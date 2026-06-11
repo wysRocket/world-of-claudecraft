@@ -1,0 +1,13 @@
+node_modules
+tmp
+dist
+dist-env
+dist-server
+.git
+python
+docs
+tests
+scripts
+deploy
+*.md
+.venv

@@ -9,6 +9,7 @@ COPY tsconfig.json vite.config.ts index.html ./
 COPY src ./src
 COPY server ./server
 COPY headless ./headless
+COPY public ./public
 RUN npm run build && npm run build:server
 
 FROM node:22-alpine

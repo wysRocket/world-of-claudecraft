@@ -52,6 +52,9 @@ async function bearerAccount(req: http.IncomingMessage): Promise<number | null> 
 const MIME: Record<string, string> = {
   '.html': 'text/html', '.js': 'application/javascript', '.css': 'text/css',
   '.png': 'image/png', '.svg': 'image/svg+xml', '.json': 'application/json',
+  '.glb': 'model/gltf-binary', '.gltf': 'model/gltf+json', '.bin': 'application/octet-stream',
+  '.hdr': 'application/octet-stream', '.ktx2': 'image/ktx2', '.wasm': 'application/wasm',
+  '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp',
 };
 
 function serveStatic(req: http.IncomingMessage, res: http.ServerResponse): void {
@@ -59,6 +62,13 @@ function serveStatic(req: http.IncomingMessage, res: http.ServerResponse): void 
   if (urlPath === '/') urlPath = '/index.html';
   const file = path.join(STATIC_DIR, path.normalize(urlPath).replace(/^([.][.][/\\])+/, ''));
   if (!file.startsWith(STATIC_DIR) || !fs.existsSync(file) || !fs.statSync(file).isFile()) {
+    // Asset paths must 404, not SPA-fall-back: a missing .glb served as index.html
+    // surfaces as a cryptic GLTFLoader parse error instead of a clear 404.
+    if (path.extname(urlPath) && path.extname(urlPath) !== '.html') {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('not found');
+      return;
+    }
     // SPA fallback
     const index = path.join(STATIC_DIR, 'index.html');
     if (fs.existsSync(index)) {
