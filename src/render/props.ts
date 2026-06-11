@@ -568,8 +568,13 @@ export function buildProps(seed: number): PropsResult {
     const g = new THREE.Group();
     const key = d.x * 3.3 + d.z * 1.7;
     for (let i = 0; i < 3; i++) {
+      // step each pier section down toward the water so the far legs stay
+      // grounded on a dropping shore (flat shores keep a level deck)
+      const lz = -1.05 - i * 2.13;
+      const wx = d.x + lz * Math.sin(d.rot);
+      const wz = d.z + lz * Math.cos(d.rot);
       addParts(g, 'dockPlatform', {
-        z: -1.05 - i * 2.13, y: -0.04 * i,
+        z: lz, y: Math.min(0, ground(wx, wz) - y + 0.15),
         rot: (keyRand(key, i) - 0.5) * 0.04,
         scale: [0.78, 0.52, 0.85],
       });
@@ -582,10 +587,18 @@ export function buildProps(seed: number): PropsResult {
     addParts(g, 'barrel', { x: 0.55, y: 0.52, z: -0.55, rot: keyRand(key, 5) * Math.PI, scale: 0.95 });
     addParts(g, 'barrel', { x: 1.45, z: 0.9, rot: keyRand(key, 6) * Math.PI, scale: 1.15 });
     addParts(g, 'crateWooden', { x: -0.6, y: 0.52, z: -2.2, rot: keyRand(key, 7), scale: 0.9 });
-    // rowboat riding at water level beside the deck's far end
+    // rowboat beside the deck's far end: floats at water level when the
+    // shore dips below it, otherwise sits hauled up on the bank
+    const boatLx = 2.4, boatLz = -5.0;
+    const boatWx = d.x + boatLx * Math.cos(d.rot) + boatLz * Math.sin(d.rot);
+    const boatWz = d.z - boatLx * Math.sin(d.rot) + boatLz * Math.cos(d.rot);
+    const boatGround = ground(boatWx, boatWz);
+    const isAfloat = boatGround < WATER_LEVEL - 0.1;
     addParts(g, 'rowboat', {
-      x: 2.4, y: WATER_LEVEL - y + 0.18, z: -5.0,
+      x: boatLx, z: boatLz,
+      y: (isAfloat ? WATER_LEVEL + 0.18 : boatGround + 0.06) - y,
       rot: 0.5 + (keyRand(key, 8) - 0.5) * 0.4, scale: 0.85,
+      euler: isAfloat ? undefined : new THREE.Euler(0.04, 0.5 + (keyRand(key, 8) - 0.5) * 0.4, 0.16),
     });
     g.position.set(d.x, y, d.z);
     g.rotation.y = d.rot;
