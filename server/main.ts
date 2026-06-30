@@ -1,7 +1,7 @@
 import * as fs from 'node:fs';
 import * as http from 'node:http';
 import * as path from 'node:path';
-import { type WebSocket, WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws';
 import {
   LEADERBOARD_MAX,
   LEADERBOARD_PAGE_SIZE,
@@ -151,6 +151,7 @@ import {
   webLoginEnforced,
 } from './web_login_guard';
 import { handleWocBalance, parseWocBalanceQuery } from './woc_balance';
+import { createWsAuth } from './ws_auth';
 import { bufferHandshakeMessages } from './ws_buffer';
 
 const PORT = Number(process.env.PORT ?? 8787);
@@ -1407,10 +1408,46 @@ async function handleApi(req: http.IncomingMessage, res: http.ServerResponse): P
 }
 
 // ---------------------------------------------------------------------------
+// HTTP route dispatch
+// ---------------------------------------------------------------------------
+
+// The createServer prefix-dispatch ladder, lifted to module scope as an
+// importable pure function. Every symbol it touches (game, the imported route
+// handlers, the CORS helpers) is module-level, so it moves cleanly. The exact
+// prefix order, the url-vs-path arm asymmetry, the CORS + OPTIONS-204
+// short-circuit position, and every fire-and-forget `void` are preserved 1:1.
+export function routeHttpRequest(req: http.IncomingMessage, res: http.ServerResponse): void {
+  const url = req.url ?? '';
+  const path = url.split('?')[0];
+  const isApi = url.startsWith('/api/') || url.startsWith('/admin/api/');
+  // Public read surfaces (/api/public/..., /avatar/...) are CORS-open to any
+  // origin so browser-origin companion apps can call them client-side; every
+  // other /api route keeps the narrow realm/native allowlist.
+  const publicCorsPath = isPublicCorsPath(path);
+  if (publicCorsPath) publicCors(res);
+  else if (isApi) maybeCors(req, res);
+  if (req.method === 'OPTIONS' && (isApi || publicCorsPath)) {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+  if (url.startsWith('/internal/')) void handleInternalApi(req, res, game);
+  else if (url.startsWith('/admin/api/')) void handleAdminApi(req, res, game);
+  else if (url.startsWith('/api/')) void handleApi(req, res);
+  else if (url.startsWith('/oauth/')) void handleOAuth(req, res);
+  else if (req.method === 'GET' && url.startsWith('/p/')) void handleCardRoutes(req, res);
+  else if (req.method === 'GET' && path.startsWith('/avatar/')) void handleAvatar(req, res);
+  else if (req.method === 'GET' && path.startsWith('/c/')) void handleProfilePage(req, res);
+  else if (req.method === 'GET' && path === '/sitemap-characters.xml')
+    void handleCharacterSitemap(req, res);
+  else serveStatic(req, res);
+}
+
+// ---------------------------------------------------------------------------
 // Boot
 // ---------------------------------------------------------------------------
 
-async function main(): Promise<void> {
+export async function startServer(): Promise<http.Server> {
   // wait for the database (it may still be starting in docker)
   for (let attempt = 1; ; attempt++) {
     try {
@@ -1494,182 +1531,26 @@ async function main(): Promise<void> {
   setInterval(warmLeaderboards, LEADERBOARD_TTL_MS).unref();
   console.log('database ready');
 
-  const server = http.createServer((req, res) => {
-    const url = req.url ?? '';
-    const path = url.split('?')[0];
-    const isApi = url.startsWith('/api/') || url.startsWith('/admin/api/');
-    // Public read surfaces (/api/public/..., /avatar/...) are CORS-open to any
-    // origin so browser-origin companion apps can call them client-side; every
-    // other /api route keeps the narrow realm/native allowlist.
-    const publicCorsPath = isPublicCorsPath(path);
-    if (publicCorsPath) publicCors(res);
-    else if (isApi) maybeCors(req, res);
-    if (req.method === 'OPTIONS' && (isApi || publicCorsPath)) {
-      res.writeHead(204);
-      res.end();
-      return;
-    }
-    if (url.startsWith('/internal/')) void handleInternalApi(req, res, game);
-    else if (url.startsWith('/admin/api/')) void handleAdminApi(req, res, game);
-    else if (url.startsWith('/api/')) void handleApi(req, res);
-    else if (url.startsWith('/oauth/')) void handleOAuth(req, res);
-    else if (req.method === 'GET' && url.startsWith('/p/')) void handleCardRoutes(req, res);
-    else if (req.method === 'GET' && path.startsWith('/avatar/')) void handleAvatar(req, res);
-    else if (req.method === 'GET' && path.startsWith('/c/')) void handleProfilePage(req, res);
-    else if (req.method === 'GET' && path === '/sitemap-characters.xml')
-      void handleCharacterSitemap(req, res);
-    else serveStatic(req, res);
-  });
+  const server = http.createServer(routeHttpRequest);
 
   // cap frame size: the largest legitimate client message is a small JSON
   // command; without this the ws default (~100 MiB) lets one socket force a
   // huge allocation + parse before any field-level validation runs
   const wss = new WebSocketServer({ noServer: true, maxPayload: 16 * 1024 });
-  server.on('upgrade', (req, socket, head) => {
-    const url = new URL(req.url ?? '/', 'http://localhost');
-    if (url.pathname !== '/ws') {
-      socket.destroy();
-      return;
-    }
-    wss.handleUpgrade(req, socket, head, (ws) => {
-      void onConnection(ws, req);
-    });
+  const wsAuth = createWsAuth({
+    game,
+    accountForToken,
+    moderationStatusForAccount,
+    getCharacter,
+    chatMuteStatusForAccount,
+    isAdminAccount,
+    loadAccountCosmetics,
+    isConnectionRefused,
+    bufferHandshakeMessages,
+    requestMetadata,
+    maxWsPerIpHard: MAX_WS_PER_IP_HARD,
   });
-
-  async function authenticateWebSocket(
-    ws: WebSocket,
-    raw: string,
-    req: http.IncomingMessage,
-  ): Promise<void> {
-    let msg: any;
-    try {
-      msg = JSON.parse(raw);
-    } catch {
-      ws.send(JSON.stringify({ t: 'error', error: 'bad auth message' }));
-      ws.close();
-      return;
-    }
-    if (msg?.t !== 'auth') {
-      ws.send(JSON.stringify({ t: 'error', error: 'authentication required' }));
-      ws.close();
-      return;
-    }
-
-    const token = typeof msg.token === 'string' ? msg.token : '';
-    const characterId = Number(msg.character ?? 'NaN');
-    const clientSeed = typeof msg.clientSeed === 'string' ? msg.clientSeed : '';
-    const accountId = await accountForToken(token);
-    if (accountId === null || !Number.isFinite(characterId)) {
-      ws.send(JSON.stringify({ t: 'error', error: 'not authenticated' }));
-      ws.close();
-      return;
-    }
-    const status = await moderationStatusForAccount(accountId);
-    if (status.locked) {
-      ws.send(JSON.stringify({ t: 'error', error: status.message }));
-      ws.close();
-      return;
-    }
-    const character = await getCharacter(accountId, characterId);
-    if (!character) {
-      ws.send(JSON.stringify({ t: 'error', error: 'no such character' }));
-      ws.close();
-      return;
-    }
-    if (character.force_rename) {
-      ws.send(
-        JSON.stringify({
-          t: 'error',
-          error: 'This character must be renamed before entering the world.',
-        }),
-      );
-      ws.close();
-      return;
-    }
-    const chatMute = await chatMuteStatusForAccount(accountId);
-    // Hard per-IP WS connection limit. The soft threshold (composite score evidence)
-    // is handled inside game.join(); this guard blocks egregious bot farms before
-    // they consume a session slot.
-    const ip = requestMetadata(req).ip;
-    const isAdmin = await isAdminAccount(accountId);
-    if (
-      isConnectionRefused({
-        blocked: game.isIpBlocked(ip),
-        isAdmin,
-        ipSessions: game.countIpSessions(ip),
-        hardLimit: MAX_WS_PER_IP_HARD,
-      })
-    ) {
-      ws.close(1008, 'Too many connections from your network');
-      return;
-    }
-    const accountCosmetics = await loadAccountCosmetics(accountId);
-    const result = game.join(
-      ws,
-      accountId,
-      character.id,
-      character.name,
-      character.class,
-      character.state,
-      character.is_gm,
-      {
-        ...requestMetadata(req),
-        mutedUntil: status.chatMutedUntil ?? chatMute.mutedUntil,
-        reason: chatMute.reason,
-        chatStrikes: status.chatStrikes,
-        accountCosmetics,
-        isAdmin,
-        clientSeed,
-      },
-    );
-    if ('error' in result) {
-      ws.send(JSON.stringify({ t: 'error', error: result.error }));
-      ws.close();
-      return;
-    }
-    const session = result;
-    console.log(`+ ${character.name} (${character.class}) joined — ${game.clients.size} online`);
-    ws.on('message', (data) => {
-      game.handleMessage(session, String(data));
-    });
-    ws.on('close', () => {
-      void game.leave(session, 'disconnected');
-      console.log(`- ${character.name} left — ${game.clients.size} online`);
-    });
-    ws.on('error', () => {
-      void game.leave(session, 'connection error');
-    });
-  }
-
-  async function onConnection(ws: WebSocket, req: http.IncomingMessage): Promise<void> {
-    const authTimer = setTimeout(() => {
-      ws.send(JSON.stringify({ t: 'error', error: 'authentication timed out' }));
-      ws.close();
-    }, 10_000);
-
-    // Pre-auth socket errors (e.g. a first frame over maxPayload, which ws
-    // surfaces as an 'error' event) would otherwise be an unhandled exception
-    // and crash the process. Tear the connection down quietly instead. The
-    // post-auth game.leave handler is attached separately once joined.
-    ws.on('error', () => {
-      clearTimeout(authTimer);
-      try {
-        ws.close();
-      } catch {
-        /* already closing */
-      }
-    });
-
-    ws.once('message', (data) => {
-      clearTimeout(authTimer);
-      // Buffer any frames the client sends while the async auth/join handshake
-      // is still in flight, then replay them once authenticateWebSocket has
-      // attached the permanent message handler. Without this the frames are
-      // silently dropped (see ws_buffer.ts).
-      const flush = bufferHandshakeMessages(ws);
-      void authenticateWebSocket(ws, String(data), req).finally(flush);
-    });
-  }
+  wsAuth.attachUpgrade(server, wss);
 
   game.start();
   server.listen(PORT, () => {
@@ -1702,9 +1583,20 @@ async function main(): Promise<void> {
   process.on('unhandledRejection', (reason) => {
     console.error('unhandledRejection (kept alive):', reason);
   });
+
+  return server;
 }
 
-main().catch((err) => {
-  console.error('fatal:', err);
-  process.exit(1);
-});
+// Boot only when this module is the process entrypoint, never on a bare import.
+// The server always runs as the esbuild CJS bundle (npm run server / npm run
+// realms, then node dist-server/server.cjs), where require.main === module marks
+// the entry. esbuild leaves import.meta empty under the cjs output format, so the
+// CJS entry check is the one that fires in the bundle; a Vitest import() of this
+// module matches neither a defined require nor require.main === module, so the
+// bare import stays inert (no socket bound, no DB connection).
+if (typeof require !== 'undefined' && require.main === module) {
+  startServer().catch((err) => {
+    console.error('fatal:', err);
+    process.exit(1);
+  });
+}
