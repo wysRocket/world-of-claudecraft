@@ -130,6 +130,33 @@ describe('createApiDispatcher', () => {
     expect(res.writableEnded).toBe(false);
   });
 
+  it('delegates a HEAD request (a synthesized GET match) to the legacy handleApi, never the onion', () => {
+    // The Phase 4 router synthesizes HEAD from GET: a HEAD to a registered GET route
+    // resolves matched with head:true. While the legacy arms are retained the
+    // migration must stay byte-identical, and the legacy ladder 404s HEAD, so the
+    // dispatcher delegates a HEAD match instead of running the handler.
+    let handlerCalls = 0;
+    let delegateCalls = 0;
+    const route = fakeRoute(async () => {
+      handlerCalls++;
+    });
+    const dispatcher = createApiDispatcher({
+      registry: registryReturning({ kind: 'matched', route, params: { id: '42' }, head: true }),
+      delegate: () => {
+        delegateCalls++;
+      },
+    });
+    const res = new FakeRes();
+    dispatcher(
+      makeReq({ method: 'HEAD', url: '/api/things/42' }),
+      res as unknown as http.ServerResponse,
+    );
+    expect(delegateCalls).toBe(1);
+    expect(handlerCalls).toBe(0);
+    // The dispatcher wrote nothing: the delegate owns the response.
+    expect(res.writableEnded).toBe(false);
+  });
+
   it('maps a handler throw to exactly one problem+json response without leaking the error', async () => {
     const events: MetricEvent[] = [];
     const route = fakeRoute(async () => {

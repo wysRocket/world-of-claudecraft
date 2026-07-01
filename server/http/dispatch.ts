@@ -61,6 +61,16 @@ export function createApiDispatcher(deps: ApiDispatcherDeps): ApiDispatcher {
       void deps.delegate(req, res);
       return;
     }
+    if (match.head) {
+      // A HEAD request resolves to a matched GET route (the Phase 4 router
+      // synthesizes HEAD from GET, head:true). The legacy ladder answers HEAD with
+      // a 404 (every arm gates on GET), so while the legacy arms are retained
+      // (through Phase 24) a HEAD match delegates too, keeping the migration
+      // byte-identical old-vs-new. Serving HEAD as GET is a deliberate behavior
+      // change deferred to the Phase 25 flag flip / ladder deletion.
+      void deps.delegate(req, res);
+      return;
+    }
     // A registry-owned route: run the Phase 5 onion. runOnion guarantees exactly
     // one idempotent response on both the resolve and the throw path, so we
     // fire-and-forget its promise, matching the legacy void call site.

@@ -124,6 +124,12 @@ const API_REQUEST_CORPUS: readonly ApiRequestSpec[] = [
   { name: 'leaderboard_scope_global', method: 'GET', url: '/api/leaderboard?scope=global' },
   { name: 'leaderboard_scope_realm', method: 'GET', url: '/api/leaderboard?scope=realm' },
   { name: 'leaderboard_limit5', method: 'GET', url: '/api/leaderboard?limit=5' },
+  // HEAD parity: the Phase 4 router synthesizes HEAD from GET, but the dispatcher
+  // delegates a HEAD match to the legacy ladder (which 404s HEAD) so HEAD stays
+  // byte-identical old-vs-new while the legacy arms are retained (serving HEAD as
+  // GET is deferred to the Phase 25 flag flip). This pins it: a HEAD to a migrated
+  // GET route must 404 on BOTH paths, with no divergence and no known-deviation.
+  { name: 'leaderboard_head_404', method: 'HEAD', url: '/api/leaderboard' },
 
   // --- binary request class, player card (characterization block 5) -----------
   {
