@@ -1860,6 +1860,7 @@ const ALL_DELTA_KEYS = [
   'qlog',
   'stats',
   'tal',
+  'tfocus',
   'trade',
   'weapon',
 ] as const;
@@ -1902,6 +1903,7 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   res: 'resource',
   rtype: 'resourceType',
   rxp: 'restedXp',
+  tfocus: 'townFocus',
 };
 
 // Year ~2223 in epoch ms. Beats selfWireJson's `until > Date.now()` lockout
@@ -2141,9 +2143,9 @@ describe('full self-state snapshot delta fixture', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 30 unique keys in sorted order', () => {
-    expect(ALL_DELTA_KEYS).toHaveLength(30);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(30);
+  it('ALL_DELTA_KEYS contains exactly 31 unique keys in sorted order', () => {
+    expect(ALL_DELTA_KEYS).toHaveLength(31);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(31);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
