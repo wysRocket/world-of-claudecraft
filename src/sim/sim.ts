@@ -5050,6 +5050,8 @@ export class Sim {
   // non-primary party member the same way lootCorpse does.
   autoLoot(mobId: number, pid?: number): void {
     interaction.autoLootForParty(this.ctx, mobId, pid ?? this.primaryId);
+  harvestCorpse(mobId: number, pid?: number): void {
+    interaction.harvestCorpse(this.ctx, mobId, pid);
   }
 
   harvestCorpse(mobId: number, pid?: number): void {
