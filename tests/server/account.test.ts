@@ -462,6 +462,31 @@ describe('companion-token method fan (405 deviation)', () => {
 });
 
 // ---------------------------------------------------------------------------
+// The accountBodyValidationRemap known deviation: the account write handlers self-read
+// their body (no withBody), so a malformed / over-cap body throws inside readBody and
+// surfaces as 500 application/problem+json through the shared withErrors boundary, where
+// the legacy outer-catch answered 500 { error: 'internal error' }. Same 500 STATUS, only
+// the body SHAPE diverges (no withBody, so NO 400/413 remap either). Pinned here on the
+// companion-create route (a self-reading route handler the deviation lists), mirroring how
+// the companion-token method fan is pinned above.
+// ---------------------------------------------------------------------------
+
+describe('accountBodyValidationRemap deviation (self-read body throw -> 500 problem+json)', () => {
+  it('POST /api/account/companion-token with a malformed body is 500 application/problem+json (internal.error)', async () => {
+    authedDb();
+    const r = await runRoute('POST', COMPANION_PATH, {
+      headers: { authorization: BEARER },
+      body: '{ not valid json',
+    });
+    // The throw propagates past activeGuard to the withErrors boundary: 500 STATUS (as
+    // legacy) but the problem+json body shape (internal.error), not legacy { error }.
+    expect(r.status).toBe(500);
+    expect(r.contentType).toBe('application/problem+json');
+    expect((r.body as Record<string, unknown>).code).toBe('internal.error');
+  });
+});
+
+// ---------------------------------------------------------------------------
 // The two token-in-query link handlers (db-free no-token path), byte-identical to
 // their Phase 3 golden fixtures.
 // ---------------------------------------------------------------------------
@@ -552,6 +577,9 @@ describe('deactivate route: injected hooks + runtime wiring', () => {
     // character ids, and the post-lock teardown disconnected the account.
     expect(anyCharacterOnline).toHaveBeenCalledWith([1, 2]);
     expect(disconnectAccount).toHaveBeenCalledWith(7, expect.any(String));
+    // The self-service delete also emails the account (the side effect the legacy arm
+    // fired too), so the deactivate flow is confirmed end to end, not just the hooks.
+    expect(vi.mocked(emailAccountDeleted)).toHaveBeenCalledWith(acctRow);
   });
 
   it('409s and does NOT disconnect when anyCharacterOnline reports a live session', async () => {
