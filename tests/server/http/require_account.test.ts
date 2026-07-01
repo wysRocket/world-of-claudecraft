@@ -38,6 +38,15 @@ const SUSPENDED_INDEFINITE = {
   reason: 'suspended',
   message: 'suspended',
 };
+// A self-deactivated account: locked, not banned, no suspension end date. The
+// real moderationStatusForAccount (server/db.ts) surfaces exactly this shape for
+// a deactivated account and sets the deactivated discriminator.
+const DEACTIVATED = {
+  ...NOT_LOCKED,
+  locked: true,
+  deactivated: true,
+  message: 'This account has been deactivated.',
+};
 
 describe('requireAccount: missing or invalid token', () => {
   it('throws auth.token_missing when the Authorization header is absent', async () => {
@@ -63,6 +72,17 @@ describe('requireAccount: missing or invalid token', () => {
     }
   });
 
+  it('throws auth.token_missing for a present but malformed (non 64-hex) Authorization header', async () => {
+    const ctx = fakeCtx({
+      req: makeReq({ headers: { authorization: 'Bearer not-a-valid-token' } }),
+    });
+    const middleware = requireAccount({ scope: 'full' });
+    await expect(middleware(ctx, nextGuard())).rejects.toMatchObject({
+      status: 401,
+      code: 'auth.token_missing',
+    });
+  });
+
   it('throws auth.token_invalid when the token is well-formed but unknown', async () => {
     const ctx = fakeCtx({ req: makeReq({ headers: authHeader(VALID_TOKEN) }) });
     const middleware = requireAccount({ scope: 'full', lookupToken: async () => null });
@@ -70,6 +90,20 @@ describe('requireAccount: missing or invalid token', () => {
       status: 401,
       code: 'auth.token_invalid',
     });
+  });
+
+  it('serializes the token_invalid 401 with the invalid_token WWW-Authenticate challenge', async () => {
+    const ctx = fakeCtx({ req: makeReq({ headers: authHeader(VALID_TOKEN) }) });
+    const middleware = requireAccount({ scope: 'full', lookupToken: async () => null });
+    try {
+      await middleware(ctx, nextGuard());
+      throw new Error('expected requireAccount to reject');
+    } catch (err) {
+      const serialized = mapError(err, fakeCtx(), { surface: 'problem' });
+      expect(serialized.status).toBe(401);
+      expect(JSON.parse(serialized.body).code).toBe('auth.token_invalid');
+      expect(serialized.headers['WWW-Authenticate']).toBe('Bearer error="invalid_token"');
+    }
   });
 });
 
@@ -126,6 +160,19 @@ describe('requireAccount: moderation gate', () => {
     await expect(middleware(ctx, nextGuard())).rejects.toMatchObject({
       status: 403,
       code: 'moderation.suspended',
+    });
+  });
+
+  it('throws account.deactivated for a self-deactivated (locked, not banned, no suspension) account', async () => {
+    const ctx = fakeCtx({ req: makeReq({ headers: authHeader(VALID_TOKEN) }) });
+    const middleware = requireAccount({
+      scope: 'full',
+      lookupToken: async () => ({ accountId: 1, scope: 'full' }),
+      moderationStatus: async () => DEACTIVATED,
+    });
+    await expect(middleware(ctx, nextGuard())).rejects.toMatchObject({
+      status: 403,
+      code: 'account.deactivated',
     });
   });
 

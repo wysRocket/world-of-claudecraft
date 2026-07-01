@@ -64,6 +64,12 @@ export function requireAccount(deps: RequireAccountDeps): Middleware {
       if (status.suspendedUntil) {
         throw new HttpError(403, 'moderation.suspended_until', { date: status.suspendedUntil });
       }
+      // A self-deactivated account is locked but is neither banned nor suspended;
+      // it carries its own stable code so the client localizes the deactivation
+      // message rather than a generic suspension. Kept ahead of the fallback,
+      // which stays as a defensive catch for any future locked-but-unclassified
+      // state (e.g. an indefinite suspension the DB does not currently emit).
+      if (status.deactivated) throw new HttpError(403, 'account.deactivated');
       throw new HttpError(403, 'moderation.suspended');
     }
     ctx.account = { accountId: info.accountId, scope: info.scope };

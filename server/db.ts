@@ -469,6 +469,11 @@ export interface AccountModerationStatus {
   locked: boolean;
   banned: boolean;
   suspendedUntil: string | null;
+  // True only for a self-deactivated account (locked, not banned, no active
+  // suspension). Lets a caller distinguish the deactivation lock from a
+  // suspension so it can surface the correct message/code (e.g. the API pipeline
+  // requireAccount maps it to account.deactivated, not moderation.suspended).
+  deactivated?: boolean;
   reason: string;
   message: string;
   // Chat mute is independent of `locked`: a muted account can still log in and
@@ -1394,6 +1399,7 @@ export async function moderationStatusForAccount(
       locked: true,
       banned: false,
       suspendedUntil: null,
+      deactivated: true,
       reason: '',
       message: 'This account has been deactivated.',
       chatMutedUntil,

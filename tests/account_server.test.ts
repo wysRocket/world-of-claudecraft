@@ -478,6 +478,7 @@ describe('moderationStatusForAccount precedence', () => {
     const s = await moderationStatusForAccount(1);
     expect(s.locked).toBe(true);
     expect(s.banned).toBe(false);
+    expect(s.deactivated).toBe(true);
     expect(s.message).toContain('deactivated');
   });
   it('a banned + deactivated account reports the ban, not the deactivation', async () => {
@@ -492,6 +493,7 @@ describe('moderationStatusForAccount precedence', () => {
     const s = await moderationStatusForAccount(1);
     expect(s.locked).toBe(true);
     expect(s.banned).toBe(true);
+    expect(s.deactivated).toBeFalsy();
     expect(s.reason).toBe('cheating');
     expect(s.message).toContain('banned');
   });
@@ -507,6 +509,7 @@ describe('moderationStatusForAccount precedence', () => {
     const s = await moderationStatusForAccount(1);
     expect(s.locked).toBe(true);
     expect(s.suspendedUntil).toBeTruthy();
+    expect(s.deactivated).toBeFalsy();
     expect(s.message).toContain('suspended');
   });
 });
