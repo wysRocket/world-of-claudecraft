@@ -1,9 +1,12 @@
-import * as http from 'node:http';
+import type * as http from 'node:http';
 import { inflateSync } from 'node:zlib';
 
 export function json(res: http.ServerResponse, status: number, body: unknown): void {
   const data = JSON.stringify(body);
-  res.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(data) });
+  res.writeHead(status, {
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(data),
+  });
   res.end(data);
 }
 
@@ -17,7 +20,15 @@ export function isUniqueViolation(err: unknown): boolean {
   return e?.code === '23505' || (typeof e?.message === 'string' && e.message.includes('unique'));
 }
 
-export function readBody(req: http.IncomingMessage, maxBytes = 64 * 1024): Promise<any> {
+// The default JSON request-body cap (64 KiB). The single source of truth so
+// readBody and the withBody middleware (server/http/middleware/body.ts) can
+// never drift apart.
+export const DEFAULT_JSON_BODY_MAX_BYTES = 64 * 1024;
+
+export function readBody(
+  req: http.IncomingMessage,
+  maxBytes = DEFAULT_JSON_BODY_MAX_BYTES,
+): Promise<any> {
   return new Promise((resolve, reject) => {
     let data = '';
     let bytes = 0;
@@ -107,7 +118,7 @@ const CRC32_TABLE = (() => {
   for (let n = 0; n < table.length; n++) {
     let c = n;
     for (let k = 0; k < 8; k++) {
-      c = (c & 1) ? (0xedb88320 ^ (c >>> 1)) : (c >>> 1);
+      c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
     }
     table[n] = c >>> 0;
   }
@@ -133,7 +144,9 @@ function isPngChunkType(buf: Buffer, offset: number): boolean {
 function validPngBitDepth(colorType: number, bitDepth: number): boolean {
   switch (colorType) {
     case 0:
-      return bitDepth === 1 || bitDepth === 2 || bitDepth === 4 || bitDepth === 8 || bitDepth === 16;
+      return (
+        bitDepth === 1 || bitDepth === 2 || bitDepth === 4 || bitDepth === 8 || bitDepth === 16
+      );
     case 2:
       return bitDepth === 8 || bitDepth === 16;
     case 3:
@@ -239,7 +252,8 @@ export function parsePngInfo(buf: Buffer, options: PngValidationOptions = {}): P
         break;
       }
       case 'PLTE':
-        if (!info || sawPlte || sawIdat || length === 0 || length % 3 !== 0 || length / 3 > 256) return null;
+        if (!info || sawPlte || sawIdat || length === 0 || length % 3 !== 0 || length / 3 > 256)
+          return null;
         if (info.colorType === 0 || info.colorType === 4) return null;
         sawPlte = true;
         break;
@@ -252,7 +266,14 @@ export function parsePngInfo(buf: Buffer, options: PngValidationOptions = {}): P
       case 'IEND':
         if (!info || length !== 0 || !sawIdat || chunkEnd !== buf.length) return null;
         if (info.colorType === 3 && !sawPlte) return null;
-        if (!pngImageDataValid(info, idatChunks, options.maxDecodedBytes ?? DEFAULT_MAX_PNG_DECODED_BYTES)) return null;
+        if (
+          !pngImageDataValid(
+            info,
+            idatChunks,
+            options.maxDecodedBytes ?? DEFAULT_MAX_PNG_DECODED_BYTES,
+          )
+        )
+          return null;
         return info;
     }
 

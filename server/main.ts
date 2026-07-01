@@ -95,6 +95,7 @@ import {
 import { pruneDiscordOAuthStates, pruneDiscordPendingLogins } from './discord_db';
 import { emailAccountCreated } from './email';
 import { GameServer } from './game';
+import { handleClientError } from './http/client_error';
 import { isUniqueViolation, json, readBody } from './http_util';
 import { handleInternalApi } from './internal';
 import { isConnectionRefused } from './ip_block';
@@ -1532,6 +1533,7 @@ export async function startServer(): Promise<http.Server> {
   console.log('database ready');
 
   const server = http.createServer(routeHttpRequest);
+  server.on('clientError', handleClientError);
 
   // cap frame size: the largest legitimate client message is a small JSON
   // command; without this the ws default (~100 MiB) lets one socket force a
