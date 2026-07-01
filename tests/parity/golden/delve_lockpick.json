@@ -16,7 +16,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 389,
-      "state": "d4c14b80",
+      "state": "0fac6014",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -39,6 +39,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -102,7 +103,7 @@
       "tick": 10,
       "time": 0.5,
       "nextId": 402,
-      "state": "de20c8c3",
+      "state": "42e27837",
       "events": "f1c417ce",
       "rng": {
         "draws": 4,
@@ -113,7 +114,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 402,
-      "state": "86b30312",
+      "state": "96c96c96",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -124,7 +125,7 @@
       "tick": 30,
       "time": 1.5,
       "nextId": 402,
-      "state": "61ecc6d1",
+      "state": "24cc1fd5",
       "events": "3a3cdaf4",
       "rng": {
         "draws": 5,
@@ -135,7 +136,7 @@
       "tick": 38,
       "time": 1.9,
       "nextId": 404,
-      "state": "c726d61d",
+      "state": "ce041f61",
       "events": "ddc6ffa8",
       "rng": {
         "draws": 8,
@@ -174,6 +175,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 12098,
           "talents": {
             "choices": {},
@@ -374,7 +376,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 404,
-      "state": "fbc85cd0",
+      "state": "960da19c",
       "events": "741638a5",
       "rng": {
         "draws": 8,
@@ -385,7 +387,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 404,
-      "state": "fbc85cd0",
+      "state": "960da19c",
       "events": "741638a5",
       "rng": {
         "draws": 8,
@@ -424,6 +426,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 12098,
           "talents": {
             "choices": {},

@@ -31,7 +31,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "4b6259c0",
+      "state": "3e46fc3c",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -53,6 +53,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -72,6 +73,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -91,6 +93,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -300,7 +303,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "4d254c55",
+      "state": "0b40ef69",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -322,6 +325,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -341,6 +345,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -360,6 +365,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -569,7 +575,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "bc458cc7",
+      "state": "03824e53",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -591,6 +597,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -610,6 +617,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -629,6 +637,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -838,7 +847,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "5f5ff9db",
+      "state": "645b467f",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -860,6 +869,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -879,6 +889,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -898,6 +909,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1107,7 +1119,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "e8975f3d",
+      "state": "45132cd1",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1129,6 +1141,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1148,6 +1161,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1167,6 +1181,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1378,7 +1393,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "c38fab5d",
+      "state": "20f295b1",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1400,6 +1415,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1419,6 +1435,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1438,6 +1455,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1649,7 +1667,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "d26cffec",
+      "state": "a8390b30",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1671,6 +1689,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1690,6 +1709,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1709,6 +1729,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1919,7 +1940,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "4d89b628",
+      "state": "a38b7424",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1941,6 +1962,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1960,6 +1982,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -1979,6 +2002,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2189,7 +2213,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "c7855291",
+      "state": "42fcf6cd",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -2211,6 +2235,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2230,6 +2255,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2249,6 +2275,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2444,7 +2471,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "c7855291",
+      "state": "42fcf6cd",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -2466,6 +2493,7 @@
             "chest": "recruit_tunic",
             "mainhand": "worn_sword"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2485,6 +2513,7 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
@@ -2504,6 +2533,7 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
