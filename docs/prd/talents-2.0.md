@@ -450,9 +450,9 @@ aimed_shot, rapid_fire, tame/dismiss/revive pet)
 - L17: Deterrence [grant NEW] (+50% dodge 10s, 2min cd) / Master Tamer [mod]
   (Tame Beast and Revive Pet cast -50%) / Thick Hide [stats]
   (armor +10%, dodge +2%, the plain pick)
-- L20: Volley [grant NEW] (ground-target AoE channel) / Rapid Killing [mod]
-  (Rapid Fire cd -50%, effect +25%) / Aspect of the Wild [grant NEW]
-  (party nature-flavored AP aura)
+- L20: Improved Volley [mod] (Volley damage +30%, cost -20%; Volley is
+  baseline via PR #1064) / Rapid Killing [mod] (Rapid Fire cd -50%, effect
+  +25%) / Aspect of the Wild [grant NEW] (party nature-flavored AP aura)
 
 **Rogue** (kit: sinister_strike, eviscerate, backstab, gouge, evasion,
 slice_and_dice, sprint, kidney_shot, ambush, stealth, garrote, cheap_shot,
@@ -560,9 +560,9 @@ insect_swarm, and more; the largest kit, 31 abilities)
 - L17: Improved Barkskin [mod] (effect +40%, cd -25%) /
   Frenzied Regeneration [grant NEW] (bear heal over 10s) /
   Survival of the Fittest [stats] (armor +10%, max HP +5%, the plain pick)
-- L20: Hurricane [grant NEW] (AoE nature channel) / Berserk [grant NEW]
-  (+30% melee damage 15s, 3min cd) / Tranquility [grant NEW]
-  (channeled party heal)
+- L20: Improved Hurricane [mod] (Hurricane damage +30%, cost -20%; Hurricane
+  is baseline via PR #1064) / Berserk [grant NEW] (+30% melee damage 15s,
+  3min cd) / Tranquility [grant NEW] (channeled party heal)
 
 ---
 
@@ -604,17 +604,22 @@ before the next starts.
   - Interrupt effects add no threat/combat entry by themselves; interrupt
     content should pair the effect with a strike or add threat explicitly.
 
-**PR2: targeted and conditional effects, introduced via Flamestrike.**
-- Flamestrike [grant NEW -> baseline mage kit]: classic ground-target AoE
-  fire nuke with a small burn DoT. This PR folds the ground-targeting
-  mechanic into ability effects properly (the later row/capstone abilities
-  Meteor, Volley, Heroic Leap, Frost Trap, Earthbind all reuse it).
+**PR2: targeted and conditional effects. STATUS: split and largely done.**
+- Ground targeting is carried by the pre-existing PR #1064 (ground-targeted
+  casting + Flamestrike/Rain of Fire/Volley/Hurricane/Earthquake as baseline
+  spells, full i18n, server-clamped targetMode 'position', IWorld
+  castAbilityAt). Rebased onto the current release base 2026-07-02, ratchet
+  pins bumped, 278 tests green, and functionally validated in the live
+  client by scripts/ground_target_flamestrike_shot.mjs (zone clamps to range
+  along the aim line, mob takes zone damage). Later row/capstone abilities
+  (Meteor, Frost Trap, Heroic Leap, Earthbind) reuse targetMode 'position'.
+- CONTENT FALLOUT of #1064 on Part 3: Volley (hunter) and Hurricane (druid)
+  become BASELINE spells, so their L20 row options are replaced (see Part 3;
+  a row must never grant an ability the class already has).
 - P4 vs-rooted conditionals (vsRootedMult on directDamage, critVsRooted
-  global) and P5 addEffects ability transform, both content-unused.
-- Flamestrike is a real new baseline spell: full ability i18n (name +
-  description, all locales pending maintainer fill), wiki regen.
-- First deliberate golden regen if the mob garnish or Flamestrike testing
-  moves draws; isolated here.
+  global via the playerMods accessor) and P5 addEffects transform: DONE,
+  content-unused, on branch feature/talents-2-0-pr2 (stacked on PR1 #1305;
+  its PR opens when #1305 lands). Goldens untouched.
 
 **PR3: signature fairness (real spec spells under the EXISTING system).**
 - The 24 new grant-only signature abilities from the table above (Holy
