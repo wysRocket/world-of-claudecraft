@@ -47,6 +47,12 @@ import {
   normAngle,
 } from '../types';
 import { isLockedOut, isSilenced, isStunned, tonguesMult } from './cc';
+import {
+  consumeNextAttackCrit,
+  consumeNextCastFree,
+  consumeNextCastInstant,
+  hasNextCastFree,
+} from './empower_next';
 import { isSpellResisted } from './spell_resist';
 
 // Shaman shocks (earth/flame/frost) share one cooldown; lightning_shock joins them
@@ -174,7 +180,7 @@ export function castAbility(ctx: SimContext, abilityId: string, pid?: number): v
   const r = ctx.resolve(pid);
   if (!r) return;
   const { meta, e: p } = r;
-  const res = ctx.resolvedAbility(abilityId, p.id);
+  let res = ctx.resolvedAbility(abilityId, p.id);
   if (!res || p.dead) return;
   meta.lastActiveTick = ctx.tickCount; // a cast attempt is a deliberate action
   const ability = res.def;
@@ -205,7 +211,8 @@ export function castAbility(ctx: SimContext, abilityId: string, pid?: number): v
   }
   // shifting out of a form is free; shifting across forms bills the parked
   // mana (the live bar is rage/energy in a form) — see spendAbilityCost
-  if (p.resource < res.cost && !togglingOff && !formShiftKind(p, ability)) {
+  const canCastFree = res.cost > 0 && hasNextCastFree(p);
+  if (p.resource < res.cost && !canCastFree && !togglingOff && !formShiftKind(p, ability)) {
     ctx.error(
       p.id,
       p.resourceType === 'rage'
@@ -351,12 +358,33 @@ export function castAbility(ctx: SimContext, abilityId: string, pid?: number): v
 
   // Heroic-strike style: queue on next swing, pay cost on the swing itself.
   if (ability.onNextSwing) {
-    p.queuedOnSwing = p.queuedOnSwing === ability.id ? null : ability.id;
+    const toggledOff = p.queuedOnSwing === ability.id;
+    p.queuedOnSwing = toggledOff ? null : ability.id;
+    if (!toggledOff && canCastFree && consumeNextCastFree(ctx, p)) {
+      p.queuedOnSwingFree = true;
+    } else {
+      delete p.queuedOnSwingFree;
+    }
     if (!p.autoAttack && target) ctx.startAutoAttack(p.id);
     return;
   }
 
   const gcd = ctx.playerGcdFor(meta.cls);
+  // A channel keeps its duration, so it must not eat a next_cast_instant charge.
+  const castTime =
+    !ability.channel &&
+    res.castTime > 0 &&
+    ability.school !== 'physical' &&
+    consumeNextCastInstant(ctx, p)
+      ? 0
+      : res.castTime;
+  // A free cast is consumed where the cost is actually billed: here for channels
+  // and instants (this tick resolves them via the local `res`), but for cast-time
+  // spells the bill lands in applyAbility at completion, which RE-RESOLVES the
+  // ability, so the charge must survive until then and be consumed there.
+  if ((castTime === 0 || ability.channel) && !togglingOff) {
+    if (canCastFree && consumeNextCastFree(ctx, p)) res = { ...res, cost: 0 };
+  }
 
   if (ability.channel) {
     spendResource(p, res.cost);
@@ -377,14 +405,14 @@ export function castAbility(ctx: SimContext, abilityId: string, pid?: number): v
     return;
   }
 
-  if (res.castTime > 0 && !togglingOff) {
+  if (castTime > 0 && !togglingOff) {
     // Curse of Tongues stretches the resolved (already haste-adjusted) cast time.
-    const castTime = res.castTime * tonguesMult(p);
+    const stretchedCastTime = castTime * tonguesMult(p);
     p.castingAbility = ability.id;
-    p.castTotal = castTime;
-    p.castRemaining = castTime;
+    p.castTotal = stretchedCastTime;
+    p.castRemaining = stretchedCastTime;
     p.gcdRemaining = Math.max(p.gcdRemaining, gcd);
-    ctx.emit({ type: 'castStart', entityId: p.id, ability: ability.id, time: castTime });
+    ctx.emit({ type: 'castStart', entityId: p.id, ability: ability.id, time: stretchedCastTime });
     return;
   }
 
@@ -464,7 +492,7 @@ function applyChannelTick(ctx: SimContext, p: Entity, res: ResolvedAbility): voi
     const channelSp = channelTickBonus(abilityScalingPower(src, res.def), res.def);
     for (const eff of res.effects) {
       if (eff.type === 'directDamage') {
-        const crit = ctx.rng.chance(ctx.spellCrit(src));
+        const crit = ctx.rng.chance(consumeNextAttackCrit(ctx, src) ? 1 : ctx.spellCrit(src));
         let dmg = ctx.rng.range(eff.min, eff.max) + channelSp;
         if (crit) dmg *= 1.5;
         ctx.dealDamage(src, tgt, Math.round(dmg), crit, res.def.school, res.def.name, 'hit');
@@ -494,15 +522,20 @@ function applyChannelTick(ctx: SimContext, p: Entity, res: ResolvedAbility): voi
 function applyAbility(ctx: SimContext, p: Entity, meta: PlayerMeta, res: ResolvedAbility): void {
   const ability = res.def;
   const togglingOff = isToggleBuff(ability) && p.auras.some((a) => a.id === ability.id);
+  // The free charge is consumed exactly where a cost is actually billed; the
+  // early-return utility branches below bill directly, so they must go through
+  // this too or a free conjure/revive would keep the charge alive.
+  const billableCost = (): number =>
+    res.cost > 0 && !togglingOff && consumeNextCastFree(ctx, p) ? 0 : res.cost;
   if (ability.id === 'conjure_water') {
-    spendResource(p, res.cost);
+    spendResource(p, billableCost());
     // higher ranks conjure better water (falls back if the item isn't defined)
     const tiered = `conjured_water${res.rank}`;
     ctx.addItem(res.rank > 1 && ITEMS[tiered] ? tiered : 'conjured_water', 2, p.id);
     return;
   }
   if (ability.id === 'conjure_food') {
-    spendResource(p, res.cost);
+    spendResource(p, billableCost());
     // higher ranks conjure heartier fare (falls back if the item isn't defined)
     const tiered = `conjured_bread${res.rank}`;
     ctx.addItem(res.rank > 1 && ITEMS[tiered] ? tiered : 'conjured_bread', 2, p.id);
@@ -518,7 +551,7 @@ function applyAbility(ctx: SimContext, p: Entity, meta: PlayerMeta, res: Resolve
       ctx.error(p.id, 'Your pet is already alive.');
       return;
     }
-    spendResource(p, res.cost);
+    spendResource(p, billableCost());
     armAbilityCooldown(p, ability.id, res.cooldown);
     ctx.revivePet(p.id);
     return;
@@ -553,10 +586,12 @@ function applyAbility(ctx: SimContext, p: Entity, meta: PlayerMeta, res: Resolve
       return;
     }
   }
-  if (p.resource < res.cost && !togglingOff && !formShiftKind(p, ability)) {
+  const canCastFree = res.cost > 0 && hasNextCastFree(p);
+  if (p.resource < res.cost && !canCastFree && !togglingOff && !formShiftKind(p, ability)) {
     ctx.error(p.id, `Not enough ${p.resourceType ?? 'resource'}!`);
     return;
   }
+  if (canCastFree && !togglingOff && consumeNextCastFree(ctx, p)) res = { ...res, cost: 0 };
 
   // helpful spells never miss
   if (ability.targetType === 'friendly') {

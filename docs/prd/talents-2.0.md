@@ -585,6 +585,24 @@ before the next starts.
   mobs an interrupt cast so players feel the mechanic as counterplay.
 - Tests: tests/talent_primitives.test.ts (cancel + lockout semantics,
   one-charge consumption, rng-draw-count invariance of guaranteed crit).
+- Reviewed decisions carried forward to the content PRs:
+  - The dedicated interrupt SimEvent (FCT "Interrupted!", combat-log
+    attribution) lands with the first player-facing interrupt (PR3 or PR5),
+    not in PR1; until then cancelCast's castStop + the aura event suffice.
+  - Interrupt ABILITIES must be physical school (Pummel/Kick/Counter Shot
+    pattern): a non-physical targeted ability rides the projectile+resist
+    path and lands too late to be a reliable interrupt. Counterspell/Spell
+    Lock are defined as school 'physical' mechanically (arcane/shadow visual
+    only) or the projectile path gets an instant flag later.
+  - Parity scenarios exercising the new rng-visible behavior ride the first
+    content PR that uses each primitive (content-unused primitives provably
+    leave goldens untouched, which PR1's gate asserts directly).
+  - A next_cast_free charge consumed by queueing an on-next-swing ability is
+    NOT refunded if the queue is toggled off or the swing never lands; a
+    charge consumed at cast completion is lost on a resist (matches classic
+    mana-on-resist semantics). Both are accepted, documented semantics.
+  - Interrupt effects add no threat/combat entry by themselves; interrupt
+    content should pair the effect with a strike or add threat explicitly.
 
 **PR2: targeted and conditional effects, introduced via Flamestrike.**
 - Flamestrike [grant NEW -> baseline mage kit]: classic ground-target AoE

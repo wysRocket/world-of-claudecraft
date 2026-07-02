@@ -63,6 +63,7 @@ export interface AbilityModEffect {
   cooldownPct?: number; // -0.50 = half cooldown
   castPct?: number; // -0.50 = half cast time
   buffPct?: number; // +0.20 = +20% to this ability's selfBuff/buffTarget value (e.g. Improved Devotion Aura)
+  castWhileMoving?: boolean; // the cast/channel survives the caster's own movement (Firestarter)
 }
 
 // Mastery-style global multipliers, applied to whole damage/heal schools when
@@ -155,6 +156,7 @@ export interface ResolvedAbilityMod {
   cooldownPct: number;
   castPct: number;
   buffPct: number;
+  castWhileMoving: boolean;
 }
 
 // The flat precomputed struct read by the hot paths.
@@ -521,7 +523,15 @@ function zeroGlobal(): Required<GlobalModEffect> {
   return { meleeDmgPct: 0, spellDmgPct: 0, healPct: 0, threatPct: 0 };
 }
 function zeroAbilityMod(): ResolvedAbilityMod {
-  return { dmgPct: 0, flatDmg: 0, costPct: 0, cooldownPct: 0, castPct: 0, buffPct: 0 };
+  return {
+    dmgPct: 0,
+    flatDmg: 0,
+    costPct: 0,
+    cooldownPct: 0,
+    castPct: 0,
+    buffPct: 0,
+    castWhileMoving: false,
+  };
 }
 
 export function emptyModifiers(): TalentModifiers {
@@ -578,6 +588,7 @@ function accumulate(mods: TalentModifiers, eff: TalentEffect | undefined, mult: 
     cur.cooldownPct += (am.cooldownPct ?? 0) * mult;
     cur.castPct += (am.castPct ?? 0) * mult;
     cur.buffPct += (am.buffPct ?? 0) * mult;
+    if (am.castWhileMoving) cur.castWhileMoving = true;
   }
   if (eff.grant) mods.grants.push({ ability: eff.grant.ability, rank: eff.grant.rank ?? 1 });
 }

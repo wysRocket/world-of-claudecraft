@@ -569,6 +569,7 @@ export interface ResolvedAbility {
   effects: AbilityEffect[];
   threatFlat: number; // classic bonus threat on a successful use
   threatMult: number; // classic multiplier on this ability's damage-threat
+  castWhileMoving?: boolean; // talent-granted mobility (def.castWhileMoving covers baseline)
 }
 
 export interface RewardCounters {
@@ -2760,7 +2761,13 @@ export class Sim {
       wishZ = 0,
       wishSpeed = 0;
     if (moving) {
-      if (p.castingAbility) this.cancelCast(p);
+      if (p.castingAbility) {
+        // A mobile cast (def flag, or talent-granted via the resolved ability)
+        // survives its caster's movement; everything else breaks, fishing included.
+        const casting = this.resolvedAbility(p.castingAbility, p.id);
+        const mobile = casting != null && (casting.def.castWhileMoving || casting.castWhileMoving);
+        if (!mobile) this.cancelCast(p);
+      }
       const len = Math.hypot(mx, mz);
       mx /= len;
       mz /= len;

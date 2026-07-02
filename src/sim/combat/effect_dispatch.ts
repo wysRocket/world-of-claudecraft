@@ -30,7 +30,8 @@ import {
 import { stunDrCategory } from '../stun_dr';
 import { addThreat } from '../threat';
 import type { AbilityDef, Entity } from '../types';
-import { armorReduction, meleeMissChance } from '../types';
+import { armorReduction, FISHING_CAST_ID, meleeMissChance } from '../types';
+import { consumeNextAttackCrit } from './empower_next';
 import { exclusiveAuraConflicts } from './exclusive_aura';
 
 const CHARGE_MAX_DURATION = 3; // seconds before a blocked charge gives up
@@ -85,7 +86,7 @@ export function runEffects(
         // abilityScalingPower picks the rating; powerScale (inside directHitBonus)
         // applies the AP scale-down. A non-scaling effect just contributes 0.
         dmg += directHitBonus(abilityScalingPower(p, ability), ability, res.castTime);
-        const crit = ctx.rng.chance(critChance);
+        const crit = ctx.rng.chance(consumeNextAttackCrit(ctx, p) ? 1 : critChance);
         if (crit) dmg *= isSpell ? 1.5 : 2;
         if (!isSpell) dmg *= 1 - armorReduction(ctx.effectiveArmor(target), p.level);
         ctx.dealDamage(
@@ -112,7 +113,7 @@ export function runEffects(
           eff.perCombo * spentCombo +
           ctx.rng.range(0, eff.variance) +
           ctx.effectiveAttackPower(p) / 14;
-        const crit = ctx.rng.chance(p.critChance);
+        const crit = ctx.rng.chance(consumeNextAttackCrit(ctx, p) ? 1 : p.critChance);
         if (crit) dmg *= 2;
         dmg *= 1 - armorReduction(ctx.effectiveArmor(target), p.level);
         ctx.dealDamage(
@@ -247,9 +248,34 @@ export function runEffects(
         let dmg =
           ctx.rng.range(seal.value2 ?? 10, seal.value3 ?? 15) +
           directHitBonus(p.spellPower, ability, res.castTime);
-        const crit = ctx.rng.chance(ctx.spellCrit(p));
+        const crit = ctx.rng.chance(consumeNextAttackCrit(ctx, p) ? 1 : ctx.spellCrit(p));
         if (crit) dmg *= 1.5;
         ctx.dealDamage(p, target, Math.round(dmg), crit, 'holy', ability.name, 'hit');
+        break;
+      }
+      case 'interrupt': {
+        if (!target || target.castingAbility === null || target.castingAbility === FISHING_CAST_ID)
+          break;
+        // Resolve per-player when possible (rank/mods), but fall back to the
+        // global ability table so a non-player caster (a mob whose cast is an
+        // ability id) is interruptible too; scripted pseudo-casts resolve to
+        // nothing and are immune by design.
+        const interruptedDef =
+          ctx.resolvedAbility(target.castingAbility, target.id)?.def ??
+          ABILITIES[target.castingAbility];
+        if (!interruptedDef || interruptedDef.school === 'physical') break;
+        const school = interruptedDef.school;
+        ctx.cancelCast(target);
+        ctx.applyAura(target, {
+          id: `${ability.id}_lockout`,
+          name: ability.name,
+          kind: 'lockout',
+          remaining: eff.lockout,
+          duration: eff.lockout,
+          value: 0,
+          sourceId: p.id,
+          school,
+        });
         break;
       }
       case 'lifeTap': {

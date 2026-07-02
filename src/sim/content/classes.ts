@@ -3506,6 +3506,7 @@ export interface KnownAbility {
   effects: AbilityEffect[];
   threatFlat: number;
   threatMult: number;
+  castWhileMoving?: boolean; // talent-granted mobility (def.castWhileMoving covers baseline)
 }
 
 // Scale one effect's damage/heal magnitudes, returning a NEW effect object — the
@@ -3595,6 +3596,7 @@ function applyTalentMods(entry: KnownAbility, mods: TalentModifiers): void {
     if (am.costPct) entry.cost = Math.max(0, Math.round(entry.cost * (1 + am.costPct)));
     if (am.castPct) entry.castTime = Math.max(0, entry.castTime * (1 + am.castPct));
     if (am.cooldownPct) entry.cooldown = Math.max(0, entry.cooldown * (1 + am.cooldownPct));
+    if (am.castWhileMoving) entry.castWhileMoving = true;
     // buffPct strengthens the value of a (self/target) buff, e.g. Improved Devotion Aura
     // giving more armor. Only the buff effects scale; damage on the same ability does not.
     if (am.buffPct) {

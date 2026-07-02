@@ -153,6 +153,7 @@ export function mergeAugmentMods(base: TalentModifiers, augIds: string[]): Talen
           cooldownPct: 0,
           castPct: 0,
           buffPct: 0,
+          castWhileMoving: false,
         };
       }
       const cur = m.abilities[am.ability];
@@ -162,6 +163,7 @@ export function mergeAugmentMods(base: TalentModifiers, augIds: string[]): Talen
       cur.cooldownPct += am.cooldownPct ?? 0;
       cur.castPct += am.castPct ?? 0;
       cur.buffPct += am.buffPct ?? 0;
+      if (am.castWhileMoving) cur.castWhileMoving = true;
     }
     if (eff.grant) m.grants.push({ ability: eff.grant.ability, rank: eff.grant.rank ?? 1 });
   }
@@ -286,6 +288,7 @@ export function fiestaDownEntity(ctx: SimContext, e: Entity, killer: Entity | nu
   e.channeling = false;
   e.autoAttack = false;
   e.queuedOnSwing = null;
+  delete e.queuedOnSwingFree;
   e.comboPoints = 0;
   e.comboTargetId = null;
   e.eating = null;

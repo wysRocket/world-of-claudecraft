@@ -177,6 +177,9 @@ export type AuraKind =
   | 'cost_tax'
   | 'heal_absorb'
   | 'critvuln'
+  | 'next_cast_instant'
+  | 'next_cast_free'
+  | 'next_attack_crit'
   | 'buff_spi'
   // 2v2 Fiesta power-up buffs: `buff_scale` value = body-size multiplier (also
   // boosts max-hp when >1); `buff_jump` value = jump-height multiplier.
@@ -996,6 +999,7 @@ export type AbilityEffect =
       weaponMult?: number;
     } // instant special attack (sinister strike, overpower, backstab)
   | { type: 'directDamage'; min: number; max: number }
+  | { type: 'interrupt'; lockout: number }
   | { type: 'heal'; min: number; max: number } // friendly target (or self)
   | { type: 'hot'; total: number; duration: number; interval: number } // renew, rejuvenation
   | { type: 'absorb'; amount: number; duration: number } // power word: shield
@@ -1060,6 +1064,9 @@ export interface AbilityDef {
   class: PlayerClass;
   cost: number; // rage/mana/energy (rank 1; ranks may override)
   castTime: number; // 0 = instant
+  // A cast/channel with this flag survives the player's own movement (the
+  // move-input cancel skips it); talents can also grant it per-ability.
+  castWhileMoving?: boolean;
   channel?: { duration: number; ticks: number }; // arcane missiles
   cooldown: number; // seconds, 0 = none (GCD only)
   range: number; // yards; 0 = melee range
@@ -1363,6 +1370,7 @@ export interface Entity {
   gcdRemaining: number;
   cooldowns: Map<string, number>;
   queuedOnSwing: string | null; // heroic strike
+  queuedOnSwingFree?: boolean; // next_cast_free consumed at queue time
   fiveSecondRule: number; // time since last mana spend
   comboPoints: number;
   comboTargetId: number | null;
