@@ -5395,6 +5395,18 @@ export const de_DE: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Handschützer des Sturmrufers"
+      },
+      "crownforged_girdle": {
+        "name": "Kronengeschmiedeter Gürtel"
+      },
+      "nighttalon_waistband": {
+        "name": "Nachtklauengurt"
+      },
+      "soulflame_cord": {
+        "name": "Seelenflammenkordel"
+      },
+      "stormcallers_waistguard": {
+        "name": "Gürtelschutz des Sturmrufers"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const de_DE: EnTranslations = {
       },
       "necromancers": {
         "name": "Gewänder des Nekromanten",
-        "bonus2": "Verringert Zauberrückstoß durch Schaden um 50%.",
-        "bonus3": "Erlittener Schaden verzögert das Zauberwirken nicht."
+        "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
+        "bonus3": "Erhöht Intelligenz um 10 und Ausdauer um 10."
       },
       "nighttalon": {
         "name": "Nachtkrallen-Ledertracht",
@@ -6802,13 +6814,13 @@ export const de_DE: EnTranslations = {
       },
       "soulflame": {
         "name": "Seelenflammengewänder",
-        "bonus2": "Verringert Zauberrückstoß durch Schaden um 50%.",
-        "bonus3": "Erlittener Schaden verzögert das Zauberwirken nicht."
+        "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
+        "bonus3": "Erhöht Intelligenz um 15 und Willenskraft um 15."
       },
       "stormcallers": {
         "name": "Gewänder des Sturmrufers",
-        "bonus2": "Verringert Zauberrückstoß durch Schaden um 50%.",
-        "bonus3": "Erlittener Schaden verzögert das Zauberwirken nicht."
+        "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
+        "bonus3": "Erhöht Intelligenz um 15 und Willenskraft um 15."
       },
       "wyrmshadow": {
         "name": "Wyrmschattentracht",

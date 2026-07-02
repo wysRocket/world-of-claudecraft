@@ -445,6 +445,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -488,7 +490,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "pl_PL": [
     "desktop.crash.body",
@@ -500,6 +503,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -543,7 +548,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "id_ID": [
     "desktop.crash.body",
@@ -555,6 +561,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -598,7 +606,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "tr_TR": [
     "desktop.crash.body",
@@ -610,6 +619,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -653,7 +664,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "sv_SE": [
     "desktop.crash.body",
@@ -665,6 +677,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -708,7 +722,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "vi_VN": [
     "desktop.crash.body",
@@ -720,6 +735,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -763,7 +780,8 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ],
   "da_DK": [
     "desktop.crash.body",
@@ -775,6 +793,8 @@ export const pending: Record<string, readonly string[]> = {
     "desktop.update.later",
     "desktop.update.ready",
     "desktop.update.restart",
+    "entities.mobs.thunzharr_stormling.name",
+    "entities.mobs.thunzharr_waking_peak.name",
     "errors.api.desktopCodeInvalid",
     "hudChrome.dailyRewards.close",
     "hudChrome.dailyRewards.endsIn",
@@ -818,6 +838,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.nativeUpdate.bodyWithVersion",
     "hudChrome.nativeUpdate.notNow",
     "hudChrome.nativeUpdate.title",
-    "hudChrome.nativeUpdate.update"
+    "hudChrome.nativeUpdate.update",
+    "hudChrome.worldBoss.spawn"
   ]
 };

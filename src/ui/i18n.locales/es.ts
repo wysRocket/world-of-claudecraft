@@ -3418,6 +3418,10 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.items.nighttalon_grips.name': 'Agarraderas Garra Nocturna',
   'entities.items.soulflame_gloves.name': 'Guantes Llama de Alma',
   'entities.items.stormcallers_handguards.name': 'Guardamanos del Invocatormentas',
+  'entities.items.crownforged_girdle.name': 'Cinturón Forjacorona',
+  'entities.items.nighttalon_waistband.name': 'Faja Garra Nocturna',
+  'entities.items.soulflame_cord.name': 'Cordón Llama de Alma',
+  'entities.items.stormcallers_waistguard.name': 'Guardacintura del Invocatormentas',
   'entities.mobs.thunzharr_waking_peak.name': 'Thunzharr, el Pico Despierto',
   'entities.mobs.thunzharr_stormling.name': 'Elemental de tormenta despierto',
   'hudChrome.worldBoss.spawn': '¡{name} se alza sobre las Alturas de Thornpeak!',
@@ -4965,20 +4969,20 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.deathlord.bonus3': 'Aumenta la fuerza en 15 y el aguante en 15.',
   'entities.itemSets.necromancers.name': 'Vestiduras del nigromante',
   'entities.itemSets.necromancers.bonus2':
-    'Reduce un 50% el retroceso de lanzamiento causado por daño.',
-  'entities.itemSets.necromancers.bonus3': 'El daño recibido no retrasa tus lanzamientos.',
+    'No puedes ser empujado hacia atrás (100% de resistencia al empuje).',
+  'entities.itemSets.necromancers.bonus3': 'Aumenta el intelecto en 10 y el aguante en 10.',
   'entities.itemSets.nighttalon.name': 'Atuendo de cuero Garra Nocturna',
   'entities.itemSets.nighttalon.bonus2': 'Aumenta el poder de ataque en 40.',
   'entities.itemSets.nighttalon.bonus3':
     'Aumenta la agilidad en 15 y la probabilidad de crítico en 2%.',
   'entities.itemSets.soulflame.name': 'Vestiduras de Llama de Alma',
   'entities.itemSets.soulflame.bonus2':
-    'Reduce un 50% el retroceso de lanzamiento causado por daño.',
-  'entities.itemSets.soulflame.bonus3': 'El daño recibido no retrasa tus lanzamientos.',
+    'No puedes ser empujado hacia atrás (100% de resistencia al empuje).',
+  'entities.itemSets.soulflame.bonus3': 'Aumenta el intelecto en 15 y el espíritu en 15.',
   'entities.itemSets.stormcallers.name': 'Vestiduras del Invocatormentas',
   'entities.itemSets.stormcallers.bonus2':
-    'Reduce un 50% el retroceso de lanzamiento causado por daño.',
-  'entities.itemSets.stormcallers.bonus3': 'El daño recibido no retrasa tus lanzamientos.',
+    'No puedes ser empujado hacia atrás (100% de resistencia al empuje).',
+  'entities.itemSets.stormcallers.bonus3': 'Aumenta el intelecto en 15 y el espíritu en 15.',
   'entities.itemSets.wyrmshadow.name': 'Atuendo de Sombra de Vermis',
   'entities.itemSets.wyrmshadow.bonus2': 'Aumenta el poder de ataque en 40.',
   'entities.itemSets.wyrmshadow.bonus3':

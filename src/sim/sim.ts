@@ -1147,7 +1147,7 @@ export class Sim {
         } else if (boss.dead) {
           // Lootable corpse lingers WORLD_BOSS_CORPSE_SECONDS for contributors to
           // loot, then is removed; respawnTimer is Infinity (handleDeath) so the
-          // normal in-place respawn never fires — only this scheduler respawns it.
+          // normal in-place respawn never fires; only this scheduler respawns it.
           if (boss.corpseTimer <= 0) {
             for (const addId of boss.summonedIds) this.dropEntity(addId);
             this.dropEntity(liveId);

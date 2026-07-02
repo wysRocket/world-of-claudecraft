@@ -5395,6 +5395,18 @@ export const da_DK: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Stormkalderens Håndværn"
+      },
+      "crownforged_girdle": {
+        "name": "Kronesmedet Bælte"
+      },
+      "nighttalon_waistband": {
+        "name": "Natteklo-Livrem"
+      },
+      "soulflame_cord": {
+        "name": "Sjæleflamme-Snor"
+      },
+      "stormcallers_waistguard": {
+        "name": "Stormkalderens Livværn"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const da_DK: EnTranslations = {
       },
       "necromancers": {
         "name": "Nekromantikerens klæder",
-        "bonus2": "Reducerer kastetilbageslag fra skade med 50%.",
-        "bonus3": "Skade forsinker ikke dine besværgelser."
+        "bonus2": "Du kan ikke stødes tilbage (100% modstand mod tilbagestød).",
+        "bonus3": "Øger intellekt med 10 og udholdenhed med 10."
       },
       "nighttalon": {
         "name": "Natteklos læderudstyr",
@@ -6802,13 +6814,13 @@ export const da_DK: EnTranslations = {
       },
       "soulflame": {
         "name": "Sjæleflamme-klæder",
-        "bonus2": "Reducerer kastetilbageslag fra skade med 50%.",
-        "bonus3": "Skade forsinker ikke dine besværgelser."
+        "bonus2": "Du kan ikke stødes tilbage (100% modstand mod tilbagestød).",
+        "bonus3": "Øger intellekt med 15 og ånd med 15."
       },
       "stormcallers": {
         "name": "Stormkalderens klæder",
-        "bonus2": "Reducerer kastetilbageslag fra skade med 50%.",
-        "bonus3": "Skade forsinker ikke dine besværgelser."
+        "bonus2": "Du kan ikke stødes tilbage (100% modstand mod tilbagestød).",
+        "bonus3": "Øger intellekt med 15 og ånd med 15."
       },
       "wyrmshadow": {
         "name": "Wyrmskygge-udstyr",

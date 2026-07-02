@@ -5395,6 +5395,18 @@ export const pt_BR: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Protetores de mão do Chamatormenta"
+      },
+      "crownforged_girdle": {
+        "name": "Cinturão Forjacoroa"
+      },
+      "nighttalon_waistband": {
+        "name": "Cinta Garra Noturna"
+      },
+      "soulflame_cord": {
+        "name": "Cordão Chama d'Alma"
+      },
+      "stormcallers_waistguard": {
+        "name": "Guarda-cintura do Chamatormentas"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const pt_BR: EnTranslations = {
       },
       "necromancers": {
         "name": "Vestes do necromante",
-        "bonus2": "Reduz em 50% o atraso de conjuração causado por dano.",
-        "bonus3": "Dano recebido não atrasa suas conjurações."
+        "bonus2": "Você não pode ser repelido (100% de resistência a repulsão).",
+        "bonus3": "Aumenta o intelecto em 10 e o vigor em 10."
       },
       "nighttalon": {
         "name": "Traje de couro Garranoite",
@@ -6802,13 +6814,13 @@ export const pt_BR: EnTranslations = {
       },
       "soulflame": {
         "name": "Vestes de Chama da Alma",
-        "bonus2": "Reduz em 50% o atraso de conjuração causado por dano.",
-        "bonus3": "Dano recebido não atrasa suas conjurações."
+        "bonus2": "Você não pode ser repelido (100% de resistência a repulsão).",
+        "bonus3": "Aumenta o intelecto em 15 e o espírito em 15."
       },
       "stormcallers": {
         "name": "Vestes do Chamatormentas",
-        "bonus2": "Reduz em 50% o atraso de conjuração causado por dano.",
-        "bonus3": "Dano recebido não atrasa suas conjurações."
+        "bonus2": "Você não pode ser repelido (100% de resistência a repulsão).",
+        "bonus3": "Aumenta o intelecto em 15 e o espírito em 15."
       },
       "wyrmshadow": {
         "name": "Traje Sombraverme",

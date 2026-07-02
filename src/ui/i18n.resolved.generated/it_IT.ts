@@ -5395,6 +5395,18 @@ export const it_IT: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Paramani del Chiamatempeste"
+      },
+      "crownforged_girdle": {
+        "name": "Cintura Forgiacorona"
+      },
+      "nighttalon_waistband": {
+        "name": "Fascia Artiglio Notturno"
+      },
+      "soulflame_cord": {
+        "name": "Cordone Fiammanima"
+      },
+      "stormcallers_waistguard": {
+        "name": "Guardacintura del Chiamatempeste"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const it_IT: EnTranslations = {
       },
       "necromancers": {
         "name": "Vesti del negromante",
-        "bonus2": "Riduce del 50% il ritardo al lancio causato dai danni.",
-        "bonus3": "I danni subiti non ritardano il lancio degli incantesimi."
+        "bonus2": "Non puoi essere respinto (100% di resistenza alla respinta).",
+        "bonus3": "Aumenta l'intelletto di 10 e la tempra di 10."
       },
       "nighttalon": {
         "name": "Tenuta di cuoio Artiglio Notturno",
@@ -6802,13 +6814,13 @@ export const it_IT: EnTranslations = {
       },
       "soulflame": {
         "name": "Vesti Fiamma dell’Anima",
-        "bonus2": "Riduce del 50% il ritardo al lancio causato dai danni.",
-        "bonus3": "I danni subiti non ritardano il lancio degli incantesimi."
+        "bonus2": "Non puoi essere respinto (100% di resistenza alla respinta).",
+        "bonus3": "Aumenta l'intelletto di 15 e lo spirito di 15."
       },
       "stormcallers": {
         "name": "Vesti del Chiamatempeste",
-        "bonus2": "Riduce del 50% il ritardo al lancio causato dai danni.",
-        "bonus3": "I danni subiti non ritardano il lancio degli incantesimi."
+        "bonus2": "Non puoi essere respinto (100% di resistenza alla respinta).",
+        "bonus3": "Aumenta l'intelletto di 15 e lo spirito di 15."
       },
       "wyrmshadow": {
         "name": "Tenuta Ombra del Dragone",

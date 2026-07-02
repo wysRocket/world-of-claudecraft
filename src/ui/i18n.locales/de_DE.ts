@@ -3419,6 +3419,10 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.items.nighttalon_grips.name': 'Nachtklauengriffe',
   'entities.items.soulflame_gloves.name': 'Seelenflammenhandschuhe',
   'entities.items.stormcallers_handguards.name': 'Handschützer des Sturmrufers',
+  'entities.items.crownforged_girdle.name': 'Kronengeschmiedeter Gürtel',
+  'entities.items.nighttalon_waistband.name': 'Nachtklauengurt',
+  'entities.items.soulflame_cord.name': 'Seelenflammenkordel',
+  'entities.items.stormcallers_waistguard.name': 'Gürtelschutz des Sturmrufers',
   'entities.mobs.thunzharr_waking_peak.name': 'Thunzharr, der Erwachende Gipfel',
   'entities.mobs.thunzharr_stormling.name': 'Geweckter Sturmling',
   'hudChrome.worldBoss.spawn': '{name} erhebt sich über den Thornpeak-Höhen!',
@@ -4980,18 +4984,21 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.deathlord.bonus2': 'Erhöht Angriffskraft um 40.',
   'entities.itemSets.deathlord.bonus3': 'Erhöht Stärke um 15 und Ausdauer um 15.',
   'entities.itemSets.necromancers.name': 'Gewänder des Nekromanten',
-  'entities.itemSets.necromancers.bonus2': 'Verringert Zauberrückstoß durch Schaden um 50%.',
-  'entities.itemSets.necromancers.bonus3': 'Erlittener Schaden verzögert das Zauberwirken nicht.',
+  'entities.itemSets.necromancers.bonus2':
+    'Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).',
+  'entities.itemSets.necromancers.bonus3': 'Erhöht Intelligenz um 10 und Ausdauer um 10.',
   'entities.itemSets.nighttalon.name': 'Nachtkrallen-Ledertracht',
   'entities.itemSets.nighttalon.bonus2': 'Erhöht Angriffskraft um 40.',
   'entities.itemSets.nighttalon.bonus3':
     'Erhöht Beweglichkeit um 15 und kritische Trefferchance um 2%.',
   'entities.itemSets.soulflame.name': 'Seelenflammengewänder',
-  'entities.itemSets.soulflame.bonus2': 'Verringert Zauberrückstoß durch Schaden um 50%.',
-  'entities.itemSets.soulflame.bonus3': 'Erlittener Schaden verzögert das Zauberwirken nicht.',
+  'entities.itemSets.soulflame.bonus2':
+    'Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).',
+  'entities.itemSets.soulflame.bonus3': 'Erhöht Intelligenz um 15 und Willenskraft um 15.',
   'entities.itemSets.stormcallers.name': 'Gewänder des Sturmrufers',
-  'entities.itemSets.stormcallers.bonus2': 'Verringert Zauberrückstoß durch Schaden um 50%.',
-  'entities.itemSets.stormcallers.bonus3': 'Erlittener Schaden verzögert das Zauberwirken nicht.',
+  'entities.itemSets.stormcallers.bonus2':
+    'Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).',
+  'entities.itemSets.stormcallers.bonus3': 'Erhöht Intelligenz um 15 und Willenskraft um 15.',
   'entities.itemSets.wyrmshadow.name': 'Wyrmschattentracht',
   'entities.itemSets.wyrmshadow.bonus2': 'Erhöht Angriffskraft um 40.',
   'entities.itemSets.wyrmshadow.bonus3':

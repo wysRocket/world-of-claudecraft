@@ -325,7 +325,8 @@ interface BaseItemDef {
 // Item-set bonuses (classic "tier set" style). Flat effects fold into
 // recalcPlayerStats: primary stats feed the AP/crit/HP derivations, `ap`/`crit`
 // add at their derivation steps, and `castPushbackReduction` (0..1) scales the
-// damage-driven cast pushback in Sim.pushbackCast. Balance values are authored in
+// damage-driven cast pushback in combat/casting_lifecycle.ts. `knockbackResistance` (0..1)
+// scales on-hit knockback distance. Balance values are authored in
 // content/item_sets.ts, never inline in engine code.
 export interface SetBonusEffect {
   str?: number;
@@ -336,6 +337,7 @@ export interface SetBonusEffect {
   ap?: number; // flat attack power
   crit?: number; // flat crit chance, 0..1
   castPushbackReduction?: number; // 0..1: fraction of damage cast-pushback removed (1 = immune)
+  knockbackResistance?: number; // 0..1: fraction of on-hit knockback distance resisted (1 = immune)
 }
 
 export interface SetBonusTier {
@@ -1345,6 +1347,7 @@ export interface Entity {
   critChance: number; // 0..1
   dodgeChance: number;
   castPushbackReduction: number; // 0..1: damage cast-pushback removed by item-set bonuses (1 = immune)
+  knockbackResistance: number; // 0..1: on-hit knockback distance resisted by item-set bonuses (1 = immune)
   moveSpeed: number;
   hostile: boolean;
   // combat

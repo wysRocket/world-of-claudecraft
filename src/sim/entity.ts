@@ -37,6 +37,7 @@ function baseEntity(id: number, pos: Vec3): Entity {
     critChance: 0.05,
     dodgeChance: 0.05,
     castPushbackReduction: 0,
+    knockbackResistance: 0,
     moveSpeed: 7,
     hostile: false,
     targetId: null,
@@ -196,7 +197,7 @@ export function recalcPlayerStats(
   }
   // Item-set bonuses from equipped pieces. Flat primary stats join the gear
   // totals so they feed every derivation below; AP/crit/pushback fold in at
-  // their own steps (bonusAp, critChance, castPushbackReduction).
+  // their own steps (bonusAp, critChance, castPushbackReduction, knockbackResistance).
   const setEff = aggregateSetBonuses(setCounts);
   s.str += setEff.str;
   s.agi += setEff.agi;
@@ -312,6 +313,7 @@ export function recalcPlayerStats(
   // Crit: ~1% per 20 agi at low level
   e.critChance = 0.05 + s.agi * 0.0005 + (mods?.stats.crit ?? 0) + setEff.crit;
   e.castPushbackReduction = setEff.castPushbackReduction;
+  e.knockbackResistance = setEff.knockbackResistance;
   // Floored at 0: an off-balance debuff (negative buff_dodge) can drive dodge to nothing.
   e.dodgeChance = Math.max(0, 0.05 + s.agi * 0.0005 + bonusDodge);
 

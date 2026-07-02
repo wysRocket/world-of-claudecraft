@@ -5395,6 +5395,18 @@ export const en_CA: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Stormcaller's Handguards"
+      },
+      "crownforged_girdle": {
+        "name": "Crownforged Girdle"
+      },
+      "nighttalon_waistband": {
+        "name": "Nighttalon Waistband"
+      },
+      "soulflame_cord": {
+        "name": "Soulflame Cord"
+      },
+      "stormcallers_waistguard": {
+        "name": "Stormcaller's Waistguard"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const en_CA: EnTranslations = {
       },
       "necromancers": {
         "name": "Necromancer's Raiment",
-        "bonus2": "Reduces cast pushback from damage by 50%.",
-        "bonus3": "You cannot be pushed back while casting (immune to cast pushback from damage)."
+        "bonus2": "You cannot be knocked back (100% knockback resistance).",
+        "bonus3": "Increases Intellect by 10 and Stamina by 10."
       },
       "nighttalon": {
         "name": "Nighttalon Pelt",
@@ -6802,13 +6814,13 @@ export const en_CA: EnTranslations = {
       },
       "soulflame": {
         "name": "Soulflame Regalia",
-        "bonus2": "Reduces cast pushback from damage by 50%.",
-        "bonus3": "You cannot be pushed back while casting (immune to cast pushback from damage)."
+        "bonus2": "You cannot be knocked back (100% knockback resistance).",
+        "bonus3": "Increases Intellect by 15 and Spirit by 15."
       },
       "stormcallers": {
         "name": "Stormcaller's Vestments",
-        "bonus2": "Reduces cast pushback from damage by 50%.",
-        "bonus3": "You cannot be pushed back while casting (immune to cast pushback from damage)."
+        "bonus2": "You cannot be knocked back (100% knockback resistance).",
+        "bonus3": "Increases Intellect by 15 and Spirit by 15."
       },
       "wyrmshadow": {
         "name": "Wyrmshadow Vestments",

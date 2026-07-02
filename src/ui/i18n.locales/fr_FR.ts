@@ -3434,6 +3434,10 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.items.nighttalon_grips.name': 'Poignes Serre-de-nuit',
   'entities.items.soulflame_gloves.name': "Gants Flamme-d'âme",
   'entities.items.stormcallers_handguards.name': "Protège-mains d'Appel-tempête",
+  'entities.items.crownforged_girdle.name': 'Ceinturon Forgécouronne',
+  'entities.items.nighttalon_waistband.name': 'Ceinture Serre-de-nuit',
+  'entities.items.soulflame_cord.name': "Corde Flamme-d'âme",
+  'entities.items.stormcallers_waistguard.name': "Protège-taille d'Appel-tempête",
   'entities.mobs.thunzharr_waking_peak.name': 'Thunzharr, le Pic Éveillé',
   'entities.mobs.thunzharr_stormling.name': 'Élémentaire de tempête éveillé',
   'hudChrome.worldBoss.spawn': '{name} se dresse sur les Hauteurs de Thornpeak !',
@@ -4996,20 +5000,20 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.deathlord.bonus3': "Augmente la force de 15 et l'endurance de 15.",
   'entities.itemSets.necromancers.name': 'Robe du nécromancien',
   'entities.itemSets.necromancers.bonus2':
-    'Réduit de 50% le recul des incantations causé par les dégâts.',
-  'entities.itemSets.necromancers.bonus3': "Les dégâts subis ne retardent pas l'incantation.",
+    'Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).',
+  'entities.itemSets.necromancers.bonus3': "Augmente l'intelligence de 10 et l'endurance de 10.",
   'entities.itemSets.nighttalon.name': 'Tenue de cuir Serre-nuit',
   'entities.itemSets.nighttalon.bonus2': "Augmente la puissance d'attaque de 40.",
   'entities.itemSets.nighttalon.bonus3':
     'Augmente l’agilité de 15 et les chances de critique de 2%.',
   'entities.itemSets.soulflame.name': 'Robe de Flamme d’âme',
   'entities.itemSets.soulflame.bonus2':
-    'Réduit de 50% le recul des incantations causé par les dégâts.',
-  'entities.itemSets.soulflame.bonus3': "Les dégâts subis ne retardent pas l'incantation.",
+    'Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).',
+  'entities.itemSets.soulflame.bonus3': "Augmente l'intelligence de 15 et l'esprit de 15.",
   'entities.itemSets.stormcallers.name': 'Robe de l’Appel-tempête',
   'entities.itemSets.stormcallers.bonus2':
-    'Réduit de 50% le recul des incantations causé par les dégâts.',
-  'entities.itemSets.stormcallers.bonus3': "Les dégâts subis ne retardent pas l'incantation.",
+    'Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).',
+  'entities.itemSets.stormcallers.bonus3': "Augmente l'intelligence de 15 et l'esprit de 15.",
   'entities.itemSets.wyrmshadow.name': 'Tenue d’Ombre-drake',
   'entities.itemSets.wyrmshadow.bonus2': "Augmente la puissance d'attaque de 40.",
   'entities.itemSets.wyrmshadow.bonus3':

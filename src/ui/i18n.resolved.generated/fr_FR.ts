@@ -5395,6 +5395,18 @@ export const fr_FR: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Protège-mains d'Appel-tempête"
+      },
+      "crownforged_girdle": {
+        "name": "Ceinturon Forgécouronne"
+      },
+      "nighttalon_waistband": {
+        "name": "Ceinture Serre-de-nuit"
+      },
+      "soulflame_cord": {
+        "name": "Corde Flamme-d'âme"
+      },
+      "stormcallers_waistguard": {
+        "name": "Protège-taille d'Appel-tempête"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const fr_FR: EnTranslations = {
       },
       "necromancers": {
         "name": "Robe du nécromancien",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 10 et l'endurance de 10."
       },
       "nighttalon": {
         "name": "Tenue de cuir Serre-nuit",
@@ -6802,13 +6814,13 @@ export const fr_FR: EnTranslations = {
       },
       "soulflame": {
         "name": "Robe de Flamme d’âme",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 15 et l'esprit de 15."
       },
       "stormcallers": {
         "name": "Robe de l’Appel-tempête",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 15 et l'esprit de 15."
       },
       "wyrmshadow": {
         "name": "Tenue d’Ombre-drake",

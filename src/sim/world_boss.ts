@@ -9,7 +9,7 @@
 // drives this module each tick; the loot roller is reached through the SimContext
 // seam (ctx.rollWorldBossLoot), exactly like ctx.rollLoot.
 //
-// Determinism (this is sim-core): no Math.random/Date.now — randomness is ctx.rng
+// Determinism (this is sim-core): no Math.random/Date.now, randomness is ctx.rng
 // only, and the daily boundary is the host-injected ctx.utcDay string (empty in
 // headless/replay, so the gate never rolls over and same-seed runs reproduce). The
 // personal-loot roller draws rng in a FIXED order (contributors sorted by entityId,

@@ -550,7 +550,7 @@ export function handleDeath(ctx: SimContext, e: Entity, killer: Entity | null): 
     e.respawnTimer = ctx.cfg.respawnSeconds * (template?.respawnMult ?? (template?.rare ? 4 : 1));
     // World bosses: snapshot the contributor set from the hate table BEFORE it is
     // cleared below, keep a long lootable-corpse window so every contributor can
-    // loot, and never auto-respawn in place — the world-boss scheduler is the sole
+    // loot, and never auto-respawn in place: the world-boss scheduler is the sole
     // respawner (it drops the corpse + stormlings once the window elapses).
     const worldBossContribs = template?.worldBoss ? worldBossContributors(ctx, e) : null;
     if (template?.worldBoss) {

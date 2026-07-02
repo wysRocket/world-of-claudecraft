@@ -3482,6 +3482,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.items.nighttalon_grips.name': 'Захваты Ночного Когтя',
   'entities.items.soulflame_gloves.name': 'Перчатки Пламени души',
   'entities.items.stormcallers_handguards.name': 'Рукавицы призывателя бурь',
+  'entities.items.crownforged_girdle.name': 'Короннокованый пояс',
+  'entities.items.nighttalon_waistband.name': 'Кушак Ночного Когтя',
+  'entities.items.soulflame_cord.name': 'Шнур Пламени души',
+  'entities.items.stormcallers_waistguard.name': 'Поясная защита призывателя бурь',
   'entities.mobs.thunzharr_waking_peak.name': 'Тунзарр, Пробуждающийся пик',
   'entities.mobs.thunzharr_stormling.name': 'Пробуждённый элементаль бури',
   'hudChrome.worldBoss.spawn': '{name} поднимается над Терновыми высотами!',
@@ -4949,22 +4953,20 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.deathlord.bonus3': 'Сила повышается на 15, выносливость на 15.',
   'entities.itemSets.necromancers.name': 'Одеяние некроманта',
   'entities.itemSets.necromancers.bonus2':
-    'Задержка произнесения от полученного урона снижена на 50%.',
-  'entities.itemSets.necromancers.bonus3':
-    'Полученный урон не задерживает произнесение заклинаний.',
+    'Вас невозможно отбросить (100% сопротивление отбрасыванию).',
+  'entities.itemSets.necromancers.bonus3': 'Интеллект повышается на 10, выносливость на 10.',
   'entities.itemSets.nighttalon.name': 'Кожаный доспех Ночного Когтя',
   'entities.itemSets.nighttalon.bonus2': 'Сила атаки повышается на 40.',
   'entities.itemSets.nighttalon.bonus3':
     'Ловкость повышается на 15, вероятность критического удара на 2%.',
   'entities.itemSets.soulflame.name': 'Одеяние Пламени Души',
   'entities.itemSets.soulflame.bonus2':
-    'Задержка произнесения от полученного урона снижена на 50%.',
-  'entities.itemSets.soulflame.bonus3': 'Полученный урон не задерживает произнесение заклинаний.',
+    'Вас невозможно отбросить (100% сопротивление отбрасыванию).',
+  'entities.itemSets.soulflame.bonus3': 'Интеллект повышается на 15, дух на 15.',
   'entities.itemSets.stormcallers.name': 'Одеяние Зовущего Бурю',
   'entities.itemSets.stormcallers.bonus2':
-    'Задержка произнесения от полученного урона снижена на 50%.',
-  'entities.itemSets.stormcallers.bonus3':
-    'Полученный урон не задерживает произнесение заклинаний.',
+    'Вас невозможно отбросить (100% сопротивление отбрасыванию).',
+  'entities.itemSets.stormcallers.bonus3': 'Интеллект повышается на 15, дух на 15.',
   'entities.itemSets.wyrmshadow.name': 'Облачение Тени Дракона',
   'entities.itemSets.wyrmshadow.bonus2': 'Сила атаки повышается на 40.',
   'entities.itemSets.wyrmshadow.bonus3':

@@ -5395,6 +5395,18 @@ export const vi_VN: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Hộ Thủ của Triệu Bão Sư"
+      },
+      "crownforged_girdle": {
+        "name": "Đai Lưng Rèn Vương Miện"
+      },
+      "nighttalon_waistband": {
+        "name": "Đai Lưng Dạ Trảo"
+      },
+      "soulflame_cord": {
+        "name": "Dây Lưng Hồn Hỏa"
+      },
+      "stormcallers_waistguard": {
+        "name": "Hộ Yêu của Triệu Bão Sư"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const vi_VN: EnTranslations = {
       },
       "necromancers": {
         "name": "Áo choàng pháp sư gọi hồn",
-        "bonus2": "Giảm 50% độ lùi khi niệm phép do sát thương.",
-        "bonus3": "Sát thương nhận vào không làm chậm niệm phép."
+        "bonus2": "Bạn không thể bị đẩy lùi (kháng đẩy lùi 100%).",
+        "bonus3": "Tăng trí tuệ thêm 10 và thể lực thêm 10."
       },
       "nighttalon": {
         "name": "Bộ da Móng Đêm",
@@ -6802,13 +6814,13 @@ export const vi_VN: EnTranslations = {
       },
       "soulflame": {
         "name": "Áo choàng Lửa Linh Hồn",
-        "bonus2": "Giảm 50% độ lùi khi niệm phép do sát thương.",
-        "bonus3": "Sát thương nhận vào không làm chậm niệm phép."
+        "bonus2": "Bạn không thể bị đẩy lùi (kháng đẩy lùi 100%).",
+        "bonus3": "Tăng trí tuệ thêm 15 và tinh thần thêm 15."
       },
       "stormcallers": {
         "name": "Áo choàng Gọi Bão",
-        "bonus2": "Giảm 50% độ lùi khi niệm phép do sát thương.",
-        "bonus3": "Sát thương nhận vào không làm chậm niệm phép."
+        "bonus2": "Bạn không thể bị đẩy lùi (kháng đẩy lùi 100%).",
+        "bonus3": "Tăng trí tuệ thêm 15 và tinh thần thêm 15."
       },
       "wyrmshadow": {
         "name": "Bộ Bóng Wyrm",

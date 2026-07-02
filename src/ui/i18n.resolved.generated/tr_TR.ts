@@ -5395,6 +5395,18 @@ export const tr_TR: EnTranslations = {
       },
       "stormcallers_handguards": {
         "name": "Fırtınaçağıranın El Koruyucuları"
+      },
+      "crownforged_girdle": {
+        "name": "Taçdövme Kemeri"
+      },
+      "nighttalon_waistband": {
+        "name": "Gecepençe Kuşağı"
+      },
+      "soulflame_cord": {
+        "name": "Ruhalevi Kordonu"
+      },
+      "stormcallers_waistguard": {
+        "name": "Fırtınaçağıranın Bel Koruyucusu"
       }
     },
     "mobs": {
@@ -6792,8 +6804,8 @@ export const tr_TR: EnTranslations = {
       },
       "necromancers": {
         "name": "Nekromansır giysileri",
-        "bonus2": "Hasarın neden olduğu büyü geri itmesini %50 azaltır.",
-        "bonus3": "Alınan hasar büyü yapmanı geciktirmez."
+        "bonus2": "Geri itilemezsin (%100 geri itilme direnci).",
+        "bonus3": "Zekayı 10 ve dayanıklılığı 10 artırır."
       },
       "nighttalon": {
         "name": "Gece Pençesi deri takımı",
@@ -6802,13 +6814,13 @@ export const tr_TR: EnTranslations = {
       },
       "soulflame": {
         "name": "Ruh Alevi giysileri",
-        "bonus2": "Hasarın neden olduğu büyü geri itmesini %50 azaltır.",
-        "bonus3": "Alınan hasar büyü yapmanı geciktirmez."
+        "bonus2": "Geri itilemezsin (%100 geri itilme direnci).",
+        "bonus3": "Zekayı 15 ve ruhu 15 artırır."
       },
       "stormcallers": {
         "name": "Fırtına Çağıran giysileri",
-        "bonus2": "Hasarın neden olduğu büyü geri itmesini %50 azaltır.",
-        "bonus3": "Alınan hasar büyü yapmanı geciktirmez."
+        "bonus2": "Geri itilemezsin (%100 geri itilme direnci).",
+        "bonus3": "Zekayı 15 ve ruhu 15 artırır."
       },
       "wyrmshadow": {
         "name": "Wyrm Gölgesi takımı",
