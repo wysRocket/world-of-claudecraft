@@ -5093,4 +5093,68 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.help.label': 'Butuh Bantuan',
   'hudChrome.discord.relay.help.hint': 'Minta bantuan dari komunitas',
   'hudChrome.options.showSecondaryActionBar': 'Tampilkan Bilah Aksi Sekunder',
+  'errors.api.desktopCodeInvalid':
+    'Kode masuk desktop tidak valid atau kedaluwarsa. Silakan coba lagi.',
+  'desktop.crash.body': 'Tampilan gim berhenti bekerja. Muat ulang?',
+  'desktop.crash.fatalBody':
+    'World of ClaudeCraft mengalami kesalahan tak terduga dan perlu ditutup.',
+  'desktop.crash.quit': 'Keluar',
+  'desktop.crash.reload': 'Muat Ulang',
+  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.update.downloading': 'Mengunduh pembaruan {version}...',
+  'desktop.update.later': 'Nanti',
+  'desktop.update.ready':
+    'Pembaruan {version} siap. Akan terpasang saat kamu keluar, atau mulai ulang sekarang.',
+  'desktop.update.restart': 'Mulai Ulang Sekarang',
+  'hudChrome.dailyRewards.close': 'Tutup hadiah harian',
+  'hudChrome.dailyRewards.endsIn': 'Berakhir dalam {time}',
+  'hudChrome.dailyRewards.error': 'Tidak dapat memuat hadiah harian.',
+  'hudChrome.dailyRewards.history': 'Pemenang Sebelumnya',
+  'hudChrome.dailyRewards.intro':
+    'Simpan cukup WOC di dompet terverifikasimu untuk membuka hadiah harian. Kumpulkan poin lewat satu putaran harian dan tugas yang bergilir, lalu naiki papan peringkat harian untuk mendapat bagian dari kolam hadiah.',
+  'hudChrome.dailyRewards.leaderboard': 'Papan Peringkat Harian',
+  'hudChrome.dailyRewards.loading': 'Memuat hadiah harian...',
+  'hudChrome.dailyRewards.noHistory': 'Belum ada pembayaran.',
+  'hudChrome.dailyRewards.noLeaders': 'Belum ada poin.',
+  'hudChrome.dailyRewards.prize': 'Kolam Hadiah',
+  'hudChrome.dailyRewards.reason.eligible': 'Hadiah terbuka.',
+  'hudChrome.dailyRewards.reason.no_wallet':
+    'Hubungkan dompet dengan setidaknya $20 USD dalam WOC.',
+  'hudChrome.dailyRewards.reason.price_unavailable':
+    'Harga WOC tidak tersedia, hadiah terkunci sementara.',
+  'hudChrome.dailyRewards.reason.under_minimum': 'Dompet di bawah batas minimum $20 USD WOC.',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}j {minutes}m',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1m',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}m',
+  'hudChrome.dailyRewards.reset': 'Atur Ulang',
+  'hudChrome.dailyRewards.score': 'Skor',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.spinButton': 'Putar',
+  'hudChrome.dailyRewards.spinClaimed': 'Diklaim: +{points} poin.',
+  'hudChrome.dailyRewards.spinClose': 'Tutup putaran harian',
+  'hudChrome.dailyRewards.spinDialogTitle': 'Putaran Hadiah Harian',
+  'hudChrome.dailyRewards.spinReady': 'Satu putaran siap.',
+  'hudChrome.dailyRewards.spinResult': '+{points} poin',
+  'hudChrome.dailyRewards.spinTitle': 'Putaran Harian',
+  'hudChrome.dailyRewards.tasks': 'Tugas',
+  'hudChrome.dailyRewards.title': 'Hadiah Harian',
+  'hudChrome.dailyRewards.unknown': 'Tidak diketahui',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
+  'hudChrome.dailyRewards.walletConnectBody':
+    'Verifikasi dompet Solana berisi WOC untuk membuka hadiah harian.',
+  'hudChrome.dailyRewards.walletConnectButton': 'Verifikasi Dompet',
+  'hudChrome.dailyRewards.walletConnectTitle': 'Verifikasi Dompet',
+  'hudChrome.dailyRewards.walletHoldBody':
+    'Simpan minimal {amount} USD dalam WOC untuk membuka hadiah harian.',
+  'hudChrome.dailyRewards.walletHoldTitle': 'Simpan WOC',
+  'hudChrome.dailyRewards.walletPriceBody':
+    'Harga WOC tidak tersedia saat ini. Silakan cek kembali sebentar lagi.',
+  'hudChrome.dailyRewards.walletValue': 'Nilai Dompet (WOC)',
+  'hudChrome.nativeUpdate.body':
+    'Versi baru World of ClaudeCraft tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
+  'hudChrome.nativeUpdate.bodyWithVersion':
+    'Versi {version} World of ClaudeCraft tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
+  'hudChrome.nativeUpdate.notNow': 'Jangan sekarang',
+  'hudChrome.nativeUpdate.title': 'Pembaruan Tersedia',
+  'hudChrome.nativeUpdate.update': 'Perbarui',
 };

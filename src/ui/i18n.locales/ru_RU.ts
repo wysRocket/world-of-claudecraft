@@ -5140,4 +5140,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.quit': 'Выйти',
   'desktop.crash.fatalBody':
     'World of ClaudeCraft столкнулась с непредвиденной ошибкой и будет закрыта.',
+  'hudChrome.dailyRewards.endsIn': 'Осталось {time}',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}ч {minutes}м',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1м',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}м',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

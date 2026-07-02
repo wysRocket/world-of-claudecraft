@@ -5039,4 +5039,10 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '다시 불러오기',
   'desktop.crash.quit': '종료',
   'desktop.crash.fatalBody': 'World of ClaudeCraft에 예기치 않은 오류가 발생하여 종료해야 합니다.',
+  'hudChrome.dailyRewards.endsIn': '{time} 후 종료',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}시간 {minutes}분',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '1분 미만',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}분',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

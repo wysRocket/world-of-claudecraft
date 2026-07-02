@@ -4777,4 +4777,10 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '重新加载',
   'desktop.crash.quit': '退出',
   'desktop.crash.fatalBody': 'World of ClaudeCraft 遇到意外错误，需要关闭。',
+  'hudChrome.dailyRewards.endsIn': '{time}后结束',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}小时{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1分',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

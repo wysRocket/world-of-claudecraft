@@ -5032,4 +5032,10 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '再読み込み',
   'desktop.crash.quit': '終了',
   'desktop.crash.fatalBody': 'World of ClaudeCraft で予期しないエラーが発生したため、終了します。',
+  'hudChrome.dailyRewards.endsIn': '終了まで{time}',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}時間{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '1分未満',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

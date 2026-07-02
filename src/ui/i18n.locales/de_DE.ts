@@ -5143,4 +5143,68 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.help.label': 'Hilfe benötigt',
   'hudChrome.discord.relay.help.hint': 'Bitte die Gemeinschaft um Hilfe',
   'hudChrome.options.showSecondaryActionBar': 'Zweite Aktionsleiste anzeigen',
+  'errors.api.desktopCodeInvalid':
+    'Der Desktop-Anmeldecode ist ungültig oder abgelaufen. Bitte versuche es erneut.',
+  'desktop.crash.body': 'Die Spielansicht funktioniert nicht mehr. Neu laden?',
+  'desktop.crash.fatalBody':
+    'World of ClaudeCraft ist auf einen unerwarteten Fehler gestoßen und muss geschlossen werden.',
+  'desktop.crash.quit': 'Beenden',
+  'desktop.crash.reload': 'Neu laden',
+  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.update.downloading': 'Update {version} wird heruntergeladen...',
+  'desktop.update.later': 'Später',
+  'desktop.update.ready':
+    'Update {version} ist bereit. Es wird beim Beenden installiert, oder starte jetzt neu.',
+  'desktop.update.restart': 'Jetzt neu starten',
+  'hudChrome.dailyRewards.close': 'Tägliche Belohnungen schließen',
+  'hudChrome.dailyRewards.endsIn': 'Endet in {time}',
+  'hudChrome.dailyRewards.error': 'Tägliche Belohnungen konnten nicht geladen werden.',
+  'hudChrome.dailyRewards.history': 'Bisherige Gewinner',
+  'hudChrome.dailyRewards.intro':
+    'Halte genügend WOC in deiner verifizierten Wallet, um tägliche Belohnungen freizuschalten. Verdiene Punkte mit einem täglichen Dreh und wechselnden Aufgaben und klettere dann in der täglichen Rangliste nach oben, um einen Anteil am Preispool zu erhalten.',
+  'hudChrome.dailyRewards.leaderboard': 'Tägliche Rangliste',
+  'hudChrome.dailyRewards.loading': 'Tägliche Belohnungen werden geladen...',
+  'hudChrome.dailyRewards.noHistory': 'Noch keine Auszahlungen.',
+  'hudChrome.dailyRewards.noLeaders': 'Noch keine Punkte.',
+  'hudChrome.dailyRewards.prize': 'Preispool',
+  'hudChrome.dailyRewards.reason.eligible': 'Belohnungen freigeschaltet.',
+  'hudChrome.dailyRewards.reason.no_wallet': 'Verbinde eine Wallet mit mindestens 20 USD in WOC.',
+  'hudChrome.dailyRewards.reason.price_unavailable':
+    'Der WOC-Preis ist nicht verfügbar, Belohnungen sind vorübergehend gesperrt.',
+  'hudChrome.dailyRewards.reason.under_minimum':
+    'Deine Wallet liegt unter dem Mindestwert von 20 USD in WOC.',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}Std {minutes}Min',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1Min',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}Min',
+  'hudChrome.dailyRewards.reset': 'Zurücksetzen',
+  'hudChrome.dailyRewards.score': 'Punktzahl',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.spinButton': 'Drehen',
+  'hudChrome.dailyRewards.spinClaimed': 'Erhalten: +{points} Punkte.',
+  'hudChrome.dailyRewards.spinClose': 'Täglichen Dreh schließen',
+  'hudChrome.dailyRewards.spinDialogTitle': 'Täglicher Belohnungsdreh',
+  'hudChrome.dailyRewards.spinReady': 'Ein Dreh ist bereit.',
+  'hudChrome.dailyRewards.spinResult': '+{points} Punkte',
+  'hudChrome.dailyRewards.spinTitle': 'Täglicher Dreh',
+  'hudChrome.dailyRewards.tasks': 'Aufgaben',
+  'hudChrome.dailyRewards.title': 'Tägliche Belohnungen',
+  'hudChrome.dailyRewards.unknown': 'Unbekannt',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
+  'hudChrome.dailyRewards.walletConnectBody':
+    'Verifiziere eine Solana-Wallet mit WOC, um tägliche Belohnungen freizuschalten.',
+  'hudChrome.dailyRewards.walletConnectButton': 'Wallet verifizieren',
+  'hudChrome.dailyRewards.walletConnectTitle': 'Wallet verifizieren',
+  'hudChrome.dailyRewards.walletHoldBody':
+    'Halte mindestens {amount} USD in WOC, um tägliche Belohnungen freizuschalten.',
+  'hudChrome.dailyRewards.walletHoldTitle': 'WOC halten',
+  'hudChrome.dailyRewards.walletPriceBody':
+    'Der WOC-Preis ist derzeit nicht verfügbar. Schau bald wieder vorbei.',
+  'hudChrome.dailyRewards.walletValue': 'Wallet-Wert (WOC)',
+  'hudChrome.nativeUpdate.body':
+    'Eine neue Version von World of ClaudeCraft ist verfügbar. Aktualisiere jetzt für die neuesten Fehlerbehebungen und Verbesserungen.',
+  'hudChrome.nativeUpdate.bodyWithVersion':
+    'Version {version} von World of ClaudeCraft ist verfügbar. Aktualisiere jetzt für die neuesten Fehlerbehebungen und Verbesserungen.',
+  'hudChrome.nativeUpdate.notNow': 'Jetzt nicht',
+  'hudChrome.nativeUpdate.title': 'Update verfügbar',
+  'hudChrome.nativeUpdate.update': 'Aktualisieren',
 };

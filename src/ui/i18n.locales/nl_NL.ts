@@ -5085,4 +5085,69 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.help.label': 'Hulp nodig',
   'hudChrome.discord.relay.help.hint': 'Vraag de gemeenschap om hulp',
   'hudChrome.options.showSecondaryActionBar': 'Secundaire actiebalk tonen',
+  'errors.api.desktopCodeInvalid':
+    'Desktop-inlogcode is ongeldig of verlopen. Probeer het opnieuw.',
+  'desktop.crash.body': 'De spelweergave werkt niet meer. Opnieuw laden?',
+  'desktop.crash.fatalBody':
+    'World of ClaudeCraft is op een onverwachte fout gestuit en moet worden afgesloten.',
+  'desktop.crash.quit': 'Afsluiten',
+  'desktop.crash.reload': 'Opnieuw laden',
+  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.update.downloading': 'Update {version} wordt gedownload...',
+  'desktop.update.later': 'Later',
+  'desktop.update.ready':
+    'Update {version} is klaar. Deze wordt geïnstalleerd wanneer je afsluit, of herstart nu.',
+  'desktop.update.restart': 'Nu herstarten',
+  'hudChrome.dailyRewards.close': 'Dagelijkse beloningen sluiten',
+  'hudChrome.dailyRewards.endsIn': 'Eindigt over {time}',
+  'hudChrome.dailyRewards.error': 'Kon de dagelijkse beloningen niet laden.',
+  'hudChrome.dailyRewards.history': 'Eerdere winnaars',
+  'hudChrome.dailyRewards.intro':
+    'Houd genoeg WOC in je geverifieerde portemonnee om dagelijkse beloningen te ontgrendelen. Verdien punten met één dagelijkse draai en wisselende taken, en klim daarna op in de dagelijkse ranglijst voor een deel van de prijzenpot.',
+  'hudChrome.dailyRewards.leaderboard': 'Dagelijkse ranglijst',
+  'hudChrome.dailyRewards.loading': 'Dagelijkse beloningen worden geladen...',
+  'hudChrome.dailyRewards.noHistory': 'Nog geen uitbetalingen.',
+  'hudChrome.dailyRewards.noLeaders': 'Nog geen punten.',
+  'hudChrome.dailyRewards.prize': 'Prijzenpot',
+  'hudChrome.dailyRewards.reason.eligible': 'Beloningen ontgrendeld.',
+  'hudChrome.dailyRewards.reason.no_wallet':
+    'Verbind een portemonnee met minstens $20 USD aan WOC.',
+  'hudChrome.dailyRewards.reason.price_unavailable':
+    'WOC-prijs is niet beschikbaar, beloningen zijn tijdelijk vergrendeld.',
+  'hudChrome.dailyRewards.reason.under_minimum':
+    'Portemonnee ligt onder het WOC-minimum van $20 USD.',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours} u {minutes} min',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1 min',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes} min',
+  'hudChrome.dailyRewards.reset': 'Reset',
+  'hudChrome.dailyRewards.score': 'Score',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.spinButton': 'Draaien',
+  'hudChrome.dailyRewards.spinClaimed': 'Geclaimd: +{points} punten.',
+  'hudChrome.dailyRewards.spinClose': 'Dagelijkse draai sluiten',
+  'hudChrome.dailyRewards.spinDialogTitle': 'Dagelijkse beloningsdraai',
+  'hudChrome.dailyRewards.spinReady': 'Eén draai staat klaar.',
+  'hudChrome.dailyRewards.spinResult': '+{points} punten',
+  'hudChrome.dailyRewards.spinTitle': 'Dagelijkse draai',
+  'hudChrome.dailyRewards.tasks': 'Taken',
+  'hudChrome.dailyRewards.title': 'Dagelijkse beloningen',
+  'hudChrome.dailyRewards.unknown': 'Onbekend',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
+  'hudChrome.dailyRewards.walletConnectBody':
+    'Verifieer een Solana-portemonnee met WOC om dagelijkse beloningen te ontgrendelen.',
+  'hudChrome.dailyRewards.walletConnectButton': 'Portemonnee verifiëren',
+  'hudChrome.dailyRewards.walletConnectTitle': 'Portemonnee verifiëren',
+  'hudChrome.dailyRewards.walletHoldBody':
+    'Houd minstens {amount} USD aan WOC om dagelijkse beloningen te ontgrendelen.',
+  'hudChrome.dailyRewards.walletHoldTitle': 'WOC aanhouden',
+  'hudChrome.dailyRewards.walletPriceBody':
+    'WOC-prijzen zijn momenteel niet beschikbaar. Kom binnenkort terug.',
+  'hudChrome.dailyRewards.walletValue': 'Portemonneewaarde (WOC)',
+  'hudChrome.nativeUpdate.body':
+    'Er is een nieuwe versie van World of ClaudeCraft beschikbaar. Werk nu bij voor de nieuwste oplossingen en verbeteringen.',
+  'hudChrome.nativeUpdate.bodyWithVersion':
+    'Versie {version} van World of ClaudeCraft is beschikbaar. Werk nu bij voor de nieuwste oplossingen en verbeteringen.',
+  'hudChrome.nativeUpdate.notNow': 'Niet nu',
+  'hudChrome.nativeUpdate.title': 'Update beschikbaar',
+  'hudChrome.nativeUpdate.update': 'Bijwerken',
 };

@@ -4777,4 +4777,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '重新載入',
   'desktop.crash.quit': '離開',
   'desktop.crash.fatalBody': 'World of ClaudeCraft 發生未預期的錯誤，必須關閉。',
+  'hudChrome.dailyRewards.endsIn': '{time}後結束',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}小時{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1分',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };
