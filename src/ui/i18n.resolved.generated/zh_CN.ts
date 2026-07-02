@@ -3694,7 +3694,7 @@ export const zh_CN: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "烈焰风暴",
-        "description": "在目标区域召唤一片烈焰，灼烧其中的敌人，造成 {damage} 点火焰伤害。"
+        "description": "在目标区域召唤一次烈焰爆发，对爆炸范围内的敌人造成 {damage} 点火焰伤害。"
       },
       "rain_of_fire": {
         "name": "烈火之雨",

@@ -1704,7 +1704,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     'Scuote la zona bersaglio, colpendo i nemici per {damage} danni della Natura.',
   'entities.abilities.flamestrike.name': 'Ondata di Fiamme',
   'entities.abilities.flamestrike.description':
-    'Evoca fiamme sulla zona bersaglio, bruciando i nemici e infliggendo {damage} danni da Fuoco.',
+    "Evoca un'esplosione di fiamme sulla zona bersaglio, infliggendo {damage} danni da Fuoco ai nemici investiti dalla deflagrazione.",
   'entities.abilities.fireball.description':
     'Scaglia una palla infuocata che infligge {damage} danni da Fuoco più danni aggiuntivi nel tempo.',
   'entities.abilities.frost_armor.name': 'Armatura Gelida',

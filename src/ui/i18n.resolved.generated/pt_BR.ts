@@ -3694,7 +3694,7 @@ export const pt_BR: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Golpe Flamejante",
-        "description": "Invoca uma área de chamas no local-alvo, queimando os inimigos e causando {damage} de dano de Fogo."
+        "description": "Invoca uma explosão de chamas no local-alvo, causando {damage} de dano de Fogo aos inimigos atingidos pela explosão."
       },
       "rain_of_fire": {
         "name": "Chuva de Fogo",

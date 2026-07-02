@@ -579,7 +579,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Wstrząsa wybranym obszarem, smagając wrogów i zadając {damage} obrażeń od sił natury.',
   'entities.abilities.flamestrike.name': 'Ognista nawała',
   'entities.abilities.flamestrike.description':
-    'Sprowadza płomienie na wybrany obszar, paląc wrogów i zadając {damage} obrażeń od ognia.',
+    'Sprowadza wybuch płomieni na wybrany obszar, zadając {damage} obrażeń od ognia wrogom w zasięgu eksplozji.',
   'entities.abilities.flame_shock.description':
     'Spala cel ogniem, zadając 25 obrażeń oraz {damage} w ciągu 12 sek.',
   'entities.abilities.flame_shock.name': 'Płomienny wstrząs',

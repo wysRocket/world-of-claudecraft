@@ -3694,7 +3694,7 @@ export const nl_NL: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Vlammenslag",
-        "description": "Roept een vuurzee op in het doelgebied en verbrandt vijanden voor {damage} Vuurschade."
+        "description": "Roept een vuurexplosie op in het doelgebied die vijanden in de explosie {damage} Vuurschade toebrengt."
       },
       "rain_of_fire": {
         "name": "Vuurregen",

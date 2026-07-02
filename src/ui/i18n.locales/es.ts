@@ -1714,7 +1714,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Sacude el área objetivo, golpeando a los enemigos e infligiendo {damage} de daño de Naturaleza.',
   'entities.abilities.flamestrike.name': 'Llamarada',
   'entities.abilities.flamestrike.description':
-    'Invoca una zona de fuego en el área objetivo, quemando a los enemigos e infligiendo {damage} de daño de Fuego.',
+    'Invoca un estallido de fuego en el área objetivo que inflige {damage} de daño de Fuego a los enemigos alcanzados por la explosión.',
   'entities.abilities.fireball.description':
     'Lanza una bola ígnea que causa {damage} de daño de Fuego y daño adicional en el tiempo.',
   'entities.abilities.frost_armor.name': 'Armadura de Escarcha',

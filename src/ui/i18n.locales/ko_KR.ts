@@ -1669,7 +1669,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '지정한 지역을 뒤흔들어 적을 강타하고 {damage}의 자연 피해를 입힙니다.',
   'entities.abilities.flamestrike.name': '화염 폭발',
   'entities.abilities.flamestrike.description':
-    '지정한 지역에 불길을 일으켜 그 안의 적에게 {damage}의 화염 피해를 입힙니다.',
+    '지정한 지역에 화염 폭발을 일으켜 폭발 범위 안의 적에게 {damage}의 화염 피해를 입힙니다.',
   'entities.abilities.fireball.description':
     '불덩이를 날려 {damage}의 화염 피해와 추가 지속 피해를 입힙니다.',
   'entities.abilities.frost_armor.name': '냉기 갑옷',

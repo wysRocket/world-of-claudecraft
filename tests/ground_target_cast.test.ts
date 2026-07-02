@@ -28,45 +28,78 @@ function makeMage(): { sim: Sim; pid: number } {
   return { sim, pid };
 }
 
-function flamestrikeZone(sim: Sim): GroundAoE | undefined {
-  return (sim as unknown as { groundAoEs: GroundAoE[] }).groundAoEs.find(
-    (z) => z.ability === 'Flamestrike',
-  );
+// Flamestrike is an instant aimed BURST (aoeDamage at the clamped point plus a
+// radius-carrying spellfxAt for the impact ring), not a lingering ground zone.
+function spawnWolfAt(sim: Sim, x: number, z: number): ReturnType<typeof createMob> {
+  const s = sim as unknown as { nextId: number; addEntity(e: ReturnType<typeof createMob>): void };
+  const mob = createMob(s.nextId++, MOBS.forest_wolf, 1, {
+    x,
+    y: groundHeight(x, z, sim.cfg.seed),
+    z,
+  });
+  mob.maxHp = 5000;
+  mob.hp = 5000;
+  mob.hostile = true;
+  mob.aiState = 'idle';
+  s.addEntity(mob);
+  return mob;
+}
+
+function aimedFx(sim: Sim): { x: number; z: number; radius?: number } | undefined {
+  for (const e of sim.drainEvents()) {
+    if (e.type === 'spellfxAt') return e;
+  }
+  return undefined;
 }
 
 describe('ground-targeted casting (Flamestrike)', () => {
-  it('creates the flame zone at the aimed point, not on the caster', () => {
+  it('detonates at the aimed point (ring event + damage there), not on the caster', () => {
     const { sim, pid } = makeMage();
     place(sim, pid, 0, 0);
+    const atAim = spawnWolfAt(sim, 18, 0);
+    const atCaster = spawnWolfAt(sim, 0, 2);
+    sim.drainEvents();
 
     sim.castAbility('flamestrike', pid, { x: 18, z: 0 }); // within range 30
 
-    const zone = flamestrikeZone(sim);
-    expect(zone).toBeDefined();
-    expect(zone?.pos.x).toBeCloseTo(18, 1);
-    expect(zone?.pos.z).toBeCloseTo(0, 1);
+    const fx = aimedFx(sim);
+    expect(fx).toBeDefined();
+    expect(fx?.x).toBeCloseTo(18, 1);
+    expect(fx?.radius).toBe(7); // the AoE ring size rides the event
+    expect(atAim.hp).toBeLessThan(5000);
+    expect(atCaster.hp).toBe(5000); // 16yd from the blast: untouched
   });
 
   it('clamps the aimed point to the ability range from the caster', () => {
     const { sim, pid } = makeMage();
     place(sim, pid, 0, 0);
+    const atClamp = spawnWolfAt(sim, 30, 0);
+    sim.drainEvents();
 
     sim.castAbility('flamestrike', pid, { x: 100, z: 0 }); // far beyond range 30
 
-    const zone = flamestrikeZone(sim);
-    expect(zone?.pos.x).toBeCloseTo(30, 0); // clamped onto the 30 yd range
-    expect(zone?.pos.z).toBeCloseTo(0, 1);
+    const fx = aimedFx(sim);
+    expect(fx?.x).toBeCloseTo(30, 0); // clamped onto the 30 yd range
+    expect(atClamp.hp).toBeLessThan(5000);
   });
 
   it('falls back to the caster position when no point is chosen', () => {
     const { sim, pid } = makeMage();
     place(sim, pid, 5, 5);
+    const nearCaster = spawnWolfAt(sim, 7, 5);
+    sim.drainEvents();
 
     sim.castAbility('flamestrike', pid); // no aim (e.g. a keybind cast)
 
-    const zone = flamestrikeZone(sim);
-    expect(zone?.pos.x).toBeCloseTo(5, 1);
-    expect(zone?.pos.z).toBeCloseTo(5, 1);
+    expect(nearCaster.hp).toBeLessThan(5000);
+  });
+
+  it('leaves no lingering ground zone (the burst is the whole spell)', () => {
+    const { sim, pid } = makeMage();
+    place(sim, pid, 0, 0);
+    sim.castAbility('flamestrike', pid, { x: 18, z: 0 });
+    const zones = (sim as unknown as { groundAoEs: GroundAoE[] }).groundAoEs;
+    expect(zones.some((z) => z.ability === 'Flamestrike')).toBe(false);
   });
 });
 

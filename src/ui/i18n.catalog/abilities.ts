@@ -580,7 +580,7 @@ const classAbilityNamesEn = {
       [
         'flamestrike',
         'Flamestrike',
-        'Calls down a patch of flame at the target area, burning enemies for {damage} Fire damage.',
+        'Calls down a burst of flame at the target area, dealing {damage} Fire damage to enemies caught in the blast.',
       ],
       [
         'rain_of_fire',
@@ -1177,7 +1177,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Llamarada',
-          'Invoca una zona de fuego en el área objetivo, quemando a los enemigos e infligiendo {damage} de daño de Fuego.',
+          'Invoca un estallido de fuego en el área objetivo que inflige {damage} de daño de Fuego a los enemigos alcanzados por la explosión.',
         ],
         [
           'heroic_strike',
@@ -1812,7 +1812,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Frappe enflammée',
-          'Fait pleuvoir des flammes sur la zone visée, brûlant les ennemis et infligeant {damage} points de dégâts de Feu.',
+          "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration.",
         ],
         [
           'heroic_strike',
@@ -2502,7 +2502,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Ondata di Fiamme',
-          'Evoca fiamme sulla zona bersaglio, bruciando i nemici e infliggendo {damage} danni da Fuoco.',
+          "Evoca un'esplosione di fiamme sulla zona bersaglio, infliggendo {damage} danni da Fuoco ai nemici investiti dalla deflagrazione.",
         ],
         [
           'heroic_strike',
@@ -3112,7 +3112,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Flammenschlag',
-          'Lässt am Zielort eine Feuerfläche niedergehen, die Gegner verbrennt und {damage} Feuerschaden verursacht.',
+          'Lässt am Zielort eine Feuerexplosion niedergehen, die allen Gegnern im Wirkungsbereich {damage} Feuerschaden zufügt.',
         ],
         [
           'heroic_strike',
@@ -3730,7 +3730,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           '烈焰风暴',
-          '在目标区域召唤一片烈焰，灼烧其中的敌人，造成 {damage} 点火焰伤害。',
+          '在目标区域召唤一次烈焰爆发，对爆炸范围内的敌人造成 {damage} 点火焰伤害。',
         ],
         [
           'heroic_strike',
@@ -4052,7 +4052,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           '烈焰風暴',
-          '在目標區域召喚一片烈焰，灼燒其中的敵人，造成 {damage} 點火焰傷害。',
+          '在目標區域召喚一次烈焰爆發，對爆炸範圍內的敵人造成 {damage} 點火焰傷害。',
         ],
         [
           'heroic_strike',
@@ -4374,7 +4374,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           '화염 폭발',
-          '지정한 지역에 불길을 일으켜 그 안의 적에게 {damage}의 화염 피해를 입힙니다.',
+          '지정한 지역에 화염 폭발을 일으켜 폭발 범위 안의 적에게 {damage}의 화염 피해를 입힙니다.',
         ],
         [
           'heroic_strike',
@@ -4888,7 +4888,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'フレイムストライク',
-          '対象地点に炎の地帯を呼び出し、中にいる敵に{damage}の火炎ダメージを与えます。',
+          '対象地点に炎の爆発を呼び出し、爆発に巻き込まれた敵に{damage}の火炎ダメージを与えます。',
         ],
         [
           'heroic_strike',
@@ -5438,7 +5438,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Golpe Flamejante',
-          'Invoca uma área de chamas no local-alvo, queimando os inimigos e causando {damage} de dano de Fogo.',
+          'Invoca uma explosão de chamas no local-alvo, causando {damage} de dano de Fogo aos inimigos atingidos pela explosão.',
         ],
         [
           'heroic_strike',
@@ -6032,7 +6032,7 @@ export const classAbilityNames = {
         [
           'flamestrike',
           'Огненный удар',
-          'Обрушивает пламя на указанную область, сжигая врагов и нанося {damage} ед. урона от огня.',
+          'Обрушивает огненный взрыв на указанную область, нанося {damage} ед. урона от огня врагам в зоне взрыва.',
         ],
         [
           'heroic_strike',

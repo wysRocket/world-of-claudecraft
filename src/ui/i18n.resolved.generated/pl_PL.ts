@@ -3694,7 +3694,7 @@ export const pl_PL: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Ognista nawała",
-        "description": "Sprowadza płomienie na wybrany obszar, paląc wrogów i zadając {damage} obrażeń od ognia."
+        "description": "Sprowadza wybuch płomieni na wybrany obszar, zadając {damage} obrażeń od ognia wrogom w zasięgu eksplozji."
       },
       "rain_of_fire": {
         "name": "Deszcz ognia",

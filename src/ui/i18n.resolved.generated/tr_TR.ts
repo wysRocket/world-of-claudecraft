@@ -3694,7 +3694,7 @@ export const tr_TR: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Alev Vuruşu",
-        "description": "Hedef alana alevler yağdırır ve düşmanları yakarak {damage} Ateş hasarı verir."
+        "description": "Hedef alanda bir alev patlaması yaratır ve patlamaya yakalanan düşmanlara {damage} Ateş hasarı verir."
       },
       "rain_of_fire": {
         "name": "Ateş Yağmuru",

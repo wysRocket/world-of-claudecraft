@@ -1688,6 +1688,9 @@ export type SimEvent = { pid?: number } & (
       z: number;
       school: string;
       fx: 'burst' | 'nova';
+      // blast radius in yards; when set the renderer flashes a terrain-draped
+      // AoE ring of this size under the burst so the impact area reads clearly
+      radius?: number;
     }
   // entityId (when set) anchors the log to that entity so the server only
   // delivers it to nearby players; anchorless logs broadcast server-wide

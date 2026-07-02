@@ -1002,9 +1002,9 @@ export const ABILITIES: Record<string, AbilityDef> = {
     school: 'fire',
     requiresTarget: false,
     targetMode: 'position',
-    effects: [{ type: 'groundAoE', min: 18, max: 24, radius: 7, duration: 6, interval: 1.5 }],
+    effects: [{ type: 'aoeDamage', min: 34, max: 44, radius: 7 }],
     description:
-      'Calls down a patch of flame at the target area, burning enemies for $d Fire damage.',
+      'Calls down a burst of flame at the target area, dealing $d Fire damage to enemies caught in the blast.',
   },
   // Ground-targeted thematic spells (targetMode 'position'), one per caster/ranged
   // class, all built on the ground-target cast primitive (docs/design/arpg-spell-mechanics.md).

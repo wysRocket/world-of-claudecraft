@@ -3694,7 +3694,7 @@ export const id_ID: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Hantaman Api",
-        "description": "Memanggil kobaran api di area sasaran, membakar musuh sebesar {damage} kerusakan Api."
+        "description": "Memanggil ledakan api di area sasaran, memberikan {damage} kerusakan Api kepada musuh yang terkena ledakan."
       },
       "rain_of_fire": {
         "name": "Hujan Api",

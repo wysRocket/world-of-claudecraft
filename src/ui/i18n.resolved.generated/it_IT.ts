@@ -3694,7 +3694,7 @@ export const it_IT: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Ondata di Fiamme",
-        "description": "Evoca fiamme sulla zona bersaglio, bruciando i nemici e infliggendo {damage} danni da Fuoco."
+        "description": "Evoca un'esplosione di fiamme sulla zona bersaglio, infliggendo {damage} danni da Fuoco ai nemici investiti dalla deflagrazione."
       },
       "rain_of_fire": {
         "name": "Pioggia di Fuoco",

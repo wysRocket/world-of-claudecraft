@@ -1702,7 +1702,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Сотрясает указанную область, нанося врагам {damage} ед. урона силами природы.',
   'entities.abilities.flamestrike.name': 'Огненный удар',
   'entities.abilities.flamestrike.description':
-    'Обрушивает пламя на указанную область, сжигая врагов и нанося {damage} ед. урона от огня.',
+    'Обрушивает огненный взрыв на указанную область, нанося {damage} ед. урона от огня врагам в зоне взрыва.',
   'entities.abilities.fireball.description':
     'Бросает огненный шар, наносящий {damage} ед. урона от огня и дополнительный периодический урон.',
   'entities.abilities.frost_armor.name': 'Морозный доспех',

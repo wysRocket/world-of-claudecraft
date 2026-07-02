@@ -3694,7 +3694,7 @@ export const ko_KR: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "화염 폭발",
-        "description": "지정한 지역에 불길을 일으켜 그 안의 적에게 {damage}의 화염 피해를 입힙니다."
+        "description": "지정한 지역에 화염 폭발을 일으켜 폭발 범위 안의 적에게 {damage}의 화염 피해를 입힙니다."
       },
       "rain_of_fire": {
         "name": "불의 비",

@@ -3694,7 +3694,7 @@ export const vi_VN: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Cú Đánh Lửa",
-        "description": "Gọi một vùng lửa xuống khu vực mục tiêu, thiêu đốt kẻ địch gây {damage} sát thương Lửa."
+        "description": "Gọi một vụ nổ lửa xuống khu vực mục tiêu, gây {damage} sát thương Lửa cho kẻ địch trong vụ nổ."
       },
       "rain_of_fire": {
         "name": "Mưa Lửa",

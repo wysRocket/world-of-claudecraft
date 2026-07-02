@@ -598,7 +598,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Mengguncang area sasaran, menghantam musuh sebesar {damage} kerusakan Alam.',
   'entities.abilities.flamestrike.name': 'Hantaman Api',
   'entities.abilities.flamestrike.description':
-    'Memanggil kobaran api di area sasaran, membakar musuh sebesar {damage} kerusakan Api.',
+    'Memanggil ledakan api di area sasaran, memberikan {damage} kerusakan Api kepada musuh yang terkena ledakan.',
   'entities.abilities.flame_shock.description':
     'Membakar target dengan api sebesar 25 kerusakan ditambah {damage} selama 12 detik.',
   'entities.abilities.flame_shock.name': 'Kejut Nyala Api',

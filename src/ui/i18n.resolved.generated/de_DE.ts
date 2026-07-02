@@ -3694,7 +3694,7 @@ export const de_DE: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Flammenschlag",
-        "description": "Lässt am Zielort eine Feuerfläche niedergehen, die Gegner verbrennt und {damage} Feuerschaden verursacht."
+        "description": "Lässt am Zielort eine Feuerexplosion niedergehen, die allen Gegnern im Wirkungsbereich {damage} Feuerschaden zufügt."
       },
       "rain_of_fire": {
         "name": "Feuerregen",

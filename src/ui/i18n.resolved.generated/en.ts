@@ -3694,7 +3694,7 @@ export const en: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Flamestrike",
-        "description": "Calls down a patch of flame at the target area, burning enemies for {damage} Fire damage."
+        "description": "Calls down a burst of flame at the target area, dealing {damage} Fire damage to enemies caught in the blast."
       },
       "rain_of_fire": {
         "name": "Rain of Fire",

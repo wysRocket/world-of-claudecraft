@@ -3694,7 +3694,7 @@ export const es: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Llamarada",
-        "description": "Invoca una zona de fuego en el área objetivo, quemando a los enemigos e infligiendo {damage} de daño de Fuego."
+        "description": "Invoca un estallido de fuego en el área objetivo que inflige {damage} de daño de Fuego a los enemigos alcanzados por la explosión."
       },
       "rain_of_fire": {
         "name": "Lluvia de Fuego",

@@ -1606,7 +1606,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.earthquake.description': '撼动目标区域，重击敌人，造成 {damage} 点自然伤害。',
   'entities.abilities.flamestrike.name': '烈焰风暴',
   'entities.abilities.flamestrike.description':
-    '在目标区域召唤一片烈焰，灼烧其中的敌人，造成 {damage} 点火焰伤害。',
+    '在目标区域召唤一次烈焰爆发，对爆炸范围内的敌人造成 {damage} 点火焰伤害。',
   'entities.abilities.fireball.description':
     '投掷一团火球，造成 {damage} 点火焰伤害，并附加持续伤害。',
   'entities.abilities.frost_armor.name': '霜甲术',

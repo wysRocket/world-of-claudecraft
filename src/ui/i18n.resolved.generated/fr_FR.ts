@@ -3694,7 +3694,7 @@ export const fr_FR: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Frappe enflammée",
-        "description": "Fait pleuvoir des flammes sur la zone visée, brûlant les ennemis et infligeant {damage} points de dégâts de Feu."
+        "description": "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration."
       },
       "rain_of_fire": {
         "name": "Pluie de feu",

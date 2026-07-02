@@ -429,6 +429,7 @@ export function runEffects(
             z: aoeCenter.z,
             school: ability.school,
             fx: 'nova',
+            radius: eff.radius,
           });
         } else {
           ctx.emit({

@@ -1706,7 +1706,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Sacode a área-alvo, atingindo os inimigos e causando {damage} de dano de Natureza.',
   'entities.abilities.flamestrike.name': 'Golpe Flamejante',
   'entities.abilities.flamestrike.description':
-    'Invoca uma área de chamas no local-alvo, queimando os inimigos e causando {damage} de dano de Fogo.',
+    'Invoca uma explosão de chamas no local-alvo, causando {damage} de dano de Fogo aos inimigos atingidos pela explosão.',
   'entities.abilities.fireball.description':
     'Arremessa uma bola flamejante que causa {damage} de dano de Fogo e dano adicional ao longo do tempo.',
   'entities.abilities.frost_armor.name': 'Armadura Gélida',

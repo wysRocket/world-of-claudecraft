@@ -1727,7 +1727,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     'Fait trembler la zone visée, frappant les ennemis pour {damage} points de dégâts de Nature.',
   'entities.abilities.flamestrike.name': 'Frappe enflammée',
   'entities.abilities.flamestrike.description':
-    'Fait pleuvoir des flammes sur la zone visée, brûlant les ennemis et infligeant {damage} points de dégâts de Feu.',
+    "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration.",
   'entities.abilities.fireball.description':
     'Lance une boule enflammée qui inflige {damage} points de dégâts de Feu plus des dégâts supplémentaires sur la durée.',
   'entities.abilities.frost_armor.name': 'Armure de givre',

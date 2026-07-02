@@ -577,7 +577,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Skakar målområdet och slår fiender för {damage} Naturskada.',
   'entities.abilities.flamestrike.name': 'Flamslag',
   'entities.abilities.flamestrike.description':
-    'Kallar ner ett eldfält på målområdet och bränner fiender för {damage} Eldskada.',
+    'Kallar ner en eldexplosion på målområdet som ger {damage} Eldskada till fiender som fångas i explosionen.',
   'entities.abilities.flame_shock.description':
     'Sveder målet med eld för 25 skada plus {damage} över 12 sek.',
   'entities.abilities.flame_shock.name': 'Flamchock',

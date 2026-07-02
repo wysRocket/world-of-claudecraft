@@ -582,7 +582,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Làm rung chuyển khu vực mục tiêu, quật ngã kẻ địch gây {damage} sát thương Thiên Nhiên.',
   'entities.abilities.flamestrike.name': 'Cú Đánh Lửa',
   'entities.abilities.flamestrike.description':
-    'Gọi một vùng lửa xuống khu vực mục tiêu, thiêu đốt kẻ địch gây {damage} sát thương Lửa.',
+    'Gọi một vụ nổ lửa xuống khu vực mục tiêu, gây {damage} sát thương Lửa cho kẻ địch trong vụ nổ.',
   'entities.abilities.flame_shock.description':
     'Thiêu đốt mục tiêu bằng lửa gây 25 sát thương cộng thêm {damage} trong 12 giây.',
   'entities.abilities.flame_shock.name': 'Chấn Hỏa',

@@ -3694,7 +3694,7 @@ export const da_DK: EnTranslations = {
     "abilities": {
       "flamestrike": {
         "name": "Flammeslag",
-        "description": "Nedkalder et flammefelt på målområdet og brænder fjender for {damage} Ildskade."
+        "description": "Nedkalder en flammeeksplosion på målområdet, der giver {damage} Ildskade til fjender fanget i eksplosionen."
       },
       "rain_of_fire": {
         "name": "Ildregn",

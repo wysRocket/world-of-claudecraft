@@ -41,6 +41,7 @@ import { characterSoulRendActive } from './character_effects';
 import { type AnimState, type CharacterVisual, createCharacterVisual } from './characters';
 import { mechAssetsReady, preloadMechAssets } from './characters/assets';
 import { skinCount, visualKeyFor } from './characters/manifest';
+import { AOE_RING_LIFETIME, aoeRingAnim } from './aoe_ring';
 import { CLICK_MARKER_LIFETIME, clickMarkerAnim, clickMarkerColor } from './click_marker';
 import { trackWebGLContext } from './context_release';
 import { buildCritters, type CritterField } from './critters';
@@ -91,7 +92,7 @@ import { buildTerrain, type TerrainView } from './terrain';
 import { sparkleTexture } from './textures';
 import { targetIntensity } from './travel_speed_fx';
 import { TravelSpeedFxPainter } from './travel_speed_fx_painter';
-import { Vfx } from './vfx';
+import { SCHOOL_COLORS, Vfx } from './vfx';
 import { buildWater, type WaterView } from './water';
 import { Weather } from './weather';
 
@@ -445,6 +446,13 @@ interface ClickMarkerSlot {
   elapsed: number; // seconds since spawn; >= CLICK_MARKER_LIFETIME means free
 }
 
+interface AoeRingSlot {
+  ring: THREE.Mesh;
+  mat: THREE.MeshBasicMaterial;
+  radius: number; // blast radius in yards this flash represents
+  elapsed: number; // seconds since spawn; >= AOE_RING_LIFETIME means free
+}
+
 function selfSnapshotAlpha(alpha: number, lead: number): number {
   return Math.min(1.25, alpha + Math.max(0, lead));
 }
@@ -716,6 +724,9 @@ export class Renderer {
   // `elapsed >= lifetime` is free. See click_marker.ts for the animation curves.
   private clickMarkers: ClickMarkerSlot[] = [];
   private clickMarkerNext = 0;
+  // ground-targeted AoE impact rings (see aoe_ring.ts), pooled like click markers
+  private aoeRings: AoeRingSlot[] = [];
+  private aoeRingNext = 0;
   raycaster = new THREE.Raycaster();
   clickTargets: THREE.Object3D[] = [];
   camYaw = Math.PI;
@@ -1280,6 +1291,24 @@ export class Renderer {
         crossMat,
         elapsed: CLICK_MARKER_LIFETIME,
       });
+    }
+
+    // AoE impact rings: a unit ring scaled to each blast's radius, flashed on
+    // the terrain where a ground-targeted spell lands (see aoe_ring.ts).
+    const aoeRingGeo = new THREE.RingGeometry(0.88, 1.0, 64);
+    aoeRingGeo.rotateX(-Math.PI / 2);
+    for (let i = 0; i < CLICK_MARKER_POOL; i++) {
+      const mat = new THREE.MeshBasicMaterial({
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+      });
+      const ring = new THREE.Mesh(aoeRingGeo, mat);
+      ring.visible = false;
+      ring.renderOrder = 3; // over terrain decals, like the click marker
+      setRenderCategory(ring, 'ui3d');
+      this.scene.add(ring);
+      this.aoeRings.push({ ring, mat, radius: 1, elapsed: AOE_RING_LIFETIME });
     }
 
     // particle system: projectiles, impacts, heal glows, ambience
@@ -2705,9 +2734,12 @@ export class Renderer {
         // Ground-targeted impact: burst draped onto the terrain where the spell
         // was aimed (not on the caster), so an aimed blast reads at its landing
         // spot. A 'nova' aim is the heavier detonation; 'burst' the lighter one.
+        // A radius-carrying event also flashes the AoE ring so the blast AREA
+        // reads, not just its center.
         const gy = groundHeight(ev.x, ev.z, this.sim.cfg.seed);
         const at = new THREE.Vector3(ev.x, gy + 0.4, ev.z);
         this.vfx.burst(at, ev.school, ev.fx === 'nova' ? 34 : 22, ev.fx === 'nova' ? 1.4 : 1);
+        if (ev.radius) this.spawnAoeRing(ev.x, ev.z, ev.radius, ev.school);
         break;
       }
       case 'damage':
@@ -4193,6 +4225,7 @@ export class Renderer {
       this.selectionRing.visible = false;
     }
     this.updateClickMarkers(dt);
+    this.updateAoeRings(dt);
     // dev-only Tab-target cone overlay: re-drape the front cone on the terrain
     // under the local player, oriented to the model's rendered facing.
     if (this.targetCone) {
@@ -4872,6 +4905,35 @@ export class Renderer {
       slot.ringMat.opacity = a.ringAlpha;
       slot.cross.scale.setScalar(a.crossScale);
       slot.crossMat.opacity = a.crossAlpha;
+    }
+  }
+
+  // Flash a school-colored AoE ring on the terrain at a ground-targeted blast's
+  // landing spot, sized to the blast radius (see aoe_ring.ts for the curves).
+  spawnAoeRing(x: number, z: number, radius: number, school: string): void {
+    if (this.aoeRings.length === 0) return;
+    const slot = this.aoeRings[this.aoeRingNext];
+    this.aoeRingNext = (this.aoeRingNext + 1) % this.aoeRings.length;
+    const y = groundHeight(x, z, this.sim.cfg.seed) + 0.12; // lift to avoid z-fighting
+    slot.ring.position.set(x, y, z);
+    slot.radius = radius;
+    slot.elapsed = 0;
+    slot.mat.color.setHex(SCHOOL_COLORS[school] ?? 0xffffff);
+    if (!this.lowGfx) slot.mat.color.multiplyScalar(SELECTION_RING_BOOST);
+    slot.ring.visible = true;
+  }
+
+  private updateAoeRings(dt: number): void {
+    for (const slot of this.aoeRings) {
+      if (slot.elapsed >= AOE_RING_LIFETIME) continue;
+      slot.elapsed += dt;
+      const a = aoeRingAnim(slot.elapsed);
+      if (!a.active) {
+        slot.ring.visible = false;
+        continue;
+      }
+      slot.ring.scale.setScalar(slot.radius * a.ringScale);
+      slot.mat.opacity = a.ringAlpha;
     }
   }
 

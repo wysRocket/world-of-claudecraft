@@ -588,7 +588,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Laat het doelgebied beven, treft vijanden voor {damage} Natuurschade.',
   'entities.abilities.flamestrike.name': 'Vlammenslag',
   'entities.abilities.flamestrike.description':
-    'Roept een vuurzee op in het doelgebied en verbrandt vijanden voor {damage} Vuurschade.',
+    'Roept een vuurexplosie op in het doelgebied die vijanden in de explosie {damage} Vuurschade toebrengt.',
   'entities.abilities.flame_shock.description':
     'Schroeit het doelwit met vuur voor 25 schade plus {damage} gedurende 12 sec.',
   'entities.abilities.flame_shock.name': 'Vlamschok',

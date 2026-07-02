@@ -1714,7 +1714,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Lässt den Zielbereich erbeben, trifft Gegner und verursacht {damage} Naturschaden.',
   'entities.abilities.flamestrike.name': 'Flammenschlag',
   'entities.abilities.flamestrike.description':
-    'Lässt am Zielort eine Feuerfläche niedergehen, die Gegner verbrennt und {damage} Feuerschaden verursacht.',
+    'Lässt am Zielort eine Feuerexplosion niedergehen, die allen Gegnern im Wirkungsbereich {damage} Feuerschaden zufügt.',
   'entities.abilities.fireball.description':
     'Schleudert einen feurigen Ball, der {damage} Feuerschaden sowie zusätzlichen Schaden über Zeit verursacht.',
   'entities.abilities.frost_armor.name': 'Frostrüstung',

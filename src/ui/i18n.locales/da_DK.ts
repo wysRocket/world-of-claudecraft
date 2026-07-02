@@ -575,7 +575,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Ryster målområdet og rammer fjender for {damage} Naturskade.',
   'entities.abilities.flamestrike.name': 'Flammeslag',
   'entities.abilities.flamestrike.description':
-    'Nedkalder et flammefelt på målområdet og brænder fjender for {damage} Ildskade.',
+    'Nedkalder en flammeeksplosion på målområdet, der giver {damage} Ildskade til fjender fanget i eksplosionen.',
   'entities.abilities.flame_shock.description':
     'Svider målet med ild for 25 skade plus {damage} over 12 sek.',
   'entities.abilities.flame_shock.name': 'Flammechok',
