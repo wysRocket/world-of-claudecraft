@@ -182,6 +182,40 @@ describe('createApiDispatcher', () => {
     expect(res.body).not.toContain('boom-secret-detail');
     expect(events[0]?.status).toBe(500);
   });
+
+  it("threads a route's meta.envelope into withErrors: an html route's throw serializes as HTML, never problem+json", async () => {
+    // Pins the dispatcher's `withErrors({ surface: route.meta?.envelope })` line, the
+    // only production consumer of meta.envelope. The Discord OAuth callback rides on
+    // exactly this: its RouteDef carries meta.envelope 'html' (pinned in
+    // tests/server/discord.test.ts), so if the dispatcher ever dropped the threading an
+    // escaping callback throw would flip to problem+json and break
+    // window.opener.postMessage in the OAuth popup. The problem+json test above is the
+    // un-enveloped control, proving the surface is per-route, not a global default.
+    const route = fakeRoute(
+      async () => {
+        throw new Error('boom-secret-detail');
+      },
+      { envelope: 'html' },
+    );
+    const dispatcher = createApiDispatcher({
+      registry: registryReturning({ kind: 'matched', route, params: {}, head: false }),
+      delegate: () => {},
+    });
+
+    const res = new FakeRes();
+    dispatcher(
+      makeReq({ method: 'GET', url: '/api/things/1' }),
+      res as unknown as http.ServerResponse,
+    );
+    await flush(res);
+
+    expect(res.statusCode).toBe(500);
+    expect(String(res.getHeader('content-type'))).toContain('text/html');
+    expect(String(res.getHeader('content-type'))).not.toContain('application/problem+json');
+    expect(res.writableEnded).toBe(true);
+    // The same 500-no-leak contract holds on the HTML surface.
+    expect(res.body).not.toContain('boom-secret-detail');
+  });
 });
 
 describe('selectApiEntry', () => {

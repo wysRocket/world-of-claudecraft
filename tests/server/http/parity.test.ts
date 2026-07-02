@@ -34,6 +34,8 @@
 
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import {
+  DISCORD_MAX_PER_MINUTE,
+  discordRateLimited,
   resetAuthFailures,
   resetCardUploadRateLimits,
   resetCharacterMutationRateLimits,
@@ -514,6 +516,34 @@ describe('/api dispatch parity (legacy flag vs new flag)', () => {
     expect(newCap.status).toBe(oldCap.status);
     expect(stableStringify(newCap)).toBe(stableStringify(oldCap));
   });
+
+  // The two chooser routes (login/new + login/link) are ALSO masked by
+  // newLimiterDiscord but have no corpus fixture (every non-429 branch reads the db:
+  // the pending-login token lookup is the first thing after the body). Their one
+  // deterministic, db-free branch is the shared handler self-limit (checked BEFORE
+  // the body read on both the legacy arm and the RouteDef), so each is re-pinned by
+  // draining the discord bucket before each pass and proving the 429 byte-identical.
+  for (const chooserPath of ['/api/auth/discord/login/new', '/api/auth/discord/login/link']) {
+    it(`POST ${chooserPath} with a drained bucket is identical old-vs-new and is a 429 (re-pins masked chooser route)`, async () => {
+      const drainedCapture = async (dispatch: Dispatch) => {
+        isolate();
+        // handleDiscordLoginNew/Link self-limit with discordRateLimited(req, 0): the
+        // ip bucket (127.0.0.1, same source as the fixture request) fills to the cap,
+        // so the replayed request below is the over-cap attempt on BOTH modes.
+        for (let i = 0; i < DISCORD_MAX_PER_MINUTE; i++) {
+          discordRateLimited(makeReq({ method: 'POST', url: chooserPath }), 0);
+        }
+        return normalizeResponse(
+          await captureResponse(dispatch, makeReq({ method: 'POST', url: chooserPath, body: {} })),
+        );
+      };
+      const oldCap = await drainedCapture(oldDispatch);
+      const newCap = await drainedCapture(newDispatch);
+      expect(oldCap.status).toBe(429);
+      expect(newCap.status).toBe(oldCap.status);
+      expect(stableStringify(newCap)).toBe(stableStringify(oldCap));
+    });
+  }
 
   it('CORS + OPTIONS preflight is byte-identical old-vs-new for an /api route and a public-cors path', async () => {
     // Representative /api route: maybeCors reflects the Origin, the 204 short-circuit

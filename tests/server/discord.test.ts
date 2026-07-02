@@ -17,8 +17,14 @@
 //  - the discordActiveRateGuard on status/unlink: legacy-prose 429 once the bucket is
 //    exhausted, mounted BEHIND the auth guard (an unauthenticated request 401s, never
 //    the limiter);
-//  - start's isIpBlocked gate (opaque 429), its discordConfig-null 503, and the
-//    link-mode inline resolveActiveAccount 401;
+//  - start's isIpBlocked gate (opaque 429, BOTH modes), its discordConfig-null 503,
+//    the link-mode inline resolveActiveAccount (401 / read-only 403 / moderation 403,
+//    resolved BEFORE the IP gate), the no-pre-check single count (the legacy
+//    double-count is gone), and the 503-over-429 ordering the deviation documents;
+//  - the chooser routes (login/new + login/link) through the migrated chain: the
+//    blocked-IP and drained-bucket 429s, both db-free (deeper branches live in
+//    tests/discord_server.test.ts against the same shared handlers);
+//  - the discordRateLimited ip+account dual keying (each key trips alone);
 //  - the callback HTML contract: an isIpBlocked bounce (server_error) and an
 //    unconfigured bounce (not_configured), both text/html, never problem+json;
 //  - the swag claim reachability (its in-handler self-limit fires before any DB);
@@ -59,8 +65,8 @@ import { type FakeRes, fakeCtx, makeReq } from './helpers';
 // A well-formed bearer header (64 lowercase-hex, matching the guard BEARER_PATTERN).
 const BEARER = `Bearer ${'a'.repeat(64)}`;
 // A frozen instant for the pinned limiter clock: every recorded attempt shares it, so
-// the whole 15-attempt drain sits inside the one 60s window and the counter is
-// deterministic across calls.
+// the whole DISCORD_MAX_PER_MINUTE-attempt drain sits inside the one 60s window and
+// the counter is deterministic across calls.
 const FIXED_NOW_MS = 1_700_000_000_000;
 // The DISCORD_* env keys discordConfig() reads. Deleted per-test so discordConfig()
 // resolves null by default (the harness never sets them), then restored so this suite
@@ -362,6 +368,35 @@ describe('discordActiveRateGuard on status + unlink', () => {
     expect(r.status).not.toBe(429);
     expect(r.reached).toBe(false);
   });
+
+  it('trips on the IP key alone: an ip-only drain (account 0) 429s the next authed read', async () => {
+    // Drain only the IP bucket (accountId 0 skips the account bucket), then issue an
+    // authed read as account 7 from the same IP: the guard's discordRateLimited must
+    // trip on the full IP bucket even though account 7's bucket is fresh. A keying
+    // regression that dropped the IP key would answer 200 here (well, reach the
+    // handler); the drained-bucket tests above cannot see it because they fill BOTH keys.
+    for (let i = 0; i < DISCORD_MAX_PER_MINUTE; i++) discordRateLimited(makeReq(), 0);
+    const r = await runRoute('GET', '/api/discord', { headers: { authorization: BEARER } });
+    expect(r.status).toBe(429);
+    expect(r.body).toEqual({ error: 'rate limited' });
+    expect(r.reached).toBe(false);
+  });
+
+  it('trips on the ACCOUNT key alone: an account drain from another IP 429s a fresh-IP authed read', async () => {
+    // Drain account 7's bucket from a foreign IP (via X-Forwarded-For; makeReq's
+    // loopback socket is a trusted proxy, so requestIp resolves the forwarded hop),
+    // then issue an authed read from the default 127.0.0.1: the guard must trip on the
+    // full ACCOUNT bucket even though 127.0.0.1's IP bucket is fresh. A keying
+    // regression that dropped the account key (letting one account rotate IPs past the
+    // limiter) would reach the handler here.
+    for (let i = 0; i < DISCORD_MAX_PER_MINUTE; i++) {
+      discordRateLimited(makeReq({ headers: { 'x-forwarded-for': '203.0.113.9' } }), 7);
+    }
+    const r = await runRoute('GET', '/api/discord', { headers: { authorization: BEARER } });
+    expect(r.status).toBe(429);
+    expect(r.body).toEqual({ error: 'rate limited' });
+    expect(r.reached).toBe(false);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -402,6 +437,115 @@ describe('POST /api/auth/discord/start', () => {
     expect(r.body).toEqual({ error: 'not authenticated' });
     expect(r.contentType).toBe('application/json');
   });
+
+  it('403s a link-mode start with a read-only token (the inline resolver mirrors the guard)', async () => {
+    installRuntime();
+    authedDb({ accountAndScopeForToken: scopeOf('read') });
+    const r = await runRoute('POST', '/api/auth/discord/start', {
+      url: '/api/auth/discord/start?mode=link',
+      headers: { authorization: BEARER },
+      body: {},
+    });
+    expect(r.status).toBe(403);
+    expect(r.body).toEqual({ error: 'this token is read-only' });
+  });
+
+  it('403s a link-mode start for a moderation-locked account with the status message', async () => {
+    installRuntime();
+    authedDb({
+      moderationStatusForAccount: async () =>
+        modStatus({ locked: true, message: 'this account is suspended.' }),
+    });
+    const r = await runRoute('POST', '/api/auth/discord/start', {
+      url: '/api/auth/discord/start?mode=link',
+      headers: { authorization: BEARER },
+      body: {},
+    });
+    expect(r.status).toBe(403);
+    expect(r.body).toEqual({ error: 'this account is suspended.' });
+  });
+
+  it('resolves the link-mode bearer BEFORE the IP gate: no bearer + blocked IP is 401, never 429', async () => {
+    // The link-mode ordering contract: resolveActiveAccount runs first, so a blocked
+    // IP learns nothing new from an unauthenticated link start (same 401 as anyone).
+    installRuntime({ isIpBlocked: () => true });
+    const r = await runRoute('POST', '/api/auth/discord/start', {
+      url: '/api/auth/discord/start?mode=link',
+      body: {},
+    });
+    expect(r.status).toBe(401);
+    expect(r.body).toEqual({ error: 'not authenticated' });
+  });
+
+  it('429s an authed link-mode start when the IP is blocked (the gate covers BOTH modes)', async () => {
+    installRuntime({ isIpBlocked: () => true });
+    authedDb();
+    const r = await runRoute('POST', '/api/auth/discord/start', {
+      url: '/api/auth/discord/start?mode=link',
+      headers: { authorization: BEARER },
+      body: {},
+    });
+    expect(r.status).toBe(429);
+    expect(r.body).toEqual({ error: 'rate limited' });
+  });
+
+  it('records NO limiter attempt on the new path before the handler (the legacy pre-check double-count is gone)', async () => {
+    // The legacy handleApi arm pre-checks discordRateLimited AND handleDiscordStart
+    // self-checks (a double count per request). The RouteDef deliberately does not
+    // pre-check, so an unconfigured start (503 BEFORE the handler's own self-check)
+    // records nothing: after 20 such requests the bucket must still be empty. On the
+    // legacy arm these 20 pre-checks would have tripped the 15-cap long before this.
+    installRuntime();
+    for (let i = 0; i < 20; i++) {
+      const r = await runRoute('POST', '/api/auth/discord/start', { body: {} });
+      expect(r.status).toBe(503);
+    }
+    // A fresh check records attempt #1 of DISCORD_MAX_PER_MINUTE: false proves empty.
+    expect(discordRateLimited(makeReq(), 7)).toBe(false);
+  });
+
+  it('answers 503 (config) over 429 (drained bucket) on the new path: the rate check is deferred into the handler', async () => {
+    // The documented newLimiterDiscord side effect, pinned: unconfigured AND drained,
+    // the new path answers the handler's config-null 503 where the legacy pre-check
+    // would answer 429 first. Applies to both modes (the deviation ledger notes it).
+    installRuntime();
+    drainDiscordBucket();
+    const r = await runRoute('POST', '/api/auth/discord/start', { body: {} });
+    expect(r.status).toBe(503);
+    expect(r.body).toEqual({ error: 'Discord integration is not configured' });
+    expect(r.status).not.toBe(429);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// 4b. The chooser routes (POST login/new + login/link) through the migrated chain.
+// Both handlers self-limit then check the injected isIpBlocked BEFORE reading the
+// body, so both branches are deterministic and db-free; they pin the RouteDef glue
+// (the useRuntime().isIpBlocked hand-off) that the resolve-matched wiring loop alone
+// cannot see. The deeper token/password branches live in tests/discord_server.test.ts
+// against the same shared handlers (mocked pg).
+// ---------------------------------------------------------------------------
+
+describe('POST /api/auth/discord/login/new + login/link (migrated chain)', () => {
+  const CHOOSER_ROUTES = ['/api/auth/discord/login/new', '/api/auth/discord/login/link'] as const;
+
+  for (const path of CHOOSER_ROUTES) {
+    it(`429s ${path} when the IP is blocked (the RouteDef threads the runtime hook), db-free`, async () => {
+      installRuntime({ isIpBlocked: () => true });
+      const r = await runRoute('POST', path, { body: {} });
+      expect(r.status).toBe(429);
+      expect(r.body).toEqual({ error: 'rate limited' });
+      expect(r.contentType).toBe('application/json');
+    });
+
+    it(`429s ${path} once the shared discord bucket is drained (self-limit before the body read)`, async () => {
+      installRuntime();
+      drainDiscordBucket();
+      const r = await runRoute('POST', path, { body: {} });
+      expect(r.status).toBe(429);
+      expect(r.body).toEqual({ error: 'rate limited' });
+    });
+  }
 });
 
 // ---------------------------------------------------------------------------

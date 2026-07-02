@@ -660,14 +660,17 @@ export const KNOWN_DEVIATIONS: readonly KnownDeviation[] = [
       'entangled with handler logic. start drops the legacy double-count to a single ' +
       'count on the new path (the RouteDef does not pre-check; handleDiscordStart ' +
       'self-limits once; a side effect only visible in the unconfigured-AND-drained ' +
-      'test state is that a login-mode start then answers 503 [config-null] where the ' +
-      'legacy pre-check would answer 429, since the new path defers the rate check into ' +
-      'the handler after its config check; prod-irrelevant, since prod configures ' +
-      'Discord). status/unlink carry the discordActiveRateGuard (the same ' +
-      'check the legacy arm ran in main.ts, moved behind the auth guard); swag ' +
-      'self-limits inside handleSwagClaim (no rate guard). Phase 16 also CLOSES the ' +
-      'isIpBlocked gap the PR #1044 / #1075 reviews flagged: start applies isIpBlocked ' +
-      '(opaque 429 { error: "rate limited" }, matching login/new + login/link) and the ' +
+      'test state is that a start IN EITHER MODE (login or link, both share the ' +
+      'handler) then answers 503 [config-null] where the legacy pre-check would answer ' +
+      '429, since the new path defers the rate check into the handler after its config ' +
+      'check; prod-irrelevant, since prod configures Discord). status/unlink carry the ' +
+      'discordActiveRateGuard (the same check the legacy arm ran in main.ts, moved ' +
+      'behind the auth guard); swag self-limits inside handleSwagClaim (no rate guard). ' +
+      'Phase 16 also CLOSES the isIpBlocked gap the PR #1044 / #1075 reviews flagged: ' +
+      'start applies isIpBlocked (opaque 429 { error: "rate limited" }, matching ' +
+      'login/new + login/link; in link mode the inline bearer resolve runs BEFORE the ' +
+      'IP gate, so an unauthenticated blocked-IP link start answers the ordinary 401 ' +
+      'and the block stays invisible there too) and the ' +
       'callback applies isIpBlocked (an opaque HTML bounce reusing the existing ' +
       '"server_error" vocabulary, so the block is never revealed and the callback ' +
       'stays HTML). passesTurnstile is DELIBERATELY not added (the Discord flow carries ' +

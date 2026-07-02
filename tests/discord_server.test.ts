@@ -100,6 +100,13 @@ function defaultRouter(sql: string) {
     return { rows: [{ points: '250', lifetime_points: '250' }], rowCount: 1 };
   if (s.includes('SELECT swag_id FROM swag_claims'))
     return { rows: swagClaimRows, rowCount: swagClaimRows.length };
+  // claimSwag's transactional claim path (the success tests): the claim row inserts
+  // (not already claimed) and the priced spend succeeds with the balance RETURNING.
+  if (s.includes('INSERT INTO swag_claims')) return { rows: [{ id: 1 }], rowCount: 1 };
+  if (s.includes('UPDATE reward_points SET points = points -'))
+    return { rows: [{ points: '4000' }], rowCount: 1 };
+  if (s.includes('SELECT points FROM reward_points'))
+    return { rows: [{ points: rewardRows[0]?.points ?? '0' }], rowCount: 1 };
   return { rows: [], rowCount: 0 };
 }
 
@@ -262,9 +269,13 @@ describe('DELETE /api/discord (unlink)', () => {
     const res = makeRes();
     await handleDiscordUnlink(makeReq(), res, 1);
     expect(parse(res)).toEqual({ status: 200, data: { unlinked: true } });
-    expect(
-      dbMock.query.mock.calls.some((c) => String(c[0]).includes('DELETE FROM discord_links')),
-    ).toBe(true);
+    const unlinkCall = dbMock.query.mock.calls.find((c) =>
+      String(c[0]).includes('DELETE FROM discord_links'),
+    );
+    expect(unlinkCall).toBeDefined();
+    // The delete is bound to the CALLER's account id (the guard-resolved parameter),
+    // so a cross-account unlink is impossible by construction.
+    expect(unlinkCall?.[1]).toEqual([1]);
     // A real-password account is never asked to set one, and nothing is reset.
     expect(
       dbMock.query.mock.calls.some((c) =>
@@ -347,6 +358,62 @@ describe('POST /api/discord/swag/claim', () => {
     expect(
       dbMock.query.mock.calls.some((c) => String(c[0]).includes('INSERT INTO swag_claims')),
     ).toBe(false);
+  });
+
+  it('claims a cosmetic and invokes the grant callback with the swag grantId (the live-chroma hook)', async () => {
+    // The success path the Phase 16 route glue rides: a linked, tier-qualified,
+    // point-rich account claims the chroma; the durable claim commits and the
+    // grantCosmetic hook (game.grantMechChromaToAccount on the wired server) receives
+    // the CATALOG grantId, never a client-supplied value.
+    linkRow = [
+      {
+        account_id: 1,
+        discord_user_id: '8',
+        discord_username: 'm',
+        discord_avatar: null,
+        guild_member: false,
+        linked_at: 'now',
+      },
+    ];
+    rewardRows = [{ points: '5000', lifetime_points: '5000' }]; // tier 5, >= chroma minTier 3
+    swagClaimRows = [];
+    const grant = vi.fn();
+    const res = makeRes();
+    await handleSwagClaim(makeReq({ body: { swagId: 'chroma_blurple' } }), res, 1, grant);
+    const { status, data } = parse(res);
+    expect(status).toBe(200);
+    expect(grant).toHaveBeenCalledTimes(1);
+    expect(grant).toHaveBeenCalledWith('vanguard_azure');
+    expect(data.swagId).toBe('chroma_blurple');
+    expect(data.kind).toBe('cosmetic');
+    expect(data.claimed).toContain('chroma_blurple');
+    // The spend is the parameterized cost against the caller's account row.
+    const spend = dbMock.query.mock.calls.find((c) =>
+      String(c[0]).includes('UPDATE reward_points SET points = points -'),
+    );
+    expect(spend?.[1]).toEqual([1, 1000]);
+  });
+
+  it('claims a title WITHOUT invoking the grant callback (only cosmetic-kind swag grants live)', async () => {
+    linkRow = [
+      {
+        account_id: 1,
+        discord_user_id: '8',
+        discord_username: 'm',
+        discord_avatar: null,
+        guild_member: false,
+        linked_at: 'now',
+      },
+    ];
+    rewardRows = [{ points: '0', lifetime_points: '0' }]; // tier 1 covers title_discordian (cost 0)
+    swagClaimRows = [];
+    const grant = vi.fn();
+    const res = makeRes();
+    await handleSwagClaim(makeReq({ body: { swagId: 'title_discordian' } }), res, 1, grant);
+    const { status, data } = parse(res);
+    expect(status).toBe(200);
+    expect(data.kind).toBe('title');
+    expect(grant).not.toHaveBeenCalled();
   });
 });
 

@@ -79,4 +79,13 @@ describe('Phase 13 rate-limit copy: matcher-safe (prefix before the comma)', () 
     expect(client).toContain(`normalized.startsWith('${ATTEMPTS_PREFIX}')`);
     expect(client).toContain(`normalized.startsWith('${FAILED_PREFIX}')`);
   });
+
+  it("userFacingApiError keeps the Phase 16 exact-match arm for the discord 'rate limited' 429", () => {
+    // Phase 16 closed the discordRateLimited gap with one exact-match arm reusing the
+    // existing errors.api.tooManyAttempts key. src/main.ts is DOM-coupled (never
+    // imported here), so this text pin is the guard against a silent removal until the
+    // Phase 11 matcher-extraction follow-up makes the matcher unit-testable.
+    const client = read('src/main.ts');
+    expect(client).toContain("normalized === 'rate limited'");
+  });
 });

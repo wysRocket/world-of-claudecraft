@@ -66,10 +66,12 @@ describe('ensureSchema wires every schema module at boot', () => {
     );
     expect(discordDdl).toBeDefined();
     if (discordDdl) {
-      expect(discordDdl).not.toMatch(/CREATE TABLE (?!IF NOT EXISTS)/);
-      expect(discordDdl).not.toMatch(/CREATE (?:UNIQUE )?INDEX (?!IF NOT EXISTS)/);
-      expect(discordDdl).not.toMatch(/ADD COLUMN (?!IF NOT EXISTS)/);
-      expect(discordDdl).not.toMatch(/\b(?:DROP|TRUNCATE|ALTER COLUMN)\b/);
+      // Case-insensitive so a future lowercase (or mixed-case) destructive statement
+      // cannot slip past the guard; the repo's DDL style is uppercase today.
+      expect(discordDdl).not.toMatch(/CREATE TABLE (?!IF NOT EXISTS)/i);
+      expect(discordDdl).not.toMatch(/CREATE (?:UNIQUE )?INDEX (?!IF NOT EXISTS)/i);
+      expect(discordDdl).not.toMatch(/ADD COLUMN (?!IF NOT EXISTS)/i);
+      expect(discordDdl).not.toMatch(/\b(?:DROP|TRUNCATE|ALTER COLUMN)\b/i);
     }
   });
 
