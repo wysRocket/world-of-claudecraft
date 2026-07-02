@@ -848,7 +848,7 @@
     bottom: calc(31px + env(safe-area-inset-bottom));
     width: min(220px, calc(50vw - 144px));
     min-width: 142px;
-    max-height: min(170px, calc(100vh - 128px));
+    max-height: min(170px, calc(100dvh - 128px));
     overflow: hidden;
     z-index: 25;
   }
@@ -890,7 +890,15 @@
   }
   body.mobile-touch .window {
     max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+  }
+  /* The mobile close button is a 40x40 touch target pinned in the header's
+     top-right corner (absolute, see the .window > .panel-title shell rule in
+     layout.css), so reserve symmetric room for it: the centred title must never
+     slide under it, and the header must be at least as tall as the target. */
+  body.mobile-touch .window > .panel-title {
+    padding-inline: 52px;
+    min-height: 48px;
   }
   body.mobile-touch #leaderboard-window,
   body.mobile-touch #daily-rewards-window {
@@ -922,7 +930,7 @@
      Give the window the full available height (like #trade-window) so the listing
      body keeps a usable, touch-scrollable height under the header. */
   body.mobile-touch #market-window {
-    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
     overflow: hidden;
   }
   /* Floor the listing body so it keeps a usable, touch-scrollable height even when
@@ -953,7 +961,7 @@
     top: 10px;
     width: auto;
     max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
     transform: none;
     box-sizing: border-box;
     overflow-y: auto;
@@ -981,12 +989,12 @@
   }
   body.mobile-touch #social-window {
     bottom: 10px;
-    height: min(560px, calc(100vh - 20px));
+    height: min(560px, calc(100dvh - 20px));
   }
   body.mobile-touch #trade-window {
     top: 10px;
     transform: none;
-    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
     overflow-y: auto;
   }
   body.mobile-touch #trade-window .trade-cols {
@@ -1075,7 +1083,7 @@
     right: auto;
     transform: none;
     width: min(360px, calc(100vw - 20px));
-    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
     box-sizing: border-box;
     overflow-y: auto;
   }
@@ -1113,7 +1121,7 @@
   body.mobile-touch #quest-log-window,
   body.mobile-touch #quest-dialog {
     max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
   }
   body.mobile-touch #quest-log-window,
   body.mobile-touch #vendor-window,
@@ -1123,7 +1131,7 @@
     top: 12px;
     width: clamp(320px, 76vw, 680px);
     max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 92px);
+    max-height: calc(100dvh - 92px);
     transform: translateX(-50%);
   }
   body.mobile-touch.vendor-open #vendor-window,
@@ -1174,7 +1182,7 @@
     right: auto;
     top: 12px;
     width: min(560px, calc(100vw - 170px));
-    max-height: calc(100vh - 92px);
+    max-height: calc(100dvh - 92px);
     transform: translateX(-50%);
   }
   /* On touch, stack the categories back into a single column so the large
@@ -1263,7 +1271,7 @@
     top: 50%;
     width: min(600px, calc(100vw - 20px));
     max-width: calc(100vw - 20px);
-    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
     transform: translate(-50%, -50%);
     z-index: 95 !important;
   }
@@ -1376,8 +1384,8 @@
     top: 44%;
     bottom: auto;
     width: min(360px, calc(100vw - 170px));
-    height: min(380px, calc(100vh - 116px));
-    max-height: calc(100vh - 116px);
+    height: min(380px, calc(100dvh - 116px));
+    max-height: calc(100dvh - 116px);
     transform: translate(-50%, -50%);
     z-index: 45;
   }
@@ -1927,7 +1935,7 @@
       bottom: calc(26px + env(safe-area-inset-bottom));
       width: min(190px, calc(50vw - 142px));
       min-width: 128px;
-      max-height: min(135px, calc(100vh - 112px));
+      max-height: min(135px, calc(100dvh - 112px));
       transform: none;
     }
     body.mobile-touch #banner {

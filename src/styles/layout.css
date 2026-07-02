@@ -11,16 +11,86 @@
   /* ---------- window shell ---------- */
   /* All modal windows share one position: centred on the page. Per-window rules (in
      components.css) set only size/look, never position. (Loot is the one exception: it
-     pops at the cursor, so openLoot() sets inline left/top + transform:none.) */
+     pops at the cursor, so openLoot() sets inline left/top + transform:none.)
+     The shell also guarantees two responsive invariants for every window:
+     - it can never exceed the viewport (max-width/max-height clamps, dvh so mobile
+       browser chrome is accounted for), and
+     - the header (title + close) stays pinned while the body scrolls (the sticky
+       .panel-title below). */
   .window {
+    /* The frame inset the sticky header's negative margins must mirror. A window
+       that wants more breathing room overrides --window-pad (never `padding`
+       directly), so the header stays flush however padded the body is. */
+    --window-pad: 12px;
     position: absolute;
     display: none;
-    padding: 12px;
+    padding: var(--window-pad);
     z-index: 20;
     left: 50%;
     top: 10vh;
     transform: translateX(-50%);
-    max-height: calc(85vh - 24px);
+    max-width: calc(100vw - 16px);
+    max-height: min(calc(85vh - 24px), calc(100dvh - 16px));
     overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  /* Window header: sticks to the top of the window while the body scrolls under it.
+     The negative margins counter the window's --window-pad so the header spans the
+     full inner width and starts flush at the top border; the solid --panel-base
+     background (theme-driven) covers content scrolling beneath. The title is
+     centred; the close button (and any .panel-title-actions cluster) is pinned to
+     the top-right corner. The symmetric 34px inline padding keeps the centred
+     title optically true and clear of the pinned controls. */
+  .window > .panel-title {
+    position: sticky;
+    /* -pad, not 0: sticky insets resolve against the scrollport's content edge,
+       so the offset must mirror the negative margin that counters the window's
+       padding, or the header rests (and sticks) one padding too low. */
+    top: calc(-1 * var(--window-pad));
+    z-index: 6;
+    margin: calc(-1 * var(--window-pad)) calc(-1 * var(--window-pad)) 8px;
+    padding: 11px 34px 7px;
+    background: var(--panel-base);
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    min-width: 0;
+  }
+  .window > .panel-title > span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .window > .panel-title > .x-btn,
+  .window > .panel-title > .panel-title-actions {
+    position: absolute;
+    inset-inline-end: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  /* Resizable windows (class stamped by src/ui/window_resize.ts): a diagonal grip
+     drawn as an extra background layer on the window itself, so it stays pinned to
+     the visual bottom-right corner while the content scrolls (an element or
+     pseudo-element would scroll away with the content). The second layer restates
+     the shared --panel-bg frame gradient. */
+  .window.window-resizable {
+    background-image:
+      repeating-linear-gradient(135deg, transparent 0 3px, var(--gold-dim) 3px 4px), var(--panel-bg);
+    background-size:
+      12px 12px,
+      auto;
+    background-position:
+      right 3px bottom 3px,
+      0 0;
+    background-repeat: no-repeat, repeat;
+  }
+  .window.window-resize-hot,
+  .window.window-resizing {
+    cursor: nwse-resize;
+  }
+  .window.window-resizing {
+    user-select: none;
   }
 }

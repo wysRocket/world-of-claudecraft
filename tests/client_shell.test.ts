@@ -1239,7 +1239,7 @@ describe('client HTML shell', () => {
     // and #market-body keeps a min-height floor; the window itself stays
     // overflow:hidden so #market-body remains the single scroll container.
     expect(hudMobileCss).toContain(
-      'body.mobile-touch #market-window {\n    max-height: calc(100vh - 20px);\n    overflow: hidden;',
+      'body.mobile-touch #market-window {\n    max-height: calc(100dvh - 20px);\n    overflow: hidden;',
     );
     expect(hudMobileCss).toContain('body.mobile-touch #market-body {\n    min-height: 96px;');
     expect(marketWindowTs).toContain('buildMarketView'); // pagination + filtering delegated to the core
