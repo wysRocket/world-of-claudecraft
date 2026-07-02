@@ -1668,10 +1668,22 @@
       min-height: 40px;
     }
   }
+  /* Quest rows are clickable: they re-enable pointer events like the header
+     and jump to that quest's detail in the quest log (L). */
   #quest-tracker .qt-title {
     font-weight: bold;
     margin-top: 8px;
     font-family: var(--title-font);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  #quest-tracker .qt-title:hover {
+    color: #fff;
+  }
+  #quest-tracker .qt-title:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
   /* acceptance-order number, the same gold badge the world map paints */
   #quest-tracker .qt-num {

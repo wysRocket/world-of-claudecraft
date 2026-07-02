@@ -1221,6 +1221,9 @@ export class Hud {
     // delegate on the stable container (the header is rebuilt on each render).
     $('#quest-tracker').addEventListener('click', (e) => {
       if ((e.target as HTMLElement).closest('.qt-header')) this.toggleQuestTrackerCollapsed();
+      // A quest row jumps to that quest's detail in the quest log window.
+      const row = (e.target as HTMLElement).closest<HTMLElement>('.qt-title');
+      if (row?.dataset.quest) this.questlogWindow.openWithQuest(row.dataset.quest);
     });
     // Keyboard activation: handle Enter/Space here and stop the event before it
     // bubbles to the window-level game keybinds (Enter is bound to Open Chat,
@@ -1229,11 +1232,21 @@ export class Hud {
     // overlay, so canUseGameKeys() stays true and those binds fire while it has
     // focus; stopping propagation here keeps the toggle reachable by keyboard.
     $('#quest-tracker').addEventListener('keydown', (e) => {
-      if (!(e.target as HTMLElement).closest('.qt-header')) return;
-      if (e.key === 'Enter' || e.key === ' ' || e.code === 'Space') {
+      const target = e.target as HTMLElement;
+      if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
+      if (target.closest('.qt-header')) {
         e.preventDefault();
         e.stopPropagation();
         this.toggleQuestTrackerCollapsed();
+        return;
+      }
+      // Keyboard activation for the quest rows (role=button), stopped before
+      // the window-level game keybinds hijack Enter/Space (same as the header).
+      const row = target.closest<HTMLElement>('.qt-title');
+      if (row?.dataset.quest) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.questlogWindow.openWithQuest(row.dataset.quest);
       }
     });
     // The delve board and lockpick panel are non-modal .window.panel overlays, so
@@ -5060,7 +5073,7 @@ export class Hud {
       `<span class="qt-h-label">${esc(t('questUi.tracker.title'))}</span>${count}</button>`;
     let rows = '';
     for (const q of view.quests) {
-      rows += `<div class="qt-title"><span class="qt-num">${esc(this.questNumber(q.number))}</span>${esc(q.title)}${q.complete ? ` <span class="quest-complete">(${esc(t('questUi.tracker.complete'))})</span>` : ''}</div>`;
+      rows += `<div class="qt-title" role="button" tabindex="0" data-quest="${esc(q.id)}"><span class="qt-num">${esc(this.questNumber(q.number))}</span>${esc(q.title)}${q.complete ? ` <span class="quest-complete">(${esc(t('questUi.tracker.complete'))})</span>` : ''}</div>`;
       for (const o of q.objectives) {
         rows += `<div class="qt-obj${o.done ? ' done' : ''}">- ${esc(this.questProgressText(o.label, o.current, o.total))}</div>`;
       }
