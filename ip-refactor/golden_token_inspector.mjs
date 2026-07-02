@@ -14,12 +14,14 @@
 // Anything else - a numeric change, an array-length change, an unmapped
 // string change - is a violation: the slice changed behavior. STOP.
 //
-// Usage: node ip-refactor/golden_token_inspector.mjs [worktreeRoot]
+// Usage: node ip-refactor/golden_token_inspector.mjs [worktreeRoot] [baseRef=HEAD]
+// Pass baseRef=HEAD~1 to verify an already-committed slice (worktree == HEAD).
 import { execFileSync } from "node:child_process";
 import { readFileSync, readdirSync } from "node:fs";
 import { join, relative } from "node:path";
 
 const root = process.argv[2] || process.cwd();
+const baseRef = process.argv[3] || "HEAD";
 const mapPath = join(root, "ip-refactor", "NAME-MAP.md");
 
 // ---- load locked old->new pairs ----
@@ -88,8 +90,8 @@ for (const name of readdirSync(goldenDir)) {
   const rel = relative(root, abs).replace(/\\/g, "/");
   let headText;
   try {
-    headText = execFileSync("git", ["-C", root, "show", `HEAD:${rel}`], { encoding: "utf8", maxBuffer: 1 << 28 });
-  } catch { violations.push(`${name}: not in HEAD (new golden file - not sanctioned)`); continue; }
+    headText = execFileSync("git", ["-C", root, "show", `${baseRef}:${rel}`], { encoding: "utf8", maxBuffer: 1 << 28 });
+  } catch { violations.push(`${name}: not in ${baseRef} (new golden file - not sanctioned)`); continue; }
   const workText = readFileSync(abs, "utf8");
   if (headText === workText) continue;
   filesChanged++;
