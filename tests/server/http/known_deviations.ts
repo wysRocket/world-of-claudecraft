@@ -49,6 +49,7 @@ export const DEVIATION_ID = {
   adminBodyValidationRemap: 'admin-body-validation-remap',
   oauthBodyValidationRemap: 'oauth-body-validation-remap',
   internalBodyValidationRemap: 'internal-body-validation-remap',
+  oauthInternalOffTable405: 'oauth-internal-off-table-405-handoff',
 } as const;
 export type DeviationId = (typeof DEVIATION_ID)[keyof typeof DEVIATION_ID];
 
@@ -966,6 +967,36 @@ export const KNOWN_DEVIATIONS: readonly KnownDeviation[] = [
       'entries (with a hang, not a 500 prose body, as the legacy counterfactual). Not ' +
       'exercised by the db-free parity corpus (a real throw needs a DB failure behind a ' +
       'valid secret), documented here and pinned with fakes in tests/server/internal.test.ts.',
+  },
+  {
+    id: DEVIATION_ID.oauthInternalOffTable405,
+    routes: ['/oauth/authorize', '/oauth/device', '/internal/restart-countdown'],
+    currentBehavior:
+      'Phase 18 registers only the POST arms of these three paths, so the registry ' +
+      'RESOLVES a GET (or any unregistered method) on them to methodNotAllowed. The ' +
+      'Phase 9 dispatcher DELEGATES every non-matched resolve to the legacy ladder, so ' +
+      'today the served behavior is unchanged: GET /oauth/authorize and GET /oauth/device ' +
+      'are REAL feature pages (handleOAuth renders the consent and device-link HTML), and ' +
+      'a non-POST /internal/restart-countdown answers the deliberate feature-hiding 404 ' +
+      '"unknown endpoint" (the legacy arm method-checks before its secret gate). All ' +
+      'three are parity-pinned old-vs-new with captureBothModes in parity.test.ts.',
+    intendedBehavior:
+      'At the Phase 25 ladder deletion the dispatcher stops delegating and serves ' +
+      'methodNotAllowed itself (405 + Allow: POST). Applied blindly, that would regress ' +
+      'the two consent/device GET pages from working HTML to a 405 and would swap the ' +
+      'restart-countdown anti-enumeration 404 for a path-revealing 405. Phase 25 must ' +
+      'therefore migrate the two GET pages onto RouteDefs (meta.envelope "html", the ' +
+      'renderAuthorize / renderDevicePage cores unchanged) or retain a delegate for the ' +
+      'un-migrated GET paths, and decide the restart-countdown wrong-method shape ' +
+      'deliberately (keep the 404 or accept the 405) rather than by default.',
+    introducedInPhase: 18,
+    reason:
+      'Phase 18 keeps the OAuth GET pages OFF the route table (per the packet) and ' +
+      'preserves every wrong-method 404 purely by dispatcher delegation, so without this ' +
+      'entry nothing in the ledger records that the Phase 25 flip changes the served ' +
+      'behavior of these off-table arms. Sibling to planned405BeforeAuth and ' +
+      'companionTokenMethodFan (the systemic 405-at-the-flip framing); listed separately ' +
+      'because two of the arms are whole HTML pages, not just a status-code change.',
   },
 ];
 
