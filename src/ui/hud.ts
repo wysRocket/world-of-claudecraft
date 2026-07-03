@@ -7729,18 +7729,18 @@ export class Hud {
     const key = exact[text];
     if (key) return t(key);
 
-    let match = /^You must be in (Bear|Wolf) Form\.$/.exec(text);
+    let match = /^You must be in (Bruin|Wolf) Form\.$/.exec(text);
     if (match)
       return t('hud.errors.requiresForm', {
-        form: t(match[1] === 'Bear' ? 'hud.errors.bear' : 'hud.errors.cat'),
+        form: t(match[1] === 'Bruin' ? 'hud.errors.bear' : 'hud.errors.cat'),
       });
-    match = /^You can't do that in (Bear|Wolf|Travel) Form\.$/.exec(text);
+    match = /^You can't do that in (Bruin|Wolf|Fleet) Form\.$/.exec(text);
     if (match)
       return t('hud.errors.cantInForm', {
         form: t(
-          match[1] === 'Bear'
+          match[1] === 'Bruin'
             ? 'hud.errors.bear'
-            : match[1] === 'Travel'
+            : match[1] === 'Fleet'
               ? 'hud.errors.travel'
               : 'hud.errors.cat',
         ),
