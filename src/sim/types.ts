@@ -1469,6 +1469,12 @@ export interface Entity {
   castingAbility: string | null;
   castRemaining: number;
   castTotal: number;
+  // Entity-targeted casting: the target captured at cast start for entity-targeted
+  // casts (hostile and friendly) and channels. Timed casts and channel ticks resolve
+  // against this id, so retargeting mid-cast/mid-channel cannot redirect the spell,
+  // and clearing your target no longer cancels a channel. The channel still cancels
+  // if the locked target dies or turns non-hostile.
+  castTargetId: number | null;
   // Ground-targeted casting: the world point a `targetMode: 'position'` ability is
   // aimed at, captured (server-clamped to range) when the cast begins and read by
   // its area effects when it resolves. null for normal entity/self casts.
