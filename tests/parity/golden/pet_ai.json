@@ -17,7 +17,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 390,
-      "state": "f2893d06",
+      "state": "0355766e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -40,10 +40,12 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -103,7 +105,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 394,
-      "state": "987cf043",
+      "state": "4e5c10ed",
       "events": "11a8de12",
       "rng": {
         "draws": 14,
@@ -114,7 +116,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 394,
-      "state": "5423739a",
+      "state": "c9a57cb4",
       "events": "741638a5",
       "rng": {
         "draws": 14,
@@ -125,7 +127,7 @@
       "tick": 60,
       "time": 3,
       "nextId": 394,
-      "state": "2415fc54",
+      "state": "9a73bf3e",
       "events": "78032d7d",
       "rng": {
         "draws": 107,
@@ -136,7 +138,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 394,
-      "state": "549e1346",
+      "state": "b512e124",
       "events": "741638a5",
       "rng": {
         "draws": 186,
@@ -147,7 +149,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 394,
-      "state": "b6cf6270",
+      "state": "40e48b72",
       "events": "7ffe1025",
       "rng": {
         "draws": 307,
@@ -158,7 +160,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 394,
-      "state": "162be455",
+      "state": "cf5a5d77",
       "events": "741638a5",
       "rng": {
         "draws": 418,
@@ -169,7 +171,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 394,
-      "state": "cd049fc7",
+      "state": "7930c6f5",
       "events": "741638a5",
       "rng": {
         "draws": 418,
@@ -194,11 +196,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -453,11 +457,11 @@
           "threat": [
             [
               389,
-              27
+              26
             ],
             [
               392,
-              61
+              60
             ]
           ],
           "weapon": {
@@ -472,7 +476,7 @@
       "tick": 140,
       "time": 7,
       "nextId": 394,
-      "state": "e8c904b8",
+      "state": "b2b69e3c",
       "events": "741638a5",
       "rng": {
         "draws": 518,
@@ -483,7 +487,7 @@
       "tick": 160,
       "time": 8,
       "nextId": 394,
-      "state": "1f65b13a",
+      "state": "4d069242",
       "events": "741638a5",
       "rng": {
         "draws": 637,
@@ -494,7 +498,7 @@
       "tick": 180,
       "time": 9,
       "nextId": 394,
-      "state": "43a389c1",
+      "state": "06517971",
       "events": "741638a5",
       "rng": {
         "draws": 777,
@@ -505,7 +509,7 @@
       "tick": 180,
       "time": 9,
       "nextId": 394,
-      "state": "43a389c1",
+      "state": "06517971",
       "events": "741638a5",
       "rng": {
         "draws": 777,
@@ -530,11 +534,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [

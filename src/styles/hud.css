@@ -416,17 +416,132 @@
     align-items: center;
     justify-content: center;
   }
+  /* Player Frame Scale (--player-frame-scale, playerFrameScale setting): zoom
+     like the global --ui-scale, so portrait, bars, and pips shrink or grow
+     together, docked or detached. Applied to the frame's CHILDREN, never the
+     positioned frame itself: zoom on the frame would also multiply its used
+     left/top and break the MovableFrame drag math. The move button stays
+     unscaled so the tap target keeps its size. */
+  #player-frame > :not(.tf-move-btn) {
+    zoom: var(--player-frame-scale, 1);
+  }
   #player-frame .uf-bars {
     flex: 1;
     width: auto;
     min-width: 0;
     max-width: 520px;
   }
+  /* The player frame once MOVED (MovableFrame sets pf-detached alongside the
+     saved left/top): hud.ts reparents it from the action-bar stack to #ui (a
+     transformed #bottom-bar ancestor would hijack the positioning), where it
+     sits absolutely like the target frame and drops to the target frame's
+     compact bar width, so the two frames read as a pair. Desktop only; the
+     mobile stylesheet owns its own placement (the controller clears the inline
+     position and this class on the mobile layout). */
+  #player-frame.pf-detached {
+    position: absolute;
+    top: 12px;
+    width: auto;
+    margin: 0;
+    justify-content: flex-start;
+    z-index: 6;
+  }
+  #player-frame.pf-detached .uf-bars {
+    flex: none;
+    width: 190px;
+  }
   #target-frame {
     left: 12px;
     top: 12px;
     display: none;
     z-index: 6;
+  }
+  /* Target Frame Scale (--target-frame-scale, targetFrameScale setting): the
+     player frame's twin. Children only, never the drag-positioned frame itself
+     (zoom there would multiply its used left/top and break the MovableFrame
+     drag math); the move button stays unscaled so the tap target keeps its size. */
+  #target-frame > :not(.tf-move-btn) {
+    zoom: var(--target-frame-scale, 1);
+  }
+  /* Movable unit frames: the small corner toggle (built by MovableFrame in
+     movable_frame.ts) that unlocks
+     the frame for dragging and locks it back. Sits just outside the top-right
+     corner like the rest badge, so it never overlaps the portrait or bars. The
+     glyph is a mask: move arrows while LOCKED (press to move), a padlock while
+     UNLOCKED (press to fix). Desktop only (hidden on mobile-touch). */
+  .unitframe .tf-move-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: 1px solid #4a3d1d;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
+    color: var(--color-text-muted);
+    cursor: var(--cursor-point);
+    opacity: 0.6;
+    z-index: 7;
+    box-shadow:
+      inset 0 1px 0 #ffffff14,
+      0 1px 3px #0009;
+    transition:
+      opacity 0.12s ease,
+      border-color 0.12s ease,
+      color 0.12s ease;
+  }
+  .unitframe .tf-move-btn::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background-color: currentColor;
+    -webkit-mask:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M12%201.5%208.5%205H11v6H5V8.5L1.5%2012%205%2015.5V13h6v6H8.5L12%2022.5%2015.5%2019H13v-6h6v2.5L22.5%2012%2019%208.5V11h-6V5h2.5z'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M12%201.5%208.5%205H11v6H5V8.5L1.5%2012%205%2015.5V13h6v6H8.5L12%2022.5%2015.5%2019H13v-6h6v2.5L22.5%2012%2019%208.5V11h-6V5h2.5z'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  .unitframe .tf-move-btn:hover {
+    opacity: 1;
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .unitframe .tf-move-btn:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 1px;
+    opacity: 1;
+  }
+  /* Unlocked (move mode): highlight the button gold and swap to the padlock glyph. */
+  .unitframe .tf-move-btn.active {
+    opacity: 1;
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .unitframe .tf-move-btn.active::before {
+    -webkit-mask:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M7%2010V7a5%205%200%200%201%2010%200v3h1.2A1.8%201.8%200%200%201%2020%2011.8v7.4A1.8%201.8%200%200%201%2018.2%2021H5.8A1.8%201.8%200%200%201%204%2019.2v-7.4A1.8%201.8%200%200%201%205.8%2010H7zm2%200h6V7a3%203%200%200%200-6%200v3z'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask:
+      url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20d='M7%2010V7a5%205%200%200%201%2010%200v3h1.2A1.8%201.8%200%200%201%2020%2011.8v7.4A1.8%201.8%200%200%201%2018.2%2021H5.8A1.8%201.8%200%200%201%204%2019.2v-7.4A1.8%201.8%200%200%201%205.8%2010H7zm2%200h6V7a3%203%200%200%200-6%200v3z'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+  /* The frame while unlocked: a dashed gold hint and a move cursor over the body. */
+  .unitframe.tf-unlocked {
+    cursor: move;
+    outline: 1px dashed var(--gold);
+    outline-offset: 2px;
+    touch-action: none;
+  }
+  body.target-frame-dragging,
+  body.target-frame-dragging *,
+  body.player-frame-dragging,
+  body.player-frame-dragging * {
+    user-select: none;
+  }
+  body.mobile-touch .unitframe .tf-move-btn {
+    display: none;
   }
   .portrait-wrap {
     position: relative;
@@ -1654,10 +1769,38 @@
       min-height: 40px;
     }
   }
+  /* Quest rows are clickable: they re-enable pointer events like the header
+     and jump to that quest's detail in the quest log (L). */
   #quest-tracker .qt-title {
     font-weight: bold;
     margin-top: 8px;
     font-family: var(--title-font);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  #quest-tracker .qt-title:hover {
+    color: #fff;
+  }
+  #quest-tracker .qt-title:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  /* acceptance-order number, the same gold badge the world map paints */
+  #quest-tracker .qt-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    border-radius: 50%;
+    background: var(--color-map-quest-badge-fill);
+    color: var(--color-map-quest-badge-text);
+    border: 1px solid #000;
+    font-size: 11px;
+    font-family: var(--ui-font);
+    vertical-align: text-bottom;
   }
   #quest-tracker .qt-obj {
     color: var(--color-text-overlay);
@@ -2298,6 +2441,44 @@
     color: var(--color-text-muted);
     font-size: 11px;
   }
+  /* World mob-hover tooltip (mob_tooltip_view.ts): a bit roomier than the default
+     item/ability tooltip box, since it is read at a glance while moving. The
+     compound selector (higher specificity than the plain #tooltip .tt-title/
+     .tt-sub/.tt-red/.tt-green rules above and the --tooltip-scale rules below)
+     wins regardless of source order; still scales with the user's own Tooltip
+     Text Size setting via --tooltip-scale so it does not fight that control.
+     hud.ts toggles the "mob-tooltip" class: added for showMobHoverTooltip,
+     removed by every other tooltip path (attachTooltip/hideTooltip) so it never
+     leaks its bigger sizing onto an item/ability tooltip that reuses #tooltip. */
+  #tooltip.mob-tooltip {
+    max-width: 340px;
+    padding: 10px 14px;
+    font-size: calc(14px * var(--tooltip-scale, 1));
+  }
+  #tooltip.mob-tooltip .tt-title {
+    font-size: calc(17px * var(--tooltip-scale, 1));
+  }
+  #tooltip.mob-tooltip .tt-sub,
+  #tooltip.mob-tooltip .tt-red,
+  #tooltip.mob-tooltip .tt-green {
+    font-size: calc(14px * var(--tooltip-scale, 1));
+  }
+  /* The map quest-giver glyph tooltip: the quest's level-requirement line,
+     dimmed under its gold title so the name stays the focus. */
+  #tooltip .tt-quest-req {
+    color: var(--color-text-muted);
+    font-size: 12px;
+  }
+  /* Questie-style quest lines in the mob tooltip: quest title in green over
+     its objective progress in gold, between level/family and the reaction. */
+  #tooltip.mob-tooltip .tt-quest-name {
+    color: var(--color-text-success);
+    font-size: calc(14px * var(--tooltip-scale, 1));
+  }
+  #tooltip.mob-tooltip .tt-quest-obj {
+    color: var(--gold);
+    font-size: calc(14px * var(--tooltip-scale, 1));
+  }
   /* Item-set (tier set) tooltip lines: gold set name, then bonus tiers that are
      dim until their piece threshold is met, lit green when active. */
   #tooltip .tt-set-name {
@@ -2545,16 +2726,19 @@
   body.compact-chat #chatlog-frame {
     height: 120px;
   }
-  /* High-Contrast Text, thicker dark outline behind HUD labels. */
+  /* High-Contrast Text, thicker outline behind HUD labels. The outline color
+     (--text-outline-color) is theme-aware: it sits on the opposite side of the
+     panel's lightness from the body text, so it sharpens the glyph edge
+     instead of blurring into it on light panels like Parchment. */
   body.high-contrast-text .chat-pane div,
   body.high-contrast-text .panel,
   body.high-contrast-text .set-name,
   body.high-contrast-text .tt-stat,
   body.high-contrast-text .tt-desc {
     text-shadow:
-      0 0 2px #000,
-      1px 1px 2px #000,
-      -1px -1px 2px #000;
+      0 0 2px var(--text-outline-color, #000),
+      1px 1px 2px var(--text-outline-color, #000),
+      -1px -1px 2px var(--text-outline-color, #000);
   }
   /* Reduce Motion, drop HUD animations/transitions (mirrors prefers-reduced-motion). */
   body.reduce-motion .fct {

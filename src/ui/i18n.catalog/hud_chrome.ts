@@ -359,13 +359,22 @@ export const hudChromeStrings = {
     // Interface panel toggle: nameplate glyph/outline, inspect block, player
     // card, and the Developers leaderboard tab (on by default).
     showDevBadges: 'Show Developer Badges',
+    // Interface panel toggle: render your own overhead nameplate the way other
+    // players see it (on by default).
+    showOwnNameplate: 'Show My Nameplate',
     // Interface panel: global HUD zoom slider, and the mirror of the landing
     // page's high-contrast backdrop toggle.
     uiScale: 'UI Scale',
+    // Interface panel sliders: scale just the player / target unit frame
+    // (wordy, M16: the five non-Latin fills land in the same change as each).
+    playerFrameScale: 'Player Frame Scale',
+    targetFrameScale: 'Target Frame Scale',
     highContrastBackground: 'High-Contrast Background',
     // Interface panel toggle: also engage auto-attack when using an offensive
     // ability, so white swings start without a separate Attack press (on by default).
     startAttackOnAbility: 'Auto-Attack on Ability Use',
+    // Interface panel toggle: loot corpses by walking past them (off by default).
+    walkByAutoloot: 'Walk-by Autoloot',
     groundReticle: 'Ground-Targeting Reticle',
     // Interface panel toggle + the item-tooltip lines it reveals (off by default).
     showItemLevel: 'Show Item Level',
@@ -896,6 +905,12 @@ export const hudChromeStrings = {
       nature: 'Nature',
     },
   },
+  // World-boss spawn announcement. The sim emits this server-wide in English when a
+  // world boss rises; src/ui/sim_i18n.ts re-localizes it through this key, splicing
+  // the localized boss name. English-only domain so an English-only PR compiles.
+  worldBoss: {
+    spawn: '{name} rises over Thornpeak Heights!',
+  },
   // Loot window title shown only when the chest entity is missing (the normal path
   // uses the chest's localized entity name); replaces a former hard-coded 'Chest'.
   loot: {
@@ -915,6 +930,44 @@ export const hudChromeStrings = {
   nameplate: {
     mob: '[{level}] {name}',
     mobElite: '[{level}+] {name}',
+  },
+  // World mouseover tooltip shown when hovering a mob (mob_tooltip_view.ts):
+  // name (colored by the nameplate con-color), then "Level N <type>" ({family}
+  // reuses the existing guide.family.<id>.name bestiary labels), then a
+  // Friendly/Hostile reaction line (green/red, from Entity.hostile). All three
+  // values below are wordy (M16): filled in the five non-Latin locales in this
+  // same change.
+  mobTooltip: {
+    levelFamily: 'Level {level} {family}',
+    // The one MobFamily with no guide.family.* bestiary entry (demons are
+    // warlock-pet / zone encounter mobs, out of scope for the public wiki
+    // bestiary generator), so it needs its own word here.
+    familyDemon: 'Demon',
+    hostile: 'Hostile',
+    friendly: 'Friendly',
+  },
+  // Movable target frame: the small corner toggle that unlocks the frame for
+  // dragging and locks it back in place (target_frame_pos.ts + hud.ts wiring).
+  // The one button swaps its accessible name with its pressed state; both values
+  // are wordy (M16), filled in the five non-Latin locales in this same change.
+  targetFrame: {
+    // aria-label / title while LOCKED (aria-pressed=false): press to move it.
+    unlock: 'Move target frame',
+    // aria-label / title while UNLOCKED (aria-pressed=true): press to fix it.
+    lock: 'Lock target frame',
+  },
+  // Movable player frame: the same MovableFrame corner toggle on #player-frame
+  // (movable_frame.ts). Same shape as targetFrame above; both values are wordy
+  // (M16), filled in the five non-Latin locales in this same change.
+  playerFrame: {
+    unlock: 'Move player frame',
+    lock: 'Lock player frame',
+  },
+  // Interface panel row: snap both movable unit frames back to their stock
+  // spots (the button reuses chatWindow.resetAction). Wordy (M16): the five
+  // non-Latin fills land in this same change.
+  frameReset: {
+    label: 'Reset Frame Positions',
   },
   // Item tooltip: the minimum character level needed to equip a piece (classic
   // "Requires Level N"). Shown red when the viewer is below it. {level} runs
@@ -1006,6 +1059,7 @@ export const hudChromeStrings = {
     memberSinceDays: '{days}d in the Discord',
     roleTag: {
       levyst: 'Levy St',
+      admin: 'Admin',
       devs: 'Dev',
       mods: 'Mod',
       artists: 'Artist',

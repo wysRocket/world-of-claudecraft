@@ -81,6 +81,7 @@ import {
   recordInGameAction,
 } from './moderation_db';
 import { type ModerationHost, ModerationService } from './moderation_service';
+import { consumeMsgToken, createMsgRateBucket, type MsgRateBucketState } from './msg_rate_limit';
 import { nextRaidResetMs } from './raid_reset';
 import { REALM, REALM_PUBLIC_ORIGIN, REALM_RESET_TIME_ZONE } from './realm';
 import { createSerialWriter } from './serial_writer';
@@ -337,6 +338,10 @@ export interface ClientSession {
   chatLastRateError: number;
   chatRateViolations: number;
   chatCooldownUntil: number;
+  // Global inbound-message token bucket (#978): covers every frame (input,
+  // cast, cmd, ...), separate from the chat-only bucket above, so a client
+  // flooding non-chat frames is throttled/kicked instead of processed unconditionally.
+  msgRate: MsgRateBucketState;
   chatMutedUntil: number | null;
   chatMuteReason: string;
   // Hard-word enforcement strike count driving the mute ladder. Account-scoped:
@@ -1496,6 +1501,7 @@ export class GameServer {
       chatLastRateError: 0,
       chatRateViolations: 0,
       chatCooldownUntil: 0,
+      msgRate: createMsgRateBucket(Date.now() / 1000),
       chatMutedUntil: meta.mutedUntil ? new Date(meta.mutedUntil).getTime() : null,
       chatMuteReason: meta.reason ?? '',
       chatStrikes: meta.chatStrikes ?? 0,
@@ -2134,6 +2140,12 @@ export class GameServer {
 
   handleMessage(session: ClientSession, raw: string): void {
     const receivedAtMs = Date.now();
+    const verdict = consumeMsgToken(session.msgRate, receivedAtMs / 1000);
+    if (verdict === 'kick') {
+      void this.kickSession(session, 'rejected by server', 'moderation action');
+      return;
+    }
+    if (verdict === 'drop') return;
     let msg: unknown;
     try {
       msg = JSON.parse(raw);
@@ -2284,6 +2296,9 @@ export class GameServer {
         break;
       case 'loot':
         if (typeof msg.id === 'number') sim.lootCorpse(msg.id, pid);
+        break;
+      case 'autoloot':
+        if (typeof msg.id === 'number') sim.autoLoot(msg.id, pid);
         break;
       case 'lootRoll':
         if (
@@ -3158,6 +3173,11 @@ export class GameServer {
     maybe('dcomp', this.sim.companionUpgradesFor(anchorSession.pid));
     maybe('dclears', this.sim.delveClearsFor(anchorSession.pid));
     maybe('delveDaily', this.sim.delveDailyWire(anchorSession.pid));
+    // Gathering profession proficiency (Mining/Logging/Herbalism), a small
+    // per-player read, so kept per-tick like the other small maps above. Wire
+    // key `prof` and IWorld member `professionsState` are the settled names
+    // for the professions facet (#1164, src/sim/professions/CLAUDE.md).
+    maybe('prof', this.sim.professionsStateFor(anchorSession.pid));
     // stats + weapon stay per-tick: recalcPlayerStats re-derives them on every
     // stat-affecting aura gain/loss (Bear/Cat Form, shouts, debuffs, elixir
     // wear-off, a buff cast on you by someone else), none of which mark this

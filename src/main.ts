@@ -4,12 +4,14 @@
 import './styles/index.css';
 import { syncAppViewport as syncAppViewportShared } from './game/app_viewport';
 import { audio } from './game/audio';
+import { AutoLoot } from './game/autoloot';
 import {
   BROWSER_BODY_CLASSES,
   browserBodyClasses,
   cssEffectsTier,
   readBrowserEnv,
 } from './game/browser_env';
+import { isCameraDrivenFacingActive } from './game/camera_driven_facing';
 import { cameraFollowShouldSettle, updateFollowCameraYaw, wrapAngle } from './game/camera_follow';
 import {
   clickMoveShouldWalk,
@@ -53,6 +55,12 @@ import {
   Settings,
 } from './game/settings';
 import { sfx } from './game/sfx';
+import {
+  recordSkipTap,
+  type SpawnCinematic,
+  spawnCinematicFor,
+  spawnCinematicPose,
+} from './game/spawn_cinematic';
 import { resolveUiEffectsProfile } from './game/ui_effects_profile';
 import { currentUtcDay } from './game/utc_day';
 import { voice } from './game/voice';
@@ -844,6 +852,7 @@ async function startGame(
   offlineSim: Sim | null,
   online: ClientWorld | null,
   keybindScope: string,
+  playIntro = false,
 ): Promise<void> {
   // Model/texture/HDRI fetches were kicked off at module import; the renderer
   // builds its scene synchronously, so everything must be resolved first.
@@ -946,11 +955,13 @@ async function startGame(
   uiEffectsApplier.applyNow();
   let renderer!: Renderer;
   let hud!: Hud;
+  const autoLoot = new AutoLoot();
   const perf = createPerfMonitor(null);
   try {
     renderer = new Renderer(world, canvas, nameplates);
     renderer.setAudioSink(sfx);
     renderer.showDevBadges = settings.get('showDevBadges');
+    renderer.showOwnNameplate = settings.get('showOwnNameplate');
     // Dev-only: ?targetcone=1 draws the Tab-target front cone on the ground in
     // front of the player, for tuning the targeting angle/radius (tab_target.ts).
     if (import.meta.env.DEV && new URLSearchParams(location.search).get('targetcone') === '1') {
@@ -1439,6 +1450,10 @@ async function startGame(
       renderer.showDevBadges = settings.set('showDevBadges', !!value);
       return;
     }
+    if (key === 'showOwnNameplate') {
+      renderer.showOwnNameplate = settings.set('showOwnNameplate', !!value);
+      return;
+    }
     if (key === 'invertLookY') {
       input.setInvertLookY(settings.set('invertLookY', !!value));
       return;
@@ -1557,6 +1572,12 @@ async function startGame(
         break;
       case 'uiScale':
         document.documentElement.style.setProperty('--ui-scale', String(v));
+        break;
+      case 'playerFrameScale':
+        document.documentElement.style.setProperty('--player-frame-scale', String(v));
+        break;
+      case 'targetFrameScale':
+        document.documentElement.style.setProperty('--target-frame-scale', String(v));
         break;
       // Graphics-tier HUD effects follow the STATIC preset + the advanced
       // effectsQuality slider. The 3D renderer tier is resolved at renderer
@@ -2010,9 +2031,11 @@ async function startGame(
   // eases back to zero so the camera settles in behind the character.
   let lastInterpFacing: number | null = null;
   let wasClickMoving = false;
-  // Tracks classic right-mouse mouselook across frames so its falling edge can
-  // commit the final camera yaw to the player facing (see mouselook_release.ts).
-  let prevMouselook = false;
+  // Tracks camera-driven facing (classic right-mouse mouselook, or Mouse Camera
+  // mode while a movement key is held) across frames so its falling edge can
+  // commit the final camera yaw to the player facing (see mouselook_release.ts
+  // and camera_driven_facing.ts).
+  let prevCameraDrivenFacing = false;
   // The release yaw, latched until a sim tick actually commits it. Offline a tick
   // runs on only ~2/3 of frames (60Hz frames, 20Hz ticks), so committing only on
   // the release frame would drop the one-shot when release lands on a zero-tick
@@ -2178,22 +2201,35 @@ async function startGame(
   function updateHoverCursor(): void {
     if (!input.hoverActive || input.isDragging() || hud.isModalOpen()) {
       input.setHoverCursor('default');
+      hud.clearMobHoverTooltip();
       return;
     }
     if (hoverPickGate.shouldPick(input.hoverX, input.hoverY, performance.now())) {
       hoverPickedId = renderer.pick(input.hoverX, input.hoverY);
     }
     const entity = hoverPickedId !== null ? world.entities.get(hoverPickedId) : undefined;
-    input.setHoverCursor(
-      hoverCursorKind(entity, world.playerId, partyMemberIds(), activePvpOpponentIds(world)),
-    );
+    const pvpOpponents = activePvpOpponentIds(world);
+    input.setHoverCursor(hoverCursorKind(entity, world.playerId, partyMemberIds(), pvpOpponents));
+    // WoW-style mouseover tooltip (name / level / creature type) for a mob under
+    // the cursor, reusing the same (gated) pick this function already does for
+    // the hover-cursor kind above; the tooltip content still re-resolves every
+    // frame from live entity state, so counts and death update without a re-pick.
+    if (entity && entity.kind === 'mob' && !entity.dead) {
+      hud.showMobHoverTooltip(entity, pvpOpponents);
+    } else {
+      hud.clearMobHoverTooltip();
+    }
   }
 
   function renderFacingOverride(): number | null {
-    if (input.isMouseCameraMode()) {
-      return cameraMoveActive() ? input.camYaw : null;
-    }
-    return input.isMouselookActive() && !world.player.dead ? input.camYaw : null;
+    return isCameraDrivenFacingActive(
+      input.isMouseCameraMode(),
+      cameraMoveActive(),
+      input.isMouselookActive(),
+      world.player.dead,
+    )
+      ? input.camYaw
+      : null;
   }
 
   function cameraMoveActive(): boolean {
@@ -2235,8 +2271,9 @@ async function startGame(
     syncPerfOverlay(frameDt, now);
 
     // freeze movement while the game menu is up so WASD doesn't walk the
-    // character behind it (other windows stay non-modal, as before)
-    input.suspendMovement = !gameInputReady || hud.isModalOpen();
+    // character behind it (other windows stay non-modal, as before); the
+    // first-spawn intro cinematic holds movement the same way until it lands
+    input.suspendMovement = !gameInputReady || hud.isModalOpen() || intro !== null;
     perf.trace('input.updateTouchLook', () => input.updateTouchLook(frameDt), {
       frameDtMs: frameDt * 1000,
     });
@@ -2244,15 +2281,26 @@ async function startGame(
     perf.trace('input.hoverCursor', () => updateHoverCursor(), { active: input.hoverActive });
     perf.markInputFrame(performance.now());
 
-    const mouselook = input.isMouselookActive() && !world.player.dead;
+    const mouselook = intro === null && input.isMouselookActive() && !world.player.dead;
     const controllerFacing = input.controllerFacingOverride();
     const renderFacing = renderFacingOverride();
-    // On the frame mouselook is released, latch the final camera yaw so the player
-    // facing ends exactly where the camera ended; otherwise the last slice of the
-    // turn is dropped and the character lags the camera. The render/controller
+    // On the frame the camera lets go of the player's heading (classic mouselook
+    // release, OR a Mouse Camera mode move key release), latch the final camera yaw
+    // so the facing ends exactly where the camera ended; otherwise the last slice of
+    // the turn is dropped and the character lags the camera. The render/controller
     // overrides take precedence and reclaim the heading, clearing any stale latch.
-    const edgeReleaseFacing = mouselookReleaseFacing(prevMouselook, mouselook, input.camYaw);
-    prevMouselook = mouselook;
+    const cameraDrivenFacing = isCameraDrivenFacingActive(
+      input.isMouseCameraMode(),
+      cameraMoveActive(),
+      input.isMouselookActive(),
+      world.player.dead,
+    );
+    const edgeReleaseFacing = mouselookReleaseFacing(
+      prevCameraDrivenFacing,
+      cameraDrivenFacing,
+      input.camYaw,
+    );
+    prevCameraDrivenFacing = cameraDrivenFacing;
     if (renderFacing !== null || controllerFacing !== null) {
       pendingReleaseFacing = null;
     } else if (edgeReleaseFacing !== null) {
@@ -2302,6 +2350,7 @@ async function startGame(
           frameDtMs: frameDt * 1000,
         },
       );
+      introCameraTick(now);
       renderer.camYaw = input.camYaw;
       renderer.camPitch = input.camPitch;
       renderer.camDist = input.camDist;
@@ -2316,6 +2365,7 @@ async function startGame(
       );
       perf.trace('ui.clickMoveMarker', () => updateClickMoveMarker());
       perf.markInputVisible(performance.now());
+      if (settings.get('walkByAutoloot')) autoLoot.run(world, now);
       perf.time('hud', () => perf.trace('hud.update', () => hud.update(), { mode: 'offline' }));
       perf.tick(now);
       return;
@@ -2396,6 +2446,7 @@ async function startGame(
         lastSnapAge: net.lastSnapAt > 0 ? performance.now() - net.lastSnapAt : -1,
       },
     );
+    introCameraTick(now);
     renderer.camYaw = input.camYaw;
     renderer.camPitch = input.camPitch;
     renderer.camDist = input.camDist;
@@ -2421,6 +2472,7 @@ async function startGame(
     perf.trace('ui.clickMoveMarker', () => updateClickMoveMarker());
     maybeShowImmobileNote(now);
     perf.markInputVisible(performance.now());
+    if (settings.get('walkByAutoloot')) autoLoot.run(world, now);
     perf.time('hud', () => perf.trace('hud.update', () => hud.update(), { mode: 'online' }));
     perf.tick(now);
   }
@@ -2436,6 +2488,87 @@ async function startGame(
       input.clearControllerMoveInput();
     },
   };
+  // First-spawn intro cinematic: a newly created character's first entry opens
+  // far out across the field and glides in toward the character; the HUD stays
+  // hidden until the camera lands. Escape (or a rapid tap burst on touch, which
+  // has no Escape key) skips straight to the end; other input is swallowed
+  // while it runs. Seen-state persists per character so it plays exactly once;
+  // reduce-motion players go straight to gameplay.
+  const INTRO_SEEN_KEY = `woc_spawn_intro_seen:${keybindScope}`;
+  let introSeen = true;
+  try {
+    introSeen = localStorage.getItem(INTRO_SEEN_KEY) === '1';
+  } catch {
+    // storage unavailable: the seen marker can't persist, so treat the intro as
+    // seen rather than replaying it on every boot
+  }
+  let intro: { cinematic: SpawnCinematic; startedAt: number | null } | null = null;
+  const setIntroUiHidden = (hidden: boolean): void => {
+    const display = hidden ? 'none' : '';
+    const ui = document.getElementById('ui');
+    if (ui) ui.style.display = display;
+    // The touch controls are a top-level layer OUTSIDE #ui, so they need their
+    // own toggle or the joysticks and combat buttons stay up during the intro
+    // on mobile. Clearing to '' hands display back to the stylesheet
+    // (body.mobile-touch.game-active shows it, desktop keeps it hidden).
+    const mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) mobileControls.style.display = display;
+    nameplates.style.display = display;
+  };
+  const finishIntro = (skipToEnd: boolean): void => {
+    if (!intro) return;
+    const end = intro.cinematic.end;
+    intro = null;
+    if (skipToEnd) {
+      input.camYaw = end.yaw;
+      input.camPitch = end.pitch;
+      input.camDist = end.dist;
+    }
+    setIntroUiHidden(false);
+    window.removeEventListener('keydown', skipIntro, true);
+    window.removeEventListener('pointerdown', skipIntro, true);
+    try {
+      localStorage.setItem(INTRO_SEEN_KEY, '1');
+    } catch {
+      // storage unavailable: worst case the intro replays next session
+    }
+  };
+  const introTaps: number[] = [];
+  const skipIntro = (e: Event): void => {
+    // Swallow gameplay input while the intro runs; only the skip gestures act.
+    e.stopPropagation();
+    if (e.type === 'keydown') {
+      if ((e as KeyboardEvent).key !== 'Escape') return;
+      e.preventDefault(); // skip only: the eaten Escape must not open the menu
+      finishIntro(true);
+      return;
+    }
+    if (recordSkipTap(introTaps, performance.now() / 1000)) finishIntro(true);
+  };
+  // Applied each frame between the follow-camera update and the renderer read,
+  // so the cinematic pose wins over mouse/follow input while it runs.
+  const introCameraTick = (now: number): void => {
+    if (!intro) return;
+    const elapsed = intro.startedAt === null ? 0 : (now - intro.startedAt) / 1000;
+    const pose = spawnCinematicPose(elapsed, intro.cinematic);
+    input.camYaw = pose.yaw;
+    input.camPitch = pose.pitch;
+    input.camDist = pose.dist;
+    if (pose.done) finishIntro(false);
+  };
+  if (playIntro && !introSeen && world.player.level <= 1 && !settings.get('reduceMotion')) {
+    intro = {
+      cinematic: spawnCinematicFor({
+        yaw: input.camYaw,
+        pitch: input.camPitch,
+        dist: input.camDist,
+      }),
+      startedAt: null,
+    };
+    setIntroUiHidden(true);
+    window.addEventListener('keydown', skipIntro, true);
+    window.addEventListener('pointerdown', skipIntro, true);
+  }
   input.suspendMovement = true;
   await nextPaint();
   try {
@@ -2450,6 +2583,9 @@ async function startGame(
   requestAnimationFrame(() =>
     requestAnimationFrame(() => {
       hideLoadingScreen();
+      // Start the intro clock as the loading screen begins to fade: the camera
+      // holds the opening pose until now, so the fade doubles as the cut in.
+      if (intro) intro.startedAt = performance.now();
       window.setTimeout(() => {
         gameInputReady = true;
         perf.reset();
@@ -2552,7 +2688,7 @@ async function startOffline(playerClass: PlayerClass, name: string, skin = 0): P
   }
   // Offline characters are not persisted (a fresh name is typed each session),
   // so the only stable handle is class + name. Keybinds scope to that pair.
-  void startGame(sim, sim, null, `offline:${playerClass}:${name}`);
+  void startGame(sim, sim, null, `offline:${playerClass}:${name}`, true);
 }
 
 // ---------------------------------------------------------------------------
@@ -3905,7 +4041,7 @@ async function enterWorld(c: CharacterSummary, button?: HTMLButtonElement): Prom
   const poll = setInterval(() => {
     if (world.connected && world.entities.has(world.playerId)) {
       clearInterval(poll);
-      void startGame(world, null, world, `char:${c.id}`);
+      void startGame(world, null, world, `char:${c.id}`, true);
     } else if (Date.now() - waitStart > 10000) {
       clearInterval(poll);
       world.close();
@@ -5675,6 +5811,105 @@ function wireDiscordKeepModal(): void {
   });
 }
 
+// ── Mandatory recovery-email capture modal (#recovery-email-modal) ───────────
+// Shown on sign-in when the signed-in account has no recovery email yet (accounts
+// created before email was mandatory, or a Discord login that returned no address).
+// It is deliberately blocking: the player must set an address or log out, so the
+// backdrop/Escape do NOT close it. The gate awaits the returned promise before
+// entering the realm.
+const EMAIL_SHAPE_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let recoveryEmailResolve: (() => void) | null = null;
+
+function openRecoveryEmailModal(): Promise<void> {
+  const modal = document.getElementById('recovery-email-modal');
+  if (!modal) return Promise.resolve();
+  const input = document.getElementById('recovery-email-input') as HTMLInputElement | null;
+  const errEl = document.getElementById('recovery-email-error');
+  if (input) input.value = '';
+  if (errEl) errEl.textContent = '';
+  modal.hidden = false;
+  input?.focus();
+  return new Promise<void>((resolve) => {
+    recoveryEmailResolve = resolve;
+  });
+}
+
+function closeRecoveryEmailModal(): void {
+  const modal = document.getElementById('recovery-email-modal');
+  if (modal) modal.hidden = true;
+  const done = recoveryEmailResolve;
+  recoveryEmailResolve = null;
+  done?.();
+}
+
+function wireRecoveryEmailModal(): void {
+  const modal = document.getElementById('recovery-email-modal');
+  if (!modal) return;
+  const input = document.getElementById('recovery-email-input') as HTMLInputElement | null;
+  const errEl = document.getElementById('recovery-email-error');
+  const submit = () => {
+    const email = (input?.value ?? '').trim();
+    // Mirror the server validator so the user gets an inline error before the round
+    // trip (the server re-validates and is the authority).
+    if (!email || email.length > 254 || !EMAIL_SHAPE_RE.test(email)) {
+      if (errEl) errEl.textContent = t('auth.recovery.invalid');
+      input?.focus();
+      return;
+    }
+    if (errEl) errEl.textContent = '';
+    void api
+      .setInitialEmail(email)
+      .then(() => closeRecoveryEmailModal())
+      .catch((err) => {
+        // A 409 means the address was set elsewhere (another tab) between opening
+        // this modal and submitting: there is nothing left to capture, so proceed.
+        if ((err as { status?: number })?.status === 409) {
+          api.emailMissing = false;
+          closeRecoveryEmailModal();
+          return;
+        }
+        if (errEl) errEl.textContent = userFacingApiError(err);
+      });
+  };
+  const logOut = () => {
+    // Escape hatch so the mandatory prompt never traps the player: log out and
+    // return to the login screen. They are prompted again on the next sign-in.
+    void api.logout().catch(() => {});
+    api.clearSession();
+    closeRecoveryEmailModal();
+    enterLoggedOutChrome();
+    switchMainView('#hero-view');
+    show('#login-panel');
+  };
+  document.getElementById('btn-recovery-email-submit')?.addEventListener('click', submit);
+  document.getElementById('btn-recovery-email-logout')?.addEventListener('click', logOut);
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      submit();
+    }
+  });
+}
+
+// Force the mandatory recovery-email prompt when the signed-in account has no
+// address on file. Fast path: a fresh password login/register set api.emailMissing
+// directly. A Discord or restored session leaves it undefined, so confirm once via
+// getAccount(). Never blocks realm entry on a transient whoami failure.
+async function maybePromptRecoveryEmail(): Promise<void> {
+  if (!api.token) return;
+  if (api.emailMissing === false) return;
+  if (api.emailMissing === undefined) {
+    try {
+      const acct = await api.getAccount();
+      api.emailMissing = acct.emailMissing ?? acct.email.trim() === '';
+    } catch {
+      return;
+    }
+  }
+  if (api.emailMissing !== true) return;
+  await openRecoveryEmailModal();
+}
+
 // ── First-time Discord login chooser persistence (#discord-choice-panel) ─────
 // The OAuth bounce page parks a single-use link token + Discord name here when a
 // first-time login has no account yet; main.ts reads it on boot to show the
@@ -6073,6 +6308,9 @@ function wireStartScreens(): void {
     if (await completeDesktopBrowserLogin()) return;
     void refreshWalletLinkStatus();
     void refreshGithubLinkStatus();
+    // Mandatory recovery-email capture: block realm entry until a pre-email account
+    // sets one (a fresh signup already has it, so this is a no-op there).
+    await maybePromptRecoveryEmail();
     await enterRealmFlow();
   };
 
@@ -6443,7 +6681,8 @@ function wireStartScreens(): void {
           return;
         }
       } else {
-        await api.register(username, password, token, REFERRAL_SLUG, nativeAttestation);
+        const email = ($('#login-email') as unknown as HTMLInputElement).value.trim();
+        await api.register(username, password, email, token, REFERRAL_SLUG, nativeAttestation);
         trackMetaPixel('AccountCreated');
       }
     } catch (err) {
@@ -6465,6 +6704,7 @@ function wireStartScreens(): void {
   const loginForm = $('#login-panel') as HTMLFormElement;
   const userInput = $('#login-user') as HTMLInputElement;
   const passInput = $('#login-pass') as HTMLInputElement;
+  const emailInput = $('#login-email') as HTMLInputElement;
   const togglePassBtn = $('#btn-toggle-password') as HTMLButtonElement;
 
   // Wire password visibility toggle
@@ -6473,7 +6713,7 @@ function wireStartScreens(): void {
   });
 
   // Sync aria-invalid and error elements dynamically on interaction
-  [userInput, passInput].forEach((input) => {
+  [userInput, passInput, emailInput].forEach((input) => {
     input.addEventListener('blur', () => {
       const isValid = syncInputAriaState(input);
       input.classList.toggle('user-invalid-fallback', !isValid);
@@ -6506,6 +6746,22 @@ function wireStartScreens(): void {
     );
     $('#btn-auth-toggle').textContent = t(isLogin ? 'auth.createAccount' : 'auth.logIn');
     passInput.setAttribute('autocomplete', isLogin ? 'current-password' : 'new-password');
+    // Email is mandatory at signup only: show + require it in register mode, hide +
+    // drop `required` in login mode so it never blocks a login submit. (An element
+    // inside a display:none wrapper is still constraint-validated, so we toggle
+    // `required` on the input itself, not just the wrapper's `hidden`.)
+    const emailField = $('#login-email-field') as HTMLElement;
+    const emailInput = $('#login-email') as HTMLInputElement;
+    emailField.hidden = isLogin;
+    if (isLogin) {
+      emailInput.removeAttribute('required');
+      emailInput.classList.remove('user-invalid-fallback');
+      emailInput.removeAttribute('aria-invalid');
+      const emailErr = $('#login-email-error') as HTMLElement | null;
+      if (emailErr) emailErr.style.display = 'none';
+    } else {
+      emailInput.setAttribute('required', '');
+    }
     loginError('');
   };
   authModeApply = setAuthMode;
@@ -6919,6 +7175,7 @@ function wireStartScreens(): void {
   }
   wireDiscordCtaBanner();
   wireDiscordKeepModal();
+  wireRecoveryEmailModal();
 
   // First-time Discord login chooser: create a new account, or link an existing one.
   let pendingDiscordChoice: DiscordLoginChoice | null = null;
@@ -6935,7 +7192,9 @@ function wireStartScreens(): void {
     enterLoggedInChrome();
     void refreshWalletLinkStatus();
     void refreshGithubLinkStatus();
-    goToLoggedInPlay();
+    // A Discord login usually captured the email already, but confirm and prompt
+    // if it did not (e.g. the address was missing on the Discord account).
+    void maybePromptRecoveryEmail().then(() => goToLoggedInPlay());
   };
   const onDiscordChoiceError = (err: unknown) => {
     // A dead/used pending token (400) can't be retried: clear it and ask the player
@@ -7078,7 +7337,9 @@ function wireStartScreens(): void {
     void refreshWalletLinkStatus();
     void refreshGithubLinkStatus();
     // (Discord status is refreshed by enterLoggedInChrome above.)
-    if (discordOnboarding) enterOnlinePlayFlow();
+    // A just-completed Discord login lands straight in play; capture a recovery
+    // email first if the Discord grant did not provide one.
+    if (discordOnboarding) void maybePromptRecoveryEmail().then(() => enterOnlinePlayFlow());
     if (isDesktopLoginPage()) void completeDesktopBrowserLogin();
   } else {
     enterLoggedOutChrome();
