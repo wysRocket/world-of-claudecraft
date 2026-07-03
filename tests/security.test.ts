@@ -904,7 +904,15 @@ describe('email address validator (recovery-email capture)', () => {
   });
 
   it('rejects missing, blank, or malformed addresses', () => {
-    for (const bad of ['', '   ', 'user', 'user@', '@example.com', 'user@host', 'a b@example.com']) {
+    for (const bad of [
+      '',
+      '   ',
+      'user',
+      'user@',
+      '@example.com',
+      'user@host',
+      'a b@example.com',
+    ]) {
       expect(normalizeEmail(bad)).toBeNull();
       expect(validEmail(bad)).toBe(false);
     }

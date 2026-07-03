@@ -1,8 +1,11 @@
-import { readFileSync } from 'node:fs';
 import { randomBytes, scrypt, timingSafeEqual } from 'node:crypto';
-import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
+import { readFileSync } from 'node:fs';
+import { englishDataset, englishRecommendedTransformers, RegExpMatcher } from 'obscenity';
 
-const SCRYPT_N = 16384, SCRYPT_R = 8, SCRYPT_P = 1, KEYLEN = 64;
+const SCRYPT_N = 16384,
+  SCRYPT_R = 8,
+  SCRYPT_P = 1,
+  KEYLEN = 64;
 
 export function hashPassword(password: string): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -40,7 +43,7 @@ const CONFUSABLE_CHARS: Record<string, string> = {
   '4': 'a',
   '@': 'a',
   '5': 's',
-  '$': 's',
+  $: 's',
   '7': 't',
   '+': 't',
   '8': 'b',
@@ -51,9 +54,7 @@ const profanityMatcher = new RegExpMatcher({
   ...englishRecommendedTransformers,
 });
 
-const BUILT_IN_BANNED_NAME_TERMS = parseBanlist([
-  'hitler',
-].join('\n'));
+const BUILT_IN_BANNED_NAME_TERMS = parseBanlist(['hitler'].join('\n'));
 
 function normalizedUsernameForCensorship(username: string): string {
   return username
@@ -101,9 +102,11 @@ export function offensiveUsername(u: unknown): boolean {
 export function offensiveName(u: unknown): boolean {
   if (typeof u !== 'string') return false;
   const normalized = normalizedUsernameForCensorship(u);
-  return profanityMatcher.hasMatch(u) ||
+  return (
+    profanityMatcher.hasMatch(u) ||
     profanityMatcher.hasMatch(normalized) ||
-    bannedUsernameTerms().some((term) => normalized.includes(term));
+    bannedUsernameTerms().some((term) => normalized.includes(term))
+  );
 }
 
 export function validUsername(u: unknown): u is string {
@@ -118,7 +121,9 @@ export const MIN_PASSWORD_LENGTH = 6;
 export const MAX_PASSWORD_LENGTH = 128;
 
 export function validPassword(p: unknown): p is string {
-  return typeof p === 'string' && p.length >= MIN_PASSWORD_LENGTH && p.length <= MAX_PASSWORD_LENGTH;
+  return (
+    typeof p === 'string' && p.length >= MIN_PASSWORD_LENGTH && p.length <= MAX_PASSWORD_LENGTH
+  );
 }
 
 // Canonical email validator, shared by the register handler, the account portal,

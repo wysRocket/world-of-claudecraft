@@ -25,12 +25,7 @@ export const DEFAULT_DISCORD_SCOPES = ['identify', 'email', 'guilds'] as const;
 // server requests this too, so Discord's consent screen shows "join servers" and
 // the callback can auto-join the player in one flow.
 export const GUILD_JOIN_SCOPE = 'guilds.join';
-export const DISCORD_SCOPES_WITH_JOIN = [
-  'identify',
-  'email',
-  'guilds',
-  GUILD_JOIN_SCOPE,
-] as const;
+export const DISCORD_SCOPES_WITH_JOIN = ['identify', 'email', 'guilds', GUILD_JOIN_SCOPE] as const;
 
 /** The scopes to request: with `guilds.join` only when auto-join is configured. */
 export function discordScopes(opts: { autoJoin: boolean }): readonly string[] {
@@ -163,11 +158,14 @@ export function parseDiscordUser(value: unknown): DiscordUser | null {
   if (!value || typeof value !== 'object') return null;
   const v = value as Record<string, unknown>;
   if (!isDiscordSnowflake(v.id)) return null;
-  // Only accept a well-shaped address; Discord sends null when the email scope was
-  // not granted. We keep validation permissive (a single x@y.z check) to mirror the
-  // account email validator without importing it into this pure module.
+  // Only accept a well-shaped, length-bounded address; Discord sends null when the
+  // email scope was not granted. Mirrors the account email validator (shape + the
+  // 254-char RFC 5321 cap) without importing it into this pure module.
   const rawEmail = typeof v.email === 'string' ? v.email.trim() : '';
-  const email = rawEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail) ? rawEmail : null;
+  const email =
+    rawEmail && rawEmail.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail)
+      ? rawEmail
+      : null;
   return {
     id: v.id,
     username: typeof v.username === 'string' ? v.username : '',

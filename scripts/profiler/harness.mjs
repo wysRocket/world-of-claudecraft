@@ -167,7 +167,11 @@ class Bot {
     const reg = await api(
       this.server,
       '/api/register',
-      { username: `prof_${this.uniq}_${this.i}`, password: 'hunter22', email: `prof_${this.uniq}_${this.i}@example.com` },
+      {
+        username: `prof_${this.uniq}_${this.i}`,
+        password: 'hunter22',
+        email: `prof_${this.uniq}_${this.i}@example.com`,
+      },
       undefined,
       xff,
     );

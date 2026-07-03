@@ -145,6 +145,14 @@ describe('response parsers', () => {
     });
     expect(bad?.email).toBeNull();
     expect(bad?.emailVerified).toBe(false);
+    // An over-254-char address is rejected (parity with the account validator cap).
+    const tooLong = parseDiscordUser({
+      id: '80351110224678912',
+      username: 'nelly',
+      email: `${'a'.repeat(250)}@example.com`,
+      verified: true,
+    });
+    expect(tooLong?.email).toBeNull();
   });
 
   it('prefers the global display name over the legacy username', () => {

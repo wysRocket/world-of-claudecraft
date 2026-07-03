@@ -537,7 +537,9 @@ describe('auto-join on link/login (guilds.join)', () => {
       mode: 'link',
       accountId: 1,
     });
-    expect(new URL(parse(without).data.url).searchParams.get('scope')).toBe('identify email guilds');
+    expect(new URL(parse(without).data.url).searchParams.get('scope')).toBe(
+      'identify email guilds',
+    );
   });
 
   it('adds a non-member to the guild and records membership + reward on link', async () => {

@@ -74,6 +74,8 @@ let charCount: number;
 let writes: { sql: string; params: any[] }[];
 // Pending email-change row the consume UPDATE returns (null = invalid/expired).
 let pendingChange: any;
+// Rows the atomic set-initial backfill UPDATE reports (1 = filled, 0 = race-loser).
+let emailBackfillRows: number;
 
 function routeQuery(sql: string, params: any[]) {
   writes.push({ sql, params });
@@ -89,6 +91,9 @@ function routeQuery(sql: string, params: any[]) {
   if (sql.includes('FROM characters WHERE account_id') || sql.includes('FROM characters c')) {
     return { rows: characters };
   }
+  // The atomic recovery-email backfill (set-initial): rowCount drives filled vs.
+  // race-loser. `emailBackfillRows` lets a test simulate the loser (0 rows).
+  if (sql.includes("email IS NULL OR email = ''")) return { rows: [], rowCount: emailBackfillRows };
   return { rows: [] }; // UPDATE / DELETE / INSERT writes
 }
 
@@ -110,6 +115,7 @@ beforeEach(async () => {
   characters = [{ id: 10 }, { id: 11 }];
   charCount = 2;
   pendingChange = { account_id: 1, new_email: 'new@example.com' };
+  emailBackfillRows = 1;
   writes = [];
   dbMock.query.mockReset();
   dbMock.query.mockImplementation((sql: string, params: any[]) => routeQuery(sql, params));
@@ -152,11 +158,20 @@ describe('handleAccountSetInitialEmail (mandatory recovery-email backfill)', () 
     await handleAccountSetInitialEmail(makeReq({ email: '  New@Example.com ' }), res, 1);
     const { status, data } = parse(res);
     expect(status).toBe(200);
-    // Stored trimmed (as typed), and the write hit accounts.email with the account id.
+    // Stored trimmed (as typed), through the atomic empty-only backfill: unverified
+    // (verified=false, so email_verified_at is not stamped), guarded in the WHERE.
     expect(data.email).toBe('New@Example.com');
-    const write = writes.find((w) => w.sql.includes('UPDATE accounts SET email'));
+    const write = writes.find((w) => w.sql.includes("email IS NULL OR email = ''"));
     expect(write).toBeTruthy();
-    expect(write!.params).toEqual([1, 'New@Example.com']);
+    expect(write!.params).toEqual([1, 'New@Example.com', false]);
+  });
+  it('returns 409 when a concurrent writer set an address first (backfill loses the race)', async () => {
+    // The read-side guard passed (acct.email empty) but the atomic UPDATE matched 0
+    // rows because another request filled it first: surface it as already-set.
+    emailBackfillRows = 0;
+    const res = makeRes();
+    await handleAccountSetInitialEmail(makeReq({ email: 'new@example.com' }), res, 1);
+    expect(parse(res).status).toBe(409);
   });
   it('rejects a malformed address without writing (400)', async () => {
     const res = makeRes();

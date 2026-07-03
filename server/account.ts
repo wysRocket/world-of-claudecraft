@@ -18,6 +18,7 @@ import {
   accountById,
   accountByUnsubscribeToken,
   accountTwoFactorEnabled,
+  backfillAccountEmailIfEmpty,
   characterCountForAccount,
   claimTotpWindow,
   consumeEmailChangeRequest,
@@ -32,7 +33,6 @@ import {
   revokeToken,
   revokeTokensExcept,
   setAccountDeactivated,
-  setAccountEmail,
   setAccountMarketingOptIn,
   setTotpPending,
   updatePasswordHash,
@@ -178,7 +178,13 @@ export async function handleAccountSetInitialEmail(
   }
   const email = normalizeEmail(body.email);
   if (!email) return json(res, 400, { error: 'enter a valid email address' });
-  await setAccountEmail(accountId, email);
+  // Atomic fill (the guard lives in the UPDATE's WHERE), so two concurrent
+  // set-initial calls, or one racing a Discord capture, cannot both write past the
+  // empty-email check above. The address is self-asserted here, so it is stored
+  // UNVERIFIED (verified=false). A false return means a concurrent writer already
+  // set an address: treat it exactly like the already-set case.
+  const filled = await backfillAccountEmailIfEmpty(accountId, email, false);
+  if (!filled) return json(res, 409, { error: 'use verified email change' });
   return json(res, 200, { ok: true, email });
 }
 
