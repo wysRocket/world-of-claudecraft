@@ -35,13 +35,20 @@ describe('gathering profession proficiency (#1119)', () => {
     expect(meta.gatheringProficiency).toEqual({ mining: 8, logging: 2, herbalism: 0 });
   });
 
-  it('the IWorld read surface exposes the same per-profession map', () => {
+  it('the IWorld read surface exposes the same per-profession skills, mapped to PlayerProfessionSkill', () => {
     const sim = makeSim();
     const pid = sim.playerId;
     sim.chat('/dev gather herbalism 4', pid);
     sim.tick();
-    expect(sim.gatheringProficiency).toEqual({ mining: 0, logging: 0, herbalism: 4 });
-    expect(sim.gatheringProficiencyFor(pid)).toEqual({ mining: 0, logging: 0, herbalism: 4 });
+    const expected = {
+      skills: [
+        { professionId: 'mining', skill: 0, maxSkill: 300 },
+        { professionId: 'logging', skill: 0, maxSkill: 300 },
+        { professionId: 'herbalism', skill: 4, maxSkill: 300 },
+      ],
+    };
+    expect(sim.professionsState).toEqual(expected);
+    expect(sim.professionsStateFor(pid)).toEqual(expected);
   });
 
   it('persists across a save/load round trip', () => {
@@ -52,7 +59,7 @@ describe('gathering profession proficiency (#1119)', () => {
     sim.tick();
 
     const state = (sim as any).serializeCharacter(pid);
-    expect(state.gatheringProficiency).toEqual({ mining: 7, logging: 0, herbalism: 2 });
+    expect(state.professions).toEqual({ mining: 7, logging: 0, herbalism: 2 });
 
     // Fresh Sim, same character, loading the saved state back in.
     const sim2 = new Sim({ seed: 42, playerClass: 'warrior', noPlayer: true });
@@ -65,7 +72,7 @@ describe('gathering profession proficiency (#1119)', () => {
     const sim = makeSim();
     const pid = sim.playerId;
     const state = (sim as any).serializeCharacter(pid);
-    delete state.gatheringProficiency; // simulate a pre-professions save
+    delete state.professions; // simulate a pre-professions save
 
     let loadedPid = -1;
     expect(() => {
@@ -124,6 +131,19 @@ describe('gathering profession proficiency (#1119)', () => {
     queueGatheringGrant(meta, 'mining', 4);
     drainGatheringGrants(meta);
     expect(meta.gatheringProficiency).toEqual({ mining: 7, logging: 0, herbalism: 0 });
+    expect(meta.pendingGatherGrants).toEqual([]);
+  });
+
+  it('rejects a non-positive amount at queue time: proficiency is additive-only, no decrement path', () => {
+    const meta: any = {
+      pendingGatherGrants: [],
+      gatheringProficiency: emptyGatheringProficiency(),
+    };
+    queueGatheringGrant(meta, 'mining', 5);
+    queueGatheringGrant(meta, 'mining', -3);
+    queueGatheringGrant(meta, 'mining', 0);
+    drainGatheringGrants(meta);
+    expect(meta.gatheringProficiency).toEqual({ mining: 5, logging: 0, herbalism: 0 });
     expect(meta.pendingGatherGrants).toEqual([]);
   });
 

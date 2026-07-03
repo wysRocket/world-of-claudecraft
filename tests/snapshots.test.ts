@@ -1842,7 +1842,6 @@ const ALL_DELTA_KEYS = [
   'drun',
   'duel',
   'equip',
-  'gprof',
   'inv',
   'lockouts',
   'lroll',
@@ -1850,6 +1849,7 @@ const ALL_DELTA_KEYS = [
   'marks',
   'milestones',
   'party',
+  'prof',
   'qdone',
   'qlog',
   'stats',
@@ -1877,7 +1877,6 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   drun: 'delveRun',
   duel: 'duelInfo',
   equip: 'equipment',
-  gprof: 'gatheringProficiency',
   inv: 'inventory',
   lockouts: 'selfLockouts',
   lroll: 'lootRollPrompts',
@@ -1888,6 +1887,7 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   mres: 'maxResource',
   party: 'partyInfo',
   prk: 'prestigeRank',
+  prof: 'professionsState',
   qdone: 'questsDone',
   qlog: 'questLog',
   res: 'resource',
@@ -2067,7 +2067,13 @@ describe('full self-state snapshot delta fixture', () => {
     expect(client.companionState?.companionId).toBe('companion_tessa'); // dcompanion -> companionState
     expect(client.delveMarks).toBe(7); // dmarks -> delveMarks
     expect(client.companionUpgrades).toEqual({ companion_tessa: 2 }); // dcomp -> companionUpgrades
-    expect(client.gatheringProficiency).toEqual({ mining: 6, logging: 0, herbalism: 0 }); // gprof -> gatheringProficiency
+    expect(client.professionsState).toEqual({
+      skills: [
+        { professionId: 'mining', skill: 6, maxSkill: 300 },
+        { professionId: 'logging', skill: 0, maxSkill: 300 },
+        { professionId: 'herbalism', skill: 0, maxSkill: 300 },
+      ],
+    }); // prof -> professionsState
     expect(client.delveClears).toEqual({ 'collapsed_reliquary:heroic': 1 }); // dclears -> delveClears
     expect(client.delveDaily).toMatchObject({ markClears: 4 }); // delveDaily
     // tal -> talents / talentSpec / loadouts / activeLoadout

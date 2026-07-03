@@ -9,8 +9,13 @@
 // `updateRested`), so a grant only ever takes effect on the deterministic tick
 // path, never out of band.
 
-import { GATHERING_PROFESSION_IDS, type GatheringProfessionId } from '../content/professions';
+import {
+  GATHERING_PROFESSION_IDS,
+  GATHERING_PROFESSIONS,
+  type GatheringProfessionId,
+} from '../content/professions';
 import type { PlayerMeta } from '../sim';
+import type { PlayerProfessionSkill } from './types';
 
 export type GatheringProficiency = Record<GatheringProfessionId, number>;
 
@@ -45,13 +50,16 @@ export function normalizeGatheringProficiency(
 // Queues a grant for the next tick's drain; called from the `/dev gather`
 // chat cheat (offline local play or ALLOW_DEV_COMMANDS=1 on the server). No
 // rng draw: the amount is a fixed value passed by the caller, so the result is
-// fully deterministic given the same sequence of calls.
+// fully deterministic given the same sequence of calls. Proficiency is a
+// monotonic additive-only counter (no decrement path), so a non-positive
+// amount is rejected here rather than silently applied as a decrement by
+// drainGatheringGrants.
 export function queueGatheringGrant(
   meta: PlayerMeta,
   professionId: GatheringProfessionId,
   amount: number,
 ): void {
-  if (!Number.isFinite(amount) || amount === 0) return;
+  if (!Number.isFinite(amount) || amount <= 0) return;
   meta.pendingGatherGrants.push({ professionId, amount });
 }
 
@@ -68,4 +76,17 @@ export function drainGatheringGrants(meta: PlayerMeta): void {
     );
   }
   meta.pendingGatherGrants.length = 0;
+}
+
+// Projects the internal per-profession counter onto the settled
+// `PlayerProfessionSkill` shape (src/sim/professions/types.ts, from #1164),
+// in the stable GATHERING_PROFESSION_IDS order. This is what backs the
+// `IWorldProfessions.professionsState` read (sim.ts `professionsStateFor`);
+// crafting/secondary professions still contribute nothing until they land.
+export function gatheringSkillsView(proficiency: GatheringProficiency): PlayerProfessionSkill[] {
+  return GATHERING_PROFESSION_IDS.map((id) => ({
+    professionId: id,
+    skill: proficiency[id],
+    maxSkill: GATHERING_PROFESSIONS[id].maxSkill,
+  }));
 }

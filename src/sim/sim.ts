@@ -185,6 +185,7 @@ import * as petCommands from './pet/pet_commands';
 import {
   drainGatheringGrants,
   emptyGatheringProficiency,
+  gatheringSkillsView,
   normalizeGatheringProficiency,
 } from './professions/gathering';
 import {
@@ -784,8 +785,11 @@ export interface CharacterState {
   // Rested XP pool. Optional so pre-rested-XP saves load cleanly (defaults to 0).
   restedXp?: number;
   // Gathering profession proficiency (JSONB; optional so pre-professions saves
-  // load cleanly, defaulting every profession to 0).
-  gatheringProficiency?: Partial<Record<string, number>>;
+  // load cleanly, defaulting every profession to 0). Key is `professions`
+  // (not `gatheringProficiency`), reserved by the settled professions
+  // contract (src/sim/professions/CLAUDE.md, #1164) parallel to the existing
+  // `delveDaily`/`companionUpgrades` persisted fields.
+  professions?: Partial<Record<string, number>>;
   copper: number;
   hp: number;
   resource: number;
@@ -1340,7 +1344,7 @@ export class Sim {
       meta.lifetimeXp = s.lifetimeXp ?? xpToReachLevel(player.level) + Math.max(0, s.xp);
       meta.prestigeRank = s.prestigeRank ?? 0;
       meta.restedXp = Math.max(0, s.restedXp ?? 0);
-      meta.gatheringProficiency = normalizeGatheringProficiency(s.gatheringProficiency);
+      meta.gatheringProficiency = normalizeGatheringProficiency(s.professions);
       if (s.unlockedMilestones)
         for (const id of s.unlockedMilestones) meta.unlockedMilestones.add(id);
       meta.copper = s.copper;
@@ -1543,7 +1547,7 @@ export class Sim {
       prestigeRank: meta.prestigeRank,
       unlockedMilestones: [...meta.unlockedMilestones],
       restedXp: meta.restedXp,
-      gatheringProficiency: { ...meta.gatheringProficiency },
+      professions: { ...meta.gatheringProficiency },
       copper: meta.copper,
       hp: e.hp,
       // A druid saved while shifted runs on rage/energy with its mana parked in
@@ -6081,17 +6085,6 @@ export class Sim {
     return this.companionUpgradesFor(this.primaryId);
   }
 
-  // Read-only gathering-profession proficiency surface for IWorld. Stubbed
-  // directly on IWorld pending issue #1164 (a broader professions facet); see
-  // that issue for the eventual reconciliation.
-  gatheringProficiencyFor(pid: number): Record<string, number> {
-    return { ...(this.players.get(pid)?.gatheringProficiency ?? emptyGatheringProficiency()) };
-  }
-
-  get gatheringProficiency(): Record<string, number> {
-    return this.gatheringProficiencyFor(this.primaryId);
-  }
-
   delveShopOffers(delveId: string): DelveShopOffer[] {
     return this.delveShopOffersFor(delveId, this.primaryId);
   }
@@ -6100,10 +6093,17 @@ export class Sim {
     return this.delveDailyWire(this.primaryId);
   }
 
-  // Stub read surface for #1164: professions skill tracking + recipes land in
-  // later issues (#1119/#1120). Always empty until then.
+  // Gathering profession proficiency (Mining/Logging/Herbalism), the real
+  // read surface for #1119, mapped onto the settled #1164 shape. Crafting/
+  // secondary professions still contribute nothing until #1120/#1125/#1126/
+  // #1140 land.
+  professionsStateFor(pid: number): PlayerProfessionsView {
+    const proficiency = this.players.get(pid)?.gatheringProficiency ?? emptyGatheringProficiency();
+    return { skills: gatheringSkillsView(proficiency) };
+  }
+
   get professionsState(): PlayerProfessionsView {
-    return { skills: [] };
+    return this.professionsStateFor(this.primaryId);
   }
 }
 
