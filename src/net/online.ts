@@ -779,7 +779,7 @@ function blankEntity(id: number): Entity {
     queuedOnSwing: null,
     fiveSecondRule: 99,
     comboPoints: 0,
-    comboTargetId: null,
+    comboUntil: -1,
     overpowerUntil: -1,
     potionCooldownUntil: -1,
     potionCdRemaining: 0,
@@ -1493,7 +1493,6 @@ export class ClientWorld implements IWorld {
       e.gcdRemaining = s.gcd ?? 0;
       e.potionCdRemaining = s.pcd ?? 0;
       e.comboPoints = s.combo ?? 0;
-      e.comboTargetId = s.comboTgt ?? null;
       e.targetId = s.target ?? null;
       e.autoAttack = !!s.auto;
       e.swingTimer = s.swing ?? e.swingTimer;
