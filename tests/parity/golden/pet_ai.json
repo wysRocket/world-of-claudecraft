@@ -17,7 +17,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 390,
-      "state": "f2893d06",
+      "state": "0355766e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -40,10 +40,12 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -103,7 +105,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 394,
-      "state": "c2dcafc5",
+      "state": "7f67ec43",
       "events": "11a8de12",
       "rng": {
         "draws": 14,
@@ -114,7 +116,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 394,
-      "state": "a3545524",
+      "state": "e13edb3a",
       "events": "741638a5",
       "rng": {
         "draws": 14,
@@ -125,7 +127,7 @@
       "tick": 60,
       "time": 3,
       "nextId": 394,
-      "state": "f984d2de",
+      "state": "d2237bdc",
       "events": "78032d7d",
       "rng": {
         "draws": 107,
@@ -136,7 +138,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 394,
-      "state": "e2513698",
+      "state": "397c6452",
       "events": "741638a5",
       "rng": {
         "draws": 186,
@@ -147,7 +149,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 394,
-      "state": "6fba5092",
+      "state": "1dc97478",
       "events": "7ffe1025",
       "rng": {
         "draws": 307,
@@ -158,7 +160,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 394,
-      "state": "c74e4ef5",
+      "state": "e2a775d7",
       "events": "741638a5",
       "rng": {
         "draws": 418,
@@ -169,7 +171,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 394,
-      "state": "796ae475",
+      "state": "5c990659",
       "events": "741638a5",
       "rng": {
         "draws": 418,
@@ -194,11 +196,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -306,7 +310,7 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
           "facing": -1.713587,
-          "fallStartY": 37.026485,
+          "fallStartY": 52.026485,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 49946,
@@ -327,7 +331,7 @@
           "petMode": "defensive",
           "pos": {
             "x": 202,
-            "y": 37.026485,
+            "y": 52.026485,
             "z": -2
           },
           "potionCooldownUntil": -1,
@@ -412,7 +416,7 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
           "facing": 1.570796,
-          "fallStartY": 39.397438,
+          "fallStartY": 54.397438,
           "fiveSecondRule": 99,
           "forcedTargetTimer": -0.05,
           "hostile": true,
@@ -434,7 +438,7 @@
           "petMode": "defensive",
           "pos": {
             "x": 202,
-            "y": 39.397438,
+            "y": 54.397438,
             "z": 18
           },
           "potionCooldownUntil": -1,
@@ -453,11 +457,11 @@
           "threat": [
             [
               389,
-              27
+              26
             ],
             [
               392,
-              61
+              60
             ]
           ],
           "weapon": {
@@ -472,7 +476,7 @@
       "tick": 140,
       "time": 7,
       "nextId": 394,
-      "state": "f95fbb48",
+      "state": "ed0220a0",
       "events": "741638a5",
       "rng": {
         "draws": 518,
@@ -483,7 +487,7 @@
       "tick": 160,
       "time": 8,
       "nextId": 394,
-      "state": "d325a846",
+      "state": "e4914e44",
       "events": "741638a5",
       "rng": {
         "draws": 637,
@@ -494,7 +498,7 @@
       "tick": 180,
       "time": 9,
       "nextId": 394,
-      "state": "318e8cb2",
+      "state": "d8977e71",
       "events": "741638a5",
       "rng": {
         "draws": 777,
@@ -505,7 +509,7 @@
       "tick": 180,
       "time": 9,
       "nextId": 394,
-      "state": "318e8cb2",
+      "state": "d8977e71",
       "events": "741638a5",
       "rng": {
         "draws": 777,
@@ -530,11 +534,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -638,7 +644,7 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
           "facing": -1.570796,
-          "fallStartY": 37.026485,
+          "fallStartY": 52.026485,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 49946,
@@ -654,7 +660,7 @@
           "petMode": "defensive",
           "pos": {
             "x": 164.88,
-            "y": 22.296471,
+            "y": 39.746386,
             "z": -2
           },
           "potionCooldownUntil": -1,
@@ -736,7 +742,7 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
           "facing": -1.665748,
-          "fallStartY": 39.397438,
+          "fallStartY": 54.397438,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 49940,
@@ -752,7 +758,7 @@
           "petMode": "defensive",
           "pos": {
             "x": 165.047208,
-            "y": 22.379664,
+            "y": 40.034879,
             "z": 14.480686
           },
           "potionCooldownUntil": -1,

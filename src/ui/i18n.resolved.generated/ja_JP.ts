@@ -177,6 +177,52 @@ export const ja_JP: EnTranslations = {
       "title": "エモート",
       "done": "完了"
     },
+    "dailyRewards": {
+      "title": "デイリー報酬",
+      "close": "デイリー報酬を閉じる",
+      "loading": "デイリー報酬を読み込み中...",
+      "error": "デイリー報酬を読み込めませんでした。",
+      "intro": "認証済みウォレットに十分なWOCを保有すると、デイリー報酬が解放されます。1日1回のスピンとローテーションするタスクでポイントを獲得し、デイリーランキングを駆け上がって賞金プールの分け前を狙いましょう。",
+      "prize": "賞金プール",
+      "reset": "リセット",
+      "endsIn": "終了まで{time}",
+      "remainingLessThanMinute": "1分未満",
+      "remainingMinutes": "{minutes}分",
+      "remainingHoursMinutes": "{hours}時間{minutes}分",
+      "score": "スコア",
+      "walletValue": "ウォレット価値 (WOC)",
+      "usd": "{amount} USD",
+      "sol": "{amount} SOL",
+      "unknown": "不明",
+      "spinTitle": "デイリースピン",
+      "spinDialogTitle": "デイリー報酬スピン",
+      "spinClose": "デイリースピンを閉じる",
+      "spinReady": "スピンが1回可能です。",
+      "spinClaimed": "獲得: +{points} ポイント。",
+      "spinResult": "+{points} ポイント",
+      "spinButton": "スピン",
+      "tasks": "タスク",
+      "taskMultiplier": "{multiplier}倍倍率",
+      "pointsGained": "{points} デイリー報酬ポイントを獲得しました。",
+      "leaderboard": "デイリーランキング",
+      "totalPlayer": "本日のプレイヤー {count} 人",
+      "totalPlayers": "本日のプレイヤー {count} 人",
+      "history": "過去の当選者",
+      "noLeaders": "まだポイントがありません。",
+      "noHistory": "まだ支払いがありません。",
+      "walletConnectTitle": "ウォレットを認証",
+      "walletConnectBody": "WOCを保有するSolanaウォレットを認証して、デイリー報酬を解放しましょう。",
+      "walletConnectButton": "ウォレットを認証",
+      "walletHoldTitle": "WOCを保有",
+      "walletHoldBody": "デイリー報酬を解放するには、少なくとも {amount} USD 相当のWOCを保有してください。",
+      "walletPriceBody": "現在WOCの価格を取得できません。しばらくしてから再度ご確認ください。",
+      "reason": {
+        "eligible": "報酬が解放されました。",
+        "no_wallet": "$20 USD 相当以上のWOCを保有するウォレットを接続してください。",
+        "under_minimum": "ウォレットが最低額の $20 USD 相当のWOCを下回っています。",
+        "price_unavailable": "WOCの価格を取得できないため、報酬は一時的にロックされています。"
+      }
+    },
     "theme": {
       "preset": "UIテーマ",
       "customColors": "カスタムカラー",
@@ -265,6 +311,13 @@ export const ja_JP: EnTranslations = {
       "heading": "方角",
       "minimapZoom": "ミニマップのズーム"
     },
+    "nativeUpdate": {
+      "title": "アップデートがあります",
+      "body": "World of ClaudeCraft の新しいバージョンが利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。",
+      "bodyWithVersion": "World of ClaudeCraft のバージョン {version} が利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。",
+      "notNow": "後で",
+      "update": "更新"
+    },
     "castBar": {
       "playerAria": "あなたの詠唱バー",
       "targetAria": "ターゲットの詠唱バー"
@@ -337,9 +390,14 @@ export const ja_JP: EnTranslations = {
       "showWalletOnCharacterScreen": "キャラクター画面にウォレットを表示",
       "showWalletOnPlayerCard": "プレイヤーカードにウォレットを表示",
       "showDevBadges": "開発者バッジを表示",
+      "showOwnNameplate": "自分のネームプレートを表示",
       "uiScale": "UIスケール",
+      "playerFrameScale": "プレイヤーフレームの大きさ",
+      "targetFrameScale": "ターゲットフレームの大きさ",
       "highContrastBackground": "高コントラスト背景",
       "startAttackOnAbility": "アビリティ使用時に自動攻撃",
+      "walkByAutoloot": "通りがかり自動ルート",
+      "groundReticle": "地面ターゲットのレティクル",
       "showItemLevel": "アイテムレベルを表示",
       "itemLevelLine": "アイテムレベル {level}",
       "itemScoreLine": "スコア {score}",
@@ -771,6 +829,9 @@ export const ja_JP: EnTranslations = {
         "nature": "自然"
       }
     },
+    "worldBoss": {
+      "spawn": "{name}がソーンピーク高地に立ち上がった！"
+    },
     "loot": {
       "chestTitle": "宝箱"
     },
@@ -781,6 +842,23 @@ export const ja_JP: EnTranslations = {
     "nameplate": {
       "mob": "[{level}] {name}",
       "mobElite": "[{level}+] {name}"
+    },
+    "mobTooltip": {
+      "levelFamily": "レベル{level} {family}",
+      "familyDemon": "デーモン",
+      "hostile": "敵対",
+      "friendly": "味方"
+    },
+    "targetFrame": {
+      "unlock": "ターゲットフレームを移動",
+      "lock": "ターゲットフレームを固定"
+    },
+    "playerFrame": {
+      "unlock": "プレイヤーフレームを移動",
+      "lock": "プレイヤーフレームを固定"
+    },
+    "frameReset": {
+      "label": "フレーム位置をリセット"
     },
     "itemTooltip": {
       "requiresLevel": "必要レベル {level}"
@@ -863,6 +941,7 @@ export const ja_JP: EnTranslations = {
       "memberSinceDays": "Discord加入{days}日",
       "roleTag": {
         "levyst": "Levy St",
+        "admin": "管理者",
         "devs": "開発者",
         "mods": "モデレーター",
         "artists": "アーティスト"
@@ -1903,6 +1982,9 @@ export const ja_JP: EnTranslations = {
     "password": "パスワード",
     "passwordError": "パスワードを入力してください。",
     "passwordPlaceholder": "パスワードを入力",
+    "email": "メールアドレス",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "有効なメールアドレスを入力してください。",
     "showPassword": "パスワードを表示",
     "hidePassword": "パスワードを非表示",
     "logIn": "ログイン",
@@ -1928,7 +2010,15 @@ export const ja_JP: EnTranslations = {
     "create": "作成",
     "twoFactorLabel": "認証コード",
     "twoFactorPlaceholder": "6桁のコードまたはリカバリーコード",
-    "twoFactorHint": "認証アプリに表示されたコード、またはリカバリーコードのいずれかを入力してください。"
+    "twoFactorHint": "認証アプリに表示されたコード、またはリカバリーコードのいずれかを入力してください。",
+    "recovery": {
+      "title": "復旧用メールアドレスを追加",
+      "body": "メールアドレスを設定すると、アカウントを復旧できるようになります。パスワードのリセットが必要になった際に、このアカウントの所有者であることを確認するためだけに使用します。",
+      "save": "メールを保存",
+      "logOut": "Log out",
+      "invalid": "有効なメールアドレスを入力してください。",
+      "failed": "メールアドレスを保存できませんでした。もう一度お試しください。"
+    }
   },
   "wallet": {
     "label": "$WOC ウォレット",
@@ -1982,6 +2072,7 @@ export const ja_JP: EnTranslations = {
     "helpLinkedWithBalance": "ホルダー特典が有効です。このブラウザでウォレットアプリが接続されています。",
     "helpLinkedDisconnected": "ホルダー特典が有効です。署名や支払いが必要なときはアプリを接続してください。",
     "helpLinkedDisconnectedWithBalance": "ホルダー特典が有効です。署名や支払いが必要なときはアプリを接続してください。",
+    "extensionHelp": "ここにウォレットを表示するには、Solflare Wallet などのブラウザ用ウォレット拡張機能を有効にしておいてください。",
     "flowConnect": "ウォレットを選択してください。認証は自動的に続行されます。",
     "flowSign": "ウォレットアプリで認証メッセージに署名してください。トランザクションや SOL は不要です。",
     "flowVerify": "ウォレット所有権を認証中...",
@@ -2626,6 +2717,7 @@ export const ja_JP: EnTranslations = {
       "usernameTaken": "そのユーザー名は既に使われています。",
       "invalidCredentials": "ユーザー名またはパスワードが正しくありません。",
       "verificationFailed": "確認に失敗しました。もう一度お試しください。",
+      "desktopCodeInvalid": "デスクトップ版のログインコードが無効か期限切れです。もう一度お試しください。",
       "invalidCharacterName": "キャラクター名が無効です。2-16文字の英字を使用してください。",
       "characterNameNotAllowed": "そのキャラクター名は使用できません。",
       "invalidClass": "無効なクラスです。",
@@ -2642,6 +2734,21 @@ export const ja_JP: EnTranslations = {
       "takenOver": "あなたのキャラクターは別のセッションに引き継がれました。",
       "renameBeforeEntering": "このキャラクターは世界に入る前に名前変更が必要です。",
       "renameNotPermitted": "このキャラクターの名前変更は許可されていません。"
+    }
+  },
+  "desktop": {
+    "update": {
+      "downloading": "アップデート {version} をダウンロード中...",
+      "ready": "アップデート {version} の準備ができました。ゲーム終了時に自動でインストールされます。今すぐ再起動もできます。",
+      "restart": "今すぐ再起動",
+      "later": "後で"
+    },
+    "crash": {
+      "title": "World of ClaudeCraft",
+      "body": "ゲーム画面が停止しました。再読み込みしますか？",
+      "reload": "再読み込み",
+      "quit": "終了",
+      "fatalBody": "World of ClaudeCraft で予期しないエラーが発生したため、終了します。"
     }
   },
   "realm": {
@@ -3400,13 +3507,16 @@ export const ja_JP: EnTranslations = {
     },
     "cast": {
       "fishing": "釣り",
-      "demonHeal": "悪魔の治癒"
+      "demonHeal": "悪魔の治癒",
+      "thunzharrStormcall": "嵐の呼び声"
     }
   },
   "questUi": {
     "tracker": {
       "title": "クエスト",
-      "complete": "完了"
+      "complete": "完了",
+      "showOnMap": "{name}をマップに表示",
+      "hideFromMap": "{name}をマップから隠す"
     },
     "log": {
       "title": "クエストログ",
@@ -3692,6 +3802,26 @@ export const ja_JP: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "フレイムストライク",
+        "description": "対象地点に炎の爆発を呼び出し、爆発に巻き込まれた敵に{damage}の火炎ダメージを与えます。"
+      },
+      "rain_of_fire": {
+        "name": "火炎の雨",
+        "description": "対象地点に火の雨を降らせ、敵に{damage}の火炎ダメージを与えます。"
+      },
+      "volley": {
+        "name": "乱射",
+        "description": "対象地点に矢を降らせ、範囲内の敵に{damage}のダメージを与えます。"
+      },
+      "hurricane": {
+        "name": "ハリケーン",
+        "description": "対象地点にハリケーンを呼び起こし、敵に{damage}の自然ダメージを与えます。"
+      },
+      "earthquake": {
+        "name": "地震",
+        "description": "対象地点を揺るがし、敵に{damage}の自然ダメージを与えます。"
+      },
       "heroic_strike": {
         "name": "英雄の一撃",
         "description": "強力な攻撃で近接ダメージが {damage} 増加します。次のスイングで発動します。"
@@ -4833,6 +4963,33 @@ export const ja_JP: EnTranslations = {
       "monarch_crown_helm": {
         "name": "君主の王冠"
       },
+      "copper_mining_pick": {
+        "name": "銅の採掘ピック"
+      },
+      "iron_mining_pick": {
+        "name": "鉄の採掘ピック"
+      },
+      "mithril_mining_pick": {
+        "name": "ミスリルの採掘ピック"
+      },
+      "handaxe": {
+        "name": "ハンドアックス"
+      },
+      "felling_axe": {
+        "name": "伐採斧"
+      },
+      "ironbark_axe": {
+        "name": "鉄皮の斧"
+      },
+      "gathering_sickle": {
+        "name": "採集の鎌"
+      },
+      "bronze_sickle": {
+        "name": "青銅の鎌"
+      },
+      "silverleaf_sickle": {
+        "name": "銀葉の鎌"
+      },
       "bristleback_maul": {
         "name": "ブリストルバックの大槌"
       },
@@ -5315,6 +5472,30 @@ export const ja_JP: EnTranslations = {
       },
       "vanguard_chrome_armor_plate": {
         "name": "ヴァンガードクローム"
+      },
+      "crownforged_gauntlets": {
+        "name": "冠鍛えのガントレット"
+      },
+      "nighttalon_grips": {
+        "name": "夜爪の握り"
+      },
+      "soulflame_gloves": {
+        "name": "魂炎のグローブ"
+      },
+      "stormcallers_handguards": {
+        "name": "嵐呼びの手甲"
+      },
+      "crownforged_girdle": {
+        "name": "冠鍛えのベルト"
+      },
+      "nighttalon_waistband": {
+        "name": "夜爪の腰帯"
+      },
+      "soulflame_cord": {
+        "name": "魂炎の腰紐"
+      },
+      "stormcallers_waistguard": {
+        "name": "嵐呼びの腰当て"
       }
     },
     "mobs": {
@@ -5506,6 +5687,12 @@ export const ja_JP: EnTranslations = {
       },
       "acolyte_tessa": {
         "name": "侍祭テッサ"
+      },
+      "thunzharr_waking_peak": {
+        "name": "サンザール、目覚めし峰"
+      },
+      "thunzharr_stormling": {
+        "name": "目覚めた嵐の精"
       },
       "ironvein_foreman": {
         "name": "鉄脈の現場監督"
@@ -6169,6 +6356,36 @@ export const ja_JP: EnTranslations = {
           }
         }
       },
+      "q_stalkers_return": {
+        "title": "追跡者、再び",
+        "text": "十二頭倒しても、尾根の追跡者はむしろ増えています、{playerName}。獣が飢えだけで壁に挑むはずがありません。高い尾根の何かが追い下ろしているのです。正体が知れるまで、狩りは続きます。あと十四頭。",
+        "completion": "さらに十四頭。それでも朝ごとに新しい足跡が見つかります。高い尾根から戻った斥候は雪線のように蒼白でした。盾ほどの足跡と、追跡者では有り得ない獲物の残骸があったと。上を歩くものは、ただの猫ではありません。",
+        "objectives": {
+          "0": {
+            "label": "尾根の追跡者を討伐"
+          }
+        }
+      },
+      "q_stalker_cloaks": {
+        "title": "見張りの外套",
+        "text": "八枚の毛皮で士官の外套を裏打ちしたら、壁の兵がみな同じものを欲しがっています、{playerName}。当然の望みです。冬はまず指を奪い、詫びは聞きません。門の南の尾根であと十枚。それで見張り全員が暖かく眠れます。",
+        "completion": "十枚とも上等な毛皮……いや、これを見てください、{playerName}。半分は裂けています。刃や槍の傷ではありません。私の手ほど幅のある爪痕が、冬毛を貫いている。あの尾根の何かが、同族を食い荒らしているのです。",
+        "objectives": {
+          "0": {
+            "label": "尾根の追跡者の毛皮"
+          }
+        }
+      },
+      "q_old_cragmaw": {
+        "title": "老いたるクラッグモウ",
+        "text": "山の民は、斥候が見つけた足跡の主を知っていました。老いたるクラッグモウ。傷だらけの毛皮をまとい、群れの三世代を生き延びた暴君の大猫です。追跡者が街道に溢れるのはこいつのせいです、{playerName}。ねぐらは南街道を見下ろす西の尾根。仲間を連れて、あの老いた悪魔を仕留めてください。",
+        "completion": "ついに倒れましたか。山の民は、あの猫は壁より長生きすると誓っていたものです。これで追跡者は高い雪に留まるでしょう、{playerName}。巡察も血を流さずに街道を歩けます。あなたの働きで、尾根全体が静かになりました。",
+        "objectives": {
+          "0": {
+            "label": "老いたるクラッグモウを討伐"
+          }
+        }
+      },
       "q_kobold_tunnels": {
         "title": "ディープロックの問題",
         "text": "ディープロックのコボルドは、壁の下から呼ばれているように真下へ掘っています。{playerName}、坑夫を12体倒してください。",
@@ -6706,8 +6923,8 @@ export const ja_JP: EnTranslations = {
       },
       "necromancers": {
         "name": "死霊術師の法衣",
-        "bonus2": "ダメージによる詠唱押し戻しを50%軽減します。",
-        "bonus3": "詠唱中にダメージを受けても押し戻されません。"
+        "bonus2": "ノックバックされなくなります（ノックバック耐性100%）。",
+        "bonus3": "知力が10、スタミナが10上昇します。"
       },
       "nighttalon": {
         "name": "夜爪の革装束",
@@ -6716,13 +6933,13 @@ export const ja_JP: EnTranslations = {
       },
       "soulflame": {
         "name": "魂炎の法衣",
-        "bonus2": "ダメージによる詠唱押し戻しを50%軽減します。",
-        "bonus3": "詠唱中にダメージを受けても押し戻されません。"
+        "bonus2": "ノックバックされなくなります（ノックバック耐性100%）。",
+        "bonus3": "知力が15、精神力が15上昇します。"
       },
       "stormcallers": {
         "name": "嵐呼びの法衣",
-        "bonus2": "ダメージによる詠唱押し戻しを50%軽減します。",
-        "bonus3": "詠唱中にダメージを受けても押し戻されません。"
+        "bonus2": "ノックバックされなくなります（ノックバック耐性100%）。",
+        "bonus3": "知力が15、精神力が15上昇します。"
       },
       "wyrmshadow": {
         "name": "竜影の装束",

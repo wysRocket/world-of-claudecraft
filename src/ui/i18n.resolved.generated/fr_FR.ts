@@ -177,6 +177,52 @@ export const fr_FR: EnTranslations = {
       "title": "Emotes",
       "done": "Terminé"
     },
+    "dailyRewards": {
+      "title": "Récompenses quotidiennes",
+      "close": "Fermer les récompenses quotidiennes",
+      "loading": "Chargement des récompenses quotidiennes...",
+      "error": "Impossible de charger les récompenses quotidiennes.",
+      "intro": "Détenez assez de WOC dans votre portefeuille vérifié pour débloquer les récompenses quotidiennes. Gagnez des points grâce à un tour quotidien et à des tâches en rotation, puis grimpez dans le classement quotidien pour remporter une part de la cagnotte.",
+      "prize": "Cagnotte",
+      "reset": "Réinitialisation",
+      "endsIn": "Se termine dans {time}",
+      "remainingLessThanMinute": "<1min",
+      "remainingMinutes": "{minutes}min",
+      "remainingHoursMinutes": "{hours}h {minutes}min",
+      "score": "Score",
+      "walletValue": "Valeur du portefeuille (WOC)",
+      "usd": "{amount} USD",
+      "sol": "{amount} SOL",
+      "unknown": "Inconnu",
+      "spinTitle": "Tour quotidien",
+      "spinDialogTitle": "Tour de récompense quotidien",
+      "spinClose": "Fermer le tour quotidien",
+      "spinReady": "Un tour est disponible.",
+      "spinClaimed": "Récupéré : +{points} points.",
+      "spinResult": "+{points} points",
+      "spinButton": "Tourner",
+      "tasks": "Tâches",
+      "taskMultiplier": "x{multiplier} multiplier",
+      "pointsGained": "{points} daily rewards points gained.",
+      "leaderboard": "Classement quotidien",
+      "totalPlayer": "{count} player today",
+      "totalPlayers": "{count} players today",
+      "history": "Anciens gagnants",
+      "noLeaders": "Aucun point pour l'instant.",
+      "noHistory": "Aucun versement pour l'instant.",
+      "walletConnectTitle": "Vérifier le portefeuille",
+      "walletConnectBody": "Vérifiez un portefeuille Solana contenant du WOC pour débloquer les récompenses quotidiennes.",
+      "walletConnectButton": "Vérifier le portefeuille",
+      "walletHoldTitle": "Détenir du WOC",
+      "walletHoldBody": "Détenez au moins {amount} USD en WOC pour débloquer les récompenses quotidiennes.",
+      "walletPriceBody": "Le cours du WOC est indisponible pour le moment. Revenez d'ici peu.",
+      "reason": {
+        "eligible": "Récompenses débloquées.",
+        "no_wallet": "Connectez un portefeuille contenant au moins 20 USD en WOC.",
+        "under_minimum": "Le portefeuille est en dessous du minimum de 20 USD en WOC.",
+        "price_unavailable": "Le cours du WOC est indisponible, les récompenses sont temporairement verrouillées."
+      }
+    },
     "theme": {
       "preset": "Thème de l'interface",
       "customColors": "Couleurs personnalisées",
@@ -265,6 +311,13 @@ export const fr_FR: EnTranslations = {
       "heading": "Cap",
       "minimapZoom": "Zoom de la minicarte"
     },
+    "nativeUpdate": {
+      "title": "Mise à jour disponible",
+      "body": "Une nouvelle version de World of ClaudeCraft est disponible. Mettez à jour maintenant pour les derniers correctifs et améliorations.",
+      "bodyWithVersion": "La version {version} de World of ClaudeCraft est disponible. Mettez à jour maintenant pour les derniers correctifs et améliorations.",
+      "notNow": "Pas maintenant",
+      "update": "Mettre à jour"
+    },
     "castBar": {
       "playerAria": "Votre barre d'incantation",
       "targetAria": "Barre d'incantation de la cible"
@@ -337,9 +390,14 @@ export const fr_FR: EnTranslations = {
       "showWalletOnCharacterScreen": "Afficher le portefeuille sur l’écran des personnages",
       "showWalletOnPlayerCard": "Afficher le portefeuille sur la carte de joueur",
       "showDevBadges": "Afficher les badges de développeur",
+      "showOwnNameplate": "Show My Nameplate",
       "uiScale": "Échelle de l’interface",
+      "playerFrameScale": "Player Frame Scale",
+      "targetFrameScale": "Target Frame Scale",
       "highContrastBackground": "Arrière-plan à contraste élevé",
       "startAttackOnAbility": "Attaque auto à l'utilisation d'une compétence",
+      "walkByAutoloot": "Walk-by Autoloot",
+      "groundReticle": "Réticule de ciblage au sol",
       "showItemLevel": "Afficher le niveau d'objet",
       "itemLevelLine": "Niveau d'objet {level}",
       "itemScoreLine": "Score {score}",
@@ -771,6 +829,9 @@ export const fr_FR: EnTranslations = {
         "nature": "Nature"
       }
     },
+    "worldBoss": {
+      "spawn": "{name} se dresse sur les Hauteurs de Thornpeak !"
+    },
     "loot": {
       "chestTitle": "Coffre"
     },
@@ -781,6 +842,23 @@ export const fr_FR: EnTranslations = {
     "nameplate": {
       "mob": "[{level}] {name}",
       "mobElite": "[{level}+] {name}"
+    },
+    "mobTooltip": {
+      "levelFamily": "Level {level} {family}",
+      "familyDemon": "Demon",
+      "hostile": "Hostile",
+      "friendly": "Friendly"
+    },
+    "targetFrame": {
+      "unlock": "Move target frame",
+      "lock": "Lock target frame"
+    },
+    "playerFrame": {
+      "unlock": "Move player frame",
+      "lock": "Lock player frame"
+    },
+    "frameReset": {
+      "label": "Reset Frame Positions"
     },
     "itemTooltip": {
       "requiresLevel": "Niveau requis : {level}"
@@ -863,6 +941,7 @@ export const fr_FR: EnTranslations = {
       "memberSinceDays": "{days} j sur le Discord",
       "roleTag": {
         "levyst": "Levy St",
+        "admin": "Admin",
         "devs": "Dév",
         "mods": "Modo",
         "artists": "Artiste"
@@ -1903,6 +1982,9 @@ export const fr_FR: EnTranslations = {
     "password": "Mot de passe",
     "passwordError": "Veuillez saisir votre mot de passe.",
     "passwordPlaceholder": "Saisir le mot de passe",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "Please enter a valid email address.",
     "showPassword": "Afficher le mot de passe",
     "hidePassword": "Masquer le mot de passe",
     "logIn": "Se connecter",
@@ -1928,7 +2010,15 @@ export const fr_FR: EnTranslations = {
     "create": "Créer",
     "twoFactorLabel": "Code d'authentification",
     "twoFactorPlaceholder": "Code à 6 chiffres ou code de récupération",
-    "twoFactorHint": "Saisissez le code de votre application d'authentification, ou l'un de vos codes de récupération."
+    "twoFactorHint": "Saisissez le code de votre application d'authentification, ou l'un de vos codes de récupération.",
+    "recovery": {
+      "title": "Add a recovery email",
+      "body": "Set an email address so you can recover your account. We only use it to confirm you own this account if you ever need to reset your password.",
+      "save": "Save email",
+      "logOut": "Log out",
+      "invalid": "Please enter a valid email address.",
+      "failed": "Could not save your email. Please try again."
+    }
   },
   "wallet": {
     "label": "Portefeuille $WOC",
@@ -1982,6 +2072,7 @@ export const fr_FR: EnTranslations = {
     "helpLinkedWithBalance": "Les avantages de détenteur sont actifs. L'appli de portefeuille est connectée sur ce navigateur.",
     "helpLinkedDisconnected": "Les avantages de détenteur sont actifs. Connectez l'appli lorsque vous devez signer ou dépenser.",
     "helpLinkedDisconnectedWithBalance": "Les avantages de détenteur sont actifs. Connectez l'appli lorsque vous devez signer ou dépenser.",
+    "extensionHelp": "To see a wallet here, keep a browser wallet extension such as Solflare Wallet active.",
     "flowConnect": "Choisissez un portefeuille. La vérification continue automatiquement.",
     "flowSign": "Signez le message de vérification dans votre appli de portefeuille. Aucune transaction ni SOL requis.",
     "flowVerify": "Vérification de la propriété du portefeuille...",
@@ -2626,6 +2717,7 @@ export const fr_FR: EnTranslations = {
       "usernameTaken": "Ce nom d'utilisateur est déjà pris.",
       "invalidCredentials": "Nom d'utilisateur ou mot de passe incorrect.",
       "verificationFailed": "Échec de la vérification. Veuillez réessayer.",
+      "desktopCodeInvalid": "Le code de connexion de l'application de bureau est invalide ou expiré. Veuillez réessayer.",
       "invalidCharacterName": "Nom de personnage invalide. Utilisez 2 à 16 lettres.",
       "characterNameNotAllowed": "Ce nom de personnage n'est pas autorisé.",
       "invalidClass": "Classe invalide.",
@@ -2642,6 +2734,21 @@ export const fr_FR: EnTranslations = {
       "takenOver": "Votre personnage a été pris en main par une autre session.",
       "renameBeforeEntering": "Ce personnage doit être renommé avant d'entrer dans le monde.",
       "renameNotPermitted": "Le changement de nom de ce personnage n'est pas autorisé."
+    }
+  },
+  "desktop": {
+    "update": {
+      "downloading": "Téléchargement de la mise à jour {version}...",
+      "ready": "La mise à jour {version} est prête. Elle s'installe à la fermeture, ou redémarrez maintenant.",
+      "restart": "Redémarrer maintenant",
+      "later": "Plus tard"
+    },
+    "crash": {
+      "title": "World of ClaudeCraft",
+      "body": "L'affichage du jeu a cessé de fonctionner. Le recharger ?",
+      "reload": "Recharger",
+      "quit": "Quitter",
+      "fatalBody": "World of ClaudeCraft a rencontré une erreur inattendue et doit se fermer."
     }
   },
   "realm": {
@@ -3400,13 +3507,16 @@ export const fr_FR: EnTranslations = {
     },
     "cast": {
       "fishing": "Pêche",
-      "demonHeal": "Soin démoniaque"
+      "demonHeal": "Soin démoniaque",
+      "thunzharrStormcall": "Appel de la tempête"
     }
   },
   "questUi": {
     "tracker": {
       "title": "Quêtes",
-      "complete": "Terminée"
+      "complete": "Terminée",
+      "showOnMap": "Afficher {name} sur la carte",
+      "hideFromMap": "Masquer {name} sur la carte"
     },
     "log": {
       "title": "Journal de quêtes",
@@ -3692,6 +3802,26 @@ export const fr_FR: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "Frappe enflammée",
+        "description": "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration."
+      },
+      "rain_of_fire": {
+        "name": "Pluie de feu",
+        "description": "Fait pleuvoir du feu sur la zone visée, brûlant les ennemis pour {damage} points de dégâts de Feu."
+      },
+      "volley": {
+        "name": "Volée de flèches",
+        "description": "Fait pleuvoir des flèches sur la zone visée, infligeant {damage} points de dégâts aux ennemis présents."
+      },
+      "hurricane": {
+        "name": "Ouragan",
+        "description": "Déchaîne un ouragan sur la zone visée, frappant les ennemis pour {damage} points de dégâts de Nature."
+      },
+      "earthquake": {
+        "name": "Tremblement de terre",
+        "description": "Fait trembler la zone visée, frappant les ennemis pour {damage} points de dégâts de Nature."
+      },
       "heroic_strike": {
         "name": "Frappe héroïque",
         "description": "Une attaque puissante qui augmente les dégâts de mêlée de {damage}. S'active lors de votre prochaine frappe."
@@ -4833,6 +4963,33 @@ export const fr_FR: EnTranslations = {
       "monarch_crown_helm": {
         "name": "Couronne du Monarque"
       },
+      "copper_mining_pick": {
+        "name": "Pic de Minage en Cuivre"
+      },
+      "iron_mining_pick": {
+        "name": "Pic de Minage en Fer"
+      },
+      "mithril_mining_pick": {
+        "name": "Pic de Minage en Mithril"
+      },
+      "handaxe": {
+        "name": "Hachette"
+      },
+      "felling_axe": {
+        "name": "Hache d'Abattage"
+      },
+      "ironbark_axe": {
+        "name": "Hache d'Écorce de Fer"
+      },
+      "gathering_sickle": {
+        "name": "Faucille de Récolte"
+      },
+      "bronze_sickle": {
+        "name": "Faucille de Bronze"
+      },
+      "silverleaf_sickle": {
+        "name": "Faucille Feuille d'Argent"
+      },
       "bristleback_maul": {
         "name": "Maillet Bristleback"
       },
@@ -5315,6 +5472,30 @@ export const fr_FR: EnTranslations = {
       },
       "vanguard_chrome_armor_plate": {
         "name": "Avant-garde chrome"
+      },
+      "crownforged_gauntlets": {
+        "name": "Gantelets Forgécouronne"
+      },
+      "nighttalon_grips": {
+        "name": "Poignes Serre-de-nuit"
+      },
+      "soulflame_gloves": {
+        "name": "Gants Flamme-d'âme"
+      },
+      "stormcallers_handguards": {
+        "name": "Protège-mains d'Appel-tempête"
+      },
+      "crownforged_girdle": {
+        "name": "Ceinturon Forgécouronne"
+      },
+      "nighttalon_waistband": {
+        "name": "Ceinture Serre-de-nuit"
+      },
+      "soulflame_cord": {
+        "name": "Corde Flamme-d'âme"
+      },
+      "stormcallers_waistguard": {
+        "name": "Protège-taille d'Appel-tempête"
       }
     },
     "mobs": {
@@ -5506,6 +5687,12 @@ export const fr_FR: EnTranslations = {
       },
       "acolyte_tessa": {
         "name": "Acolyte Tessa"
+      },
+      "thunzharr_waking_peak": {
+        "name": "Thunzharr, le Pic Éveillé"
+      },
+      "thunzharr_stormling": {
+        "name": "Élémentaire de tempête éveillé"
       },
       "ironvein_foreman": {
         "name": "Contremaître Veinefer"
@@ -6169,6 +6356,36 @@ export const fr_FR: EnTranslations = {
           }
         }
       },
+      "q_stalkers_return": {
+        "title": "The Stalkers Return",
+        "text": "Twelve dead, and the ridge crawls thicker than the day you started, {playerName}. Beasts do not throw themselves at a wall out of hunger. Something on the high ridge is pushing them down, and until I know what, the culling does not stop. Fourteen more.",
+        "completion": "Fourteen more, and still my patrols count fresh tracks by morning. My scout came back from the high ridge white as the snowline: prints the size of a shield, she says, and old kills no stalker would leave. Whatever walks up there is no ordinary cat.",
+        "objectives": {
+          "0": {
+            "label": "Ridge Stalker slain"
+          }
+        }
+      },
+      "q_stalker_cloaks": {
+        "title": "Cloaks for the Watch",
+        "text": "Eight pelts lined the officers' cloaks, and now every soldier on the wall wants the same, {playerName}. They are right to want it: winter takes fingers first and apologies never. Ten more pelts from the ridges south of the gate, and the whole watch sleeps warm.",
+        "completion": "Ten good pelts, thick as any I have... no, look at these, {playerName}. Torn, half of them, and by no blade or spear. Claw marks wide as my hand, right through the winter coat. Something on that ridge is savaging its own kind.",
+        "objectives": {
+          "0": {
+            "label": "Ridge Stalker Pelt"
+          }
+        }
+      },
+      "q_old_cragmaw": {
+        "title": "Old Cragmaw",
+        "text": "The mountain folk put a name to the prints my scout found: Old Cragmaw, a scar-pelted tyrant of a cat that has outlived three generations of its own pack. It is the reason the stalkers flood my road, {playerName}. Its den sits on the western ridge above the road south. Bring a friend, and put the old devil down.",
+        "completion": "Down at last. The mountain folk swore that cat would outlive the wall itself. The stalkers will keep to their high snows now, {playerName}, and my patrols will walk the road without bleeding for it. The whole ridge is quieter for your work.",
+        "objectives": {
+          "0": {
+            "label": "Old Cragmaw slain"
+          }
+        }
+      },
       "q_kobold_tunnels": {
         "title": "Troubles à Deeprock",
         "text": "Les kobolds de Deeprock creusent droit vers le bas, comme appelés sous le mur, {playerName}. Tuez 12 tunneliers.",
@@ -6706,8 +6923,8 @@ export const fr_FR: EnTranslations = {
       },
       "necromancers": {
         "name": "Robe du nécromancien",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 10 et l'endurance de 10."
       },
       "nighttalon": {
         "name": "Tenue de cuir Serre-nuit",
@@ -6716,13 +6933,13 @@ export const fr_FR: EnTranslations = {
       },
       "soulflame": {
         "name": "Robe de Flamme d’âme",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 15 et l'esprit de 15."
       },
       "stormcallers": {
         "name": "Robe de l’Appel-tempête",
-        "bonus2": "Réduit de 50% le recul des incantations causé par les dégâts.",
-        "bonus3": "Les dégâts subis ne retardent pas l'incantation."
+        "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
+        "bonus3": "Augmente l'intelligence de 15 et l'esprit de 15."
       },
       "wyrmshadow": {
         "name": "Tenue d’Ombre-drake",

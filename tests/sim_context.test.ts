@@ -48,6 +48,7 @@ const CALLBACK_KEYS = [
   'fiestaTakedown',
   'fiestaDown',
   'rollLoot',
+  'rollWorldBossLoot',
   'applyHeal',
   'spellCrit',
   'applyAura',
@@ -190,6 +191,7 @@ const CALLBACK_KEYS = [
   // G2 social plumbing (hasPendingSocialInvite already listed above; deduped).
   'setPlayerLevel',
   'notice',
+  'spawnDevBot',
   // L2 inventory/vendor (W2): the four still-on-Sim helpers the moved useItem dispatches to.
   'startFishing',
   'unlockMechChromaFromItem',
@@ -285,6 +287,7 @@ function makeFakeHost() {
     fiestaTakedown: vi.fn(),
     fiestaDown: vi.fn(),
     rollLoot: vi.fn(),
+    rollWorldBossLoot: vi.fn(),
     applyHeal: vi.fn(),
     spellCrit: vi.fn(() => 0.05),
     applyAura: vi.fn(),
@@ -302,6 +305,7 @@ function makeFakeHost() {
     // elsewhere in this host - deduped).
     spendResource: vi.fn(),
     removeItem: vi.fn(),
+    removeFungibleItem: vi.fn(),
     clearEntityMarker: vi.fn(),
     partyOf: vi.fn(() => null),
     removeFromParty: vi.fn(),
@@ -310,6 +314,7 @@ function makeFakeHost() {
     onInventoryChangedForQuests: vi.fn(),
     checkQuestReady: vi.fn(),
     countItem: vi.fn(() => 0),
+    countFungibleItem: vi.fn(() => 0),
     completeQuestForDev: vi.fn(() => false),
     completeCurrentQuestsForDev: vi.fn(() => 0),
     lockoutNowMs: vi.fn(() => 0),
@@ -420,6 +425,7 @@ function makeFakeHost() {
     // G2 social plumbing (hasPendingSocialInvite already stubbed above; deduped).
     setPlayerLevel: vi.fn(),
     notice: vi.fn(),
+    spawnDevBot: vi.fn(),
     // L2 inventory/vendor (W2): the four still-on-Sim helpers the moved useItem dispatches to.
     startFishing: vi.fn(),
     unlockMechChromaFromItem: vi.fn(),

@@ -294,6 +294,17 @@ CREATE TABLE IF NOT EXISTS world_state (
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+-- Housekeeping: per-realm operator overrides for game content and rates, one
+-- JSONB document per realm (shape: src/sim/game_config.ts GameConfigOverrides,
+-- validated before save AND before apply). Loaded at boot and applied to the
+-- sim content tables before the world is constructed; admin-dashboard edits
+-- land here and take effect on the next restart.
+CREATE TABLE IF NOT EXISTS game_config_overrides (
+  realm TEXT PRIMARY KEY DEFAULT '${REALM_SQL_DEFAULT}',
+  data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_by INT REFERENCES accounts(id) ON DELETE SET NULL
+);
 -- Chat moderation: per-account timed mute + running strike count for the
 -- hard-word (slur) enforcement ladder. A mute blocks chat only, never login.
 ALTER TABLE accounts ADD COLUMN IF NOT EXISTS chat_muted_until TIMESTAMPTZ;
@@ -396,6 +407,95 @@ CREATE TABLE IF NOT EXISTS wallet_link_challenges (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS wallet_link_challenges_account ON wallet_link_challenges(account_id);
+CREATE TABLE IF NOT EXISTS daily_reward_days (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  prize_pool_usd NUMERIC NOT NULL,
+  woc_usd_price NUMERIC,
+  finalized_at TIMESTAMPTZ,
+  discord_announced_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (day, realm)
+);
+ALTER TABLE daily_reward_days ADD COLUMN IF NOT EXISTS discord_announced_at TIMESTAMPTZ;
+CREATE TABLE IF NOT EXISTS daily_reward_scores (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+  points INT NOT NULL DEFAULT 0,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (day, realm, account_id)
+);
+CREATE INDEX IF NOT EXISTS daily_reward_scores_rank
+  ON daily_reward_scores(day, realm, points DESC, updated_at ASC);
+CREATE TABLE IF NOT EXISTS daily_reward_events (
+  id BIGSERIAL PRIMARY KEY,
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+  kind TEXT NOT NULL,
+  points INT NOT NULL,
+  idempotency_key TEXT NOT NULL,
+  meta JSONB NOT NULL DEFAULT '{}'::jsonb,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (day, realm, account_id, idempotency_key)
+);
+CREATE TABLE IF NOT EXISTS daily_reward_spins (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+  outcome_key TEXT NOT NULL,
+  points INT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (day, realm, account_id)
+);
+CREATE TABLE IF NOT EXISTS daily_reward_tasks (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  task_id TEXT NOT NULL,
+  task_type TEXT NOT NULL DEFAULT 'manual',
+  title TEXT NOT NULL,
+  description TEXT NOT NULL DEFAULT '',
+  points INT NOT NULL,
+  base_points INT NOT NULL DEFAULT 0,
+  sort_order INT NOT NULL DEFAULT 0,
+  active BOOLEAN NOT NULL DEFAULT TRUE,
+  config JSONB NOT NULL DEFAULT '{}'::jsonb,
+  PRIMARY KEY (day, realm, task_id)
+);
+ALTER TABLE daily_reward_tasks ADD COLUMN IF NOT EXISTS task_type TEXT NOT NULL DEFAULT 'manual';
+ALTER TABLE daily_reward_tasks ADD COLUMN IF NOT EXISTS base_points INT NOT NULL DEFAULT 0;
+ALTER TABLE daily_reward_tasks ADD COLUMN IF NOT EXISTS config JSONB NOT NULL DEFAULT '{}'::jsonb;
+UPDATE daily_reward_tasks SET base_points = points WHERE base_points = 0 AND points > 0;
+CREATE TABLE IF NOT EXISTS daily_reward_task_completions (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+  task_id TEXT NOT NULL,
+  points INT NOT NULL,
+  completed_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (day, realm, account_id, task_id)
+);
+CREATE TABLE IF NOT EXISTS daily_reward_payouts (
+  day TEXT NOT NULL,
+  realm TEXT NOT NULL DEFAULT '${REALM_SQL_DEFAULT}',
+  rank INT NOT NULL,
+  account_id INT NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
+  username TEXT NOT NULL,
+  wallet_pubkey TEXT,
+  points INT NOT NULL,
+  prize_percent NUMERIC NOT NULL,
+  prize_usd NUMERIC NOT NULL,
+  status TEXT NOT NULL DEFAULT 'pending',
+  tx_signature TEXT,
+  error TEXT,
+  paid_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (day, realm, rank)
+);
+CREATE INDEX IF NOT EXISTS daily_reward_payouts_status
+  ON daily_reward_payouts(status, day DESC, realm);
 -- Shareable player cards (docs/prd/woc/player-card.md). One card per character;
 -- the PNG is composited client-side and stored here as bytes so any realm
 -- process (all share this database) can serve /p/<slug> and the OG image. slug
@@ -464,6 +564,9 @@ export interface AccountRow {
   id: number;
   username: string;
   password_hash: string;
+  // Recovery email (nullable): the login path selects it so the handler can tell
+  // the client whether a pre-existing account still needs to set one.
+  email?: string | null;
   // Present on the login path (findAccount): null/undefined when 2FA is off.
   totp_secret?: string | null;
   totp_enabled_at?: string | null;
@@ -596,7 +699,7 @@ export async function createAccount(
 
 export async function findAccount(username: string): Promise<AccountRow | null> {
   const res = await pool.query(
-    `SELECT id, username, password_hash, totp_secret, totp_enabled_at, totp_last_window
+    `SELECT id, username, password_hash, email, totp_secret, totp_enabled_at, totp_last_window
      FROM accounts WHERE username = $1`,
     [username],
   );
@@ -801,6 +904,28 @@ export async function revokeCompanionToken(accountId: number, prefix: string): P
 
 export async function setAccountEmail(accountId: number, email: string | null): Promise<void> {
   await pool.query('UPDATE accounts SET email = $2 WHERE id = $1', [accountId, email]);
+}
+
+// Fill the recovery email ONLY when the account has none yet, never overwriting an
+// address the owner already set (that can only change through the verified change
+// flow). Used by the Discord capture path: a Discord-verified address seeds the
+// recovery email + stamps email_verified_at, but a fresh Discord grant must never
+// clobber an existing one. Idempotent (the WHERE makes a second call a no-op) and
+// race-safe (the guard is in the UPDATE, not a read-then-write). Returns true when
+// a row was actually filled.
+export async function backfillAccountEmailIfEmpty(
+  accountId: number,
+  email: string,
+  verified: boolean,
+): Promise<boolean> {
+  const res = await pool.query(
+    `UPDATE accounts
+       SET email = $2,
+           email_verified_at = CASE WHEN $3 THEN now() ELSE email_verified_at END
+     WHERE id = $1 AND (email IS NULL OR email = '')`,
+    [accountId, email, verified],
+  );
+  return (res.rowCount ?? 0) > 0;
 }
 
 export async function setAccountDeactivated(

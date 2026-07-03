@@ -177,6 +177,52 @@ export const es_ES: EnTranslations = {
       "title": "Emotes",
       "done": "Listo"
     },
+    "dailyRewards": {
+      "title": "Recompensas diarias",
+      "close": "Cerrar recompensas diarias",
+      "loading": "Cargando recompensas diarias...",
+      "error": "No se pudieron cargar las recompensas diarias.",
+      "intro": "Mantén suficiente WOC en tu cartera verificada para desbloquear las recompensas diarias. Gana puntos con un giro diario y tareas rotativas, y escala la clasificación diaria para llevarte una parte del fondo de premios.",
+      "prize": "Fondo de premios",
+      "reset": "Reinicio",
+      "endsIn": "Termina en {time}",
+      "remainingLessThanMinute": "<1min",
+      "remainingMinutes": "{minutes}min",
+      "remainingHoursMinutes": "{hours}h {minutes}min",
+      "score": "Puntuación",
+      "walletValue": "Valor de cartera (WOC)",
+      "usd": "{amount} USD",
+      "sol": "{amount} SOL",
+      "unknown": "Desconocido",
+      "spinTitle": "Giro diario",
+      "spinDialogTitle": "Giro de recompensa diaria",
+      "spinClose": "Cerrar giro diario",
+      "spinReady": "Tienes un giro disponible.",
+      "spinClaimed": "Reclamado: +{points} puntos.",
+      "spinResult": "+{points} puntos",
+      "spinButton": "Girar",
+      "tasks": "Tareas",
+      "taskMultiplier": "x{multiplier} multiplier",
+      "pointsGained": "{points} daily rewards points gained.",
+      "leaderboard": "Clasificación diaria",
+      "totalPlayer": "{count} player today",
+      "totalPlayers": "{count} players today",
+      "history": "Ganadores anteriores",
+      "noLeaders": "Aún no hay puntos.",
+      "noHistory": "Aún no hay pagos.",
+      "walletConnectTitle": "Verificar cartera",
+      "walletConnectBody": "Verifica una cartera de Solana con WOC para desbloquear las recompensas diarias.",
+      "walletConnectButton": "Verificar cartera",
+      "walletHoldTitle": "Mantén WOC",
+      "walletHoldBody": "Mantén al menos {amount} USD en WOC para desbloquear las recompensas diarias.",
+      "walletPriceBody": "El precio de WOC no está disponible en este momento. Vuelve a consultarlo pronto.",
+      "reason": {
+        "eligible": "Recompensas desbloqueadas.",
+        "no_wallet": "Conecta una cartera con al menos $20 USD en WOC.",
+        "under_minimum": "La cartera está por debajo del mínimo de $20 USD en WOC.",
+        "price_unavailable": "El precio de WOC no está disponible; las recompensas están bloqueadas temporalmente."
+      }
+    },
     "theme": {
       "preset": "Tema de la interfaz",
       "customColors": "Colores personalizados",
@@ -265,6 +311,13 @@ export const es_ES: EnTranslations = {
       "heading": "Rumbo",
       "minimapZoom": "Zoom del minimapa"
     },
+    "nativeUpdate": {
+      "title": "Actualización disponible",
+      "body": "Ya hay disponible una nueva versión de World of ClaudeCraft. Actualiza ahora para obtener las últimas correcciones y mejoras.",
+      "bodyWithVersion": "La versión {version} de World of ClaudeCraft ya está disponible. Actualiza ahora para obtener las últimas correcciones y mejoras.",
+      "notNow": "Ahora no",
+      "update": "Actualizar"
+    },
     "castBar": {
       "playerAria": "Tu barra de lanzamiento",
       "targetAria": "Barra de lanzamiento del objetivo"
@@ -337,9 +390,14 @@ export const es_ES: EnTranslations = {
       "showWalletOnCharacterScreen": "Mostrar cartera en la pantalla de personajes",
       "showWalletOnPlayerCard": "Mostrar cartera en la tarjeta de jugador",
       "showDevBadges": "Mostrar insignias de desarrollador",
+      "showOwnNameplate": "Show My Nameplate",
       "uiScale": "Escala de la interfaz",
+      "playerFrameScale": "Escala del marco del jugador",
+      "targetFrameScale": "Escala del marco del objetivo",
       "highContrastBackground": "Fondo de alto contraste",
       "startAttackOnAbility": "Ataque automático al usar habilidad",
+      "walkByAutoloot": "Walk-by Autoloot",
+      "groundReticle": "Retícula de objetivo terrestre",
       "showItemLevel": "Mostrar nivel de objeto",
       "itemLevelLine": "Nivel de objeto {level}",
       "itemScoreLine": "Puntuación {score}",
@@ -771,6 +829,9 @@ export const es_ES: EnTranslations = {
         "nature": "Natural"
       }
     },
+    "worldBoss": {
+      "spawn": "¡{name} se alza sobre las Alturas de Thornpeak!"
+    },
     "loot": {
       "chestTitle": "Cofre"
     },
@@ -781,6 +842,23 @@ export const es_ES: EnTranslations = {
     "nameplate": {
       "mob": "[{level}] {name}",
       "mobElite": "[{level}+] {name}"
+    },
+    "mobTooltip": {
+      "levelFamily": "Nivel {level} {family}",
+      "familyDemon": "Demonio",
+      "hostile": "Hostil",
+      "friendly": "Amistoso"
+    },
+    "targetFrame": {
+      "unlock": "Move target frame",
+      "lock": "Lock target frame"
+    },
+    "playerFrame": {
+      "unlock": "Mover marco del jugador",
+      "lock": "Fijar marco del jugador"
+    },
+    "frameReset": {
+      "label": "Restablecer posición de los marcos"
     },
     "itemTooltip": {
       "requiresLevel": "Requiere nivel {level}"
@@ -863,6 +941,7 @@ export const es_ES: EnTranslations = {
       "memberSinceDays": "{days}d en el Discord",
       "roleTag": {
         "levyst": "Levy St",
+        "admin": "Admin",
         "devs": "Dev",
         "mods": "Mod",
         "artists": "Artista"
@@ -1903,6 +1982,9 @@ export const es_ES: EnTranslations = {
     "password": "Contraseña",
     "passwordError": "Por favor, introduce tu contraseña.",
     "passwordPlaceholder": "Introduce tu contraseña",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "Please enter a valid email address.",
     "showPassword": "Mostrar contraseña",
     "hidePassword": "Ocultar contraseña",
     "logIn": "Iniciar sesión",
@@ -1928,7 +2010,15 @@ export const es_ES: EnTranslations = {
     "create": "Crear",
     "twoFactorLabel": "Código de autenticación",
     "twoFactorPlaceholder": "Código de 6 dígitos o de recuperación",
-    "twoFactorHint": "Introduce el código de tu app de autenticación, o uno de tus códigos de recuperación."
+    "twoFactorHint": "Introduce el código de tu app de autenticación, o uno de tus códigos de recuperación.",
+    "recovery": {
+      "title": "Add a recovery email",
+      "body": "Set an email address so you can recover your account. We only use it to confirm you own this account if you ever need to reset your password.",
+      "save": "Save email",
+      "logOut": "Log out",
+      "invalid": "Please enter a valid email address.",
+      "failed": "Could not save your email. Please try again."
+    }
   },
   "wallet": {
     "label": "Cartera $WOC",
@@ -1982,6 +2072,7 @@ export const es_ES: EnTranslations = {
     "helpLinkedWithBalance": "Las ventajas de titular están activas. La app de cartera está conectada en este navegador.",
     "helpLinkedDisconnected": "Las ventajas de titular están activas. Conecta la app cuando necesites firmar o gastar.",
     "helpLinkedDisconnectedWithBalance": "Las ventajas de titular están activas. Conecta la app cuando necesites firmar o gastar.",
+    "extensionHelp": "To see a wallet here, keep a browser wallet extension such as Solflare Wallet active.",
     "flowConnect": "Elige una cartera. La verificación continúa automáticamente.",
     "flowSign": "Firma el mensaje de verificación en tu app de cartera. No requiere transacción ni SOL.",
     "flowVerify": "Verificando la propiedad de la cartera...",
@@ -2626,6 +2717,7 @@ export const es_ES: EnTranslations = {
       "usernameTaken": "Ese nombre de usuario ya está en uso.",
       "invalidCredentials": "Usuario o contraseña no válidos.",
       "verificationFailed": "La verificación falló. Inténtalo de nuevo.",
+      "desktopCodeInvalid": "El código de inicio de sesión de escritorio no es válido o expiró. Inténtalo de nuevo.",
       "invalidCharacterName": "Nombre de personaje no válido. Usa 2-16 letras.",
       "characterNameNotAllowed": "Ese nombre de personaje no está permitido.",
       "invalidClass": "Clase no válida.",
@@ -2642,6 +2734,21 @@ export const es_ES: EnTranslations = {
       "takenOver": "Otra sesión tomó el control de tu personaje.",
       "renameBeforeEntering": "Este personaje debe cambiar de nombre antes de entrar en el mundo.",
       "renameNotPermitted": "No se permite cambiar el nombre de este personaje."
+    }
+  },
+  "desktop": {
+    "update": {
+      "downloading": "Descargando actualización {version}...",
+      "ready": "La actualización {version} está lista. Se instala al salir, o reinicia ahora.",
+      "restart": "Reiniciar ahora",
+      "later": "Más tarde"
+    },
+    "crash": {
+      "title": "World of ClaudeCraft",
+      "body": "La vista del juego dejó de funcionar. ¿Recargarla?",
+      "reload": "Recargar",
+      "quit": "Salir",
+      "fatalBody": "World of ClaudeCraft tuvo un error inesperado y debe cerrarse."
     }
   },
   "realm": {
@@ -3400,13 +3507,16 @@ export const es_ES: EnTranslations = {
     },
     "cast": {
       "fishing": "Pesca",
-      "demonHeal": "Sanación demoníaca"
+      "demonHeal": "Sanación demoníaca",
+      "thunzharrStormcall": "Llamada de la tormenta"
     }
   },
   "questUi": {
     "tracker": {
       "title": "Misiones",
-      "complete": "Completada"
+      "complete": "Completada",
+      "showOnMap": "Mostrar {name} en el mapa",
+      "hideFromMap": "Ocultar {name} del mapa"
     },
     "log": {
       "title": "Diario de misiones",
@@ -3692,6 +3802,26 @@ export const es_ES: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "Llamarada",
+        "description": "Invoca un estallido de fuego en el área objetivo que inflige {damage} de daño de Fuego a los enemigos alcanzados por la explosión."
+      },
+      "rain_of_fire": {
+        "name": "Lluvia de Fuego",
+        "description": "Hace caer una lluvia de fuego sobre el área objetivo, quemando a los enemigos e infligiendo {damage} de daño de Fuego."
+      },
+      "volley": {
+        "name": "Andanada",
+        "description": "Lanza una lluvia de flechas sobre el área objetivo, infligiendo {damage} de daño a los enemigos atrapados."
+      },
+      "hurricane": {
+        "name": "Huracán",
+        "description": "Desata un huracán sobre el área objetivo, golpeando a los enemigos e infligiendo {damage} de daño de Naturaleza."
+      },
+      "earthquake": {
+        "name": "Terremoto",
+        "description": "Sacude el área objetivo, golpeando a los enemigos e infligiendo {damage} de daño de Naturaleza."
+      },
       "heroic_strike": {
         "name": "Golpe heroico",
         "description": "Un ataque poderoso que aumenta el daño cuerpo a cuerpo en {damage}. Se activa en tu siguiente golpe."
@@ -4833,6 +4963,33 @@ export const es_ES: EnTranslations = {
       "monarch_crown_helm": {
         "name": "Corona del Monarca"
       },
+      "copper_mining_pick": {
+        "name": "Pico de Minería de Cobre"
+      },
+      "iron_mining_pick": {
+        "name": "Pico de Minería de Hierro"
+      },
+      "mithril_mining_pick": {
+        "name": "Pico de Minería de Mithril"
+      },
+      "handaxe": {
+        "name": "Hacha de Mano"
+      },
+      "felling_axe": {
+        "name": "Hacha de Tala"
+      },
+      "ironbark_axe": {
+        "name": "Hacha de Corteza de Hierro"
+      },
+      "gathering_sickle": {
+        "name": "Hoz de Recolección"
+      },
+      "bronze_sickle": {
+        "name": "Hoz de Bronce"
+      },
+      "silverleaf_sickle": {
+        "name": "Hoz de Hoja de Plata"
+      },
       "bristleback_maul": {
         "name": "Maza Bristleback"
       },
@@ -5315,6 +5472,30 @@ export const es_ES: EnTranslations = {
       },
       "vanguard_chrome_armor_plate": {
         "name": "Vanguardia cromada"
+      },
+      "crownforged_gauntlets": {
+        "name": "Guanteletes Forjacorona"
+      },
+      "nighttalon_grips": {
+        "name": "Agarraderas Garra Nocturna"
+      },
+      "soulflame_gloves": {
+        "name": "Guantes Llama de Alma"
+      },
+      "stormcallers_handguards": {
+        "name": "Guardamanos del Invocatormentas"
+      },
+      "crownforged_girdle": {
+        "name": "Cinturón Forjacorona"
+      },
+      "nighttalon_waistband": {
+        "name": "Faja Garra Nocturna"
+      },
+      "soulflame_cord": {
+        "name": "Cordón Llama de Alma"
+      },
+      "stormcallers_waistguard": {
+        "name": "Guardacintura del Invocatormentas"
       }
     },
     "mobs": {
@@ -5506,6 +5687,12 @@ export const es_ES: EnTranslations = {
       },
       "acolyte_tessa": {
         "name": "Acólita Tessa"
+      },
+      "thunzharr_waking_peak": {
+        "name": "Thunzharr, el Pico Despierto"
+      },
+      "thunzharr_stormling": {
+        "name": "Elemental de tormenta despierto"
       },
       "ironvein_foreman": {
         "name": "Capataz Vena de Hierro"
@@ -6169,6 +6356,36 @@ export const es_ES: EnTranslations = {
           }
         }
       },
+      "q_stalkers_return": {
+        "title": "The Stalkers Return",
+        "text": "Twelve dead, and the ridge crawls thicker than the day you started, {playerName}. Beasts do not throw themselves at a wall out of hunger. Something on the high ridge is pushing them down, and until I know what, the culling does not stop. Fourteen more.",
+        "completion": "Fourteen more, and still my patrols count fresh tracks by morning. My scout came back from the high ridge white as the snowline: prints the size of a shield, she says, and old kills no stalker would leave. Whatever walks up there is no ordinary cat.",
+        "objectives": {
+          "0": {
+            "label": "Ridge Stalker slain"
+          }
+        }
+      },
+      "q_stalker_cloaks": {
+        "title": "Cloaks for the Watch",
+        "text": "Eight pelts lined the officers' cloaks, and now every soldier on the wall wants the same, {playerName}. They are right to want it: winter takes fingers first and apologies never. Ten more pelts from the ridges south of the gate, and the whole watch sleeps warm.",
+        "completion": "Ten good pelts, thick as any I have... no, look at these, {playerName}. Torn, half of them, and by no blade or spear. Claw marks wide as my hand, right through the winter coat. Something on that ridge is savaging its own kind.",
+        "objectives": {
+          "0": {
+            "label": "Ridge Stalker Pelt"
+          }
+        }
+      },
+      "q_old_cragmaw": {
+        "title": "Old Cragmaw",
+        "text": "The mountain folk put a name to the prints my scout found: Old Cragmaw, a scar-pelted tyrant of a cat that has outlived three generations of its own pack. It is the reason the stalkers flood my road, {playerName}. Its den sits on the western ridge above the road south. Bring a friend, and put the old devil down.",
+        "completion": "Down at last. The mountain folk swore that cat would outlive the wall itself. The stalkers will keep to their high snows now, {playerName}, and my patrols will walk the road without bleeding for it. The whole ridge is quieter for your work.",
+        "objectives": {
+          "0": {
+            "label": "Old Cragmaw slain"
+          }
+        }
+      },
       "q_kobold_tunnels": {
         "title": "Problemas de Deeprock",
         "text": "Los kobolds de Deeprock cavan recto hacia abajo, como si algo los llamara bajo la muralla, {playerName}. Mata 12 tuneladores.",
@@ -6706,8 +6923,8 @@ export const es_ES: EnTranslations = {
       },
       "necromancers": {
         "name": "Vestiduras del nigromante",
-        "bonus2": "Reduce un 50% el retroceso de lanzamiento causado por daño.",
-        "bonus3": "El daño recibido no retrasa tus lanzamientos."
+        "bonus2": "No puedes ser empujado hacia atrás (100% de resistencia al empuje).",
+        "bonus3": "Aumenta el intelecto en 10 y el aguante en 10."
       },
       "nighttalon": {
         "name": "Atuendo de cuero Garra Nocturna",
@@ -6716,13 +6933,13 @@ export const es_ES: EnTranslations = {
       },
       "soulflame": {
         "name": "Vestiduras de Llama de Alma",
-        "bonus2": "Reduce un 50% el retroceso de lanzamiento causado por daño.",
-        "bonus3": "El daño recibido no retrasa tus lanzamientos."
+        "bonus2": "No puedes ser empujado hacia atrás (100% de resistencia al empuje).",
+        "bonus3": "Aumenta el intelecto en 15 y el espíritu en 15."
       },
       "stormcallers": {
         "name": "Vestiduras del Invocatormentas",
-        "bonus2": "Reduce un 50% el retroceso de lanzamiento causado por daño.",
-        "bonus3": "El daño recibido no retrasa tus lanzamientos."
+        "bonus2": "No puedes ser empujado hacia atrás (100% de resistencia al empuje).",
+        "bonus3": "Aumenta el intelecto en 15 y el espíritu en 15."
       },
       "wyrmshadow": {
         "name": "Atuendo de Sombra de Vermis",

@@ -23,7 +23,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 390,
-      "state": "f2893d06",
+      "state": "0355766e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -46,10 +46,12 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -109,7 +111,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "824642f8",
+      "state": "f994797c",
       "events": "caa6b21d",
       "rng": {
         "draws": 0,
@@ -132,11 +134,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -236,7 +240,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 392,
-      "state": "8beaea91",
+      "state": "3ecf9b41",
       "events": "24eae0bf",
       "rng": {
         "draws": 0,
@@ -259,11 +263,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -377,7 +383,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 392,
-      "state": "cabceb20",
+      "state": "eff49944",
       "events": "62c3fb26",
       "rng": {
         "draws": 0,
@@ -388,7 +394,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 392,
-      "state": "2eda4b99",
+      "state": "22ead329",
       "events": "62c3fb26",
       "rng": {
         "draws": 0,
@@ -399,7 +405,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 393,
-      "state": "a91588af",
+      "state": "5a2e299b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -422,11 +428,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -601,7 +609,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 393,
-      "state": "28f0704f",
+      "state": "b108067b",
       "events": "c6f606f6",
       "rng": {
         "draws": 0,
@@ -624,11 +632,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -743,7 +753,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 395,
-      "state": "f8f8c81a",
+      "state": "07916262",
       "events": "d31b95a1",
       "rng": {
         "draws": 0,
@@ -766,11 +776,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -925,7 +937,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 395,
-      "state": "a1f97ae6",
+      "state": "00cc0a3e",
       "events": "30072596",
       "rng": {
         "draws": 0,
@@ -948,11 +960,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -1107,7 +1121,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 395,
-      "state": "28f0704f",
+      "state": "b108067b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1130,11 +1144,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -1249,7 +1265,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 396,
-      "state": "28f0704f",
+      "state": "b108067b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1272,11 +1288,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -1391,7 +1409,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 398,
-      "state": "586f6474",
+      "state": "de5d5d74",
       "events": "226734f3",
       "rng": {
         "draws": 0,
@@ -1414,11 +1432,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         },
         {
           "activeLoadout": -1,
@@ -1434,11 +1454,13 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -1648,7 +1670,7 @@
       "tick": 60,
       "time": 3,
       "nextId": 398,
-      "state": "9543f24d",
+      "state": "d0d9cb21",
       "events": "93f2d5fc",
       "rng": {
         "draws": 82,
@@ -1659,7 +1681,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 398,
-      "state": "9a4d55d7",
+      "state": "31998d33",
       "events": "c77832ae",
       "rng": {
         "draws": 158,
@@ -1670,7 +1692,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 398,
-      "state": "9a4d55d7",
+      "state": "31998d33",
       "events": "741638a5",
       "rng": {
         "draws": 158,
@@ -1695,11 +1717,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         },
         {
           "activeLoadout": -1,
@@ -1715,11 +1739,13 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -1938,7 +1964,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 399,
-      "state": "efa37593",
+      "state": "d93ba22f",
       "events": "d10f7d8e",
       "rng": {
         "draws": 158,
@@ -1963,11 +1989,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         },
         {
           "activeLoadout": -1,
@@ -1983,11 +2011,13 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -2166,7 +2196,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 401,
-      "state": "2f4186fa",
+      "state": "bbbb1c3a",
       "events": "41fa6044",
       "rng": {
         "draws": 158,
@@ -2191,11 +2221,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         },
         {
           "activeLoadout": -1,
@@ -2211,11 +2243,13 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [
@@ -2443,7 +2477,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 401,
-      "state": "2f4186fa",
+      "state": "bbbb1c3a",
       "events": "741638a5",
       "rng": {
         "draws": 158,
@@ -2468,11 +2502,13 @@
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         },
         {
           "activeLoadout": -1,
@@ -2488,11 +2524,13 @@
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
           },
+          "gatheringProficiency": {},
           "lifetimeXp": 44000,
           "talents": {
             "choices": {},
             "ranks": {}
-          }
+          },
+          "worldBossDaily": {}
         }
       ],
       "entities": [

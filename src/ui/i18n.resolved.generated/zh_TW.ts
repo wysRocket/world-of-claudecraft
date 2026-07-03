@@ -177,6 +177,52 @@ export const zh_TW: EnTranslations = {
       "title": "表情",
       "done": "完成"
     },
+    "dailyRewards": {
+      "title": "每日獎勵",
+      "close": "關閉每日獎勵",
+      "loading": "正在載入每日獎勵...",
+      "error": "無法載入每日獎勵。",
+      "intro": "在已驗證的錢包中持有足夠的 WOC 即可解鎖每日獎勵。透過每日一次轉盤與輪換任務賺取點數，再登上每日排行榜以分得獎池的一份獎勵。",
+      "prize": "獎池",
+      "reset": "重置",
+      "endsIn": "{time}後結束",
+      "remainingLessThanMinute": "<1分",
+      "remainingMinutes": "{minutes}分",
+      "remainingHoursMinutes": "{hours}小時{minutes}分",
+      "score": "分數",
+      "walletValue": "錢包價值 (WOC)",
+      "usd": "{amount} USD",
+      "sol": "{amount} SOL",
+      "unknown": "未知",
+      "spinTitle": "每日轉盤",
+      "spinDialogTitle": "每日獎勵轉盤",
+      "spinClose": "關閉每日轉盤",
+      "spinReady": "有一次轉盤可用。",
+      "spinClaimed": "已領取：+{points} 點。",
+      "spinResult": "+{points} 點",
+      "spinButton": "轉動",
+      "tasks": "任務",
+      "taskMultiplier": "{multiplier}倍倍率",
+      "pointsGained": "已獲得 {points} 每日獎勵點數。",
+      "leaderboard": "每日排行榜",
+      "totalPlayer": "今天 {count} 名玩家",
+      "totalPlayers": "今天 {count} 名玩家",
+      "history": "歷屆得獎者",
+      "noLeaders": "尚無點數。",
+      "noHistory": "尚無派彩紀錄。",
+      "walletConnectTitle": "驗證錢包",
+      "walletConnectBody": "驗證持有 WOC 的 Solana 錢包以解鎖每日獎勵。",
+      "walletConnectButton": "驗證錢包",
+      "walletHoldTitle": "持有 WOC",
+      "walletHoldBody": "持有至少價值 {amount} USD 的 WOC 以解鎖每日獎勵。",
+      "walletPriceBody": "目前無法取得 WOC 價格，請稍後再試。",
+      "reason": {
+        "eligible": "獎勵已解鎖。",
+        "no_wallet": "請連接持有至少 $20 USD WOC 的錢包。",
+        "under_minimum": "錢包低於 $20 USD 的 WOC 最低要求。",
+        "price_unavailable": "無法取得 WOC 價格，獎勵暫時鎖定。"
+      }
+    },
     "theme": {
       "preset": "介面主題",
       "customColors": "自訂顏色",
@@ -265,6 +311,13 @@ export const zh_TW: EnTranslations = {
       "heading": "方位",
       "minimapZoom": "小地圖縮放"
     },
+    "nativeUpdate": {
+      "title": "有可用更新",
+      "body": "World of ClaudeCraft 有新版本可用。立即更新以取得最新修正與改進。",
+      "bodyWithVersion": "World of ClaudeCraft {version} 版本已可用。立即更新以取得最新修正與改進。",
+      "notNow": "暫不",
+      "update": "更新"
+    },
     "castBar": {
       "playerAria": "你的施法條",
       "targetAria": "目標施法條"
@@ -337,9 +390,14 @@ export const zh_TW: EnTranslations = {
       "showWalletOnCharacterScreen": "在角色畫面顯示錢包",
       "showWalletOnPlayerCard": "在玩家卡片顯示錢包",
       "showDevBadges": "顯示開發者徽章",
+      "showOwnNameplate": "顯示我的姓名板",
       "uiScale": "介面縮放",
+      "playerFrameScale": "玩家框縮放",
+      "targetFrameScale": "目標框縮放",
       "highContrastBackground": "高對比度背景",
       "startAttackOnAbility": "使用技能時自動攻擊",
+      "walkByAutoloot": "路過自動拾取",
+      "groundReticle": "地面瞄準指示圈",
       "showItemLevel": "顯示物品等級",
       "itemLevelLine": "物品等級 {level}",
       "itemScoreLine": "評分 {score}",
@@ -771,6 +829,9 @@ export const zh_TW: EnTranslations = {
         "nature": "自然"
       }
     },
+    "worldBoss": {
+      "spawn": "{name}在荊峰高地崛起！"
+    },
     "loot": {
       "chestTitle": "寶箱"
     },
@@ -781,6 +842,23 @@ export const zh_TW: EnTranslations = {
     "nameplate": {
       "mob": "[{level}] {name}",
       "mobElite": "[{level}+] {name}"
+    },
+    "mobTooltip": {
+      "levelFamily": "等級 {level} {family}",
+      "familyDemon": "惡魔",
+      "hostile": "敵對",
+      "friendly": "友方"
+    },
+    "targetFrame": {
+      "unlock": "移動目標框",
+      "lock": "鎖定目標框"
+    },
+    "playerFrame": {
+      "unlock": "移動玩家框",
+      "lock": "鎖定玩家框"
+    },
+    "frameReset": {
+      "label": "重置框體位置"
     },
     "itemTooltip": {
       "requiresLevel": "需要等級 {level}"
@@ -863,6 +941,7 @@ export const zh_TW: EnTranslations = {
       "memberSinceDays": "已加入 Discord {days} 天",
       "roleTag": {
         "levyst": "Levy St",
+        "admin": "管理員",
         "devs": "開發者",
         "mods": "管理員",
         "artists": "美術"
@@ -1903,6 +1982,9 @@ export const zh_TW: EnTranslations = {
     "password": "密碼",
     "passwordError": "請輸入密碼。",
     "passwordPlaceholder": "請輸入密碼",
+    "email": "電子郵件",
+    "emailPlaceholder": "you@example.com",
+    "emailError": "請輸入有效的電子郵件地址。",
     "showPassword": "顯示密碼",
     "hidePassword": "隱藏密碼",
     "logIn": "登入",
@@ -1928,7 +2010,15 @@ export const zh_TW: EnTranslations = {
     "create": "建立",
     "twoFactorLabel": "驗證碼",
     "twoFactorPlaceholder": "6 位數驗證碼或復原碼",
-    "twoFactorHint": "請輸入驗證器應用程式顯示的驗證碼，或其中一組復原碼。"
+    "twoFactorHint": "請輸入驗證器應用程式顯示的驗證碼，或其中一組復原碼。",
+    "recovery": {
+      "title": "新增復原電子郵件",
+      "body": "設定一個電子郵件地址，以便您可以復原自己的帳號。我們僅在您需要重設密碼時，用它來確認您是本帳號的擁有者。",
+      "save": "儲存電子郵件",
+      "logOut": "Log out",
+      "invalid": "請輸入有效的電子郵件地址。",
+      "failed": "無法儲存您的電子郵件，請重試。"
+    }
   },
   "wallet": {
     "label": "$WOC 錢包",
@@ -1982,6 +2072,7 @@ export const zh_TW: EnTranslations = {
     "helpLinkedWithBalance": "持有者特權已啟用。錢包應用程式已在此瀏覽器中連線。",
     "helpLinkedDisconnected": "持有者特權已啟用。需要簽名或花費時請連接應用程式。",
     "helpLinkedDisconnectedWithBalance": "持有者特權已啟用。需要簽名或花費時請連接應用程式。",
+    "extensionHelp": "若要在此處看到錢包，請保持 Solflare Wallet 等瀏覽器錢包擴充功能處於啟用狀態。",
     "flowConnect": "選擇一個錢包。驗證會自動繼續。",
     "flowSign": "在錢包應用程式中簽署驗證訊息。無需交易或 SOL。",
     "flowVerify": "正在驗證錢包所有權...",
@@ -2626,6 +2717,7 @@ export const zh_TW: EnTranslations = {
       "usernameTaken": "此使用者名稱已被使用。",
       "invalidCredentials": "使用者名稱或密碼無效。",
       "verificationFailed": "驗證失敗，請重試。",
+      "desktopCodeInvalid": "桌面版登入代碼無效或已過期，請重試。",
       "invalidCharacterName": "角色名稱無效。請使用 2-16 個字母。",
       "characterNameNotAllowed": "此角色名稱不可使用。",
       "invalidClass": "職業無效。",
@@ -2642,6 +2734,21 @@ export const zh_TW: EnTranslations = {
       "takenOver": "你的角色已被另一個工作階段接管。",
       "renameBeforeEntering": "此角色必須先更名才能進入世界。",
       "renameNotPermitted": "不允許為此角色更名。"
+    }
+  },
+  "desktop": {
+    "update": {
+      "downloading": "正在下載更新 {version}...",
+      "ready": "更新 {version} 已就緒。離開遊戲時將自動安裝，也可立即重新啟動。",
+      "restart": "立即重新啟動",
+      "later": "稍後"
+    },
+    "crash": {
+      "title": "World of ClaudeCraft",
+      "body": "遊戲畫面已停止運作。要重新載入嗎？",
+      "reload": "重新載入",
+      "quit": "離開",
+      "fatalBody": "World of ClaudeCraft 發生未預期的錯誤，必須關閉。"
     }
   },
   "realm": {
@@ -3400,13 +3507,16 @@ export const zh_TW: EnTranslations = {
     },
     "cast": {
       "fishing": "釣魚",
-      "demonHeal": "惡魔治療"
+      "demonHeal": "惡魔治療",
+      "thunzharrStormcall": "風暴召喚"
     }
   },
   "questUi": {
     "tracker": {
       "title": "任務",
-      "complete": "完成"
+      "complete": "完成",
+      "showOnMap": "在地圖上顯示{name}",
+      "hideFromMap": "在地圖上隱藏{name}"
     },
     "log": {
       "title": "任務日誌",
@@ -3692,6 +3802,26 @@ export const zh_TW: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "烈焰風暴",
+        "description": "在目標區域召喚一次烈焰爆發，對爆炸範圍內的敵人造成 {damage} 點火焰傷害。"
+      },
+      "rain_of_fire": {
+        "name": "烈火之雨",
+        "description": "在目標區域降下烈火之雨，灼燒敵人，造成 {damage} 點火焰傷害。"
+      },
+      "volley": {
+        "name": "亂射",
+        "description": "向目標區域射出箭雨，對其中的敵人造成 {damage} 點傷害。"
+      },
+      "hurricane": {
+        "name": "颶風",
+        "description": "在目標區域召喚颶風，重擊敵人，造成 {damage} 點自然傷害。"
+      },
+      "earthquake": {
+        "name": "地震",
+        "description": "撼動目標區域，重擊敵人，造成 {damage} 點自然傷害。"
+      },
       "heroic_strike": {
         "name": "英勇打擊",
         "description": "一次強力攻擊，使近戰傷害提高 {damage}。在你的下一次揮擊時觸發。"
@@ -4833,6 +4963,33 @@ export const zh_TW: EnTranslations = {
       "monarch_crown_helm": {
         "name": "君主之冠"
       },
+      "copper_mining_pick": {
+        "name": "銅製採礦鎬"
+      },
+      "iron_mining_pick": {
+        "name": "鐵製採礦鎬"
+      },
+      "mithril_mining_pick": {
+        "name": "秘銀採礦鎬"
+      },
+      "handaxe": {
+        "name": "手斧"
+      },
+      "felling_axe": {
+        "name": "伐木斧"
+      },
+      "ironbark_axe": {
+        "name": "鐵樹皮斧"
+      },
+      "gathering_sickle": {
+        "name": "採集鐮刀"
+      },
+      "bronze_sickle": {
+        "name": "青銅鐮刀"
+      },
+      "silverleaf_sickle": {
+        "name": "銀葉鐮刀"
+      },
       "bristleback_maul": {
         "name": "硬鬃重槌"
       },
@@ -5315,6 +5472,30 @@ export const zh_TW: EnTranslations = {
       },
       "vanguard_chrome_armor_plate": {
         "name": "先鋒鉻銀"
+      },
+      "crownforged_gauntlets": {
+        "name": "鑄冠護手"
+      },
+      "nighttalon_grips": {
+        "name": "夜爪握套"
+      },
+      "soulflame_gloves": {
+        "name": "魂焰手套"
+      },
+      "stormcallers_handguards": {
+        "name": "喚雷者手甲"
+      },
+      "crownforged_girdle": {
+        "name": "鑄冠腰帶"
+      },
+      "nighttalon_waistband": {
+        "name": "夜爪束帶"
+      },
+      "soulflame_cord": {
+        "name": "魂焰腰繩"
+      },
+      "stormcallers_waistguard": {
+        "name": "喚雷者腰甲"
       }
     },
     "mobs": {
@@ -5506,6 +5687,12 @@ export const zh_TW: EnTranslations = {
       },
       "acolyte_tessa": {
         "name": "侍僧泰莎"
+      },
+      "thunzharr_waking_peak": {
+        "name": "桑扎爾，覺醒之峰"
+      },
+      "thunzharr_stormling": {
+        "name": "被驚醒的風暴元素"
       },
       "ironvein_foreman": {
         "name": "鐵脈工頭"
@@ -6169,6 +6356,36 @@ export const zh_TW: EnTranslations = {
           }
         }
       },
+      "q_stalkers_return": {
+        "title": "潛獵者去而復返",
+        "text": "死了十二隻，山脊上的潛獵者反而更多了，{playerName}。野獸不會因為飢餓就往城牆上撲，是高脊上有什麼東西把牠們趕下來。查清之前，獵殺不停。再殺十四隻。",
+        "completion": "又殺了十四隻，可巡邏隊每天清晨仍數得出新的足跡。我的斥候從高脊回來時臉白得像雪線：她說那些爪印有盾牌那麼大，還有潛獵者絕不會留下的獵殺痕跡。在上面遊蕩的絕不是普通的山貓。",
+        "objectives": {
+          "0": {
+            "label": "擊敗山脊潛獵者"
+          }
+        }
+      },
+      "q_stalker_cloaks": {
+        "title": "守望者的披風",
+        "text": "八張皮給軍官的披風加了襯，現在牆上每個士兵都想要一件，{playerName}。他們想得沒錯：寒冬先奪手指，從不聽道歉。再從大門以南的山脊取十張皮，整支守望隊都能睡個暖覺。",
+        "completion": "十張好皮，厚實得沒話說……不對，你看這些，{playerName}。一半都撕裂了，可不是刀槍的痕跡。爪痕有我手掌那麼寬，直接穿透了冬毛。山脊上有什麼東西在殘殺自己的同類。",
+        "objectives": {
+          "0": {
+            "label": "山脊潛獵者毛皮"
+          }
+        }
+      },
+      "q_old_cragmaw": {
+        "title": "老裂顎",
+        "text": "山民給我斥候找到的爪印起過名字：老裂顎，一隻滿身傷疤的暴君巨貓，熬死了自己族群的三代。潛獵者湧上我的道路，就是因為牠，{playerName}。牠的巢穴在南路上方的西側山脊。帶個幫手去，了結那老魔頭。",
+        "completion": "牠終於倒下了。山民曾發誓那隻貓會比城牆活得還久。如今潛獵者會守在高處的雪原了，{playerName}，我的巡邏隊走這條路也不必再流血。整條山脊都因你安靜了下來。",
+        "objectives": {
+          "0": {
+            "label": "擊敗老裂顎"
+          }
+        }
+      },
       "q_kobold_tunnels": {
         "title": "深岩麻煩",
         "text": "深岩的狗頭人往不該挖的深處直挖，像有東西在呼喚。牠們的隧道穿過我們的城牆下，{playerName}。殺12個深岩掘地者。",
@@ -6706,8 +6923,8 @@ export const zh_TW: EnTranslations = {
       },
       "necromancers": {
         "name": "死靈法師法衣",
-        "bonus2": "受到傷害造成的施法延退降低 50%。",
-        "bonus3": "施法時不會因受到傷害而被延退。"
+        "bonus2": "你不會被擊退（擊退抗性 100%）。",
+        "bonus3": "智力提高 10 點，耐力提高 10 點。"
       },
       "nighttalon": {
         "name": "夜爪皮甲",
@@ -6716,13 +6933,13 @@ export const zh_TW: EnTranslations = {
       },
       "soulflame": {
         "name": "魂焰法衣",
-        "bonus2": "受到傷害造成的施法延退降低 50%。",
-        "bonus3": "施法時不會因受到傷害而被延退。"
+        "bonus2": "你不會被擊退（擊退抗性 100%）。",
+        "bonus3": "智力提高 15 點，精神提高 15 點。"
       },
       "stormcallers": {
         "name": "喚雷者法衣",
-        "bonus2": "受到傷害造成的施法延退降低 50%。",
-        "bonus3": "施法時不會因受到傷害而被延退。"
+        "bonus2": "你不會被擊退（擊退抗性 100%）。",
+        "bonus3": "智力提高 15 點，精神提高 15 點。"
       },
       "wyrmshadow": {
         "name": "龍影外衣",
