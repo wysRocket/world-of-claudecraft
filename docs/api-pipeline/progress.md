@@ -1207,17 +1207,73 @@ background run per the piped-tail trap).
 ## Phase 22: REST i18n matcher + per-surface code-parity guard
 
 Deliverables:
-- [ ] Extend userFacingApiError to look up emitted codes DIRECTLY in the client catalog instead of reverse-matching English prose; port parametric cases (suspended-until {date}, the {seconds} rate-limit families) to {code,params}; preserve its dual REST + WS-disconnect-reason role
-- [ ] Add apiError.* English catalog entries and wire them into client i18n; params formatted client-side via formatNumber/formatDuration/Intl
-- [ ] A per-surface code-parity Vitest asserting every server-emitted code resolves to a client entry in every locale, append-only frozen, PLUS coverage for the ~30-45 EXISTING REST strings (currently unguarded; S3 scans only game.ts) and the new Discord/guild codes
+- [x] Extend userFacingApiError to look up emitted codes DIRECTLY in the client catalog instead of reverse-matching English prose; port parametric cases (suspended-until {date}, the {seconds} rate-limit families) to {code,params}; preserve its dual REST + WS-disconnect-reason role
+- [x] Add apiError.* English catalog entries and wire them into client i18n; params formatted client-side via formatNumber/formatDuration/Intl
+- [x] A per-surface code-parity Vitest asserting every server-emitted code resolves to a client entry in every locale, append-only frozen, PLUS coverage for the ~30-45 EXISTING REST strings (currently unguarded; S3 scans only game.ts) and the new Discord/guild codes
 
 QA:
-- [ ] Fixes applied
-- [ ] Tests added
-- [ ] Dead code removed
-- [ ] Reviews clean
+- [x] Fixes applied
+- [x] Tests added
+- [x] Dead code removed
+- [x] Reviews clean
 
 Notes:
+- Reviews (2026-07-02, apply-all): cross-platform-sync PASS (0 BLOCKING / 0 SHOULD-FIX;
+  verified byte-identical prose move, 59/59 code-catalog-table parity, machine-only
+  params, twin parity, WS role unchanged; INFO: the pre-existing uncoded 'token not
+  found' and 'image too large' raw-English leaks are later-phase candidates, and the
+  REST suspension date is now locale-formatted while the WS kick keeps the raw UTC
+  string, an accepted asymmetry). qa-checklist READY (0 BLOCKING / 0 SHOULD-FIX / 2
+  NITs, both applied: the characters.test.ts moderation fake now sets banned:true and
+  pins moderation.banned; the parity guard's dimension-3 failure messages now name the
+  real API_ERROR_KEYS export). privacy-security-review / migration-safety /
+  architecture-reviewer exclusions re-confirmed VALID against the actual diff.
+- Impl (2026-07-02). Client: userFacingApiError + technicalErrorMessage EXTRACTED from
+  src/main.ts into the pure DOM-free src/ui/api_error_i18n.ts (main.ts stays a thin
+  consumer; the matcher is finally unit-testable). Resolution order: stable problem+json
+  code FIRST via the exported API_ERROR_KEYS identity table (the ONE declarative
+  code-to-key mapping: code 'domain.reason' -> t('apiError.<domain>.<reason>'), 59 rows,
+  exact set-parity with server/http/error_codes.ts), the legacy prose arms SECOND (moved
+  verbatim; still required for un-migrated old-ladder routes until the Phase 25 ladder
+  deletion), raw diagnostic English LAST. An unknown or param-starved code falls through
+  to prose. ApiError (src/net/online.ts) now captures a top-level string `code` plus the
+  body params. Parametric ports, both formatted CLIENT-side: moderation.suspended_until ->
+  t(key, {date: formatDateTime(parsedIso)}); rate_limit.exceeded -> {seconds} via the NEW
+  formatDuration(seconds) in src/ui/i18n.ts (cached Intl.NumberFormat style 'unit',
+  per-locale plural rules). WS-disconnect branches (loading.*, tServer moderation.*) and
+  the intentionally-English diagnostics moved unchanged.
+- Catalog: NEW src/ui/i18n.catalog/api_error.ts (flat en-only domain, export
+  apiErrorStrings, nested identity keys, deliberately no `as const`) wired as `apiError`
+  in the index.ts barrel. One English entry per code; existing vocabulary REUSED verbatim
+  where an equivalent errors.api.* / hudChrome.account.* / server_i18n English exists.
+  M16 non-Latin fills (zh_CN, zh_TW, ja_JP, ko_KR, ru_RU) for every wordy value, copying
+  the existing human translations for reused English; Latin locales stay pending for the
+  release fill. Resolved artifacts regenerated; sha legitimately re-baselined to
+  f203483ecaba2234aecbf14bdea5bb613933665fdc3cf8546d887a9957e04425 (content addition).
+- Server (the coded-emission pass the ratified premise shift assigned here): ADDITIVE
+  `code` fields alongside byte-identical legacy prose in BOTH dispatch twins
+  (auth_routes, account, characters, discord, wallet, the desktop_login shared throttle,
+  turnstile, bearer_active_guard, and every server/main.ts legacy arm). NEW shared
+  moderationErrorBody(status) in http_util.ts (banned -> moderation.banned;
+  suspendedUntil -> moderation.suspended_until + machine ISO `date`; deactivated ->
+  account.deactivated; else -> moderation.suspended), unit-tested in
+  tests/server/moderation_error_body.test.ts. 9 NEW discord.* codes appended to
+  error_codes.ts + snapshot (not_configured, expired, already_linked, password_required,
+  unknown_swag, link_required, swag_claimed, swag_tier, swag_points). 21 characterization
+  goldens regenerated, git-diff audited additive-only. DISCORD_POLICY stays UNMOUNTED
+  (mounting would switch the 429 to problem+json and change limiter keying: observable,
+  deferred to the P25 window). Left prose-only deliberately: 'rate limited',
+  'server_error', 'too many attempts, slow down', the github/desktop-login/daily-rewards
+  domain bodies (Phase 18b adjudication), and the /api/search legacy divergent arm.
+- Guards: NEW tests/api_error_code_parity.test.ts, 5 dimensions (SoT enumeration from
+  ERROR_CODES, every-code every-locale non-empty resolution with the exact missing
+  apiError.<code> key named on failure, API_ERROR_KEYS table parity, per-locale
+  placeholder parity pinning {date}/{seconds}, append-only literal 59-code freeze),
+  closing the historically UNGUARDED REST matcher gap (S3 scans only the WS path). NEW
+  tests/main_api_error.test.ts (18 runtime matcher tests, code/prose/parametric/WS/
+  diagnostic). tests/server/rate_limit_copy.test.ts re-pointed at the extracted module.
+- Validation: tsc green; new suites + S3 + architecture green; npm run gate PASS all 9
+  steps; i18n regen idempotent (hash stable across re-runs).
 
 ## Phase 23: Structured logging + /metrics exporter + drain-aware health
 
