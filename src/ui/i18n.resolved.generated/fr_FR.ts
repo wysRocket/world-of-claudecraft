@@ -178,45 +178,49 @@ export const fr_FR: EnTranslations = {
       "done": "Terminé"
     },
     "dailyRewards": {
-      "title": "Daily Rewards",
-      "close": "Close daily rewards",
-      "loading": "Loading daily rewards...",
-      "error": "Could not load daily rewards.",
-      "intro": "Hold enough WOC in your verified wallet to unlock daily rewards. Earn points with one daily spin and rotating tasks, then climb the daily leaderboard for a share of the prize pool.",
-      "prize": "Prize Pool",
-      "reset": "Reset",
-      "endsIn": "Ends in {time}",
-      "remainingLessThanMinute": "<1m",
-      "remainingMinutes": "{minutes}m",
-      "remainingHoursMinutes": "{hours}h {minutes}m",
+      "title": "Récompenses quotidiennes",
+      "close": "Fermer les récompenses quotidiennes",
+      "loading": "Chargement des récompenses quotidiennes...",
+      "error": "Impossible de charger les récompenses quotidiennes.",
+      "intro": "Détenez assez de WOC dans votre portefeuille vérifié pour débloquer les récompenses quotidiennes. Gagnez des points grâce à un tour quotidien et à des tâches en rotation, puis grimpez dans le classement quotidien pour remporter une part de la cagnotte.",
+      "prize": "Cagnotte",
+      "reset": "Réinitialisation",
+      "endsIn": "Se termine dans {time}",
+      "remainingLessThanMinute": "<1min",
+      "remainingMinutes": "{minutes}min",
+      "remainingHoursMinutes": "{hours}h {minutes}min",
       "score": "Score",
-      "walletValue": "Wallet Value (WOC)",
+      "walletValue": "Valeur du portefeuille (WOC)",
       "usd": "{amount} USD",
       "sol": "{amount} SOL",
-      "unknown": "Unknown",
-      "spinTitle": "Daily Spin",
-      "spinDialogTitle": "Daily Reward Spin",
-      "spinClose": "Close daily spin",
-      "spinReady": "One spin is ready.",
-      "spinClaimed": "Claimed: +{points} points.",
+      "unknown": "Inconnu",
+      "spinTitle": "Tour quotidien",
+      "spinDialogTitle": "Tour de récompense quotidien",
+      "spinClose": "Fermer le tour quotidien",
+      "spinReady": "Un tour est disponible.",
+      "spinClaimed": "Récupéré : +{points} points.",
       "spinResult": "+{points} points",
-      "spinButton": "Spin",
-      "tasks": "Tasks",
-      "leaderboard": "Daily Leaderboard",
-      "history": "Past Winners",
-      "noLeaders": "No points yet.",
-      "noHistory": "No payouts yet.",
-      "walletConnectTitle": "Verify Wallet",
-      "walletConnectBody": "Verify a Solana wallet with WOC to unlock daily rewards.",
-      "walletConnectButton": "Verify Wallet",
-      "walletHoldTitle": "Hold WOC",
-      "walletHoldBody": "Hold at least {amount} USD in WOC to unlock daily rewards.",
-      "walletPriceBody": "WOC pricing is unavailable right now. Check back shortly.",
+      "spinButton": "Tourner",
+      "tasks": "Tâches",
+      "taskMultiplier": "x{multiplier} multiplier",
+      "pointsGained": "{points} daily rewards points gained.",
+      "leaderboard": "Classement quotidien",
+      "totalPlayer": "{count} player today",
+      "totalPlayers": "{count} players today",
+      "history": "Anciens gagnants",
+      "noLeaders": "Aucun point pour l'instant.",
+      "noHistory": "Aucun versement pour l'instant.",
+      "walletConnectTitle": "Vérifier le portefeuille",
+      "walletConnectBody": "Vérifiez un portefeuille Solana contenant du WOC pour débloquer les récompenses quotidiennes.",
+      "walletConnectButton": "Vérifier le portefeuille",
+      "walletHoldTitle": "Détenir du WOC",
+      "walletHoldBody": "Détenez au moins {amount} USD en WOC pour débloquer les récompenses quotidiennes.",
+      "walletPriceBody": "Le cours du WOC est indisponible pour le moment. Revenez d'ici peu.",
       "reason": {
-        "eligible": "Rewards unlocked.",
-        "no_wallet": "Connect a wallet with at least $20 USD in WOC.",
-        "under_minimum": "Wallet is below the $20 USD WOC minimum.",
-        "price_unavailable": "WOC price is unavailable, rewards are temporarily locked."
+        "eligible": "Récompenses débloquées.",
+        "no_wallet": "Connectez un portefeuille contenant au moins 20 USD en WOC.",
+        "under_minimum": "Le portefeuille est en dessous du minimum de 20 USD en WOC.",
+        "price_unavailable": "Le cours du WOC est indisponible, les récompenses sont temporairement verrouillées."
       }
     },
     "theme": {
@@ -308,11 +312,11 @@ export const fr_FR: EnTranslations = {
       "minimapZoom": "Zoom de la minicarte"
     },
     "nativeUpdate": {
-      "title": "Update Available",
-      "body": "A new version of World of ClaudeCraft is available. Update now for the latest fixes and improvements.",
-      "bodyWithVersion": "Version {version} of World of ClaudeCraft is available. Update now for the latest fixes and improvements.",
-      "notNow": "Not now",
-      "update": "Update"
+      "title": "Mise à jour disponible",
+      "body": "Une nouvelle version de World of ClaudeCraft est disponible. Mettez à jour maintenant pour les derniers correctifs et améliorations.",
+      "bodyWithVersion": "La version {version} de World of ClaudeCraft est disponible. Mettez à jour maintenant pour les derniers correctifs et améliorations.",
+      "notNow": "Pas maintenant",
+      "update": "Mettre à jour"
     },
     "castBar": {
       "playerAria": "Votre barre d'incantation",
@@ -389,6 +393,7 @@ export const fr_FR: EnTranslations = {
       "uiScale": "Échelle de l’interface",
       "highContrastBackground": "Arrière-plan à contraste élevé",
       "startAttackOnAbility": "Attaque auto à l'utilisation d'une compétence",
+      "groundReticle": "Réticule de ciblage au sol",
       "showItemLevel": "Afficher le niveau d'objet",
       "itemLevelLine": "Niveau d'objet {level}",
       "itemScoreLine": "Score {score}",
@@ -2031,6 +2036,7 @@ export const fr_FR: EnTranslations = {
     "helpLinkedWithBalance": "Les avantages de détenteur sont actifs. L'appli de portefeuille est connectée sur ce navigateur.",
     "helpLinkedDisconnected": "Les avantages de détenteur sont actifs. Connectez l'appli lorsque vous devez signer ou dépenser.",
     "helpLinkedDisconnectedWithBalance": "Les avantages de détenteur sont actifs. Connectez l'appli lorsque vous devez signer ou dépenser.",
+    "extensionHelp": "To see a wallet here, keep a browser wallet extension such as Solflare Wallet active.",
     "flowConnect": "Choisissez un portefeuille. La vérification continue automatiquement.",
     "flowSign": "Signez le message de vérification dans votre appli de portefeuille. Aucune transaction ni SOL requis.",
     "flowVerify": "Vérification de la propriété du portefeuille...",
@@ -2675,7 +2681,7 @@ export const fr_FR: EnTranslations = {
       "usernameTaken": "Ce nom d'utilisateur est déjà pris.",
       "invalidCredentials": "Nom d'utilisateur ou mot de passe incorrect.",
       "verificationFailed": "Échec de la vérification. Veuillez réessayer.",
-      "desktopCodeInvalid": "Desktop login code is invalid or expired. Please try again.",
+      "desktopCodeInvalid": "Le code de connexion de l'application de bureau est invalide ou expiré. Veuillez réessayer.",
       "invalidCharacterName": "Nom de personnage invalide. Utilisez 2 à 16 lettres.",
       "characterNameNotAllowed": "Ce nom de personnage n'est pas autorisé.",
       "invalidClass": "Classe invalide.",
@@ -2696,17 +2702,17 @@ export const fr_FR: EnTranslations = {
   },
   "desktop": {
     "update": {
-      "downloading": "Downloading update {version}...",
-      "ready": "Update {version} is ready. It installs when you quit, or restart now.",
-      "restart": "Restart now",
-      "later": "Later"
+      "downloading": "Téléchargement de la mise à jour {version}...",
+      "ready": "La mise à jour {version} est prête. Elle s'installe à la fermeture, ou redémarrez maintenant.",
+      "restart": "Redémarrer maintenant",
+      "later": "Plus tard"
     },
     "crash": {
       "title": "World of ClaudeCraft",
-      "body": "The game view stopped working. Reload it?",
-      "reload": "Reload",
-      "quit": "Quit",
-      "fatalBody": "World of ClaudeCraft hit an unexpected error and needs to close."
+      "body": "L'affichage du jeu a cessé de fonctionner. Le recharger ?",
+      "reload": "Recharger",
+      "quit": "Quitter",
+      "fatalBody": "World of ClaudeCraft a rencontré une erreur inattendue et doit se fermer."
     }
   },
   "realm": {
@@ -3757,6 +3763,26 @@ export const fr_FR: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "Frappe enflammée",
+        "description": "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration."
+      },
+      "rain_of_fire": {
+        "name": "Pluie de feu",
+        "description": "Fait pleuvoir du feu sur la zone visée, brûlant les ennemis pour {damage} points de dégâts de Feu."
+      },
+      "volley": {
+        "name": "Volée de flèches",
+        "description": "Fait pleuvoir des flèches sur la zone visée, infligeant {damage} points de dégâts aux ennemis présents."
+      },
+      "hurricane": {
+        "name": "Ouragan",
+        "description": "Déchaîne un ouragan sur la zone visée, frappant les ennemis pour {damage} points de dégâts de Nature."
+      },
+      "earthquake": {
+        "name": "Tremblement de terre",
+        "description": "Fait trembler la zone visée, frappant les ennemis pour {damage} points de dégâts de Nature."
+      },
       "heroic_strike": {
         "name": "Frappe héroïque",
         "description": "Une attaque puissante qui augmente les dégâts de mêlée de {damage}. S'active lors de votre prochaine frappe."

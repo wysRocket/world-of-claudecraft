@@ -202,7 +202,11 @@ export const en_XA: EnTranslations = {
       "spinResult": "[+{points} þóíñţš]",
       "spinButton": "[Šþíñ]",
       "tasks": "[Ţášķš]",
+      "taskMultiplier": "[ẋ{multiplier} ɱúļţíþļíéŕ]",
+      "pointsGained": "[{points} ðáíļý ŕéŵáŕðš þóíñţš ĝáíñéð.]",
       "leaderboard": "[Ðáíļý Ļéáðéŕƀóáŕð]",
+      "totalPlayer": "[{count} þļáýéŕ ţóðáý]",
+      "totalPlayers": "[{count} þļáýéŕš ţóðáý]",
       "history": "[Þášţ Ŵíññéŕš]",
       "noLeaders": "[Ñó þóíñţš ýéţ.]",
       "noHistory": "[Ñó þáýóúţš ýéţ.]",
@@ -389,6 +393,7 @@ export const en_XA: EnTranslations = {
       "uiScale": "[ÚÍ Šçáļé]",
       "highContrastBackground": "[Ĥíĝĥ-Çóñţŕášţ Ɓáçķĝŕóúñð]",
       "startAttackOnAbility": "[Áúţó-Áţţáçķ óñ Áƀíļíţý Úšé]",
+      "groundReticle": "[Ĝŕóúñð-Ţáŕĝéţíñĝ Ŕéţíçļé]",
       "showItemLevel": "[Šĥóŵ Íţéɱ Ļéʋéļ]",
       "itemLevelLine": "[Íţéɱ Ļéʋéļ {level}]",
       "itemScoreLine": "[Šçóŕé {score}]",
@@ -2031,6 +2036,7 @@ export const en_XA: EnTranslations = {
     "helpLinkedWithBalance": "[Ĥóļðéŕ þéŕķš áŕé áçţíʋé. Ŵáļļéţ áþþ çóññéçţéð óñ ţĥíš ƀŕóŵšéŕ.]",
     "helpLinkedDisconnected": "[Ĥóļðéŕ þéŕķš áŕé áçţíʋé. Çóññéçţ ţĥé áþþ ŵĥéñ ýóú ñééð ţó šíĝñ óŕ šþéñð.]",
     "helpLinkedDisconnectedWithBalance": "[Ĥóļðéŕ þéŕķš áŕé áçţíʋé. Çóññéçţ ţĥé áþþ ŵĥéñ ýóú ñééð ţó šíĝñ óŕ šþéñð.]",
+    "extensionHelp": "[Ţó šéé á ŵáļļéţ ĥéŕé, ķééþ á ƀŕóŵšéŕ ŵáļļéţ éẋţéñšíóñ šúçĥ áš Šóļƒļáŕé Ŵáļļéţ áçţíʋé.]",
     "flowConnect": "[Çĥóóšé á ŵáļļéţ. Ʋéŕíƒíçáţíóñ çóñţíñúéš áúţóɱáţíçáļļý.]",
     "flowSign": "[Šíĝñ ţĥé ʋéŕíƒíçáţíóñ ɱéššáĝé íñ ýóúŕ ŵáļļéţ áþþ. Ñó ţŕáñšáçţíóñ óŕ ŠÓĻ ŕéɋúíŕéð.]",
     "flowVerify": "[Ʋéŕíƒýíñĝ ŵáļļéţ óŵñéŕšĥíþ...]",
@@ -3757,6 +3763,26 @@ export const en_XA: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "flamestrike": {
+        "name": "[Ƒļáɱéšţŕíķé]",
+        "description": "[Çáļļš ðóŵñ á ƀúŕšţ óƒ ƒļáɱé áţ ţĥé ţáŕĝéţ áŕéá, ðéáļíñĝ {damage} Ƒíŕé ðáɱáĝé ţó éñéɱíéš çáúĝĥţ íñ ţĥé ƀļášţ.]"
+      },
+      "rain_of_fire": {
+        "name": "[Ŕáíñ óƒ Ƒíŕé]",
+        "description": "[Çáļļš á ŕáíñ óƒ ƒíŕé óñţó ţĥé ţáŕĝéţ áŕéá, ƀúŕñíñĝ éñéɱíéš ƒóŕ {damage} Ƒíŕé ðáɱáĝé.]"
+      },
+      "volley": {
+        "name": "[Ʋóļļéý]",
+        "description": "[Ŕáíñš áŕŕóŵš óñ ţĥé ţáŕĝéţ áŕéá, ðéáļíñĝ {damage} ðáɱáĝé ţó éñéɱíéš çáúĝĥţ íñ íţ.]"
+      },
+      "hurricane": {
+        "name": "[Ĥúŕŕíçáñé]",
+        "description": "[Çáļļš á ĥúŕŕíçáñé óñţó ţĥé ţáŕĝéţ áŕéá, ƀáţţéŕíñĝ éñéɱíéš ƒóŕ {damage} Ñáţúŕé ðáɱáĝé.]"
+      },
+      "earthquake": {
+        "name": "[Éáŕţĥɋúáķé]",
+        "description": "[Šĥáķéš ţĥé ţáŕĝéţ áŕéá, ƀáţţéŕíñĝ éñéɱíéš ƒóŕ {damage} Ñáţúŕé ðáɱáĝé.]"
+      },
       "heroic_strike": {
         "name": "[Ĥéŕóíç Šţŕíķé]",
         "description": "[Á šţŕóñĝ áţţáçķ ţĥáţ íñçŕéášéš ɱéļéé ðáɱáĝé ƀý {damage}. Áçţíʋáţéš óñ ýóúŕ ñéẋţ šŵíñĝ.]"

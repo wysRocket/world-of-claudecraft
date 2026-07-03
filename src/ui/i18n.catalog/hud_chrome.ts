@@ -62,7 +62,11 @@ export const hudChromeStrings = {
     spinResult: '+{points} points',
     spinButton: 'Spin',
     tasks: 'Tasks',
+    taskMultiplier: 'x{multiplier} multiplier',
+    pointsGained: '{points} daily rewards points gained.',
     leaderboard: 'Daily Leaderboard',
+    totalPlayer: '{count} player today',
+    totalPlayers: '{count} players today',
     history: 'Past Winners',
     noLeaders: 'No points yet.',
     noHistory: 'No payouts yet.',
@@ -362,6 +366,7 @@ export const hudChromeStrings = {
     // Interface panel toggle: also engage auto-attack when using an offensive
     // ability, so white swings start without a separate Attack press (on by default).
     startAttackOnAbility: 'Auto-Attack on Ability Use',
+    groundReticle: 'Ground-Targeting Reticle',
     // Interface panel toggle + the item-tooltip lines it reveals (off by default).
     showItemLevel: 'Show Item Level',
     itemLevelLine: 'Item Level {level}',

@@ -34,7 +34,11 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.spinResult': '+{points} 點',
   'hudChrome.dailyRewards.spinButton': '轉動',
   'hudChrome.dailyRewards.tasks': '任務',
+  'hudChrome.dailyRewards.taskMultiplier': '{multiplier}倍倍率',
+  'hudChrome.dailyRewards.pointsGained': '已獲得 {points} 每日獎勵點數。',
   'hudChrome.dailyRewards.leaderboard': '每日排行榜',
+  'hudChrome.dailyRewards.totalPlayer': '今天 {count} 名玩家',
+  'hudChrome.dailyRewards.totalPlayers': '今天 {count} 名玩家',
   'hudChrome.dailyRewards.history': '歷屆得獎者',
   'hudChrome.dailyRewards.noLeaders': '尚無點數。',
   'hudChrome.dailyRewards.noHistory': '尚無派彩紀錄。',
@@ -154,6 +158,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.theme.knob.rage': '怒氣',
   'hudChrome.theme.knob.energy': '能量',
   'hudChrome.options.interfaceMode': '介面模式',
+  'hudChrome.options.groundReticle': '地面瞄準指示圈',
   'hudChrome.options.interfaceModeAuto': '自動',
   'hudChrome.options.interfaceModeDesktop': '桌面',
   'hudChrome.options.interfaceModeTouch': '觸控',
@@ -545,6 +550,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'wallet.helpLinkedWithBalance': '持有者特權已啟用。錢包應用程式已在此瀏覽器中連線。',
   'wallet.helpLinkedDisconnected': '持有者特權已啟用。需要簽名或花費時請連接應用程式。',
   'wallet.helpLinkedDisconnectedWithBalance': '持有者特權已啟用。需要簽名或花費時請連接應用程式。',
+  'wallet.extensionHelp':
+    '若要在此處看到錢包，請保持 Solflare Wallet 等瀏覽器錢包擴充功能處於啟用狀態。',
   'wallet.flowConnect': '選擇一個錢包。驗證會自動繼續。',
   'wallet.flowSign': '在錢包應用程式中簽署驗證訊息。無需交易或 SOL。',
   'wallet.flowVerify': '正在驗證錢包所有權...',
@@ -1631,6 +1638,19 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.taunt.description':
     '嘲諷目標：你的威脅值提高到其最仇恨敵人的水平，並強迫其攻擊你 3 秒。',
   'entities.abilities.fireball.name': '火球術',
+  'entities.abilities.rain_of_fire.name': '烈火之雨',
+  'entities.abilities.rain_of_fire.description':
+    '在目標區域降下烈火之雨，灼燒敵人，造成 {damage} 點火焰傷害。',
+  'entities.abilities.volley.name': '亂射',
+  'entities.abilities.volley.description': '向目標區域射出箭雨，對其中的敵人造成 {damage} 點傷害。',
+  'entities.abilities.hurricane.name': '颶風',
+  'entities.abilities.hurricane.description':
+    '在目標區域召喚颶風，重擊敵人，造成 {damage} 點自然傷害。',
+  'entities.abilities.earthquake.name': '地震',
+  'entities.abilities.earthquake.description': '撼動目標區域，重擊敵人，造成 {damage} 點自然傷害。',
+  'entities.abilities.flamestrike.name': '烈焰風暴',
+  'entities.abilities.flamestrike.description':
+    '在目標區域召喚一次烈焰爆發，對爆炸範圍內的敵人造成 {damage} 點火焰傷害。',
   'entities.abilities.fireball.description':
     '投擲一團火球，造成 {damage} 點火焰傷害，並附加持續傷害。',
   'entities.abilities.frost_armor.name': '霜甲術',
@@ -4781,4 +4801,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '重新載入',
   'desktop.crash.quit': '離開',
   'desktop.crash.fatalBody': 'World of ClaudeCraft 發生未預期的錯誤，必須關閉。',
+  'hudChrome.dailyRewards.endsIn': '{time}後結束',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}小時{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1分',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

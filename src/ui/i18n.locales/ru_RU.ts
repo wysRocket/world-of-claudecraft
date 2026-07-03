@@ -34,7 +34,11 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.spinResult': '+{points} очков',
   'hudChrome.dailyRewards.spinButton': 'Крутить',
   'hudChrome.dailyRewards.tasks': 'Задания',
+  'hudChrome.dailyRewards.taskMultiplier': 'Множитель x{multiplier}',
+  'hudChrome.dailyRewards.pointsGained': 'Получено {points} очков ежедневных наград.',
   'hudChrome.dailyRewards.leaderboard': 'Ежедневная таблица лидеров',
+  'hudChrome.dailyRewards.totalPlayer': 'Сегодня {count} игрок',
+  'hudChrome.dailyRewards.totalPlayers': 'Сегодня {count} игроков',
   'hudChrome.dailyRewards.history': 'Прошлые победители',
   'hudChrome.dailyRewards.noLeaders': 'Пока нет очков.',
   'hudChrome.dailyRewards.noHistory': 'Пока нет выплат.',
@@ -162,6 +166,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.theme.knob.rage': 'Ярость',
   'hudChrome.theme.knob.energy': 'Энергия',
   'hudChrome.options.interfaceMode': 'Режим интерфейса',
+  'hudChrome.options.groundReticle': 'Прицел наземного наведения',
   'hudChrome.options.interfaceModeAuto': 'Авто',
   'hudChrome.options.interfaceModeDesktop': 'Компьютер',
   'hudChrome.options.interfaceModeTouch': 'Сенсорный',
@@ -594,6 +599,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Привилегии держателя активны. Подключайте приложение, когда нужно подписать или потратить.',
   'wallet.helpLinkedDisconnectedWithBalance':
     'Привилегии держателя активны. Подключайте приложение, когда нужно подписать или потратить.',
+  'wallet.extensionHelp':
+    'Чтобы кошелек появился здесь, держите активным браузерное расширение кошелька, например Solflare Wallet.',
   'wallet.flowConnect': 'Выберите кошелек. Подтверждение продолжится автоматически.',
   'wallet.flowSign':
     'Подпишите сообщение подтверждения в приложении кошелька. Транзакция и SOL не требуются.',
@@ -1727,6 +1734,21 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.taunt.description':
     'Провоцирует цель: ваша угроза повышается до уровня самого ненавистного ей врага, и она вынуждена атаковать вас 3 сек.',
   'entities.abilities.fireball.name': 'Огненный шар',
+  'entities.abilities.rain_of_fire.name': 'Огненный дождь',
+  'entities.abilities.rain_of_fire.description':
+    'Обрушивает огненный дождь на указанную область, сжигая врагов и нанося {damage} ед. урона от огня.',
+  'entities.abilities.volley.name': 'Залп',
+  'entities.abilities.volley.description':
+    'Осыпает указанную область стрелами, нанося {damage} ед. урона врагам в ней.',
+  'entities.abilities.hurricane.name': 'Ураган',
+  'entities.abilities.hurricane.description':
+    'Обрушивает ураган на указанную область, нанося врагам {damage} ед. урона силами природы.',
+  'entities.abilities.earthquake.name': 'Землетрясение',
+  'entities.abilities.earthquake.description':
+    'Сотрясает указанную область, нанося врагам {damage} ед. урона силами природы.',
+  'entities.abilities.flamestrike.name': 'Огненный удар',
+  'entities.abilities.flamestrike.description':
+    'Обрушивает огненный взрыв на указанную область, нанося {damage} ед. урона от огня врагам в зоне взрыва.',
   'entities.abilities.fireball.description':
     'Бросает огненный шар, наносящий {damage} ед. урона от огня и дополнительный периодический урон.',
   'entities.abilities.frost_armor.name': 'Морозный доспех',
@@ -5142,4 +5164,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.quit': 'Выйти',
   'desktop.crash.fatalBody':
     'World of ClaudeCraft столкнулась с непредвиденной ошибкой и будет закрыта.',
+  'hudChrome.dailyRewards.endsIn': 'Осталось {time}',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}ч {minutes}м',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1м',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}м',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

@@ -34,7 +34,11 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.spinResult': '+{points} 积分',
   'hudChrome.dailyRewards.spinButton': '转动',
   'hudChrome.dailyRewards.tasks': '任务',
+  'hudChrome.dailyRewards.taskMultiplier': '{multiplier}倍倍率',
+  'hudChrome.dailyRewards.pointsGained': '已获得 {points} 每日奖励积分。',
   'hudChrome.dailyRewards.leaderboard': '每日排行榜',
+  'hudChrome.dailyRewards.totalPlayer': '今天 {count} 名玩家',
+  'hudChrome.dailyRewards.totalPlayers': '今天 {count} 名玩家',
   'hudChrome.dailyRewards.history': '往期获奖者',
   'hudChrome.dailyRewards.noLeaders': '暂无积分。',
   'hudChrome.dailyRewards.noHistory': '暂无派奖记录。',
@@ -154,6 +158,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.theme.knob.rage': '怒气',
   'hudChrome.theme.knob.energy': '能量',
   'hudChrome.options.interfaceMode': '界面模式',
+  'hudChrome.options.groundReticle': '地面瞄准指示圈',
   'hudChrome.options.interfaceModeAuto': '自动',
   'hudChrome.options.interfaceModeDesktop': '桌面',
   'hudChrome.options.interfaceModeTouch': '触控',
@@ -544,6 +549,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'wallet.helpLinkedWithBalance': '持有者特权已启用。钱包应用已在此浏览器中连接。',
   'wallet.helpLinkedDisconnected': '持有者特权已启用。需要签名或消费时请连接应用。',
   'wallet.helpLinkedDisconnectedWithBalance': '持有者特权已启用。需要签名或消费时请连接应用。',
+  'wallet.extensionHelp':
+    '若要在此处看到钱包，请保持 Solflare Wallet 等浏览器钱包扩展处于启用状态。',
   'wallet.flowConnect': '选择一个钱包。验证会自动继续。',
   'wallet.flowSign': '在钱包应用中签署验证消息。无需交易或 SOL。',
   'wallet.flowVerify': '正在验证钱包所有权...',
@@ -1629,6 +1636,19 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.taunt.description':
     '嘲讽目标：你的威胁值提高到其最仇恨敌人的水平，并强迫其攻击你 3 秒。',
   'entities.abilities.fireball.name': '火球术',
+  'entities.abilities.rain_of_fire.name': '烈火之雨',
+  'entities.abilities.rain_of_fire.description':
+    '在目标区域降下烈火之雨，灼烧敌人，造成 {damage} 点火焰伤害。',
+  'entities.abilities.volley.name': '乱射',
+  'entities.abilities.volley.description': '向目标区域射出箭雨，对其中的敌人造成 {damage} 点伤害。',
+  'entities.abilities.hurricane.name': '飓风',
+  'entities.abilities.hurricane.description':
+    '在目标区域召唤飓风，重击敌人，造成 {damage} 点自然伤害。',
+  'entities.abilities.earthquake.name': '地震',
+  'entities.abilities.earthquake.description': '撼动目标区域，重击敌人，造成 {damage} 点自然伤害。',
+  'entities.abilities.flamestrike.name': '烈焰风暴',
+  'entities.abilities.flamestrike.description':
+    '在目标区域召唤一次烈焰爆发，对爆炸范围内的敌人造成 {damage} 点火焰伤害。',
   'entities.abilities.fireball.description':
     '投掷一团火球，造成 {damage} 点火焰伤害，并附加持续伤害。',
   'entities.abilities.frost_armor.name': '霜甲术',
@@ -4781,4 +4801,10 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '重新加载',
   'desktop.crash.quit': '退出',
   'desktop.crash.fatalBody': 'World of ClaudeCraft 遇到意外错误，需要关闭。',
+  'hudChrome.dailyRewards.endsIn': '{time}后结束',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}小时{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '<1分',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

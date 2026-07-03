@@ -34,7 +34,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.spinResult': '+{points} ポイント',
   'hudChrome.dailyRewards.spinButton': 'スピン',
   'hudChrome.dailyRewards.tasks': 'タスク',
+  'hudChrome.dailyRewards.taskMultiplier': '{multiplier}倍倍率',
+  'hudChrome.dailyRewards.pointsGained': '{points} デイリー報酬ポイントを獲得しました。',
   'hudChrome.dailyRewards.leaderboard': 'デイリーランキング',
+  'hudChrome.dailyRewards.totalPlayer': '本日のプレイヤー {count} 人',
+  'hudChrome.dailyRewards.totalPlayers': '本日のプレイヤー {count} 人',
   'hudChrome.dailyRewards.history': '過去の当選者',
   'hudChrome.dailyRewards.noLeaders': 'まだポイントがありません。',
   'hudChrome.dailyRewards.noHistory': 'まだ支払いがありません。',
@@ -164,6 +168,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.theme.knob.rage': '怒り',
   'hudChrome.theme.knob.energy': 'エネルギー',
   'hudChrome.options.interfaceMode': '操作モード',
+  'hudChrome.options.groundReticle': '地面ターゲットのレティクル',
   'hudChrome.options.interfaceModeAuto': '自動',
   'hudChrome.options.interfaceModeDesktop': 'デスクトップ',
   'hudChrome.options.interfaceModeTouch': 'タッチ',
@@ -581,6 +586,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'ホルダー特典が有効です。署名や支払いが必要なときはアプリを接続してください。',
   'wallet.helpLinkedDisconnectedWithBalance':
     'ホルダー特典が有効です。署名や支払いが必要なときはアプリを接続してください。',
+  'wallet.extensionHelp':
+    'ここにウォレットを表示するには、Solflare Wallet などのブラウザ用ウォレット拡張機能を有効にしておいてください。',
   'wallet.flowConnect': 'ウォレットを選択してください。認証は自動的に続行されます。',
   'wallet.flowSign':
     'ウォレットアプリで認証メッセージに署名してください。トランザクションや SOL は不要です。',
@@ -1711,6 +1718,21 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.taunt.description':
     '対象を挑発します。あなたの脅威が対象の最も憎む敵と同じ値まで上がり、3秒間あなたを攻撃させます。',
   'entities.abilities.fireball.name': 'ファイアボール',
+  'entities.abilities.rain_of_fire.name': '火炎の雨',
+  'entities.abilities.rain_of_fire.description':
+    '対象地点に火の雨を降らせ、敵に{damage}の火炎ダメージを与えます。',
+  'entities.abilities.volley.name': '乱射',
+  'entities.abilities.volley.description':
+    '対象地点に矢を降らせ、範囲内の敵に{damage}のダメージを与えます。',
+  'entities.abilities.hurricane.name': 'ハリケーン',
+  'entities.abilities.hurricane.description':
+    '対象地点にハリケーンを呼び起こし、敵に{damage}の自然ダメージを与えます。',
+  'entities.abilities.earthquake.name': '地震',
+  'entities.abilities.earthquake.description':
+    '対象地点を揺るがし、敵に{damage}の自然ダメージを与えます。',
+  'entities.abilities.flamestrike.name': 'フレイムストライク',
+  'entities.abilities.flamestrike.description':
+    '対象地点に炎の爆発を呼び出し、爆発に巻き込まれた敵に{damage}の火炎ダメージを与えます。',
   'entities.abilities.fireball.description':
     '炎の球を放ち、{damage} の火炎ダメージと追加の継続ダメージを与えます。',
   'entities.abilities.frost_armor.name': 'フロストアーマー',
@@ -5034,4 +5056,10 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '再読み込み',
   'desktop.crash.quit': '終了',
   'desktop.crash.fatalBody': 'World of ClaudeCraft で予期しないエラーが発生したため、終了します。',
+  'hudChrome.dailyRewards.endsIn': '終了まで{time}',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}時間{minutes}分',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '1分未満',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}分',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

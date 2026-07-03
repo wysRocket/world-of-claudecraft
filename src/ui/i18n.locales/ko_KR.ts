@@ -34,7 +34,11 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.spinResult': '+{points} 포인트',
   'hudChrome.dailyRewards.spinButton': '돌리기',
   'hudChrome.dailyRewards.tasks': '과제',
+  'hudChrome.dailyRewards.taskMultiplier': '{multiplier}배 배율',
+  'hudChrome.dailyRewards.pointsGained': '{points} 일일 보상 포인트를 획득했습니다.',
   'hudChrome.dailyRewards.leaderboard': '일일 순위표',
+  'hudChrome.dailyRewards.totalPlayer': '오늘 플레이어 {count}명',
+  'hudChrome.dailyRewards.totalPlayers': '오늘 플레이어 {count}명',
   'hudChrome.dailyRewards.history': '지난 당첨자',
   'hudChrome.dailyRewards.noLeaders': '아직 포인트가 없습니다.',
   'hudChrome.dailyRewards.noHistory': '아직 지급 내역이 없습니다.',
@@ -162,6 +166,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.theme.knob.rage': '분노',
   'hudChrome.theme.knob.energy': '에너지',
   'hudChrome.options.interfaceMode': '인터페이스 모드',
+  'hudChrome.options.groundReticle': '지면 조준 표시기',
   'hudChrome.options.interfaceModeAuto': '자동',
   'hudChrome.options.interfaceModeDesktop': '데스크톱',
   'hudChrome.options.interfaceModeTouch': '터치',
@@ -578,6 +583,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '보유자 혜택이 활성화되었습니다. 서명이나 지출이 필요할 때 앱을 연결하세요.',
   'wallet.helpLinkedDisconnectedWithBalance':
     '보유자 혜택이 활성화되었습니다. 서명이나 지출이 필요할 때 앱을 연결하세요.',
+  'wallet.extensionHelp':
+    '여기에 지갑이 표시되려면 Solflare Wallet 같은 브라우저 지갑 확장 프로그램이 활성화되어 있어야 합니다.',
   'wallet.flowConnect': '지갑을 선택하세요. 인증은 자동으로 계속됩니다.',
   'wallet.flowSign': '지갑 앱에서 인증 메시지에 서명하세요. 트랜잭션이나 SOL은 필요 없습니다.',
   'wallet.flowVerify': '지갑 소유권 인증 중...',
@@ -1695,6 +1702,21 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.taunt.description':
     '대상을 도발합니다. 자신의 위협 수준이 대상이 가장 증오하는 적과 같아지며, 3초 동안 자신을 공격하게 만듭니다.',
   'entities.abilities.fireball.name': '화염구',
+  'entities.abilities.rain_of_fire.name': '불의 비',
+  'entities.abilities.rain_of_fire.description':
+    '지정한 지역에 불의 비를 내려 적을 불태우고 {damage}의 화염 피해를 입힙니다.',
+  'entities.abilities.volley.name': '일제 사격',
+  'entities.abilities.volley.description':
+    '지정한 지역에 화살을 쏟아부어 그 안의 적에게 {damage}의 피해를 입힙니다.',
+  'entities.abilities.hurricane.name': '폭풍우',
+  'entities.abilities.hurricane.description':
+    '지정한 지역에 폭풍우를 일으켜 적을 강타하고 {damage}의 자연 피해를 입힙니다.',
+  'entities.abilities.earthquake.name': '지진',
+  'entities.abilities.earthquake.description':
+    '지정한 지역을 뒤흔들어 적을 강타하고 {damage}의 자연 피해를 입힙니다.',
+  'entities.abilities.flamestrike.name': '화염 폭발',
+  'entities.abilities.flamestrike.description':
+    '지정한 지역에 화염 폭발을 일으켜 폭발 범위 안의 적에게 {damage}의 화염 피해를 입힙니다.',
   'entities.abilities.fireball.description':
     '불덩이를 날려 {damage}의 화염 피해와 추가 지속 피해를 입힙니다.',
   'entities.abilities.frost_armor.name': '냉기 갑옷',
@@ -5041,4 +5063,10 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.reload': '다시 불러오기',
   'desktop.crash.quit': '종료',
   'desktop.crash.fatalBody': 'World of ClaudeCraft에 예기치 않은 오류가 발생하여 종료해야 합니다.',
+  'hudChrome.dailyRewards.endsIn': '{time} 후 종료',
+  'hudChrome.dailyRewards.remainingHoursMinutes': '{hours}시간 {minutes}분',
+  'hudChrome.dailyRewards.remainingLessThanMinute': '1분 미만',
+  'hudChrome.dailyRewards.remainingMinutes': '{minutes}분',
+  'hudChrome.dailyRewards.sol': '{amount} SOL',
+  'hudChrome.dailyRewards.usd': '{amount} USD',
 };

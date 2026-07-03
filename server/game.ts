@@ -40,6 +40,10 @@ import type {
   SessionRuntimeSnapshot,
   SuspiciousPlayer,
 } from './bot_detector/contract';
+import {
+  buildDetectionCalibrationSnapshot,
+  type DetectionCalibrationSnapshot,
+} from './calibration_snapshot';
 import { ChatFilter } from './chat_filter';
 import { applyChatStrike, loadChatFilterState, recordChatViolation } from './chat_filter_db';
 import { ChatLogger } from './chat_log';
@@ -1811,6 +1815,14 @@ export class GameServer {
     return this.botDetector.listSuspiciousPlayers();
   }
 
+  detectionCalibration(): DetectionCalibrationSnapshot {
+    return buildDetectionCalibrationSnapshot(
+      this.botDetector.listCalibrationHistograms(),
+      this.startedAt,
+      Date.now(),
+    );
+  }
+
   private liveLocationFor(e: Entity): AdminLiveLocation {
     const instance = this.sim.instanceInfoAt(e.pos);
     const dungeonId = e.dungeonId ?? instance?.dungeonId ?? null;
@@ -2216,6 +2228,19 @@ export class GameServer {
       case 'castSlot':
         if (typeof msg.slot === 'number') sim.castAbilityBySlot(msg.slot | 0, pid);
         break;
+      case 'castAt':
+        // Ground-targeted cast: the client proposes a world point; the sim clamps
+        // it to the ability's range from the caster (server-authoritative).
+        if (
+          typeof msg.ability === 'string' &&
+          typeof msg.x === 'number' &&
+          typeof msg.z === 'number' &&
+          Number.isFinite(msg.x) &&
+          Number.isFinite(msg.z)
+        ) {
+          sim.castAbility(msg.ability, pid, { x: msg.x, z: msg.z });
+        }
+        break;
       case 'cast':
         if (typeof msg.ability === 'string') sim.castAbility(msg.ability, pid);
         break;
@@ -2274,6 +2299,9 @@ export class GameServer {
           if (!beforeDone && afterDone) {
             void dailyRewardService
               .recordQuestCompletion(session.accountId, msg.quest)
+              .then((points) => {
+                if (points > 0) this.sendDailyRewardPointsGained(session, points);
+              })
               .catch((err) => console.error('daily reward quest task failed:', err));
             if (msg.quest === ALDRIC_METEOR_QUEST_ID) {
               this.noteAccountQuestComplete(session, msg.quest);
@@ -3306,6 +3334,9 @@ export class GameServer {
             ratingBefore: ev.ratingBefore,
             ratingAfter: ev.ratingAfter,
           })
+          .then((points) => {
+            if (points > 0) this.sendDailyRewardPointsGained(s, points);
+          })
           .catch((err) => console.error('daily reward arena task failed:', err));
         if (!ev.won) continue;
         enqueueActivity(
@@ -3426,8 +3457,14 @@ export class GameServer {
     let id: number | undefined;
     if ('targetId' in ev && typeof ev.targetId === 'number') id = ev.targetId;
     else if ('entityId' in ev && typeof ev.entityId === 'number') id = ev.entityId;
-    if (id === undefined) return null; // chat/log etc: broadcast
-    return this.sim.entities.get(id)?.pos ?? null;
+    if (id !== undefined) return this.sim.entities.get(id)?.pos ?? null;
+    // world-coordinate events (spellfxAt: a ground-targeted impact) anchor at
+    // their own point so they interest-scope like entity-anchored fx instead
+    // of fanning out server-wide (dist2d ignores y)
+    if ('x' in ev && 'z' in ev && typeof ev.x === 'number' && typeof ev.z === 'number') {
+      return { x: ev.x, y: 0, z: ev.z };
+    }
+    return null; // chat/log etc: broadcast
   }
 
   private isSpectateLocalChat(session: ClientSession, text: string): boolean {
@@ -3532,6 +3569,19 @@ export class GameServer {
 
   private sendSystemNotice(session: ClientSession, text: string): void {
     this.send(session, { t: 'events', list: [{ type: 'log', text, color: '#ffd100' }] });
+  }
+
+  private sendDailyRewardPointsGained(session: ClientSession, points: number): void {
+    this.send(session, {
+      t: 'events',
+      list: [
+        {
+          type: 'log',
+          text: `${Math.max(0, Math.floor(points))} daily rewards points gained.`,
+          color: '#ffe27a',
+        },
+      ],
+    });
   }
 
   /**
