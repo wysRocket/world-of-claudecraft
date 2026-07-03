@@ -2465,6 +2465,12 @@ async function startGame(
     const display = hidden ? 'none' : '';
     const ui = document.getElementById('ui');
     if (ui) ui.style.display = display;
+    // The touch controls are a top-level layer OUTSIDE #ui, so they need their
+    // own toggle or the joysticks and combat buttons stay up during the intro
+    // on mobile. Clearing to '' hands display back to the stylesheet
+    // (body.mobile-touch.game-active shows it, desktop keeps it hidden).
+    const mobileControls = document.getElementById('mobile-controls');
+    if (mobileControls) mobileControls.style.display = display;
     nameplates.style.display = display;
   };
   const finishIntro = (skipToEnd: boolean): void => {
