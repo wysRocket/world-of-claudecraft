@@ -216,16 +216,17 @@ const CHICKEN_COW: ClipMap = {
   jump: 'Jump',
 };
 
-// Raid 02 asset-pipeline rig (stone_cantor.glb): Mixamo-rigged, ships exactly
-// Idle / Cast / Walk / Death. A caster, so attack aliases the cast clip; run
-// aliases walk (no run clip); no hit-react clip (the pipeline no-ops missing
-// clips gracefully).
+// Raid 02 asset-pipeline rig (stone_cantor.glb): Mixamo-rigged, ships
+// Idle / Cast / Walk / Death plus a synthesized 'Hit' flinch authored by
+// scripts/_add_cantor_hit_anim.mjs (the batch has no hit-react take). A
+// caster, so attack aliases the cast clip; run aliases walk (no run clip).
 const RAID_CASTER: ClipMap = {
   idle: 'Idle',
   walk: 'Walk',
   run: 'Walk',
   attack: ['Cast'],
   cast: 'Cast',
+  hit: ['Hit'],
   death: 'Death',
 };
 
@@ -916,6 +917,12 @@ export const VISUALS: Record<string, VisualDef> = {
     url: `${CREATURES}/stone_cantor.glb`,
     height: HUMANOID_H,
     clips: RAID_CASTER,
+    // The 2.6s Cast clip doubles as the vial-throw one-shot; at the default
+    // 1.3x it fills nearly the whole 2.6s attack cadence, which reads
+    // sluggish AND leaves no gap for the Hit flinch (one-shots never
+    // interrupt one-shots). 1.7x makes the throw snap and frees ~1.1s of
+    // every cycle for reactions.
+    attackTimeScale: 1.7,
     tint: 'entity',
     tintStrength: 0.2,
   },

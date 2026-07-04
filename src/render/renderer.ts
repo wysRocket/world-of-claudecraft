@@ -2812,6 +2812,17 @@ export class Renderer {
         else if (ev.fx === 'beam') this.vfx.beam(ev.sourceId, ev.targetId, ev.school);
         else if (ev.fx === 'tick') this.vfx.tick(ev.targetId, ev.school);
         else this.vfx.nova(ev.targetId, ev.school);
+        // A mob that hurls an instant bolt (the hostile petSpell path: the
+        // Reedbound Acolyte's Rotwater Vial, the warlock demon's bolt) has no
+        // cast state for the looping cast channel, and the damage event that
+        // animates melee fires on ARRIVAL and only for the physical school:
+        // play the shooter's attack one-shot at launch so the throw reads.
+        // Real casts (castingAbility set) already animate via the cast
+        // channel; players animate through their own cast/swing paths.
+        if (ev.fx === 'projectile' || ev.fx === 'beam') {
+          const src = this.sim.entities.get(ev.sourceId);
+          if (src && src.kind === 'mob' && !src.castingAbility) this.triggerAttack(ev.sourceId);
+        }
         break;
       case 'spellfxAt': {
         // Ground-targeted impact: burst draped onto the terrain where the spell

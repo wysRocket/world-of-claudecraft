@@ -187,7 +187,7 @@ export const MEDIA_ASSETS: Record<string, string> =
   "models/creatures/spider.glb": "/media/models/creatures/spider.5becf8b6510f.glb",
   "models/creatures/spider_egg_sac.glb": "/media/models/creatures/spider_egg_sac.e30e056bab92.glb",
   "models/creatures/stag.glb": "/media/models/creatures/stag.ec967c29bd35.glb",
-  "models/creatures/stone_cantor.glb": "/media/models/creatures/stone_cantor.7a66b761d519.glb",
+  "models/creatures/stone_cantor.glb": "/media/models/creatures/stone_cantor.2e7c78ec19c3.glb",
   "models/creatures/tolling_bell.glb": "/media/models/creatures/tolling_bell.7f89922472aa.glb",
   "models/creatures/tribal.glb": "/media/models/creatures/tribal.36f1f0f698db.glb",
   "models/creatures/velociraptor.glb": "/media/models/creatures/velociraptor.3385fbba757a.glb",
