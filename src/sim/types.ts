@@ -537,6 +537,10 @@ export interface MobTemplate {
   loot: LootEntry[];
   scale: number; // render hint
   color: number; // render hint
+  // Profession harvesting: the skinning/salvage component types this mob's corpse
+  // can yield (e.g. 'hide', 'horn', 'venomSac', 'gills', 'fang', 'claw', 'feather').
+  // Data-as-code only for now; consumed by later profession-harvest issues.
+  componentTags?: string[];
   boss?: boolean;
   rare?: boolean;
   // World boss: a server-wide elite that spawns on a fixed cadence (not from a
@@ -1573,6 +1577,10 @@ export interface Entity {
   respawnTimer: number;
   corpseTimer: number;
   lootFfaTimer: number; // seconds of owner-lock left before tap loot opens to all (FFA); Infinity until rollLoot starts it
+  // Profession harvest: single-use, first-come claim on this corpse's componentTags
+  // yield. null = unharvested; once set to a player's entity id, every later attempt
+  // (same tick or later) is denied. The opposite of a world gathering node (per-player).
+  harvestClaimedBy: number | null;
   despawnTimer?: number;
   damageIdleDespawnTimer?: number;
   lootable: boolean;
