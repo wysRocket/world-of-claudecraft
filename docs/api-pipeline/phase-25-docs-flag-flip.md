@@ -121,7 +121,10 @@ give each ONLY the Explore summary (not the raw files):
     404; and the v0.20.0 third-slice maps/assets wrong-method shapes: a wrong method on an
     /api/maps or /api/assets path has no RouteDef, delegates to the ladder terminal 404 today,
     and flips to the table's pre-auth 405 at the deletion, the same planned405BeforeAuth class);
-    a naive zero-requests gate is unreachable otherwise. Also name
+    a naive zero-requests gate is unreachable otherwise. [FIFTH-SLICE UPDATE 2026-07-04: the
+    release reverted housekeeping entirely, so the housekeeping in-family and HEAD shapes above
+    no longer exist; state.md carve-out (d) is RETIRED and the housekeeping unit-test seam note
+    below is void (housekeeping_db is deleted).] Also name
     the expiry of the Phase 18/18b dual-edit MAINTENANCE RULE (ladder branch + RouteDef twin) as
     part of the deletion follow-up. Housekeeping unit-test seam note for this phase's docs: the
     migrated housekeeping handlers reach Postgres via housekeeping_db directly (not the Phase 17
@@ -161,8 +164,10 @@ OUT OF SCOPE (do not do these here)
   uploaded-GLB family (server/user_assets_routes.ts) on the wallet shared-*Core template, 5
   admin moderation RouteDefs, and the housekeeping calendar 11th member. The release-merge
   migrated set is 45 (12 18b + 4 + 10 + 19); a provenance sweep should attribute the
-  thirty-three to their merge commits, they have no owning phase). The scaffold emits a STUB
-  only.
+  thirty-three to their merge commits, they have no owning phase). [FIFTH-SLICE UPDATE
+  2026-07-04: the housekeeping revert removes the 10-route family and the calendar 11th
+  member, so the release-merge migrated set is 34 (12 18b + 4 + 18 map editor/admin).] The
+  scaffold emits a STUB only.
   PRECONDITION: Phase 18b MUST have landed before this phase runs; if any route family in server
   source still lacks either a RouteDef or a recorded permanent-delegate decision, STOP (see the
   stopping rules). The `oauthInternalOffTable405` deviation directs THIS phase to decide the off-table
@@ -174,7 +179,9 @@ OUT OF SCOPE (do not do these here)
   shape) plus the ops family's family-wide pre-path 401. The second v0.20.0 merge (64392ada2)
   hands over the same decision for the housekeeping in-family shapes (unknown sub-path /
   non-GET/POST under /admin/api/housekeeping/: auth-then-404/405 today, table pre-auth 404/405
-  after deletion; db-free 401 pins already in parity.test.ts). The third v0.20.0 merge hands
+  after deletion; db-free 401 pins already in parity.test.ts). [FIFTH-SLICE UPDATE 2026-07-04:
+  that housekeeping handoff is VOID; the family and its pins were removed with the revert.]
+  The third v0.20.0 merge hands
   over the maps/assets wrong-method flips (ladder terminal 404 today, table pre-auth 405 after
   deletion, the systemic planned405BeforeAuth class) and notes GET /api/maps/:id keeps its
   conditional anonymous-only prose throttle inside optionalViewerGuard on the surviving path

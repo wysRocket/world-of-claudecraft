@@ -882,13 +882,14 @@ the X-ms constant; X is TBD, see open items.)
   (the admin ladder is now 33 branches / 19 GET reads). The SECOND v0.20.0 slice
   (2026-07-03, release tip 3e1bc17c4) grew it to TWENTY-SIX: the 10-route housekeeping
   family (/admin/api/housekeeping/*), 10 RouteDefs sharing one parity-by-construction
-  handler that calls the handleHousekeepingApi sub-dispatcher whole (admin surface now 43
-  RouteDefs; the legacy ladder gained no === branches, its serving is a startsWith
-  delegation). That slice also forced a structural change: GameServer construction moved
-  off module load (housekeeping overrides apply before the Sim ctor), so main.ts now
-  exposes the memoized liveGame() accessor; production first-touches it in startServer()
-  after applyGameConfigAtBoot, and the import-main test harnesses construct lazily on
-  first request. Each route is router-owned AND
+  handler that called the handleHousekeepingApi sub-dispatcher whole. [FIFTH-SLICE UPDATE
+  2026-07-04: the release reverted housekeeping entirely, so that family, its RouteDefs,
+  and its parity pins are GONE; the release-merge set is 34 and the admin surface counts
+  38 RouteDefs.] That slice also forced a structural change that SURVIVES the revert:
+  GameServer construction moved off module load, so main.ts exposes the memoized
+  liveGame() accessor; production first-touches it in startServer(), and the import-main
+  test harnesses construct lazily on first request (the overrides-before-construction
+  ordering premise died with the feature). Each surviving route is router-owned AND
   legacy-served with corpus rows, mounting-sweep coverage, and captureBothModes re-pins
   filed at the merge. The Phase 25 exit criteria must still carve
   out the deliberately delegate-served shapes (the oauthInternalOffTable405 set +
@@ -897,10 +898,6 @@ the X-ms constant; X is TBD, see open items.)
   registered, so a wrong-method request delegates to the ladder's terminal 404 'unknown
   endpoint' today and flips to the table 405 at the deletion, the systemic
   planned405BeforeAuth framing; pinned old-vs-new in parity.test.ts at the 18b QA gate],
-  the housekeeping in-family unknown-sub-path/wrong-method shapes [no RouteDef, so today
-  admin auth 401 precedes the sub-dispatcher's 404/405 via the ladder delegation; they
-  flip to the table's pre-auth 404/405 at the deletion, same planned405BeforeAuth class;
-  db-free 401 pins filed at the second v0.20.0 slice],
   and the ops family's family-wide PRE-PATH 401,
   which the table cannot reproduce per-route and whose recreation-or-loss must be
   adjudicated at ladder deletion, per dailyRewardsOpsBodyValidationRemap). Also
