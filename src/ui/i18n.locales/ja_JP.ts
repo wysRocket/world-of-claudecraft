@@ -828,6 +828,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'errors.api.accountBanned': 'このアカウントは利用停止されています。',
   'errors.api.accountSuspended': 'このアカウントは {date} まで停止されています。',
   'errors.api.alreadyInWorld': 'キャラクターは既に世界にいます。',
+  'errors.api.accountSessionLimit': 'このアカウントでは既に多くのキャラクターが世界にいます。',
   'errors.api.takenOver': 'あなたのキャラクターは別のセッションに引き継がれました。',
   'errors.api.renameBeforeEntering': 'このキャラクターは世界に入る前に名前変更が必要です。',
   'errors.api.renameNotPermitted': 'このキャラクターの名前変更は許可されていません。',

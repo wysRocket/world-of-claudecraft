@@ -69,6 +69,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -132,6 +133,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -195,6 +197,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -258,6 +261,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -322,6 +326,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -385,6 +390,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -452,6 +458,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -516,6 +523,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -579,6 +587,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -642,6 +651,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -705,6 +715,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -768,6 +779,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -831,6 +843,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ],
@@ -894,6 +907,7 @@ export const pending: Record<string, readonly string[]> = {
     "apiError.two_factor.not_enabled",
     "apiError.two_factor.setup_required",
     "apiError.validation.failed",
+    "errors.api.accountSessionLimit",
     "errors.api.crossSiteOrigin",
     "errors.api.unsupportedMediaType"
   ]
