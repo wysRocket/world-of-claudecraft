@@ -1,13 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { terraceStep } from '../src/sim/world';
+import { TERRACE_APRON, TERRACE_STEP, TERRACE_TREAD, terraceStep } from '../src/sim/world';
 
 // Direct pins for the pure terracing math behind the mountain walls
-// (src/sim/world.ts). The parameters below are the production values
-// (TERRACE_STEP = 6, TERRACE_TREAD = 0.6, TERRACE_APRON = 0.5) as
-// independent literals; tests/impact_site.test.ts and
-// tests/terrain_walls.test.ts pin the composed terrain, this file pins the
-// edges of the function itself, especially the base-of-wall behavior that
-// once flattened the Mirefen impact-site wall.
+// (src/sim/world.ts). The parameters below are independent literals, pinned
+// against the production constants so neither can drift silently;
+// tests/impact_site.test.ts and tests/terrain_walls.test.ts pin the composed
+// terrain, this file pins the edges of the function itself, especially the
+// base-of-wall behavior that once flattened the Mirefen impact-site wall.
 const STEP = 6;
 const TREAD = 0.6;
 const APRON = 0.5;
@@ -15,6 +14,12 @@ const APRON = 0.5;
 const terrace = (v: number) => terraceStep(v, STEP, TREAD, APRON);
 
 describe('terraceStep', () => {
+  it('the production terrace constants are the values pinned here', () => {
+    expect(TERRACE_STEP).toBe(6);
+    expect(TERRACE_TREAD).toBe(0.6);
+    expect(TERRACE_APRON).toBe(0.5);
+  });
+
   it('returns exactly 0 at and below 0, so callers can add it unconditionally', () => {
     expect(terrace(0)).toBe(0);
     expect(terrace(-3)).toBe(0);
@@ -28,9 +33,15 @@ describe('terraceStep', () => {
     expect(terrace(1)).toBe(0.5);
     expect(terrace(2)).toBe(1);
     expect(terrace(3)).toBe(1.5);
+    // The old dead-zone boundary itself (TREAD * STEP): still on the apron.
+    expect(terrace(3.6)).toBe(1.8);
     // The measured smooth rise at the impact-site wall sample is ~3.13yd and
     // the landmark needs > 1.31 of it kept (tests/impact_site.test.ts).
     expect(terrace(3.13)).toBeGreaterThan(1.31);
+    // By v = 5 the first riser has overtaken the apron floor (2.5):
+    // smoothstep(0.6, 1, 5/6) * 6 = 539/144.
+    expect(terrace(5)).toBeCloseTo(539 / 144, 10);
+    expect(terrace(5)).toBeGreaterThan(2.5);
   });
 
   it('the apron floor never reaches past the first band', () => {
@@ -58,7 +69,7 @@ describe('terraceStep', () => {
     const riserStart = STEP + TREAD * STEP; // 9.6
     const avgSlope = (terrace(2 * STEP) - terrace(riserStart)) / (2 * STEP - riserStart);
     expect(terrace(riserStart)).toBe(STEP);
-    expect(avgSlope).toBeCloseTo(1 / (1 - TREAD), 10);
+    expect(avgSlope).toBeCloseTo(2.5, 10);
   });
 
   it('is monotonic and continuous', () => {
