@@ -80,14 +80,25 @@ describe('stepKeyboardTurnFacing', () => {
     expect(st.facing).toBeNull();
   });
 
-  it('hands off on the frame the server facing crosses the held heading', () => {
+  it('holds through a server overshoot instead of riding it out and back', () => {
+    // Between the key release and the latch landing, the server may keep
+    // integrating the in-flight held flags PAST the held heading, then the
+    // latch snaps it back onto it. The display must hold still through the
+    // whole excursion (this was the residual re-aim after every turn).
     const st = newKeyboardTurnState();
-    stepKeyboardTurnFacing(st, args({ turnLeft: true, serverFacing: 0 }));
+    for (let i = 0; i < 20; i++) {
+      stepKeyboardTurnFacing(st, args({ turnLeft: true, serverFacing: 0 }));
+    }
     const held = st.facing as number;
-    // a coarse snapshot step jumps the interpolated server facing PAST us
-    const f = stepKeyboardTurnFacing(st, args({ serverFacing: held + 0.04 }));
-    expect(f).toBeCloseTo(held + 0.04, 6); // bridges to the server value
-    expect(st.facing).toBeNull(); // handed off
+    // overshoot beyond eps, linger, then settle back to the latched heading
+    const excursion = [0.08, 0.12, 0.12, 0.08, 0.0];
+    for (const off of excursion.slice(0, 4)) {
+      const f = stepKeyboardTurnFacing(st, args({ serverFacing: held + off }));
+      expect(f).toBeCloseTo(held, 9); // held perfectly still, no ride-along
+    }
+    const f = stepKeyboardTurnFacing(st, args({ serverFacing: held }));
+    expect(f).toBeCloseTo(held, 6); // bridged onto the settled server facing
+    expect(st.facing).toBeNull(); // handed off at eps-arrival
   });
 
   it('holds a persistent residual through the grace window, then glides it out gently', () => {

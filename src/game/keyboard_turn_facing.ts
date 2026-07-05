@@ -45,14 +45,13 @@ const MAX_FRAME_DT = 0.1; // clamp long frames so a hitch cannot over-rotate
 export interface KeyboardTurnState {
   facing: number | null; // null = inactive (the server facing owns the display)
   releaseMs: number; // time spent in the release phase
-  releaseGapSign: number; // sign of (server - local) when the release began
   /** Set once on the turning-to-release edge: the final local heading the
    *  caller should send on the wire (and then clear). Null otherwise. */
   releaseFacingToSend: number | null;
 }
 
 export function newKeyboardTurnState(): KeyboardTurnState {
-  return { facing: null, releaseMs: 0, releaseGapSign: 0, releaseFacingToSend: null };
+  return { facing: null, releaseMs: 0, releaseFacingToSend: null };
 }
 
 function approachAngle(current: number, target: number, maxStep: number): number {
@@ -102,22 +101,20 @@ export function stepKeyboardTurnFacing(
     state.facing = wrapAngle(base + dir * TURN_SPEED * dt);
     state.releaseMs = 0;
     state.releaseFacingToSend = null;
-    // The server integrates the same keys one echo behind, so at release it
-    // lags on the side OPPOSITE the turn: that is the gap sign we expect to
-    // see while it catches up. A gap already on the other side means it has
-    // caught up (or was never behind), which is an instant handoff below.
-    if (dir !== 0) state.releaseGapSign = -dir;
     return state.facing;
   }
   if (state.facing === null) return null;
 
-  // Release phase: hold the local heading and let the server facing converge
-  // onto it. Hand off when it arrives or crosses (the crossing can jump past
-  // the eps between frames, so a sign flip counts as caught up).
+  // Release phase: hold the local heading until the server facing SETTLES on
+  // it. The latch (sent by the caller) guarantees the server ends exactly on
+  // our heading, but before the latch lands the server may still be
+  // integrating the in-flight held flags and OVERSHOOT us by up to a tick;
+  // handing off on a mere crossing would ride that overshoot out and back,
+  // a small visible re-aim after every turn. So: eps-arrival only, from
+  // either side.
   if (state.releaseMs === 0) state.releaseFacingToSend = state.facing;
   const gap = wrapAngle(args.serverFacing - state.facing);
-  if (state.releaseGapSign === 0) state.releaseGapSign = Math.sign(gap) || 1;
-  if (Math.abs(gap) <= HANDOFF_EPS || Math.sign(gap) !== state.releaseGapSign) {
+  if (Math.abs(gap) <= HANDOFF_EPS) {
     state.facing = null;
     // Bridge the final sliver this frame; next frame the interpolated server
     // facing continues from (about) the same value, so nothing steps.
