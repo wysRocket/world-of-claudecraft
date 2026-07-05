@@ -2115,3 +2115,81 @@ default-const coverage gap, closed by the AS-SHIPPED pins). Note: the packet con
 phase-27-qa.md (the closeout phases run their reviewers in-phase, the Phase 26
 precedent). NEXT: phase-28 (the four missing attack-signal metrics), the last open
 closeout item besides the next-release deletion PR.
+
+## Phase 28: closeout, ship the four attack-signal RED metrics (source-spec 4.9 complete) DONE (2026-07-05)
+
+Resolution: OPTION A (SHIP), the maintainer's pick at the packet's STEP 2 fork. The
+source-spec 4.9 "Request layer (RED), this PR" catalog is now COMPLETE: all six series
+live on the ONE per-instance /metrics registry, and the brute-force / BOLA-enumeration /
+flood-reaching-pg dashboards the effort set out to enable are buildable.
+
+NEW server/http/attack_signals.ts: the AttackSignalSink contract (rateLimitHit /
+authFailure / bolaDenied / pgLimiterWrite), the noopAttackSignalSink default, and the
+setAttackSignalSink / attackSignalSink() process-wide slot (mirrors the
+setRateLimitTier2Store idiom; read at emission time, never captured at import).
+server/http/metrics.ts registers the four Counters on the SAME registry as the two
+Phase 23 metrics, each name a pinned constant (RATE_LIMIT_HITS_TOTAL,
+AUTH_FAILURES_TOTAL, BOLA_DENIED_TOTAL, PG_LIMITER_WRITES_TOTAL), exposes them as
+HttpMetrics.attackSignals, and try/catch-guards every increment so an observability
+write can never break the rejection path it observes. Ctx gained an additive optional
+`route` field (the matched :param TEMPLATE, set by buildContext from the matched
+RouteDef; fakeCtx override added): the ONLY route identity allowed in a metric or log
+label, never ctx.path.
+
+Emission sites: rate_limit.ts increments rate_limit_hits_total{policy, key_kind} before
+BOTH 429 throws (tier-1 and tier-2), labels from the bounded policy table only.
+ratelimit.ts is the auth choke point covering BOTH dispatch arms plus discord/account
+re-auth with one site: recordAuthFailure emits kind='bad_credentials'; authThrottled
+emits kind='throttled' on a lockout outcome, with the caller-rejects assumption spelled
+out in its doc comment (all three callers gate-and-reject; a future non-rejecting caller
+must split the predicate). require_owned.ts increments bola_denied_total{route} with
+ctx.route ?? 'unknown' alongside the unchanged structured deny-log (404 body
+byte-identical). ratelimit_db.ts counts one pg_limiter_writes_total{policy} per UPSERT
+and the http_requests_total{route='ratelimit.pg.hit'} proxy row is GONE (the store's
+MetricSink option removed; ONE source of truth; the access log no longer carries pg
+pseudo-lines; the allowed-vs-tripped split now lives on rate_limit_hits_total).
+main.ts boot: setAttackSignalSink(httpMetrics.attackSignals) plus
+createPgRateLimitStore({ pool }). Reconciliations recorded in state.md OPEN items: the
+spec's auth.* policy alert example maps to auth_failures_total + the 429 rows of
+http_requests_total on the auth routes (the fused per-IP auth budget is legacy-parity
+inline, outside the policy middleware); realm stays a Prometheus external label
+(matching Phase 23); bola_denied_total counts the locked 404 anti-enumeration denials
+(the spec table's "403s" wording predates that decision).
+
+Tests (8 files): metrics.test.ts (six-series TYPE lines before traffic, name-constant
+literal pins, per-counter label pins, instance isolation); context.test.ts (ctx.route =
+template not concrete path, undefined on unmatched); rate_limit.test.ts (tier-1 and
+tier-2 rejection labels, allowed-records-nothing, the tier-1 flood never touching the
+tier-2 store, and the REAL-PgRateLimitStore-over-counting-fake-pool flood companion
+that pins "pg_limiter_writes_total stays 0 under a tier-1 flood" end to end, making
+qa-checklist.md:153 literally true); ratelimit.test.ts (bad_credentials per
+recordAuthFailure, throttled once per lockout check, below-ceiling and clear negatives);
+require_owned.test.ts (template-not-path both directions, 'unknown' fallback, owned-load
+and 422-before-DB negatives); ratelimit_db.test.ts (policy parsing incl. the colonless
+'default', writes-not-decisions, no ip/colon in the label); metrics_gate.test.ts (pg
+sink rework, six-series exposure at the real /metrics surface, and the boot-wiring
+integration pin: an emission through attackSignalSink() after importing main surfaces
+in a routeHttpRequest /metrics scrape, so deleting the one main.ts wiring line fails a
+test); fake_ctx.ts (route override).
+
+Reviews (in-phase, the closeout precedent; apply-all honored): privacy-security-review
+CLEAN, all 7 required checks pass (no label can carry ip/account/token/concrete id;
+METRICS_TOKEN gate unwidened; zero behavior change at every emission site; guarded
+increments; prom-client untouched at the pinned EXACT 15.1.3; proxy fully removed with
+no double-count; the BolaDenyEvent audit log intact), 0 findings. test-coverage-auditor
+0 BLOCKING / 1 SHOULD-FIX + 1 NIT, BOTH APPLIED: the unpinned main.ts boot-wiring line
+became the metrics_gate boot-wiring integration test, and the vacuous
+pgLimiterWrites-empty assertion in the recording-fake flood test became the real-pg-store
+flood companion (plus a clarifying comment on the original). qa-checklist READY,
+0 BLOCKING / 0 SHOULD-FIX / 0 NIT (its two adversarial items are the documented-by-design
+reconciliations above).
+
+Validation at the final tree: tsc 0; tests/server 86 files / 1704 passed + 2 skipped;
+build:server OK; PERF_GATE_WALLCLOCK=1 perf_gate 10/10 (counters sit on rejection paths,
+not the request hot path); ci:changed 0 errors; npm run gate PASS all 9 steps. Durable
+record: state.md closeout list marks Phase 28 RESOLVED, the OPEN items index leads with
+the RED-catalog-complete entry, the new-files table gained row 28, the Phase 19 record
+carries an inline proxy-retired pointer, and server/http/CLAUDE.md's observability row
+names attack_signals with the label discipline. The packet (25 phases + closeouts 26/27/28)
+is now fully closed; the only remaining follow-up is the next-release ladder-deletion PR
+(exit criteria in state.md, owner Fernando).

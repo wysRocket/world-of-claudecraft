@@ -26,7 +26,7 @@ each matched route through a Koa-style middleware onion. It replaces the old inl
 | `config.ts` | `loadConfig` validates env into the boot `Config` once at boot; owns `DispatchMode` and the `API_DISPATCH` flag. |
 | `index.ts` | The public barrel: re-exports router / compose / context / schema / errors / error_codes / registry / dispatch + the type contracts. Excludes the seam-reached internals (`path_pattern`, `config`, the individual `middleware/*`). |
 | `middleware/*` | The onion frames: `body`/`raw_body`, `content_type`, `origin_check`, `require_account`/`require_admin`/`require_internal_secret`, `require_owned`, `bearer_active_guard`, `turnstile`, `rate_limit`, `request_id`, `cors`, `metric_sink`, `security_headers`, `with_errors`. |
-| `metrics`/`health`/`perf_gate`/`server_timeouts`/`logger`/`access_log`/`redact`/`client_error` | Observability + hardening support the dispatcher and boot wire in. |
+| `metrics`/`attack_signals`/`health`/`perf_gate`/`server_timeouts`/`logger`/`access_log`/`redact`/`client_error` | Observability + hardening support the dispatcher and boot wire in. `metrics.ts` owns all six request-layer RED series (the request counter/histogram plus the four attack-signal counters); `attack_signals.ts` is the process-wide slot their scattered emission sites (rate_limit, ratelimit.ts auth failures, require_owned, the tier-2 pg store) emit through, installed by main.ts at boot. Labels are bounded (policy / kind / key_kind / route TEMPLATE); never label with an ip, account, token, or concrete id. |
 
 ## The RouteDef contract
 A `RouteDef` (`types.ts`) is `{ method, path, surface, middleware?, schema?, params?, query?,
