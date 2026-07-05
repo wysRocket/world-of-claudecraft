@@ -57,38 +57,13 @@ export const WORLD_BOSSES: readonly WorldBossDef[] = [
   },
 ];
 
-// Per-player daily loot record. `date` is the UTC day the `looted` set belongs to;
-// `looted` holds the boss template ids already looted that day.
-export interface WorldBossDaily {
-  date: string;
-  looted: Set<string>;
-}
-
-export function emptyWorldBossDaily(): WorldBossDaily {
-  return { date: '', looted: new Set() };
-}
-
-// Roll the daily window over when the host's UTC day changes. A no-op when the day
-// is unknown (headless/replay, utcDay === ''), keeping replays reproducible.
-export function refreshWorldBossDaily(meta: PlayerMeta, utcDay: string): void {
-  if (utcDay && meta.worldBossDaily.date !== utcDay) {
-    meta.worldBossDaily = { date: utcDay, looted: new Set() };
-  }
-}
-
-// Eligible if this player has not already looted this boss today. When the calendar
-// day is unknown (utcDay === ''), there is no daily window to enforce, so the player
-// is always eligible (offline/headless play is non-authoritative).
-export function isWorldBossLootEligible(meta: PlayerMeta, bossId: string, utcDay: string): boolean {
-  refreshWorldBossDaily(meta, utcDay);
-  if (!utcDay) return true;
-  return !meta.worldBossDaily.looted.has(bossId);
-}
-
-// The raid-lockout id under which a looted world boss shows in the raid-lockout timer
-// UI. Prefixed so it never collides with a real dungeon id (the dungeon enter-gate keys
-// on bare dungeon ids and never matches this) and so the HUD name resolver can spot it
-// and localize it as a mob name. See raidLockoutPanelView in hud.ts.
+// The raid-lockout id under which a looted world boss is BOTH gated and shown in the
+// raid-lockout timer UI. Prefixed so it never collides with a real dungeon id (the
+// dungeon enter-gate keys on bare dungeon ids and never matches this) and so the HUD
+// name resolver can spot it and localize it as a mob name. See raidLockoutPanelView in
+// hud.ts. The world boss is a genuine raid lockout: the SAME `meta.raidLockouts` entry
+// that renders the countdown is what the eligibility gate reads, so the displayed timer
+// is exactly the loot lockout, and it resets on the same boundary as the raids.
 export const WORLD_BOSS_LOCKOUT_PREFIX = 'worldboss:';
 export function worldBossLockoutId(bossId: string): string {
   return WORLD_BOSS_LOCKOUT_PREFIX + bossId;
@@ -101,34 +76,23 @@ export function worldBossIdFromLockout(lockoutId: string): string | null {
     : null;
 }
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-// The next UTC-midnight instant at or after `nowMs`. The world-boss daily gate resets
-// when the host's `utcDay` string (a UTC calendar day) rolls over, i.e. exactly at UTC
-// midnight, so the lockout DISPLAY must expire at this same instant to stay truthful:
-// using the raids' 3 AM realm-local reset instead would show "locked" for hours after
-// the gate had already freed (or the reverse). Epoch ms are UTC-based, so flooring to
-// the day and adding one day lands on the next UTC midnight.
-export function nextUtcMidnightMs(nowMs: number): number {
-  return (Math.floor(nowMs / DAY_MS) + 1) * DAY_MS;
+// Eligible if this player holds no unexpired world-boss lockout for this boss. Reads
+// the exact same `meta.raidLockouts` entry the raid-lockout UI renders (one source of
+// truth), so gate and display can never disagree. `nowMs` is the host lockout clock
+// (`ctx.lockoutNowMs()`); like the raid lockouts this is the host wall clock on the
+// server and the sim clock offline, never a deterministic-tick value.
+export function isWorldBossLootEligible(meta: PlayerMeta, bossId: string, nowMs: number): boolean {
+  const until = meta.raidLockouts.get(worldBossLockoutId(bossId));
+  return until === undefined || until <= nowMs;
 }
 
-// Record that this player looted this boss today (so they cannot loot it again
-// until the daily reset). Called from lootCorpse when a personal world-boss slot
-// is actually taken, NOT at kill/roll time. A no-op when the calendar day is unknown.
-// `lockoutUntilMs` (the host's next daily-reset instant) also writes a raid-lockout
-// entry so the once-per-day gate shows as a countdown in the raid-lockout timer UI;
-// omit it (headless/tests of the pure gate) to skip the display entry.
-export function markWorldBossLooted(
-  meta: PlayerMeta,
-  bossId: string,
-  utcDay: string,
-  lockoutUntilMs?: number,
-): void {
-  if (!utcDay) return;
-  refreshWorldBossDaily(meta, utcDay);
-  meta.worldBossDaily.looted.add(bossId);
-  if (lockoutUntilMs !== undefined && lockoutUntilMs > 0)
-    meta.raidLockouts.set(worldBossLockoutId(bossId), lockoutUntilMs);
+// Record that this player looted this boss, locking them out until `untilMs` (the host's
+// next raid-reset instant, `ctx.raidResetMs(ctx.lockoutNowMs())`, the same boundary the
+// dungeon raids reset on). Called from lootCorpse when a personal world-boss slot is
+// actually taken, NOT at kill/roll time. This single write is both the eligibility gate
+// (isWorldBossLootEligible) and the rendered raid-lockout countdown.
+export function markWorldBossLooted(meta: PlayerMeta, bossId: string, untilMs: number): void {
+  if (untilMs > 0) meta.raidLockouts.set(worldBossLockoutId(bossId), untilMs);
 }
 
 // The players who contributed to (damaged or healed against) this boss, derived
@@ -205,7 +169,7 @@ export function rollWorldBossLoot(ctx: SimContext, mob: Entity, contributors: Pl
   // their daily and can try again at the next spawn. Corpse windows (300s) never
   // overlap the 3h cadence, so at most one corpse is ever lootable at a time.
   for (const meta of contributors) {
-    if (!isWorldBossLootEligible(meta, mob.templateId, ctx.utcDay)) continue;
+    if (!isWorldBossLootEligible(meta, mob.templateId, ctx.lockoutNowMs())) continue;
     const rolledGroups = new Set<string>();
     // At most ONE roll-group (gear) item per contributor: no double gear drop (a glove
     // AND a belt) from a single kill. Every group is still ROLLED so the rng draw order

@@ -5,8 +5,6 @@ import type { Entity, SimEvent } from '../src/sim/types';
 import {
   isWorldBossLootEligible,
   markWorldBossLooted,
-  nextUtcMidnightMs,
-  refreshWorldBossDaily,
   WORLD_BOSS_INTERVAL_SECONDS,
   WORLD_BOSSES,
   worldBossLockoutId,
@@ -15,10 +13,10 @@ import {
 const BOSS_ID = 'thunzharr_waking_peak';
 const DAY = '2026-06-28';
 
-// Minimal PlayerMeta stand-in for the pure daily-gate helpers (they touch only
-// .worldBossDaily). Cast through unknown to satisfy the full PlayerMeta type.
+// Minimal PlayerMeta stand-in for the pure lockout-gate helpers (they touch only
+// .raidLockouts). Cast through unknown to satisfy the full PlayerMeta type.
 function fakeMeta() {
-  return { worldBossDaily: { date: '', looted: new Set<string>() } } as unknown as Parameters<
+  return { raidLockouts: new Map<string, number>() } as unknown as Parameters<
     typeof isWorldBossLootEligible
   >[0];
 }
@@ -43,26 +41,30 @@ function spawnBossNow(sim: Sim): { boss: Entity; events: SimEvent[] } {
   return { boss, events };
 }
 
-describe('world boss daily-loot gate (pure helpers)', () => {
-  it('is eligible until looted, then blocked for the same day', () => {
+describe('world boss loot lockout gate (pure helpers)', () => {
+  const NOW = 1_000_000;
+  const RESET = NOW + 5 * 60 * 60 * 1000; // some future reset instant
+
+  it('is eligible until looted, then blocked until the lockout expires', () => {
     const meta = fakeMeta();
-    expect(isWorldBossLootEligible(meta, BOSS_ID, DAY)).toBe(true);
-    markWorldBossLooted(meta, BOSS_ID, DAY);
-    expect(isWorldBossLootEligible(meta, BOSS_ID, DAY)).toBe(false);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, NOW)).toBe(true);
+    markWorldBossLooted(meta, BOSS_ID, RESET);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, NOW)).toBe(false);
   });
 
-  it('resets at the UTC day boundary', () => {
+  it('gate and rendered lockout are ONE value: the gate reads the raidLockouts entry', () => {
     const meta = fakeMeta();
-    markWorldBossLooted(meta, BOSS_ID, DAY);
-    expect(isWorldBossLootEligible(meta, BOSS_ID, DAY)).toBe(false);
-    refreshWorldBossDaily(meta, '2026-06-29');
-    expect(isWorldBossLootEligible(meta, BOSS_ID, '2026-06-29')).toBe(true);
+    markWorldBossLooted(meta, BOSS_ID, RESET);
+    // The exact entry the raid-lockout UI renders is what the gate checks.
+    expect((meta as any).raidLockouts.get(worldBossLockoutId(BOSS_ID))).toBe(RESET);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, RESET - 1)).toBe(false);
   });
 
-  it('never gates when the calendar day is unknown (headless/replay)', () => {
+  it('frees up exactly at the reset instant', () => {
     const meta = fakeMeta();
-    markWorldBossLooted(meta, BOSS_ID, '');
-    expect(isWorldBossLootEligible(meta, BOSS_ID, '')).toBe(true);
+    markWorldBossLooted(meta, BOSS_ID, RESET);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, RESET - 1)).toBe(false);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, RESET)).toBe(true);
   });
 });
 
@@ -309,15 +311,16 @@ describe('world boss personal loot', () => {
       expect(slot.personalFor && slot.personalFor.length === 1).toBe(true);
       expect(slot.openToAll).toBeFalsy();
     }
-    // The KILL does not consume the daily: only actually looting a personal
+    // The KILL does not consume the lockout: only actually looting a personal
     // slot does. p1 walks over and loots; p2 never does.
-    expect((sim as any).players.get(p1).worldBossDaily.looted.has(BOSS_ID)).toBe(false);
-    expect((sim as any).players.get(p2).worldBossDaily.looted.has(BOSS_ID)).toBe(false);
+    const lockoutId = worldBossLockoutId(BOSS_ID);
+    expect((sim as any).players.get(p1).raidLockouts.has(lockoutId)).toBe(false);
+    expect((sim as any).players.get(p2).raidLockouts.has(lockoutId)).toBe(false);
     const e1 = (sim as any).entities.get(p1) as Entity;
     e1.pos = { ...boss.pos };
     sim.lootCorpse(boss.id, p1);
-    expect((sim as any).players.get(p1).worldBossDaily.looted.has(BOSS_ID)).toBe(true);
-    expect((sim as any).players.get(p2).worldBossDaily.looted.has(BOSS_ID)).toBe(false);
+    expect((sim as any).players.get(p1).raidLockouts.has(lockoutId)).toBe(true);
+    expect((sim as any).players.get(p2).raidLockouts.has(lockoutId)).toBe(false);
   });
 
   it('gives a contributor who LOOTED a boss no loot from a second boss the same day', () => {
@@ -383,9 +386,17 @@ describe('world boss personal loot', () => {
     expect(anyGearDropped).toBe(true);
   });
 
-  it('records a once-per-day raid lockout (surfaced in the raid-lockout timer) when looted', () => {
-    const sim = makeSim();
-    sim.utcDay = DAY;
+  it('looting writes ONE raid-lockout entry that is both the gate and the rendered timer', () => {
+    // Inject a fixed reset boundary so the assertion is exact and host-independent.
+    const RESET = 9_999_999_999;
+    const sim = new Sim({
+      seed: 7,
+      playerClass: 'warrior',
+      autoEquip: true,
+      noPlayer: true,
+      lockoutNowMs: () => 1_000,
+      raidResetMs: () => RESET,
+    } as any);
     const p1 = sim.addPlayer('warrior', 'Ada');
     const { boss } = spawnBossNow(sim);
     killWith(sim, boss, [p1]);
@@ -396,19 +407,10 @@ describe('world boss personal loot', () => {
     const e1 = (sim as any).entities.get(p1) as Entity;
     e1.pos = { ...boss.pos };
     sim.lootCorpse(boss.id, p1);
-    // Now the daily gate is both consumed AND visible as a future-dated raid lockout.
-    expect(meta.worldBossDaily.looted.has(BOSS_ID)).toBe(true);
-    // The lockout must expire at the SAME instant the daily gate frees (next UTC
-    // midnight), not the raids' 3 AM reset, so the displayed timer never lies.
-    expect(meta.raidLockouts.get(lockoutId)).toBe(nextUtcMidnightMs((sim as any).lockoutNowMs()));
-  });
-
-  it('nextUtcMidnightMs lands on the next UTC midnight strictly after now', () => {
-    const midDay = Date.UTC(2026, 5, 28, 13, 37, 5); // 2026-06-28 13:37:05 UTC
-    expect(nextUtcMidnightMs(midDay)).toBe(Date.UTC(2026, 5, 29, 0, 0, 0));
-    const exactMidnight = Date.UTC(2026, 5, 28, 0, 0, 0);
-    // At an exact boundary the gate has just rolled, so the next one is a full day out.
-    expect(nextUtcMidnightMs(exactMidnight)).toBe(Date.UTC(2026, 5, 29, 0, 0, 0));
+    // The lockout is written at exactly the raid-reset instant (same boundary as raids),
+    // and this same entry is what both the eligibility gate and the UI read (one value).
+    expect(meta.raidLockouts.get(lockoutId)).toBe(RESET);
+    expect(isWorldBossLootEligible(meta, BOSS_ID, (sim as any).lockoutNowMs())).toBe(false);
   });
 
   it('produces identical personal loot for the same seed (determinism)', () => {

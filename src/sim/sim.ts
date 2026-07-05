@@ -227,11 +227,9 @@ import {
   spawnOverworldSpiritHealers,
 } from './spirit';
 import {
-  emptyWorldBossDaily,
   rollWorldBossLoot as rollWorldBossLootImpl,
   scaleWorldBossHp,
   WORLD_BOSSES,
-  type WorldBossDaily,
   type WorldBossDef,
 } from './world_boss';
 
@@ -805,10 +803,9 @@ export interface PlayerMeta {
   companionUpgrades: Record<string, number>;
   delveLoreUnlocked: Set<string>;
   delveDaily: { date: string; firstClearXp: Set<string>; markClears: number };
-  // World-boss daily loot record (persisted in CharacterState). Resets at the UTC
-  // day boundary; holds the boss ids already looted today so a player can take
-  // personal loot from each world boss only once per day. See world_boss.ts.
-  worldBossDaily: WorldBossDaily;
+  // World-boss loot lockouts live in `raidLockouts` (keyed worldboss:<mobId>), so the
+  // eligibility gate and the rendered raid-lockout countdown are one value. See
+  // world_boss.ts (markWorldBossLooted / isWorldBossLootEligible).
 }
 
 // Away-from-keyboard / do-not-disturb presence. `afk` still delivers whispers
@@ -906,9 +903,11 @@ export interface CharacterState {
   // Ravenpost welcome letter already sent (optional so pre-mail saves load
   // cleanly and receive the announcement letter once on their next login).
   mailWelcomed?: boolean;
-  // World-boss daily loot record. Optional so saves from before world bosses load
-  // cleanly (addPlayer falls back to an empty record).
-  worldBossDaily?: { date: string; looted: string[] };
+  // World-boss loot lockouts now ride `raidLockouts` (keyed worldboss:<mobId>). The
+  // legacy per-day `worldBossDaily` field is intentionally dropped: pre-migration saves
+  // that still carry it just ignore it (a player locked at deploy may loot once more, a
+  // one-time, player-friendly transition), and their lockouts persist via raidLockouts
+  // from then on.
   // Flat per-craft skill tracking (#1126; JSONB, additive back-compat: absent or
   // partial on older saves loads the missing crafts as 0, see normalizeCraftSkills).
   craftSkills?: Record<string, number>;
@@ -1461,7 +1460,6 @@ export class Sim {
       companionUpgrades: {},
       delveLoreUnlocked: new Set(),
       delveDaily: { date: '', firstClearXp: new Set(), markClears: 0 },
-      worldBossDaily: emptyWorldBossDaily(),
     };
     // A fresh character sets out provisioned (class-defined starter rations);
     // a saved character loads its own bags from savedState below.
@@ -1561,12 +1559,9 @@ export class Sim {
           markClears: s.delveDaily.markClears,
         };
       }
-      if (s.worldBossDaily) {
-        meta.worldBossDaily = {
-          date: s.worldBossDaily.date,
-          looted: new Set(s.worldBossDaily.looted),
-        };
-      }
+      // Legacy s.worldBossDaily is intentionally not restored: world-boss lockouts now
+      // ride raidLockouts (loaded above), so a pre-migration save just drops its stale
+      // daily record.
     }
 
     // Resolve the flat talent struct once, before the stat pass + ability
@@ -1817,10 +1812,7 @@ export class Sim {
         markClears: meta.delveDaily.markClears,
       },
       mailWelcomed: meta.mailWelcomed,
-      worldBossDaily: {
-        date: meta.worldBossDaily.date,
-        looted: [...meta.worldBossDaily.looted],
-      },
+      // World-boss lockouts serialize via raidLockouts (above), not a separate field.
     };
     return sanitizeRemovedZone1Content(state).state;
   }
