@@ -311,7 +311,10 @@ export const ko_KR: EnTranslations = {
       "nameplates": "이름표",
       "haptics": "진동",
       "hapticsOff": "진동 꺼짐",
-      "toggleHaptics": "진동 전환"
+      "toggleHaptics": "진동 전환",
+      "actionRing": "전투 행동",
+      "actionPageToggle": "행동 페이지 전환",
+      "actionPageIndicator": "Page {page} of {count}"
     },
     "tutorial": {
       "moveBodyTouch": "이동 스틱으로 이동하고 화면을 끌어 주위를 둘러보세요. 몇 걸음 움직여 시작하세요.",

@@ -311,7 +311,10 @@ export const zh_TW: EnTranslations = {
       "nameplates": "名條",
       "haptics": "觸覺回饋",
       "hapticsOff": "觸覺回饋已關閉",
-      "toggleHaptics": "切換觸覺回饋"
+      "toggleHaptics": "切換觸覺回饋",
+      "actionRing": "戰鬥動作",
+      "actionPageToggle": "切換動作頁",
+      "actionPageIndicator": "Page {page} of {count}"
     },
     "tutorial": {
       "moveBodyTouch": "使用搖桿移動，拖曳螢幕環顧四周。先走幾步開始吧。",

@@ -151,6 +151,7 @@ const INDEX_SECTIONS = [
   'Clean up styles (previously inline)',
   'Premium Class Details Panel',
   'mobile touch controls (runtime-gated with body.mobile-touch + game-active)',
+  'mobile action ring (paged combat buttons)',
   'Unified Character Select Layout',
   'Cosmetic skin-select event overlay',
   // accessibility infra: three global sections added to base.css (loaded by both
@@ -169,12 +170,12 @@ const PLAY_SECTIONS = INDEX_SECTIONS.filter((name) => !PLAY_OMITS.includes(name)
 const MANIFEST = INDEX_SECTIONS;
 
 describe('css_corpus section manifest', () => {
-  it('pins a non-vacuous manifest: 62 index + 60 play sections, no duplicate names', () => {
-    expect(INDEX_SECTIONS.length).toBe(62);
-    expect(PLAY_SECTIONS.length).toBe(60);
-    expect(MANIFEST.length).toBe(62);
-    expect(new Set(INDEX_SECTIONS).size).toBe(62);
-    expect(new Set(PLAY_SECTIONS).size).toBe(60);
+  it('pins a non-vacuous manifest: 63 index + 61 play sections, no duplicate names', () => {
+    expect(INDEX_SECTIONS.length).toBe(63);
+    expect(PLAY_SECTIONS.length).toBe(61);
+    expect(MANIFEST.length).toBe(63);
+    expect(new Set(INDEX_SECTIONS).size).toBe(63);
+    expect(new Set(PLAY_SECTIONS).size).toBe(61);
   });
 
   it('captures the live corpus markers (the marker regex is non-vacuous, not a zero match)', () => {

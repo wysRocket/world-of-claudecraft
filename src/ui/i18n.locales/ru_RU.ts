@@ -3509,6 +3509,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.meters.perSecond': '{value}/с',
   'hudChrome.meters.perSecondRow': '{total} ({rate})',
   'hudChrome.meters.seconds': '{s} сек.',
+  'hudChrome.mobile.actionPageToggle': 'Переключить страницу действий',
+  'hudChrome.mobile.actionRing': 'Боевые действия',
   'hudChrome.mobile.autorun': 'Автобег',
   'hudChrome.mobile.haptics': 'Вибрация',
   'hudChrome.mobile.hapticsOff': 'Вибрация выкл.',

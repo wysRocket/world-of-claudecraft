@@ -311,7 +311,10 @@ export const sv_SE: EnTranslations = {
       "nameplates": "Namn",
       "haptics": "Haptik",
       "hapticsOff": "Haptik av",
-      "toggleHaptics": "Växla haptik"
+      "toggleHaptics": "Växla haptik",
+      "actionRing": "Combat actions",
+      "actionPageToggle": "Switch action page",
+      "actionPageIndicator": "Page {page} of {count}"
     },
     "tutorial": {
       "moveBodyTouch": "Använd rörelsespaken för att gå och dra på skärmen för att se dig omkring. Ta några steg för att börja.",

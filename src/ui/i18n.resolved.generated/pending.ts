@@ -13,90 +13,142 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "es_ES": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "fr_FR": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "fr_CA": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "en_CA": [],
   "it_IT": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "de_DE": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
-  "zh_CN": [],
-  "zh_TW": [],
-  "ko_KR": [],
-  "ja_JP": [],
+  "zh_CN": [
+    "hudChrome.mobile.actionPageIndicator"
+  ],
+  "zh_TW": [
+    "hudChrome.mobile.actionPageIndicator"
+  ],
+  "ko_KR": [
+    "hudChrome.mobile.actionPageIndicator"
+  ],
+  "ja_JP": [
+    "hudChrome.mobile.actionPageIndicator"
+  ],
   "pt_BR": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
-  "ru_RU": [],
+  "ru_RU": [
+    "hudChrome.mobile.actionPageIndicator"
+  ],
   "nl_NL": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "pl_PL": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "id_ID": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "tr_TR": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "sv_SE": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "vi_VN": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ],
   "da_DK": [
     "hudChrome.gathering.herbalism",
     "hudChrome.gathering.logging",
     "hudChrome.gathering.mining",
-    "hudChrome.gathering.title"
+    "hudChrome.gathering.title",
+    "hudChrome.mobile.actionPageIndicator",
+    "hudChrome.mobile.actionPageToggle",
+    "hudChrome.mobile.actionRing"
   ]
 };

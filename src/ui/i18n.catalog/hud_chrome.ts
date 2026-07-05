@@ -229,6 +229,14 @@ export const hudChromeStrings = {
     haptics: 'Haptics',
     hapticsOff: 'Haptics Off',
     toggleHaptics: 'Toggle haptics',
+    // Paged mobile action ring (Phase 1 of the mobile combat HUD rework): the
+    // ring container's accessible name, the page-cycle toggle's accessible name,
+    // and the page indicator text ("1/2") painted on the toggle. The per-button
+    // aria labels reuse abilityUi.actionBar.slotAria/emptySlotAria/attackName via
+    // the shared action_bar_view core, so no per-slot key lives here.
+    actionRing: 'Combat actions',
+    actionPageToggle: 'Switch action page',
+    actionPageIndicator: 'Page {page} of {count}',
   },
   // New-adventurer tutorial copy for the touch interface. The default tutorial
   // bodies (hud.tutorial.*Body) reference keyboard/mouse ("W/A/S/D", "press F"),

@@ -311,7 +311,10 @@ export const en_XA: EnTranslations = {
       "nameplates": "[Ñáɱéš]",
       "haptics": "[Ĥáþţíçš]",
       "hapticsOff": "[Ĥáþţíçš Óƒƒ]",
-      "toggleHaptics": "[Ţóĝĝļé ĥáþţíçš]"
+      "toggleHaptics": "[Ţóĝĝļé ĥáþţíçš]",
+      "actionRing": "[Çóɱƀáţ áçţíóñš]",
+      "actionPageToggle": "[Šŵíţçĥ áçţíóñ þáĝé]",
+      "actionPageIndicator": "[Þáĝé {page} óƒ {count}]"
     },
     "tutorial": {
       "moveBodyTouch": "[Úšé ţĥé ɱóʋéɱéñţ šţíçķ ţó ɱóʋé áñð ðŕáĝ ţĥé šçŕééñ ţó ļóóķ áŕóúñð. Ţáķé á ƒéŵ šţéþš ţó ƀéĝíñ.]",

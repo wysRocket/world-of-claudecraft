@@ -311,7 +311,10 @@ export const ru_RU: EnTranslations = {
       "nameplates": "Имена",
       "haptics": "Вибрация",
       "hapticsOff": "Вибрация выкл.",
-      "toggleHaptics": "Вкл/выкл вибрацию"
+      "toggleHaptics": "Вкл/выкл вибрацию",
+      "actionRing": "Боевые действия",
+      "actionPageToggle": "Переключить страницу действий",
+      "actionPageIndicator": "Page {page} of {count}"
     },
     "tutorial": {
       "moveBodyTouch": "Используйте джойстик передвижения, чтобы двигаться, и проведите по экрану, чтобы осмотреться. Сделайте несколько шагов, чтобы начать.",

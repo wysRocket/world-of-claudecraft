@@ -252,7 +252,9 @@
     transform: translateX(-50%) scale(var(--btn-scale, 1));
     transform-origin: center bottom;
     display: grid;
-    grid-template-columns: 124px repeat(6, 58px);
+    /* #mobile-attack-nearest is taken out of flow (position: absolute, above),
+       so the grid only lays out the remaining 6 utility buttons. */
+    grid-template-columns: repeat(6, 58px);
     gap: 8px;
     pointer-events: auto;
     align-items: end;
@@ -283,9 +285,20 @@
     height: 22px;
   }
   body.mobile-touch #mobile-attack-nearest {
-    width: 124px;
+    /* Secondary utility button (decision 1: the ring's own attack toggle is the
+       primary path; Attack Nearest stays a smaller subordinate button near the
+       ring cluster, 48-60px, never below the 44px floor). Taken out of the
+       #mobile-combat-controls grid flow so it can sit next to the ring instead
+       of at the head of the jump/target/interact/chat/more row. */
+    position: absolute;
+    left: auto;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: calc(150px + env(safe-area-inset-bottom));
+    width: var(--mobile-ring-secondary-size, 56px);
+    height: var(--mobile-ring-secondary-size, 56px);
     color: #ffdf9c;
     border-color: #8b4e2c;
+    border-radius: 50%;
   }
   body.mobile-touch #mobile-more {
     position: static;
@@ -325,6 +338,167 @@
     font-size: 8px;
     font-family: var(--ui-font);
     color: #bfb28a;
+  }
+
+  /* ---------- mobile action ring (paged combat buttons) ---------- */
+  /* Phase 1 of the mobile combat HUD rework: a bottom-right thumb cluster that
+     makes the existing hotbar castable on touch (desktop drag/drop keybinds are
+     unusable on a phone). One fixed primary Attack toggle (castSlot(0), unpaged),
+     5 paged action buttons (2 pages of 5 covering hotbar source slots 1-10, see
+     mobile_action_page_view.ts), and a page-cycle toggle. The ring supersedes the
+     desktop #actionbar/#actionbar2 rows under body.mobile-touch (hidden below);
+     xpbar/player-frame/petbar keep rendering (their own mobile rules are
+     untouched). Sizing hooks: --mobile-ring-attack-size/--mobile-ring-action-size/
+     --mobile-ring-gap are scoped to #mobile-action-ring (matching the
+     --joy-scale/--btn-scale convention); --btn-scale (actionButtonScale) and
+     --touch-opacity (touchOpacity) are reused directly, not forked. */
+  body.mobile-touch #mobile-action-ring {
+    --mobile-ring-attack-size: 100px;
+    --mobile-ring-action-size: 68px;
+    --mobile-ring-gap: 8px;
+    position: absolute;
+    right: max(18px, env(safe-area-inset-right));
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    width: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-action-size) * 2 + var(--mobile-ring-gap) * 4);
+    height: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-action-size) + var(--mobile-ring-gap) * 2);
+    transform-origin: right bottom;
+    transform: scale(var(--btn-scale, 1));
+    opacity: var(--touch-opacity, 1);
+    pointer-events: none;
+    z-index: 31;
+  }
+  body.mobile-touch #mobile-action-ring > button {
+    position: absolute;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #4a3d1d;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #2d3048d8, #11121ed8 72%);
+    color: #eee8ff;
+    cursor: var(--cursor-point);
+    box-shadow:
+      inset 0 1px 0 #ffffff14,
+      0 2px 8px #0009;
+  }
+  /* Primary attack toggle: bottom-right anchor of the cluster, largest button. */
+  body.mobile-touch #mobile-action-attack {
+    right: 0;
+    bottom: 0;
+    width: var(--mobile-ring-attack-size);
+    height: var(--mobile-ring-attack-size);
+    color: #ffdf9c;
+    border-color: #8b4e2c;
+  }
+  /* The 5 paged action buttons arc up and to the left of the attack button in a
+     crescent (pure CSS positioning, no JS layout), each individually anchored so
+     the arc holds at every --mobile-ring-action-size the settings scale picks. */
+  body.mobile-touch .mobile-action-slot {
+    width: var(--mobile-ring-action-size);
+    height: var(--mobile-ring-action-size);
+  }
+  body.mobile-touch .mobile-action-slot[data-mobile-index="0"] {
+    right: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-gap));
+    bottom: 0;
+  }
+  body.mobile-touch .mobile-action-slot[data-mobile-index="1"] {
+    right: calc(var(--mobile-ring-attack-size) * 0.65 + var(--mobile-ring-gap));
+    bottom: calc(var(--mobile-ring-attack-size) * 0.72 + var(--mobile-ring-gap));
+  }
+  body.mobile-touch .mobile-action-slot[data-mobile-index="2"] {
+    right: calc(var(--mobile-ring-attack-size) * 0.06 + var(--mobile-ring-gap));
+    bottom: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-action-size) * 0.35 + var(--mobile-ring-gap) * 2);
+  }
+  body.mobile-touch .mobile-action-slot[data-mobile-index="3"] {
+    right: calc(0px - var(--mobile-ring-action-size) * 0.55);
+    bottom: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-gap) * 2);
+  }
+  body.mobile-touch .mobile-action-slot[data-mobile-index="4"] {
+    right: calc(0px - var(--mobile-ring-action-size) * 1.1 - var(--mobile-ring-gap));
+    bottom: calc(var(--mobile-ring-attack-size) * 0.6 + var(--mobile-ring-gap));
+  }
+  /* Page-cycle toggle: small pip above the cluster, always >=44px. */
+  body.mobile-touch #mobile-action-page-toggle {
+    right: calc(var(--mobile-ring-attack-size) * 0.3);
+    bottom: calc(var(--mobile-ring-attack-size) + var(--mobile-ring-action-size) + var(--mobile-ring-gap) * 3);
+    width: 44px;
+    height: 44px;
+    font-size: 11px;
+    font-family: var(--ui-font);
+  }
+  body.mobile-touch #mobile-action-page-toggle:active {
+    border-color: var(--gold);
+    color: #fff;
+  }
+  /* Cooldown sweep + used-flash + state dimming reuse the SAME classes/structure
+     as .action-btn (cd-overlay height% sweep, .empty/.unusable/.oor/.queued),
+     scoped here so no desktop selector changes. */
+  body.mobile-touch #mobile-action-ring button .icon-label {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+  }
+  body.mobile-touch #mobile-action-ring button .cd-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    border-radius: 0 0 50% 50%;
+    background: #000a;
+    pointer-events: none;
+  }
+  body.mobile-touch #mobile-action-ring button .cdtext {
+    position: relative;
+    font-size: 15px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+    pointer-events: none;
+  }
+  body.mobile-touch #mobile-action-ring button .item-count {
+    position: absolute;
+    right: 4px;
+    bottom: 2px;
+    font-size: 11px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+    pointer-events: none;
+  }
+  body.mobile-touch #mobile-action-ring button .keybind {
+    display: none;
+  }
+  body.mobile-touch #mobile-action-ring button.empty .icon-label {
+    background-image: none;
+  }
+  body.mobile-touch #mobile-action-ring button.empty {
+    opacity: 0.4;
+  }
+  body.mobile-touch #mobile-action-ring button.unusable {
+    filter: grayscale(0.6);
+    opacity: 0.6;
+  }
+  body.mobile-touch #mobile-action-ring button.oor {
+    border-color: #a33;
+  }
+  body.mobile-touch #mobile-action-ring button.queued {
+    border-color: var(--gold);
+    box-shadow:
+      0 0 12px #ffd100aa,
+      inset 0 0 0 1px #ffd10077;
+  }
+  body.mobile-touch #mobile-action-ring button.used {
+    border-color: var(--gold);
+  }
+  /* Page-switch icon transition: gated behind prefers-reduced-motion so the icon
+     swap when cycling pages does not animate for a motion-sensitive player. */
+  @media (prefers-reduced-motion: no-preference) {
+    body.mobile-touch .mobile-action-slot .icon-label {
+      transition: opacity 0.12s ease;
+    }
   }
   body.mobile-touch #mobile-extra-controls {
     position: fixed;
@@ -575,6 +749,13 @@
   }
   /* The second action bar is desktop-only; the mobile hotbar stays a single scroll row. */
   body.mobile-touch #actionbar2 {
+    display: none;
+  }
+  /* The mobile action ring (above) supersedes both desktop bars: it makes the
+     hotbar castable on touch, so the scaled desktop rows would only duplicate
+     it. #actionbar-stack siblings (xpbar/player-frame/petbar) are untouched and
+     keep rendering via their own existing mobile rules elsewhere in this file. */
+  body.mobile-touch #actionbar {
     display: none;
   }
   body.mobile-touch .action-btn {
@@ -1663,7 +1844,7 @@
 
   @media (orientation: portrait) {
     body.mobile-touch #mobile-combat-controls {
-      grid-template-columns: 96px repeat(6, 42px);
+      grid-template-columns: repeat(6, 42px);
       gap: 4px;
     }
     body.mobile-touch .mobile-btn {
@@ -1672,7 +1853,7 @@
       font-size: 16px;
     }
     body.mobile-touch #mobile-attack-nearest {
-      width: 96px;
+      bottom: calc(130px + env(safe-area-inset-bottom));
     }
     body.mobile-touch #community-hud {
       /* var(--app-vh), not dvh: viewport units resolve against the initial
@@ -1700,15 +1881,12 @@
      44px height keeps each target at WCAG size. */
   @media (orientation: portrait) and (max-width: 384px) {
     body.mobile-touch #mobile-combat-controls {
-      grid-template-columns: 78px repeat(6, 36px);
+      grid-template-columns: repeat(6, 36px);
       gap: 3px;
     }
     body.mobile-touch .mobile-btn {
       width: 36px;
       font-size: 14px;
-    }
-    body.mobile-touch #mobile-attack-nearest {
-      width: 78px;
     }
   }
 
@@ -1820,7 +1998,7 @@
     }
     body.mobile-touch #mobile-combat-controls {
       bottom: calc(2px + env(safe-area-inset-bottom));
-      grid-template-columns: 115px repeat(6, 54px);
+      grid-template-columns: repeat(6, 54px);
       gap: 7px;
     }
     body.mobile-touch .mobile-btn {
@@ -1828,9 +2006,6 @@
       height: 48px;
       font-size: 20px;
       background: radial-gradient(circle at 35% 30%, #2d3048bf, #11121ec2 72%);
-    }
-    body.mobile-touch #mobile-attack-nearest {
-      width: 115px;
     }
     body.mobile-touch #mobile-extra-controls {
       left: 50%;

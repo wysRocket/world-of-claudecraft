@@ -1287,14 +1287,18 @@ describe('client HTML shell', () => {
     expect(attack).toBeGreaterThanOrEqual(0);
     expect(autorun).toBeGreaterThan(attack);
     expect(jump).toBeGreaterThan(autorun);
-    expect(hudMobileCss).toContain('grid-template-columns: 124px repeat(6, 58px);');
-    expect(hudMobileCss).toContain('grid-template-columns: 115px repeat(6, 54px);');
-    expect(hudMobileCss).toContain('grid-template-columns: 96px repeat(6, 42px);');
+    // #mobile-attack-nearest is taken out of grid flow (position: absolute, a
+    // secondary utility button near the mobile action ring per the Phase 1
+    // rework), so the combat-controls grid only lays out the remaining 6
+    // buttons (autorun/jump/target/interact/chat/more) at each breakpoint.
+    expect(hudMobileCss).toContain('grid-template-columns: repeat(6, 58px);');
+    expect(hudMobileCss).toContain('grid-template-columns: repeat(6, 54px);');
+    expect(hudMobileCss).toContain('grid-template-columns: repeat(6, 42px);');
     expect(hudMobileCss).toContain(
       'position: absolute;\n    left: 50%;\n    bottom: calc(3px + env(safe-area-inset-bottom));',
     );
     expect(hudMobileCss).toContain(
-      'bottom: calc(2px + env(safe-area-inset-bottom));\n      grid-template-columns: 115px repeat(6, 54px);',
+      'bottom: calc(2px + env(safe-area-inset-bottom));\n      grid-template-columns: repeat(6, 54px);',
     );
     expect(hudMobileCss).toContain(
       'pointer-events: auto;\n    align-items: end;\n    z-index: 30;',

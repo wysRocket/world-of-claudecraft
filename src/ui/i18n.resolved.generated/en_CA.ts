@@ -311,7 +311,10 @@ export const en_CA: EnTranslations = {
       "nameplates": "Names",
       "haptics": "Haptics",
       "hapticsOff": "Haptics Off",
-      "toggleHaptics": "Toggle haptics"
+      "toggleHaptics": "Toggle haptics",
+      "actionRing": "Combat actions",
+      "actionPageToggle": "Switch action page",
+      "actionPageIndicator": "Page {page} of {count}"
     },
     "tutorial": {
       "moveBodyTouch": "Use the movement stick to move and drag the screen to look around. Take a few steps to begin.",
