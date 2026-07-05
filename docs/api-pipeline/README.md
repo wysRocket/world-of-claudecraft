@@ -74,14 +74,15 @@ so in their own file when the session runs hot.
 The core migration finished at Phase 25 (every REST surface behind the pipeline, the
 `API_DISPATCH` default flipped to `'new'`, the pre-merge gate green). A closeout review
 (2026-07-04) then surfaced three polish items, each its own focused, bisectable PR. They are
-follow-ups, not blockers; the shipped pipeline is correct without them. Each pairs with its
-`phase-NN-qa.md` when it runs.
+follow-ups, not blockers; the shipped pipeline is correct without them. All three are DONE:
+closeout phases run their reviewers in-phase and land the durable record in `progress.md`
+and `state.md` (no separate `phase-NN-qa.md` files).
 
 | NN | Phase | QA | ctx |
 |----|-------|----|-----|
 | 26 | [Closeout cleanup: de-phase and de-stale the pipeline comments](phase-26-comment-cleanup.md) | DONE 2026-07-04, apply-all 0/0 (record: progress.md Phase 26; no separate qa file) | low |
-| 27 | [Closeout: honor the flag-flip precondition (bound the log-only mismatch sinks)](phase-27-flip-precondition.md) | (on run) | low |
-| 28 | [Closeout: complete or formally defer the four attack-signal RED metrics](phase-28-observability-metrics.md) | (on run) | low |
+| 27 | [Closeout: honor the flag-flip precondition (bound the log-only mismatch sinks)](phase-27-flip-precondition.md) | DONE 2026-07-04, Option A (bound shipped: mismatch_warn_throttle.ts), apply-all (record: progress.md Phase 27 + state.md OPEN items; no separate qa file) | low |
+| 28 | [Closeout: complete or formally defer the four attack-signal RED metrics](phase-28-observability-metrics.md) | DONE 2026-07-05, Option A SHIP (all four counters live via attack_signals.ts), apply-all (record: progress.md Phase 28 + state.md OPEN items; no separate qa file) | low |
 
 ## Ground rules every phase keeps
 

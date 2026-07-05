@@ -27,13 +27,13 @@ Mark a row's Status as "In progress" or "Done" and fill Started / Completed
 | Phase 07 | Done | 2026-06-30 | 2026-06-30 |
 | Phase 07 QA | Done | 2026-06-30 | 2026-06-30 |
 | Phase 08 | Done | 2026-06-30 | 2026-06-30 |
-| Phase 08 QA | Not started |  |  |
+| Phase 08 QA | Done | 2026-06-30 | 2026-06-30 |
 | Phase 09 | Done | 2026-06-30 | 2026-06-30 |
-| Phase 09 QA | Not started |  |  |
+| Phase 09 QA | Done | 2026-06-30 | 2026-06-30 |
 | Phase 10 | Done | 2026-06-30 | 2026-06-30 |
 | Phase 10 QA | Done | 2026-07-01 | 2026-07-01 |
 | Phase 11 | Done | 2026-07-01 | 2026-07-01 |
-| Phase 11 QA | Not started |  |  |
+| Phase 11 QA | Done | 2026-07-01 | 2026-07-01 |
 | Phase 12 | Done | 2026-07-01 | 2026-07-01 |
 | Phase 12 QA | Done | 2026-07-01 | 2026-07-01 |
 | Phase 13 | Done | 2026-07-01 | 2026-07-01 |
@@ -65,7 +65,13 @@ Mark a row's Status as "In progress" or "Done" and fill Started / Completed
 | Phase 24 | Done | 2026-07-03 | 2026-07-03 |
 | Phase 24 QA | Done | 2026-07-03 | 2026-07-03 |
 | Phase 25 | Done | 2026-07-03 | 2026-07-03 |
-| Phase 25 QA | Not started |  |  |
+| Phase 25 QA | Done | 2026-07-04 | 2026-07-04 |
+| Closeout review (whole branch) | Done | 2026-07-04 | 2026-07-04 |
+| Phase 26 (closeout cleanup) | Done | 2026-07-04 | 2026-07-04 |
+| Phase 27 (flip precondition, sink bound) | Done | 2026-07-04 | 2026-07-04 |
+| Phase 28 (attack-signal RED metrics) | Done | 2026-07-05 | 2026-07-05 |
+| v0.21.0 release merge + audit | Done | 2026-07-04 | 2026-07-04 |
+| v0.22.0 release merge + audit (both passes) | Done | 2026-07-05 | 2026-07-05 |
 
 ## Phase 01: Importable spine + WS-auth extraction (the gate, zero behavior change)
 

@@ -25,7 +25,9 @@ name that never shipped -- and the source-spec still claims all six are "this PR
 These are observability niceties, not correctness or safety blockers (the flip already happened and
 the pipeline is fine without them), so this is a should-fix / MEDIUM. This phase resolves it one of
 two ways (maintainer picks in STEP 2): SHIP the four counters, or FORMALLY DEFER them to a named
-observability follow-up and true up the stale references. Pair with `phase-28-qa.md` when executed.
+observability follow-up and true up the stale references. Closeout phases run their reviewers
+in-phase and land the durable record in `progress.md` and `state.md`; there is no separate
+`phase-28-qa.md`.
 
 Paste the block below into a fresh Claude Code session. It is self-contained.
 

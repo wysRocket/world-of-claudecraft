@@ -14,7 +14,8 @@ normal, finished code, WITHOUT losing any load-bearing rationale.
 The `docs/api-pipeline/` PLANNING PACKET keeps its phase structure and is OUT OF SCOPE. This
 phase touches CODE and CODE COMMENTS only. It is a large but purely mechanical change (about 122
 files, about 640 comment lines), zero behavior change, so it stays well under the 40% context
-bound if you fan it out by directory. Pair with `phase-26-qa.md` when executed.
+bound if you fan it out by directory. Closeout phases run their reviewers in-phase and land
+the durable record in `progress.md` and `state.md`; there is no separate `phase-26-qa.md`.
 
 Paste the block below into a fresh Claude Code session. It is self-contained.
 

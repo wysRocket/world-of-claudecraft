@@ -40,7 +40,9 @@ scratchpad/canonical.md pointers repointed to this file (fd472bd96) and the new:
 golden test hardened (b04df2f89: anchor-not-found UsageError pins plus a passed-count
 assertion on the child vitest). The stale until-Phase-25 prose inside
 tests/server/http/known_deviations.ts and sibling test comments is DEFERRED to the deletion
-PR (frozen ledger prose; those entries fire at the deletion anyway). Validation green at the
+PR (frozen ledger prose; those entries fire at the deletion anyway). [Superseded early:
+Phase 26's comment sweep (76e26254c, 2026-07-04) already reworded that prose; zero
+"Phase 25" matches remain in known_deviations.ts.] Validation green at the
 final tree: tsc 0, golden 23/23, dispatch_default + config 32/32, tests/server/http 41
 files / 912 tests with zero fixture edits, PERF_GATE_WALLCLOCK=1 perf_gate 10/10,
 ci:changed 0, npm run gate PASS all 9 steps. The core MIGRATION is COMPLETE.
@@ -622,8 +624,9 @@ named constants, mindful of the WS upgrade handshake and the 1 MB card upload.
 Non-goal: NO realtime regression. Pipeline (compose recursion + ALS + per-route metric
 write + full-issue schema validation) runs on the SAME event loop as the 20 Hz world loop.
 Acceptance gate: the pipeline adds < X ms p99 per request and does NOT raise tick p95 above
-0.8 x DT, measured against the existing perf harness. (Phase 24 codifies the gate and picks
-the X-ms constant; X is TBD, see open items.)
+0.8 x DT, measured against the existing perf harness. (Phase 24 codified the gate and picked
+X: PIPELINE_ADDED_P99_BUDGET_MS = 1.0 ms and TICK_P95_CEILING_RATIO 0.8 in
+server/http/perf_gate.ts; measured pipeline overhead is about 0.005 ms p99.)
 
 ## Non-negotiable constraints (every phase keeps all of these)
 - **Determinism / sim purity:** sim randomness via `Rng` only; NEVER
@@ -912,7 +915,8 @@ the X-ms constant; X is TBD, see open items.)
   acceptance is unaffected; any future audit of server tunables must list it as the third
   source alongside the named-constant block and msg_rate_limit.ts.
 - Add the perf/tick-jitter acceptance gate (pipeline adds < X ms p99, tick p95 stays under
-  0.8 x DT). X-ms constant is TBD (chosen here; see open items).
+  0.8 x DT). DONE: X chosen here as PIPELINE_ADDED_P99_BUDGET_MS = 1.0 ms
+  (server/http/perf_gate.ts, perf_gate suite green, measured about 0.005 ms p99).
 
 ## Architecture decisions (locked, independently confirmed by code + 2024-2026 sources)
 - **RFC 9457 `application/problem+json`** as the `/api` error format (obsoleted RFC 7807,
@@ -1013,8 +1017,8 @@ the X-ms constant; X is TBD, see open items.)
   test harnesses construct lazily on first request (the overrides-before-construction
   ordering premise died with the feature). Each surviving route is router-owned AND
   legacy-served with corpus rows, mounting-sweep coverage, and captureBothModes re-pins
-  filed at the merge. The Phase 25 exit criteria must still carve
-  out the deliberately delegate-served shapes (the oauthInternalOffTable405 set +
+  filed at the merge. The deletion exit criteria (end of this file, written by Phase 25)
+  carve out the deliberately delegate-served shapes (the oauthInternalOffTable405 set +
   HEAD-to-GET + the 18b remainder: the daily-rewards prefix-arm oddities [wrong method,
   unknown subpath, the no-slash sibling], the github callback's non-GET arm [only GET is
   registered, so a wrong-method request delegates to the ladder's terminal 404 'unknown
@@ -1027,7 +1031,7 @@ the X-ms constant; X is TBD, see open items.)
   the freshness gate's registry-union source side; re-annotate both together) and the four
   limiter-column rows
   (reports, characters-POST, wallet-link x2) document the LEGACY arm and mislead once the
-  default flips; Phase 25 re-annotates them.
+  default flips; the next-release deletion PR re-annotates them (exit criteria section 3).
 - **The freshness gate's prefix-delegation blind spot is CLOSED but the lesson stands.**
   The gate scans DISPATCHER_SOURCES (now five files incl. server/daily_rewards.ts) and,
   since the second v0.20.0 merge, ALSO counts registered RouteDefs (non-:param registry
@@ -1088,9 +1092,10 @@ the X-ms constant; X is TBD, see open items.)
   to guarantee exactly ONE idempotent response on both the resolve and throw paths
   (headersSent/writableEnded guarded). A top-level `clientError` handler must destroy the
   socket. Mandatory, not optional.
-- **Perf/tick gate X-ms TBD.** The acceptance constant (pipeline adds < X ms p99; tick p95
-  stays under 0.8 x DT) is not yet picked. Phase 24 codifies the gate and chooses X against
-  the existing perf harness.
+- **Perf/tick gate RESOLVED (Phase 24, 2026-07-03).** The acceptance constant is
+  PIPELINE_ADDED_P99_BUDGET_MS = 1.0 ms p99 (measured about 0.005 ms) with
+  TICK_P95_CEILING_RATIO 0.8 x DT, both in server/http/perf_gate.ts; the perf_gate suite
+  pins it (PERF_GATE_WALLCLOCK=1 runs the wall-clock arm).
 - **Old-ladder deletion exit criteria RESOLVED (Phase 25).** The gate, its carve-outs, the
   metric-instrumentation caveat, the owner, and the full deferred-items handoff now live in
   `## Old-ladder deletion exit criteria (next release)` (end of this file). One correction the
@@ -1100,13 +1105,18 @@ the X-ms constant; X is TBD, see open items.)
   a bounded delegate counter FIRST, then read it. The deletion is its own next-release PR.
 - **Rollback tradeoff accepted.** A flag flip reverts the hardening too (the suite targets
   the new path). This is the chosen model; not an open question, but keep it visible.
-- **`handleSwagClaim` orphaned.** Implemented + tested in `discord.ts` but never dispatched;
-  Phase 16 wires it.
-- **DISCORD_SCHEMA precedent trap.** Defined-but-unwired on this branch; the exact failure
-  mode `RATELIMIT_SCHEMA` must avoid. Always add new schemas to the `ensureSchema` list with
-  a boot-time table-existence assertion.
-- **`isIpBlocked` + turnstile parity gap** carried forward from prior Discord reviews;
-  ported Discord endpoints must not skip those checks.
+- **`handleSwagClaim` orphaned, RESOLVED (Phase 16, 2026-07-01).** Was implemented + tested
+  in `discord.ts` but never dispatched; Phase 16 wired the full seven-route Discord family.
+  The legacy arm's `unreachable: true` inventory row is re-annotated at the ladder deletion
+  (exit criteria section 3).
+- **DISCORD_SCHEMA precedent trap (historical; the premise was already stale at Phase 16).**
+  Recorded here as defined-but-unwired, but progress.md Phase 16 found it HAD been wired
+  into the `ensureSchema` list since PR #1075 with a `schema_wiring.test.ts` guard. The
+  lesson stands: always add new schemas to the `ensureSchema` list with a boot-time
+  table-existence assertion (`RATELIMIT_SCHEMA` did, Phase 19).
+- **`isIpBlocked` + turnstile parity gap, SATISFIED (Phase 16, 2026-07-01).** Carried
+  forward from prior Discord reviews; the migrated Discord endpoints carry `isIpBlocked`,
+  and Phase 16 QA re-confirmed the pre-existing turnstile deferrals were not widened.
 
 ## Old-ladder deletion exit criteria (next release)
 

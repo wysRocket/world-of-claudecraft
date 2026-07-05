@@ -17,7 +17,8 @@ route (e.g. POST /api/register) adds at most about a 2x log amplification ahead 
 limiter, not an unbounded one. This is a should-fix, not a blocker. This phase resolves it one of
 two ways (maintainer picks in STEP 2): add the promised bound, or record an explicit conscious
 acceptance that supersedes the watch-item. Either way the outcome lands in the DURABLE index so
-the loose end stops floating. Pair with `phase-27-qa.md` when executed.
+the loose end stops floating. Closeout phases run their reviewers in-phase and land the durable
+record in `progress.md` and `state.md`; there is no separate `phase-27-qa.md`.
 
 Paste the block below into a fresh Claude Code session. It is self-contained.
 
