@@ -1,7 +1,7 @@
 import { timingSafeEqual } from 'node:crypto';
 import type * as http from 'node:http';
 import { DELVES } from '../src/sim/data';
-import type { LootTier } from '../src/sim/types';
+import type { LootTier } from '../src/sim/lockpick';
 import type {
   DailyRewardHistory,
   DailyRewardLeaderboardEntry,
