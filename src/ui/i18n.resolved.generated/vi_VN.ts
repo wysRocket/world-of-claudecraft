@@ -311,9 +311,7 @@ export const vi_VN: EnTranslations = {
       "nameplates": "Tên",
       "haptics": "Phản Hồi Rung",
       "hapticsOff": "Tắt Phản Hồi Rung",
-      "toggleHaptics": "Bật/tắt phản hồi rung",
-      "hotbarPage": "Kỹ Năng",
-      "hotbarPageAria": "Hiện bộ kỹ năng tiếp theo"
+      "toggleHaptics": "Bật/tắt phản hồi rung"
     },
     "tutorial": {
       "moveBodyTouch": "Dùng cần di chuyển để đi và kéo màn hình để nhìn quanh. Bước vài bước để bắt đầu.",

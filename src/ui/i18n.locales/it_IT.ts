@@ -4121,8 +4121,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Corsa automatica',
   'hudChrome.mobile.haptics': 'Vibrazione',
   'hudChrome.mobile.hapticsOff': 'Vibrazione disattivata',
-  'hudChrome.mobile.hotbarPage': 'Abilità',
-  'hudChrome.mobile.hotbarPageAria': 'Mostra la serie successiva di abilità',
   'hudChrome.mobile.jump': 'Salta',
   'hudChrome.mobile.leaderboard': 'Classifica',
   'hudChrome.mobile.nameplates': 'Nomi',

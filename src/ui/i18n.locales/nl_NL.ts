@@ -4697,8 +4697,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Autoloop',
   'hudChrome.mobile.haptics': 'Haptiek',
   'hudChrome.mobile.hapticsOff': 'Haptiek uit',
-  'hudChrome.mobile.hotbarPage': 'Vaardigheden',
-  'hudChrome.mobile.hotbarPageAria': 'Toon de volgende set vaardigheden',
   'hudChrome.mobile.jump': 'Springen',
   'hudChrome.mobile.leaderboard': 'Ranglijst',
   'hudChrome.mobile.nameplates': 'Namen',

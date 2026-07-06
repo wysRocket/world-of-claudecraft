@@ -311,9 +311,7 @@ export const id_ID: EnTranslations = {
       "nameplates": "Nama",
       "haptics": "Haptik",
       "hapticsOff": "Haptik Nonaktif",
-      "toggleHaptics": "Alihkan haptik",
-      "hotbarPage": "Kemampuan",
-      "hotbarPageAria": "Tampilkan rangkaian kemampuan berikutnya"
+      "toggleHaptics": "Alihkan haptik"
     },
     "tutorial": {
       "moveBodyTouch": "Gunakan tuas gerak untuk berpindah dan seret layar untuk melihat sekeliling. Ambil beberapa langkah untuk memulai.",

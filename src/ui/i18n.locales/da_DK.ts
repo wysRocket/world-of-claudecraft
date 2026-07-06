@@ -4639,8 +4639,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Autoløb',
   'hudChrome.mobile.haptics': 'Haptik',
   'hudChrome.mobile.hapticsOff': 'Haptik fra',
-  'hudChrome.mobile.hotbarPage': 'Evner',
-  'hudChrome.mobile.hotbarPageAria': 'Vis næste sæt evner',
   'hudChrome.mobile.jump': 'Hop',
   'hudChrome.mobile.leaderboard': 'Rangliste',
   'hudChrome.mobile.nameplates': 'Navne',

@@ -5891,8 +5891,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Ju färre delar du väljer, desto högre kvalitetsnivå får var och en.',
   'hudChrome.corpseHarvest.harvestButton': 'Skörda',
   'hudChrome.corpseHarvest.title': 'Skörda',
-  'hudChrome.mobile.hotbarPage': 'Förmågor',
-  'hudChrome.mobile.hotbarPageAria': 'Visa nästa uppsättning förmågor',
   'errors.api.accountSessionLimit': 'För många karaktärer på detta konto är redan i världen.',
   'errors.api.crossSiteOrigin': 'Begäran blockerades av säkerhetsskäl.',
   'errors.api.unsupportedMediaType': 'Formatet på begäran stöds inte.',

@@ -311,9 +311,7 @@ export const pt_BR: EnTranslations = {
       "nameplates": "Nomes",
       "haptics": "Vibração",
       "hapticsOff": "Vibração desligada",
-      "toggleHaptics": "Alternar vibração",
-      "hotbarPage": "Habilidades",
-      "hotbarPageAria": "Mostrar o próximo conjunto de habilidades"
+      "toggleHaptics": "Alternar vibração"
     },
     "tutorial": {
       "moveBodyTouch": "Use o analógico de movimento para se mover e arraste a tela para olhar ao redor. Dê alguns passos para começar.",

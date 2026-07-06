@@ -311,9 +311,7 @@ export const nl_NL: EnTranslations = {
       "nameplates": "Namen",
       "haptics": "Haptiek",
       "hapticsOff": "Haptiek uit",
-      "toggleHaptics": "Haptiek aan/uit",
-      "hotbarPage": "Vaardigheden",
-      "hotbarPageAria": "Toon de volgende set vaardigheden"
+      "toggleHaptics": "Haptiek aan/uit"
     },
     "tutorial": {
       "moveBodyTouch": "Gebruik de bewegingsstick om te bewegen en sleep over het scherm om rond te kijken. Zet een paar stappen om te beginnen.",

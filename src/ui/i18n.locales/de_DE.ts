@@ -4151,8 +4151,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Auto-Laufen',
   'hudChrome.mobile.haptics': 'Haptik',
   'hudChrome.mobile.hapticsOff': 'Haptik aus',
-  'hudChrome.mobile.hotbarPage': 'Fähigkeiten',
-  'hudChrome.mobile.hotbarPageAria': 'Nächste Fähigkeitengruppe anzeigen',
   'hudChrome.mobile.jump': 'Springen',
   'hudChrome.mobile.leaderboard': 'Rangliste',
   'hudChrome.mobile.nameplates': 'Namen',

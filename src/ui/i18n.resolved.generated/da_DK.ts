@@ -311,9 +311,7 @@ export const da_DK: EnTranslations = {
       "nameplates": "Navne",
       "haptics": "Haptik",
       "hapticsOff": "Haptik fra",
-      "toggleHaptics": "Slå haptik til/fra",
-      "hotbarPage": "Evner",
-      "hotbarPageAria": "Vis næste sæt evner"
+      "toggleHaptics": "Slå haptik til/fra"
     },
     "tutorial": {
       "moveBodyTouch": "Brug bevægelsesstikken til at bevæge dig og træk på skærmen for at se dig omkring. Tag et par skridt for at begynde.",

@@ -311,9 +311,7 @@ export const it_IT: EnTranslations = {
       "nameplates": "Nomi",
       "haptics": "Vibrazione",
       "hapticsOff": "Vibrazione disattivata",
-      "toggleHaptics": "Attiva/disattiva vibrazione",
-      "hotbarPage": "Abilità",
-      "hotbarPageAria": "Mostra la serie successiva di abilità"
+      "toggleHaptics": "Attiva/disattiva vibrazione"
     },
     "tutorial": {
       "moveBodyTouch": "Usa il joystick di movimento per muoverti e trascina lo schermo per guardarti intorno. Fai qualche passo per iniziare.",

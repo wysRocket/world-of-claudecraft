@@ -4710,8 +4710,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Lari Otomatis',
   'hudChrome.mobile.haptics': 'Haptik',
   'hudChrome.mobile.hapticsOff': 'Haptik Nonaktif',
-  'hudChrome.mobile.hotbarPage': 'Kemampuan',
-  'hudChrome.mobile.hotbarPageAria': 'Tampilkan rangkaian kemampuan berikutnya',
   'hudChrome.mobile.jump': 'Lompat',
   'hudChrome.mobile.leaderboard': 'Peringkat',
   'hudChrome.mobile.nameplates': 'Nama',

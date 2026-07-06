@@ -311,9 +311,7 @@ export const tr_TR: EnTranslations = {
       "nameplates": "İsimler",
       "haptics": "Dokunsal Geri Bildirim",
       "hapticsOff": "Dokunsal Kapalı",
-      "toggleHaptics": "Dokunsal geri bildirimi aç/kapat",
-      "hotbarPage": "Yetenekler",
-      "hotbarPageAria": "Sonraki yetenek grubunu göster"
+      "toggleHaptics": "Dokunsal geri bildirimi aç/kapat"
     },
     "tutorial": {
       "moveBodyTouch": "Hareket etmek için hareket çubuğunu kullan ve etrafa bakmak için ekranı sürükle. Başlamak için birkaç adım at.",

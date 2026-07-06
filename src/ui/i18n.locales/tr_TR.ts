@@ -4642,8 +4642,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.autorun': 'Otomatik Koşu',
   'hudChrome.mobile.haptics': 'Dokunsal Geri Bildirim',
   'hudChrome.mobile.hapticsOff': 'Dokunsal Kapalı',
-  'hudChrome.mobile.hotbarPage': 'Yetenekler',
-  'hudChrome.mobile.hotbarPageAria': 'Sonraki yetenek grubunu göster',
   'hudChrome.mobile.jump': 'Zıpla',
   'hudChrome.mobile.leaderboard': 'Sıralama',
   'hudChrome.mobile.nameplates': 'İsimler',
