@@ -130,6 +130,31 @@ describe('stepKeyboardTurnFacing', () => {
     expect(st.facing).toBeNull(); // eventually converged and handed off
   });
 
+  it('seams the last wire-rounding fraction instead of stepping it in one frame', () => {
+    const st = newKeyboardTurnState();
+    for (let i = 0; i < 20; i++) {
+      stepKeyboardTurnFacing(st, args({ turnLeft: true, serverFacing: 0 }));
+    }
+    const held = st.facing as number;
+    // the mirror settles a wire-rounding away from the held heading (round2)
+    const mirror = held - 0.015;
+    let prev = held;
+    let f: number | null = held;
+    let frames = 0;
+    while (f !== null && frames < 120) {
+      f = stepKeyboardTurnFacing(st, args({ serverFacing: mirror }));
+      if (f !== null) {
+        // never more than one seam step per frame (~0.33deg at 60fps)
+        expect(Math.abs(f - prev)).toBeLessThanOrEqual(0.35 * (1 / 60) + 1e-9);
+        prev = f;
+      }
+      frames++;
+    }
+    expect(st.facing).toBeNull(); // converged and handed off
+    expect(frames).toBeGreaterThan(2); // spread over frames, not a single jump
+    expect(frames).toBeLessThan(40); // but still well under a second
+  });
+
   it('holds instead of integrating while turning is not allowed (stun family)', () => {
     const st = newKeyboardTurnState();
     stepKeyboardTurnFacing(st, args({ turnLeft: true, serverFacing: 0 }));

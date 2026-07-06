@@ -23,9 +23,15 @@
 import { TURN_SPEED } from '../sim/types';
 import { wrapAngle } from './camera_follow';
 
-// Handoff gap: within this of the server facing the display is considered
-// caught up; the renderer's own rate-limited release path absorbs the rest.
+// Within this of the server facing the display starts SEAMING: the wire
+// rounds facing to 0.01 rad, so the mirror can sit ~0.3deg away from the held
+// heading forever, and any one-frame jump onto it reads as a tiny end-of-turn
+// tick. Inside the seam band the last fraction of a degree is eased at
+// SEAM_RATE instead (sub-perceptual, ~0.33deg per 60fps frame).
 const HANDOFF_EPS = 0.02; // rad (~1.1 degrees)
+const SEAM_RATE = 0.35; // rad/s
+// Fully handed off once within this (sub-pixel at any camera distance).
+const HANDOFF_DONE_EPS = 0.002; // rad (~0.1 degrees)
 // How long a release-time disagreement may stand before we start correcting.
 // Sized to cover a generous input echo plus a couple of snapshots, so the
 // normal catch-up always wins the race and no correction ever shows.
@@ -98,11 +104,15 @@ export function stepKeyboardTurnFacing(
   // is already there; the mirror just needs the last round trip to show it).
   // Eps-arrival only, from either side: no crossing shortcuts, no rewinds.
   const gap = wrapAngle(args.serverFacing - state.facing);
-  if (Math.abs(gap) <= HANDOFF_EPS) {
+  if (Math.abs(gap) <= HANDOFF_DONE_EPS) {
     state.facing = null;
-    // Bridge the final sliver this frame; next frame the interpolated server
-    // facing continues from (about) the same value, so nothing steps.
     return args.serverFacing;
+  }
+  if (Math.abs(gap) <= HANDOFF_EPS) {
+    // Seam band: ease the last fraction of a degree (mostly wire rounding)
+    // onto the mirror instead of stepping it in a single frame.
+    state.facing = approachAngle(state.facing, args.serverFacing, SEAM_RATE * dt);
+    return state.facing;
   }
   state.releaseMs += dt * 1000;
   if (state.releaseMs >= RELEASE_GRACE_MS) {
