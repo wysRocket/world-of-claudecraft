@@ -28,8 +28,6 @@ export const GATHERING_PROFESSIONS: Record<GatheringProfessionId, GatheringProfe
     maxSkill: 300,
     name: 'Mining',
     icon: 'mining',
-    name: 'Mining',
-    icon: '⛏',
     description: 'Extracting ore and stone from nodes found in the wild.',
   },
   logging: {
@@ -38,8 +36,6 @@ export const GATHERING_PROFESSIONS: Record<GatheringProfessionId, GatheringProfe
     maxSkill: 300,
     name: 'Logging',
     icon: 'logging',
-    name: 'Logging',
-    icon: '🪓',
     description: 'Felling timber from trees found across the zones.',
   },
   herbalism: {
@@ -48,8 +44,6 @@ export const GATHERING_PROFESSIONS: Record<GatheringProfessionId, GatheringProfe
     maxSkill: 300,
     name: 'Herbalism',
     icon: 'herbalism',
-    name: 'Herbalism',
-    icon: '🌿',
     description: 'Collecting herbs and plants growing in the wild.',
   },
 };
