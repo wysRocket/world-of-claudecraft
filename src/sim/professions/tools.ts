@@ -102,12 +102,13 @@ export interface ToolEffectSlot {
 // identity is available (the slot is then never eligible for the
 // original-crafter recharge discount). `confirmMode` (#1138) defaults to
 // 'always' so a caller that never touches the new config gets #1136's exact
-// prior behavior.
+// prior behavior. Keyword options (not positional) so a future third option
+// can't silently rebind an existing one.
 export function slotEffect(
   effectId: ToolEffectId,
-  craftedBy?: string,
-  confirmMode: ToolEffectConfirmMode = 'always',
+  options: { craftedBy?: string; confirmMode?: ToolEffectConfirmMode } = {},
 ): ToolEffectSlot {
+  const { craftedBy, confirmMode = 'always' } = options;
   return {
     effectId,
     durability: TOOL_EFFECTS[effectId].startingDurability,

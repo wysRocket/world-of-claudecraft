@@ -301,7 +301,7 @@ describe('tool effect slotting with durability and depletion (#1136)', () => {
 
 describe('effect recharge with original-crafter discount (#1137)', () => {
   it('isOriginalCrafter is true only when craftedBy matches the recharger', () => {
-    const slot = slotEffect('gatherers_cache', 'player_alice');
+    const slot = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
     expect(isOriginalCrafter(slot, 'player_alice')).toBe(true);
     expect(isOriginalCrafter(slot, 'player_bob')).toBe(false);
     const noIdentity = slotEffect('gatherers_cache');
@@ -309,8 +309,8 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
   });
 
   it('recharging via the original crafter costs strictly less than a generic recharge, in materials and time', () => {
-    const original = slotEffect('gatherers_cache', 'player_alice');
-    const generic = slotEffect('gatherers_cache', 'player_alice');
+    const original = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
+    const generic = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
     const costOriginal = rechargeCost(original, 'player_alice');
     const costGeneric = rechargeCost(generic, 'player_bob');
     expect(costOriginal.materials).toBeLessThan(costGeneric.materials);
@@ -321,14 +321,14 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
     const slot = slotEffect('artisans_eye');
     const cost = rechargeCost(slot, 'player_anyone');
     const genericFromKnownCrafter = rechargeCost(
-      slotEffect('artisans_eye', 'player_alice'),
+      slotEffect('artisans_eye', { craftedBy: 'player_alice' }),
       'player_bob',
     );
     expect(cost).toEqual(genericFromKnownCrafter);
   });
 
   it('a successful recharge restores durability to full and the bonus resumes applying', () => {
-    const slot = slotEffect('gatherers_cache', 'player_alice');
+    const slot = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
     const rng = new Rng(3);
     for (let i = 0; i < 200; i++) depleteEffect(slot, rng);
     expect(slot.durability).toBe(0);
@@ -346,7 +346,7 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
   });
 
   it('a recharge fails, and does not mutate the slot, when insufficient materials are provided', () => {
-    const slot = slotEffect('gatherers_cache', 'player_alice');
+    const slot = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
     slot.durability = 0;
     const cost = rechargeCost(slot, 'player_alice');
     const result = rechargeEffect(slot, 'player_alice', cost.materials - 1);
@@ -355,7 +355,7 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
   });
 
   it('the generic recharger still succeeds when providing the (higher) generic cost', () => {
-    const slot = slotEffect('quickening_charm', 'player_alice');
+    const slot = slotEffect('quickening_charm', { craftedBy: 'player_alice' });
     slot.durability = 0;
     const cost = rechargeCost(slot, 'player_bob');
     const result = rechargeEffect(slot, 'player_bob', cost.materials);
@@ -381,7 +381,7 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
     };
     const runNew = (seed: number, confirmed: boolean) => {
       const rng = new Rng(seed);
-      const slot = slotEffect('gatherers_cache', undefined, 'always');
+      const slot = slotEffect('gatherers_cache', { confirmMode: 'always' });
       const history: { outcome: HarvestOutcome; depleted: boolean }[] = [];
       for (let i = 0; i < 30; i++) {
         const result = resolveToolEffectUse(slot, baseOutcome, rng, confirmed);
@@ -398,7 +398,7 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
 
   it('prompt mode without confirmation applies no bonus and consumes no charge', () => {
     const rng = new Rng(1);
-    const slot = slotEffect('gatherers_cache', undefined, 'prompt');
+    const slot = slotEffect('gatherers_cache', { confirmMode: 'prompt' });
     const startingDurability = slot.durability;
     const result = resolveToolEffectUse(slot, baseOutcome, rng, false);
     expect(result.applied).toBe(false);
@@ -410,11 +410,11 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
   it('prompt mode with confirmed=true behaves like always mode for that one use', () => {
     const seed = 42;
     const rngPrompt = new Rng(seed);
-    const promptSlot = slotEffect('gatherers_cache', undefined, 'prompt');
+    const promptSlot = slotEffect('gatherers_cache', { confirmMode: 'prompt' });
     const promptResult = resolveToolEffectUse(promptSlot, baseOutcome, rngPrompt, true);
 
     const rngAlways = new Rng(seed);
-    const alwaysSlot = slotEffect('gatherers_cache', undefined, 'always');
+    const alwaysSlot = slotEffect('gatherers_cache', { confirmMode: 'always' });
     const alwaysResult = resolveToolEffectUse(alwaysSlot, baseOutcome, rngAlways, true);
 
     expect(promptResult.applied).toBe(true);
@@ -424,7 +424,7 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
 
   it('repeated unconfirmed prompt uses never deplete the slot, across many draws', () => {
     const rng = new Rng(7);
-    const slot = slotEffect('artisans_eye', undefined, 'prompt');
+    const slot = slotEffect('artisans_eye', { confirmMode: 'prompt' });
     for (let i = 0; i < 100; i++) {
       const result = resolveToolEffectUse(slot, baseOutcome, rng, false);
       expect(result.applied).toBe(false);
