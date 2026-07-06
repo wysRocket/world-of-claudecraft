@@ -243,13 +243,21 @@ describe('tool effect slotting with durability and depletion (#1136)', () => {
     expect(applyEffectBonus(undefined, baseOutcome)).toEqual(baseOutcome);
   });
 
+  // Tool rarity 'epic' vs target rarity 'rare' is a one-tier gap, which the
+  // rarity-scaled consumption curve (#1139) rolls at 60% (see
+  // professions_effect_consumption.test.ts for the full curve coverage); used
+  // here purely as a non-trivial, non-0/100% probability to exercise the
+  // probabilistic depletion mechanics themselves.
+  const TOOL_RARITY = 'epic';
+  const TARGET_RARITY = 'rare';
+
   it('depleteEffect decrements durability only on a losing roll, via Rng, deterministically under a fixed seed', () => {
     const runSequence = (seed: number): number[] => {
       const rng = new Rng(seed);
       const slot = slotEffect('gatherers_cache');
       const history: number[] = [];
       for (let i = 0; i < 30; i++) {
-        depleteEffect(slot, rng);
+        depleteEffect(slot, TOOL_RARITY, TARGET_RARITY, rng);
         history.push(slot.durability);
       }
       return history;
@@ -263,13 +271,13 @@ describe('tool effect slotting with durability and depletion (#1136)', () => {
     expect(a).not.toEqual(c);
     // Durability never goes negative across enough uses.
     expect(Math.min(...a)).toBeGreaterThanOrEqual(0);
-    // At a 50% chance, 30 draws almost always exhaust a 20-charge effect.
+    // At a 60% chance, 200 draws almost always exhaust a 20-charge effect.
     const runToZero = (seed: number): number[] => {
       const rng = new Rng(seed);
       const slot = slotEffect('gatherers_cache');
       const history: number[] = [];
       for (let i = 0; i < 200; i++) {
-        depleteEffect(slot, rng);
+        depleteEffect(slot, TOOL_RARITY, TARGET_RARITY, rng);
         history.push(slot.durability);
       }
       return history;
@@ -281,17 +289,26 @@ describe('tool effect slotting with durability and depletion (#1136)', () => {
     const rng = new Rng(1);
     const slot = slotEffect('artisans_eye');
     slot.durability = 0;
-    depleteEffect(slot, rng);
+    depleteEffect(slot, TOOL_RARITY, TARGET_RARITY, rng);
     expect(slot.durability).toBe(0);
   });
 
   it('re-slotting an effect resets it to full durability', () => {
     const slot = slotEffect('quickening_charm');
     const rng = new Rng(7);
-    for (let i = 0; i < 50; i++) depleteEffect(slot, rng);
+    for (let i = 0; i < 50; i++) depleteEffect(slot, TOOL_RARITY, TARGET_RARITY, rng);
     expect(slot.durability).toBe(0);
     const fresh = slotEffect('quickening_charm');
     expect(fresh.durability).toBeGreaterThan(0);
+  });
+
+  it('depleteEffect always spends a charge against an equal-or-higher rarity target', () => {
+    const rng = new Rng(2024);
+    const slot = slotEffect('gatherers_cache');
+    const before = slot.durability;
+    const spent = depleteEffect(slot, 'rare', 'rare', rng);
+    expect(spent).toBe(true);
+    expect(slot.durability).toBe(before - 1);
   });
 
   it('slotEffect defaults to always mode', () => {
@@ -330,7 +347,7 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
   it('a successful recharge restores durability to full and the bonus resumes applying', () => {
     const slot = slotEffect('gatherers_cache', { craftedBy: 'player_alice' });
     const rng = new Rng(3);
-    for (let i = 0; i < 200; i++) depleteEffect(slot, rng);
+    for (let i = 0; i < 200; i++) depleteEffect(slot, 'epic', 'rare', rng);
     expect(slot.durability).toBe(0);
     const baseOutcome: HarvestOutcome = { quantity: 2, quality: 1, respawnTicks: 100 };
     expect(applyEffectBonus(slot, baseOutcome)).toEqual(baseOutcome);
@@ -366,6 +383,10 @@ describe('effect recharge with original-crafter discount (#1137)', () => {
 
 describe('always/prompt-on-use confirmation gate (#1138)', () => {
   const baseOutcome: HarvestOutcome = { quantity: 2, quality: 1, respawnTicks: 100 };
+  // Same non-trivial, non-0/100% rarity gap used in the #1136 depletion suite
+  // above, so the consumption-curve roll being probabilistic here too.
+  const TOOL_RARITY = 'epic';
+  const TARGET_RARITY = 'rare';
 
   it("'always' mode is byte-for-byte identical to #1136's baseline behavior, confirmed or not", () => {
     const runOld = (seed: number) => {
@@ -374,7 +395,7 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
       const history: { outcome: HarvestOutcome; depleted: boolean }[] = [];
       for (let i = 0; i < 30; i++) {
         const outcome = applyEffectBonus(slot, baseOutcome);
-        const depleted = depleteEffect(slot, rng);
+        const depleted = depleteEffect(slot, TOOL_RARITY, TARGET_RARITY, rng);
         history.push({ outcome, depleted });
       }
       return { history, finalDurability: slot.durability };
@@ -384,7 +405,14 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
       const slot = slotEffect('gatherers_cache', { confirmMode: 'always' });
       const history: { outcome: HarvestOutcome; depleted: boolean }[] = [];
       for (let i = 0; i < 30; i++) {
-        const result = resolveToolEffectUse(slot, baseOutcome, rng, confirmed);
+        const result = resolveToolEffectUse(
+          slot,
+          baseOutcome,
+          TOOL_RARITY,
+          TARGET_RARITY,
+          rng,
+          confirmed,
+        );
         expect(result.applied).toBe(true);
         history.push({ outcome: result.outcome, depleted: result.depleted });
       }
@@ -400,7 +428,7 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
     const rng = new Rng(1);
     const slot = slotEffect('gatherers_cache', { confirmMode: 'prompt' });
     const startingDurability = slot.durability;
-    const result = resolveToolEffectUse(slot, baseOutcome, rng, false);
+    const result = resolveToolEffectUse(slot, baseOutcome, TOOL_RARITY, TARGET_RARITY, rng, false);
     expect(result.applied).toBe(false);
     expect(result.depleted).toBe(false);
     expect(result.outcome).toEqual(baseOutcome);
@@ -411,11 +439,25 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
     const seed = 42;
     const rngPrompt = new Rng(seed);
     const promptSlot = slotEffect('gatherers_cache', { confirmMode: 'prompt' });
-    const promptResult = resolveToolEffectUse(promptSlot, baseOutcome, rngPrompt, true);
+    const promptResult = resolveToolEffectUse(
+      promptSlot,
+      baseOutcome,
+      TOOL_RARITY,
+      TARGET_RARITY,
+      rngPrompt,
+      true,
+    );
 
     const rngAlways = new Rng(seed);
     const alwaysSlot = slotEffect('gatherers_cache', { confirmMode: 'always' });
-    const alwaysResult = resolveToolEffectUse(alwaysSlot, baseOutcome, rngAlways, true);
+    const alwaysResult = resolveToolEffectUse(
+      alwaysSlot,
+      baseOutcome,
+      TOOL_RARITY,
+      TARGET_RARITY,
+      rngAlways,
+      true,
+    );
 
     expect(promptResult.applied).toBe(true);
     expect(promptResult).toEqual(alwaysResult);
@@ -426,7 +468,14 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
     const rng = new Rng(7);
     const slot = slotEffect('artisans_eye', { confirmMode: 'prompt' });
     for (let i = 0; i < 100; i++) {
-      const result = resolveToolEffectUse(slot, baseOutcome, rng, false);
+      const result = resolveToolEffectUse(
+        slot,
+        baseOutcome,
+        TOOL_RARITY,
+        TARGET_RARITY,
+        rng,
+        false,
+      );
       expect(result.applied).toBe(false);
       expect(result.outcome).toEqual(baseOutcome);
     }
@@ -435,7 +484,9 @@ describe('always/prompt-on-use confirmation gate (#1138)', () => {
 
   it('resolveToolEffectUse returns an unapplied no-op when there is no slot at all', () => {
     const rng = new Rng(1);
-    expect(resolveToolEffectUse(undefined, baseOutcome, rng, true)).toEqual({
+    expect(
+      resolveToolEffectUse(undefined, baseOutcome, TOOL_RARITY, TARGET_RARITY, rng, true),
+    ).toEqual({
       outcome: baseOutcome,
       depleted: false,
       applied: false,
