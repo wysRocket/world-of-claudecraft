@@ -13,7 +13,7 @@
 | Phase 4: lease + ledger | complete | 2026-07-06 | 2026-07-06 |
 | Phase 4 QA | complete | 2026-07-06 | 2026-07-06 |
 | Phase 5: bank window | complete | 2026-07-06 | 2026-07-06 |
-| Phase 5 QA | not started | | |
+| Phase 5 QA | complete | 2026-07-06 | 2026-07-06 |
 | Phase 6: deposit + search | not started | | |
 | Phase 6 QA | not started | | |
 | Phase 7: mobile + a11y | not started | | |
@@ -71,7 +71,7 @@
 - [x] hudChrome.bank.* keys (16, five non-Latin fills each, M16); tests/bank_view.test.ts (13) + tests/bank_window.test.ts (20 source-scan pins)
 
 ### Phase 5 QA
-- [ ] As Phase 1 QA
+- [x] Deliverables and acceptance criteria re-verified independently (adversarially-verified finder workflow + fresh qa-checklist + both smokes + a new escape peel probe); all should-fix applied, 4-mutation decisiveness pass all killed; full record in state.md
 
 ### Phase 6: deposit + search
 - [ ] Deposit mode inserted into BagMode + bagItemAction + bagTooltipHintKey together; deps flag on BagsWindowDeps
@@ -175,6 +175,15 @@
 - qa-checklist: READY, 0 blocking; 1 should-fix (missing :focus-visible ring on the two new bank controls) + 1 nit (10vh -> --app-vh) applied same-session and pinned; INFO adjudications in state.md.
 - Environment gotchas for browser smokes (first-spawn intro hides #ui in fresh profiles; realm picker + zero-char create-view flow; trader_wilkes vs the_merchant) recorded in state.md.
 - Next: run docs/bank-system/phase-05-qa.md in a fresh session.
+
+### Phase 5 QA (2026-07-06)
+
+- Verdict: PASS after fixes. 0 blocking + 5 should-fix + 18 nit/INFO across five audit streams; every should-fix and three nits applied same-session (bdb1d6e67 bank + eed955066 bags family fix). Full record in state.md "Phase 5 QA outcomes".
+- Preceded by the release/v0.23.0 merge 90caf42f2 (CI vitest de-flake + render door/portal extraction): ZERO conflicts, the first conflict-free merge on this branch; release-merge-audit CLEAN.
+- Two real behavior defects fixed and live-proven: prompt Escape double-handling (one keypress on a prompt button closed prompt AND window; now stopPropagation, peel order prompt -> bags -> bank pinned by a new gitignored escape peel probe) and the withdraw-quantity stale-index hazard (submit now re-validates the live slot's itemId and clamps to the live count). Both inherited-recipe issues; bags got the same Escape fix in its own commit.
+- Three mutation-proven vacuous pins tightened (grace-close action, both inert teardown arms, the hud deps wiring); 4 mutations re-run, all killed.
+- Incidental find, pre-existing upstream, NOT ours: the opt-in axe browser suite's paperdoll test throws on a professionsState-less world stub (gathering HUD PR #1194, broken on release/v0.23.0 too; invisible to CI). Recorded for an upstream fix, not folded into bank commits.
+- Next: run docs/bank-system/phase-06-deposit-search.md in a fresh session.
 
 ### Phase 4 QA (2026-07-06)
 
