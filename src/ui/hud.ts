@@ -334,6 +334,7 @@ import { localizeTalentTitle, roleLabel, tTalent } from './talent_i18n';
 import { TalentsWindow } from './talents_window';
 import type { PresetId, ThemeKnob, ThemeState } from './theme';
 import { TOOLTIP_PEEK_MS, TouchPeekGuard } from './touch_peek';
+import { bindTouchTap } from './touch_tap';
 import { TutorialOverlay } from './tutorial';
 import { svgIcon } from './ui_icons';
 import { getUiScale } from './ui_scale';
@@ -771,6 +772,10 @@ export class Hud {
   private mobileActionPage = 0;
   private mobileActionRingView: ActionBarView | undefined;
   private mobileActionRingPainter: MobileActionRingPainter | undefined;
+  /** Ring button refs so castSlot's used-flash can hit the ring too (the
+   *  desktop bar is display:none under body.mobile-touch). */
+  private mobileRingAttackBtn: HTMLButtonElement | null = null;
+  private mobileRingSlotBtns: HTMLButtonElement[] = [];
   // Acquire-nearest fallback for the ring's attack toggle when the player has
   // no live hostile target: wired by main.ts to the same nearest-attackable
   // pick the touch layer uses (the HUD cannot resolve attackability itself,
@@ -1301,11 +1306,16 @@ export class Hud {
         }
       }
     });
-    document.getElementById('mobile-more-close')?.addEventListener('click', () => {
-      document.body.classList.remove('mobile-more-open');
-      document.getElementById('mobile-controls')?.classList.remove('expanded');
-      document.getElementById('mobile-more')?.classList.remove('active');
-    });
+    const moreClose = document.getElementById('mobile-more-close');
+    if (moreClose) {
+      // bindTouchTap so the close X works from a second finger too (a click
+      // never fires for a non-primary touch).
+      bindTouchTap(moreClose, () => {
+        document.body.classList.remove('mobile-more-open');
+        document.getElementById('mobile-controls')?.classList.remove('expanded');
+        document.getElementById('mobile-more')?.classList.remove('active');
+      });
+    }
     // Dismiss the shared #ctx-menu (right-click menus and the chat "+" channel
     // picker) on any pointerdown outside it. A pointerdown inside the menu is left
     // to the item's own click; a pointerdown on the opener is left to that opener's
@@ -4502,8 +4512,21 @@ export class Hud {
 
   private flashActionSlot(barSlot: number): void {
     const btn = this.abilityButtons[barSlot]?.btn;
-    if (!btn) return;
-    this.flashActionButton(btn);
+    if (btn) this.flashActionButton(btn);
+    // Mirror the used-flash onto the mobile ring (the desktop bar is
+    // display:none under body.mobile-touch, so without this a ring cast gave
+    // no visual acknowledgment at all). barSlot 0 is the attack toggle; the 5
+    // paged buttons show sourceSlotForMobileButton(page, i) for the CURRENT page.
+    if (barSlot === 0 && this.mobileRingAttackBtn) {
+      this.flashActionButton(this.mobileRingAttackBtn);
+      return;
+    }
+    for (let i = 0; i < this.mobileRingSlotBtns.length; i++) {
+      if (sourceSlotForMobileButton(this.mobileActionPage, i) === barSlot) {
+        this.flashActionButton(this.mobileRingSlotBtns[i]);
+        return;
+      }
+    }
   }
 
   private flashActionButton(btn: HTMLButtonElement): void {
@@ -4766,6 +4789,8 @@ export class Hud {
     const pageToggle = document.getElementById('mobile-action-page-toggle');
     const pageIndicator = pageToggle?.querySelector<HTMLElement>('.mobile-action-page-indicator');
     if (!attackBtn || slotBtns.length !== 5 || !pageToggle || !pageIndicator) return;
+    this.mobileRingAttackBtn = attackBtn;
+    this.mobileRingSlotBtns = slotBtns;
 
     const ringButtons = [attackBtn, ...slotBtns];
     const ringEls: ActionBarSlotElements[] = ringButtons.map((btn) => {
@@ -4792,7 +4817,10 @@ export class Hud {
     // click time, not a captured page). Mirrors the desktop action-btn click
     // pattern exactly (peek-guard consume, audio.click, blur) so
     // long-press-to-inspect on touch behaves the same way.
-    attackBtn.addEventListener('click', () => {
+    // bindTouchTap, not 'click': the browser only synthesizes click for the
+    // PRIMARY pointer, so click-bound ring buttons went dead the moment the
+    // other thumb held the joystick, which is how combat is actually played.
+    bindTouchTap(attackBtn, () => {
       if (this.peekGuard.consume()) {
         this.hideTooltip();
         attackBtn.blur();
@@ -4810,7 +4838,7 @@ export class Hud {
       attackBtn.blur();
     });
     slotBtns.forEach((btn, i) => {
-      btn.addEventListener('click', () => {
+      bindTouchTap(btn, () => {
         if (this.peekGuard.consume()) {
           this.hideTooltip();
           btn.blur();
@@ -4821,7 +4849,7 @@ export class Hud {
         btn.blur();
       });
     });
-    pageToggle.addEventListener('click', () => {
+    bindTouchTap(pageToggle, () => {
       if (this.peekGuard.consume()) {
         this.hideTooltip();
         (pageToggle as HTMLElement).blur();
@@ -4830,6 +4858,39 @@ export class Hud {
       audio.click();
       this.cycleMobileActionPage();
       (pageToggle as HTMLElement).blur();
+    });
+
+    // Long-press-to-inspect: the same attachTooltip wiring the desktop bar
+    // buttons get. This is what ARMS the peek guard the tap handlers above
+    // consume; without it a long press showed nothing and the release CAST
+    // the ability (burning cooldowns while trying to read a spell). The slot
+    // closures resolve the CURRENT page fresh, exactly like the view's.
+    this.attachTooltip(
+      attackBtn,
+      () =>
+        `<div class="tt-title">${esc(t('abilityUi.actionBar.attackName'))}</div><div class="tt-sub">${esc(t('abilityUi.actionBar.attackTooltip'))}</div>`,
+    );
+    slotBtns.forEach((btn, i) => {
+      this.attachTooltip(btn, () => {
+        const slot = sourceSlotForMobileButton(this.mobileActionPage, i);
+        const known = this.abilityForSlot(slot);
+        if (known) return this.abilityTooltip(known);
+        const item = this.itemForSlot(slot);
+        if (item) {
+          const count = this.inventoryCount(item.id);
+          return (
+            this.itemTooltip(item) +
+            `<div class="tt-sub">${esc(
+              count > 0
+                ? t('abilityUi.actionBar.itemInBags', {
+                    count: formatNumber(count, { maximumFractionDigits: 0 }),
+                  })
+                : t('abilityUi.actionBar.itemNoneInBags'),
+            )}</div>`
+          );
+        }
+        return `<div class="tt-sub">${esc(t('abilityUi.actionBar.emptySlot'))}</div>`;
+      });
     });
 
     this.mobileActionRingView = createActionBarView(

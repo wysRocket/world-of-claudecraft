@@ -37,6 +37,7 @@ const CONTROL_IDS = [
   'mobile-interact',
   'mobile-jump',
   'mobile-chat',
+  'mobile-social',
   'mobile-more',
 ];
 const NEIGHBOR_IDS = ['minimap-wrap', 'side-buttons'];
@@ -111,6 +112,10 @@ const CIRCLE_IDS = new Set([
   'mobile-target-cycle',
   'mobile-interact',
   'mobile-action-page-toggle',
+  // Jump/Autorun are true circles too, nested around the joystick's hollow
+  // the same way Target/Use nest in the ring's (mirrored for the left thumb).
+  'mobile-autorun',
+  'mobile-jump',
   'slot-0',
   'slot-1',
   'slot-2',
@@ -358,9 +363,18 @@ try {
     return r ? { left: r.left, top: r.top, right: r.right, bottom: r.bottom } : null;
   });
   if (joy) {
+    // Circle math on both sides: the joystick pad and the satellites are true
+    // circles (border-radius: 50%), and Autorun's 45deg diagonal seat sits
+    // corner-to-corner with the pad, so bounding boxes overlap by design
+    // while the circles keep a positive gap (same rationale as CIRCLE_IDS).
+    const joyCircle = circleOf({ ...joy, w: joy.right - joy.left, h: joy.bottom - joy.top });
     for (const id of ['mobile-jump', 'mobile-autorun']) {
       const r = sc.controls[id];
-      if (r && edgeGap(r, joy) < 0) fail(`joy-scale 1.3: joystick overlaps #${id}`);
+      if (!r) continue;
+      const c = circleOf(r);
+      if (Math.hypot(c.x - joyCircle.x, c.y - joyCircle.y) - c.r - joyCircle.r < 0) {
+        fail(`joy-scale 1.3: joystick overlaps #${id}`);
+      }
     }
   }
   await page.evaluate(() => {
