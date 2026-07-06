@@ -1054,6 +1054,12 @@ export class Sim {
   // book, the id counter, and the mailbox entity ids; Sim keeps thin delegates
   // (the market shape). Constructed in the ctor after the SimContext.
   postOffice!: PostOffice;
+  // Entity ids of every NPC with `banker: true`, assigned by the ctor NPC loop.
+  // The bank is per-character self-storage (state on PlayerMeta.bank), so unlike
+  // the shared World Market there is no bank instance: this anchor list is all the
+  // sim needs, and any banker is a valid place to stand and use the bank. Exposed
+  // as a live SimContext view so bank.ts gates deposit/withdraw/buy on proximity.
+  bankerIds: number[] = [];
   /** When true, /dev level|tp|give chat commands are accepted (local dev only). */
   readonly devCommands: boolean;
   private pendingMobRespawns: PendingMobRespawn[] = [];
@@ -1125,6 +1131,7 @@ export class Sim {
       const npc = createNpc(this.nextId++, npcDef, this.groundPos(safe.x, safe.z));
       this.addEntity(npc);
       if (npcDef.market) this.market.merchantIds.push(npc.id); // every auctioneer anchors the shared World Market
+      if (npcDef.banker) this.bankerIds.push(npc.id); // every bursar is a place to use the bank
     }
     this.market.seed();
 
@@ -2352,6 +2359,11 @@ export class Sim {
       },
       get marketListings() {
         return sim.marketListings;
+      },
+      // Banker anchor list (Phase 2 bank system): the live array of every banker
+      // NPC id, read by bank.ts's proximity gate. Sim-owned, never reassigned.
+      get bankerIds() {
+        return sim.bankerIds;
       },
       // LATE-bound (not .bind(sim)): a moved emit site (C5 meleeSwing/rangedSwing)
       // now emits via ctx.emit, and tests swap (sim as any).emit post-construction to

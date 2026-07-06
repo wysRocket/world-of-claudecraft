@@ -9,7 +9,8 @@
 // directly, plus the three command bodies (bankDeposit/bankWithdraw/bankBuySlots)
 // as free functions `fn(ctx, ...)` behind SimContext. Backing state stays on Sim
 // (PlayerMeta.bank); Sim keeps thin same-named delegates. Each op has ONE entry
-// point so a later phase can add the banker-proximity gate in one place each.
+// point, where the Phase 2 banker-proximity gate (nearBanker) now lives: the
+// player must stand near a `banker: true` NPC to deposit, withdraw, or buy slots.
 //
 // `src/sim`-pure: no DOM/Three/render-ui-game-net imports, no Math.random/Date.now
 // (enforced by tests/architecture.test.ts). This module draws NO rng.
@@ -17,7 +18,7 @@
 import { addStacked, bagCapacity, bagsFullError, countFit } from './bags';
 import { ITEMS } from './data';
 import type { SimContext } from './sim_context';
-import { cloneInvSlot, type InvSlot } from './types';
+import { cloneInvSlot, dist2d, type Entity, INTERACT_RANGE, type InvSlot } from './types';
 
 /** Slots every character's bank starts with, before any expansion. */
 export const BANK_BASE_SLOTS = 24;
@@ -97,6 +98,21 @@ export function moveBetweenContainers(
   return { moved: want };
 }
 
+/** How close a player must stand to a banker NPC to use the bank. Mirrors the
+ *  World Market's reach (nearMerchant in market.ts): INTERACT_RANGE + 2, inclusive. */
+const BANKER_RANGE = INTERACT_RANGE + 2;
+
+/** True when the player entity stands within reach of any live banker NPC. Iterates
+ *  the ctx.bankerIds anchor list (seeded by the Sim ctor) against the live entities,
+ *  the same liveness checks nearMerchant uses (present + kind 'npc'). */
+function nearBanker(ctx: SimContext, e: Entity): boolean {
+  for (const id of ctx.bankerIds) {
+    const b = ctx.entities.get(id);
+    if (b && b.kind === 'npc' && dist2d(e.pos, b.pos) <= BANKER_RANGE) return true;
+  }
+  return false;
+}
+
 /** Deposit a carried-inventory slot into the bank. Quest items are refused (they
  *  are quest-bound); everything else follows the pooled capacity rules. A counted
  *  fungible leaving the bags must un-credit any collect quest, so success pokes the
@@ -110,7 +126,11 @@ export function bankDeposit(
 ): void {
   const r = ctx.resolve(pid);
   if (!r) return;
-  const { meta } = r;
+  const { meta, e: p } = r;
+  if (!nearBanker(ctx, p)) {
+    ctx.error(meta.entityId, 'You are too far from the banker.');
+    return;
+  }
   if (!Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex >= meta.inventory.length) return;
   const slot = meta.inventory[slotIndex];
   if (ITEMS[slot.itemId]?.kind === 'quest') {
@@ -143,7 +163,11 @@ export function bankWithdraw(
 ): void {
   const r = ctx.resolve(pid);
   if (!r) return;
-  const { meta } = r;
+  const { meta, e: p } = r;
+  if (!nearBanker(ctx, p)) {
+    ctx.error(meta.entityId, 'You are too far from the banker.');
+    return;
+  }
   if (!Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex >= meta.bank.inventory.length) {
     return;
   }
@@ -168,7 +192,11 @@ export function bankWithdraw(
 export function bankBuySlots(ctx: SimContext, pid?: number): void {
   const r = ctx.resolve(pid);
   if (!r) return;
-  const { meta } = r;
+  const { meta, e: p } = r;
+  if (!nearBanker(ctx, p)) {
+    ctx.error(meta.entityId, 'You are too far from the banker.');
+    return;
+  }
   // purchasedSlots is kept on the 6-slot grid (init 0, load floors, +6 here), so this
   // divides evenly; the floor guards a future writer from a fractional price index.
   const purchases = Math.floor(meta.bank.purchasedSlots / BANK_EXPANSION_SLOTS);

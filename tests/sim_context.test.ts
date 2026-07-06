@@ -260,6 +260,7 @@ function makeFakeHost() {
     nextLootRollId: 1,
     devCommands: false,
     marketListings: [],
+    bankerIds: [],
     emit: vi.fn(),
     error: vi.fn(),
     dealDamage: vi.fn(),

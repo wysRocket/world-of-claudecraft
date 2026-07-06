@@ -197,6 +197,7 @@ function makeCtx() {
     nextLootRollId: 1,
     devCommands: false,
     marketListings: [],
+    bankerIds: [],
     grantXp: vi.fn(),
     enterCombat: vi.fn(),
     hexOutputMult: vi.fn(() => 1),
