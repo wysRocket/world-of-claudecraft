@@ -4,6 +4,7 @@ import {
   auditBank,
   type BankAuditFinding,
   type BankLedgerAuditRow,
+  formatReport,
 } from '../scripts/bank_audit.mjs';
 
 // Fill a bank_ledger row's defaults (snake_case, as Postgres returns it); pass only
@@ -144,5 +145,68 @@ describe('auditBank', () => {
     });
     // A negative state count (shape) plus the net-vs-state mismatch it implies.
     expect(findingKindsFor(findings, 5)).toContain('negative_state_count');
+  });
+
+  it('flags each remaining row-shape anomaly exactly once', () => {
+    // One anomaly per character (all absent from characters, nets non-negative)
+    // so each row isolates exactly its own shape finding.
+    const findings = auditBank({
+      ledgerRows: [
+        // Deposit with a positive count but no item id.
+        { id: 1, character_id: 60, op: 'deposit', count: 2 },
+        // Item op carrying copper.
+        {
+          id: 2,
+          character_id: 61,
+          op: 'deposit',
+          item_id: 'wolf_fang',
+          count: 1,
+          copper_delta: 25,
+        },
+        // Buy carrying an item count.
+        {
+          id: 3,
+          character_id: 62,
+          op: 'buy_slots',
+          count: 3,
+          copper_delta: -500,
+          purchased_slots_after: 6,
+        },
+        // Free buy: copper_delta 0 pins the >= boundary (a buy must cost copper).
+        { id: 4, character_id: 63, op: 'buy_slots', copper_delta: 0, purchased_slots_after: 6 },
+      ].map(L),
+      characters: [],
+    });
+    expect(findings).toHaveLength(4);
+    expect(findingKindsFor(findings, 60)).toEqual(['missing_item_id']);
+    expect(findingKindsFor(findings, 61)).toEqual(['copper_on_item_op']);
+    expect(findingKindsFor(findings, 62)).toEqual(['count_on_buy']);
+    expect(findingKindsFor(findings, 63)).toEqual(['nonnegative_buy_cost']);
+  });
+});
+
+describe('formatReport', () => {
+  const rows = [L({ id: 1, character_id: 1, op: 'deposit', item_id: 'wolf_fang', count: 2 })];
+
+  it('renders one FINDING line per anomaly plus the per-container summary', () => {
+    const finding: BankAuditFinding = {
+      container: 'personal',
+      realm: 'Claudemoon',
+      characterId: 9,
+      kind: 'negative_net',
+      detail: 'net -3 of wolf_fang',
+    };
+    const report = formatReport(rows, [finding]);
+    expect(report).toContain('container personal: ledger rows 1: findings 1');
+    expect(report).toContain(
+      'FINDING: container personal: realm Claudemoon: character 9: negative_net: net -3 of wolf_fang',
+    );
+    expect(report).not.toContain('OK:');
+  });
+
+  it('renders the OK line and no FINDING lines on clean data', () => {
+    const report = formatReport(rows, []);
+    expect(report).toContain('OK: no shape or conservation anomalies found.');
+    expect(report).not.toContain('FINDING:');
   });
 });

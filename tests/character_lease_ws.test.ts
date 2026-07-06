@@ -86,7 +86,8 @@ describe('ws auth character load lease', () => {
     const { deps, joinSpy, acquireSpy, releaseSpy } = makeDeps({ acquireResult: false });
     const { ws, sent, closes } = fakeWs();
 
-    await createWsAuth(deps).authenticateWebSocket(ws, authFrame(7), fakeReq());
+    const h = createWsAuth(deps);
+    await h.authenticateWebSocket(ws, authFrame(7), fakeReq());
 
     // Acquired on the ownership-checked id, not a raw client field.
     expect(acquireSpy).toHaveBeenCalledTimes(1);
@@ -97,6 +98,16 @@ describe('ws auth character load lease', () => {
     expect(joinSpy).not.toHaveBeenCalled();
     expect(releaseSpy).not.toHaveBeenCalled();
     expect(closes.length).toBeGreaterThan(0);
+
+    // A refused handshake clears the pending guard too (not just a successful
+    // one): a retry after the foreign lease frees must reach the DB acquire
+    // again rather than dying on a leaked pending id.
+    acquireSpy.mockResolvedValueOnce(true);
+    const retry = fakeWs();
+    await h.authenticateWebSocket(retry.ws, authFrame(7), fakeReq());
+    expect(acquireSpy).toHaveBeenCalledTimes(2);
+    expect(retry.sent).not.toContainEqual({ t: 'error', error: ALREADY_IN_WORLD });
+    expect(joinSpy).toHaveBeenCalledTimes(1);
   });
 
   it('acquires with a uuid nonce then joins, passing that same nonce into the session meta', async () => {
@@ -209,5 +220,13 @@ describe('ws auth character load lease', () => {
 
     releaseAcquire(true);
     await p1; // H1 completes and clears the pending id
+
+    // The finally must have cleared the guard: a third handshake for the same
+    // character reaches a fresh DB acquire instead of being refused by a leaked
+    // pending id (which would lock the character out of this process for good).
+    const w3 = fakeWs();
+    await h.authenticateWebSocket(w3.ws, authFrame(7), fakeReq());
+    expect(w3.sent).not.toContainEqual({ t: 'error', error: ALREADY_IN_WORLD });
+    expect(deps.acquireCharacterLease).toHaveBeenCalledTimes(2);
   });
 });

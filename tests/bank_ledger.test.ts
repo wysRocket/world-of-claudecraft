@@ -223,6 +223,28 @@ describe('bank ledger dispatch integration', () => {
     expect(insertMock).not.toHaveBeenCalled();
   });
 
+  it('an op refused AT the banker writes zero rows (identical non-null snapshots)', async () => {
+    // The other refusal arm: the player IS at the banker, so bankInfoFor is
+    // non-null on both sides, and the refusal must surface as an empty diff.
+    const server = new GameServer();
+    const fw = fakeWs();
+    const s = joinLedger(server, fw, 'Ledgerd');
+    const pid = s.pid;
+    const sim = server.sim as any;
+    bringBankerToPlayer(sim, pid);
+
+    // Withdrawing from an empty bank slot changes nothing.
+    send(server, s, { cmd: 'bank_withdraw', slot: 0, count: 1 });
+    await bankLedgerIdle();
+    expect(insertMock).not.toHaveBeenCalled();
+
+    // An unaffordable slot purchase changes nothing.
+    sim.players.get(pid).copper = 0;
+    send(server, s, { cmd: 'bank_buy_slots' });
+    await bankLedgerIdle();
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
   it('a rejecting insert neither throws into dispatch nor stops the next op writing', async () => {
     const errSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const server = new GameServer();
