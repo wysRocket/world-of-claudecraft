@@ -16,7 +16,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 404,
-      "state": "6cda7fa7",
+      "state": "1b0e5f7f",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -36,6 +36,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -118,7 +119,7 @@
       "tick": 2,
       "time": 0.1,
       "nextId": 406,
-      "state": "78f889e3",
+      "state": "b091c85b",
       "events": "22d937b3",
       "rng": {
         "draws": 4,
@@ -129,7 +130,7 @@
       "tick": 4,
       "time": 0.2,
       "nextId": 406,
-      "state": "54a565c5",
+      "state": "bf75d261",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -140,7 +141,7 @@
       "tick": 5,
       "time": 0.25,
       "nextId": 406,
-      "state": "b063a301",
+      "state": "3f2468b5",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -160,6 +161,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -243,7 +245,7 @@
       "tick": 5,
       "time": 0.25,
       "nextId": 406,
-      "state": "01dc7ada",
+      "state": "45f33aee",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -263,6 +265,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -353,7 +356,7 @@
       "tick": 5,
       "time": 0.25,
       "nextId": 406,
-      "state": "813a333d",
+      "state": "3eefbdd9",
       "events": "95da97a6",
       "rng": {
         "draws": 4,
@@ -373,6 +376,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -468,7 +472,7 @@
       "tick": 6,
       "time": 0.3,
       "nextId": 406,
-      "state": "7a4a81f8",
+      "state": "df0781c8",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -479,7 +483,7 @@
       "tick": 7,
       "time": 0.35,
       "nextId": 406,
-      "state": "6c71b460",
+      "state": "22e788f0",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -499,6 +503,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},

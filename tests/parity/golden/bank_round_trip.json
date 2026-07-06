@@ -1,14 +1,14 @@
 {
-  "scenario": "talents_progression",
-  "seed": 1014,
-  "sampleEvery": 2,
-  "ticks": 0,
+  "scenario": "bank_round_trip",
+  "seed": 1024,
+  "sampleEvery": 20,
+  "ticks": 2,
   "coverage": [
-    "applyTalents valid spec build (G1a) + recomputeTalents flat-struct bake",
-    "respec wipes ranks, keeps spec",
-    "saveLoadout (object-alloc overload) + switchLoadout (2 of 4 slots)",
-    "setSpec drops the prior spec tree points",
-    "refreshKnownAbilities(announce=false): known-ability list flips per change"
+    "bankDeposit partial: a fraction of a fungible stack moves bags -> bank",
+    "bankDeposit whole: the remaining stack merges into the bank slot",
+    "bankWithdraw partial then whole: bank -> bags, gated by bag capacity",
+    "bankBuySlots: meta.copper - BANK_EXPANSION_PRICES[0] + purchasedSlots + 6",
+    "banker-proximity gate (nearBanker) satisfied by standing at a bursar"
   ],
   "draws": 0,
   "drawDigest": "811c9dc5",
@@ -16,21 +16,34 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 404,
-      "state": "1b0e5f7f",
+      "nextId": 403,
+      "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
       },
       "label": "init",
+      "players": [],
+      "entities": []
+    },
+    {
+      "tick": 0,
+      "time": 0,
+      "nextId": 404,
+      "state": "60406cc8",
+      "events": "b3bab1bc",
+      "rng": {
+        "draws": 0,
+        "digest": "811c9dc5"
+      },
+      "label": "bank-setup",
       "players": [
         {
           "activeLoadout": -1,
           "archetype": {},
           "arena2v2Rating": 1500,
           "arenaRating": 1500,
-          "autoEquip": true,
           "bags": [
             null,
             null,
@@ -40,6 +53,235 @@
           "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
+          "copper": 1000,
+          "counters": {},
+          "craftSkills": {},
+          "delveClears": {},
+          "delveDaily": {},
+          "entityId": 403,
+          "equipment": {
+            "chest": "recruit_tunic",
+            "mainhand": "worn_sword"
+          },
+          "gatheringProficiency": {},
+          "inventory": [
+            {
+              "count": 5,
+              "itemId": "baked_bread"
+            },
+            {
+              "count": 5,
+              "itemId": "wolf_fang"
+            }
+          ],
+          "mailWelcomed": true,
+          "nodeHarvestReadyAt": {},
+          "talents": {
+            "choices": {},
+            "ranks": {}
+          }
+        }
+      ],
+      "entities": [
+        {
+          "aiState": "idle",
+          "attackPower": 46,
+          "combatTimer": 99,
+          "comboUntil": -1,
+          "critChance": 0.06,
+          "detonateTimer": "Infinity",
+          "dodgeChance": 0.06,
+          "fallStartY": 1.5,
+          "fiveSecondRule": 99,
+          "hp": 90,
+          "id": 403,
+          "kind": "player",
+          "level": 1,
+          "lootFfaTimer": "Infinity",
+          "maxHp": 90,
+          "maxResource": 100,
+          "moveSpeed": 7,
+          "onGround": true,
+          "overpowerUntil": -1,
+          "petMode": "defensive",
+          "pos": {
+            "x": 13,
+            "y": 1.5,
+            "z": 8
+          },
+          "potionCooldownUntil": -1,
+          "resourceType": "rage",
+          "spawnPos": {
+            "x": 2,
+            "y": 1.5,
+            "z": -2
+          },
+          "spellPower": 5,
+          "stats": {
+            "agi": 20,
+            "armor": 110,
+            "int": 10,
+            "spi": 11,
+            "sta": 22,
+            "str": 23
+          },
+          "templateId": "warrior",
+          "weapon": {
+            "max": 5,
+            "min": 2,
+            "speed": 2
+          }
+        }
+      ]
+    },
+    {
+      "tick": 0,
+      "time": 0,
+      "nextId": 404,
+      "state": "fd1392a2",
+      "events": "741638a5",
+      "rng": {
+        "draws": 0,
+        "digest": "811c9dc5"
+      },
+      "label": "deposited-partial",
+      "players": [
+        {
+          "activeLoadout": -1,
+          "archetype": {},
+          "arena2v2Rating": 1500,
+          "arenaRating": 1500,
+          "bags": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "bank": {
+            "inventory": [
+              {
+                "count": 2,
+                "itemId": "wolf_fang"
+              }
+            ]
+          },
+          "cls": "warrior",
+          "companionUpgrades": {},
+          "copper": 1000,
+          "counters": {},
+          "craftSkills": {},
+          "delveClears": {},
+          "delveDaily": {},
+          "entityId": 403,
+          "equipment": {
+            "chest": "recruit_tunic",
+            "mainhand": "worn_sword"
+          },
+          "gatheringProficiency": {},
+          "inventory": [
+            {
+              "count": 5,
+              "itemId": "baked_bread"
+            },
+            {
+              "count": 3,
+              "itemId": "wolf_fang"
+            }
+          ],
+          "mailWelcomed": true,
+          "nodeHarvestReadyAt": {},
+          "talents": {
+            "choices": {},
+            "ranks": {}
+          }
+        }
+      ],
+      "entities": [
+        {
+          "aiState": "idle",
+          "attackPower": 46,
+          "combatTimer": 99,
+          "comboUntil": -1,
+          "critChance": 0.06,
+          "detonateTimer": "Infinity",
+          "dodgeChance": 0.06,
+          "fallStartY": 1.5,
+          "fiveSecondRule": 99,
+          "hp": 90,
+          "id": 403,
+          "kind": "player",
+          "level": 1,
+          "lootFfaTimer": "Infinity",
+          "maxHp": 90,
+          "maxResource": 100,
+          "moveSpeed": 7,
+          "onGround": true,
+          "overpowerUntil": -1,
+          "petMode": "defensive",
+          "pos": {
+            "x": 13,
+            "y": 1.5,
+            "z": 8
+          },
+          "potionCooldownUntil": -1,
+          "resourceType": "rage",
+          "spawnPos": {
+            "x": 2,
+            "y": 1.5,
+            "z": -2
+          },
+          "spellPower": 5,
+          "stats": {
+            "agi": 20,
+            "armor": 110,
+            "int": 10,
+            "spi": 11,
+            "sta": 22,
+            "str": 23
+          },
+          "templateId": "warrior",
+          "weapon": {
+            "max": 5,
+            "min": 2,
+            "speed": 2
+          }
+        }
+      ]
+    },
+    {
+      "tick": 0,
+      "time": 0,
+      "nextId": 404,
+      "state": "8d9ae2ec",
+      "events": "741638a5",
+      "rng": {
+        "draws": 0,
+        "digest": "811c9dc5"
+      },
+      "label": "deposited-whole",
+      "players": [
+        {
+          "activeLoadout": -1,
+          "archetype": {},
+          "arena2v2Rating": 1500,
+          "arenaRating": 1500,
+          "bags": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "bank": {
+            "inventory": [
+              {
+                "count": 5,
+                "itemId": "wolf_fang"
+              }
+            ]
+          },
+          "cls": "warrior",
+          "companionUpgrades": {},
+          "copper": 1000,
           "counters": {},
           "craftSkills": {},
           "delveClears": {},
@@ -87,9 +329,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2,
+            "x": 13,
             "y": 1.5,
-            "z": -2
+            "z": 8
           },
           "potionCooldownUntil": -1,
           "resourceType": "rage",
@@ -120,29 +362,36 @@
       "tick": 0,
       "time": 0,
       "nextId": 404,
-      "state": "4cba074f",
-      "events": "40d0fbff",
+      "state": "20e394d2",
+      "events": "741638a5",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
       },
-      "label": "apply-arms",
+      "label": "withdrew-partial",
       "players": [
         {
           "activeLoadout": -1,
           "archetype": {},
           "arena2v2Rating": 1500,
           "arenaRating": 1500,
-          "autoEquip": true,
           "bags": [
             null,
             null,
             null,
             null
           ],
-          "bank": {},
+          "bank": {
+            "inventory": [
+              {
+                "count": 4,
+                "itemId": "wolf_fang"
+              }
+            ]
+          },
           "cls": "warrior",
           "companionUpgrades": {},
+          "copper": 1000,
           "counters": {},
           "craftSkills": {},
           "delveClears": {},
@@ -157,47 +406,46 @@
             {
               "count": 5,
               "itemId": "baked_bread"
+            },
+            {
+              "count": 1,
+              "itemId": "wolf_fang"
             }
           ],
-          "lifetimeXp": 167200,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "choices": {},
-            "ranks": {
-              "arms_imp_overpower": 2,
-              "war_cruelty": 2
-            },
-            "spec": "arms"
+            "ranks": {}
           }
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 122,
+          "attackPower": 46,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.0895,
+          "critChance": 0.06,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
+          "dodgeChance": 0.06,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 812,
+          "hp": 90,
           "id": 403,
           "kind": "player",
-          "level": 20,
+          "level": 1,
           "lootFfaTimer": "Infinity",
-          "maxHp": 812,
+          "maxHp": 90,
           "maxResource": 100,
           "moveSpeed": 7,
           "onGround": true,
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2,
+            "x": 13,
             "y": 1.5,
-            "z": -2
+            "z": 8
           },
           "potionCooldownUntil": -1,
           "resourceType": "rage",
@@ -208,12 +456,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 39,
-            "armor": 376,
+            "agi": 20,
+            "armor": 110,
             "int": 10,
             "spi": 11,
-            "sta": 60,
-            "str": 61
+            "sta": 22,
+            "str": 23
           },
           "templateId": "warrior",
           "weapon": {
@@ -228,20 +476,19 @@
       "tick": 0,
       "time": 0,
       "nextId": 404,
-      "state": "f285952c",
-      "events": "1e84eecf",
+      "state": "60406cc8",
+      "events": "741638a5",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
       },
-      "label": "respec",
+      "label": "withdrew-whole",
       "players": [
         {
           "activeLoadout": -1,
           "archetype": {},
           "arena2v2Rating": 1500,
           "arenaRating": 1500,
-          "autoEquip": true,
           "bags": [
             null,
             null,
@@ -251,6 +498,7 @@
           "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
+          "copper": 1000,
           "counters": {},
           "craftSkills": {},
           "delveClears": {},
@@ -265,167 +513,46 @@
             {
               "count": 5,
               "itemId": "baked_bread"
-            }
-          ],
-          "lifetimeXp": 167200,
-          "mailWelcomed": true,
-          "nodeHarvestReadyAt": {},
-          "talents": {
-            "choices": {},
-            "ranks": {},
-            "spec": "arms"
-          }
-        }
-      ],
-      "entities": [
-        {
-          "aiState": "idle",
-          "attackPower": 122,
-          "combatTimer": 99,
-          "comboUntil": -1,
-          "critChance": 0.0695,
-          "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
-          "fallStartY": 1.5,
-          "fiveSecondRule": 99,
-          "hp": 812,
-          "id": 403,
-          "kind": "player",
-          "level": 20,
-          "lootFfaTimer": "Infinity",
-          "maxHp": 812,
-          "maxResource": 100,
-          "moveSpeed": 7,
-          "onGround": true,
-          "overpowerUntil": -1,
-          "petMode": "defensive",
-          "pos": {
-            "x": 2,
-            "y": 1.5,
-            "z": -2
-          },
-          "potionCooldownUntil": -1,
-          "resourceType": "rage",
-          "spawnPos": {
-            "x": 2,
-            "y": 1.5,
-            "z": -2
-          },
-          "spellPower": 5,
-          "stats": {
-            "agi": 39,
-            "armor": 376,
-            "int": 10,
-            "spi": 11,
-            "sta": 60,
-            "str": 61
-          },
-          "templateId": "warrior",
-          "weapon": {
-            "max": 5,
-            "min": 2,
-            "speed": 2
-          }
-        }
-      ]
-    },
-    {
-      "tick": 0,
-      "time": 0,
-      "nextId": 404,
-      "state": "e7c37439",
-      "events": "aee06575",
-      "rng": {
-        "draws": 0,
-        "digest": "811c9dc5"
-      },
-      "label": "second-build",
-      "players": [
-        {
-          "archetype": {},
-          "arena2v2Rating": 1500,
-          "arenaRating": 1500,
-          "autoEquip": true,
-          "bags": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "bank": {},
-          "cls": "warrior",
-          "companionUpgrades": {},
-          "counters": {},
-          "craftSkills": {},
-          "delveClears": {},
-          "delveDaily": {},
-          "entityId": 403,
-          "equipment": {
-            "chest": "recruit_tunic",
-            "mainhand": "worn_sword"
-          },
-          "gatheringProficiency": {},
-          "inventory": [
-            {
-              "count": 5,
-              "itemId": "baked_bread"
-            }
-          ],
-          "lifetimeXp": 167200,
-          "loadouts": [
-            {
-              "alloc": {
-                "choices": {},
-                "ranks": {
-                  "arms_imp_overpower": 2
-                },
-                "spec": "arms"
-              },
-              "bar": [
-                "mortal_strike",
-                "overpower",
-                null
-              ],
-              "name": "Arms"
-            }
-          ],
-          "mailWelcomed": true,
-          "nodeHarvestReadyAt": {},
-          "talents": {
-            "choices": {},
-            "ranks": {
-              "war_cruelty": 3
             },
-            "spec": "arms"
+            {
+              "count": 5,
+              "itemId": "wolf_fang"
+            }
+          ],
+          "mailWelcomed": true,
+          "nodeHarvestReadyAt": {},
+          "talents": {
+            "choices": {},
+            "ranks": {}
           }
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 122,
+          "attackPower": 46,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.0995,
+          "critChance": 0.06,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
+          "dodgeChance": 0.06,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 812,
+          "hp": 90,
           "id": 403,
           "kind": "player",
-          "level": 20,
+          "level": 1,
           "lootFfaTimer": "Infinity",
-          "maxHp": 812,
+          "maxHp": 90,
           "maxResource": 100,
           "moveSpeed": 7,
           "onGround": true,
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2,
+            "x": 13,
             "y": 1.5,
-            "z": -2
+            "z": 8
           },
           "potionCooldownUntil": -1,
           "resourceType": "rage",
@@ -436,12 +563,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 39,
-            "armor": 376,
+            "agi": 20,
+            "armor": 110,
             "int": 10,
             "spi": 11,
-            "sta": 60,
-            "str": 61
+            "sta": 22,
+            "str": 23
           },
           "templateId": "warrior",
           "weapon": {
@@ -456,28 +583,31 @@
       "tick": 0,
       "time": 0,
       "nextId": 404,
-      "state": "06076c2c",
-      "events": "2546b2db",
+      "state": "162022ca",
+      "events": "29a381b3",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
       },
-      "label": "switch-loadout",
+      "label": "bought-slots",
       "players": [
         {
+          "activeLoadout": -1,
           "archetype": {},
           "arena2v2Rating": 1500,
           "arenaRating": 1500,
-          "autoEquip": true,
           "bags": [
             null,
             null,
             null,
             null
           ],
-          "bank": {},
+          "bank": {
+            "purchasedSlots": 6
+          },
           "cls": "warrior",
           "companionUpgrades": {},
+          "copper": 500,
           "counters": {},
           "craftSkills": {},
           "delveClears": {},
@@ -492,184 +622,46 @@
             {
               "count": 5,
               "itemId": "baked_bread"
-            }
-          ],
-          "lifetimeXp": 167200,
-          "loadouts": [
-            {
-              "alloc": {
-                "choices": {},
-                "ranks": {
-                  "arms_imp_overpower": 2
-                },
-                "spec": "arms"
-              },
-              "bar": [
-                "mortal_strike",
-                "overpower",
-                null
-              ],
-              "name": "Arms"
-            }
-          ],
-          "mailWelcomed": true,
-          "nodeHarvestReadyAt": {},
-          "talents": {
-            "choices": {},
-            "ranks": {
-              "arms_imp_overpower": 2
             },
-            "spec": "arms"
-          }
-        }
-      ],
-      "entities": [
-        {
-          "aiState": "idle",
-          "attackPower": 122,
-          "combatTimer": 99,
-          "comboUntil": -1,
-          "critChance": 0.0695,
-          "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
-          "fallStartY": 1.5,
-          "fiveSecondRule": 99,
-          "hp": 812,
-          "id": 403,
-          "kind": "player",
-          "level": 20,
-          "lootFfaTimer": "Infinity",
-          "maxHp": 812,
-          "maxResource": 100,
-          "moveSpeed": 7,
-          "onGround": true,
-          "overpowerUntil": -1,
-          "petMode": "defensive",
-          "pos": {
-            "x": 2,
-            "y": 1.5,
-            "z": -2
-          },
-          "potionCooldownUntil": -1,
-          "resourceType": "rage",
-          "spawnPos": {
-            "x": 2,
-            "y": 1.5,
-            "z": -2
-          },
-          "spellPower": 5,
-          "stats": {
-            "agi": 39,
-            "armor": 376,
-            "int": 10,
-            "spi": 11,
-            "sta": 60,
-            "str": 61
-          },
-          "templateId": "warrior",
-          "weapon": {
-            "max": 5,
-            "min": 2,
-            "speed": 2
-          }
-        }
-      ]
-    },
-    {
-      "tick": 0,
-      "time": 0,
-      "nextId": 404,
-      "state": "977ef614",
-      "events": "40d0fbff",
-      "rng": {
-        "draws": 0,
-        "digest": "811c9dc5"
-      },
-      "label": "set-spec",
-      "players": [
-        {
-          "archetype": {},
-          "arena2v2Rating": 1500,
-          "arenaRating": 1500,
-          "autoEquip": true,
-          "bags": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "bank": {},
-          "cls": "warrior",
-          "companionUpgrades": {},
-          "counters": {},
-          "craftSkills": {},
-          "delveClears": {},
-          "delveDaily": {},
-          "entityId": 403,
-          "equipment": {
-            "chest": "recruit_tunic",
-            "mainhand": "worn_sword"
-          },
-          "gatheringProficiency": {},
-          "inventory": [
             {
               "count": 5,
-              "itemId": "baked_bread"
-            }
-          ],
-          "lifetimeXp": 167200,
-          "loadouts": [
-            {
-              "alloc": {
-                "choices": {},
-                "ranks": {
-                  "arms_imp_overpower": 2
-                },
-                "spec": "arms"
-              },
-              "bar": [
-                "mortal_strike",
-                "overpower",
-                null
-              ],
-              "name": "Arms"
+              "itemId": "wolf_fang"
             }
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "choices": {},
-            "ranks": {},
-            "spec": "fury"
+            "ranks": {}
           }
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 132,
+          "attackPower": 46,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.1195,
+          "critChance": 0.06,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
+          "dodgeChance": 0.06,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 812,
+          "hp": 90,
           "id": 403,
           "kind": "player",
-          "level": 20,
+          "level": 1,
           "lootFfaTimer": "Infinity",
-          "maxHp": 812,
+          "maxHp": 90,
           "maxResource": 100,
           "moveSpeed": 7,
           "onGround": true,
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2,
+            "x": 13,
             "y": 1.5,
-            "z": -2
+            "z": 8
           },
           "potionCooldownUntil": -1,
           "resourceType": "rage",
@@ -680,12 +672,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 39,
-            "armor": 376,
+            "agi": 20,
+            "armor": 110,
             "int": 10,
             "spi": 11,
-            "sta": 60,
-            "str": 61
+            "sta": 22,
+            "str": 23
           },
           "templateId": "warrior",
           "weapon": {
@@ -697,10 +689,10 @@
       ]
     },
     {
-      "tick": 0,
-      "time": 0,
+      "tick": 2,
+      "time": 0.1,
       "nextId": 404,
-      "state": "977ef614",
+      "state": "1dd3d5cc",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -709,19 +701,22 @@
       "label": "final",
       "players": [
         {
+          "activeLoadout": -1,
           "archetype": {},
           "arena2v2Rating": 1500,
           "arenaRating": 1500,
-          "autoEquip": true,
           "bags": [
             null,
             null,
             null,
             null
           ],
-          "bank": {},
+          "bank": {
+            "purchasedSlots": 6
+          },
           "cls": "warrior",
           "companionUpgrades": {},
+          "copper": 500,
           "counters": {},
           "craftSkills": {},
           "delveClears": {},
@@ -736,61 +731,46 @@
             {
               "count": 5,
               "itemId": "baked_bread"
-            }
-          ],
-          "lifetimeXp": 167200,
-          "loadouts": [
+            },
             {
-              "alloc": {
-                "choices": {},
-                "ranks": {
-                  "arms_imp_overpower": 2
-                },
-                "spec": "arms"
-              },
-              "bar": [
-                "mortal_strike",
-                "overpower",
-                null
-              ],
-              "name": "Arms"
+              "count": 5,
+              "itemId": "wolf_fang"
             }
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "choices": {},
-            "ranks": {},
-            "spec": "fury"
+            "ranks": {}
           }
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 132,
-          "combatTimer": 99,
+          "attackPower": 46,
+          "combatTimer": 99.1,
           "comboUntil": -1,
-          "critChance": 0.1195,
+          "critChance": 0.06,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.0695,
+          "dodgeChance": 0.06,
           "fallStartY": 1.5,
-          "fiveSecondRule": 99,
-          "hp": 812,
+          "fiveSecondRule": 99.1,
+          "hp": 90,
           "id": 403,
           "kind": "player",
-          "level": 20,
+          "level": 1,
           "lootFfaTimer": "Infinity",
-          "maxHp": 812,
+          "maxHp": 90,
           "maxResource": 100,
           "moveSpeed": 7,
           "onGround": true,
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2,
+            "x": 13,
             "y": 1.5,
-            "z": -2
+            "z": 8
           },
           "potionCooldownUntil": -1,
           "resourceType": "rage",
@@ -801,12 +781,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 39,
-            "armor": 376,
+            "agi": 20,
+            "armor": 110,
             "int": 10,
             "spi": 11,
-            "sta": 60,
-            "str": 61
+            "sta": 22,
+            "str": 23
           },
           "templateId": "warrior",
           "weapon": {

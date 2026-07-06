@@ -35,7 +35,7 @@
       "tick": 5,
       "time": 0.25,
       "nextId": 410,
-      "state": "7f6a72f3",
+      "state": "85da4e6f",
       "events": "c3430539",
       "rng": {
         "draws": 2,
@@ -46,7 +46,7 @@
       "tick": 10,
       "time": 0.5,
       "nextId": 410,
-      "state": "003dac7d",
+      "state": "e8083c21",
       "events": "741638a5",
       "rng": {
         "draws": 2,
@@ -57,7 +57,7 @@
       "tick": 15,
       "time": 0.75,
       "nextId": 410,
-      "state": "fcc36f3f",
+      "state": "cd801cfb",
       "events": "741638a5",
       "rng": {
         "draws": 2,
@@ -68,7 +68,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 410,
-      "state": "96ed6d51",
+      "state": "892da045",
       "events": "17216200",
       "rng": {
         "draws": 2,
@@ -79,7 +79,7 @@
       "tick": 25,
       "time": 1.25,
       "nextId": 410,
-      "state": "df809cfc",
+      "state": "d90cf0b0",
       "events": "741638a5",
       "rng": {
         "draws": 2,
@@ -90,7 +90,7 @@
       "tick": 30,
       "time": 1.5,
       "nextId": 410,
-      "state": "e4496d21",
+      "state": "5668e115",
       "events": "08ca6ed3",
       "rng": {
         "draws": 2,
@@ -101,7 +101,7 @@
       "tick": 32,
       "time": 1.6,
       "nextId": 410,
-      "state": "edd7ddf6",
+      "state": "db8fead2",
       "events": "eea6b519",
       "rng": {
         "draws": 4,
@@ -120,6 +120,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -157,6 +158,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {},
@@ -198,6 +200,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {},
@@ -235,6 +238,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {},
@@ -276,6 +280,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -317,6 +322,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -731,7 +737,7 @@
       "tick": 35,
       "time": 1.75,
       "nextId": 410,
-      "state": "daedf370",
+      "state": "69e19174",
       "events": "e6abe036",
       "rng": {
         "draws": 4,
@@ -742,7 +748,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 410,
-      "state": "2cb75d5c",
+      "state": "9f925b10",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -753,7 +759,7 @@
       "tick": 45,
       "time": 2.25,
       "nextId": 410,
-      "state": "9c6e0496",
+      "state": "9ac6e572",
       "events": "741638a5",
       "rng": {
         "draws": 36,
@@ -764,7 +770,7 @@
       "tick": 50,
       "time": 2.5,
       "nextId": 410,
-      "state": "092c3ee7",
+      "state": "36c717e3",
       "events": "741638a5",
       "rng": {
         "draws": 50,
@@ -775,7 +781,7 @@
       "tick": 55,
       "time": 2.75,
       "nextId": 410,
-      "state": "e05d5325",
+      "state": "4f171bc9",
       "events": "741638a5",
       "rng": {
         "draws": 66,
@@ -786,7 +792,7 @@
       "tick": 60,
       "time": 3,
       "nextId": 410,
-      "state": "6efbea74",
+      "state": "90ab5968",
       "events": "741638a5",
       "rng": {
         "draws": 80,
@@ -797,7 +803,7 @@
       "tick": 65,
       "time": 3.25,
       "nextId": 410,
-      "state": "65197fbb",
+      "state": "b70357b7",
       "events": "741638a5",
       "rng": {
         "draws": 101,
@@ -808,7 +814,7 @@
       "tick": 70,
       "time": 3.5,
       "nextId": 410,
-      "state": "698a5770",
+      "state": "cc83b574",
       "events": "741638a5",
       "rng": {
         "draws": 127,
@@ -819,7 +825,7 @@
       "tick": 75,
       "time": 3.75,
       "nextId": 410,
-      "state": "bda66c39",
+      "state": "b07b596d",
       "events": "741638a5",
       "rng": {
         "draws": 152,
@@ -830,7 +836,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 410,
-      "state": "9d25f1ec",
+      "state": "2df231a0",
       "events": "741638a5",
       "rng": {
         "draws": 174,
@@ -841,7 +847,7 @@
       "tick": 85,
       "time": 4.25,
       "nextId": 410,
-      "state": "cf74c98e",
+      "state": "b6c174aa",
       "events": "741638a5",
       "rng": {
         "draws": 203,
@@ -852,7 +858,7 @@
       "tick": 90,
       "time": 4.5,
       "nextId": 410,
-      "state": "ccf7af71",
+      "state": "d00f5965",
       "events": "741638a5",
       "rng": {
         "draws": 230,
@@ -863,7 +869,7 @@
       "tick": 95,
       "time": 4.75,
       "nextId": 410,
-      "state": "3966c03f",
+      "state": "5ac95dfb",
       "events": "741638a5",
       "rng": {
         "draws": 253,
@@ -874,7 +880,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 410,
-      "state": "fe890af8",
+      "state": "a60e4cbc",
       "events": "741638a5",
       "rng": {
         "draws": 276,
@@ -885,7 +891,7 @@
       "tick": 105,
       "time": 5.25,
       "nextId": 410,
-      "state": "91fa0395",
+      "state": "820bc0b9",
       "events": "741638a5",
       "rng": {
         "draws": 304,
@@ -896,7 +902,7 @@
       "tick": 110,
       "time": 5.5,
       "nextId": 410,
-      "state": "a86cb237",
+      "state": "f0a9d533",
       "events": "741638a5",
       "rng": {
         "draws": 328,
@@ -907,7 +913,7 @@
       "tick": 115,
       "time": 5.75,
       "nextId": 410,
-      "state": "ecd0580e",
+      "state": "bef39b2a",
       "events": "741638a5",
       "rng": {
         "draws": 360,
@@ -918,7 +924,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 410,
-      "state": "a9cd766d",
+      "state": "33f954d1",
       "events": "741638a5",
       "rng": {
         "draws": 387,
@@ -929,7 +935,7 @@
       "tick": 125,
       "time": 6.25,
       "nextId": 410,
-      "state": "25bba35a",
+      "state": "56ab7c96",
       "events": "741638a5",
       "rng": {
         "draws": 407,
@@ -940,7 +946,7 @@
       "tick": 130,
       "time": 6.5,
       "nextId": 410,
-      "state": "a7620061",
+      "state": "4ec8f755",
       "events": "741638a5",
       "rng": {
         "draws": 434,
@@ -951,7 +957,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 411,
-      "state": "c283f33e",
+      "state": "c193cf5a",
       "events": "d5d00c04",
       "rng": {
         "draws": 444,
@@ -970,6 +976,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -1007,6 +1014,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {},
@@ -1048,6 +1056,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {},
@@ -1085,6 +1094,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {},
@@ -1126,6 +1136,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -1167,6 +1178,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -1581,7 +1593,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 412,
-      "state": "ab35508f",
+      "state": "836a2ccb",
       "events": "1091079f",
       "rng": {
         "draws": 445,
@@ -1600,6 +1612,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -1637,6 +1650,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {},
@@ -1678,6 +1692,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {},
@@ -1715,6 +1730,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {},
@@ -1756,6 +1772,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -1797,6 +1814,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -2280,7 +2298,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 414,
-      "state": "98aa4063",
+      "state": "a890a3e7",
       "events": "b230c3d1",
       "rng": {
         "draws": 447,
@@ -2299,6 +2317,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -2336,6 +2355,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
@@ -2379,6 +2399,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {},
@@ -2416,6 +2437,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {},
@@ -2457,6 +2479,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -2498,6 +2521,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -3089,7 +3113,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 415,
-      "state": "651b2c01",
+      "state": "c35ae441",
       "events": "31a6b5e4",
       "rng": {
         "draws": 452,
@@ -3108,6 +3132,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -3145,6 +3170,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
@@ -3188,6 +3214,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
@@ -3227,6 +3254,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {},
@@ -3268,6 +3296,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -3309,6 +3338,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -3973,7 +4003,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 416,
-      "state": "5f892ba9",
+      "state": "d5554449",
       "events": "23832b98",
       "rng": {
         "draws": 453,
@@ -3992,6 +4022,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -4029,6 +4060,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
@@ -4072,6 +4104,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
@@ -4111,6 +4144,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
@@ -4154,6 +4188,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -4195,6 +4230,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -4935,7 +4971,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 417,
-      "state": "613614c1",
+      "state": "72469141",
       "events": "fecf6d7e",
       "rng": {
         "draws": 453,
@@ -4954,6 +4990,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -4991,6 +5028,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
@@ -5034,6 +5072,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
@@ -5073,6 +5112,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
@@ -5116,6 +5156,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -5157,6 +5198,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
@@ -5951,7 +5993,7 @@
       "tick": 133,
       "time": 6.65,
       "nextId": 417,
-      "state": "613614c1",
+      "state": "72469141",
       "events": "741638a5",
       "rng": {
         "draws": 453,
@@ -5970,6 +6012,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {},
@@ -6007,6 +6050,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
@@ -6050,6 +6094,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
@@ -6089,6 +6134,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
@@ -6132,6 +6178,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "druid",
           "companionUpgrades": {},
           "counters": {},
@@ -6173,6 +6220,7 @@
             null,
             null
           ],
+          "bank": {},
           "cls": "warlock",
           "companionUpgrades": {},
           "counters": {},
