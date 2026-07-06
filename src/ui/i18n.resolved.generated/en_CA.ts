@@ -2296,7 +2296,7 @@ export const en_CA: EnTranslations = {
     "water": {
       "title": "Water Level",
       "level": "Water level",
-      "hint": "Sets the map-wide water surface height, from {min} to {max} yards.",
+      "hint": "Sets each declared lake's water surface height, from {min} to {max} yards.",
       "reset": "Reset to the built-in level"
     },
     "place": {
@@ -2541,7 +2541,7 @@ export const en_CA: EnTranslations = {
         "smooth": "Smooth bumps toward the local average height.",
         "flatten": "Level the ground to the height where the drag starts.",
         "paint": "Paint biome ground cover over the zone default.",
-        "water": "Set the map-wide water level.",
+        "water": "Set a declared lake's water level.",
         "place": "Place catalog or uploaded assets on the ground.",
         "blocker": "Drag invisible walls that block movement in playtest.",
         "camp": "Add and edit mob camps that spawn in playtest.",
