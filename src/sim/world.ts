@@ -42,8 +42,9 @@ export const LAKE_BLEND_RADIUS_MULT = 1.6;
 export function isInWaterBody(x: number, z: number): boolean {
   for (const zone of world().content.zones) {
     for (const lake of zone.lakes) {
-      const d = Math.sqrt((x - lake.x) ** 2 + (z - lake.z) ** 2);
-      if (d < lake.radius * LAKE_BLEND_RADIUS_MULT) return true;
+      const dSq = (x - lake.x) ** 2 + (z - lake.z) ** 2;
+      const rMax = lake.radius * LAKE_BLEND_RADIUS_MULT;
+      if (dSq < rMax * rMax) return true;
     }
   }
   return false;

@@ -59,7 +59,7 @@ export function paintTerrainRows(
         g = 100;
         b = 82;
       }
-      if (h < wl) {
+      if (h < waterLevelAt(x, z)) {
         r = 38;
         g = 84;
         b = 138;
