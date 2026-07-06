@@ -22,6 +22,7 @@
     "ja_JP",
     "pt_BR",
     "ru_RU",
+    "cs_CZ",
     "nl_NL",
     "pl_PL",
     "id_ID",
@@ -32,10 +33,10 @@
   ],
   "counts": {
     "keys": 6045,
-    "rows": 120900,
-    "translated": 120745,
+    "rows": 126945,
+    "translated": 126777,
     "pending": 0,
-    "blocked": 155,
+    "blocked": 168,
     "blockedSource": 93
   },
   "perLocale": {
@@ -103,6 +104,11 @@
       "translated": 6045,
       "pending": 0,
       "blocked": 0
+    },
+    "cs_CZ": {
+      "translated": 6032,
+      "pending": 0,
+      "blocked": 13
     },
     "nl_NL": {
       "translated": 6025,
