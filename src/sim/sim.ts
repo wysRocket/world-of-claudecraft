@@ -898,7 +898,6 @@ export interface CharacterState {
   // contract (src/sim/professions/CLAUDE.md, #1164) parallel to the existing
   // `delveDaily`/`companionUpgrades` persisted fields.
   professions?: Partial<Record<string, number>>;
-  // load cleanly, defaulting every profession to 0).
   gatheringProficiency?: Partial<Record<string, number>>;
   copper: number;
   hp: number;
@@ -1559,8 +1558,6 @@ export class Sim {
       meta.lifetimeXp = s.lifetimeXp ?? xpToReachLevel(player.level) + Math.max(0, s.xp);
       meta.prestigeRank = s.prestigeRank ?? 0;
       meta.restedXp = Math.max(0, s.restedXp ?? 0);
-      meta.gatheringProficiency = normalizeGatheringProficiency(s.professions);
-      meta.gatheringProficiency = normalizeGatheringProficiency(s.gatheringProficiency);
       // `s.professions` is the legacy pre-rename field (#1119); `s.gatheringProficiency`
       // is the current one. Prefer the current field, fall back to the legacy one so
       // saves from before the rename still load correctly.
