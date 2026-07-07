@@ -46,6 +46,14 @@ await page
   )
   .catch(() => console.log('WARN: perf overlay text never appeared'));
 
+// Dismiss the new-player tutorial card (.tut-skip "Skip Tutorial" button) so
+// it never clutters a screenshot. No-op if the tutorial isn't showing.
+await page.evaluate(() => {
+  const btn = document.querySelector('.tut-skip');
+  if (btn instanceof HTMLElement) btn.click();
+});
+await new Promise((r) => setTimeout(r, 200));
+
 // 10 spread locations: vale hub/lake area, marsh, peaks, rim, ridge pass.
 const LOCATIONS = [
   { name: '01_vale_spawn', x: 0, z: 0 },
