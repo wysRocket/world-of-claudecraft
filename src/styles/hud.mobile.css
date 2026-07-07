@@ -804,6 +804,14 @@
   body.mobile-touch .mobile-action-slot:active {
     border-color: var(--gold);
   }
+  /* Long-press-to-pick-up state for the ring's touch swap (bindMobileRingDrag):
+     a steady border + glow, never a scale transform (motion-sickness rule), on
+     both the picked-up source slot and whichever slot the finger is currently
+     over. Mirrors the desktop .action-btn.drop-target treatment. */
+  body.mobile-touch .mobile-action-slot.drop-target {
+    border-color: #7fd1ff;
+    box-shadow: 0 0 8px #7fd1ff88;
+  }
   body.mobile-touch #mobile-action-ring button .cdtext {
     position: relative;
     font-size: 15px;
