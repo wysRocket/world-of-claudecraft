@@ -291,6 +291,7 @@ export const cs_CZ: EnTranslations = {
       "targetLabel": "Tvoje značka",
       "targetAnnounce": "Označit {name}",
       "partyLabel": "Tvoje družina",
+      "partyChip": "Party",
       "partyGroup": "Skupina {n}",
       "durationUnitSeconds": "s",
       "durationUnitMinutes": "min",
@@ -320,7 +321,8 @@ export const cs_CZ: EnTranslations = {
       "actionPageIndicator": "{page}",
       "targetCycle": "Přepnout cíl",
       "targetCycleShort": "Cíl",
-      "spellbookPageLabel": "Strana {page}"
+      "spellbookPageLabel": "Strana {page}",
+      "hideKeyboard": "Hide keyboard"
     },
     "tutorial": {
       "moveBodyTouch": "Pohybuj se páčkou pohybu a tažením po obrazovce se rozhlížej. Udělej pár kroků a začni.",

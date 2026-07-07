@@ -291,6 +291,7 @@ export const vi_VN: EnTranslations = {
       "targetLabel": "Mục Tiêu Của Bạn",
       "targetAnnounce": "Đánh Dấu {name}",
       "partyLabel": "Đội Của Bạn",
+      "partyChip": "Party",
       "partyGroup": "Nhóm {n}",
       "durationUnitSeconds": "s",
       "durationUnitMinutes": "ph",
@@ -320,7 +321,8 @@ export const vi_VN: EnTranslations = {
       "actionPageIndicator": "Trang {page}",
       "targetCycle": "Hoán đổi mục tiêu",
       "targetCycleShort": "Mục tiêu",
-      "spellbookPageLabel": "Trang {page}"
+      "spellbookPageLabel": "Trang {page}",
+      "hideKeyboard": "Hide keyboard"
     },
     "tutorial": {
       "moveBodyTouch": "Dùng cần di chuyển để đi và kéo màn hình để nhìn quanh. Bước vài bước để bắt đầu.",

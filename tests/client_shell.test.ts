@@ -136,6 +136,18 @@ const partyFrameRowTs = readFileSync(
   new URL('../src/ui/party_frame_row.ts', import.meta.url),
   'utf8',
 ).replace(/\r\n/g, '\n');
+// The mobile collapse chip is painter-created (built by party_chip.ts, driven by the
+// party painter), so it is entry-agnostic: there is no static chip markup to keep in
+// sync across index.html / play.html. These guards read the painter + chip builder +
+// the mobile CSS instead of a static id.
+const partyChipTs = readFileSync(
+  new URL('../src/ui/party_chip.ts', import.meta.url),
+  'utf8',
+).replace(/\r\n/g, '\n');
+const partyFramesPainterTs = readFileSync(
+  new URL('../src/ui/party_frames_painter.ts', import.meta.url),
+  'utf8',
+).replace(/\r\n/g, '\n');
 const aurasPainterTs = readFileSync(
   new URL('../src/ui/auras_painter.ts', import.meta.url),
   'utf8',
@@ -367,6 +379,100 @@ describe('client HTML shell', () => {
     expect(
       refresh.slice(0, refresh.indexOf('\n  }')).includes('this.partyFramesPainter.relocalize();'),
     ).toBe(true);
+  });
+
+  it('keeps the mobile party-collapse chip painter-created (entry-agnostic, no static markup)', () => {
+    // The chip is built by party_chip.ts and placed by the party painter, so it is NOT
+    // static markup that must ship in both index.html / play.html. Pin that: the chip id
+    // appears in the builder, and NEITHER entry carries a static #party-chip.
+    expect(partyChipTs).toContain("export const PARTY_CHIP_ID = 'party-chip';");
+    expect(partyChipTs).toContain('doc.createElement');
+    for (const [name, entry] of [
+      ['index.html', html],
+      ['play.html', playHtml],
+    ] as const) {
+      expect(entry, name).not.toContain('id="party-chip"');
+    }
+    // The Hud drives the chip only in a party AND on the touch HUD: setCollapse takes the
+    // isMobileLayout() flag, so it never renders on desktop (party frames unchanged there),
+    // plus the isMobileChatOpen() flag so the party UI yields while mobile chat is up.
+    expect(hudTs).toContain('this.partyFramesPainter.setCollapse(');
+    expect(hudTs).toContain('this.isMobileLayout(),');
+    expect(hudTs).toContain('this.partyCollapsed,');
+    expect(hudTs).toContain('this.isMobileChatOpen(),');
+    // The chat-yield read is a transient body-class check, never persisted.
+    expect(hudTs).toContain("return document.body.classList.contains('mobile-chat-open');");
+    // The collapse is a pure USER toggle: the chip caption reuses a t() key (never a raw
+    // string), and the tap persists the flag through the party_collapse core.
+    expect(hudTs).toContain("chipLabel: () => t('hudChrome.unitFrame.partyChip'),");
+    expect(hudTs).toContain('savePartyCollapsed(this.partyCollapsed);');
+    // The painter routes every chip DOM effect through the elided writers (no raw write
+    // on the party painter's per-frame path): the class + attr + text writers, never a
+    // raw classList / setAttribute / textContent.
+    expect(partyFramesPainterTs).toContain(
+      'this.writers.toggleClass(this.container, CHIP_PRESENT_CLASS',
+    );
+    expect(partyFramesPainterTs).toContain('this.writers.setAttr(chip.el, ARIA_EXPANDED');
+    expect(partyFramesPainterTs).not.toMatch(/chip\.el\.setAttribute/);
+  });
+
+  it('ships the mobile chat keyboard-dismiss chevron in BOTH entries, hidden until chat opens', () => {
+    // The dismiss chevron blurs the composer so the on-screen keyboard drops WITHOUT
+    // closing chat. It is STATIC markup (a fixed button seated at the composer's corner),
+    // so it must ship in both index.html / play.html or one entry loses the affordance.
+    for (const [name, entry] of [
+      ['index.html', html],
+      ['play.html', playHtml],
+    ] as const) {
+      expect(entry, name).toContain('id="chat-dismiss"');
+      // Carries the chevron icon hook (hydrateIcons swaps [data-icon] for inline SVG).
+      expect(entry, name).toMatch(/id="chat-dismiss"[^>]*data-icon="next"/);
+      // Accessible name via the hud_chrome mobile namespace (English-only domain + M16
+      // non-Latin fills), never a raw aria string.
+      expect(entry, name).toMatch(
+        /id="chat-dismiss"[^>]*data-i18n-aria="hudChrome\.mobile\.hideKeyboard"/,
+      );
+    }
+    // Hidden by default EVERYWHERE via a base rule (so it is not a stray button on
+    // desktop, which has no mobile-touch-scoped rule to hide it), then revealed only
+    // under body.mobile-touch.mobile-chat-open (a later @layer wins there).
+    expect(hudCss).toContain('#chat-dismiss {\n    display: none;\n  }');
+    expect(hudMobileCss).toContain('body.mobile-touch #chat-dismiss {\n    display: none;');
+    const openRule =
+      hudMobileCss.match(/body\.mobile-touch\.mobile-chat-open #chat-dismiss \{([^}]*)\}/)?.[1] ??
+      '';
+    expect(openRule).toMatch(/width:\s*40px/);
+    expect(openRule).toMatch(/height:\s*40px/);
+    // The dismiss blur does NOT close chat: the pure seam differentiates it from the
+    // close path (recover only when the composer is already hidden).
+    expect(mainTs).toContain(
+      'if (shouldRecoverOnComposerBlur(chatInput.style.display)) recoverFromMobileKeyboard();',
+    );
+    expect(mainTs).toContain('if (effect.blurComposer) chatInput.blur();');
+    // Chat surfaces stay full-contrast while open (the idle fade never dims the log/composer).
+    expect(hudMobileCss).toContain(
+      'body.mobile-touch.mobile-chat-open #chatlog-wrap,\n  body.mobile-touch.mobile-chat-open #chatlog-tabs,\n  body.mobile-touch.mobile-chat-open #chat-input,\n  body.mobile-touch.mobile-chat-open #mobile-chat {\n    opacity: 1;',
+    );
+  });
+
+  it('ships the mobile party-chip CSS with a 40px touch floor, scoped to body.mobile-touch', () => {
+    // The chip meets the mobile touch floor and reveals the frames only under the
+    // painter-driven .party-expanded class (collapsed by default hides the rows + Leave).
+    const chipRule = hudMobileCss.match(/body\.mobile-touch #party-chip \{([^}]*)\}/)?.[1] ?? '';
+    expect(chipRule).toMatch(/min-width:\s*40px/);
+    expect(chipRule).toMatch(/min-height:\s*40px/);
+    // The chevron rotates on expand (the repo's SVG chevron pattern, not a unicode arrow).
+    expect(hudMobileCss).toContain(
+      'body.mobile-touch #party-frames.party-expanded #party-chip .ui-icon {\n    transform: rotate(90deg);',
+    );
+    // Collapsed OR chat-yielded (no .party-expanded on mobile) hides the member rows +
+    // Leave button, so both states leave only the chip (if present) as the party UI.
+    expect(hudMobileCss).toContain(
+      'body.mobile-touch #party-frames:not(.party-expanded) .party-frame,',
+    );
+    expect(hudMobileCss).toContain(
+      'body.mobile-touch #party-frames:not(.party-expanded) #party-leave {\n    display: none;',
+    );
   });
 
   it('drives the arena window relocalize from refreshLocalizedDynamicUi (live language switch)', () => {
@@ -986,14 +1092,18 @@ describe('client HTML shell', () => {
     expect(hudMobileCss).toContain(
       'body.mobile-touch #party-frames {\n    position: fixed;\n    left: max(20px, calc(env(safe-area-inset-left) + 10px));\n    top: calc(max(8px, env(safe-area-inset-top)) + 74px);',
     );
-    expect(hudMobileCss).toContain(
-      'body.mobile-touch #party-frames.below-target {\n    top: calc(max(8px, env(safe-area-inset-top)) + 130px);',
-    );
+    // The base below-target offset was nudged +5px (130 -> 135) so the new first-child
+    // collapse chip clears the target frame's bottom edge; a comment now sits between the
+    // selector and the top, so assert the selector and the pinned value independently.
+    expect(hudMobileCss).toContain('body.mobile-touch #party-frames.below-target {');
+    expect(hudMobileCss).toContain('top: calc(max(8px, env(safe-area-inset-top)) + 135px);');
     expect(hudMobileCss).toContain(
       'body.mobile-touch #party-frames .party-frame {\n    width: 112px;\n    min-height: 40px;',
     );
+    // Keyed on :first-of-type (not :first-child): the collapse chip is now the
+    // container's first child, so the top member row is selected by :first-of-type.
     expect(hudMobileCss).toContain(
-      'body.mobile-touch #party-frames .party-frame:not(:first-child) {\n    margin-top: -1px;',
+      'body.mobile-touch #party-frames .party-frame:not(:first-of-type) {\n    margin-top: -1px;',
     );
     expect(hudMobileCss).toContain(
       'body.mobile-touch #party-frames #party-leave {\n    grid-column: 1;\n    grid-row: 3;\n    justify-self: start;\n    width: auto;\n    min-width: 0;\n    min-height: 40px;',
@@ -1004,9 +1114,8 @@ describe('client HTML shell', () => {
     expect(hudMobileCss).toContain(
       'body.mobile-touch #target-frame {\n      left: max(6px, env(safe-area-inset-left));\n      top: calc(max(6px, env(safe-area-inset-top)) + 56px);',
     );
-    expect(hudMobileCss).toContain(
-      'body.mobile-touch #party-frames.below-target {\n      top: calc(max(6px, env(safe-area-inset-top)) + 100px);',
-    );
+    // Landscape below-target offset likewise nudged +5px (100 -> 105) for the chip.
+    expect(hudMobileCss).toContain('top: calc(max(6px, env(safe-area-inset-top)) + 105px);');
     expect(hudMobileCss).not.toContain('body.mobile-touch.mobile-left-handed #xpbar,');
     // The XP fill fraction is mirrored into --xp-fill on BOTH the #xpbar and the
     // #player-frame (the mobile ring around the class circle reads it). The painter

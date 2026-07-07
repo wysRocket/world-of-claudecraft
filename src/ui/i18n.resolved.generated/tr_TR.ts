@@ -291,6 +291,7 @@ export const tr_TR: EnTranslations = {
       "targetLabel": "Hedefin",
       "targetAnnounce": "{name} hedefini işaretle",
       "partyLabel": "Takımın",
+      "partyChip": "Party",
       "partyGroup": "Grup {n}",
       "durationUnitSeconds": "sn",
       "durationUnitMinutes": "dk",
@@ -320,7 +321,8 @@ export const tr_TR: EnTranslations = {
       "actionPageIndicator": "Sayfa {page}",
       "targetCycle": "Hedefi değiştir",
       "targetCycleShort": "Hedef",
-      "spellbookPageLabel": "Sayfa {page}"
+      "spellbookPageLabel": "Sayfa {page}",
+      "hideKeyboard": "Hide keyboard"
     },
     "tutorial": {
       "moveBodyTouch": "Hareket etmek için hareket çubuğunu kullan ve etrafa bakmak için ekranı sürükle. Başlamak için birkaç adım at.",

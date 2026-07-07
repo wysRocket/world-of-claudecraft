@@ -291,6 +291,7 @@ export const zh_CN: EnTranslations = {
       "targetLabel": "你的目标",
       "targetAnnounce": "目标：{name}",
       "partyLabel": "你的队伍",
+      "partyChip": "小队",
       "partyGroup": "小队 {n}",
       "durationUnitSeconds": "秒",
       "durationUnitMinutes": "分",
@@ -320,7 +321,8 @@ export const zh_CN: EnTranslations = {
       "actionPageIndicator": "第{page}页",
       "targetCycle": "切换目标",
       "targetCycleShort": "目标",
-      "spellbookPageLabel": "页{page}"
+      "spellbookPageLabel": "页{page}",
+      "hideKeyboard": "隐藏键盘"
     },
     "tutorial": {
       "moveBodyTouch": "使用摇杆移动，拖动屏幕环顾四周。先走几步开始吧。",

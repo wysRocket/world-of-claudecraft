@@ -1285,6 +1285,20 @@
   body.mobile-touch.mobile-chrome-idle #mobile-consumables-toggle {
     opacity: 0.5;
   }
+  /* Chat has full contrast while open: when the player is deliberately using chat
+     (body.mobile-chat-open), the log, tabs, composer, and the Chat button itself stay
+     at full opacity even if the idle-fade class is still armed on <body>. The
+     idle-fade above dims #mobile-combat-controls .mobile-btn (which the Chat button is
+     one of), so this pins it (and the log/tabs/composer, which the fade does not
+     select but which must never read as mid-fade) back to opacity 1 while chat is up.
+     This is about TEXT/control contrast only; it does NOT touch the deliberate
+     reply-mode chat-background fade (--chat-opacity below), which stays as designed. */
+  body.mobile-touch.mobile-chat-open #chatlog-wrap,
+  body.mobile-touch.mobile-chat-open #chatlog-tabs,
+  body.mobile-touch.mobile-chat-open #chat-input,
+  body.mobile-touch.mobile-chat-open #mobile-chat {
+    opacity: 1;
+  }
   @media (prefers-reduced-motion: reduce) {
     body.mobile-touch #mobile-combat-controls .mobile-btn,
     body.mobile-touch #mobile-utility-cluster .mobile-btn {
@@ -1373,6 +1387,61 @@
     min-height: 40px;
     box-sizing: border-box;
     font-size: 16px;
+  }
+  /* The mobile keyboard-dismiss chevron (#chat-dismiss): a down-chevron button seated
+     at the chat composer's top-right corner, shown only while chat is open. Tapping it
+     blurs the composer so the on-screen keyboard drops WITHOUT closing chat (main.ts).
+     Hidden by default (the composer exists in the template even off-chat); revealed
+     under body.mobile-chat-open. The chevron reuses the hydrated `next` triangle
+     rotated to point DOWN (the SVG-chevron pattern, no unicode arrow). */
+  body.mobile-touch #chat-dismiss {
+    display: none;
+  }
+  body.mobile-touch.mobile-chat-open #chat-dismiss {
+    position: fixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    right: auto;
+    /* Seated at the COMPOSER's right corner (not the screen edge): the composer is
+       left max(10px,...) wide min(360px, 100vw-20px), so its right edge is
+       (left + width); park the 40px chevron just inside that, vertically aligned with
+       the composer's resting bottom (316px). It reads as the composer's own dismiss
+       affordance rather than a disconnected far-right button. */
+    left: calc(max(10px, env(safe-area-inset-left)) + min(360px, 100vw - 20px) - 40px);
+    bottom: calc(316px + env(safe-area-inset-bottom));
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--mobile-glass-border, #cba43d8c);
+    border-radius: 10px;
+    background: var(--mobile-glass-bg, linear-gradient(160deg, #23212de3, #0e0d10eb));
+    -webkit-backdrop-filter: blur(var(--mobile-glass-blur, 8px));
+    backdrop-filter: blur(var(--mobile-glass-blur, 8px));
+    color: #d8b98a;
+    cursor: var(--cursor-point);
+    z-index: 26;
+    box-shadow:
+      inset 0 1px 0 #ffffff14,
+      0 2px 8px #0009;
+  }
+  body.mobile-touch.mobile-chat-open #chat-dismiss:active {
+    border-color: var(--gold);
+    color: #fff;
+  }
+  /* The down chevron: the `next` triangle rotated a quarter turn to point down. */
+  body.mobile-touch #chat-dismiss .ui-icon {
+    width: 13px;
+    height: 13px;
+    transform: rotate(90deg);
+  }
+  /* Keyboard open: the composer abandons its resting seat and docks just above the
+     keyboard's top edge (see #chat-input below at bottom: calc(100vh -
+     --mobile-keyboard-visible-vh + 8px)); the dismiss chevron follows, aligned with the
+     composer's keyboard-open bottom at its right edge. */
+  body.mobile-touch.mobile-keyboard-open.mobile-chat-open #chat-dismiss {
+    top: auto;
+    bottom: calc(100vh - var(--mobile-keyboard-visible-vh, 100vh) + 8px);
   }
   /* Issue 1577 (5): once the on-screen keyboard opens (mobile-keyboard-open,
      toggled by keyboard_viewport_applier.ts off the visualViewport resize
@@ -1473,7 +1542,9 @@
     z-index: 5;
   }
   body.mobile-touch #party-frames.below-target {
-    top: calc(max(8px, env(safe-area-inset-top)) + 130px);
+    /* +135px (was 130px): the collapse chip is the container's first child now, so keep
+       it clear of the target frame's bottom edge (the same +5px nudge as landscape). */
+    top: calc(max(8px, env(safe-area-inset-top)) + 135px);
   }
   /* party rows are role="button" tap targets (tap to target a member), so they
      must clear the 40x40 mobile touch floor, not the compact desktop
@@ -1503,11 +1574,16 @@
     -webkit-backdrop-filter: blur(var(--mobile-glass-blur, 8px));
     backdrop-filter: blur(var(--mobile-glass-blur, 8px));
   }
-  body.mobile-touch #party-frames .party-frame:first-child {
+  /* Round the top corners of the FIRST member frame and pull every later one up 1px.
+     Keyed on :first-of-type (the first .party-frame div) rather than :first-child,
+     because the collapse chip (a <button>) is now the container's first child, so the
+     top member row is no longer :first-child; :first-of-type still selects it whether
+     or not the chip precedes it (the chip and Leave button are buttons, the rows divs). */
+  body.mobile-touch #party-frames .party-frame:first-of-type {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
   }
-  body.mobile-touch #party-frames .party-frame:not(:first-child) {
+  body.mobile-touch #party-frames .party-frame:not(:first-of-type) {
     margin-top: -1px;
   }
   body.mobile-touch #party-frames .party-frame .pfm-name {
@@ -1555,6 +1631,72 @@
     padding: 4px 12px;
     border-radius: 5px;
     font-size: 10px;
+  }
+  /* The mobile-only collapse chip (a "Party" disclosure header) the party painter
+     seats first in #party-frames while in a party on the touch HUD. Collapsed by
+     default (a persisted USER choice, never a graphics-tier signal): only the chip
+     shows; the member frames + Leave button reveal when the container gains
+     .party-expanded. The chip reuses the glass look + chevron rotate of the
+     consumables toggle. Never rendered on desktop (the painter builds it only under
+     body.mobile-touch), so the desktop stack is unchanged. */
+  body.mobile-touch #party-frames.has-party-chip {
+    grid-template-rows: auto auto auto;
+  }
+  body.mobile-touch #party-chip {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 40px;
+    min-height: 40px;
+    margin: 0 0 3px;
+    padding: 6px 12px;
+    border: 1px solid var(--mobile-glass-border, #cba43d8c);
+    border-radius: 8px;
+    background: var(--mobile-glass-bg, linear-gradient(160deg, #23212de3, #0e0d10eb));
+    -webkit-backdrop-filter: blur(var(--mobile-glass-blur, 8px));
+    backdrop-filter: blur(var(--mobile-glass-blur, 8px));
+    color: #d8b98a;
+    cursor: var(--cursor-point);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow:
+      inset 0 1px 0 #ffffff14,
+      0 2px 8px #0009;
+  }
+  body.mobile-touch #party-chip:active {
+    border-color: var(--gold);
+    color: #fff;
+  }
+  body.mobile-touch #party-chip .ui-icon {
+    width: 11px;
+    height: 11px;
+    flex: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    body.mobile-touch #party-chip .ui-icon {
+      transition: transform 0.12s ease;
+    }
+  }
+  /* Expanded: the chevron points down and the frames show. On mobile the member rows
+     + Leave button show ONLY while the container carries .party-expanded, so BOTH the
+     collapsed state (chip present, not expanded) AND the chat-yield state (chip removed
+     while chat is open) hide the whole stack, leaving the chip (if present) as the only
+     party UI. On desktop this rule never applies (no body.mobile-touch), so the desktop
+     stack is unchanged. */
+  body.mobile-touch #party-frames.party-expanded #party-chip {
+    border-color: var(--gold-dim);
+    color: #ffdf9c;
+  }
+  body.mobile-touch #party-frames.party-expanded #party-chip .ui-icon {
+    transform: rotate(90deg);
+  }
+  body.mobile-touch #party-frames:not(.party-expanded) .party-frame,
+  body.mobile-touch #party-frames:not(.party-expanded) #party-leave {
+    display: none;
   }
   body.mobile-touch #buff-bar {
     right: max(10px, env(safe-area-inset-right));
@@ -3047,7 +3189,10 @@
       top: calc(max(6px, env(safe-area-inset-top)) + 58px);
     }
     body.mobile-touch #party-frames.below-target {
-      top: calc(max(6px, env(safe-area-inset-top)) + 100px);
+      /* +105px (was 100px): the collapse chip is now the container's first child, and
+         a chip crowding the scaled target frame reads as a mis-tap pair; the extra 5px
+         keeps the chip clear of the target frame's bottom edge (>= 4px). */
+      top: calc(max(6px, env(safe-area-inset-top)) + 105px);
     }
     /* keep the 40x40 touch floor in landscape too (was 25px); width matches the
        base double-stack tier (issue 1577 (2), a further trim from the old

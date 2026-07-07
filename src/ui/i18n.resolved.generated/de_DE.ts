@@ -291,6 +291,7 @@ export const de_DE: EnTranslations = {
       "targetLabel": "Euer Ziel",
       "targetAnnounce": "Ziel: {name}",
       "partyLabel": "Eure Gruppe",
+      "partyChip": "Party",
       "partyGroup": "Gruppe {n}",
       "durationUnitSeconds": "s",
       "durationUnitMinutes": "Min",
@@ -320,7 +321,8 @@ export const de_DE: EnTranslations = {
       "actionPageIndicator": "Seite {page}",
       "targetCycle": "Ziel tauschen",
       "targetCycleShort": "Ziel",
-      "spellbookPageLabel": "Seite {page}"
+      "spellbookPageLabel": "Seite {page}",
+      "hideKeyboard": "Hide keyboard"
     },
     "tutorial": {
       "moveBodyTouch": "Nutze den Bewegungsstick zum Bewegen und zieh über den Bildschirm, um dich umzusehen. Mach ein paar Schritte, um zu beginnen.",

@@ -294,6 +294,7 @@ import { MobileActionRingPainter } from './mobile_action_ring_painter';
 import { MovableFrame } from './movable_frame';
 import { OptionsWindow } from './options_window';
 import { makeWriterFacet, type PainterHostPresentation } from './painter_host';
+import { loadPartyCollapsed, savePartyCollapsed } from './party_collapse';
 import type { PartyRowAuraDeps } from './party_frame_row';
 import { partyFrameSignature, selectPartyFrameMembers } from './party_frames';
 import { PartyFramesPainter } from './party_frames_painter';
@@ -3153,6 +3154,11 @@ export class Hud {
       attachTooltip: (el, html) => this.attachTooltip(el, html),
     },
   };
+  // The persisted mobile party-collapse choice (default collapsed). Only consulted on
+  // the touch HUD; the chip's tap flips + persists it and re-drives setCollapse. It is
+  // a pure USER toggle (party HP is actionable info), never influenced by
+  // data-fx-level, reduce-motion, or the FPS governor.
+  private partyCollapsed = loadPartyCollapsed();
   // The party frames are N further instances of the unit_frame family, one per
   // member, behind a keyed node pool that replaces the old per-rebuild innerHTML wipe
   // + click/contextmenu re-attach. The pool owns #party-frames; updatePartyFrames
@@ -3167,6 +3173,8 @@ export class Hud {
       onContextMenu: (pid, name, x, y) => this.openContextMenu(pid, name, x, y),
       onLeave: () => this.sim.partyLeave(),
       leaveLabel: () => t('hud.social.leaveParty'),
+      chipLabel: () => t('hudChrome.unitFrame.partyChip'),
+      onToggleCollapse: () => this.togglePartyCollapsed(),
       partyAuras: this.partyAurasDeps,
     },
   );
@@ -12427,6 +12435,27 @@ export class Hud {
   // Party frames
   // -------------------------------------------------------------------------
 
+  /** Flip and persist the mobile party-collapse choice (the chip's tap), then re-drive
+   *  the chip immediately so the toggle lands this frame rather than next tick. A pure
+   *  USER action; the persisted flag is the only input to the collapse, never a
+   *  graphics tier / reduce-motion / governor signal. */
+  private togglePartyCollapsed(): void {
+    this.partyCollapsed = !this.partyCollapsed;
+    savePartyCollapsed(this.partyCollapsed);
+    this.partyFramesPainter.setCollapse(
+      !!this.sim.partyInfo,
+      this.isMobileLayout(),
+      this.partyCollapsed,
+      this.isMobileChatOpen(),
+    );
+  }
+
+  /** Whether the mobile chat overlay (body.mobile-chat-open) is up. While it is, the
+   *  party UI yields (see setCollapse); a transient read, never persisted. */
+  private isMobileChatOpen(): boolean {
+    return document.body.classList.contains('mobile-chat-open');
+  }
+
   private updatePartyFrames(): void {
     const target =
       this.sim.player.targetId !== null ? this.sim.entities.get(this.sim.player.targetId) : null;
@@ -12444,6 +12473,19 @@ export class Hud {
       this.wasLeaderOfParty = false;
       return;
     }
+    // Drive the mobile collapse chip from (in a party, on the touch HUD, the persisted
+    // collapse choice, whether mobile chat is open), every frame. Fully elided: a
+    // steady state (unchanged inputs) writes nothing. On desktop the chip is never
+    // built and the container carries no collapse class, so the desktop stack is
+    // unchanged. While mobile chat is open the party UI yields (chip + frames hide) so
+    // the chat overlay owns the top-left; the persisted choice is untouched, so closing
+    // chat restores it.
+    this.partyFramesPainter.setCollapse(
+      true,
+      this.isMobileLayout(),
+      this.partyCollapsed,
+      this.isMobileChatOpen(),
+    );
     // The Loot Settings window (opened on demand from the right-click menu) is
     // repainted from authoritative state while open. The signature is low frequency
     // (loot settings + leadership + membership, NO hp/res) so it is not rebuilt every
