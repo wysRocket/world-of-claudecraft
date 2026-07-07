@@ -10,6 +10,7 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -19,6 +20,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "es_ES": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -28,6 +30,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "fr_FR": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -37,6 +40,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "fr_CA": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -47,6 +51,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "en_CA": [],
   "it_IT": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -56,6 +61,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "de_DE": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -64,11 +70,20 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.saveButton",
     "hudChrome.townFocus.title"
   ],
-  "zh_CN": [],
-  "zh_TW": [],
-  "ko_KR": [],
-  "ja_JP": [],
+  "zh_CN": [
+    "hudChrome.discord.roleTag.coredevs"
+  ],
+  "zh_TW": [
+    "hudChrome.discord.roleTag.coredevs"
+  ],
+  "ko_KR": [
+    "hudChrome.discord.roleTag.coredevs"
+  ],
+  "ja_JP": [
+    "hudChrome.discord.roleTag.coredevs"
+  ],
   "pt_BR": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -77,8 +92,21 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.saveButton",
     "hudChrome.townFocus.title"
   ],
-  "ru_RU": [],
+  "ru_RU": [
+    "hudChrome.discord.roleTag.coredevs"
+  ],
+  "cs_CZ": [
+    "hudChrome.discord.roleTag.coredevs",
+    "hudChrome.townFocus.budgetLabel",
+    "hudChrome.townFocus.decreaseAria",
+    "hudChrome.townFocus.hint",
+    "hudChrome.townFocus.increaseAria",
+    "hudChrome.townFocus.notInTownHint",
+    "hudChrome.townFocus.saveButton",
+    "hudChrome.townFocus.title"
+  ],
   "nl_NL": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -88,6 +116,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "pl_PL": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -97,6 +126,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "id_ID": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -106,6 +136,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "tr_TR": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -115,6 +146,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "sv_SE": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -124,6 +156,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "vi_VN": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",
@@ -133,6 +166,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.townFocus.title"
   ],
   "da_DK": [
+    "hudChrome.discord.roleTag.coredevs",
     "hudChrome.townFocus.budgetLabel",
     "hudChrome.townFocus.decreaseAria",
     "hudChrome.townFocus.hint",

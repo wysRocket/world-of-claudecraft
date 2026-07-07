@@ -44,8 +44,10 @@ import {
   HARVEST_COMPONENT_ITEMS,
   harvestTierQuantity,
   isHarvestableCorpse,
+  isSignableMaterialRarity,
   resolveCorpseFocusHarvest,
   resolveCorpseHarvest,
+  rollCorpseMaterialRarity,
 } from './professions/gathering';
 import type { SimContext } from './sim_context';
 import { dist2d, type Entity, INTERACT_RANGE, type InvSlot, OBJECT_RESPAWN } from './types';
@@ -263,7 +265,17 @@ export function harvestCorpse(
     // #1142 roll for a focused component; an unfocused component's tier is
     // exactly the roll above, untouched.
     const tier = applyFocusTierBonus(y.tier, y.component, meta.townFocus);
-    ctx.addItem(itemId, harvestTierQuantity(tier), meta.entityId);
+    // #1145: a rare-or-better monster material is stamped with the harvester's
+    // name (a non-fungible instance slot); anything below that rarity stays a
+    // plain fungible grant at the (focus-adjusted) tier's yield quantity, same
+    // as before this issue. One rarity roll per yielded component, independent
+    // of the component's tier roll/bonus above.
+    const rarity = rollCorpseMaterialRarity(ctx.rng);
+    if (isSignableMaterialRarity(rarity)) {
+      ctx.addItemInstance(itemId, { signer: meta.name }, meta.entityId);
+    } else {
+      ctx.addItem(itemId, harvestTierQuantity(tier), meta.entityId);
+    }
   }
 }
 
