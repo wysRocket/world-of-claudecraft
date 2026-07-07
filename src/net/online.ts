@@ -20,13 +20,7 @@ import {
   type TalentAllocation,
   talentPointsAtLevel,
 } from '../sim/content/talents';
-import {
-  abilitiesKnownAt,
-  CLASSES,
-  COMMON_RECIPES,
-  NPCS,
-  resolveDelveShopOffers,
-} from '../sim/data';
+import { ALL_RECIPES, abilitiesKnownAt, CLASSES, NPCS, resolveDelveShopOffers } from '../sim/data';
 import { deadTargetSelectable } from '../sim/dead_target';
 import { LEADERBOARD_PAGE_SIZE } from '../sim/leaderboard_page';
 import type { Ante, PickAction } from '../sim/lockpick';
@@ -1003,10 +997,10 @@ export class ClientWorld implements IWorld {
   nodeHarvestableByMe(_nodeId: string): boolean {
     return true;
   }
-  // Static content read (#1127): the common-tier recipe list ships with the
-  // client bundle like every other content table, so this needs no wire
-  // round-trip. See src/world_api/professions.ts.
-  recipeList: readonly RecipeDef[] = COMMON_RECIPES;
+  // Static content read (#1127, extended #1132): the full recipe list (common
+  // tier plus combo recipes) ships with the client bundle like every other
+  // content table, so this needs no wire round-trip. See src/world_api/professions.ts.
+  recipeList: readonly RecipeDef[] = ALL_RECIPES;
   // Craft-result surface (#1127), mirrored from the server's `craftResult`
   // event (applyEvent below). Null until this session's first craft attempt.
   lastCraftResult: CraftResultView | null = null;

@@ -198,10 +198,11 @@ describe('craftItem command (#1127)', () => {
     expect(sim.countItem('tough_jerky', pid)).toBe(1);
   });
 
-  it('the IWorld recipeList read surface exposes the common-tier recipe content', () => {
+  it('the IWorld recipeList read surface exposes every recipe, common and combo alike (#1132 review)', () => {
     const sim = makeSim();
-    expect(sim.recipeList.length).toBe(COMMON_RECIPES.length);
-    expect(sim.recipeList.map((r) => r.id).sort()).toEqual(COMMON_RECIPES.map((r) => r.id).sort());
+    const allIds = [...COMMON_RECIPES, ...COMBO_RECIPES].map((r) => r.id).sort();
+    expect(sim.recipeList.length).toBe(COMMON_RECIPES.length + COMBO_RECIPES.length);
+    expect(sim.recipeList.map((r) => r.id).sort()).toEqual(allIds);
   });
 
   it('denies a craft with an error event and leaves lastCraftResult reflecting the denial', () => {

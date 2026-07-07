@@ -26,7 +26,8 @@
 // weaponcrafting (both Material pole), and alchemy is adjacent to
 // engineering (both Experimental pole). Reagents reuse the same harvested
 // materials as the common tier; outputs reuse existing BASE_ITEMS entries
-// (boundstone_helm, elixir_of_the_bear) for the same i18n reason as above.
+// (boundstone_helm, gravewyrm_gauntlets, elixir_of_the_bear) for the same
+// i18n reason as above.
 
 import type { ProfessionRecipeRecord } from '../professions/types';
 
@@ -122,7 +123,7 @@ export const COMBO_RECIPES: ProfessionRecipeRecord[] = [
     comboRequirement: { craftA: 'armorcrafting', craftB: 'weaponcrafting', minTier: 1 },
   },
   {
-    id: 'recipe_forgeguard_bulwark_shoulders',
+    id: 'recipe_forgeguard_bulwark_gauntlets',
     professionId: 'weaponcrafting',
     resultItemId: 'gravewyrm_gauntlets',
     resultCount: 1,
@@ -151,7 +152,11 @@ export const COMBO_RECIPES: ProfessionRecipeRecord[] = [
   },
 ];
 
-const ALL_RECIPES: ProfessionRecipeRecord[] = [...COMMON_RECIPES, ...COMBO_RECIPES];
+// Exported (not just used internally by recipeById below) so the IWorld
+// recipeList read surface (Sim.recipeList / ClientWorld.recipeList) can list
+// every recipe, common and combo alike: see PR #1209 review, a combo recipe
+// omitted from recipeList was unreachable in normal play.
+export const ALL_RECIPES: ProfessionRecipeRecord[] = [...COMMON_RECIPES, ...COMBO_RECIPES];
 
 export function recipeById(recipeId: string): ProfessionRecipeRecord | undefined {
   return ALL_RECIPES.find((r) => r.id === recipeId);

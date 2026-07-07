@@ -84,10 +84,10 @@ import {
 import { applyCooldowns, type SavedCooldowns, serializeCooldowns } from './cooldown_persist';
 import type { DelveShopGate, DelveShopOffer } from './data';
 import {
+  ALL_RECIPES,
   abilitiesKnownAt,
   arenaOrigin,
   CLASSES,
-  COMMON_RECIPES,
   DEEPFEN_SHALLOWS_LAKE,
   DELVE_COMPANIONS,
   DELVE_LIST,
@@ -5144,11 +5144,12 @@ export class Sim {
     return this.nodeHarvestableByMeFor(nodeId, this.primaryId);
   }
 
-  // IWorld read surface (IWorldProfessions, #1127): the static common-tier
-  // recipe list, a plain content read (no per-player state), same shape both
-  // worlds can serve without a wire round-trip.
+  // IWorld read surface (IWorldProfessions, #1127): the full recipe list
+  // (common tier plus combo recipes, #1132), a plain content read (no
+  // per-player state), same shape both worlds can serve without a wire
+  // round-trip.
   get recipeList(): readonly RecipeDef[] {
-    return COMMON_RECIPES;
+    return ALL_RECIPES;
   }
 
   // Common-tier crafting command (#1127): a thin delegate onto

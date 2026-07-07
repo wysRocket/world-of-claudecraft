@@ -14,7 +14,7 @@
 //
 // Combo-recipe requirement (issue #1132): a recipe may carry a
 // `comboRequirement` naming one specific adjacent craft pair and a minimum
-// tier both must meet. `hasComboRequirement` checks the player's tier
+// tier both must meet. `meetsComboRequirement` checks the player's tier
 // capability in BOTH named crafts (via wheel.ts tierCapability), independent
 // of the recipe's `professionId`. Only the two named crafts ever count: a
 // player's skill in any other craft, however high, never substitutes for
