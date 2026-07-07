@@ -373,5 +373,16 @@ describe('bank wire round-trip', () => {
       { id: 'email', slots: 2, maxSlots: 2 },
       { id: 'referral', slots: 4, maxSlots: 10, count: 2, cap: 5 },
     ]);
+
+    // And the DECODE side: the ClientWorld mirror carries the populated breakdown
+    // through applySnapshot (the whole-object bank decode; a per-field rewrite that
+    // dropped bonusSources would red here while every encode pin stayed green).
+    const client = bareClient(pid);
+    (client as any).applySnapshot(snap);
+    expect(client.bankInfo?.bonusSlots).toBe(6);
+    expect(client.bankInfo?.bonusSources).toEqual([
+      { id: 'email', slots: 2, maxSlots: 2 },
+      { id: 'referral', slots: 4, maxSlots: 10, count: 2, cap: 5 },
+    ]);
   });
 });

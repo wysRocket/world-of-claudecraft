@@ -67,7 +67,10 @@ export function computeBankBonus(
   const sources: BankBonusSource[] = [];
   let bonusSlots = 0;
   for (const def of registry) {
-    const rawUnits = Math.max(0, Math.floor(def.units(facts)));
+    // The || 0 mirrors clampBonusSlots: a NaN from a malformed future units() decays
+    // to 0 instead of propagating into slots/bonusSlots (Infinity is bounded by the
+    // capUnits min below).
+    const rawUnits = Math.max(0, Math.floor(def.units(facts)) || 0);
     const earnedUnits = Math.min(rawUnits, def.capUnits);
     const slots = earnedUnits * def.slotsPerUnit;
     const row: BankBonusSource = {

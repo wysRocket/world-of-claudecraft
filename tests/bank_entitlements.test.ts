@@ -217,4 +217,22 @@ describe('computeBankBonus: a new future source row lands without touching the w
     expect(BANK_BONUS_SOURCES).toHaveLength(4);
     expect(BANK_BONUS_SOURCES.map((d) => d.id)).toEqual(['email', 'discord', 'wallet', 'referral']);
   });
+
+  it('a malformed future units() (NaN or negative) decays to 0 slots, never propagating', () => {
+    // The registry is the extensibility seam, so harden it like clampBonusSlots: a
+    // future row whose criterion misbehaves must not poison bonusSlots (NaN) or
+    // subtract capacity (negative). Infinity is bounded by the capUnits min.
+    const badRows: BankBonusSourceDef[] = [
+      { id: 'nan_source', slotsPerUnit: 2, capUnits: 1, units: () => Number.NaN },
+      { id: 'neg_source', slotsPerUnit: 2, capUnits: 1, units: () => -3 },
+      { id: 'inf_source', slotsPerUnit: 2, capUnits: 1, units: () => Number.POSITIVE_INFINITY },
+    ];
+    const r = computeBankBonus(facts({ emailVerified: true }), [...BANK_BONUS_SOURCES, ...badRows]);
+    expect(rowFor(r, 'nan_source')).toEqual({ id: 'nan_source', slots: 0, maxSlots: 2 });
+    expect(rowFor(r, 'neg_source')).toEqual({ id: 'neg_source', slots: 0, maxSlots: 2 });
+    expect(rowFor(r, 'inf_source')).toEqual({ id: 'inf_source', slots: 2, maxSlots: 2 });
+    expect(Number.isFinite(r.bonusSlots)).toBe(true);
+    expect(r.bonusSlots).toBe(sumSlots(r));
+    expect(r.bonusSlots).toBe(4); // email +2, inf bounded to +2, nan/neg contribute 0
+  });
 });
