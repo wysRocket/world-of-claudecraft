@@ -31,6 +31,7 @@ import type { MaterialRarity } from '../sim/professions/gathering';
 import { emptyCraftSkills } from '../sim/professions/wheel';
 import { computeQuestState, type ResolvedAbility } from '../sim/sim';
 import {
+  type DungeonDifficulty,
   type Entity,
   type EquipSlot,
   emptyMoveInput,
@@ -945,6 +946,7 @@ export class ClientWorld implements IWorld {
   // The raid-target markers ride the `markers` map below; IWorldPet keeps no mirror
   // field (pet state lives on the owned-mob entity wire). ---
   partyInfo: PartyInfo | null = null;
+  private selectedDungeonDifficulty: DungeonDifficulty = 'normal';
   // --- IWorldTrade: active trade-window state, mirrored from the snapshot self
   // (`s.trade`, delta-omitted). ---
   tradeInfo: TradeInfo | null = null;
@@ -1786,6 +1788,7 @@ export class ClientWorld implements IWorld {
         this.questLog = new Map((s.qlog as QuestProgress[]).map((q) => [q.questId, q]));
       if (s.qdone !== undefined) this.questsDone = new Set(s.qdone);
       if (s.lockouts !== undefined) this.selfLockouts = s.lockouts as Record<string, number>;
+      if (s.ddiff === 'normal' || s.ddiff === 'heroic') this.selectedDungeonDifficulty = s.ddiff;
       if (s.qlog !== undefined || s.qdone !== undefined) this.pendingQuestCommands?.clear();
       // IWorldTalents facet (W7) self-decode: tal is delta-guarded (omitted keeps
       // the prior mirror); the known rebuild below is display-only (re-renders what
@@ -2363,6 +2366,16 @@ export class ClientWorld implements IWorld {
   }
   leaveDungeon(): void {
     this.cmd({ cmd: 'leave_dungeon' });
+  }
+  dungeonDifficulty(): DungeonDifficulty {
+    return this.selectedDungeonDifficulty ?? 'normal';
+  }
+  setDungeonDifficulty(difficulty: DungeonDifficulty): void {
+    this.selectedDungeonDifficulty = difficulty;
+    this.cmd({ cmd: 'set_dungeon_difficulty', difficulty });
+  }
+  buyHeroicVendorItem(itemId: string): void {
+    this.cmd({ cmd: 'heroic_buy', itemId });
   }
   // Raid lockouts mirrored from snapshot self as {dungeonId: expiryEpochMs}; the
   // remaining time is derived locally so the countdown ticks down without traffic.
