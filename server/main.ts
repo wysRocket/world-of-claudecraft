@@ -2354,18 +2354,22 @@ export async function startServer(): Promise<http.Server> {
     await game.saveMarket();
     await game.saveMail();
     await game.endAllPlaySessions();
+    // Drain any bank_ledger writes still queued on the FIFO tail BEFORE the lease
+    // sweep: once the leases drop, a replacement process can load the same character
+    // and write new ledger rows, and rows still queued here would flush after them
+    // with higher insertion ids, inverting the id order the offline audit replays by
+    // (false negative_net / purchased_regression alarms). A clean restart loses no
+    // audit rows this way (a crash still can; the audit tolerates that as a
+    // transient mismatch). Rejections log inside the writer, so the drain never
+    // throws.
+    await bankLedgerIdle();
     // Drop every character load lease this process holds so a clean restart can
     // reload its characters immediately instead of waiting out the lease TTL.
-    // Runs before pool.end(); a failure here must not abort the drain, so log
+    // Runs before pool.end(); a failure here must not abort the shutdown, so log
     // and continue to close the pool.
     await releaseAllCharacterLeases().catch((err) =>
       console.error('lease release-all failed:', err),
     );
-    // Drain any bank_ledger writes still queued on the FIFO tail so a clean
-    // restart loses no audit rows (a crash still can; the offline audit
-    // tolerates that as a transient mismatch). Rejections log inside the
-    // writer, so the drain itself never throws.
-    await bankLedgerIdle();
     await game.chatLog.stop();
     await pool.end();
     process.exit(0);
