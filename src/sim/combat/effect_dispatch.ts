@@ -33,6 +33,7 @@ import type { AbilityDef, Entity } from '../types';
 import { armorReduction, FISHING_CAST_ID, meleeMissChance } from '../types';
 import { isRooted } from './cc';
 import { consumeNextAttackCrit } from './empower_next';
+import { runWeaponProcs } from './equip_procs';
 import { exclusiveAuraConflicts } from './exclusive_aura';
 
 const CHARGE_MAX_DURATION = 3; // seconds before a blocked charge gives up
@@ -112,6 +113,11 @@ export function runEffects(
           ctx.awardCombo(p, target, ability.awardsCombo);
           comboAwarded = true;
         }
+        // Legendary on-spell-damage weapon procs (e.g. Deathless Heartwood's
+        // Deathbloom). Only a landed damaging SPELL triggers it; a physical special
+        // routed through this same case does not. No-op (no rng draw) unless the
+        // caster wields a proc weapon with a spellDamage proc.
+        if (isSpell) runWeaponProcs(ctx, p, target, 'spellDamage');
         break;
       }
       case 'finisherDamage': {
@@ -706,6 +712,30 @@ export function runEffects(
         p.chargePath = ctx.findChargePath(p, target);
         if (p.resourceType === 'rage') p.resource = Math.min(p.maxResource, p.resource + 9);
         ctx.enterCombat(p, target);
+        break;
+      }
+      // The Vale Cup sport moves (docs/prd/vale-cup.md). All three route to the
+      // vale_cup module through the seam and silently no-op unless the caster
+      // is seated in the live Sowfield match's play phase.
+      case 'ballKick': {
+        ctx.vcupBallKick(p, eff.power, eff.loft, ability.range);
+        break;
+      }
+      case 'ballPass': {
+        ctx.vcupBallPass(p, eff.power, eff.loft, ability.range);
+        break;
+      }
+      case 'ballShoot': {
+        ctx.vcupShoot(p, eff.power, eff.loft, ability.range);
+        break;
+      }
+      case 'sportDash': {
+        ctx.vcupSportDash(p, eff.distance, eff.catchBall === true);
+        break;
+      }
+      case 'sportShove': {
+        if (!target || target.dead) break;
+        ctx.vcupSportShove(p, target, eff.distance);
         break;
       }
       case 'sunder': {

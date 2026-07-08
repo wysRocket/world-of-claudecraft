@@ -308,10 +308,19 @@ export const fr_FR: EnTranslations = {
       "autorun": "Course automatique",
       "jump": "Sauter",
       "leaderboard": "Classement",
+      "dailyRewards": "Récompenses",
       "nameplates": "Noms",
       "haptics": "Vibrations",
       "hapticsOff": "Vibrations désactivées",
-      "toggleHaptics": "Activer/désactiver les vibrations"
+      "toggleHaptics": "Activer/désactiver les vibrations",
+      "hotbarPage": "Techniques",
+      "hotbarPageAria": "Afficher la série de techniques suivante",
+      "actionRing": "Actions de combat",
+      "actionPageToggle": "Changer de page d'action",
+      "actionPageIndicator": "Page {page}",
+      "targetCycle": "Échanger la cible",
+      "targetCycleShort": "Cible",
+      "spellbookPageLabel": "Page {page}"
     },
     "tutorial": {
       "moveBodyTouch": "Utilise le joystick de déplacement pour te déplacer et fais glisser l'écran pour regarder autour de toi. Fais quelques pas pour commencer.",
@@ -360,7 +369,9 @@ export const fr_FR: EnTranslations = {
       "hoursMinutes": "{h}h {m}min",
       "minutes": "{m}min",
       "lessThanMinute": "<1min",
-      "lockedToast": "Vous êtes verrouillé sur {raid}. Déverrouillage dans {time}."
+      "lockedToast": "Vous êtes verrouillé sur {raid}. Déverrouillage dans {time}.",
+      "heroicName": "{name} héroïque",
+      "heroicLocked": "Vous êtes verrouillé sur {name} héroïque."
     },
     "compass": {
       "N": "N",
@@ -382,11 +393,149 @@ export const fr_FR: EnTranslations = {
       "emoteWheel": "Roue des emotes",
       "targetFriendly": "Cibler l'allié le plus proche",
       "targetFriendlyNext": "Changer de cible alliée",
-      "discord": "Discord"
+      "discord": "Discord",
+      "valecup": "Coupe du Val"
+    },
+    "vcup": {
+      "title": "La Coupe du Val",
+      "shootPower": "PUISSANCE",
+      "close": "Fermer la fenêtre de la Coupe du Val",
+      "offlineNote": "Le livre des rencontres est fermé. La Coupe du Val n'est pas disponible pour le moment.",
+      "recordLine": "Votre palmarès : {wins} victoires, {losses} défaites, {draws} nuls.",
+      "bracketsAria": "Format du match",
+      "bracketLabel": "{n}c{n}",
+      "waitingCount": "{count} en attente",
+      "nationsHeading": "Nation de bannière",
+      "nation": {
+        "vale": "Val d'Eastbrook",
+        "mirefen": "Le Mirefen",
+        "thornpeak": "Thornpeak",
+        "coliseum": "Le Colisée cendré",
+        "choir": "Le Chœur pâle",
+        "ogre": "Les Clans ogres",
+        "moon": "La Lune pâle",
+        "copperdig": "La Fouille du cuivre"
+      },
+      "awayNote": "Si les deux camps arborent la même bannière, l'équipe visiteuse joue avec la palette inversée.",
+      "rolesHeading": "Rôle sportif",
+      "role": {
+        "allrounder": {
+          "name": "Polyvalent",
+          "desc": "Un peu de tout : frappe, botte et un coup d'épaule loyal."
+        },
+        "striker": {
+          "name": "Attaquant",
+          "desc": "Vit pour la longue botte et le crochet éclair."
+        },
+        "sweeper": {
+          "name": "Libéro",
+          "desc": "Bouscule les porteurs loin du ballon et dégage au loin."
+        },
+        "keeper": {
+          "name": "Gardien",
+          "desc": "Garde la surface de but à coups de prises, de plongeons et de dégagements."
+        }
+      },
+      "queue": "Rejoindre la file",
+      "leaveQueue": "Quitter la file",
+      "queueNote": "Entrez en file depuis n'importe où ; le coup de sifflet vous appellera au Pré de la Truie.",
+      "queuedStatus": "En file pour {bracket} : position {position} sur {count}.",
+      "blockNation": "Choisissez d'abord une nation de bannière.",
+      "blockPartySize": "Ce format demande un groupe plus petit.",
+      "blockNotLeader": "Seul le chef du groupe peut inscrire l'équipe en file.",
+      "inMatchNote": "Votre équipe est sur le terrain. Jouez !",
+      "deserterNote": "L'intendant s'en souvient. Vous pourrez reprendre la file dans {seconds} sec.",
+      "liveHeading": "En ce moment au Pré de la Truie",
+      "liveAria": "Coupe du Val : {nationA} {scoreA}, {nationB} {scoreB}",
+      "walkUp": "Approchez-vous du Pré de la Truie pour regarder depuis les tribunes.",
+      "noLive": "Le terrain est calme. Aucun match en cours.",
+      "boardHeading": "Tableau des vainqueurs",
+      "boardEmpty": "Aucun vainqueur enregistré pour l'instant. Le Seau de cuivre attend.",
+      "boardWins": "{count} victoires",
+      "enterAsGuild": "Entrer sous la bannière de {guild}",
+      "guildRecordLine": "Palmarès de votre guilde : {wins} victoires, {losses} défaites.",
+      "guildBoardHeading": "Bannières de guilde",
+      "guildBoardEmpty": "Aucune guilde n'est encore entrée sur le terrain. Hissez votre bannière !",
+      "guildBoardWl": "{wins} V, {losses} D",
+      "practice": "Entraînement contre des bots",
+      "practiceNote": "Lance aussitôt un match privé contre des bots sur votre propre terrain d'entraînement.",
+      "practicingNow": "À l'entraînement ({count}) :",
+      "clock": "{minutes}:{seconds}",
+      "indicatorQueued": "File de la Coupe du Val : {bracket}, position {position} sur {count}",
+      "indicatorLive": "Coupe du Val",
+      "indicatorOpen": "Ouvrir la fenêtre de la Coupe du Val",
+      "phaseCountdown": "Coup d'envoi dans {seconds}",
+      "phaseGoal": "BUT !",
+      "phaseGolden": "BUT EN OR",
+      "phaseOver": "FIN DU MATCH",
+      "bannerFound": "La Coupe du Val appelle : {nationA} contre {nationB} !",
+      "bannerCountdown": "Coup d'envoi dans {seconds}...",
+      "bannerKickoff": "COUP D'ENVOI !",
+      "bannerGoal": "BUT ! {nation} marque !",
+      "bannerSave": "ARRÊT DE {name} !",
+      "bannerGolden": "BUT EN OR : le prochain but gagne !",
+      "bannerEnd": "Fin du match : {nationA} {scoreA}, {nationB} {scoreB}",
+      "bannerWin": "Victoire au Pré de la Truie !",
+      "bannerDraw": "Match nul au Pré de la Truie.",
+      "bannerLoss": "Défaite au Pré de la Truie.",
+      "logQueued": "Vous rejoignez la file de la Coupe du Val en {bracket} (position {position}).",
+      "logUnqueued": "Vous quittez la file de la Coupe du Val.",
+      "logFound": "Votre match de la Coupe du Val est prêt : {nationA} contre {nationB}.",
+      "logRoster": "Votre camp : {allies}. Leur camp : {enemies}.",
+      "logGoal": "{name} marque pour {nation} ! {nationA} {scoreA}, {nationB} {scoreB}.",
+      "logSave": "{name} fait l'arrêt !",
+      "logWin": "Vous gagnez la rencontre au Pré de la Truie.",
+      "logDraw": "La rencontre au Pré de la Truie se termine sur un match nul.",
+      "logLoss": "Vous perdez la rencontre au Pré de la Truie.",
+      "gossipOpen": "Le livre des rencontres",
+      "gossipOpenAria": "Ouvrir la fenêtre de la Coupe du Val",
+      "mobileLabel": "Coupe",
+      "briefing": {
+        "subtitle": "Briefing d'avant-match",
+        "vs": "contre",
+        "rulesHeading": "Comment jouer",
+        "rule1": "Envoyez le ballon dans le but adverse, d'une frappe ou d'une passe, pour marquer.",
+        "rule2": "Le premier à 5 buts gagne, ou celui qui en a le plus au coup de sifflet final.",
+        "rule3": "Un match à égalité à la fin du temps réglementaire se joue au but en or : le prochain but gagne.",
+        "rule4": "Les tacles ne font que vous faire culbuter. Personne n'est blessé sous la trêve des moissons.",
+        "rule5": "Chacun peut s'approcher et vous encourager depuis les tribunes.",
+        "kitHeading": "Votre panoplie",
+        "kitNote": "Ces techniques remplacent vos capacités de classe le temps du match.",
+        "rosterHeading": "La feuille de match",
+        "you": "Vous",
+        "bot": "Bot",
+        "ready": "Je suis prêt",
+        "readyDone": "Prêt",
+        "readyAria": "Se déclarer prêt pour le coup d'envoi",
+        "waiting": "En attente que l'autre camp se déclare prêt...",
+        "whistle": "Le coup de sifflet retentit dans {seconds}s.",
+        "readyCount": "{ready} sur {total} prêts"
+      },
+      "bet": {
+        "title": "Paris du match",
+        "aria": "Paris sur le match de la Coupe du Val",
+        "closesIn": "Les paris ferment dans {seconds}s",
+        "closed": "Paris clos",
+        "prize": "Cagnotte {amount}",
+        "splitAria": "Part de la cagnotte misée sur chaque équipe",
+        "expand": "Voir les paris et miser",
+        "collapse": "Masquer les paris",
+        "oddsLabel": "Rapporte",
+        "back": "Miser sur {team}",
+        "form": "{wins}V-{losses}D",
+        "mine": "Votre pari : {amount} sur {team}",
+        "none": "Vous n'avez pas encore de pari sur ce match.",
+        "record": "Bilan de paris : {wins}V-{losses}D, {sign}{net}",
+        "wonBanner": "Votre pari est gagné !",
+        "wonLog": "Votre pari de la Coupe du Val est gagné : {amount} récupérés.",
+        "lostLog": "Votre pari de la Coupe du Val est perdu : {amount}.",
+        "refundLog": "Paris annulés, votre mise de {amount} vous a été rendue."
+      }
     },
     "options": {
       "clickMoveLeft": "Clic gauche",
       "clickMoveRight": "Clic droit",
+      "version": "v{version} ({build})",
       "browserEffects": "Effets du navigateur",
       "browserEffectsAuto": "Auto",
       "browserEffectsFull": "Complets",
@@ -418,7 +567,9 @@ export const fr_FR: EnTranslations = {
       "itemLevelLine": "Niveau d'objet {level}",
       "itemScoreLine": "Score {score}",
       "showSecondaryActionBar": "Afficher la barre d'action secondaire",
-      "showDailyRewardsChest": "Afficher le coffre des récompenses quotidiennes"
+      "showDailyRewardsChest": "Afficher le coffre des récompenses quotidiennes",
+      "mobileCameraJoystick": "Manette de caméra",
+      "mobileLeftHanded": "Disposition pour gaucher"
     },
     "controller": {
       "title": "Manette",
@@ -469,7 +620,9 @@ export const fr_FR: EnTranslations = {
         "fps01Low": "0,1 % min.",
         "ping": "Ping",
         "jitter": "Gigue",
+        "predLead": "Avance de prédiction",
         "snapshot": "Fréquence d'instantanés",
+        "serverTick": "Fréquence de tick serveur",
         "connection": "Connexion",
         "drawCalls": "Appels de rendu",
         "triangles": "Triangles",
@@ -512,7 +665,9 @@ export const fr_FR: EnTranslations = {
     "statInfo": {
       "fromYour": "Grâce à vos {value} en {stat} :",
       "names": {
-        "spellPower": "Puissance des sorts"
+        "spellPower": "Puissance des sorts",
+        "critRating": "Score de critique",
+        "hasteRating": "Score de hâte"
       },
       "desc": {
         "str": "Augmente votre puissance d'attaque, vos coups d'arme frappent donc plus fort.",
@@ -525,7 +680,9 @@ export const fr_FR: EnTranslations = {
         "spellPower": "Augmente les dégâts de vos sorts et la puissance de vos soins. Chaque point d'Intelligence confère un peu de Puissance des sorts, en plus de celle de l'équipement ou des améliorations.",
         "dps": "Vos dégâts par seconde estimés à l'arme, combinant les dégâts et la vitesse de votre arme avec votre puissance d'attaque.",
         "critChance": "Vos chances de porter un coup critique avec une attaque, infligeant le double des dégâts.",
-        "dodge": "Vos chances d'éviter complètement une attaque de mêlée, sans subir aucun dégât."
+        "dodge": "Vos chances d'éviter complètement une attaque de mêlée, sans subir aucun dégât.",
+        "critRating": "Score de critique de votre équipement et de vos bonus de panoplie, augmentant vos chances de coup critique. Environ 10 points de score confèrent 1% de critique.",
+        "hasteRating": "Score de hâte de votre équipement et de vos bonus de panoplie, accélérant vos attaques et vos incantations. Environ 10 points de score confèrent 1% de hâte."
       },
       "effects": {
         "attackPower": "+{value} Puissance d'attaque",
@@ -565,6 +722,15 @@ export const fr_FR: EnTranslations = {
     "itemSet": {
       "header": "{name} ({have}/{total})",
       "bonusLine": "({pieces}) {bonus}"
+    },
+    "itemProc": {
+      "onMeleeHit": "Chance à l'impact ({chance}%) : {effect}",
+      "onSpellDamage": "Chance sur vos sorts offensifs ({chance}%) : {effect}",
+      "onHeal": "Chance sur vos soins ({chance}%) : {effect}",
+      "chainArc": "frappe la cible avec un {name} {school} ({damage}) qui bondit sur {jumps} ennemis proches pour des dégâts décroissants",
+      "attackSlow": "et ralentit la vitesse d'attaque de la cible de {pct}% pendant {duration} s",
+      "dot": "provoque {name}, des dégâts de {school} sur la durée infligeant {total} sur {duration} s",
+      "hot": "fait éclore {name}, un soin sur la durée restaurant {total} sur {duration} s"
     },
     "questShare": {
       "notShareable": "Cette quête ne peut pas être partagée.",
@@ -753,6 +919,15 @@ export const fr_FR: EnTranslations = {
         "tusk": "Défense"
       }
     },
+    "townFocus": {
+      "title": "Priorités de la ville",
+      "hint": "Les points de priorité ajoutent un bonus au rendement de base de chaque composante. Les composantes sans priorité restent au rendement de base.",
+      "budgetLabel": "Points restants : {remaining} / {budget}",
+      "saveButton": "Enregistrer les priorités",
+      "notInTownHint": "Vous devez être en ville pour définir vos priorités.",
+      "increaseAria": "Augmenter la priorité de {component}",
+      "decreaseAria": "Réduire la priorité de {component}"
+    },
     "party": {
       "promoteLeader": "Promouvoir chef",
       "inviteUsage": "Inviter qui ? Utilisation : /invite <nom>."
@@ -768,7 +943,13 @@ export const fr_FR: EnTranslations = {
       "leaderOption": "Maître du butin : Chef (vous)",
       "masterOption": "Maître du butin : {name}"
     },
+    "dungeonDifficulty": {
+      "setHeroic": "Définir la difficulté du donjon : Héroïque",
+      "setNormal": "Définir la difficulté du donjon : Normal"
+    },
     "bags": {
+      "cannotDestroy": "Cet objet ne peut pas être détruit.",
+      "rightClickDestroy": "Clic droit pour détruire",
       "filterGroupAria": "Filtrer les sacs par catégorie",
       "filterAll": "Tous",
       "filterWeapon": "Armes",
@@ -984,6 +1165,7 @@ export const fr_FR: EnTranslations = {
       "roleTag": {
         "levyst": "Levy St",
         "admin": "Admin",
+        "coredevs": "Développeur principal",
         "devs": "Dév",
         "mods": "Modo",
         "artists": "Artiste"
@@ -1048,18 +1230,6 @@ export const fr_FR: EnTranslations = {
           "hint": "Demander de l'aide à la communauté"
         }
       }
-    },
-    "crafting": {
-      "title": "Artisanat",
-      "close": "Fermer la fabrication",
-      "craft": "Artisanat",
-      "reagentsNeeded": "Nécessite$1",
-      "reagentLine": "{name}: {have}/{required}",
-      "empty": "Aucune recette connue pour l'instant.",
-      "resultAria": "Artisanat {name}",
-      "craftedToast": "Fabriqué$1 {name}",
-      "insufficientMaterials": "Vous n'avez pas le matériel pour cela.",
-      "unknownRecipe": "Cette recette n'existe pas."
     },
     "devBadge": {
       "title": "Développeur",
@@ -1137,6 +1307,50 @@ export const fr_FR: EnTranslations = {
         "takeParcelsFirst": "Retirez les colis avant de jeter la lettre."
       }
     },
+    "bank": {
+      "title": "Banque",
+      "subtitle": "Le Coffre doré",
+      "close": "Fermer la banque",
+      "capacity": "{used}/{total}",
+      "capacityAria": "Emplacements de banque utilisés : {used} sur {total}",
+      "empty": "Votre banque est vide.",
+      "tooFar": "Vous devez être auprès d'un banquier pour consulter votre banque.",
+      "buySlots": "Acheter {count} emplacements",
+      "buySlotsMaxed": "Capacité maximale",
+      "buyConfirm": "Acheter {count} emplacements de banque supplémentaires pour {price} ?",
+      "buyConfirmAccept": "Acheter",
+      "withdrawHint": "Cliquez pour retirer",
+      "withdrawPartialHint": "Maj-clic pour retirer une quantité partielle",
+      "depositHint": "Cliquez pour déposer",
+      "depositPartialHint": "Maj-clic pour déposer une quantité partielle",
+      "cannotDeposit": "Impossible à mettre en banque",
+      "depositQuantityTitle": "Déposer {item}",
+      "depositQuantityInput": "Quantité à déposer",
+      "depositQuantityConfirm": "Déposer",
+      "withdrawQuantityTitle": "Retirer {item}",
+      "withdrawQuantityInput": "Quantité à retirer",
+      "withdrawQuantityConfirm": "Retirer",
+      "filterGroupAria": "Filtrer la banque par catégorie",
+      "sortAria": "Trier les objets de la banque",
+      "searchAria": "Rechercher un objet de la banque par son nom",
+      "depositAll": "Déposer tous les matériaux",
+      "depositAllDone": "Matériaux déposés : {count}.",
+      "depositAllFull": "Matériaux déposés : {count}. La banque est maintenant pleine.",
+      "depositAllNone": "Banque pleine : rien n'a été déposé.",
+      "bonusTitle": "Emplacements bonus",
+      "bonusEarned": "+{count}",
+      "bonusStatusEarned": "+{count}",
+      "bonusSourceEmail": "Adresse e-mail vérifiée",
+      "bonusSourceDiscord": "Discord lié",
+      "bonusSourceWallet": "Portefeuille lié",
+      "bonusSourceReferral": "Amis parrainés",
+      "bonusAdvertEmail": "Vérifiez votre adresse e-mail pour gagner 2 emplacements.",
+      "bonusAdvertDiscord": "Liez votre Discord pour gagner 2 emplacements.",
+      "bonusAdvertWallet": "Liez un portefeuille pour gagner 2 emplacements.",
+      "bonusReferralProgress": "{count}/{cap}",
+      "bonusReferralExplainer": "Invitez un ami : quand il atteint le niveau 10, vous gagnez chacun 2 emplacements, jusqu'à 5 amis.",
+      "bonusSectionAria": "Emplacements de banque bonus et comment en gagner d'autres"
+    },
     "calendar": {
       "title": "Calendrier des événements",
       "close": "Fermer le calendrier",
@@ -1204,6 +1418,33 @@ export const fr_FR: EnTranslations = {
       "mining": "Minage",
       "logging": "Bûcheronnage",
       "herbalism": "Herboristerie"
+    },
+    "archetypeTitle": {
+      "label": "Titre",
+      "none": "Aucun",
+      "armorcrafting": "Armurier",
+      "weaponcrafting": "Forgeron d'armes",
+      "jewelcrafting": "Joaillier",
+      "alchemy": "Alchimiste",
+      "engineering": "Ingénieur",
+      "cooking": "Cuisinier",
+      "inscription": "Scribe",
+      "enchanting": "Enchanteur",
+      "tailoring": "Tailleur",
+      "leatherworking": "Tanneur"
+    },
+    "crafting": {
+      "title": "Artisanat",
+      "close": "Fermer la fabrication",
+      "craft": "Artisanat",
+      "reagentsNeeded": "Nécessite$1",
+      "reagentLine": "{name}: {have}/{required}",
+      "empty": "Aucune recette connue pour l'instant.",
+      "resultAria": "Artisanat {name}",
+      "craftedToast": "Fabriqué$1 {name}",
+      "insufficientMaterials": "Vous n'avez pas le matériel pour cela.",
+      "unknownRecipe": "Cette recette n'existe pas.",
+      "comboRequirementUnmet": "Vous ne possédez pas les deux métiers requis au palier nécessaire pour cette recette."
     }
   },
   "apiError": {
@@ -1310,6 +1551,7 @@ export const fr_FR: EnTranslations = {
       "bestiary": "Bestiaire",
       "models": "Modèles 3D",
       "gear": "Équipement et objets",
+      "professions": "Métiers",
       "economy": "Économie et commerce",
       "social": "Social et groupes",
       "stats": "Personnage et caractéristiques",
@@ -1324,6 +1566,7 @@ export const fr_FR: EnTranslations = {
       "combat": "Combat",
       "talents": "Talents",
       "arena": "Arène et JcJ",
+      "valeCup": "Coupe du Val",
       "glossary": "Glossaire",
       "wishIKnew": "Ce que j'aurais aimé savoir",
       "faq": "FAQ",
@@ -1979,6 +2222,32 @@ export const fr_FR: EnTranslations = {
       "ladderHeading": "Gravir l'échelle",
       "ladderBody": "Le jeu classé suit votre classement dans le temps. Consultez le classement pour voir où vous en êtes et qui tient le haut du royaume."
     },
+    "valeCupPage": {
+      "heading": "La Coupe du Val",
+      "intro": "La balle au sanglier au Pré de la Truie : choisissez une bannière, choisissez un rôle, et envoyez une peau de sanglier empaillée derrière un gardien pour remporter le Seau de cuivre. Pas de sang, pas de butin, juste la clameur des tribunes.",
+      "loreHeading": "La balle au sanglier et la trêve des moissons",
+      "loreOldSow": "Bien avant que les morts ne s'éveillent, les valets de ferme d'Eastbrook jouaient à la balle au sanglier sur les chaumes après la moisson : deux bandes de joueurs, une peau de sanglier bourrée de paille, et deux portails de chariot traînés aux deux bouts du pré. Le premier ballon, la Vieille Truie, pend, bronzé, au-dessus de l'âtre de la taverne.",
+      "loreTruce": "Quand le Colisée cendré se mit à organiser des jeux de guerre, le maréchal Redbrook répondit par quelque chose de plus doux : une trêve des moissons permanente sur le vieux pré. Les portails de chariot devinrent des poteaux de but, le pré gagna des murs, des tribunes et un nom, le Pré de la Truie, et le prix fut toujours le même seau à lait cabossé dans lequel buvaient les vainqueurs : le Seau de cuivre.",
+      "howHeading": "Comment jouer",
+      "howQueue": "Mettez-vous en file depuis n'importe où via la fenêtre de la Coupe du Val, ou parlez à l'intendant Bram à la porte du Pré de la Truie. Choisissez un format, du un contre un au cinq contre cinq, une nation de bannière et un rôle sportif ; entrez en file en solo ou avec votre groupe.",
+      "howMatch": "Au coup d'envoi, votre panoplie de classe est remplacée par une panoplie sportive, puis restaurée à l'identique après le match. Les frappes visent le réticule au sol, le ballon rebondit sur les bandes, et dribbler consiste simplement à courir avec le ballon. Marquez plus de buts que l'autre camp avant la fin du temps réglementaire ; en cas d'égalité, on joue le but en or.",
+      "howTruce": "Personne ne saigne au Pré de la Truie : les tacles font culbuter, rien ne blesse, et les familiers regardent le match depuis le banc.",
+      "spectateBody": "Un seul match se joue à la fois au stade, et chacun peut s'approcher et regarder depuis les tribunes.",
+      "nationsHeading": "Les huit nations de bannière",
+      "nationsBody": "Chaque équipe joue sous une bannière. Le capitaine choisit la nation, et si les deux camps arborent la même, l'équipe visiteuse joue avec la palette inversée.",
+      "nationVale": "Vert et or, sous la gerbe de blé : l'équipe locale, valets de ferme jusqu'à la moelle.",
+      "nationMirefen": "Sarcelle et gris sous le héron : patients, hauts sur pattes, jamais pressés.",
+      "nationThornpeak": "Bleu glacier et blanc sous le pic : le pied sûr et la tête dure.",
+      "nationColiseum": "Rouge et noir aux épées croisées : ils jouent comme si c'était encore un jeu de guerre.",
+      "nationChoir": "Bleu pâle et argent sous la cloche : inquiétants, précis et très silencieux.",
+      "nationOgre": "Orange et terre d'ombre derrière le poing : l'épaule d'abord, et fiers de l'être.",
+      "nationMoon": "Violet et argent sous le croissant : des joueurs de nuit, légers sur leurs appuis.",
+      "nationCopperdig": "Cuivre et brun sous la pioche : des piocheurs qui ne s'arrêtent jamais de courir.",
+      "rolesHeading": "Rôles sportifs",
+      "rolesBody": "Votre rôle décide de la panoplie que vous emportez sur le terrain. Tout le monde frappe le ballon ; le reste est affaire de tempérament.",
+      "rewardsHeading": "Règles de trêve",
+      "rewardsBody": "Règles de trêve obligent : ni expérience ni butin. Un match décidé compte pour votre palmarès et le tableau des vainqueurs, et des points de récompense quotidienne l'accompagnent. Déserter un match vous envoie sur le banc, et l'intendant s'en souvient."
+    },
     "wishPage": {
       "heading": "Ce que j'aurais aimé savoir",
       "intro": "Quelques vérités honnêtes qui épargnent bien des hésitations aux nouveaux joueurs. Rien de tout cela n'est obligatoire, mais tout y aide.",
@@ -2063,6 +2332,35 @@ export const fr_FR: EnTranslations = {
       "cosmeticsCache": "Quelques-unes proviennent d'un mystérieux coffre cosmétique, un lot scellé qui tire l'un de trois rangs de qualité quand vous l'ouvrez et accorde l'apparence correspondante. C'est purement esthétique : rien à l'intérieur ne vous rend plus fort, seulement plus beau.",
       "cosmeticsApply": "Définissez votre apparence active depuis la rangée d'allure de votre écran de personnage, et passez librement de l'une à l'autre parmi tout ce que vous avez débloqué."
     },
+    "professions": {
+      "intro": "Au-delà des combats et des quêtes, le monde vous récompense de travailler la terre et la forge : récolter des matières premières, les transformer en équipement aux ateliers des dix métiers d'artisanat, et vous installer dans une identité, celle de l'un des dix archétypes que ces métiers incarnent.",
+      "gatherTitle": "Récolte : Minage, Bûcheronnage et Herboristerie",
+      "gatherIntro": "Trois métiers de récolte vous permettent de tirer des matières premières directement du monde : le Minage extrait minerai et pierre des filons, le Bûcheronnage abat le bois des bosquets, et l'Herboristerie cueille herbes et plantes sauvages. Chacun est suivi séparément : en pratiquer un ne ralentit jamais vos progrès dans un autre.",
+      "gatherWhatTitle": "Les gisements de ressources",
+      "gatherWhatBody": "Filons de minerai, bosquets de bois et carrés d'herbes sont disséminés dans les zones comme des éléments visibles, sans propriétaire. Approchez-vous et interagissez pour récolter ce qu'ils contiennent. Une fois un gisement récolté, il lui faut du temps pour se régénérer avant que vous puissiez, vous, le récolter à nouveau, mais il ne bloque jamais personne d'autre : un autre joueur peut récolter le même gisement entre-temps.",
+      "gatherProficiencyTitle": "Aptitude et qualité des matériaux",
+      "gatherProficiencyBody": "Chaque récolte réussie augmente votre aptitude dans ce métier de récolte. Une aptitude plus élevée oriente ce que vous tirez d'un gisement vers des qualités de matériaux plus rares, du commun vers le haut, même si les qualités les plus rares le restent, aptitude élevée ou non. La pratique ne nuit jamais à vos chances, elle ne fait que les améliorer.",
+      "gatherToolsTitle": "Les outils du métier",
+      "gatherToolsBody": "Les marchands vendent des outils de base pour chaque métier de récolte, et de meilleurs peuvent être fabriqués : exploiter un gisement doit gagner en efficacité à mesure que vous vous équipez, plutôt que de rester figé. Les outils de niveau supérieur sont la voie prévue pour accéder aux gisements les plus riches et les exploiter plus efficacement sur la durée.",
+      "craftTitle": "Les dix métiers d'artisanat",
+      "craftIntro": "Dix métiers d'artisanat transforment les matériaux récoltés en équipement et en marchandises : la fabrication d'armures, la forge d'armes et la joaillerie façonnent la matière brute en équipement portable ; l'alchimie et l'ingénierie avancent par essais et erreurs ; la cuisine, la calligraphie et l'enchantement touchent chacun au produit des autres métiers ; la couture et le travail du cuir suivent des patrons précis. Ensemble, ils forment une roue où chaque métier siège entre deux voisins, à l'opposé d'un autre.",
+      "craftRingTitle": "Une roue de spécialités",
+      "craftRingBody": "Les dix métiers sont disposés en un anneau fixe, et la place d'un métier sur cet anneau compte : les métiers voisins sur la roue ont plus en commun entre eux que ceux qui se font face. S'engager dans un métier doit donner le sentiment de rejoindre une famille de métiers apparentés, pas de choisir une compétence isolée.",
+      "craftRecipesTitle": "Recettes et composants",
+      "craftRecipesBody": "Chaque métier a ses propres recettes, chacune réclamant des composants précis que vous récoltez ou achetez. Les recettes les plus simples de chaque métier ne demandent que des matériaux communs et se fabriquent dès le tout début, si bien que vous pouvez exercer un métier dès que vous l'adoptez au lieu d'attendre de le débloquer.",
+      "craftMasteryTitle": "Compétence et maîtrise",
+      "craftMasteryBody": "Réussir une fabrication fait progresser votre compétence dans ce métier, et les recettes les plus riches exigent une compétence plus élevée : les recettes de base sont ouvertes à chacun, tandis que les plus avancées demandent une maîtrise toujours plus grande pour être tentées. Faire grandir votre compétence dans un métier est le chemin qui mène des simples produits de départ à ses recettes les plus ambitieuses.",
+      "craftComboTitle": "Recettes combinées",
+      "craftComboBody": "Au-delà de la liste de recettes propre à chaque métier, la roue permet aussi des recettes combinées qui font appel à deux métiers voisins à la fois, récompensant un personnage (ou un duo de partenaires d'échange) qui a investi dans des métiers adjacents sur l'anneau plutôt que dans un seul, isolé.",
+      "archetypeTitle": "Les dix archétypes",
+      "archetypeIntro": "Chacun des dix métiers d'artisanat incarne aussi un archétype, une identité plus large que vous pouvez adopter au-delà du simple exercice du métier. Votre archétype actif est un choix unique, pas une liste à cocher : vous n'en portez qu'un à la fois, et vous pourrez en changer plus tard si vous le souhaitez.",
+      "archetypeChooseTitle": "Choisir son archétype",
+      "archetypeChooseBody": "Vous déclarez votre premier archétype au fil d'une quête d'histoire de la première zone, tôt dans l'aventure, qui vous accueille officiellement dans cette identité. Tant que cette quête n'est pas terminée, vous n'avez encore choisi aucun archétype.",
+      "archetypeSwitchTitle": "Changer d'avis",
+      "archetypeSwitchBody": "Avoir déclaré un archétype une fois ne vous y enferme pas pour toujours. Passer à un autre archétype demande d'abord d'accomplir une quête répétable où vous faites amende honorable envers l'ancien, et à chaque changement, l'amende attendue la fois suivante devient un peu plus exigeante, pour que changer garde du sens au lieu d'être gratuit.",
+      "archetypeIdentityTitle": "Ce que votre archétype signifie",
+      "archetypeIdentityBody": "Votre archétype actif dit qui est votre personnage dans le monde, et se reflète dans la façon dont les autres et le monde s'adressent à vous. Les récompenses et marques de reconnaissance exactes qui l'accompagnent sont encore en cours de finalisation ; revenez voir à mesure que le système se met en place."
+    },
     "economy": {
       "intro": "L'argent fait tourner le monde entier : il achète votre équipement, vos provisions et votre matériel de voyage, et passe de main en main entre joueurs. Vous ramassez tout cela rien qu'en jouant, alors voyez cette page comme une carte d'où vient votre argent et où il va.",
       "coinTitle": "Or, argent et cuivre",
@@ -2071,6 +2369,10 @@ export const fr_FR: EnTranslations = {
       "vendorsBody": "Villes et avant-postes sont parsemés de marchands, chacun avec son propre commerce. Les intendants ont de quoi manger et boire, les forgerons et armuriers vendent de l'équipement, et un quartier-maître garde le matériel de voyage utile. Approchez-vous de l'un d'eux pour voir ce qu'il propose.",
       "marksTitle": "Une seconde monnaie : les Marques de plongée",
       "marksBody": "L'or n'est pas la seule chose que vous mettez de côté. Les plongées versent des Marques de plongée, une monnaie distincte que vous ne dépensez qu'auprès du gardien de plongée, pour les améliorations de votre compagne et un équipement introuvable ailleurs. Elles ne se mêlent jamais à votre or.",
+      "bankTitle": "La banque",
+      "bankBody": "Chaque ville principale abrite une succursale du Coffre doré, la maison de banque du royaume. Adressez-vous au trésorier sur place pour ouvrir votre chambre forte, une réserve privée au-delà de vos sacs que votre personnage conserve à vie. Tout ce que vous leur confiez attend en lieu sûr, quelle que soit la succursale où vous passerez ensuite.",
+      "bankHow": "Une fois la chambre forte ouverte, cliquez sur un objet dans vos sacs pour le déposer, et cliquez dessus dans la chambre forte pour le reprendre. La chambre forte n'accueille que des biens, jamais de pièces, et les objets de quête restent sur vous. Quand vos sacs débordent en pleine route, un seul bouton y range d'un coup tous vos matériaux d'artisanat.",
+      "bankSlots": "Une chambre forte neuve commence petite et grandit avec vous. Le trésorier vend des emplacements supplémentaires contre pièces, à des prix toujours plus élevés, et jouer en ligne rapporte de la place bonus en plus, par exemple pour une adresse e-mail vérifiée, des comptes liés ou des amis que vous amenez dans le jeu.",
       "buyingTitle": "Acheter et vendre",
       "buyingBody": "Tenez-vous près d'un marchand pour ouvrir sa fenêtre. Vous pouvez acheter tout ce qu'il vend si vous en avez les moyens, et revendre contre des pièces la plupart du contenu de vos sacs. Si vous vendez quelque chose par erreur, le marchand garde vos ventes récentes pour que vous puissiez les racheter.",
       "junkTitle": "Faire le tri du superflu",
@@ -3143,6 +3445,10 @@ export const fr_FR: EnTranslations = {
       "hard": "Butin supérieur"
     },
     "closeAria": "Fermer"
+  },
+  "heroicShop": {
+    "balance": "Marques héroïques : {count}",
+    "buyAria": "Acheter {item} pour {marks} marques héroïques"
   },
   "delveUi": {
     "board": {
@@ -4436,12 +4742,14 @@ export const fr_FR: EnTranslations = {
     "slots": {
       "mainhand": "Main droite",
       "helmet": "Tête",
+      "neck": "Cou",
       "shoulder": "Épaules",
       "chest": "Torse",
       "waist": "Taille",
       "legs": "Jambes",
       "gloves": "Mains",
-      "feet": "Pieds"
+      "feet": "Pieds",
+      "ring": "Doigt"
     },
     "quality": {
       "poor": "Médiocre",
@@ -4645,6 +4953,46 @@ export const fr_FR: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "sport_kick": {
+        "name": "Coup de pied",
+        "description": "Poussez le ballon au sol vers le point visé."
+      },
+      "sport_shoot": {
+        "name": "Tir",
+        "description": "Maintenez pour charger la puissance, relâchez pour tirer au but. Trop de puissance et le ballon file au-dessus."
+      },
+      "sport_pass": {
+        "name": "Passe",
+        "description": "Adressez une passe appuyée à votre coéquipier ciblé, dans sa course."
+      },
+      "sport_boot": {
+        "name": "Grosse botte",
+        "description": "Une longue balle bottée en cloche vers le point visé. La foule adore."
+      },
+      "sport_hoof": {
+        "name": "Coup de sabot",
+        "description": "Frappez le ballon fort et à ras de terre vers l'avant du terrain."
+      },
+      "sport_punt": {
+        "name": "Long dégagement",
+        "description": "Un dégagement de gardien, haut et loin."
+      },
+      "sport_feint": {
+        "name": "Feinte",
+        "description": "Une brève accélération de côté vers le point visé."
+      },
+      "sport_dive": {
+        "name": "Plongeon",
+        "description": "Jetez-vous vers le point visé. Un ballon qui croise votre course vous colle aux mains."
+      },
+      "sport_shoulder": {
+        "name": "Coup d'épaule",
+        "description": "Un coup d'épaule loyal, dans l'esprit de la trêve des moissons. Envoie l'adversaire culbuter loin du ballon."
+      },
+      "sport_second_wind": {
+        "name": "Jambes fraîches",
+        "description": "Retrouvez vos jambes : déplacement 50 % plus rapide pendant 4 sec."
+      },
       "flamestrike": {
         "name": "Frappe enflammée",
         "description": "Fait s'abattre une explosion de flammes sur la zone visée, infligeant {damage} points de dégâts de Feu aux ennemis pris dans la déflagration."
@@ -5866,6 +6214,24 @@ export const fr_FR: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Faucille Pétale de Soleil"
       },
+      "thorium_ore": {
+        "name": "Minerai de Thorium"
+      },
+      "arcanite_bar": {
+        "name": "Barre d'Arcanite"
+      },
+      "ashwood_log": {
+        "name": "Bûche de Frêne Gris"
+      },
+      "elderwood_log": {
+        "name": "Bûche de Sureau Ancien"
+      },
+      "goldleaf_herb": {
+        "name": "Herbe Feuille d'Or"
+      },
+      "sunpetal_herb": {
+        "name": "Herbe Pétale de Soleil"
+      },
       "bristleback_maul": {
         "name": "Marteau Gallowglass"
       },
@@ -6331,6 +6697,132 @@ export const fr_FR: EnTranslations = {
       "event_skin_token": {
         "name": "Cache cosmétique mystérieuse"
       },
+      "heroic_mark": {
+        "name": "Marque héroïque"
+      },
+      "morthens_cryptforged_hauberk": {
+        "name": "Haubert Cryptforged de Morthen"
+      },
+      "shadowpulse_handwraps": {
+        "name": "Bandes de mains d'Ombre pulsante"
+      },
+      "bonechill_striders": {
+        "name": "Arpenteurs de gel des os"
+      },
+      "mistcallers_fang": {
+        "name": "Croc de l'Appelant des brumes"
+      },
+      "tidebound_spaulders": {
+        "name": "Spallières liées aux marées"
+      },
+      "sash_of_the_sunken_court": {
+        "name": "Écharpe de la Cour engloutie"
+      },
+      "lunar_tide_greatstaff": {
+        "name": "Grand bâton de la Marée lunaire"
+      },
+      "tidewoven_trousers": {
+        "name": "Pantalon tissé de marées"
+      },
+      "choirmothers_casque": {
+        "name": "Casque de la Mère du Choeur"
+      },
+      "gravewyrm_cleaver": {
+        "name": "Fendoir du Gravewyrm"
+      },
+      "shroud_of_the_gravewyrm": {
+        "name": "Suaire du Gravewyrm"
+      },
+      "sanctum_prowlers_grips": {
+        "name": "Poignes du Rôdeur du Sanctuaire"
+      },
+      "scepter_of_the_deathless_court": {
+        "name": "Sceptre de la Cour immortelle"
+      },
+      "deathless_warguard_legmail": {
+        "name": "Cotte de jambes de la garde immortelle"
+      },
+      "soulrend_diadem": {
+        "name": "Diadème Déchire-âme"
+      },
+      "scourgehide_carapace": {
+        "name": "Carapace en peau de Fléau"
+      },
+      "cryptplate_helm": {
+        "name": "Heaume de plaques sépulcrales"
+      },
+      "shadowpulse_slippers": {
+        "name": "Chaussons d'Ombre pulsante"
+      },
+      "bonechill_cord": {
+        "name": "Cordon de gel des os"
+      },
+      "mistforged_pauldrons": {
+        "name": "Spallières forgées dans la brume"
+      },
+      "tideguard_faceguard": {
+        "name": "Garde-visage du Gardien des marées"
+      },
+      "sunken_court_mantle": {
+        "name": "Mantelet de la Cour engloutie"
+      },
+      "lunar_choir_leggings": {
+        "name": "Jambières du Choeur lunaire"
+      },
+      "choir_blessed_spaulders": {
+        "name": "Spallières bénies par le Choeur"
+      },
+      "tideworn_warboots": {
+        "name": "Bottes de guerre usées par les marées"
+      },
+      "gravewyrm_claws": {
+        "name": "Griffes du Gravewyrm"
+      },
+      "gravescale_girdle": {
+        "name": "Ceinturon d'écailles sépulcrales"
+      },
+      "wyrmchoir_handwraps": {
+        "name": "Bandes de mains du Choeur du Wyrm"
+      },
+      "deathless_greatblade": {
+        "name": "Grande lame immortelle"
+      },
+      "soulforged_warplate": {
+        "name": "Harnois de guerre forgé dans les âmes"
+      },
+      "stormcallers_focus": {
+        "name": "Focalisateur de l'Invocateur de tempêtes"
+      },
+      "seal_of_the_nine_oaths": {
+        "name": "Sceau des Neuf Serments"
+      },
+      "nielas_coldlight_band": {
+        "name": "Anneau de Lumière froide de Niela"
+      },
+      "sutils_gambit": {
+        "name": "Gambit de Sutil"
+      },
+      "oath_of_the_round_table": {
+        "name": "Serment de la Table ronde"
+      },
+      "zyzzs_deathless_signet": {
+        "name": "Chevalière immortelle de Zyzz"
+      },
+      "architects_cornerstone": {
+        "name": "La Pierre angulaire de l'Architecte"
+      },
+      "swiftfang_talisman": {
+        "name": "Talisman Croc-agile"
+      },
+      "yumis_keepsake_locket": {
+        "name": "Médaillon souvenir de Yumi"
+      },
+      "zense_meridian": {
+        "name": "Méridien de Zense"
+      },
+      "medallion_of_endless_profit": {
+        "name": "Médaillon du Profit sans fin"
+      },
       "deathless_heartwood": {
         "name": "Bois-coeur de la Couronne immortelle"
       },
@@ -6660,6 +7152,9 @@ export const fr_FR: EnTranslations = {
       "tolling_bell": {
         "name": "Cloche du glas"
       },
+      "vale_cup_ball": {
+        "name": "Ballon de sanglier"
+      },
       "thunzharr_waking_peak": {
         "name": "Thunzharr, le Pic Éveillé"
       },
@@ -6866,6 +7361,11 @@ export const fr_FR: EnTranslations = {
         "title": "Maître armurier",
         "greeting": "La forge est chaude et la meule tourne. Si ça coupe, je le vends."
       },
+      "heroic_quartermaster": {
+        "name": "Intendant Vex",
+        "title": "Intendant héroïque",
+        "greeting": "La preuve des profondeurs héroïques achète les plus belles bagues et les plus beaux pendentifs de Highwatch. Montre-moi tes marques."
+      },
       "loremaster_caddis": {
         "name": "Maître du savoir Caddis",
         "title": "Maître du savoir",
@@ -6875,6 +7375,21 @@ export const fr_FR: EnTranslations = {
         "name": "Commissaire-priseur Voss",
         "title": "Gardien du Marché du monde",
         "greeting": "Le Marché du monde est ouvert ici aussi, {className}. Achetez auprès de chaque aventurier du royaume, ou proposez vos propres marchandises."
+      },
+      "bursar_fernando": {
+        "name": "Trésorier Fernando",
+        "title": "Le Coffre doré",
+        "greeting": "Bienvenue au Coffre doré. Vos biens reposent à l'abri derrière nos serrures."
+      },
+      "bursar_petra_vell": {
+        "name": "Trésorière Petra Vell",
+        "title": "Le Coffre doré",
+        "greeting": "Le Coffre doré tient des registres propres et des chambres fortes plus propres encore. Que pouvons-nous ranger pour vous ?"
+      },
+      "bursar_aldous_crane": {
+        "name": "Trésorier Aldous Crane",
+        "title": "Le Coffre doré",
+        "greeting": "Chaque caisse, chaque coffret et chaque babiole est en sécurité au Coffre doré."
       },
       "brother_aldric_raid": {
         "name": "Frère Aldric",
@@ -6895,6 +7410,11 @@ export const fr_FR: EnTranslations = {
         "name": "Le Veilleur pâle",
         "title": "Gardien des morts",
         "greeting": "Repose-toi maintenant, esprit. Je peux te rendre à ton corps, mais la traversée du retour te laisse affaibli."
+      },
+      "groundskeeper_bram": {
+        "name": "Intendant Bram",
+        "title": "Gardien du Pré de la Truie",
+        "greeting": "La trêve tient au Pré de la Truie, {className} : des bottes et des épaules, rien de plus. Envie de jouer pour le Seau de cuivre ?"
       },
       "tidewatcher_ondrel": {
         "name": "Ondrel Vane",
@@ -7803,6 +8323,9 @@ export const fr_FR: EnTranslations = {
           },
           "9": {
             "label": "Clairière de Brightwood"
+          },
+          "10": {
+            "label": "Le Pré de la Truie"
           }
         }
       },
@@ -7947,12 +8470,14 @@ export const fr_FR: EnTranslations = {
       "crownforged": {
         "name": "Tenue d'apparat Bonewrought",
         "bonus2": "Augmente la puissance d'attaque de 40.",
-        "bonus3": "Augmente la force de 15, l'endurance de 15 et la vitesse d'attaque et d'incantation de 15%."
+        "bonus3": "Augmente la force de 15, l'endurance de 15 et la vitesse d'attaque et d'incantation de 15%.",
+        "bonus4": "Vos coups critiques d'arme lacèrent la cible avec Éclat d'os, lui infligeant 8 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois."
       },
       "deathlord": {
         "name": "Tenue de guerre de Barrowlord",
         "bonus2": "Augmente la puissance d'attaque de 40.",
-        "bonus3": "Augmente la force de 15 et l'endurance de 15."
+        "bonus3": "Augmente la force de 15 et l'endurance de 15.",
+        "bonus4": "Vos coups critiques d'arme ont 50% de chances de conférer Puissance sépulcrale, augmentant la puissance d'attaque de 60 pendant 10 s."
       },
       "greyjaw_stalker": {
         "name": "Équipement du traqueur de Greyjaw",
@@ -7961,22 +8486,26 @@ export const fr_FR: EnTranslations = {
       "necromancers": {
         "name": "Parure de Mournweave",
         "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
-        "bonus3": "Augmente l'intelligence de 10 et l'endurance de 10."
+        "bonus3": "Augmente l'intelligence de 10 et l'endurance de 10.",
+        "bonus4": "Vos sorts ont 10% de chances de conférer Incantation limpide, rendant votre prochain sort gratuit."
       },
       "nighttalon": {
         "name": "Peau de Direfang",
         "bonus2": "Augmente la puissance d'attaque de 40.",
-        "bonus3": "Augmente l'agilité de 15, les chances de critique de 2% et la vitesse d'attaque et d'incantation de 15%."
+        "bonus3": "Augmente l'agilité de 15, les chances de critique de 2% et la vitesse d'attaque et d'incantation de 15%.",
+        "bonus4": "Vos coups critiques d'arme ouvrent une Entaille déchiquetée, infligeant à la cible 6 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois."
       },
       "soulflame": {
         "name": "Tenue d'apparat Wraithfire",
         "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
-        "bonus3": "Augmente l'intelligence de 15, l'esprit de 15 et la vitesse d'attaque et d'incantation de 15%."
+        "bonus3": "Augmente l'intelligence de 15, l'esprit de 15 et la vitesse d'attaque et d'incantation de 15%.",
+        "bonus4": "Vos sorts ont 10% de chances de conférer Embrasement d'âme, augmentant la puissance des sorts de 40 pendant 10 s."
       },
       "stormcallers": {
         "name": "Vêtements de Galecall",
         "bonus2": "Vous ne pouvez pas être projeté en arrière (100% de résistance à la projection).",
-        "bonus3": "Augmente l'intelligence de 15, l'esprit de 15 et la vitesse d'attaque et d'incantation de 15%."
+        "bonus3": "Augmente l'intelligence de 15, l'esprit de 15 et la vitesse d'attaque et d'incantation de 15%.",
+        "bonus4": "Vos sorts ont 10% de chances de conférer Embrasement d'âme, augmentant la puissance des sorts de 40 pendant 10 s."
       },
       "vale_arcanist": {
         "name": "Tenue de l'arcaniste du Val",
@@ -7985,7 +8514,8 @@ export const fr_FR: EnTranslations = {
       "wyrmshadow": {
         "name": "Vêtements de Nightfang",
         "bonus2": "Augmente la puissance d'attaque de 40.",
-        "bonus3": "Augmente l’agilité de 15 et les chances de critique de 2%."
+        "bonus3": "Augmente l’agilité de 15 et les chances de critique de 2%.",
+        "bonus4": "Vos coups critiques d'arme ont 50% de chances de conférer Ruée des crocs, augmentant la vitesse d'attaque de 25% pendant 8 s."
       }
     }
   },

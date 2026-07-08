@@ -1066,6 +1066,18 @@ export const ZONE3_NPCS: Record<string, NpcDef> = {
     vendorItems: ['highwatch_warblade', 'craghorn_staff', 'icevein_dirk'],
     greeting: 'Forge is hot and the grindstone is turning. If it cuts, I sell it.',
   },
+  heroic_quartermaster: {
+    id: 'heroic_quartermaster',
+    name: 'Quartermaster Vex',
+    title: 'Heroic Quartermaster',
+    pos: { x: -8, z: 665 },
+    facing: 1.2,
+    color: 0x8e44ad,
+    questIds: [],
+    heroicVendor: true,
+    greeting:
+      'Proof of the heroic depths buys the finest rings and pendants in Highwatch. Show me your marks.',
+  },
   loremaster_caddis: {
     id: 'loremaster_caddis',
     name: 'Loremaster Caddis',
@@ -1091,6 +1103,17 @@ export const ZONE3_NPCS: Record<string, NpcDef> = {
     market: true,
     greeting:
       'The World Market is open here too, $C. Buy from every adventurer in the realm, or set out your own wares.',
+  },
+  bursar_aldous_crane: {
+    id: 'bursar_aldous_crane',
+    name: 'Bursar Aldous Crane',
+    title: 'The Gilded Strongbox',
+    pos: { x: -12, z: 663 },
+    facing: Math.PI / 2,
+    color: 0xc9a227,
+    questIds: [],
+    banker: true,
+    greeting: 'Every crate, coffer, and trinket is safe with the Gilded Strongbox.',
   },
 };
 
@@ -2595,7 +2618,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   deathlords_dread_visage: {
     id: 'deathlords_dread_visage',
     set: 'deathlord',
-    name: "Barrowlord's Dread Visage",
+    name: 'Barrowlord Dread Visage',
     kind: 'armor',
     armorType: 'mail',
     slot: 'helmet',
@@ -2633,7 +2656,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   // family's existing helm/shoulder. The `set` tag wires each into its family. ---
   crownforged_gauntlets: {
     id: 'crownforged_gauntlets',
-    name: 'Crownforged Gauntlets',
+    name: 'Bonewrought Gauntlets',
     kind: 'armor',
     slot: 'gloves',
     armorType: 'mail',
@@ -2641,11 +2664,11 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     stats: { armor: 180, str: 6, sta: 7 },
     sellValue: 3600,
     requiredClass: ['warrior', 'paladin'],
-    set: 'crownforged', // 3rd Crownforged piece, unlocks the set's 3-piece bonus
+    set: 'crownforged', // 3rd Bonewrought piece, unlocks the set's 3-piece bonus
   },
   nighttalon_grips: {
     id: 'nighttalon_grips',
-    name: 'Nighttalon Grips',
+    name: 'Direfang Grips',
     kind: 'armor',
     slot: 'gloves',
     armorType: 'leather',
@@ -2653,11 +2676,11 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     stats: { armor: 110, agi: 8, sta: 5 },
     sellValue: 3600,
     requiredClass: ['rogue', 'hunter', 'druid'],
-    set: 'nighttalon', // 3rd Nighttalon piece, unlocks the set's 3-piece bonus
+    set: 'nighttalon', // 3rd Direfang piece, unlocks the set's 3-piece bonus
   },
   soulflame_gloves: {
     id: 'soulflame_gloves',
-    name: 'Soulflame Gloves',
+    name: 'Wraithfire Gloves',
     kind: 'armor',
     slot: 'gloves',
     armorType: 'cloth',
@@ -2665,11 +2688,11 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     stats: { armor: 60, int: 8, sta: 5 },
     sellValue: 3600,
     requiredClass: ['mage', 'priest', 'warlock', 'druid'],
-    set: 'soulflame', // 3rd Soulflame piece, unlocks the set's 3-piece bonus
+    set: 'soulflame', // 3rd Wraithfire piece, unlocks the set's 3-piece bonus
   },
   stormcallers_handguards: {
     id: 'stormcallers_handguards',
-    name: "Stormcaller's Handguards",
+    name: 'Galecall Handguards',
     kind: 'armor',
     slot: 'gloves',
     armorType: 'mail',
@@ -2677,13 +2700,13 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     stats: { armor: 130, int: 8, sta: 5 },
     sellValue: 3600,
     requiredClass: ['shaman'],
-    set: 'stormcallers', // 3rd Stormcaller's piece, unlocks the set's 3-piece bonus
+    set: 'stormcallers', // 3rd Galecall piece, unlocks the set's 3-piece bonus
   },
   // --- Thunzharr, the Waking Peak (world boss): epic BELTS, each family's fourth
   // piece (helm, shoulder, glove, belt), alongside the glove drops above. ---
   crownforged_girdle: {
     id: 'crownforged_girdle',
-    name: 'Crownforged Girdle',
+    name: 'Bonewrought Girdle',
     kind: 'armor',
     slot: 'waist',
     armorType: 'mail',
@@ -2695,7 +2718,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   },
   nighttalon_waistband: {
     id: 'nighttalon_waistband',
-    name: 'Nighttalon Waistband',
+    name: 'Direfang Waistband',
     kind: 'armor',
     slot: 'waist',
     armorType: 'leather',
@@ -2707,7 +2730,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   },
   soulflame_cord: {
     id: 'soulflame_cord',
-    name: 'Soulflame Cord',
+    name: 'Wraithfire Cord',
     kind: 'armor',
     slot: 'waist',
     armorType: 'cloth',
@@ -2719,7 +2742,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   },
   stormcallers_waistguard: {
     id: 'stormcallers_waistguard',
-    name: "Stormcaller's Waistguard",
+    name: 'Galecall Waistguard',
     kind: 'armor',
     slot: 'waist',
     armorType: 'mail',
@@ -2736,9 +2759,41 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'mainhand',
     quality: 'legendary',
     weapon: { min: 42, max: 68, speed: 3.2 },
-    stats: { agi: 17, sta: 13, int: 14 },
+    // A druid caster/healer staff by deliberate choice: its 17 points sit in
+    // spirit (druid mana/healing) rather than agility, accepting that feral
+    // wearers lose real value from the swap (bear-form AP scales on agility).
+    // Hunters/rogues cannot equip it. Still exactly on the 44-pt legendary
+    // mainhand budget.
+    stats: { spi: 17, sta: 13, int: 14 },
     sellValue: 25000,
     requiredClass: ['druid'],
+    // Life and decay: a damaging spell may fester a nature DoT (Deathbloom); a heal
+    // may bloom a nature heal-over-time on its target (Lifebloom).
+    weaponProcs: [
+      {
+        id: 'deathbloom',
+        name: 'Deathbloom',
+        trigger: 'spellDamage',
+        chance: 0.15,
+        effects: [
+          {
+            kind: 'dot',
+            name: 'Deathbloom',
+            school: 'nature',
+            perTick: 12,
+            interval: 2,
+            duration: 8,
+          },
+        ],
+      },
+      {
+        id: 'lifebloom',
+        name: 'Lifebloom',
+        trigger: 'heal',
+        chance: 0.15,
+        effects: [{ kind: 'hot', name: 'Lifebloom', perTick: 10, interval: 2, duration: 8 }],
+      },
+    ],
   },
   kingsbane_last_oath: {
     id: 'kingsbane_last_oath',
@@ -2747,9 +2802,26 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'mainhand',
     quality: 'legendary',
     weapon: { min: 46, max: 74, speed: 2.8 },
-    stats: { str: 24, sta: 20 },
+    // Rebalanced into a str/agi/sta hybrid within the fixed 44-pt legendary
+    // mainhand budget: 15 agi makes it a viable hunter ranged weapon (ranged AP +
+    // crit) while it stays usable by its warrior/paladin owners.
+    stats: { str: 15, agi: 15, sta: 14 },
     sellValue: 25000,
     requiredClass: ['warrior', 'paladin'],
+    // Thunderfury-style on-hit: a nature arc that blasts the target and chains to
+    // nearby foes, and slows the primary target's attack speed.
+    weaponProcs: [
+      {
+        id: 'thronebane_arc',
+        name: 'Chain Arc',
+        trigger: 'meleeHit',
+        chance: 0.1,
+        effects: [
+          { kind: 'chainArc', school: 'nature', damage: 42, jumps: 3, falloff: 0.6, radius: 8 },
+          { kind: 'attackSlow', name: 'Thunderclap', mult: 1.2, duration: 6 },
+        ],
+      },
+    ],
   },
   crownforged_dreadhelm: {
     id: 'crownforged_dreadhelm',

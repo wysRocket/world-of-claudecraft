@@ -36,6 +36,15 @@ export const DUNGEON_LEASH_DISTANCE = 70;
 // updateMob); the boss id NYTHRAXIS_BOSS_ID lives lower in this file (C1 relocation).
 export const NYTHRAXIS_ADD_ID = 'nythraxis_skeleton_warrior';
 export const GCD = 1.5; // seconds
+// Combat ratings are gear-facing stats converted to fractions in recalcPlayerStats.
+export const HASTE_RATING_PER_PCT = 10; // 10 haste rating = 1% faster
+export const CRIT_RATING_PER_PCT = 10; // 10 crit rating = +1% crit chance
+export function hasteFractionFromRating(rating: number): number {
+  return rating / (HASTE_RATING_PER_PCT * 100);
+}
+export function critFractionFromRating(rating: number): number {
+  return rating / (CRIT_RATING_PER_PCT * 100);
+}
 // Shared cooldown across ALL combat potions (classic-era potion sickness): one
 // potion locks every other potion for this long (#103). 2 minutes, the classic-era value.
 export const POTION_COOLDOWN = 120; // seconds
@@ -88,6 +97,26 @@ export function isPetClass(cls: PlayerClass): boolean {
 // dopamine-maxxed 2v2 party mode (score-based, respawns, augments, a shrinking
 // ring) — see docs/design and the Fiesta region of sim.ts.
 export type ArenaFormat = '1v1' | '2v2' | 'fiesta';
+
+export type DungeonDifficulty = 'normal' | 'heroic';
+
+export function isDungeonDifficulty(value: unknown): value is DungeonDifficulty {
+  return value === 'normal' || value === 'heroic';
+}
+
+// The Vale Cup boarball minigame (docs/prd/vale-cup.md): transient match
+// sides pick a banner nation and each fighter picks a sport role.
+export type VcNationId =
+  | 'vale'
+  | 'mirefen'
+  | 'thornpeak'
+  | 'coliseum'
+  | 'choir'
+  | 'ogre'
+  | 'moon'
+  | 'copperdig';
+export type SportRole = 'allrounder' | 'striker' | 'sweeper' | 'keeper';
+export type VcBracket = 1 | 2 | 3 | 4 | 5;
 
 export interface ArenaStanding {
   rating: number;
@@ -249,25 +278,37 @@ export interface WeaponInfo {
 export type EquipSlot =
   | 'mainhand'
   | 'helmet'
+  | 'neck'
   | 'shoulder'
   | 'chest'
   | 'waist'
   | 'legs'
   | 'gloves'
-  | 'feet';
+  | 'feet'
+  | 'ring1'
+  | 'ring2';
 
-// The eight equip slots, in the canonical paperdoll order. Single source for
+// The eleven equip slots, in the canonical paperdoll order. Single source for
 // the entity loop and the server's unequip-command validation.
 export const EQUIP_SLOTS: readonly EquipSlot[] = [
   'mainhand',
   'helmet',
+  'neck',
   'shoulder',
   'chest',
   'waist',
   'legs',
   'gloves',
   'feet',
+  'ring1',
+  'ring2',
 ];
+
+// What an ITEM declares as its slot. Rings declare the slot KIND ('ring'); the
+// equip path resolves the concrete ring1/ring2 equipment key at equip time
+// (resolveEquipSlot in equipment_rules.ts). Every other item names its
+// equipment slot directly. Items never carry 'ring1'/'ring2'.
+export type ItemSlot = EquipSlot | 'ring';
 
 export type SkinCatalog = 'class' | 'mech';
 
@@ -304,13 +345,16 @@ type ItemKind =
 interface BaseItemDef {
   id: string;
   name: string;
-  slot?: EquipSlot;
+  slot?: ItemSlot;
   weapon?: WeaponInfo;
   stats?: Partial<Stats>;
   // Spell Power affix (caster gear): flat Spell Power, summed in recalcPlayerStats.
   // Kept off `Stats` because Spell Power is a derived combat rating (like attackPower),
   // not one of the six primary attributes.
   spellPower?: number;
+  // Combat ratings, converted to crit%/haste% in recalcPlayerStats.
+  critRating?: number;
+  hasteRating?: number;
   use?: ItemUse;
   sellValue: number; // copper (vendor buys at this)
   buyValue?: number; // copper (vendor sells at this)
@@ -354,6 +398,27 @@ interface BaseItemDef {
 // damage-driven cast pushback in combat/casting_lifecycle.ts. `knockbackResistance` (0..1)
 // scales on-hit knockback distance. Balance values are authored in
 // content/item_sets.ts, never inline in engine code.
+export interface SetProc {
+  id: string; // unique aura/proc id, e.g. 'set_clearcasting'
+  name: string; // buff display name, e.g. 'Clearcasting'
+  // weaponCrit fires on any critical white swing or weapon strike, melee AND
+  // ranged (Auto Shot / wand), so the leather sets work for hunters too.
+  trigger: 'spellCast' | 'weaponCrit' | 'spellCrit' | 'kill';
+  chance: number; // 0..1 proc chance
+  aura: AuraKind; // the buff to grant, e.g. 'next_cast_free'
+  duration: number; // seconds the granted aura lasts
+  value?: number; // optional aura value (per stack when maxStacks is set)
+  icd?: number; // internal cooldown seconds, min gap between procs
+  // Target-applied procs (the stacking bleeds): 'target' lands the aura on the
+  // struck enemy instead of the wearer. Defaults to the wearer.
+  applyTo?: 'self' | 'target';
+  tickInterval?: number; // dot/hot tick cadence, seconds
+  // Stacking cap: reapplication adds a stack (magnitude scales linearly with
+  // the count) and refreshes the duration.
+  maxStacks?: number;
+  school?: Aura['school']; // granted aura's school (bleeds are physical); default arcane
+}
+
 export interface SetBonusEffect {
   str?: number;
   agi?: number;
@@ -361,13 +426,17 @@ export interface SetBonusEffect {
   int?: number;
   spi?: number;
   ap?: number; // flat attack power
+  sp?: number; // flat spell power (mirrors `ap` for the caster archetype)
   crit?: number; // flat crit chance, 0..1
+  critRating?: number; // crit rating (converted to % in recalcPlayerStats)
   // Haste fraction (0.15 = 15% faster). ONE stat: it speeds melee and ranged
   // auto-attack swings AND shortens spell cast/channel time, all together
   // (folded into Entity.meleeHaste/rangedHaste/spellHaste in recalcPlayerStats).
   haste?: number;
+  hasteRating?: number; // haste rating (converted to % in recalcPlayerStats)
   castPushbackReduction?: number; // 0..1: fraction of damage cast-pushback removed (1 = immune)
   knockbackResistance?: number; // 0..1: fraction of on-hit knockback distance resisted (1 = immune)
+  proc?: SetProc;
 }
 
 export interface SetBonusTier {
@@ -384,8 +453,19 @@ export interface ItemSet {
 
 export interface ArmorItemDef extends BaseItemDef {
   kind: 'armor';
-  slot: Exclude<EquipSlot, 'mainhand'>;
+  slot: Exclude<EquipSlot, 'mainhand' | 'neck' | 'ring1' | 'ring2'>;
   armorType: ArmorType;
+  weapon?: never;
+}
+
+// Jewelry: neck and ring pieces. kind 'armor' so the equip/budget/tooltip paths
+// treat it as gear, but it carries NO armor class: equipment_rules falls through
+// the armorType gate, so any class can wear jewelry (requiredClass still applies
+// when set). Rings declare slot 'ring'; see resolveEquipSlot.
+export interface JewelryItemDef extends BaseItemDef {
+  kind: 'armor';
+  slot: 'neck' | 'ring';
+  armorType?: never;
   weapon?: never;
 }
 
@@ -394,6 +474,49 @@ export interface WeaponItemDef extends BaseItemDef {
   slot: 'mainhand';
   weapon: WeaponInfo;
   armorType?: never;
+  // Legendary "chance on action" procs; see WeaponProc below.
+  weaponProcs?: WeaponProc[];
+}
+
+// A legendary weapon proc: a "chance on action" effect that rolls when the wielder
+// performs the trigger action (lands a melee swing, lands a damaging spell, or lands
+// a heal) and, on success, fires its effects. Handled by
+// src/sim/combat/equip_procs.ts. The proc's rng roll is gated on the wielder actually
+// carrying a proc weapon, so ordinary gear draws no extra rng and the deterministic
+// draw order (and every parity golden that equips no legendary) is unchanged.
+export type WeaponProcTrigger = 'meleeHit' | 'spellDamage' | 'heal';
+
+export type WeaponProcEffect =
+  // Thunderfury-style arc: a bolt that strikes the primary target and then jumps to
+  // up to `jumps` nearby enemies for `falloff`-decaying damage.
+  | {
+      kind: 'chainArc';
+      school: Aura['school'];
+      damage: number;
+      jumps: number;
+      falloff: number;
+      radius: number;
+    }
+  // Slows the primary target's attack speed (an `attackspeed` aura, mult > 1).
+  | { kind: 'attackSlow'; name: string; mult: number; duration: number }
+  // A damage-over-time on the target (e.g. Deathbloom).
+  | {
+      kind: 'dot';
+      name: string;
+      school: Aura['school'];
+      perTick: number;
+      interval: number;
+      duration: number;
+    }
+  // A heal-over-time on the trigger's target (e.g. Lifebloom).
+  | { kind: 'hot'; name: string; perTick: number; interval: number; duration: number };
+
+export interface WeaponProc {
+  id: string; // unique per item; used for the applied aura ids
+  name: string; // player-visible proc name (also the chain arc's damage label)
+  trigger: WeaponProcTrigger;
+  chance: number; // 0..1 per trigger action
+  effects: WeaponProcEffect[];
 }
 
 export interface OtherItemDef extends BaseItemDef {
@@ -401,7 +524,7 @@ export interface OtherItemDef extends BaseItemDef {
   armorType?: never;
 }
 
-export type ItemDef = ArmorItemDef | WeaponItemDef | OtherItemDef;
+export type ItemDef = ArmorItemDef | WeaponItemDef | JewelryItemDef | OtherItemDef;
 
 // Per-instance item payload (#1165). Additive and OPTIONAL: most items stay plain
 // {itemId, count} with no instance payload (fungible, market-listable). A slot
@@ -1159,6 +1282,20 @@ export type AbilityEffect =
   | { type: 'aoeAttackSpeed'; mult: number; duration: number; radius: number } // thunder clap rider
   | { type: 'aoeAttackPower'; amount: number; duration: number; radius: number } // demoralizing roar/shout
   | { type: 'aoeRoot'; duration: number; radius: number; min: number; max: number }
+  // The Vale Cup boarball moves (docs/prd/vale-cup.md). ballKick launches the
+  // match ball toward the caster's castAim (power = ground speed yd/s, loft =
+  // initial vertical speed); sportDash is a targetless directional lunge along
+  // the aim direction (catchBall lets a keeper's Dive catch a crossing ball);
+  // sportShove bumps the target back via the knockback walker. ballPass rolls a
+  // firm auto-paced ground pass to the caster's targeted teammate (else the best
+  // teammate toward the aim), leading their run. All no-damage.
+  | { type: 'ballKick'; power: number; loft: number }
+  | { type: 'ballPass'; power: number; loft: number }
+  // ballShoot fires the ball at the enemy goal; power (ground speed) and loft
+  // both scale with the caster's charge, so a max-power shot sails OVER the bar.
+  | { type: 'ballShoot'; power: number; loft: number }
+  | { type: 'sportDash'; distance: number; catchBall?: boolean }
+  | { type: 'sportShove'; distance: number }
   | {
       type: 'selfBuff';
       kind: AuraKind;
@@ -1269,6 +1406,12 @@ export interface NpcDef {
   // The Merchant: talking to this NPC opens the player-driven World Market
   // (auction house) instead of a fixed vendor stock.
   market?: boolean;
+  // A banker: talking to this NPC opens the player's bank (deposit box). The bank
+  // deposit/withdraw/buy-slots commands gate on standing near one of these.
+  banker?: true;
+  // The Heroic Quartermaster: talking to this NPC opens the Heroic Marks
+  // shop (src/sim/content/heroic_vendor.ts) instead of a copper vendor stock.
+  heroicVendor?: boolean;
   greeting: string;
   // Registered but not surface-placed at world init. The owning system spawns
   // the entity on demand (e.g. the Nythraxis encounter walks Brother Aldric in
@@ -1509,7 +1652,11 @@ export interface Entity {
   meleeHaste: number;
   rangedHaste: number;
   spellHaste: number;
+  setProcs: SetProc[];
+  procReadyAt: Record<string, number>;
   critChance: number; // 0..1
+  critRating: number; // accumulated crit rating from gear + set bonuses
+  hasteRating: number; // accumulated haste rating from gear + set bonuses
   dodgeChance: number;
   castPushbackReduction: number; // 0..1: damage cast-pushback removed by item-set bonuses (1 = immune)
   knockbackResistance: number; // 0..1: on-hit knockback distance resisted by item-set bonuses (1 = immune)
@@ -1601,6 +1748,19 @@ export interface Entity {
   firedSummons: number; // summonAdds thresholds already triggered
   summonedIds: number[]; // live adds this boss summoned; despawned on reset
   enraged: boolean; // enrage mechanic active
+  // Heroic-instance mechanic scaling (instances/difficulty.ts applyHeroicMobTuning).
+  // Mechanic numbers (aoePulse/bigCast/stomp damage; mendAlly/wardAllies/stoneskin
+  // amounts) are read from the base MOBS table at fire time, so the fire sites
+  // multiply by these AFTER the rng draw. undefined = 1 (normal difficulty).
+  mechanicDamageMult?: number;
+  mechanicHealMult?: number;
+  // Entity-level CC/snare immunity, the per-spawn twin of the MobTemplate
+  // ccImmune/slowImmune flags (which are read from the base MOBS table, so a
+  // spawn-time template transform cannot grant them). Heroic instances set
+  // both on boss-flagged mobs (applyHeroicMobTuning); the applyAura gates and
+  // the polymorph cast gate check template OR entity.
+  ccImmune?: boolean;
+  slowImmune?: boolean;
   healedThisPull: boolean; // desperation self-heal already used this pull
   nythraxis?: NythraxisEncounterState; // sim-only state for the Nythraxis raid encounter
   spawnPos: Vec3;
@@ -1825,6 +1985,10 @@ export type SimEvent = { pid?: number } & (
   // `collected` the coin taken, `tooManyParcels` the attachment cap). All
   // always carry pid.
   | { type: 'mailbox' }
+  // Asks the client to open the bank window (the interact path at a banker NPC).
+  // Structured data only (pid supplied by the union intersection); the client
+  // builds every visible string, the mailbox precedent.
+  | { type: 'bank' }
   | { type: 'mailArrived'; senderName: string; letterId?: string }
   | { type: 'mailResult'; code: MailResultCode; value?: number; name?: string }
   // Guild calendar outcome. Emitted only by the server's SocialService (the
@@ -1909,6 +2073,58 @@ export type SimEvent = { pid?: number } & (
   // A fighter grabbed a ring power-up (world event so everyone sees the glow).
   // Whether it's "mine" is decided client-side (entityId === local player).
   | { type: 'fiestaPowerup'; entityId: number; defId: string; glow: number; duration: number }
+  // The Vale Cup (docs/prd/vale-cup.md). Queue lifecycle events carry pid
+  // (personal). Match-theatre events (kickoff/goal/save/golden/end) carry a
+  // WORLD x/z anchor at the pitch instead, so walk-up spectators in the
+  // Sowfield stands see the banners and fireworks too (routeEvents delivers
+  // anchored pid-less events to everyone within 90yd).
+  | { type: 'vcupQueued'; bracket: VcBracket; position: number }
+  | { type: 'vcupUnqueued' }
+  | {
+      type: 'vcupFound';
+      bracket: VcBracket;
+      nationA: VcNationId;
+      nationB: VcNationId;
+      team: 'A' | 'B';
+      allies: ArenaCombatant[];
+      enemies: ArenaCombatant[];
+    }
+  | { type: 'vcupCountdown'; seconds: number; x: number; z: number }
+  | { type: 'vcupKickoff'; x: number; z: number }
+  | {
+      type: 'vcupGoal';
+      scorerName: string;
+      team: 'A' | 'B';
+      scoreA: number;
+      scoreB: number;
+      nationA: VcNationId;
+      nationB: VcNationId;
+      x: number;
+      z: number;
+    }
+  | { type: 'vcupSave'; keeperName: string; x: number; z: number }
+  // A spectator's parimutuel wager settled: pid-scoped so it refreshes their purse
+  // and toasts the outcome. payout is the total copper credited (0 on a loss).
+  | {
+      type: 'vcupBetSettled';
+      pid: number;
+      outcome: 'won' | 'lost' | 'refunded';
+      stake: number;
+      payout: number;
+    }
+  | { type: 'vcupGolden'; x: number; z: number }
+  | {
+      type: 'vcupEnd';
+      scoreA: number;
+      scoreB: number;
+      nationA: VcNationId;
+      nationB: VcNationId;
+      winner: 'A' | 'B' | null;
+      x: number;
+      z: number;
+    }
+  // personal outcome line for each fighter (rides beside the anchored vcupEnd)
+  | { type: 'vcupResult'; won: boolean; draw: boolean }
   | {
       type: 'heal2';
       sourceId: number;
@@ -2029,7 +2245,7 @@ export type SimEvent = { pid?: number } & (
       itemId?: string;
       count?: number;
       quality?: ItemDef['quality'];
-      reason?: 'unknown_recipe' | 'insufficient_materials';
+      reason?: 'unknown_recipe' | 'insufficient_materials' | 'combo_requirement_unmet';
     }
 );
 
@@ -2151,6 +2367,17 @@ export interface SimConfig {
   // so callers that set this MUST also call setActiveWorldContent() with content
   // whose terrain-relevant fields are identical (see the sim.ts ctor invariant).
   world?: WorldContent;
+  // Optional per-phase timing hook: tick() calls this after each internal phase and
+  // the HOST owns the clock, attributing the elapsed time since its previous mark to
+  // `phase` (keeps wall-clock reads out of the sim, per the determinism guard). The
+  // server injects it to feed its tick profiler during an on-demand capture; undefined
+  // offline/headless, so the sim draws no wall clock in a deterministic scenario.
+  perfLap?: (phase: string) => void;
+  // When true, the Sowfield auto-runs a bot-vs-bot showcase match after a stretch
+  // of no queue activity, so a walk-up spectator always has a game to watch (and
+  // bet on). Server + offline game enable it; tests/goldens leave it off so the
+  // idle timer never perturbs a deterministic scenario.
+  valeCupShowcase?: boolean;
 }
 
 export function emptyMoveInput(): MoveInput {
@@ -2173,6 +2400,16 @@ export function dist2d(a: Vec3, b: Vec3): number {
 
 export function angleTo(from: Vec3, to: Vec3): number {
   return Math.atan2(to.x - from.x, to.z - from.z);
+}
+
+// Below this separation two positions no longer define a bearing: atan2 turns
+// position noise (collision nudges, online rounding) into full-circle swings,
+// so an entity re-aimed at a target standing on top of it strobes its
+// orientation every tick. steadyAngleTo holds the previous facing instead.
+export const FACING_HOLD_DIST = 0.1;
+
+export function steadyAngleTo(from: Vec3, to: Vec3, current: number): number {
+  return dist2d(from, to) < FACING_HOLD_DIST ? current : angleTo(from, to);
 }
 
 export function normAngle(a: number): number {

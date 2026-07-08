@@ -44,7 +44,11 @@ import {
   SPIRIT_HEALER_NPC_ID,
 } from './content/graveyards';
 import { GROUND_PICKUP_LINES } from './content/ground_pickup_lines';
-import { COMMON_RECIPES as COMMON_RECIPES_CONTENT } from './content/recipes';
+import {
+  ALL_RECIPES as ALL_RECIPES_CONTENT,
+  COMMON_RECIPES as COMMON_RECIPES_CONTENT,
+  TOOL_RECIPES as TOOL_RECIPES_CONTENT,
+} from './content/recipes';
 import {
   TEMPLE_CAMPS,
   TEMPLE_DUNGEON_DEFS,
@@ -57,6 +61,7 @@ import {
   TEMPLE_QUEST_ORDER,
   TEMPLE_QUESTS,
 } from './content/temple';
+import { VALE_CUP_BALL_MOB, VALE_CUP_BALL_TEMPLATE_ID } from './content/vale_cup';
 import { WARLOCK_PET_MOBS } from './content/warlock_pets';
 import {
   GRAVEYARD_POS,
@@ -113,6 +118,8 @@ export {
 } from './content/delves';
 
 import { DELVE_ITEMS } from './content/delves/items';
+import { HEROIC_ITEMS } from './content/heroic_loot';
+import { HEROIC_VENDOR_ITEMS } from './content/heroic_vendor';
 import { DELVE_MODULE_LAYOUTS, type DelveModuleId, delveModuleSpan } from './delve_layout';
 
 function mergeItems(...parts: Record<string, ItemDef>[]): Record<string, ItemDef> {
@@ -153,6 +160,8 @@ export const ITEMS: Record<string, ItemDef> = mergeItems(
   ZONE3_ITEMS,
   TEMPLE_ITEMS,
   DELVE_ITEMS,
+  HEROIC_VENDOR_ITEMS,
+  HEROIC_ITEMS,
 );
 
 export type { AggregatedSetEffect } from './content/item_sets';
@@ -167,6 +176,9 @@ export const MOBS: Record<string, MobTemplate> = {
   ...TEMPLE_MOBS,
   ...TEMPLE_DUNGEON_MOBS,
   ...DELVE_MOBS,
+  // The Vale Cup boarball: an inert, non-hostile ball entity (never camp-spawned;
+  // the match driver in social/vale_cup.ts spawns and despawns it).
+  [VALE_CUP_BALL_TEMPLATE_ID]: VALE_CUP_BALL_MOB,
 };
 
 export const NPCS: Record<string, NpcDef> = {
@@ -222,7 +234,12 @@ export const GROUND_OBJECTS: GroundObjectDef[] = [
 
 export const GATHER_NODES: GatherNodeDef[] = [...GATHER_NODES_CONTENT];
 
-export const COMMON_RECIPES = [...COMMON_RECIPES_CONTENT];
+export const COMMON_RECIPES = [...COMMON_RECIPES_CONTENT, ...TOOL_RECIPES_CONTENT];
+
+// Every recipe, common and combo alike (#1132 review): the recipeList read
+// surface below lists this, not just COMMON_RECIPES, so a combo recipe is
+// reachable in normal play.
+export const ALL_RECIPES = [...ALL_RECIPES_CONTENT];
 
 export const ROADS: { x: number; z: number }[][] = [...ZONE1_ROADS, ...ZONE2_ROADS, ...ZONE3_ROADS];
 

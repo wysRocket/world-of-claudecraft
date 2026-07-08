@@ -308,10 +308,19 @@ export const de_DE: EnTranslations = {
       "autorun": "Auto-Laufen",
       "jump": "Springen",
       "leaderboard": "Rangliste",
+      "dailyRewards": "Belohnungen",
       "nameplates": "Namen",
       "haptics": "Haptik",
       "hapticsOff": "Haptik aus",
-      "toggleHaptics": "Haptik umschalten"
+      "toggleHaptics": "Haptik umschalten",
+      "hotbarPage": "Fähigkeiten",
+      "hotbarPageAria": "Nächste Fähigkeitengruppe anzeigen",
+      "actionRing": "Kampfhandlungen",
+      "actionPageToggle": "Aktionsseite wechseln",
+      "actionPageIndicator": "Seite {page}",
+      "targetCycle": "Ziel tauschen",
+      "targetCycleShort": "Ziel",
+      "spellbookPageLabel": "Seite {page}"
     },
     "tutorial": {
       "moveBodyTouch": "Nutze den Bewegungsstick zum Bewegen und zieh über den Bildschirm, um dich umzusehen. Mach ein paar Schritte, um zu beginnen.",
@@ -360,7 +369,9 @@ export const de_DE: EnTranslations = {
       "hoursMinutes": "{h}Std {m}Min",
       "minutes": "{m}Min",
       "lessThanMinute": "<1Min",
-      "lockedToast": "Du bist für {raid} gesperrt. Freischaltung in {time}."
+      "lockedToast": "Du bist für {raid} gesperrt. Freischaltung in {time}.",
+      "heroicName": "Heroisch {name}",
+      "heroicLocked": "Du bist für Heroisch {name} gesperrt."
     },
     "compass": {
       "N": "N",
@@ -382,11 +393,149 @@ export const de_DE: EnTranslations = {
       "emoteWheel": "Emote-Rad",
       "targetFriendly": "Nächsten Verbündeten anvisieren",
       "targetFriendlyNext": "Freundliches Ziel wechseln",
-      "discord": "Discord"
+      "discord": "Discord",
+      "valecup": "Talpokal"
+    },
+    "vcup": {
+      "title": "Der Talpokal",
+      "shootPower": "KRAFT",
+      "close": "Das Talpokal-Fenster schließen",
+      "offlineNote": "Das Spielplanbuch ist geschlossen. Der Talpokal ist gerade nicht verfügbar.",
+      "recordLine": "Deine Bilanz: {wins} Siege, {losses} Niederlagen, {draws} Unentschieden.",
+      "bracketsAria": "Spielstaffel",
+      "bracketLabel": "{n}v{n}",
+      "waitingCount": "Wartende: {count}",
+      "nationsHeading": "Bannernation",
+      "nation": {
+        "vale": "Eastbrook-Tal",
+        "mirefen": "Das Mirefen",
+        "thornpeak": "Thornpeak",
+        "coliseum": "Das Aschene Kolosseum",
+        "choir": "Der Bleiche Chor",
+        "ogre": "Die Oger-Clans",
+        "moon": "Der Bleiche Mond",
+        "copperdig": "Die Kupfergrube"
+      },
+      "awayNote": "Fliegen beide Seiten dasselbe Banner, spielt die Auswärtsseite in den umgekehrten Farben.",
+      "rolesHeading": "Sportrolle",
+      "role": {
+        "allrounder": {
+          "name": "Allrounder",
+          "desc": "Von allem etwas: Kick, Weitschlag und ein fairer Rempler."
+        },
+        "striker": {
+          "name": "Stürmer",
+          "desc": "Lebt für den weiten Schlag und den schnellen Haken."
+        },
+        "sweeper": {
+          "name": "Ausputzer",
+          "desc": "Rempelt Läufer vom Ball und schlägt ihn weit nach vorn."
+        },
+        "keeper": {
+          "name": "Torhüter",
+          "desc": "Hütet den Torraum mit Griff, Hechtsprung und Abschlag."
+        }
+      },
+      "queue": "In die Warteschlange",
+      "leaveQueue": "Warteschlange verlassen",
+      "queueNote": "Stell dich von überall an; der Anpfiff ruft dich zum Saufeld.",
+      "queuedStatus": "In der Warteschlange für {bracket}: Position {position} von {count}.",
+      "blockNation": "Wähle zuerst eine Bannernation.",
+      "blockPartySize": "Diese Staffel braucht eine kleinere Gruppe.",
+      "blockNotLeader": "Nur der Gruppenanführer kann das Team in die Warteschlange stellen.",
+      "inMatchNote": "Dein Team steht auf dem Platz. Weiterspielen!",
+      "deserterNote": "Der Platzwart vergisst nicht. Du kannst dich in {seconds} Sek. wieder anstellen.",
+      "liveHeading": "Jetzt auf dem Saufeld",
+      "liveAria": "Talpokal: {nationA} {scoreA}, {nationB} {scoreB}",
+      "walkUp": "Komm zum Saufeld, um von den Rängen aus zuzusehen.",
+      "noLive": "Der Platz ruht. Es wird gerade kein Spiel gespielt.",
+      "boardHeading": "Siegertafel",
+      "boardEmpty": "Noch keine Sieger verzeichnet. Der Kupfereimer wartet.",
+      "boardWins": "{count} Siege",
+      "enterAsGuild": "Unter dem Banner von {guild} antreten",
+      "guildRecordLine": "Deine Gildenbilanz: {wins} Siege, {losses} Niederlagen.",
+      "guildBoardHeading": "Gildenbanner",
+      "guildBoardEmpty": "Noch keine Gilde hat den Platz betreten. Zeig dein Banner!",
+      "guildBoardWl": "{wins} S, {losses} N",
+      "practice": "Training gegen Bots",
+      "practiceNote": "Startet sofort ein privates Bot-Spiel auf deinem eigenen Trainingsplatz.",
+      "practicingNow": "Gerade im Training ({count}):",
+      "clock": "{minutes}:{seconds}",
+      "indicatorQueued": "Talpokal-Warteschlange: {bracket}, Position {position} von {count}",
+      "indicatorLive": "Talpokal",
+      "indicatorOpen": "Das Talpokal-Fenster öffnen",
+      "phaseCountdown": "Anstoß in {seconds}",
+      "phaseGoal": "TOR!",
+      "phaseGolden": "GOLDEN GOAL",
+      "phaseOver": "ABPFIFF",
+      "bannerFound": "Der Talpokal ruft: {nationA} gegen {nationB}!",
+      "bannerCountdown": "Anstoß in {seconds}...",
+      "bannerKickoff": "ANSTOSS!",
+      "bannerGoal": "TOR! {nation} trifft!",
+      "bannerSave": "{name} HÄLT!",
+      "bannerGolden": "GOLDEN GOAL: Der nächste Treffer gewinnt!",
+      "bannerEnd": "Abpfiff: {nationA} {scoreA}, {nationB} {scoreB}",
+      "bannerWin": "Sieg auf dem Saufeld!",
+      "bannerDraw": "Unentschieden auf dem Saufeld.",
+      "bannerLoss": "Niederlage auf dem Saufeld.",
+      "logQueued": "Du reihst dich in die Talpokal-Warteschlange für {bracket} ein (Position {position}).",
+      "logUnqueued": "Du verlässt die Talpokal-Warteschlange.",
+      "logFound": "Dein Talpokal-Spiel ist bereit: {nationA} gegen {nationB}.",
+      "logRoster": "Deine Seite: {allies}. Die Gegenseite: {enemies}.",
+      "logGoal": "{name} trifft für {nation}! {nationA} {scoreA}, {nationB} {scoreB}.",
+      "logSave": "{name} hält den Ball!",
+      "logWin": "Du gewinnst die Partie auf dem Saufeld.",
+      "logDraw": "Die Partie auf dem Saufeld endet unentschieden.",
+      "logLoss": "Du verlierst die Partie auf dem Saufeld.",
+      "gossipOpen": "Das Spielplanbuch",
+      "gossipOpenAria": "Das Talpokal-Fenster öffnen",
+      "mobileLabel": "Pokal",
+      "briefing": {
+        "subtitle": "Besprechung vor dem Spiel",
+        "vs": "gegen",
+        "rulesHeading": "So wird gespielt",
+        "rule1": "Schieße oder passe den Ball ins gegnerische Tor, um zu punkten.",
+        "rule2": "Wer zuerst 5 Tore erzielt, gewinnt, oder wer beim Abpfiff die meisten Tore hat.",
+        "rule3": "Steht es beim Abpfiff unentschieden, geht es ins Golden Goal: Der nächste Treffer gewinnt.",
+        "rule4": "Tacklings werfen dich nur um. Unter dem Erntefrieden wird niemand verletzt.",
+        "rule5": "Jeder kann vorbeikommen und dich von den Rängen aus anfeuern.",
+        "kitHeading": "Deine Ausrüstung",
+        "kitNote": "Diese Manöver ersetzen für das Spiel deine Klassenfähigkeiten.",
+        "rosterHeading": "Die Aufstellung",
+        "you": "Du",
+        "bot": "Bot",
+        "ready": "Ich bin bereit",
+        "readyDone": "Bereit",
+        "readyAria": "Bereit machen für den Anstoß",
+        "waiting": "Warte, bis die andere Seite bereit ist...",
+        "whistle": "Der Anpfiff ertönt in {seconds}s.",
+        "readyCount": "{ready} von {total} bereit"
+      },
+      "bet": {
+        "title": "Spielwetten",
+        "aria": "Talpokal-Spielwetten",
+        "closesIn": "Wettschluss in {seconds}s",
+        "closed": "Wetten geschlossen",
+        "prize": "Topf {amount}",
+        "splitAria": "Anteil des Wett-Topfs je Team",
+        "expand": "Wetten ansehen und setzen",
+        "collapse": "Wetten ausblenden",
+        "oddsLabel": "Quote",
+        "back": "Auf {team} setzen",
+        "form": "{wins}S-{losses}N",
+        "mine": "Deine Wette: {amount} auf {team}",
+        "none": "Du hast auf dieses Spiel noch keine Wette platziert.",
+        "record": "Wettbilanz: {wins}S-{losses}N, {sign}{net}",
+        "wonBanner": "Deine Wette hat gewonnen!",
+        "wonLog": "Deine Talpokal-Wette hat gewonnen: {amount} ausgezahlt.",
+        "lostLog": "Deine Talpokal-Wette ist verloren: {amount}.",
+        "refundLog": "Wetten annulliert, dein Einsatz von {amount} wurde zurückgezahlt."
+      }
     },
     "options": {
       "clickMoveLeft": "Linksklick",
       "clickMoveRight": "Rechtsklick",
+      "version": "v{version} ({build})",
       "browserEffects": "Browser-Effekte",
       "browserEffectsAuto": "Auto",
       "browserEffectsFull": "Voll",
@@ -418,7 +567,9 @@ export const de_DE: EnTranslations = {
       "itemLevelLine": "Gegenstandsstufe {level}",
       "itemScoreLine": "Wertung {score}",
       "showSecondaryActionBar": "Zweite Aktionsleiste anzeigen",
-      "showDailyRewardsChest": "Truhe der täglichen Belohnungen anzeigen"
+      "showDailyRewardsChest": "Truhe der täglichen Belohnungen anzeigen",
+      "mobileCameraJoystick": "Kamera-Joystick",
+      "mobileLeftHanded": "Linkshänder-Layout"
     },
     "controller": {
       "title": "Controller",
@@ -469,7 +620,9 @@ export const de_DE: EnTranslations = {
         "fps01Low": "0,1 % Min.",
         "ping": "Ping",
         "jitter": "Jitter",
+        "predLead": "Prädiktionsvorlauf",
         "snapshot": "Snapshot-Rate",
+        "serverTick": "Server-Tickrate",
         "connection": "Verbindung",
         "drawCalls": "Draw Calls",
         "triangles": "Dreiecke",
@@ -512,7 +665,9 @@ export const de_DE: EnTranslations = {
     "statInfo": {
       "fromYour": "Von deinen {value} Punkten {stat}:",
       "names": {
-        "spellPower": "Zaubermacht"
+        "spellPower": "Zaubermacht",
+        "critRating": "Kritische Trefferwertung",
+        "hasteRating": "Tempowertung"
       },
       "desc": {
         "str": "Erhöht deine Angriffskraft, sodass deine Waffenschläge härter treffen.",
@@ -525,7 +680,9 @@ export const de_DE: EnTranslations = {
         "spellPower": "Erhöht den Schaden deiner Zauber und die Stärke deiner Heilungen. Jeder Punkt Intelligenz gewährt etwas Zaubermacht, zusätzlich zu der aus Ausrüstung oder Stärkungszaubern.",
         "dps": "Dein geschätzter Waffenschaden pro Sekunde, der Schaden und Geschwindigkeit deiner Waffe mit deiner Angriffskraft verbindet.",
         "critChance": "Deine Chance, dass ein Angriff kritisch trifft und doppelten Schaden verursacht.",
-        "dodge": "Deine Chance, einem eingehenden Nahkampfangriff vollständig auszuweichen und keinen Schaden zu erleiden."
+        "dodge": "Deine Chance, einem eingehenden Nahkampfangriff vollständig auszuweichen und keinen Schaden zu erleiden.",
+        "critRating": "Kritische Trefferwertung aus deiner Ausrüstung und deinen Setboni, die deine kritische Trefferchance erhöht. Etwa 10 Wertung gewähren 1% kritische Trefferchance.",
+        "hasteRating": "Tempowertung aus deiner Ausrüstung und deinen Setboni, die deine Angriffe und dein Zaubern beschleunigt. Etwa 10 Wertung gewähren 1% Tempo."
       },
       "effects": {
         "attackPower": "+{value} Angriffskraft",
@@ -565,6 +722,15 @@ export const de_DE: EnTranslations = {
     "itemSet": {
       "header": "{name} ({have}/{total})",
       "bonusLine": "({pieces}) {bonus}"
+    },
+    "itemProc": {
+      "onMeleeHit": "Chance bei Treffer ({chance}%): {effect}",
+      "onSpellDamage": "Chance bei euren schädigenden Zaubern ({chance}%): {effect}",
+      "onHeal": "Chance bei euren Heilungen ({chance}%): {effect}",
+      "chainArc": "trifft das Ziel mit einem {school} {name} ({damage}), der auf {jumps} nahe Gegner mit abnehmendem Schaden überspringt",
+      "attackSlow": "und verlangsamt das Angriffstempo des Ziels {duration} Sek. lang um {pct}%",
+      "dot": "lässt {name} schwären, einen {school} Schaden über Zeit, der {total} über {duration} Sek. verursacht",
+      "hot": "entfaltet {name}, eine Heilung über Zeit, die {total} über {duration} Sek. wiederherstellt"
     },
     "questShare": {
       "notShareable": "Diese Quest kann nicht geteilt werden.",
@@ -753,6 +919,15 @@ export const de_DE: EnTranslations = {
         "tusk": "Stoßzahn"
       }
     },
+    "townFocus": {
+      "title": "Stadtfokus",
+      "hint": "Fokuspunkte gewähren einen Bonus auf den Grundertrag jeder Einrichtung. Einrichtungen ohne Fokus bleiben beim Grundertrag.",
+      "budgetLabel": "Verbleibende Punkte: {remaining} / {budget}",
+      "saveButton": "Fokus speichern",
+      "notInTownHint": "Du musst in der Stadt sein, um deinen Fokus festzulegen.",
+      "increaseAria": "Fokus auf {component} erhöhen",
+      "decreaseAria": "Fokus auf {component} verringern"
+    },
     "party": {
       "promoteLeader": "Zum Anführer befördern",
       "inviteUsage": "Wen einladen? Verwendung: /invite <name>."
@@ -768,7 +943,13 @@ export const de_DE: EnTranslations = {
       "leaderOption": "Plündermeister: Anführer (Du)",
       "masterOption": "Plündermeister: {name}"
     },
+    "dungeonDifficulty": {
+      "setHeroic": "Dungeon-Schwierigkeit festlegen: Heroisch",
+      "setNormal": "Dungeon-Schwierigkeit festlegen: Normal"
+    },
     "bags": {
+      "cannotDestroy": "Dieser Gegenstand kann nicht zerstört werden.",
+      "rightClickDestroy": "Rechtsklick zum Zerstören",
       "filterGroupAria": "Taschen nach Kategorie filtern",
       "filterAll": "Alle",
       "filterWeapon": "Waffen",
@@ -984,6 +1165,7 @@ export const de_DE: EnTranslations = {
       "roleTag": {
         "levyst": "Levy St",
         "admin": "Admin",
+        "coredevs": "Kernentwickler",
         "devs": "Entwickler",
         "mods": "Mod",
         "artists": "Künstler"
@@ -1048,18 +1230,6 @@ export const de_DE: EnTranslations = {
           "hint": "Bitte die Gemeinschaft um Hilfe"
         }
       }
-    },
-    "crafting": {
-      "title": "Basteln",
-      "close": "Enges Basteln",
-      "craft": "Handwerk",
-      "reagentsNeeded": "Erfordert:",
-      "reagentLine": "{name}: {have}/{required}",
-      "empty": "Noch keine Rezepte bekannt.",
-      "resultAria": "Basteln {name}",
-      "craftedToast": "Hergestellt: {name}",
-      "insufficientMaterials": "Dafür fehlen Ihnen die Materialien.",
-      "unknownRecipe": "Dieses Rezept existiert nicht."
     },
     "devBadge": {
       "title": "Entwickler",
@@ -1137,6 +1307,50 @@ export const de_DE: EnTranslations = {
         "takeParcelsFirst": "Entnimm erst die Pakete, bevor du den Brief verwirfst."
       }
     },
+    "bank": {
+      "title": "Bank",
+      "subtitle": "Die Vergoldete Schatulle",
+      "close": "Bank schließen",
+      "capacity": "{used}/{total}",
+      "capacityAria": "Belegte Bankfächer: {used} von {total}",
+      "empty": "Deine Bank ist leer.",
+      "tooFar": "Du musst bei einem Bankier stehen, um deine Bank einzusehen.",
+      "buySlots": "{count} Fächer kaufen",
+      "buySlotsMaxed": "Vollständig erweitert",
+      "buyConfirm": "{count} zusätzliche Bankfächer für {price} kaufen?",
+      "buyConfirmAccept": "Kaufen",
+      "withdrawHint": "Klicke, um zu entnehmen",
+      "withdrawPartialHint": "Umschalt-Klick, um eine Teilmenge zu entnehmen",
+      "depositHint": "Klicke, um einzulagern",
+      "depositPartialHint": "Umschalt-Klick, um eine Teilmenge einzulagern",
+      "cannotDeposit": "Kann nicht eingelagert werden",
+      "depositQuantityTitle": "{item} einlagern",
+      "depositQuantityInput": "Einzulagernde Menge",
+      "depositQuantityConfirm": "Einlagern",
+      "withdrawQuantityTitle": "{item} entnehmen",
+      "withdrawQuantityInput": "Zu entnehmende Menge",
+      "withdrawQuantityConfirm": "Entnehmen",
+      "filterGroupAria": "Bank nach Kategorie filtern",
+      "sortAria": "Bankgegenstände sortieren",
+      "searchAria": "Bankgegenstände nach Namen durchsuchen",
+      "depositAll": "Alle Materialien einlagern",
+      "depositAllDone": "Eingelagerte Materialien: {count}.",
+      "depositAllFull": "Eingelagerte Materialien: {count}. Die Bank ist jetzt voll.",
+      "depositAllNone": "Bank voll: nichts eingelagert.",
+      "bonusTitle": "Bonusfächer",
+      "bonusEarned": "+{count}",
+      "bonusStatusEarned": "+{count}",
+      "bonusSourceEmail": "E-Mail-Adresse bestätigt",
+      "bonusSourceDiscord": "Discord verknüpft",
+      "bonusSourceWallet": "Wallet verknüpft",
+      "bonusSourceReferral": "Geworbene Freunde",
+      "bonusAdvertEmail": "Bestätige deine E-Mail-Adresse und erhalte 2 Fächer.",
+      "bonusAdvertDiscord": "Verknüpfe dein Discord-Konto und erhalte 2 Fächer.",
+      "bonusAdvertWallet": "Verknüpfe eine Wallet und erhalte 2 Fächer.",
+      "bonusReferralProgress": "{count}/{cap}",
+      "bonusReferralExplainer": "Lade einen Freund ein: Erreicht er Stufe 10, erhaltet ihr beide 2 Fächer, bis zu 5 Freunde.",
+      "bonusSectionAria": "Bonus-Bankfächer und wie du mehr davon verdienst"
+    },
     "calendar": {
       "title": "Ereigniskalender",
       "close": "Kalender schließen",
@@ -1204,6 +1418,33 @@ export const de_DE: EnTranslations = {
       "mining": "Bergbau",
       "logging": "Holzfällen",
       "herbalism": "Kräuterkunde"
+    },
+    "archetypeTitle": {
+      "label": "Titel",
+      "none": "Keiner",
+      "armorcrafting": "Rüstungsschmied",
+      "weaponcrafting": "Waffenschmied",
+      "jewelcrafting": "Juwelier",
+      "alchemy": "Alchemist",
+      "engineering": "Ingenieur",
+      "cooking": "Koch",
+      "inscription": "Schreiber",
+      "enchanting": "Verzauberer",
+      "tailoring": "Schneider",
+      "leatherworking": "Gerber"
+    },
+    "crafting": {
+      "title": "Basteln",
+      "close": "Enges Basteln",
+      "craft": "Handwerk",
+      "reagentsNeeded": "Erfordert:",
+      "reagentLine": "{name}: {have}/{required}",
+      "empty": "Noch keine Rezepte bekannt.",
+      "resultAria": "Basteln {name}",
+      "craftedToast": "Hergestellt: {name}",
+      "insufficientMaterials": "Dafür fehlen Ihnen die Materialien.",
+      "unknownRecipe": "Dieses Rezept existiert nicht.",
+      "comboRequirementUnmet": "Ihr besitzt nicht beide erforderlichen Berufe auf der nötigen Stufe für dieses Rezept."
     }
   },
   "apiError": {
@@ -1310,6 +1551,7 @@ export const de_DE: EnTranslations = {
       "bestiary": "Bestiarium",
       "models": "3D-Modelle",
       "gear": "Ausrüstung und Gegenstände",
+      "professions": "Berufe",
       "economy": "Wirtschaft und Handel",
       "social": "Soziales und Gruppen",
       "stats": "Charakter und Werte",
@@ -1324,6 +1566,7 @@ export const de_DE: EnTranslations = {
       "combat": "Kampf",
       "talents": "Talente",
       "arena": "Arena und PvP",
+      "valeCup": "Talpokal",
       "glossary": "Glossar",
       "wishIKnew": "Was ich gern früher gewusst hätte",
       "faq": "FAQ",
@@ -1979,6 +2222,32 @@ export const de_DE: EnTranslations = {
       "ladderHeading": "Die Rangleiter erklimmen",
       "ladderBody": "Das gewertete Spiel verfolgt dein Ansehen über die Zeit. Wirf einen Blick auf die Bestenliste, um zu sehen, wo du stehst und wer die Spitze des Reichs hält."
     },
+    "valeCupPage": {
+      "heading": "Der Talpokal",
+      "intro": "Keilerball auf dem Saufeld: Wähle ein Banner, wähle eine Rolle und schieß eine ausgestopfte Eberhaut an einem Torhüter vorbei, um den Kupfereimer zu holen. Kein Blut, keine Beute, nur das Tosen der Ränge.",
+      "loreHeading": "Keilerball und der Erntefrieden",
+      "loreOldSow": "Lange bevor die Toten erwachten, spielten Eastbrooks Feldarbeiter nach der Ernte Keilerball auf den Stoppelfeldern: zwei Haufen Leute, eine mit Stroh ausgestopfte Eberhaut und zwei Wagentore, an beide Enden des Angers gezerrt. Der erste Ball, die Alte Sau, hängt in Bronze über dem Kamin der Taverne.",
+      "loreTruce": "Als das Aschene Kolosseum begann, Kriegsspiele auszurichten, antwortete Marschall Redbrook mit etwas Sanfterem: einem ständigen Erntefrieden auf dem alten Anger. Die Wagentore wurden zu Torpfosten, der Anger bekam Wände, Ränge und einen Namen, das Saufeld, und der Preis war immer derselbe verbeulte Milcheimer, aus dem die Sieger tranken: der Kupfereimer.",
+      "howHeading": "So wird gespielt",
+      "howQueue": "Stell dich von überall über das Talpokal-Fenster an, oder sprich mit Platzwart Bram am Tor des Saufelds. Wähle eine Staffel von eins gegen eins bis fünf gegen fünf, eine Bannernation und eine Sportrolle; stell dich allein an oder bring deine Gruppe mit.",
+      "howMatch": "Beim Anstoß werden deine Klassenfähigkeiten gegen eine Sportausrüstung getauscht und danach exakt wiederhergestellt. Kicks zielen auf das Fadenkreuz am Boden, der Ball prallt von der Bande ab, und Dribbeln heißt einfach, mit dem Ball zu laufen. Erziele bis zum Abpfiff mehr Tore als die Gegenseite; ein Unentschieden geht ins Golden Goal.",
+      "howTruce": "Auf dem Saufeld blutet niemand: Tacklings lassen dich nur purzeln, nichts tut weh, und Begleiter setzen das Spiel aus.",
+      "spectateBody": "Im Stadion läuft immer nur ein Spiel, und jeder kann einfach vorbeikommen und von den Rängen aus zusehen.",
+      "nationsHeading": "Die acht Bannernationen",
+      "nationsBody": "Jedes Team spielt unter einem Banner. Der Kapitän wählt die Nation, und fliegen beide Seiten dasselbe Banner, spielt die Auswärtsseite in den umgekehrten Farben.",
+      "nationVale": "Grün und Gold unter der Weizengarbe: die Heimmannschaft, Feldarbeiter bis ins Mark.",
+      "nationMirefen": "Blaugrün und Grau unter dem Reiher: geduldig, langbeinig, nie in Eile.",
+      "nationThornpeak": "Eisblau und Weiß unter dem Berggipfel: trittsicher und stur.",
+      "nationColiseum": "Rot und Schwarz mit gekreuzten Schwertern: Sie spielen, als wäre es noch immer ein Kriegsspiel.",
+      "nationChoir": "Fahlblau und Silber unter der Glocke: unheimlich, präzise und sehr still.",
+      "nationOgre": "Orange und Umbra hinter der Faust: Schulter voran und stolz darauf.",
+      "nationMoon": "Violett und Silber unter der Mondsichel: Nachtspieler, leicht auf den Beinen.",
+      "nationCopperdig": "Kupfer und Braun mit der Spitzhacke: Schaufler, die nie aufhören zu rennen.",
+      "rolesHeading": "Sportrollen",
+      "rolesBody": "Deine Rolle bestimmt die Ausrüstung, die du auf den Platz trägst. Kicken kann jeder; der Rest ist Temperament.",
+      "rewardsHeading": "Friedensregeln",
+      "rewardsBody": "Friedensregeln bedeuten keine Erfahrung und keine Beute: Ein entschiedenes Spiel zählt für deine Bilanz und die Siegertafel, und Punkte für die täglichen Belohnungen gibt es obendrauf. Wer ein Spiel im Stich lässt, kassiert eine Sperre, und der Platzwart vergisst nicht."
+    },
     "wishPage": {
       "heading": "Was ich gern früher gewusst hätte",
       "intro": "Ein paar ehrliche Wahrheiten, die neuen Spielern viel Zweifeln ersparen. Nichts davon ist Pflichtlektüre, aber alles davon hilft.",
@@ -2063,6 +2332,35 @@ export const de_DE: EnTranslations = {
       "cosmeticsCache": "Einige davon stammen aus einer geheimnisvollen kosmetischen Truhe, einem versiegelten Preis, der beim Öffnen eine von drei Qualitätsstufen auswürfelt und dir das passende Aussehen verleiht. Es geht rein um die Optik: Nichts darin macht dich stärker, nur schöner anzusehen.",
       "cosmeticsApply": "Lege dein aktives Aussehen in der Aussehen-Zeile auf deinem Charakterbildschirm fest und wechsle frei zwischen allem, was du freigeschaltet hast."
     },
+    "professions": {
+      "intro": "Jenseits von Kampf und Quests belohnt dich die Welt für die Arbeit an Land und Esse: Rohstoffe sammeln, sie an den Werkstationen von zehn verschiedenen Gewerben zu Ausrüstung verarbeiten und in eine Identität als einer der zehn Archetypen hineinwachsen, für die diese Gewerbe stehen.",
+      "gatherTitle": "Sammeln: Bergbau, Holzfällen und Kräuterkunde",
+      "gatherIntro": "Drei Sammelgewerbe lassen dich Rohstoffe direkt aus der Welt ziehen: Bergbau schlägt Erz und Stein aus Adern, Holzfällen fällt Nutzholz aus Baumbeständen, und Kräuterkunde sammelt wild wachsende Kräuter und Pflanzen. Jedes wird getrennt gezählt, sodass die Arbeit an einem nie deinen Fortschritt in einem anderen bremst.",
+      "gatherWhatTitle": "Rohstoffvorkommen",
+      "gatherWhatBody": "Erzadern, Baumbestände und Kräuterflecken stehen sichtbar und herrenlos draußen in den Gebieten. Geh auf eines zu und interagiere damit, um zu ernten, was es enthält. Hast du ein Vorkommen abgeerntet, braucht es Zeit, um sich zu erholen, bevor du persönlich es erneut ernten kannst; andere blockiert es aber nie: Ein anderer Spieler kann dasselbe Vorkommen in der Zwischenzeit ernten.",
+      "gatherProficiencyTitle": "Fertigkeit und Materialqualität",
+      "gatherProficiencyBody": "Jede erfolgreiche Ernte steigert deine Fertigkeit in diesem Sammelgewerbe. Höhere Fertigkeit verschiebt, was du aus einem Vorkommen holst, hin zu selteneren Materialgüten, von gewöhnlich aufwärts, wobei die seltensten Güten auch bei hoher Fertigkeit selten bleiben. Mehr Übung schadet deinen Chancen nie, sie verbessert sie immer nur.",
+      "gatherToolsTitle": "Das Werkzeug des Handwerks",
+      "gatherToolsBody": "Händler verkaufen einfache Werkzeuge für jedes Sammelgewerbe, und bessere lassen sich herstellen; die Arbeit an einem Rohstoffvorkommen soll sich also fähiger anfühlen, je besser du dafür ausgerüstet bist, statt immer gleich zu bleiben. Werkzeuge höherer Stufe sind der vorgesehene Weg, um Zugang zu reicheren Vorkommen zu erhalten und sie über eine lange Sitzung hinweg effizienter zu bearbeiten.",
+      "craftTitle": "Die zehn Handwerke",
+      "craftIntro": "Zehn Handwerksgewerbe verwandeln gesammelte Materialien in fertige Ausrüstung und Waren: Rüstungsschmieden, Waffenschmieden und Juwelierskunst formen rohen Stoff zu tragbarer Ausrüstung; Alchemie und Ingenieurskunst leben von Versuch und Irrtum; Kochkunst, Inschriftenkunde und Verzauberungskunst greifen jeweils auf die Erzeugnisse anderer Handwerke zurück; Schneiderei und Gerberei arbeiten nach exakten Schnittmustern. Zusammen bilden sie ein Rad, auf dem jedes Handwerk neben zwei Nachbarn und einem anderen genau gegenüber sitzt.",
+      "craftRingTitle": "Ein Rad der Spezialitäten",
+      "craftRingBody": "Die zehn Handwerke sind in einem festen Ring angeordnet, und wo ein Handwerk auf diesem Ring sitzt, spielt eine Rolle: Nebeneinanderliegende Handwerke haben mehr miteinander gemein als solche auf gegenüberliegenden Seiten. Sich einem Handwerk zu verschreiben soll sich anfühlen, als träte man einer Familie verwandter Gewerbe bei, nicht wie das Wählen einer isolierten Fertigkeit.",
+      "craftRecipesTitle": "Rezepte und Reagenzien",
+      "craftRecipesBody": "Jedes Handwerk hat eigene Rezepte, und jedes verlangt bestimmte Reagenzien, die du sammelst oder kaufst. Die einfachsten Rezepte jedes Handwerks brauchen nichts als gewöhnliche Materialien und lassen sich von Anfang an herstellen, sodass du ein Gewerbe in dem Moment aufnehmen kannst, in dem du es erlernst, statt erst auf eine Freischaltung zu warten.",
+      "craftMasteryTitle": "Fertigkeit und Meisterschaft",
+      "craftMasteryBody": "Erfolgreiches Herstellen steigert deine Fertigkeit in diesem Gewerbe, und reichhaltigere Rezepte sind hinter höherer Fertigkeit verschlossen: Die Grundrezepte stehen allen offen, während zunehmend fortgeschrittene Rezepte für den Versuch zunehmend mehr Meisterschaft verlangen. Deine Fertigkeit in einem Handwerk auszubauen ist der Weg von einfachen Anfängerwaren zu seinen ehrgeizigeren Rezepten.",
+      "craftComboTitle": "Kombinationsrezepte",
+      "craftComboBody": "Über die eigene Rezeptliste eines einzelnen Handwerks hinaus unterstützt das Rad auch Kombinationsrezepte, die zwei benachbarte Handwerke zugleich fordern, und belohnt damit einen Charakter (oder ein Paar von Handelspartnern), der in benachbarte Gewerbe auf dem Ring investiert hat statt in eines allein.",
+      "archetypeTitle": "Die zehn Archetypen",
+      "archetypeIntro": "Jedes der zehn Handwerke steht zugleich für einen Archetyp, eine umfassendere Identität, die du über das bloße Ausüben des Gewerbes hinaus annehmen kannst. Dein aktiver Archetyp ist eine einzelne Wahl, keine Checkliste: Du trägst einen und kannst später wechseln, wenn du möchtest.",
+      "archetypeChooseTitle": "Deinen Archetyp wählen",
+      "archetypeChooseBody": "Deinen ersten Archetyp erklärst du über eine frühe Story-Quest im ersten Gebiet, die dich förmlich in diese Identität aufnimmt. Bis du diese Quest abgeschlossen hast, hast du noch gar keinen Archetyp gewählt.",
+      "archetypeSwitchTitle": "Es dir anders überlegen",
+      "archetypeSwitchBody": "Einmal einen Archetyp erklärt zu haben, bindet dich nicht für immer. Wer zu einem anderen Archetyp wechseln will, muss zuerst eine wiederholbare Quest der Wiedergutmachung für den alten abschließen, und mit jedem Wechsel fällt die nächste erwartete Wiedergutmachung ein wenig strenger aus, damit der Wechsel bedeutsam bleibt statt kostenlos.",
+      "archetypeIdentityTitle": "Was dein Archetyp bedeutet",
+      "archetypeIdentityBody": "Dein aktiver Archetyp ist eine Aussage darüber, wer dein Charakter in der Welt ist, und spiegelt sich darin, wie andere und die Welt dich ansprechen. Die genauen Belohnungen und die Anerkennung, die damit einhergehen, werden noch ausgearbeitet; schau wieder vorbei, während das System Gestalt annimmt."
+    },
     "economy": {
       "intro": "Münzen halten die ganze Welt in Schwung: Sie kaufen deine Ausrüstung, Vorräte und dein Reisegerät und wechseln zwischen Spielern den Besitzer. All das sammelst du ganz nebenbei beim Spielen ein, sieh diese Seite also als eine Karte, woher dein Geld kommt und wohin es geht.",
       "coinTitle": "Gold, Silber und Kupfer",
@@ -2071,6 +2369,10 @@ export const de_DE: EnTranslations = {
       "vendorsBody": "Städte und Außenposten sind mit Händlern gespickt, jeder mit seinem eigenen Gewerbe. Versorger führen Speis und Trank, Waffenschmiede und Rüstungsschmiede haben Ausrüstung, und ein Quartiermeister hält praktisches Reisegerät bereit. Geh auf einen zu, um zu sehen, was er verkauft.",
       "marksTitle": "Eine zweite Währung: Tiefgang-Marken",
       "marksBody": "Geld ist nicht das Einzige, was du anhäufst. Tiefgänge zahlen Tiefgang-Marken aus, eine eigene Währung, die du nur beim Tiefgang-Hüter ausgibst, für Verbesserungen deiner Gefährtin und Ausrüstung, die du nirgendwo sonst findest. Sie vermischen sich nie mit deinem Geld.",
+      "bankTitle": "Die Bank",
+      "bankBody": "Jede größere Stadt beherbergt eine Filiale der Vergoldeten Schatulle, des Bankhauses des Reichs. Sprich dort mit dem Kämmerer, um deinen Tresor zu eröffnen: einen privaten Stauraum jenseits deiner Taschen, der deinem Charakter ein Leben lang erhalten bleibt. Was du dort zurücklässt, wartet sicher auf dich, welche Filiale du auch als Nächstes besuchst.",
+      "bankHow": "Ist der Tresor geöffnet, klicke einen Gegenstand in deinen Taschen an, um ihn einzulagern, und klicke ihn im Tresor an, um ihn zurückzuholen. Der Tresor fasst nur Waren, niemals Münzen, und Questgegenstände bleiben bei dir. Wenn deine Taschen unterwegs überquellen, fegt ein einziger Knopf alle deine Handwerksmaterialien auf einmal hinein.",
+      "bankSlots": "Ein frischer Tresor beginnt klein und wächst mit dir. Der Kämmerer verkauft weitere Fächer für Münzen zu immer steileren Preisen, und Online-Spielen bringt obendrein Bonusfächer ein, etwa für eine bestätigte E-Mail-Adresse, verknüpfte Konten und Freunde, die du ins Spiel holst.",
       "buyingTitle": "Kaufen und Verkaufen",
       "buyingBody": "Stelle dich neben einen Händler, um sein Fenster zu öffnen. Du kannst alles kaufen, was er führt, sofern du es dir leisten kannst, und das meiste aus deinen Taschen gegen Münzen verkaufen. Verkaufst du etwas aus Versehen, hebt ein Händler deine jüngsten Verkäufe auf, sodass du sie zurückkaufen kannst.",
       "junkTitle": "Plunder loswerden",
@@ -3143,6 +3445,10 @@ export const de_DE: EnTranslations = {
       "hard": "Erlesene Beute"
     },
     "closeAria": "Schließen"
+  },
+  "heroicShop": {
+    "balance": "Heroische Marken: {count}",
+    "buyAria": "{item} für {marks} Heroische Marken kaufen"
   },
   "delveUi": {
     "board": {
@@ -4436,12 +4742,14 @@ export const de_DE: EnTranslations = {
     "slots": {
       "mainhand": "Waffenhand",
       "helmet": "Kopf",
+      "neck": "Hals",
       "shoulder": "Schultern",
       "chest": "Brust",
       "waist": "Taille",
       "legs": "Beine",
       "gloves": "Hände",
-      "feet": "Füße"
+      "feet": "Füße",
+      "ring": "Finger"
     },
     "quality": {
       "poor": "Schlecht",
@@ -4645,6 +4953,46 @@ export const de_DE: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "sport_kick": {
+        "name": "Kick",
+        "description": "Stoß den Ball flach über den Boden zum Zielpunkt."
+      },
+      "sport_shoot": {
+        "name": "Torschuss",
+        "description": "Halten, um Kraft aufzubauen, loslassen, um aufs Tor zu schießen. Zu viel Kraft und der Ball segelt drüber."
+      },
+      "sport_pass": {
+        "name": "Pass",
+        "description": "Spiel einen scharfen Pass auf deinen anvisierten Mitspieler, genau in seinen Lauf."
+      },
+      "sport_boot": {
+        "name": "Weitschlag",
+        "description": "Ein hoher, weiter Schlag Richtung Zielpunkt. Die Menge liebt es."
+      },
+      "sport_hoof": {
+        "name": "Bolzen",
+        "description": "Drisch den Ball flach und hart nach vorn übers Feld."
+      },
+      "sport_punt": {
+        "name": "Weiter Abschlag",
+        "description": "Ein Abschlag des Torhüters, hoch und weit."
+      },
+      "sport_feint": {
+        "name": "Finte",
+        "description": "Ein schneller Antritt mit Seitwärtshaken zum Zielpunkt."
+      },
+      "sport_dive": {
+        "name": "Hechtsprung",
+        "description": "Wirf dich zum Zielpunkt. Ein hereinfliegender Ball bleibt an dir haften."
+      },
+      "sport_shoulder": {
+        "name": "Rempler",
+        "description": "Ein fairer Rempler nach den Regeln des Erntefriedens. Wirft den Gegner purzelnd vom Ball."
+      },
+      "sport_second_wind": {
+        "name": "Frische Beine",
+        "description": "Finde deine Beine: Bewege dich 4 Sek. lang 50% schneller."
+      },
       "flamestrike": {
         "name": "Flammenschlag",
         "description": "Lässt am Zielort eine Feuerexplosion niedergehen, die allen Gegnern im Wirkungsbereich {damage} Feuerschaden zufügt."
@@ -5866,6 +6214,24 @@ export const de_DE: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Sonnenblütensichel"
       },
+      "thorium_ore": {
+        "name": "Thoriumerz"
+      },
+      "arcanite_bar": {
+        "name": "Arkanitbarren"
+      },
+      "ashwood_log": {
+        "name": "Aschenholzscheit"
+      },
+      "elderwood_log": {
+        "name": "Altholunderscheit"
+      },
+      "goldleaf_herb": {
+        "name": "Goldblattkraut"
+      },
+      "sunpetal_herb": {
+        "name": "Sonnenblütenkraut"
+      },
       "bristleback_maul": {
         "name": "Gallowglass-Hammer"
       },
@@ -6331,6 +6697,132 @@ export const de_DE: EnTranslations = {
       "event_skin_token": {
         "name": "Geheimnisvolle Kosmetiktruhe"
       },
+      "heroic_mark": {
+        "name": "Heroische Marke"
+      },
+      "morthens_cryptforged_hauberk": {
+        "name": "Morthens gruftgeschmiedetes Kettenhemd"
+      },
+      "shadowpulse_handwraps": {
+        "name": "Schattenpuls-Handwickel"
+      },
+      "bonechill_striders": {
+        "name": "Knochenfrost-Schreiter"
+      },
+      "mistcallers_fang": {
+        "name": "Fangzahn des Nebelrufers"
+      },
+      "tidebound_spaulders": {
+        "name": "Flutgebundene Schulterstücke"
+      },
+      "sash_of_the_sunken_court": {
+        "name": "Schärpe des Versunkenen Hofes"
+      },
+      "lunar_tide_greatstaff": {
+        "name": "Großstab der Mondflut"
+      },
+      "tidewoven_trousers": {
+        "name": "Flutgewebte Beinkleider"
+      },
+      "choirmothers_casque": {
+        "name": "Helm der Chormutter"
+      },
+      "gravewyrm_cleaver": {
+        "name": "Grabwyrm-Spalter"
+      },
+      "shroud_of_the_gravewyrm": {
+        "name": "Leichentuch des Grabwyrms"
+      },
+      "sanctum_prowlers_grips": {
+        "name": "Griffe des Sanktum-Pirschers"
+      },
+      "scepter_of_the_deathless_court": {
+        "name": "Zepter des Todlosen Hofes"
+      },
+      "deathless_warguard_legmail": {
+        "name": "Todlose Beinkette der Kriegswache"
+      },
+      "soulrend_diadem": {
+        "name": "Seelenriss-Diadem"
+      },
+      "scourgehide_carapace": {
+        "name": "Geißelhaut-Panzer"
+      },
+      "cryptplate_helm": {
+        "name": "Gruftplatten-Helm"
+      },
+      "shadowpulse_slippers": {
+        "name": "Schattenpuls-Schuhe"
+      },
+      "bonechill_cord": {
+        "name": "Knochenfrost-Kordel"
+      },
+      "mistforged_pauldrons": {
+        "name": "Nebelgeschmiedete Schulterstücke"
+      },
+      "tideguard_faceguard": {
+        "name": "Gesichtsschutz der Flutwache"
+      },
+      "sunken_court_mantle": {
+        "name": "Umhang des Versunkenen Hofes"
+      },
+      "lunar_choir_leggings": {
+        "name": "Mondchor-Beinschienen"
+      },
+      "choir_blessed_spaulders": {
+        "name": "Chorgesegnete Schulterstücke"
+      },
+      "tideworn_warboots": {
+        "name": "Flutzerschlissene Kriegsstiefel"
+      },
+      "gravewyrm_claws": {
+        "name": "Grabwyrm-Klauen"
+      },
+      "gravescale_girdle": {
+        "name": "Grabschuppen-Gürtel"
+      },
+      "wyrmchoir_handwraps": {
+        "name": "Wyrmchor-Handwickel"
+      },
+      "deathless_greatblade": {
+        "name": "Todlose Großklinge"
+      },
+      "soulforged_warplate": {
+        "name": "Seelengeschmiedete Kriegsplatte"
+      },
+      "stormcallers_focus": {
+        "name": "Fokus des Sturmrufers"
+      },
+      "seal_of_the_nine_oaths": {
+        "name": "Siegel der Neun Eide"
+      },
+      "nielas_coldlight_band": {
+        "name": "Nielas Kaltlicht-Reif"
+      },
+      "sutils_gambit": {
+        "name": "Sutils Gambit"
+      },
+      "oath_of_the_round_table": {
+        "name": "Eid der Tafelrunde"
+      },
+      "zyzzs_deathless_signet": {
+        "name": "Zyzz' Todloser Siegelring"
+      },
+      "architects_cornerstone": {
+        "name": "Der Grundstein des Architekten"
+      },
+      "swiftfang_talisman": {
+        "name": "Schnellzahn-Talisman"
+      },
+      "yumis_keepsake_locket": {
+        "name": "Yumis Andenken-Medaillon"
+      },
+      "zense_meridian": {
+        "name": "Zense-Meridian"
+      },
+      "medallion_of_endless_profit": {
+        "name": "Medaillon des endlosen Profits"
+      },
       "deathless_heartwood": {
         "name": "Herzholz der todlosen Krone"
       },
@@ -6660,6 +7152,9 @@ export const de_DE: EnTranslations = {
       "tolling_bell": {
         "name": "Läutende Glocke"
       },
+      "vale_cup_ball": {
+        "name": "Keilerball"
+      },
       "thunzharr_waking_peak": {
         "name": "Thunzharr, der Erwachende Gipfel"
       },
@@ -6866,6 +7361,11 @@ export const de_DE: EnTranslations = {
         "title": "Meisterrüster",
         "greeting": "Die Esse ist heiß und der Schleifstein dreht sich. Wenn es schneidet, verkaufe ich es."
       },
+      "heroic_quartermaster": {
+        "name": "Quartiermeister Vex",
+        "title": "Heroischer Quartiermeister",
+        "greeting": "Ein Beweis aus den heroischen Tiefen kauft die feinsten Ringe und Anhänger in Highwatch. Zeig mir deine Marken."
+      },
       "loremaster_caddis": {
         "name": "Lehrmeister Caddis",
         "title": "Lehrmeister",
@@ -6875,6 +7375,21 @@ export const de_DE: EnTranslations = {
         "name": "Auktionator Voss",
         "title": "Hüter des Weltmarkts",
         "greeting": "Der Weltmarkt ist auch hier geöffnet, {className}. Kauf bei jedem Abenteurer im Reich ein oder biete deine eigenen Waren feil."
+      },
+      "bursar_fernando": {
+        "name": "Kämmerer Fernando",
+        "title": "Die Vergoldete Schatulle",
+        "greeting": "Willkommen bei der Vergoldeten Schatulle. Deine Waren ruhen sicher hinter unseren Schlössern."
+      },
+      "bursar_petra_vell": {
+        "name": "Kämmerin Petra Vell",
+        "title": "Die Vergoldete Schatulle",
+        "greeting": "Die Vergoldete Schatulle führt saubere Bücher und noch sauberere Tresore. Was dürfen wir für dich verwahren?"
+      },
+      "bursar_aldous_crane": {
+        "name": "Kämmerer Aldous Crane",
+        "title": "Die Vergoldete Schatulle",
+        "greeting": "Jede Kiste, jede Truhe und jedes Kleinod ist bei der Vergoldeten Schatulle sicher."
       },
       "brother_aldric_raid": {
         "name": "Bruder Aldric",
@@ -6895,6 +7410,11 @@ export const de_DE: EnTranslations = {
         "name": "Der Bleiche Hüter",
         "title": "Wächter der Toten",
         "greeting": "Ruhe nun, Geist. Ich kann dich in deinen Körper zurückbringen, doch die Rückkehr lässt dich geschwächt zurück."
+      },
+      "groundskeeper_bram": {
+        "name": "Platzwart Bram",
+        "title": "Hüter des Saufelds",
+        "greeting": "Auf dem Saufeld gilt der Erntefrieden, {className}: nur Kicks und Rempler. Lust auf ein Spiel um den Kupfereimer?"
       },
       "tidewatcher_ondrel": {
         "name": "Ondrel Vane",
@@ -7803,6 +8323,9 @@ export const de_DE: EnTranslations = {
           },
           "9": {
             "label": "Hellholz-Lichtung"
+          },
+          "10": {
+            "label": "Das Saufeld"
           }
         }
       },
@@ -7947,12 +8470,14 @@ export const de_DE: EnTranslations = {
       "crownforged": {
         "name": "Bonewrought-Kriegstracht",
         "bonus2": "Erhöht Angriffskraft um 40.",
-        "bonus3": "Erhöht Stärke um 15, Ausdauer um 15 sowie Angriffs- und Zaubertempo um 15%."
+        "bonus3": "Erhöht Stärke um 15, Ausdauer um 15 sowie Angriffs- und Zaubertempo um 15%.",
+        "bonus4": "Eure kritischen Waffentreffer zersplittern das Ziel mit Knochensplitter und lassen es 12 Sek. lang alle 2 Sek. 8 Schaden bluten. Stapelt sich bis zu 3-mal."
       },
       "deathlord": {
         "name": "Barrowlord-Kriegstracht",
         "bonus2": "Erhöht Angriffskraft um 40.",
-        "bonus3": "Erhöht Stärke um 15 und Ausdauer um 15."
+        "bonus3": "Erhöht Stärke um 15 und Ausdauer um 15.",
+        "bonus4": "Eure kritischen Waffentreffer haben eine Chance von 50%, Grabesmacht zu gewähren, was die Angriffskraft 10 Sek. lang um 60 erhöht."
       },
       "greyjaw_stalker": {
         "name": "Ausrüstung des Greyjaw-Pirschers",
@@ -7961,22 +8486,26 @@ export const de_DE: EnTranslations = {
       "necromancers": {
         "name": "Mournweave-Gewänder",
         "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
-        "bonus3": "Erhöht Intelligenz um 10 und Ausdauer um 10."
+        "bonus3": "Erhöht Intelligenz um 10 und Ausdauer um 10.",
+        "bonus4": "Eure Zauber haben eine Chance von 10%, Klarsicht zu gewähren, wodurch euer nächster Zauber kostenlos wird."
       },
       "nighttalon": {
         "name": "Direfang-Pelz",
         "bonus2": "Erhöht Angriffskraft um 40.",
-        "bonus3": "Erhöht Beweglichkeit um 15, kritische Trefferchance um 2% sowie Angriffs- und Zaubertempo um 15%."
+        "bonus3": "Erhöht Beweglichkeit um 15, kritische Trefferchance um 2% sowie Angriffs- und Zaubertempo um 15%.",
+        "bonus4": "Eure kritischen Waffentreffer reißen eine Zerfetzte Wunde und lassen das Ziel 12 Sek. lang alle 2 Sek. 6 Schaden bluten. Stapelt sich bis zu 3-mal."
       },
       "soulflame": {
         "name": "Wraithfire-Gewänder",
         "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
-        "bonus3": "Erhöht Intelligenz um 15, Willenskraft um 15 sowie Angriffs- und Zaubertempo um 15%."
+        "bonus3": "Erhöht Intelligenz um 15, Willenskraft um 15 sowie Angriffs- und Zaubertempo um 15%.",
+        "bonus4": "Eure Zauber haben eine Chance von 10%, Seelenbrand zu gewähren, was die Zaubermacht 10 Sek. lang um 40 erhöht."
       },
       "stormcallers": {
         "name": "Galecall-Gewänder",
         "bonus2": "Ihr könnt nicht zurückgestoßen werden (100% Rückstoßwiderstand).",
-        "bonus3": "Erhöht Intelligenz um 15, Willenskraft um 15 sowie Angriffs- und Zaubertempo um 15%."
+        "bonus3": "Erhöht Intelligenz um 15, Willenskraft um 15 sowie Angriffs- und Zaubertempo um 15%.",
+        "bonus4": "Eure Zauber haben eine Chance von 10%, Seelenbrand zu gewähren, was die Zaubermacht 10 Sek. lang um 40 erhöht."
       },
       "vale_arcanist": {
         "name": "Ornat des Talarkanisten",
@@ -7985,7 +8514,8 @@ export const de_DE: EnTranslations = {
       "wyrmshadow": {
         "name": "Nightfang-Gewänder",
         "bonus2": "Erhöht Angriffskraft um 40.",
-        "bonus3": "Erhöht Beweglichkeit um 15 und kritische Trefferchance um 2%."
+        "bonus3": "Erhöht Beweglichkeit um 15 und kritische Trefferchance um 2%.",
+        "bonus4": "Eure kritischen Waffentreffer haben eine Chance von 50%, Fangrausch zu gewähren, was das Angriffstempo 8 Sek. lang um 25% erhöht."
       }
     }
   },

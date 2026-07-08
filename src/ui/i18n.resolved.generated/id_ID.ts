@@ -308,10 +308,19 @@ export const id_ID: EnTranslations = {
       "autorun": "Lari Otomatis",
       "jump": "Lompat",
       "leaderboard": "Peringkat",
+      "dailyRewards": "Hadiah",
       "nameplates": "Nama",
       "haptics": "Haptik",
       "hapticsOff": "Haptik Nonaktif",
-      "toggleHaptics": "Alihkan haptik"
+      "toggleHaptics": "Alihkan haptik",
+      "hotbarPage": "Kemampuan",
+      "hotbarPageAria": "Tampilkan rangkaian kemampuan berikutnya",
+      "actionRing": "Aksi tempur",
+      "actionPageToggle": "Ganti halaman tindakan",
+      "actionPageIndicator": "Hal. {page}",
+      "targetCycle": "Tukar sasaran",
+      "targetCycleShort": "Target",
+      "spellbookPageLabel": "Halaman {page}"
     },
     "tutorial": {
       "moveBodyTouch": "Gunakan tuas gerak untuk berpindah dan seret layar untuk melihat sekeliling. Ambil beberapa langkah untuk memulai.",
@@ -360,7 +369,9 @@ export const id_ID: EnTranslations = {
       "hoursMinutes": "{h}j {m}mnt",
       "minutes": "{m}mnt",
       "lessThanMinute": "<1mnt",
-      "lockedToast": "Anda terkunci pada {raid}. Terbuka dalam {time}."
+      "lockedToast": "Anda terkunci pada {raid}. Terbuka dalam {time}.",
+      "heroicName": "{name} Heroik",
+      "heroicLocked": "Anda terkunci pada {name} Heroik."
     },
     "compass": {
       "N": "U",
@@ -382,11 +393,149 @@ export const id_ID: EnTranslations = {
       "emoteWheel": "Roda Emote",
       "targetFriendly": "Bidik Sekutu Terdekat",
       "targetFriendlyNext": "Putar Bidikan Sekutu",
-      "discord": "Discord"
+      "discord": "Discord",
+      "valecup": "Piala Lembah"
+    },
+    "vcup": {
+      "title": "Piala Lembah",
+      "shootPower": "TENAGA",
+      "close": "Tutup jendela Piala Lembah",
+      "offlineNote": "Buku jadwal sedang tutup. Piala Lembah tidak tersedia saat ini.",
+      "recordLine": "Rekormu: {wins} menang, {losses} kalah, {draws} imbang.",
+      "bracketsAria": "Format pertandingan",
+      "bracketLabel": "{n}v{n}",
+      "waitingCount": "{count} menunggu",
+      "nationsHeading": "Negeri panji",
+      "nation": {
+        "vale": "Lembah Eastbrook",
+        "mirefen": "Mirefen",
+        "thornpeak": "Thornpeak",
+        "coliseum": "Koloseum Abu",
+        "choir": "Paduan Suara Pucat",
+        "ogre": "Klan Ogre",
+        "moon": "Bulan Pucat",
+        "copperdig": "Galian Tembaga"
+      },
+      "awayNote": "Jika kedua tim mengibarkan panji yang sama, tim tandang memakai palet warna terbalik.",
+      "rolesHeading": "Peran olahraga",
+      "role": {
+        "allrounder": {
+          "name": "Serba Bisa",
+          "desc": "Serba bisa: tendang, sepak jauh, dan benturan bahu yang adil."
+        },
+        "striker": {
+          "name": "Penyerang",
+          "desc": "Hidup untuk tendangan jauh dan gerak elak cepat."
+        },
+        "sweeper": {
+          "name": "Penyapu",
+          "desc": "Membenturkan pelari menjauh dari bola dan menyapunya jauh-jauh."
+        },
+        "keeper": {
+          "name": "Kiper",
+          "desc": "Menjaga kotak gawang dengan tangkapan, terjunan, dan sepakan jauh."
+        }
+      },
+      "queue": "Masuk Antrean",
+      "leaveQueue": "Keluar dari Antrean",
+      "queueNote": "Mengantrelah dari mana saja; peluit akan memanggilmu ke Sowfield.",
+      "queuedStatus": "Mengantre untuk {bracket}: posisi {position} dari {count}.",
+      "blockNation": "Pilih negeri panji dulu.",
+      "blockPartySize": "Format itu membutuhkan party yang lebih kecil.",
+      "blockNotLeader": "Hanya pemimpin party yang bisa mengantrekan tim.",
+      "inMatchNote": "Timmu sedang di lapangan. Teruskan permainan!",
+      "deserterNote": "Sang Penjaga Lapangan mengingatnya. Kamu boleh mengantre lagi dalam {seconds} detik.",
+      "liveHeading": "Kini di Sowfield",
+      "liveAria": "Piala Lembah: {nationA} {scoreA}, {nationB} {scoreB}",
+      "walkUp": "Datanglah ke Sowfield untuk menonton dari tribun.",
+      "noLive": "Lapangan sunyi. Tak ada pertandingan yang berlangsung.",
+      "boardHeading": "Papan pemenang",
+      "boardEmpty": "Belum ada pemenang tercatat. Ember Tembaga menanti.",
+      "boardWins": "{count} kemenangan",
+      "enterAsGuild": "Masuk di bawah panji {guild}",
+      "guildRecordLine": "Rekor guild-mu: {wins} menang, {losses} kalah.",
+      "guildBoardHeading": "Panji guild",
+      "guildBoardEmpty": "Belum ada guild yang turun ke lapangan. Kibarkan panjimu!",
+      "guildBoardWl": "{wins} M, {losses} K",
+      "practice": "Latihan vs. Bot",
+      "practiceNote": "Langsung memulai pertandingan bot pribadi di lapangan latihanmu sendiri.",
+      "practicingNow": "Sedang berlatih ({count}):",
+      "clock": "{minutes}.{seconds}",
+      "indicatorQueued": "Antrean Piala Lembah: {bracket}, posisi {position} dari {count}",
+      "indicatorLive": "Piala Lembah",
+      "indicatorOpen": "Buka jendela Piala Lembah",
+      "phaseCountdown": "Sepak mula dalam {seconds}",
+      "phaseGoal": "GOL!",
+      "phaseGolden": "GOL EMAS",
+      "phaseOver": "PELUIT PANJANG",
+      "bannerFound": "Piala Lembah memanggil: {nationA} vs {nationB}!",
+      "bannerCountdown": "Sepak mula dalam {seconds}...",
+      "bannerKickoff": "SEPAK MULA!",
+      "bannerGoal": "GOL! {nation} mencetak gol!",
+      "bannerSave": "{name} MENEPIS!",
+      "bannerGolden": "GOL EMAS: gol berikutnya menang!",
+      "bannerEnd": "Peluit panjang: {nationA} {scoreA}, {nationB} {scoreB}",
+      "bannerWin": "Kemenangan di Sowfield!",
+      "bannerDraw": "Imbang di Sowfield.",
+      "bannerLoss": "Kekalahan di Sowfield.",
+      "logQueued": "Kamu masuk antrean Piala Lembah untuk {bracket} (posisi {position}).",
+      "logUnqueued": "Kamu keluar dari antrean Piala Lembah.",
+      "logFound": "Pertandingan Piala Lembah-mu sudah siap: {nationA} vs {nationB}.",
+      "logRoster": "Timmu: {allies}. Tim lawan: {enemies}.",
+      "logGoal": "{name} mencetak gol untuk {nation}! {nationA} {scoreA}, {nationB} {scoreB}.",
+      "logSave": "{name} melakukan penyelamatan!",
+      "logWin": "Kamu memenangkan laga di Sowfield.",
+      "logDraw": "Laga di Sowfield berakhir imbang.",
+      "logLoss": "Kamu kalah dalam laga di Sowfield.",
+      "gossipOpen": "Buku jadwal pertandingan",
+      "gossipOpenAria": "Buka jendela Piala Lembah",
+      "mobileLabel": "Piala",
+      "briefing": {
+        "subtitle": "Pengarahan prapertandingan",
+        "vs": "vs",
+        "rulesHeading": "Cara bermain",
+        "rule1": "Tendang atau umpan bola ke gawang lawan untuk mencetak gol.",
+        "rule2": "Yang pertama mencetak 5 gol menang, atau yang golnya terbanyak saat peluit panjang berbunyi.",
+        "rule3": "Skor imbang saat peluit panjang berlanjut ke gol emas: gol berikutnya menang.",
+        "rule4": "Tekel hanya membuatmu terjungkal. Tak ada yang terluka di bawah gencatan panen.",
+        "rule5": "Siapa pun bisa datang dan menyemangatimu dari tribun.",
+        "kitHeading": "Perangkatmu",
+        "kitNote": "Gerakan-gerakan ini menggantikan kemampuan kelasmu selama pertandingan.",
+        "rosterHeading": "Susunan pemain",
+        "you": "Kamu",
+        "bot": "Bot",
+        "ready": "Aku siap",
+        "readyDone": "Siap",
+        "readyAria": "Nyatakan siap untuk sepak mula",
+        "waiting": "Menunggu tim lawan menyatakan siap...",
+        "whistle": "Peluit berbunyi dalam {seconds} dtk.",
+        "readyCount": "{ready} dari {total} siap"
+      },
+      "bet": {
+        "title": "Taruhan Pertandingan",
+        "aria": "Taruhan pertandingan Piala Lembah",
+        "closesIn": "Taruhan ditutup dalam {seconds} dtk",
+        "closed": "Taruhan ditutup",
+        "prize": "Pundi {amount}",
+        "splitAria": "Porsi pundi taruhan pada tiap tim",
+        "expand": "Lihat taruhan dan pasang",
+        "collapse": "Sembunyikan taruhan",
+        "oddsLabel": "Bayaran",
+        "back": "Dukung {team}",
+        "form": "{wins}M-{losses}K",
+        "mine": "Taruhanmu: {amount} pada {team}",
+        "none": "Kamu belum bertaruh di pertandingan ini.",
+        "record": "Rekor taruhan: {wins}M-{losses}K, {sign}{net}",
+        "wonBanner": "Taruhanmu menang!",
+        "wonLog": "Taruhan Piala Lembah-mu menang: {amount} dikembalikan.",
+        "lostLog": "Taruhan Piala Lembah-mu kalah: {amount}.",
+        "refundLog": "Taruhan dibatalkan, uang taruhanmu sebesar {amount} dikembalikan."
+      }
     },
     "options": {
       "clickMoveLeft": "Klik Kiri",
       "clickMoveRight": "Klik Kanan",
+      "version": "v{version} ({build})",
       "browserEffects": "Efek Peramban",
       "browserEffectsAuto": "Otomatis",
       "browserEffectsFull": "Penuh",
@@ -418,7 +567,9 @@ export const id_ID: EnTranslations = {
       "itemLevelLine": "Level Item {level}",
       "itemScoreLine": "Skor {score}",
       "showSecondaryActionBar": "Tampilkan Bilah Aksi Sekunder",
-      "showDailyRewardsChest": "Tampilkan Peti Hadiah Harian"
+      "showDailyRewardsChest": "Tampilkan Peti Hadiah Harian",
+      "mobileCameraJoystick": "Joystick kamera",
+      "mobileLeftHanded": "Tata letak kidal"
     },
     "controller": {
       "title": "Kontroler",
@@ -469,7 +620,9 @@ export const id_ID: EnTranslations = {
         "fps01Low": "0,1% Terendah",
         "ping": "Ping",
         "jitter": "Jitter",
+        "predLead": "Jarak Prediksi",
         "snapshot": "Laju Snapshot",
+        "serverTick": "Laju Tick Server",
         "connection": "Koneksi",
         "drawCalls": "Panggilan Gambar",
         "triangles": "Segitiga",
@@ -512,7 +665,9 @@ export const id_ID: EnTranslations = {
     "statInfo": {
       "fromYour": "Dari {value} {stat} Anda:",
       "names": {
-        "spellPower": "Kekuatan Mantra"
+        "spellPower": "Kekuatan Mantra",
+        "critRating": "Rating Kritis",
+        "hasteRating": "Rating Kecepatan"
       },
       "desc": {
         "str": "Meningkatkan daya serang Anda, sehingga serangan senjata Anda menghantam lebih keras.",
@@ -525,7 +680,9 @@ export const id_ID: EnTranslations = {
         "spellPower": "Meningkatkan kerusakan mantra dan kekuatan penyembuhanmu. Setiap poin Kecerdasan memberi sedikit Kekuatan Mantra, di atas apa pun dari perlengkapan atau buff.",
         "dps": "Perkiraan kerusakan senjata Anda per detik, menggabungkan kerusakan dan kecepatan senjata dengan daya serang Anda.",
         "critChance": "Peluang serangan Anda menghantam secara kritis, memberikan kerusakan ganda.",
-        "dodge": "Peluang Anda untuk sepenuhnya menghindari serangan jarak dekat, tanpa menerima kerusakan."
+        "dodge": "Peluang Anda untuk sepenuhnya menghindari serangan jarak dekat, tanpa menerima kerusakan.",
+        "critRating": "Rating kritis dari perlengkapan dan bonus set Anda, menaikkan peluang serangan kritis Anda. Sekitar 10 rating memberi 1% kritis.",
+        "hasteRating": "Rating kecepatan dari perlengkapan dan bonus set Anda, mempercepat serangan dan rapalan mantra Anda. Sekitar 10 rating memberi 1% kecepatan."
       },
       "effects": {
         "attackPower": "+{value} Daya Serang",
@@ -565,6 +722,15 @@ export const id_ID: EnTranslations = {
     "itemSet": {
       "header": "{name} ({have}/{total})",
       "bonusLine": "({pieces}) {bonus}"
+    },
+    "itemProc": {
+      "onMeleeHit": "Peluang saat memukul ({chance}%): {effect}",
+      "onSpellDamage": "Peluang saat mantra kerusakanmu ({chance}%): {effect}",
+      "onHeal": "Peluang saat penyembuhanmu ({chance}%): {effect}",
+      "chainArc": "menghantam target dengan {name} {school} ({damage}) yang melompat ke {jumps} musuh terdekat dengan kerusakan yang kian melemah",
+      "attackSlow": "dan memperlambat kecepatan serangan target sebesar {pct}% selama {duration} dtk",
+      "dot": "menjangkitkan {name}, kerusakan berkala {school} yang memberikan {total} selama {duration} dtk",
+      "hot": "memekarkan {name}, penyembuhan berkala yang memulihkan {total} selama {duration} dtk"
     },
     "questShare": {
       "notShareable": "Misi ini tidak dapat dibagikan.",
@@ -753,6 +919,15 @@ export const id_ID: EnTranslations = {
         "tusk": "Gading"
       }
     },
+    "townFocus": {
+      "title": "Fokus Kota",
+      "hint": "Poin fokus menambahkan bonus di atas hasil dasar setiap komponen. Komponen tanpa fokus tetap pada hasil dasar.",
+      "budgetLabel": "Sisa poin: {remaining} / {budget}",
+      "saveButton": "Simpan Fokus",
+      "notInTownHint": "Kamu harus berada di kota untuk mengatur fokusmu.",
+      "increaseAria": "Tambah fokus pada {component}",
+      "decreaseAria": "Kurangi fokus pada {component}"
+    },
     "party": {
       "promoteLeader": "Angkat jadi Pemimpin",
       "inviteUsage": "Mengundang siapa? Penggunaan: /invite <name>."
@@ -768,7 +943,13 @@ export const id_ID: EnTranslations = {
       "leaderOption": "Penjarah Utama: Pemimpin (Anda)",
       "masterOption": "Penjarah Utama: {name}"
     },
+    "dungeonDifficulty": {
+      "setHeroic": "Atur Kesulitan Dungeon: Heroik",
+      "setNormal": "Atur Kesulitan Dungeon: Normal"
+    },
     "bags": {
+      "cannotDestroy": "Item ini tidak dapat dihancurkan.",
+      "rightClickDestroy": "Klik kanan untuk menghancurkan",
       "filterGroupAria": "Saring tas menurut kategori",
       "filterAll": "Semua",
       "filterWeapon": "Senjata",
@@ -984,6 +1165,7 @@ export const id_ID: EnTranslations = {
       "roleTag": {
         "levyst": "Levy St",
         "admin": "Admin",
+        "coredevs": "Dev Inti",
         "devs": "Pengembang",
         "mods": "Moderator",
         "artists": "Seniman"
@@ -1048,18 +1230,6 @@ export const id_ID: EnTranslations = {
           "hint": "Minta bantuan dari komunitas"
         }
       }
-    },
-    "crafting": {
-      "title": "kerajinan",
-      "close": "Tutup kerajinan",
-      "craft": "Keahlian",
-      "reagentsNeeded": "Memerlukan:",
-      "reagentLine": "{name}: {have}/{required}",
-      "empty": "Belum ada resep yang diketahui.",
-      "resultAria": "Kerajinan {name}",
-      "craftedToast": "Dibuat: {name}",
-      "insufficientMaterials": "Anda tidak memiliki bahan untuk itu.",
-      "unknownRecipe": "Resep itu tidak ada."
     },
     "devBadge": {
       "title": "Pengembang",
@@ -1137,6 +1307,50 @@ export const id_ID: EnTranslations = {
         "takeParcelsFirst": "Keluarkan bingkisannya dulu sebelum membuang surat itu."
       }
     },
+    "bank": {
+      "title": "Bank",
+      "subtitle": "Brankas Bersepuh Emas",
+      "close": "Tutup bank",
+      "capacity": "{used}/{total}",
+      "capacityAria": "Slot bank terpakai: {used} dari {total}",
+      "empty": "Bankmu kosong.",
+      "tooFar": "Kamu harus berada di dekat bankir untuk melihat bankmu.",
+      "buySlots": "Beli {count} slot",
+      "buySlotsMaxed": "Sudah diperluas penuh",
+      "buyConfirm": "Beli {count} slot bank tambahan seharga {price}?",
+      "buyConfirmAccept": "Beli",
+      "withdrawHint": "Klik untuk menarik",
+      "withdrawPartialHint": "Shift-klik untuk menarik sebagian",
+      "depositHint": "Klik untuk menyetor",
+      "depositPartialHint": "Shift-klik untuk menyetor sebagian",
+      "cannotDeposit": "Tidak dapat disimpan di bank",
+      "depositQuantityTitle": "Setor {item}",
+      "depositQuantityInput": "Jumlah yang disetor",
+      "depositQuantityConfirm": "Setor",
+      "withdrawQuantityTitle": "Tarik {item}",
+      "withdrawQuantityInput": "Jumlah yang ditarik",
+      "withdrawQuantityConfirm": "Tarik",
+      "filterGroupAria": "Saring bank menurut kategori",
+      "sortAria": "Urutkan barang bank",
+      "searchAria": "Cari barang bank menurut nama",
+      "depositAll": "Setor semua bahan",
+      "depositAllDone": "Bahan disetor: {count}.",
+      "depositAllFull": "Bahan disetor: {count}. Bank kini penuh.",
+      "depositAllNone": "Bank penuh: tidak ada yang disetor.",
+      "bonusTitle": "Slot bonus",
+      "bonusEarned": "+{count}",
+      "bonusStatusEarned": "+{count}",
+      "bonusSourceEmail": "Email terverifikasi",
+      "bonusSourceDiscord": "Discord tertaut",
+      "bonusSourceWallet": "Dompet tertaut",
+      "bonusSourceReferral": "Teman yang dirujuk",
+      "bonusAdvertEmail": "Verifikasi emailmu untuk mendapat 2 slot.",
+      "bonusAdvertDiscord": "Tautkan Discord-mu untuk mendapat 2 slot.",
+      "bonusAdvertWallet": "Tautkan dompet untuk mendapat 2 slot.",
+      "bonusReferralProgress": "{count}/{cap}",
+      "bonusReferralExplainer": "Undang seorang teman: saat ia mencapai level 10, kalian masing-masing mendapat 2 slot, hingga 5 teman.",
+      "bonusSectionAria": "Slot bank bonus dan cara mendapat lebih banyak"
+    },
     "calendar": {
       "title": "Kalender Acara",
       "close": "Tutup kalender",
@@ -1204,6 +1418,33 @@ export const id_ID: EnTranslations = {
       "mining": "Penambangan",
       "logging": "Penebangan",
       "herbalism": "Herbalisme"
+    },
+    "archetypeTitle": {
+      "label": "Gelar",
+      "none": "Tidak Ada",
+      "armorcrafting": "Pandai Zirah",
+      "weaponcrafting": "Pandai Senjata",
+      "jewelcrafting": "Perajin Permata",
+      "alchemy": "Alkemis",
+      "engineering": "Insinyur",
+      "cooking": "Koki",
+      "inscription": "Juru Tulis",
+      "enchanting": "Pemantra",
+      "tailoring": "Penjahit",
+      "leatherworking": "Perajin Kulit"
+    },
+    "crafting": {
+      "title": "kerajinan",
+      "close": "Tutup kerajinan",
+      "craft": "Keahlian",
+      "reagentsNeeded": "Memerlukan:",
+      "reagentLine": "{name}: {have}/{required}",
+      "empty": "Belum ada resep yang diketahui.",
+      "resultAria": "Kerajinan {name}",
+      "craftedToast": "Dibuat: {name}",
+      "insufficientMaterials": "Anda tidak memiliki bahan untuk itu.",
+      "unknownRecipe": "Resep itu tidak ada.",
+      "comboRequirementUnmet": "Kamu tidak memiliki kedua keahlian yang diperlukan pada tingkat yang disyaratkan untuk resep itu."
     }
   },
   "apiError": {
@@ -1310,6 +1551,7 @@ export const id_ID: EnTranslations = {
       "bestiary": "Bestiari",
       "models": "Model 3D",
       "gear": "Perlengkapan & Barang",
+      "professions": "Profesi",
       "economy": "Ekonomi & Perdagangan",
       "social": "Sosial & Kelompok",
       "stats": "Karakter & Statistik",
@@ -1324,6 +1566,7 @@ export const id_ID: EnTranslations = {
       "combat": "Pertarungan",
       "talents": "Talent",
       "arena": "Arena & PvP",
+      "valeCup": "Piala Lembah",
       "glossary": "Glosarium",
       "wishIKnew": "Hal yang Andai Kuketahui",
       "faq": "FAQ",
@@ -1979,6 +2222,32 @@ export const id_ID: EnTranslations = {
       "ladderHeading": "Menaiki tangga peringkat",
       "ladderBody": "Permainan berperingkat melacak kedudukanmu dari waktu ke waktu. Lihat papan peringkat untuk mengetahui posisimu dan siapa yang memuncaki realm."
     },
+    "valeCupPage": {
+      "heading": "Piala Lembah",
+      "intro": "Bola babi hutan di Sowfield: pilih panji, pilih peran, dan tendang kulit babi hutan berisi jerami melewati kiper demi Ember Tembaga. Tanpa darah, tanpa jarahan, hanya gemuruh tribun.",
+      "loreHeading": "Bola babi hutan dan gencatan panen",
+      "loreOldSow": "Jauh sebelum orang mati terbangun, buruh tani Eastbrook bermain bola babi hutan di ladang jerami usai panen: dua gerombolan, satu kulit babi hutan berisi jerami, dan dua gerbang pedati yang diseret ke kedua ujung lapangan hijau. Bola pertama, Si Induk Tua, digantung berlapis perunggu di atas perapian kedai.",
+      "loreTruce": "Ketika Koloseum Abu mulai merestui permainan perang, Marsekal Redbrook menjawab dengan sesuatu yang lebih lembut: gencatan panen tetap di lapangan hijau tua itu. Gerbang pedati menjadi tiang gawang, lapangan hijau itu mendapat tembok, tribun, dan sebuah nama, Sowfield, dan hadiahnya selalu sama, ember susu penyok yang dipakai minum para pemenang: Ember Tembaga.",
+      "howHeading": "Cara bermain",
+      "howQueue": "Masuk antrean dari mana saja lewat jendela Piala Lembah, atau bicaralah dengan Penjaga Lapangan Bram di gerbang Sowfield. Pilih format dari satu lawan satu hingga lima lawan lima, sebuah negeri panji, dan peran olahraga; masuk antrean sendirian atau bawa party-mu.",
+      "howMatch": "Saat sepak mula, perangkat kelasmu ditukar dengan perangkat olahraga dan dikembalikan persis seperti semula setelahnya. Tendangan mengarah ke retikel di tanah, bola memantul dari papan pembatas, dan menggiring bola hanyalah berlari bersama bola. Cetak gol lebih banyak dari lawan sebelum waktu habis; hasil imbang berlanjut ke gol emas.",
+      "howTruce": "Tak ada yang berdarah di Sowfield: tekel hanya membuat terjungkal, tak ada yang terluka, dan peliharaan menunggu di luar lapangan.",
+      "spectateBody": "Satu pertandingan berlangsung pada satu waktu di stadion, dan siapa pun bisa datang menonton dari tribun.",
+      "nationsHeading": "Delapan negeri panji",
+      "nationsBody": "Setiap tim bermain di bawah sebuah panji. Kapten memilih negerinya, dan jika kedua tim mengibarkan panji yang sama, tim tandang memakai palet warna terbalik.",
+      "nationVale": "Hijau dan emas, mengibarkan berkas gandum: tim tuan rumah, buruh tani sejati.",
+      "nationMirefen": "Toska dan kelabu di bawah burung bangau: sabar, berkaki panjang, tak pernah terburu-buru.",
+      "nationThornpeak": "Biru es dan putih di bawah puncak gunung: berpijak mantap dan keras kepala.",
+      "nationColiseum": "Merah dan hitam dengan pedang bersilang: mereka bermain seakan ini masih permainan perang.",
+      "nationChoir": "Biru pucat dan perak di bawah lonceng: menyeramkan, presisi, dan sangat pendiam.",
+      "nationOgre": "Jingga dan cokelat tua di balik kepalan: bahu duluan, dan bangga akan itu.",
+      "nationMoon": "Ungu dan perak di bawah bulan sabit: pemain malam, ringan langkahnya.",
+      "nationCopperdig": "Tembaga dan cokelat dengan beliung: para penggali yang tak pernah berhenti berlari.",
+      "rolesHeading": "Peran olahraga",
+      "rolesBody": "Peranmu menentukan perangkat yang kau bawa ke lapangan. Semua orang menendang; sisanya soal watak.",
+      "rewardsHeading": "Aturan gencatan",
+      "rewardsBody": "Aturan gencatan berarti tanpa pengalaman dan tanpa jarahan: pertandingan yang tuntas dihitung ke dalam rekormu dan papan pemenang, dan poin hadiah harian ikut serta. Meninggalkan pertandingan membekukan slotmu, dan Sang Penjaga Lapangan mengingatnya."
+    },
     "wishPage": {
       "heading": "Hal-hal yang andai kuketahui dulu",
       "intro": "Beberapa kebenaran jujur yang menghemat banyak keraguan bagi pemain baru. Tak satu pun wajib dibaca, tetapi semuanya membantu.",
@@ -2063,6 +2332,35 @@ export const id_ID: EnTranslations = {
       "cosmeticsCache": "Beberapa di antaranya berasal dari peti kosmetik misterius, sebuah hadiah tersegel yang mengundi satu dari tiga tingkat kualitas saat kamu membukanya dan menganugerahkan penampilan yang sesuai. Ini murni untuk penampilan: tak ada di dalamnya yang membuatmu lebih kuat, hanya lebih elok dipandang.",
       "cosmeticsApply": "Atur penampilan aktifmu dari baris penampilan di layar karaktermu, dan berganti dengan bebas di antara semua yang telah kamu buka."
     },
+    "professions": {
+      "intro": "Di luar pertempuran dan misi, dunia mengganjarmu karena menggarap tanah dan tempaan: mengumpulkan bahan mentah, mengolahnya menjadi perlengkapan di stasiun kriya sepuluh kerajinan berbeda, dan menetap dalam identitas sebagai salah satu dari sepuluh arketipe yang diwakili kerajinan-kerajinan itu.",
+      "gatherTitle": "Pengumpulan: Penambangan, Penebangan, dan Herbalisme",
+      "gatherIntro": "Tiga profesi pengumpulan memungkinkanmu menarik bahan mentah langsung dari dunia: Penambangan memahat bijih dan batu dari urat tambang, Penebangan merobohkan kayu dari rumpun pohon, dan Herbalisme memetik herba serta tanaman liar. Masing-masing dicatat terpisah, jadi menekuni satu tak pernah memperlambat kemajuanmu di yang lain.",
+      "gatherWhatTitle": "Simpul sumber daya",
+      "gatherWhatBody": "Urat bijih, rumpun kayu, dan petak herba ditempatkan di zona-zona sebagai objek yang terlihat dan tak bertuan. Dekati satu dan berinteraksilah untuk memanen isinya. Setelah kamu memanen sebuah simpul, simpul itu butuh waktu untuk pulih sebelum kamu pribadi bisa memanennya lagi, tapi itu tak pernah menghalangi orang lain: pemain lain bisa memanen simpul yang sama sementara itu.",
+      "gatherProficiencyTitle": "Kecakapan dan mutu bahan",
+      "gatherProficiencyBody": "Setiap panen yang berhasil menumbuhkan kecakapanmu di profesi pengumpulan itu. Kecakapan yang lebih tinggi menggeser hasil yang kamu tarik dari sebuah simpul ke mutu bahan yang lebih langka, dari yang umum ke atas, meski mutu paling langka tetap langka bahkan pada kecakapan tinggi. Lebih banyak latihan tak pernah merugikan peluangmu, hanya memperbaikinya.",
+      "gatherToolsTitle": "Perkakas kerja",
+      "gatherToolsBody": "Pedagang menjual perkakas dasar untuk tiap profesi pengumpulan, dan yang lebih baik bisa dibuat, jadi menggarap simpul sumber daya dimaksudkan terasa makin cakap seiring perlengkapanmu membaik, bukan diam di tempat. Perkakas tingkat lebih tinggi adalah jalan yang dimaksudkan untuk membuka simpul yang lebih kaya dan menggarapnya lebih efisien sepanjang sesi yang panjang.",
+      "craftTitle": "Sepuluh kerajinan",
+      "craftIntro": "Sepuluh kerajinan mengubah bahan yang terkumpul menjadi perlengkapan dan barang jadi: Penempaan Zirah, Penempaan Senjata, dan Kriya Permata membentuk bahan mentah menjadi perlengkapan yang bisa dikenakan; Alkimia dan Rekayasa berjalan lewat coba-coba; Memasak, Inskripsi, dan Pemantraan masing-masing menyentuh hasil kerajinan lain; Menjahit dan Pengolahan Kulit bekerja dari pola yang persis. Bersama-sama semuanya membentuk sebuah roda, dengan tiap kerajinan duduk di samping dua tetangga dan berseberangan dengan satu kerajinan lain.",
+      "craftRingTitle": "Roda spesialisasi",
+      "craftRingBody": "Sepuluh kerajinan tersusun dalam lingkaran tetap, dan posisi sebuah kerajinan di lingkaran itu penting: kerajinan yang bersebelahan di roda punya lebih banyak kesamaan satu sama lain dibanding kerajinan di sisi berlawanan. Berkomitmen pada satu kerajinan dimaksudkan terasa seperti bergabung dengan keluarga kerajinan serumpun, bukan memilih keterampilan yang terpencil.",
+      "craftRecipesTitle": "Resep dan reagen",
+      "craftRecipesBody": "Setiap kerajinan punya resepnya sendiri, masing-masing membutuhkan reagen tertentu yang kamu kumpulkan atau beli. Resep paling dasar di tiap kerajinan hanya meminta bahan umum dan bisa dibuat sejak awal, jadi kamu bisa mulai menekuni sebuah kerajinan begitu mengambilnya, tanpa menunggu untuk membukanya.",
+      "craftMasteryTitle": "Keahlian dan penguasaan",
+      "craftMasteryBody": "Berhasil membuat barang menumbuhkan keahlianmu di kerajinan itu, dan resep yang lebih kaya terkunci di balik keahlian yang lebih tinggi: resep dasar terbuka untuk semua orang, sementara resep yang makin maju menuntut penguasaan yang makin tinggi untuk dicoba. Menumbuhkan keahlian dalam sebuah kerajinan adalah jalan dari barang pemula sederhana menuju resep-resepnya yang lebih ambisius.",
+      "craftComboTitle": "Resep kombinasi",
+      "craftComboBody": "Di luar daftar resep tiap kerajinan, roda ini juga mendukung resep kombinasi yang memakai dua kerajinan bertetangga sekaligus, mengganjar karakter (atau sepasang mitra dagang) yang menekuni kerajinan bersebelahan di lingkaran alih-alih satu kerajinan secara terpisah.",
+      "archetypeTitle": "Sepuluh arketipe",
+      "archetypeIntro": "Masing-masing dari sepuluh kerajinan juga mewakili sebuah arketipe, identitas yang lebih luas yang bisa kamu sandang di luar sekadar menekuni kerajinannya. Arketipe aktifmu adalah satu pilihan pada satu waktu, bukan daftar centang: kamu menyandang satu, dan bisa menggantinya kelak jika mau.",
+      "archetypeChooseTitle": "Memilih arketipemu",
+      "archetypeChooseBody": "Kamu menyatakan arketipe pertamamu melalui misi cerita awal di zona satu yang secara resmi menerimamu ke dalam identitas itu. Sebelum misi itu selesai, kamu sama sekali belum memilih arketipe.",
+      "archetypeSwitchTitle": "Berubah pikiran",
+      "archetypeSwitchBody": "Menyatakan sebuah arketipe sekali tidak mengikatmu selamanya. Berpindah ke arketipe lain berarti lebih dulu menyelesaikan misi \"menebus kesalahan\" yang dapat diulang untuk arketipe lamamu, dan setiap kali kamu berpindah, tebusan yang diminta berikutnya sedikit lebih berat, sehingga berpindah tetap bermakna, bukan tanpa harga.",
+      "archetypeIdentityTitle": "Makna arketipemu",
+      "archetypeIdentityBody": "Arketipe aktifmu adalah pernyataan tentang siapa karaktermu di dunia, terlihat dari cara orang lain dan dunia menyapamu. Hadiah dan pengakuan pastinya masih dirampungkan; tengok kembali seiring sistem ini dilengkapi."
+    },
     "economy": {
       "intro": "Koin melumasi seluruh dunia: ia membeli perlengkapanmu, persediaan, dan perlengkapan perjalanan, serta berpindah tangan antarpemain. Kamu mengumpulkan semua ini hanya dengan bermain, jadi anggaplah halaman ini sebagai peta dari mana uangmu datang dan ke mana ia pergi.",
       "coinTitle": "Emas, perak, dan tembaga",
@@ -2071,6 +2369,10 @@ export const id_ID: EnTranslations = {
       "vendorsBody": "Kota dan pos terdepan bertaburan pedagang, masing-masing dengan dagangannya sendiri. Penyedia perbekalan menjual makanan dan minuman, pandai senjata dan pembuat zirah menjajakan perlengkapan, dan seorang juru bekal menyimpan perlengkapan perjalanan yang praktis. Hampirilah salah satunya untuk melihat apa yang mereka jual.",
       "marksTitle": "Mata uang kedua: Tanda Delve",
       "marksBody": "Koin bukan satu-satunya yang kamu simpan. Delve membayar Tanda Delve, mata uang terpisah yang hanya kamu belanjakan di penjaga delve, untuk peningkatan pendamping dan perlengkapan yang tak akan kamu temukan di tempat lain. Tanda ini tak pernah bercampur dengan koinmu.",
+      "bankTitle": "Bank",
+      "bankBody": "Setiap kota pusat memiliki cabang Brankas Bersepuh Emas, rumah perbankan realm ini. Bicaralah dengan bendahara di sana untuk membuka lemari besimu, ruang simpanan pribadi di luar tasmu yang dimiliki karaktermu seumur hidup. Apa pun yang kamu titipkan pada mereka menunggu dengan aman, di cabang mana pun yang kamu kunjungi berikutnya.",
+      "bankHow": "Saat lemari besi terbuka, klik sebuah barang di tasmu untuk menyetorkannya dan klik barang itu di lemari besi untuk mengambilnya kembali. Lemari besi hanya menampung barang, tidak pernah koin, dan barang misi tetap bersamamu. Saat tasmu penuh di tengah perjalanan, satu tombol menyapu semua bahan kerajinanmu masuk sekaligus.",
+      "bankSlots": "Lemari besi yang baru mulai dari ukuran kecil dan tumbuh bersamamu. Bendahara menjual slot tambahan dengan koin pada harga yang kian menanjak, dan bermain online memberi ruang bonus di atasnya, untuk hal-hal seperti email terverifikasi, akun tertaut, dan teman yang kamu ajak masuk ke dalam permainan.",
       "buyingTitle": "Membeli dan menjual",
       "buyingBody": "Berdirilah di dekat seorang pedagang untuk membuka jendelanya. Kamu bisa membeli apa pun yang mereka jual jika kamu mampu, dan menjual sebagian besar isi tasmu untuk koin. Jika kamu menjual sesuatu secara tidak sengaja, penjaja akan menyimpan penjualan terakhirmu agar kamu bisa membelinya kembali.",
       "junkTitle": "Membereskan barang rongsokan",
@@ -3143,6 +3445,10 @@ export const id_ID: EnTranslations = {
       "hard": "Jarahan terbaik"
     },
     "closeAria": "Tutup"
+  },
+  "heroicShop": {
+    "balance": "Tanda Heroik: {count}",
+    "buyAria": "Beli {item} seharga {marks} Tanda Heroik"
   },
   "delveUi": {
     "board": {
@@ -4436,12 +4742,14 @@ export const id_ID: EnTranslations = {
     "slots": {
       "mainhand": "Tangan Utama",
       "helmet": "Helm",
+      "neck": "Leher",
       "shoulder": "Bahu",
       "chest": "Dada",
       "waist": "Pinggang",
       "legs": "Tungkai",
       "gloves": "Sarung Tangan",
-      "feet": "Kaki"
+      "feet": "Kaki",
+      "ring": "Jari"
     },
     "quality": {
       "poor": "Buruk",
@@ -4645,6 +4953,46 @@ export const id_ID: EnTranslations = {
   },
   "entities": {
     "abilities": {
+      "sport_kick": {
+        "name": "Tendang",
+        "description": "Tendang bola menyusur tanah ke arah titik bidik."
+      },
+      "sport_shoot": {
+        "name": "Tembak",
+        "description": "Tahan untuk mengumpulkan tenaga, lepaskan untuk menembak ke gawang. Tenaga berlebih membuat bola melambung lewat."
+      },
+      "sport_pass": {
+        "name": "Umpan",
+        "description": "Gulirkan umpan mantap ke rekan setim yang kau bidik, mendahului arah larinya."
+      },
+      "sport_boot": {
+        "name": "Tendangan Jauh",
+        "description": "Tendangan lambung jauh ke arah titik bidik. Penonton menyukainya."
+      },
+      "sport_hoof": {
+        "name": "Sapu Jauh",
+        "description": "Hantam bola rendah dan keras ke depan lapangan."
+      },
+      "sport_punt": {
+        "name": "Sepakan Jauh",
+        "description": "Tendangan lambung kiper, tinggi dan jauh."
+      },
+      "sport_feint": {
+        "name": "Tipuan",
+        "description": "Gerakan mengelak cepat ke arah titik bidik."
+      },
+      "sport_dive": {
+        "name": "Terjun",
+        "description": "Lemparkan dirimu ke arah titik bidik. Bola yang melintas akan menempel padamu."
+      },
+      "sport_shoulder": {
+        "name": "Benturan Bahu",
+        "description": "Benturan bahu yang adil ala gencatan panen. Membuat lawan terjungkal menjauh dari bola."
+      },
+      "sport_second_wind": {
+        "name": "Kaki Segar",
+        "description": "Temukan kembali tenagamu: bergerak 50% lebih cepat selama 4 detik."
+      },
       "flamestrike": {
         "name": "Hantaman Api",
         "description": "Memanggil ledakan api di area sasaran, memberikan {damage} kerusakan Api kepada musuh yang terkena ledakan."
@@ -5866,6 +6214,24 @@ export const id_ID: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Sabit Kelopak Matahari"
       },
+      "thorium_ore": {
+        "name": "Bijih Torium"
+      },
+      "arcanite_bar": {
+        "name": "Batangan Arkanit"
+      },
+      "ashwood_log": {
+        "name": "Kayu Gelondongan Abu"
+      },
+      "elderwood_log": {
+        "name": "Kayu Gelondongan Tua Elder"
+      },
+      "goldleaf_herb": {
+        "name": "Herba Daun Emas"
+      },
+      "sunpetal_herb": {
+        "name": "Herba Kelopak Matahari"
+      },
       "bristleback_maul": {
         "name": "Palu Gallowglass"
       },
@@ -6331,6 +6697,132 @@ export const id_ID: EnTranslations = {
       "event_skin_token": {
         "name": "Peti Kosmetik Misterius"
       },
+      "heroic_mark": {
+        "name": "Tanda Heroik"
+      },
+      "morthens_cryptforged_hauberk": {
+        "name": "Baju Zirah Tempaan Kripta Morthen"
+      },
+      "shadowpulse_handwraps": {
+        "name": "Pembalut Tangan Denyut Bayangan"
+      },
+      "bonechill_striders": {
+        "name": "Bot Langkah Dingin Tulang"
+      },
+      "mistcallers_fang": {
+        "name": "Taring Pemanggil Kabut"
+      },
+      "tidebound_spaulders": {
+        "name": "Pelindung Bahu Ikatan Pasang"
+      },
+      "sash_of_the_sunken_court": {
+        "name": "Selempang Istana Karam"
+      },
+      "lunar_tide_greatstaff": {
+        "name": "Tongkat Agung Pasang Rembulan"
+      },
+      "tidewoven_trousers": {
+        "name": "Celana Tenunan Pasang"
+      },
+      "choirmothers_casque": {
+        "name": "Ketopong Ibu Paduan Suara"
+      },
+      "gravewyrm_cleaver": {
+        "name": "Kapak Pembelah Wyrm Kubur"
+      },
+      "shroud_of_the_gravewyrm": {
+        "name": "Kafan Sang Wyrm Kubur"
+      },
+      "sanctum_prowlers_grips": {
+        "name": "Sarung Tangan Pengendap Sanktum"
+      },
+      "scepter_of_the_deathless_court": {
+        "name": "Tongkat Kebesaran Istana Nirmaut"
+      },
+      "deathless_warguard_legmail": {
+        "name": "Zirah Kaki Garda Perang Nirmaut"
+      },
+      "soulrend_diadem": {
+        "name": "Diadem Pengoyak Jiwa"
+      },
+      "scourgehide_carapace": {
+        "name": "Karapas Kulit Sampar"
+      },
+      "cryptplate_helm": {
+        "name": "Helm Lempeng Kripta"
+      },
+      "shadowpulse_slippers": {
+        "name": "Selop Denyut Bayangan"
+      },
+      "bonechill_cord": {
+        "name": "Tali Pinggang Dingin Tulang"
+      },
+      "mistforged_pauldrons": {
+        "name": "Bahu Tempaan Kabut"
+      },
+      "tideguard_faceguard": {
+        "name": "Pelindung Wajah Penjaga Pasang"
+      },
+      "sunken_court_mantle": {
+        "name": "Mantel Istana Karam"
+      },
+      "lunar_choir_leggings": {
+        "name": "Celana Paduan Suara Rembulan"
+      },
+      "choir_blessed_spaulders": {
+        "name": "Pelindung Bahu Berkah Paduan Suara"
+      },
+      "tideworn_warboots": {
+        "name": "Bot Perang Kikisan Pasang"
+      },
+      "gravewyrm_claws": {
+        "name": "Cakar Wyrm Kubur"
+      },
+      "gravescale_girdle": {
+        "name": "Sabuk Sisik Kubur"
+      },
+      "wyrmchoir_handwraps": {
+        "name": "Pembalut Tangan Paduan Suara Wyrm"
+      },
+      "deathless_greatblade": {
+        "name": "Bilah Agung Nirmaut"
+      },
+      "soulforged_warplate": {
+        "name": "Zirah Perang Tempaan Jiwa"
+      },
+      "stormcallers_focus": {
+        "name": "Fokus Pemanggil Badai"
+      },
+      "seal_of_the_nine_oaths": {
+        "name": "Segel Sembilan Sumpah"
+      },
+      "nielas_coldlight_band": {
+        "name": "Cincin Cahaya Dingin Niela"
+      },
+      "sutils_gambit": {
+        "name": "Gambit Sutil"
+      },
+      "oath_of_the_round_table": {
+        "name": "Sumpah Meja Bundar"
+      },
+      "zyzzs_deathless_signet": {
+        "name": "Cincin Stempel Nirmaut Zyzz"
+      },
+      "architects_cornerstone": {
+        "name": "Batu Penjuru Sang Arsitek"
+      },
+      "swiftfang_talisman": {
+        "name": "Talisman Taring Gesit"
+      },
+      "yumis_keepsake_locket": {
+        "name": "Liontin Kenangan Yumi"
+      },
+      "zense_meridian": {
+        "name": "Meridian Zense"
+      },
+      "medallion_of_endless_profit": {
+        "name": "Medali Laba Tanpa Akhir"
+      },
       "deathless_heartwood": {
         "name": "Inti Kayu Mahkota Baka"
       },
@@ -6660,6 +7152,9 @@ export const id_ID: EnTranslations = {
       "tolling_bell": {
         "name": "Lonceng Berdentang"
       },
+      "vale_cup_ball": {
+        "name": "Bola Babi Hutan"
+      },
       "thunzharr_waking_peak": {
         "name": "Thunzharr, Puncak yang Terjaga"
       },
@@ -6866,6 +7361,11 @@ export const id_ID: EnTranslations = {
         "title": "Ahli Penempa Zirah",
         "greeting": "Tungku menyala dan batu asah berputar. Kalau bisa menebas, aku menjualnya."
       },
+      "heroic_quartermaster": {
+        "name": "Kepala Perbekalan Vex",
+        "title": "Kepala Perbekalan Heroik",
+        "greeting": "Bukti dari kedalaman heroik dapat membeli cincin dan liontin terbaik di Highwatch. Tunjukkan tanda-tandamu."
+      },
       "loremaster_caddis": {
         "name": "Ahli Sejarah Caddis",
         "title": "Ahli Sejarah",
@@ -6875,6 +7375,21 @@ export const id_ID: EnTranslations = {
         "name": "Pelelang Voss",
         "title": "Penjaga World Market",
         "greeting": "World Market juga buka di sini, {className}. Belilah dari setiap petualang di alam ini, atau gelarlah daganganmu sendiri."
+      },
+      "bursar_fernando": {
+        "name": "Bendahara Fernando",
+        "title": "Brankas Bersepuh Emas",
+        "greeting": "Selamat datang di Brankas Bersepuh Emas. Barang-barangmu tersimpan aman di balik kunci-kunci kami."
+      },
+      "bursar_petra_vell": {
+        "name": "Bendahara Petra Vell",
+        "title": "Brankas Bersepuh Emas",
+        "greeting": "Brankas Bersepuh Emas menjaga buku kas yang bersih dan lemari besi yang lebih bersih lagi. Apa yang hendak kami simpankan untukmu?"
+      },
+      "bursar_aldous_crane": {
+        "name": "Bendahara Aldous Crane",
+        "title": "Brankas Bersepuh Emas",
+        "greeting": "Setiap peti, kotak harta, dan pernak-pernik aman bersama Brankas Bersepuh Emas."
       },
       "brother_aldric_raid": {
         "name": "Bruder Aldric",
@@ -6895,6 +7410,11 @@ export const id_ID: EnTranslations = {
         "name": "Sang Penjaga Pucat",
         "title": "Penjaga Para Mati",
         "greeting": "Beristirahatlah, arwah. Aku bisa mengembalikanmu ke tubuhmu, tapi penyeberangan kembali akan membuatmu lemah."
+      },
+      "groundskeeper_bram": {
+        "name": "Penjaga Lapangan Bram",
+        "title": "Penjaga Sowfield",
+        "greeting": "Gencatan tetap berlaku di Sowfield, {className}: hanya tendangan dan benturan bahu. Mau bermain memperebutkan Ember Tembaga?"
       },
       "tidewatcher_ondrel": {
         "name": "Ondrel Vane",
@@ -7803,6 +8323,9 @@ export const id_ID: EnTranslations = {
           },
           "9": {
             "label": "Tanah Lapang Brightwood"
+          },
+          "10": {
+            "label": "Sowfield"
           }
         }
       },
@@ -7947,12 +8470,14 @@ export const id_ID: EnTranslations = {
       "crownforged": {
         "name": "Regalia Bonewrought",
         "bonus2": "Meningkatkan daya serang sebesar 40.",
-        "bonus3": "Meningkatkan kekuatan sebesar 15, stamina sebesar 15, serta kecepatan serangan dan rapal sebesar 15%."
+        "bonus3": "Meningkatkan kekuatan sebesar 15, stamina sebesar 15, serta kecepatan serangan dan rapal sebesar 15%.",
+        "bonus4": "Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali."
       },
       "deathlord": {
         "name": "Perlengkapan Tempur Barrowlord",
         "bonus2": "Meningkatkan daya serang sebesar 40.",
-        "bonus3": "Meningkatkan kekuatan sebesar 15 dan stamina sebesar 15."
+        "bonus3": "Meningkatkan kekuatan sebesar 15 dan stamina sebesar 15.",
+        "bonus4": "Serangan kritis senjatamu memiliki peluang 50% memberikan Kuasa Kubur, meningkatkan daya serang sebesar 60 selama 10 detik."
       },
       "greyjaw_stalker": {
         "name": "Perlengkapan Penguntit Greyjaw",
@@ -7961,22 +8486,26 @@ export const id_ID: EnTranslations = {
       "necromancers": {
         "name": "Jubah Mournweave",
         "bonus2": "Kamu tidak dapat terpental (ketahanan pentalan 100%).",
-        "bonus3": "Meningkatkan kecerdasan sebesar 10 dan stamina sebesar 10."
+        "bonus3": "Meningkatkan kecerdasan sebesar 10 dan stamina sebesar 10.",
+        "bonus4": "Mantramu memiliki peluang 10% memberikan Rapal Jernih, menjadikan mantra berikutmu tanpa biaya."
       },
       "nighttalon": {
         "name": "Perlengkapan Kulit Direfang",
         "bonus2": "Meningkatkan daya serang sebesar 40.",
-        "bonus3": "Meningkatkan kelincahan sebesar 15, peluang kritis sebesar 2%, serta kecepatan serangan dan rapal sebesar 15%."
+        "bonus3": "Meningkatkan kelincahan sebesar 15, peluang kritis sebesar 2%, serta kecepatan serangan dan rapal sebesar 15%.",
+        "bonus4": "Serangan kritis senjatamu mengoyakkan Cabikan Kasar, membuat target berdarah sebesar 6 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali."
       },
       "soulflame": {
         "name": "Regalia Wraithfire",
         "bonus2": "Kamu tidak dapat terpental (ketahanan pentalan 100%).",
-        "bonus3": "Meningkatkan kecerdasan sebesar 15, roh sebesar 15, serta kecepatan serangan dan rapal sebesar 15%."
+        "bonus3": "Meningkatkan kecerdasan sebesar 15, roh sebesar 15, serta kecepatan serangan dan rapal sebesar 15%.",
+        "bonus4": "Mantramu memiliki peluang 10% memberikan Nyala Jiwa, meningkatkan kekuatan mantra sebesar 40 selama 10 detik."
       },
       "stormcallers": {
         "name": "Jubah Galecall",
         "bonus2": "Kamu tidak dapat terpental (ketahanan pentalan 100%).",
-        "bonus3": "Meningkatkan kecerdasan sebesar 15, roh sebesar 15, serta kecepatan serangan dan rapal sebesar 15%."
+        "bonus3": "Meningkatkan kecerdasan sebesar 15, roh sebesar 15, serta kecepatan serangan dan rapal sebesar 15%.",
+        "bonus4": "Mantramu memiliki peluang 10% memberikan Nyala Jiwa, meningkatkan kekuatan mantra sebesar 40 selama 10 detik."
       },
       "vale_arcanist": {
         "name": "Perlengkapan Arkanis Lembah",
@@ -7985,7 +8514,8 @@ export const id_ID: EnTranslations = {
       "wyrmshadow": {
         "name": "Jubah Nightfang",
         "bonus2": "Meningkatkan daya serang sebesar 40.",
-        "bonus3": "Meningkatkan kelincahan sebesar 15 dan peluang kritis sebesar 2%."
+        "bonus3": "Meningkatkan kelincahan sebesar 15 dan peluang kritis sebesar 2%.",
+        "bonus4": "Serangan kritis senjatamu memiliki peluang 50% memberikan Sergap Taring, meningkatkan kecepatan serangan sebesar 25% selama 8 detik."
       }
     }
   },
