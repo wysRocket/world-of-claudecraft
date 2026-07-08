@@ -4327,6 +4327,12 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.items.elderwood_axe.name': 'Hache en Bois Ancien',
   'entities.items.goldleaf_sickle.name': "Faucille Feuille d'Or",
   'entities.items.sunpetal_sickle.name': 'Faucille Pétale de Soleil',
+  'entities.items.thorium_ore.name': 'Minerai de Thorium',
+  'entities.items.arcanite_bar.name': "Barre d'Arcanite",
+  'entities.items.ashwood_log.name': 'Bûche de Frêne Gris',
+  'entities.items.elderwood_log.name': 'Bûche de Sureau Ancien',
+  'entities.items.goldleaf_herb.name': "Herbe Feuille d'Or",
+  'entities.items.sunpetal_herb.name': 'Herbe Pétale de Soleil',
   // v0.10.0 release fill (Fiesta / skin-select / NPC voices / chat channels / Brightwood Glade)
   'hud.core.chatChannels.add': 'Ajouter un canal de discussion',
   'hud.core.chatChannels.addTitle': 'Ajouter un canal',

@@ -6166,6 +6166,24 @@ export const pt_BR: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Foice Pétala Solar"
       },
+      "thorium_ore": {
+        "name": "Minério de Tório"
+      },
+      "arcanite_bar": {
+        "name": "Barra de Arcanita"
+      },
+      "ashwood_log": {
+        "name": "Tora de Freixo Cinza"
+      },
+      "elderwood_log": {
+        "name": "Tora de Sabugueiro Antigo"
+      },
+      "goldleaf_herb": {
+        "name": "Erva Folha Dourada"
+      },
+      "sunpetal_herb": {
+        "name": "Erva Pétala Solar"
+      },
       "bristleback_maul": {
         "name": "Martelo Gallowglass"
       },

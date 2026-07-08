@@ -6166,6 +6166,24 @@ export const de_DE: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Sonnenblütensichel"
       },
+      "thorium_ore": {
+        "name": "Thoriumerz"
+      },
+      "arcanite_bar": {
+        "name": "Arkanitbarren"
+      },
+      "ashwood_log": {
+        "name": "Aschenholzscheit"
+      },
+      "elderwood_log": {
+        "name": "Altholunderscheit"
+      },
+      "goldleaf_herb": {
+        "name": "Goldblattkraut"
+      },
+      "sunpetal_herb": {
+        "name": "Sonnenblütenkraut"
+      },
       "bristleback_maul": {
         "name": "Gallowglass-Hammer"
       },

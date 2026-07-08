@@ -6166,6 +6166,24 @@ export const ja_JP: EnTranslations = {
       "sunpetal_sickle": {
         "name": "陽花弁の鎌"
       },
+      "thorium_ore": {
+        "name": "トリウム鉱石"
+      },
+      "arcanite_bar": {
+        "name": "アーケナイトの延べ棒"
+      },
+      "ashwood_log": {
+        "name": "アッシュウッドの丸太"
+      },
+      "elderwood_log": {
+        "name": "エルダーウッドの丸太"
+      },
+      "goldleaf_herb": {
+        "name": "ゴールドリーフ草"
+      },
+      "sunpetal_herb": {
+        "name": "サンペタル草"
+      },
       "bristleback_maul": {
         "name": "ギャロウグラスの大槌"
       },

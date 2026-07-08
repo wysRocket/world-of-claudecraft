@@ -6166,6 +6166,24 @@ export const da_DK: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Solkronbladssegl"
       },
+      "thorium_ore": {
+        "name": "Thoriummalm"
+      },
+      "arcanite_bar": {
+        "name": "Arkanitbarre"
+      },
+      "ashwood_log": {
+        "name": "Askeved Stamme"
+      },
+      "elderwood_log": {
+        "name": "Gammel Hyldeved Stamme"
+      },
+      "goldleaf_herb": {
+        "name": "Guldbladurt"
+      },
+      "sunpetal_herb": {
+        "name": "Solkroneurt"
+      },
       "bristleback_maul": {
         "name": "Gallowglass-Hammer"
       },

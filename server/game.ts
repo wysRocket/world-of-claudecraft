@@ -3951,6 +3951,8 @@ export class GameServer {
     maybe('dclears', this.sim.delveClearsFor(anchorSession.pid));
     maybe('delveDaily', this.sim.delveDailyWire(anchorSession.pid));
     // Gathering profession proficiency (Mining/Logging/Herbalism), a small
+    // per-player map, so kept per-tick like the other small maps above.
+    maybe('gprof', this.sim.gatheringProficiencyFor(anchorSession.pid));
     // per-player read, so kept per-tick like the other small maps above. Wire
     // key `prof` and IWorld member `professionsState` are the settled names
     // for the professions facet (#1164, src/sim/professions/CLAUDE.md). `gprof`

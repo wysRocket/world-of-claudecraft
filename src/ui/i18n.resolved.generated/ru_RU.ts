@@ -6166,6 +6166,24 @@ export const ru_RU: EnTranslations = {
       "sunpetal_sickle": {
         "name": "Солнцелепестковый серп"
       },
+      "thorium_ore": {
+        "name": "Ториевая руда"
+      },
+      "arcanite_bar": {
+        "name": "Слиток аркана"
+      },
+      "ashwood_log": {
+        "name": "Бревно пепельного дерева"
+      },
+      "elderwood_log": {
+        "name": "Бревно древней бузины"
+      },
+      "goldleaf_herb": {
+        "name": "Трава золотолист"
+      },
+      "sunpetal_herb": {
+        "name": "Трава солнцелепест"
+      },
       "bristleback_maul": {
         "name": "Молот Гэллоугласа"
       },

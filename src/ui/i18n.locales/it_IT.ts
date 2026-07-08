@@ -4288,6 +4288,12 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.items.elderwood_axe.name': 'Ascia di Legno Antico',
   'entities.items.goldleaf_sickle.name': 'Falcetto Fogliadoro',
   'entities.items.sunpetal_sickle.name': 'Falcetto Petalo di Sole',
+  'entities.items.thorium_ore.name': 'Minerale di Torio',
+  'entities.items.arcanite_bar.name': 'Barra di Arcanite',
+  'entities.items.ashwood_log.name': 'Tronco di Frassino Cinereo',
+  'entities.items.elderwood_log.name': 'Tronco di Sambuco Antico',
+  'entities.items.goldleaf_herb.name': 'Erba Fogliadoro',
+  'entities.items.sunpetal_herb.name': 'Erba Petalosole',
   // v0.10.0 release fill (Fiesta / skin-select / NPC voices / chat channels / Brightwood Glade)
   'hud.core.chatChannels.add': 'Aggiungi canale di chat',
   'hud.core.chatChannels.addTitle': 'Aggiungi canale',

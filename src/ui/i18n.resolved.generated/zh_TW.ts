@@ -6166,6 +6166,24 @@ export const zh_TW: EnTranslations = {
       "sunpetal_sickle": {
         "name": "陽瓣鐮刀"
       },
+      "thorium_ore": {
+        "name": "瑟銀礦石"
+      },
+      "arcanite_bar": {
+        "name": "秘銀錠"
+      },
+      "ashwood_log": {
+        "name": "灰木原木"
+      },
+      "elderwood_log": {
+        "name": "古老接骨木原木"
+      },
+      "goldleaf_herb": {
+        "name": "金葉草"
+      },
+      "sunpetal_herb": {
+        "name": "陽瓣草"
+      },
       "bristleback_maul": {
         "name": "加洛格拉斯戰錘"
       },

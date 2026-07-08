@@ -4311,6 +4311,12 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.items.elderwood_axe.name': 'Altholzaxt',
   'entities.items.goldleaf_sickle.name': 'Goldblatt-Sichel',
   'entities.items.sunpetal_sickle.name': 'Sonnenblütensichel',
+  'entities.items.thorium_ore.name': 'Thoriumerz',
+  'entities.items.arcanite_bar.name': 'Arkanitbarren',
+  'entities.items.ashwood_log.name': 'Aschenholzscheit',
+  'entities.items.elderwood_log.name': 'Altholunderscheit',
+  'entities.items.goldleaf_herb.name': 'Goldblattkraut',
+  'entities.items.sunpetal_herb.name': 'Sonnenblütenkraut',
   // v0.10.0 release fill (Fiesta / skin-select / NPC voices / chat channels / Brightwood Glade)
   'hud.core.chatChannels.add': 'Chatkanal hinzufügen',
   'hud.core.chatChannels.addTitle': 'Kanal hinzufügen',

@@ -4274,6 +4274,12 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.items.elderwood_axe.name': 'Machado de Madeira Antiga',
   'entities.items.goldleaf_sickle.name': 'Foice Folha Dourada',
   'entities.items.sunpetal_sickle.name': 'Foice Pétala Solar',
+  'entities.items.thorium_ore.name': 'Minério de Tório',
+  'entities.items.arcanite_bar.name': 'Barra de Arcanita',
+  'entities.items.ashwood_log.name': 'Tora de Freixo Cinza',
+  'entities.items.elderwood_log.name': 'Tora de Sabugueiro Antigo',
+  'entities.items.goldleaf_herb.name': 'Erva Folha Dourada',
+  'entities.items.sunpetal_herb.name': 'Erva Pétala Solar',
   // v0.10.0 release fill (Fiesta / skin-select / NPC voices / chat channels / Brightwood Glade)
   'hud.core.chatChannels.add': 'Adicionar canal de chat',
   'hud.core.chatChannels.addTitle': 'Adicionar canal',
