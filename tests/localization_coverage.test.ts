@@ -333,6 +333,7 @@ describe('i18n Localization Key Coverage', () => {
     ability: 'Fireball',
     action: 'Open Chat',
     amount: 42,
+    answered: 6,
     base: 14,
     rested: 18,
     buyer: 'Mira',

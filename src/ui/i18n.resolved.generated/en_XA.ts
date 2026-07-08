@@ -4998,7 +4998,8 @@ export const en_XA: EnTranslations = {
       "needAria": "[Ñééð ƒóŕ {item}]",
       "greedAria": "[Ĝŕééð ƒóŕ {item}]",
       "passAria": "[Þášš óñ {item}]",
-      "everyonePassed": "[Éʋéŕýóñé þáššéð óñ {item}.]"
+      "everyonePassed": "[Éʋéŕýóñé þáššéð óñ {item}.]",
+      "rolled": "[{answered}/{total} ŕóļļéð]"
     }
   },
   "entities": {

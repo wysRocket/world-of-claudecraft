@@ -4998,7 +4998,8 @@ export const cs_CZ: EnTranslations = {
       "needAria": "Potřeba pro {item}",
       "greedAria": "Chamtivost pro {item}",
       "passAria": "Vzdát se nároku na {item}",
-      "everyonePassed": "Všichni se vzdali nároku na {item}."
+      "everyonePassed": "Všichni se vzdali nároku na {item}.",
+      "rolled": "{answered}/{total} rolled"
     }
   },
   "entities": {
