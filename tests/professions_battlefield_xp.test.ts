@@ -159,6 +159,21 @@ describe('battlefieldExperienceTrickle active-specialty gate (#1149/#1205)', () 
     expect(amount).toBe(0);
     expect(skills.alchemy).toBe(0);
   });
+
+  // #1638 review: #1129's active archetype is an adjacent PAIR (the two
+  // majors), so this gate must check both, not just the title-quest craft.
+  it('grants the trickle when the recipe craft is the SECOND (paired) major, not just the title craft', () => {
+    const skills = emptyCraftSkills();
+    const amount = battlefieldExperienceTrickle(skills, {
+      itemId: 'minor_healing_potion', // -> alchemy
+      instance: { signer: 'Aria', rolled: { quality: 'rare' } },
+      observerName: 'Aria',
+      observerActiveArchetype: 'engineering', // title craft is the OTHER major
+      observerPairedMajor: 'alchemy', // alchemy is the second major, adjacent to engineering
+    });
+    expect(amount).toBe(BATTLEFIELD_XP_TRICKLE);
+    expect(skills.alchemy).toBe(BATTLEFIELD_XP_TRICKLE);
+  });
 });
 
 // The issue's own guidance: assert the handler's only skill-mutating call is

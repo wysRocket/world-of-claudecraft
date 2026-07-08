@@ -1700,5 +1700,9 @@ export const hudChromeStrings = {
     // crafting hub) and the player is either not there or not high enough
     // level.
     notAtHub: 'You must be at the crafting hub, at the required level, to craft that.',
+    // #1301: denied because the rolling craft-output window is full.
+    throttled: 'You are crafting too quickly. Wait a moment and try again.',
+    // #1299: the recipe exists but this player has not learned it yet.
+    recipeNotLearned: 'You have not learned that recipe yet.',
   },
 };

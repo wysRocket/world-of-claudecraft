@@ -31,7 +31,7 @@ export interface CraftResultView {
     | 'unknown_recipe'
     | 'insufficient_materials'
     | 'combo_requirement_unmet'
-    | 'recipe_unknown'
+    | 'recipe_not_learned'
     | 'throttled'
     // #1297: denied because the recipe is station-bound and the player is not
     // currently at the level-20 crafting hub (or not yet the required level).
@@ -55,8 +55,12 @@ export interface CraftResultView {
 // `archetypeAmendsRequired` plus `acceptArchetypeQuest`/`advanceAmendsProgress`/
 // `switchArchetype` (#1129, superseded scope) are the active-archetype identity
 // surface: per the #107 decision, all ten craft skills (above) stay purely
-// additive, and archetype identity is a single active craft the player swaps via
-// quest, not a conserved-mass drain. See src/sim/professions/archetype.ts for the
+// additive, and archetype identity is a pair of ring-adjacent crafts (the two
+// majors) the player swaps via quest, not a conserved-mass drain. `activeArchetype`
+// here is the title-quest major only; its ring-adjacent partner (also
+// empowered past rare) is internal sim state (archetype.ts `pairedMajor`), not
+// yet its own read surface since no UI reads it independently of the
+// composed empowerment ceiling. See src/sim/professions/archetype.ts for the
 // full state machine and what is stubbed (quest content, not the gating logic).
 export interface IWorldProfessions {
   professionsState: PlayerProfessionsView;

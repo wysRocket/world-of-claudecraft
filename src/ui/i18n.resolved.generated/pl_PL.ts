@@ -1446,7 +1446,9 @@ export const pl_PL: EnTranslations = {
       "insufficientMaterials": "Nie masz na to materiałów.",
       "unknownRecipe": "Ten przepis nie istnieje.",
       "comboRequirementUnmet": "Nie masz obu wymaganych rzemiosł na wymaganym poziomie dla tego przepisu.",
-      "notAtHub": "You must be at the crafting hub, at the required level, to craft that."
+      "notAtHub": "You must be at the crafting hub, at the required level, to craft that.",
+      "throttled": "You are crafting too quickly. Wait a moment and try again.",
+      "recipeNotLearned": "You have not learned that recipe yet."
     }
   },
   "apiError": {

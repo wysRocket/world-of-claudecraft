@@ -1446,7 +1446,9 @@ export const zh_CN: EnTranslations = {
       "insufficientMaterials": "你没有足够的材料。",
       "unknownRecipe": "该配方不存在。",
       "comboRequirementUnmet": "你没有达到该配方所需组合的两项制造技能等级。",
-      "notAtHub": "必须达到所需等级并位于制作站，才能制作该物品。"
+      "notAtHub": "必须达到所需等级并位于制作站，才能制作该物品。",
+      "throttled": "你制作得太快了，请稍等片刻后再试。",
+      "recipeNotLearned": "你还没有学会这个配方。"
     }
   },
   "apiError": {

@@ -62,9 +62,14 @@ import {
 import { recipeById } from '../content/recipes';
 import type { PlayerMeta } from '../sim';
 import type { SimContext } from '../sim_context';
-import { craftCeiling } from './archetype';
+import { archetypeCeilingFor, craftCeiling } from './archetype';
 import { canUseCraftingHubStation } from './crafting_hub';
-import { isSignableMaterialRarity, type MaterialRarity, rollMaterialRarity } from './gathering';
+import {
+  clampMaterialRarity,
+  isSignableMaterialRarity,
+  type MaterialRarity,
+  rollMaterialRarity,
+} from './gathering';
 import type { ProfessionReagent, ProfessionRecipeRecord } from './types';
 import {
   type CraftSkillState,
@@ -97,7 +102,7 @@ export interface CraftResult {
     | 'unknown_recipe'
     | 'insufficient_materials'
     | 'combo_requirement_unmet'
-    | 'recipe_unknown'
+    | 'recipe_not_learned'
     | 'throttled'
     | 'not_at_hub';
 }
@@ -228,19 +233,23 @@ export function hasRecipeMaterials(
  *  wheel.ts `tierCapability` with the #1129 empowerment ceiling) in BOTH
  *  named crafts is at or above `minTier`. Deliberately does not fall back to
  *  any other craft: a high skill in a craft outside the required pair never
- *  satisfies this check. `activeArchetype` defaults to `null` (the
- *  uncapped-to-rare pre-archetype state) so existing raw-skills callers keep
- *  working unchanged. */
+ *  satisfies this check. `activeArchetype`/`pairedMajor` default to `null`
+ *  (the uncapped-to-rare pre-archetype state) so existing raw-skills callers
+ *  keep working unchanged. Every `COMBO_RECIPES` pair in content/recipes.ts
+ *  is ring-adjacent (content/professions.ts `adjacentCrafts`), i.e. exactly
+ *  the shape of a player's two majors, so an attuned specialist's own pair
+ *  always qualifies (both sides unlimited via `pairedMajor`). */
 export function meetsComboRequirement(
   skills: CraftSkills,
   recipe: ProfessionRecipeRecord,
   activeArchetype: string | null = null,
+  pairedMajor: string | null = null,
 ): boolean {
   const combo = recipe.comboRequirement;
   if (!combo) return true;
   return (
-    craftCeiling(skills, activeArchetype, combo.craftA) >= combo.minTier &&
-    craftCeiling(skills, activeArchetype, combo.craftB) >= combo.minTier
+    craftCeiling(skills, activeArchetype, pairedMajor, combo.craftA) >= combo.minTier &&
+    craftCeiling(skills, activeArchetype, pairedMajor, combo.craftB) >= combo.minTier
   );
 }
 
@@ -282,12 +291,13 @@ export function resolveCraftForRecipe(
       meta ? meta.craftSkills : {},
       recipe,
       meta ? meta.archetype.activeArchetype : null,
+      meta ? meta.archetype.pairedMajor : null,
     )
   ) {
     return { ok: false, recipeId: recipe.id, reason: 'combo_requirement_unmet' };
   }
   if (!isRecipeKnown(meta, recipe)) {
-    return { ok: false, recipeId: recipe.id, reason: 'recipe_unknown' };
+    return { ok: false, recipeId: recipe.id, reason: 'recipe_not_learned' };
   }
   if (!hasRecipeMaterials(ctx, recipe, pid)) {
     return { ok: false, recipeId: recipe.id, reason: 'insufficient_materials' };
@@ -299,12 +309,14 @@ export function resolveCraftForRecipe(
     return { ok: false, recipeId: recipe.id, reason: 'throttled' };
   }
   // #1301 gold sink: a fee proportional to the recipe's item-level budget,
-  // charged on every successful craft. Never blocks a craft the player would
-  // otherwise be able to perform (a hard gold gate on common-tier crafting
-  // would violate the existing free-floor rule and every recipe currently in
-  // content/recipes.ts is common tier): floored at 0 copper rather than
-  // denied, so a broke player still crafts, just contributes nothing to the
-  // sink that trip. Content-driven via CRAFT_GOLD_SINK_COPPER_PER_BUDGET.
+  // charged on every successful craft, common tier included (the free-floor
+  // rule from #1126/#1127 only ever meant free of a HARD gate; a gold fee on
+  // a common-tier craft was already implicit once #1301 landed a sink on
+  // every craft, TOOL_RECIPES' skillReq 75/150 included). Never blocks a
+  // craft the player would otherwise be able to perform: floored at 0 copper
+  // rather than denied, so a broke player still crafts, just contributes
+  // nothing to the sink that trip. Content-driven via
+  // CRAFT_GOLD_SINK_COPPER_PER_BUDGET.
   if (meta) {
     const goldFee = Math.ceil(recipe.itemLevelBudget * CRAFT_GOLD_SINK_COPPER_PER_BUDGET);
     meta.copper = Math.max(0, meta.copper - goldFee);
@@ -317,7 +329,19 @@ export function resolveCraftForRecipe(
     ctx.removeItem(reagent.itemId, required.count, pid);
   }
   const skill = meta ? (meta.craftSkills[recipe.professionId] ?? 0) : 0;
-  const quality = rollMaterialRarity(skill, ctx.rng);
+  const rawQuality = rollMaterialRarity(skill, ctx.rng);
+  // #1129/#1148 review: output quality must respect the empowerment ceiling
+  // too, not just skill-gain (a dormant or hobby craft can still roll high off
+  // raw skill; the actual granted quality is clamped to what that craft is
+  // empowered to produce).
+  const ceilingTier = meta
+    ? archetypeCeilingFor(
+        meta.archetype.activeArchetype,
+        meta.archetype.pairedMajor,
+        recipe.professionId,
+      )
+    : Infinity;
+  const quality = clampMaterialRarity(rawQuality, ceilingTier);
   // #1149: sign a single rare-or-better copy so it carries an attribution
   // target for Battlefield Experience; anything below that stays fungible,
   // and a resultCount > 1 output is never itself signable (only single-copy
@@ -328,13 +352,31 @@ export function resolveCraftForRecipe(
     ctx.addItem(recipe.resultItemId, recipe.resultCount, pid);
   }
   if (meta) {
+    // #1129/#1148 review: a recipe whose tier is ABOVE this craft's archetype
+    // ceiling must grant zero progress, full stop, never the ordinary
+    // diminishing-returns treatment. Before this guard, capping the CAPABILITY
+    // fed to tierProgressMultiplier (via craftCeiling) only capped the CAP,
+    // never the climb: tiersBelow (cappedCapability - recipeTier) went
+    // negative whenever recipeTier exceeded the cap, and the formula reads
+    // any non-positive tiersBelow as "at or above capability", granting FULL
+    // progress. This is the one case raw-skill callers never hit (a raw-skill
+    // capability can never be exceeded by a recipe tier the player can
+    // already attempt), so tierProgressMultiplier itself is untouched;
+    // recipeTier > capabilityTier is guarded here instead. Below the ceiling,
+    // the ordinary curve (full at/above, reduced one tier under, zero two-plus
+    // under) applies unchanged, now measured against the CEILINGED capability
+    // so a dormant/hobby craft's climb still stops exactly at its cap.
     const capabilityTier = craftCeiling(
       meta.craftSkills,
       meta.archetype.activeArchetype,
+      meta.archetype.pairedMajor,
       recipe.professionId,
     );
     const recipeTier = tierForSkill(recipe.skillReq);
-    const multiplier = tierProgressMultiplier(capabilityTier, recipeTier);
+    const multiplier =
+      recipeTier > 0 && recipeTier > capabilityTier
+        ? 0
+        : tierProgressMultiplier(capabilityTier, recipeTier);
     gainCraftSkill(meta.craftSkills, recipe.professionId, CRAFT_SKILL_GAIN * multiplier);
     meta.craftThrottle.count += 1;
   }

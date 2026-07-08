@@ -6273,6 +6273,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'У вас нет обоих требуемых ремесел нужного уровня для этого рецепта.',
   'hudChrome.crafting.notAtHub':
     'Чтобы создать это, вы должны находиться у ремесленного центра и иметь требуемый уровень.',
+  'hudChrome.crafting.throttled':
+    'Вы создаете предметы слишком быстро. Подождите немного и попробуйте снова.',
+  'hudChrome.crafting.recipeNotLearned': 'Вы еще не изучили этот рецепт.',
   'hudChrome.mobile.actionPageIndicator': 'Стр. {page}',
   'hudChrome.mobile.spellbookPageLabel': 'Страница {page}',
   'hudChrome.keybinds.valecup': 'Кубок Долины',

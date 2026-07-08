@@ -6145,6 +6145,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.comboRequirementUnmet':
     '이 조합 제작법에 필요한 두 제작 기술의 숙련도에 도달하지 못했습니다.',
   'hudChrome.crafting.notAtHub': '그것을 제작하려면 필요한 레벨로 제작 거점에 있어야 합니다.',
+  'hudChrome.crafting.throttled': '너무 빨리 제작하고 있습니다. 잠시 후 다시 시도하세요.',
+  'hudChrome.crafting.recipeNotLearned': '아직 그 제작법을 배우지 않았습니다.',
   'hudChrome.mobile.actionPageIndicator': '{page}페이지',
   'hudChrome.mobile.spellbookPageLabel': '페이지 {page}',
   'hudChrome.keybinds.valecup': '베일 컵',

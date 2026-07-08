@@ -2249,7 +2249,7 @@ export type SimEvent = { pid?: number } & (
         | 'unknown_recipe'
         | 'insufficient_materials'
         | 'combo_requirement_unmet'
-        | 'recipe_unknown'
+        | 'recipe_not_learned'
         | 'throttled'
         | 'not_at_hub';
     }

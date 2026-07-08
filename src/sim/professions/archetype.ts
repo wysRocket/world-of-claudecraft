@@ -4,9 +4,18 @@
 // budget / opposite-craft-drain model this issue originally described was dropped.
 // Knowledge in all ten crafts (see wheel.ts) stays flat and purely additive: this
 // module never reads or writes CraftSkills, and archetype selection/switching NEVER
-// touches any craft skill value. Archetype identity instead comes from a single
-// "active archetype" field: one of the ten crafts on the ring (content/professions.ts)
-// a character has declared as their identity. It starts unset (null).
+// touches any craft skill value.
+//
+// Per #1129's actual text ("an adjacent pair, the two majors"), an archetype is
+// NOT a single craft: it is `activeArchetype` (the craft the acceptance/title
+// quest names, see getArchetypeTitle) PLUS `pairedMajor`, its ring-adjacent
+// neighbor (content/professions.ts adjacentCrafts), together the two majors
+// empowered past rare. Both start unset (null). Which of the two ring-adjacent
+// neighbors becomes the pair is not yet a player choice (the acceptance quest
+// is a content stub, like the rest of this module); acceptArchetypeQuest/
+// switchArchetype default it to the first neighbor deterministically. A real
+// quest choosing the neighbor, and #1293's later hobby-flip, are both future
+// content work over this same state shape.
 //
 // The active archetype is set for the first time by a zone-1 acceptance lore quest,
 // and can only be changed afterward by first completing a repeatable, escalating
@@ -28,15 +37,20 @@
 // imports, no Math.random/Date.now, host-agnostic so it runs offline, on the
 // server, and in the headless RL env unchanged.
 
-import { CRAFT_RING, oppositeCraft } from '../content/professions';
+import { adjacentCrafts, CRAFT_RING, oppositeCraft } from '../content/professions';
 import type { SimContext } from '../sim_context';
 import { type CraftSkills, tierCapability } from './wheel';
 
 /** A character's active-archetype progression, persisted in CharacterState. */
 export interface ArchetypeState {
-  // The chosen craft id (see content/professions.ts CRAFT_RING), or null before the
-  // zone-1 acceptance quest has ever been completed.
+  // The chosen craft id (see content/professions.ts CRAFT_RING) naming the title/
+  // identity major, or null before the zone-1 acceptance quest has ever been
+  // completed.
   activeArchetype: string | null;
+  // The second major: always ring-adjacent to activeArchetype (see
+  // adjacentCrafts), together the "two majors" #1129 empowers past rare. Null
+  // exactly when activeArchetype is null.
+  pairedMajor: string | null;
   // Total number of successful archetype switches this character has ever made.
   switchCount: number;
   // Progress toward the CURRENT switch's amends requirement (see
@@ -46,11 +60,14 @@ export interface ArchetypeState {
 
 /** A fresh character: no archetype chosen yet, never switched. */
 export function emptyArchetypeState(): ArchetypeState {
-  return { activeArchetype: null, switchCount: 0, amendsProgress: 0 };
+  return { activeArchetype: null, pairedMajor: null, switchCount: 0, amendsProgress: 0 };
 }
 
-/** Backfill a persisted/partial record so an older save (predating this field)
- *  loads cleanly as a fresh, unset archetype state. */
+/** Backfill a persisted/partial record so an older save (predating this field, or
+ *  predating `pairedMajor`) loads cleanly. A saved `pairedMajor` that is missing,
+ *  invalid, or (from a pre-pair save) not ring-adjacent to `activeArchetype` is
+ *  replaced by the deterministic default neighbor rather than left null, so an
+ *  archetype set under the old single-craft model still gets a real pair. */
 export function normalizeArchetypeState(
   saved: Partial<ArchetypeState> | undefined | null,
 ): ArchetypeState {
@@ -58,6 +75,14 @@ export function normalizeArchetypeState(
   if (!saved) return state;
   if (typeof saved.activeArchetype === 'string' && isCraftId(saved.activeArchetype)) {
     state.activeArchetype = saved.activeArchetype;
+  }
+  if (state.activeArchetype !== null) {
+    state.pairedMajor =
+      typeof saved.pairedMajor === 'string' &&
+      isCraftId(saved.pairedMajor) &&
+      isAdjacent(state.activeArchetype, saved.pairedMajor)
+        ? saved.pairedMajor
+        : defaultPairedMajor(state.activeArchetype);
   }
   if (
     typeof saved.switchCount === 'number' &&
@@ -78,6 +103,18 @@ export function normalizeArchetypeState(
 
 function isCraftId(id: string): boolean {
   return CRAFT_RING.some((craft) => craft.id === id);
+}
+
+/** Whether `b` is one of `a`'s two ring-adjacent neighbors. */
+function isAdjacent(a: string, b: string): boolean {
+  return adjacentCrafts(a).some((craft) => craft.id === b);
+}
+
+/** The deterministic default second major for a primary craft: its first
+ *  ring-adjacent neighbor. See the module comment: which neighbor becomes the
+ *  pair is not yet a player choice. */
+function defaultPairedMajor(activeArchetype: string): string {
+  return adjacentCrafts(activeArchetype)[0].id;
 }
 
 // Escalation formula for the repeatable "make amends" quest: a modest linear
@@ -130,14 +167,12 @@ export function archetypeTitleFor(ctx: SimContext, pid: number): string | null {
 }
 
 // Issue #1294 (the hobby): one opposite craft, empowered up to rare, is the
-// player's "hobby" alongside their active archetype's majors. Per #1129/the
-// design doc's rules card, the hobby is not independently chosen: it is
-// simply THE opposite craft on CRAFT_RING (`oppositeCraft`), the same craft
-// `archetypeCeilingFor` above already caps at rare rather than common. This
-// is a pure read/derivation over that existing state, not a new mechanic:
-// there is exactly one opposite craft per active archetype today (a
-// standalone hobby-switch quest letting a player flip which craft on the
-// opposite side is empowered is content work, #1293, out of scope here).
+// player's "hobby" alongside their active archetype's two majors. Under the
+// pair model each major has its own opposite craft, so there are two
+// candidate hobby crafts (this is exactly what makes #1293's later hobby-flip
+// quest meaningful: it would let a player pick between them). Which one is
+// live today is not yet a player choice, so this deterministically picks the
+// opposite of `activeArchetype` (the title-quest major), not `pairedMajor`.
 
 /** The player's current hobby craft id: the opposite craft on CRAFT_RING from
  *  their active archetype, empowered up to rare per `archetypeCeilingFor`.
@@ -158,18 +193,18 @@ export function hobbyCraftFor(ctx: SimContext, pid: number): string | null {
 // #1129/#1203 empowerment ceiling: this is the composition point that makes the
 // active archetype matter, not just track it. The reachable ceiling for a craft
 // is min(tierCapability from #1128/#1203, archetypeCapability derived from this
-// state below): unlimited for the active-archetype major, capped at "rare" for
-// the hobby (the opposite craft on CRAFT_RING), capped at "common" for every
-// other craft once an archetype is set, uncapped-to-rare before any archetype
-// is set at all. `archetypeCeilingFor` computes the archetype-derived half of
-// that min; `craftCeiling` composes it with wheel.ts's `tierCapability` for a
-// given player's flat skill state. Consumers: crafting.ts's tier-progress
-// multiplier (the gainCraftSkill call site) and `meetsComboRequirement`'s
-// dual-craft tier gate, both of which now read the ceiling instead of the raw
-// tier capability. #1281's Battlefield Experience trickle calls the same
-// gainCraftSkill primitive; its own narrower "active specialty only" gate
-// (see battlefield_xp.ts's TODO) is a separate, not-yet-landed acceptance
-// criterion and is unaffected by this change.
+// state below): unlimited for BOTH majors (activeArchetype and pairedMajor),
+// capped at "rare" for the hobby (the opposite craft on CRAFT_RING from
+// activeArchetype), capped at "common" for every other craft once an archetype
+// is set, uncapped-to-rare before any archetype is set at all.
+// `archetypeCeilingFor` computes the archetype-derived half of that min;
+// `craftCeiling` composes it with wheel.ts's `tierCapability` for a given
+// player's flat skill state. Consumers: crafting.ts's tier-progress multiplier
+// (the gainCraftSkill call site), crafting.ts's output-quality roll, and
+// `meetsComboRequirement`'s dual-craft tier gate, all of which read the
+// ceiling instead of the raw tier capability. #1281's Battlefield Experience
+// trickle calls the same gainCraftSkill primitive but gates on its own
+// narrower "one of the two active majors" check (battlefield_xp.ts).
 
 // Ceiling tiers, expressed in wheel.ts's tier-index units (see tierForSkill):
 // tier 0 is the "common" free floor per wheel.ts's own naming; tier 2 is
@@ -180,13 +215,22 @@ const COMMON_CEILING_TIER = 0;
 const RARE_CEILING_TIER = 2;
 
 /** The archetype-derived half of the empowerment ceiling for one craft: no
- *  cap (Infinity) for the player's active archetype craft, capped at "rare"
- *  for the hobby (the opposite craft on CRAFT_RING) and, before any archetype
- *  has ever been chosen, for every craft; capped at "common" for every other
- *  craft once an archetype is set. */
-export function archetypeCeilingFor(activeArchetype: string | null, craftId: string): number {
+ *  cap (Infinity) for either of the player's two majors (`activeArchetype` or
+ *  `pairedMajor`), capped at "rare" for the hobby (the opposite craft on
+ *  CRAFT_RING from `activeArchetype`) and, before any archetype has ever been
+ *  chosen, for every craft; capped at "common" for every other craft once an
+ *  archetype is set. `pairedMajor` should be null exactly when
+ *  `activeArchetype` is (see ArchetypeState); passing a non-null
+ *  `activeArchetype` with a null `pairedMajor` (a malformed/pre-pair state
+ *  that skipped `normalizeArchetypeState`) degrades to the single-craft
+ *  reading rather than throwing. */
+export function archetypeCeilingFor(
+  activeArchetype: string | null,
+  pairedMajor: string | null,
+  craftId: string,
+): number {
   if (activeArchetype === null) return RARE_CEILING_TIER;
-  if (craftId === activeArchetype) return Infinity;
+  if (craftId === activeArchetype || craftId === pairedMajor) return Infinity;
   if (craftId === oppositeCraft(activeArchetype).id) return RARE_CEILING_TIER;
   return COMMON_CEILING_TIER;
 }
@@ -199,9 +243,13 @@ export function archetypeCeilingFor(activeArchetype: string | null, craftId: str
 export function craftCeiling(
   skills: CraftSkills,
   activeArchetype: string | null,
+  pairedMajor: string | null,
   craftId: string,
 ): number {
-  return Math.min(tierCapability(skills, craftId), archetypeCeilingFor(activeArchetype, craftId));
+  return Math.min(
+    tierCapability(skills, craftId),
+    archetypeCeilingFor(activeArchetype, pairedMajor, craftId),
+  );
 }
 
 /** The zone-1 acceptance quest's stubbed completion hook: on FIRST completion only,
@@ -215,6 +263,7 @@ export function acceptArchetypeQuest(ctx: SimContext, pid: number, craftId: stri
   if (!meta || !isCraftId(craftId)) return false;
   if (meta.archetype.activeArchetype !== null) return false;
   meta.archetype.activeArchetype = craftId;
+  meta.archetype.pairedMajor = defaultPairedMajor(craftId);
   return true;
 }
 
@@ -241,6 +290,7 @@ export function switchArchetype(ctx: SimContext, pid: number, craftId: string): 
   if (state.activeArchetype === null || state.activeArchetype === craftId) return false;
   if (state.amendsProgress < requiredAmendsProgress(state.switchCount)) return false;
   state.activeArchetype = craftId;
+  state.pairedMajor = defaultPairedMajor(craftId);
   state.switchCount += 1;
   state.amendsProgress = 0;
   return true;

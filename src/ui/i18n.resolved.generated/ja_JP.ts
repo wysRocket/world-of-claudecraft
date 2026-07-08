@@ -1446,7 +1446,9 @@ export const ja_JP: EnTranslations = {
       "insufficientMaterials": "材料が不足しています。",
       "unknownRecipe": "そのレシピは存在しません。",
       "comboRequirementUnmet": "その組み合わせレシピに必要な両方の生産スキルの熟練度に達していません。",
-      "notAtHub": "それを製作するには、必要なレベルで製作拠点にいる必要があります。"
+      "notAtHub": "それを製作するには、必要なレベルで製作拠点にいる必要があります。",
+      "throttled": "製作が速すぎます。少し待ってからもう一度お試しください。",
+      "recipeNotLearned": "そのレシピはまだ習得していません。"
     }
   },
   "apiError": {

@@ -8411,7 +8411,11 @@ export class Hud {
                     ? 'hudChrome.crafting.comboRequirementUnmet'
                     : ev.reason === 'not_at_hub'
                       ? 'hudChrome.crafting.notAtHub'
-                      : 'hudChrome.crafting.insufficientMaterials',
+                      : ev.reason === 'throttled'
+                        ? 'hudChrome.crafting.throttled'
+                        : ev.reason === 'recipe_not_learned'
+                          ? 'hudChrome.crafting.recipeNotLearned'
+                          : 'hudChrome.crafting.insufficientMaterials',
               ),
               '#ff6b6b',
             );

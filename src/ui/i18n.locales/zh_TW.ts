@@ -5826,6 +5826,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.reagentLine': '{name}: {have}/{required}',
   'hudChrome.crafting.comboRequirementUnmet': '你尚未達到該配方所需組合的兩項製造技能等級。',
   'hudChrome.crafting.notAtHub': '必須達到所需等級並位於製作站，才能製作該物品。',
+  'hudChrome.crafting.throttled': '你製作得太快了，請稍等片刻後再試。',
+  'hudChrome.crafting.recipeNotLearned': '你還沒有學會這個配方。',
   'hudChrome.mobile.actionPageIndicator': '第{page}頁',
   'hudChrome.mobile.spellbookPageLabel': '頁{page}',
   'hudChrome.keybinds.valecup': '溪谷盃',

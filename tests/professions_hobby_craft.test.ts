@@ -76,6 +76,11 @@ describe('IWorld hobbyCraft read surface (#1294)', () => {
     sim.acceptArchetypeQuest(CRAFT_A);
     const hobby = sim.hobbyCraft;
     expect(hobby).not.toBeNull();
-    expect(archetypeCeilingFor(sim.activeArchetype, hobby as string)).toBe(2);
+    const meta = (
+      sim as unknown as { players: Map<number, { archetype: { pairedMajor: string } }> }
+    ).players.get(sim.playerId)!;
+    expect(
+      archetypeCeilingFor(sim.activeArchetype, meta.archetype.pairedMajor, hobby as string),
+    ).toBe(2);
   });
 });

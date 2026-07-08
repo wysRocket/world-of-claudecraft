@@ -425,6 +425,11 @@ export interface CraftingHubStationDef {
 // string surface in this pass) since a station is identified by its craft id,
 // which already has a localized display name (src/ui/i18n.catalog/hud_chrome.ts
 // `archetypeTitle.<craftId>` / `gathering.*`).
+//
+// Has zero consumers today: forward content for that future render pass, kept
+// data-as-code (module-init cost is negligible, ten cheap trig calls). Its
+// `offset` is render-only positioning; never feed it back into sim state if a
+// consumer lands.
 export const CRAFTING_HUB_STATIONS: readonly CraftingHubStationDef[] = CRAFT_RING.map(
   (craft, index) => {
     const angle = (index / CRAFT_RING.length) * Math.PI * 2;

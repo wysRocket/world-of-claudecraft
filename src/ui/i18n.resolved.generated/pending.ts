@@ -11,28 +11,40 @@
 export const pending: Record<string, readonly string[]> = {
   "es": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "es_ES": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "fr_FR": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "fr_CA": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "en_CA": [],
   "it_IT": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "de_DE": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "zh_CN": [],
   "zh_TW": [],
@@ -40,7 +52,9 @@ export const pending: Record<string, readonly string[]> = {
   "ja_JP": [],
   "pt_BR": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "ru_RU": [],
   "cs_CZ": [
@@ -51,34 +65,50 @@ export const pending: Record<string, readonly string[]> = {
     "entities.items.sunpetal_herb.name",
     "entities.items.thorium_ore.name",
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "nl_NL": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "pl_PL": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "id_ID": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "tr_TR": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "sv_SE": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "vi_VN": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ],
   "da_DK": [
     "hudChrome.archetypeTitle.hobbyLabel",
-    "hudChrome.crafting.notAtHub"
+    "hudChrome.crafting.notAtHub",
+    "hudChrome.crafting.recipeNotLearned",
+    "hudChrome.crafting.throttled"
   ]
 };

@@ -49,7 +49,7 @@ describe('#1299 recipe acquisition', () => {
     grantItem(sim, 'bone_fragments', 5, pid);
     const result = resolveCraftForRecipe(sim.ctx, pid, GATED_RECIPE);
     expect(result.ok).toBe(false);
-    expect(result.reason).toBe('recipe_unknown');
+    expect(result.reason).toBe('recipe_not_learned');
   });
 
   it('acquireRecipe on an unregistered recipe id is denied as unknown_recipe', () => {
@@ -139,15 +139,17 @@ describe('#1300 salvage/disenchant', () => {
   });
 
   it('yield scales with rarity: a higher-quality item never yields less than a lower one, all else equal', () => {
-    const sim = makeSim();
-    const rngA = sim.ctx.rng;
+    // Two identically-seeded rng instances, one draw each, so the bonus draw
+    // itself is identical between the two calls: isolates quality as the only
+    // variable instead of letting a shared rng's second draw differ from its
+    // first.
     const low = salvageYield(
       { id: 'a', name: 'a', sellValue: 0, quality: 'common', kind: 'weapon' } as never,
-      rngA,
+      makeSim().ctx.rng,
     );
     const high = salvageYield(
       { id: 'b', name: 'b', sellValue: 0, quality: 'legendary', kind: 'weapon' } as never,
-      rngA,
+      makeSim().ctx.rng,
     );
     expect(high).toBeGreaterThanOrEqual(low);
   });
@@ -165,9 +167,12 @@ describe('#1301 gold sink and output throttle', () => {
     const before = meta.copper;
     const result = resolveCraftForRecipe(sim.ctx, pid, recipe);
     expect(result.ok).toBe(true);
-    const expectedFee = Math.ceil(recipe.itemLevelBudget * CRAFT_GOLD_SINK_COPPER_PER_BUDGET);
-    expect(expectedFee).toBeGreaterThan(0);
-    expect(meta.copper).toBe(before - expectedFee);
+    // Pinned to literals (not recomputed from the constants under test): a
+    // rate change to CRAFT_GOLD_SINK_COPPER_PER_BUDGET or recipe.itemLevelBudget
+    // would otherwise slip past this assertion silently.
+    expect(CRAFT_GOLD_SINK_COPPER_PER_BUDGET).toBe(2);
+    expect(recipe.itemLevelBudget).toBe(10);
+    expect(meta.copper).toBe(before - 20);
   });
 
   it('a broke player can still craft (the sink never gates a craft), floored at 0 copper', () => {
@@ -184,6 +189,9 @@ describe('#1301 gold sink and output throttle', () => {
   });
 
   it('throttles a maxed specialist to CRAFT_THROTTLE_MAX_PER_WINDOW crafts per window', () => {
+    // Pinned to literals so a re-tune of either constant cannot pass silently.
+    expect(CRAFT_THROTTLE_MAX_PER_WINDOW).toBe(10);
+    expect(CRAFT_THROTTLE_WINDOW_SECONDS).toBe(60);
     const sim = makeSim();
     const pid = sim.playerId;
     const meta = (sim as any).players.get(pid);

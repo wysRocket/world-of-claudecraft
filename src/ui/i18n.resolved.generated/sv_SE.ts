@@ -1446,7 +1446,9 @@ export const sv_SE: EnTranslations = {
       "insufficientMaterials": "Du har inte materialet för det.",
       "unknownRecipe": "Det receptet finns inte.",
       "comboRequirementUnmet": "Du har inte båda de hantverk som krävs på den nivå receptet kräver.",
-      "notAtHub": "You must be at the crafting hub, at the required level, to craft that."
+      "notAtHub": "You must be at the crafting hub, at the required level, to craft that.",
+      "throttled": "You are crafting too quickly. Wait a moment and try again.",
+      "recipeNotLearned": "You have not learned that recipe yet."
     }
   },
   "apiError": {

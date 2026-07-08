@@ -6155,6 +6155,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.comboRequirementUnmet':
     'その組み合わせレシピに必要な両方の生産スキルの熟練度に達していません。',
   'hudChrome.crafting.notAtHub': 'それを製作するには、必要なレベルで製作拠点にいる必要があります。',
+  'hudChrome.crafting.throttled': '製作が速すぎます。少し待ってからもう一度お試しください。',
+  'hudChrome.crafting.recipeNotLearned': 'そのレシピはまだ習得していません。',
   'hudChrome.mobile.actionPageIndicator': '{page}ページ',
   'hudChrome.mobile.spellbookPageLabel': 'ページ{page}',
   'hudChrome.keybinds.valecup': 'ヴェイルカップ',

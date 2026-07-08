@@ -1446,7 +1446,9 @@ export const id_ID: EnTranslations = {
       "insufficientMaterials": "Anda tidak memiliki bahan untuk itu.",
       "unknownRecipe": "Resep itu tidak ada.",
       "comboRequirementUnmet": "Kamu tidak memiliki kedua keahlian yang diperlukan pada tingkat yang disyaratkan untuk resep itu.",
-      "notAtHub": "You must be at the crafting hub, at the required level, to craft that."
+      "notAtHub": "You must be at the crafting hub, at the required level, to craft that.",
+      "throttled": "You are crafting too quickly. Wait a moment and try again.",
+      "recipeNotLearned": "You have not learned that recipe yet."
     }
   },
   "apiError": {
