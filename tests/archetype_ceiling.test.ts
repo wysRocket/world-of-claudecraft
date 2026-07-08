@@ -202,6 +202,34 @@ describe('resolveCraftForRecipe reads the archetype-gated ceiling for skill-gain
     expect(meta.craftSkills[OUTSIDE]).toBe(100); // frozen: no progress past the common ceiling
   });
 
+  it('a dormant craft with LOW raw skill cannot even start climbing toward tier 1 (isolates the ceiling from diminishing returns)', () => {
+    // The high-raw-skill case above also zeroes under plain diminishing
+    // returns (raw capability 4 vs a tier-2 recipe), so it alone cannot
+    // distinguish the ceiling from the ordinary curve. Here raw capability is
+    // 0, where base granted FULL climb progress toward a tier-1 recipe: only
+    // the dormancy ceiling produces the freeze.
+    const sim = makeSim();
+    const pid = sim.playerId;
+    sim.acceptArchetypeQuest(ARMOR);
+    const meta = metaOf(sim, pid);
+    meta.craftSkills[OUTSIDE] = 20; // raw tierCapability(OUTSIDE) = 0
+
+    const recipe: ProfessionRecipeRecord = {
+      id: 'test_recipe_tier1_outside_climb',
+      professionId: OUTSIDE,
+      resultItemId: 'bone_fragments',
+      resultCount: 1,
+      reagents: [],
+      skillReq: 25, // recipeTier = 1, above the common (0) dormancy ceiling
+      trivialAt: 50,
+      itemLevelBudget: 10,
+    };
+    const result = resolveCraftForRecipe(ctxOf(sim), pid, recipe);
+
+    expect(result.ok).toBe(true);
+    expect(meta.craftSkills[OUTSIDE]).toBe(20); // frozen at 20: the climb itself is denied
+  });
+
   it('a common-tier (recipeTier 0) craft still produces skill progress at the free floor even when dormant', () => {
     const sim = makeSim();
     const pid = sim.playerId;
