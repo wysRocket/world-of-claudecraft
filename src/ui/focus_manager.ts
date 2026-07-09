@@ -86,6 +86,17 @@ export class FocusManager {
   private listening = false;
 
   /**
+   * Whether a focus trap is currently installed. This is the explicit gate the gamepad
+   * menu-input mode reads (spec section 5): the pad emits menu intents and consumes its
+   * handled edges only while a trap owns focus, so world input never double-fires. A pure
+   * O(1) read of the trap stack with NO effect on trap mechanics; a trap leaked without
+   * release() is self-healed on the next Tab by the existing onKeyDown path.
+   */
+  hasActiveTrap(): boolean {
+    return this.stack.length > 0;
+  }
+
+  /**
    * The currently focused element worth returning to later (the old
    * currentFocusableElement idiom): a connected, rendered, non-body element.
    */
