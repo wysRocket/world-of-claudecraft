@@ -296,3 +296,34 @@ describe('FocusManager listener lifecycle', () => {
     expect(keydownHandler).toBeNull(); // removed once the stack empties
   });
 });
+
+describe('FocusManager.hasActiveTrap', () => {
+  // The gamepad menu-input gate (spec section 5): the pad drives menu intents and consumes
+  // its edges ONLY while a trap owns focus. This predicate exposes that, with no change to
+  // trap mechanics.
+  it('is false with no trap, true while a trap is open, false after release', () => {
+    const root = new FakeHTMLElement();
+    root.append(new FakeHTMLElement({ focusable: true }));
+    const fm = new FocusManager();
+    expect(fm.hasActiveTrap()).toBe(false);
+    const handle = fm.open({ root: () => el(root) });
+    expect(fm.hasActiveTrap()).toBe(true);
+    handle.release(false);
+    expect(fm.hasActiveTrap()).toBe(false);
+  });
+
+  it('stays true while any nested trap remains, false only when the stack empties', () => {
+    const root1 = new FakeHTMLElement();
+    root1.append(new FakeHTMLElement({ focusable: true }));
+    const root2 = new FakeHTMLElement();
+    root2.append(new FakeHTMLElement({ focusable: true }));
+    const fm = new FocusManager();
+    const t1 = fm.open({ root: () => el(root1) });
+    const t2 = fm.open({ root: () => el(root2) });
+    expect(fm.hasActiveTrap()).toBe(true);
+    t2.release(false);
+    expect(fm.hasActiveTrap()).toBe(true); // the trap beneath is still installed
+    t1.release(false);
+    expect(fm.hasActiveTrap()).toBe(false);
+  });
+});
