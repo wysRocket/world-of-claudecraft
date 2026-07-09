@@ -16,6 +16,8 @@ import {
   normalizePrimaryStats,
   primaryStatBudget,
   QUALITY_ILVL_BONUS,
+  scaleWeaponDamage,
+  weaponDpsBudget,
 } from '../item_budget';
 import type { ItemDef, MobTemplate } from '../types';
 
@@ -33,13 +35,25 @@ function makeHeroicVariant(base: ItemDef): ItemDef {
   // heroic budget. Weapon damage and armor stay at the base value, so the variant
   // is never worse than its base.
   const stats = base.stats ? normalizePrimaryStats(base.stats, budget) : base.stats;
-  return {
+  // Weapon damage tracks item level too: scale the base weapon to the heroic-tier
+  // dps for this variant's item level, keeping its swing speed and spread. armor is
+  // left at the base value, so the variant is never worse than its base.
+  const variant = {
     ...base,
     id: heroicVariantId(base.id),
     name: `Heroic ${base.name}`,
     heroicOf: base.id,
     stats,
   };
+  if (base.weapon) {
+    variant.weapon = {
+      ...base.weapon,
+      ...scaleWeaponDamage(base.weapon, weaponDpsBudget(targetLevel)),
+    };
+  }
+  // The spread widens ItemDef's discriminated union; the transform preserves the
+  // base item's kind/slot shape, so this is a valid ItemDef of the same variant.
+  return variant as ItemDef;
 }
 
 // Build a Heroic variant for every epic/rare EQUIPPABLE item that drops from a mob's

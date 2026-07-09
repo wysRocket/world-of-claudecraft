@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { heroicVariantId } from '../src/sim/content/heroic_variants';
 import { ITEMS, MOBS } from '../src/sim/data';
 import { enterDungeon } from '../src/sim/instances/dungeons';
+import { weaponDpsBudget } from '../src/sim/item_budget';
 import { expectedStatBudget, itemLevel, primaryStatSum } from '../src/sim/item_level';
 import { Sim } from '../src/sim/sim';
 import type { Entity } from '../src/sim/types';
@@ -47,6 +48,43 @@ describe('heroic loot flair: variant generation', () => {
   });
 });
 
+describe('heroic loot flair: weapon dps tracks item level', () => {
+  const dps = (id: string) => {
+    const w = ITEMS[id].weapon!;
+    return (w.min + w.max) / 2 / w.speed;
+  };
+  const HEROIC_SET_WEAPONS = [
+    'gravewyrm_cleaver',
+    'mistcallers_fang',
+    'lunar_tide_greatstaff',
+    'scepter_of_the_deathless_court',
+    'deathless_greatblade',
+    'stormcallers_focus',
+  ];
+
+  it('every heroic (item level 31) set weapon sits on the dps curve', () => {
+    const target = weaponDpsBudget(31);
+    for (const id of HEROIC_SET_WEAPONS) {
+      expect(itemLevel(ITEMS[id]), id).toBe(31);
+      expect(Math.abs(dps(id) - target), `${id} dps ${dps(id)}`).toBeLessThan(0.3);
+    }
+  });
+
+  it('the Gravewyrm Cleaver now out-dps the item-level-26 Wyrmfang Greatblade but stays under the legendaries', () => {
+    expect(dps('gravewyrm_cleaver')).toBeGreaterThan(dps('wyrmfang_greatblade'));
+    expect(dps('gravewyrm_cleaver')).toBeLessThan(dps('kingsbane_last_oath'));
+    expect(dps('mistcallers_fang')).toBeLessThan(dps('deathless_heartwood'));
+  });
+
+  it('a Heroic weapon variant scales its damage to its own item level', () => {
+    const v = Object.values(ITEMS).find((i) => i.heroicOf && i.weapon);
+    expect(v).toBeDefined();
+    const w = v!.weapon!;
+    const d = (w.min + w.max) / 2 / w.speed;
+    expect(Math.abs(d - weaponDpsBudget(itemLevel(v!)!))).toBeLessThan(0.6);
+  });
+});
+
 describe('heroic loot flair: the drop swap in a heroic instance', () => {
   function killKorzul(difficulty: 'normal' | 'heroic'): any[] {
     const sim = new Sim({ seed: 7, playerClass: 'warrior', noPlayer: true }) as AnySim;
@@ -54,7 +92,8 @@ describe('heroic loot flair: the drop swap in a heroic instance', () => {
     if (difficulty === 'heroic') sim.setDungeonDifficulty('heroic', pid);
     enterDungeon(sim.ctx, 'gravewyrm_sanctum', pid);
     const inst = (sim.instances as any[]).find(
-      (i) => i.dungeonId === 'gravewyrm_sanctum' && i.difficulty === difficulty && i.partyKey !== null,
+      (i) =>
+        i.dungeonId === 'gravewyrm_sanctum' && i.difficulty === difficulty && i.partyKey !== null,
     );
     const korzul = inst.mobIds
       .map((id: number) => sim.entities.get(id))

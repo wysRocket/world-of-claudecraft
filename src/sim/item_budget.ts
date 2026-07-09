@@ -69,6 +69,33 @@ export const STAT_PER_ILVL = 0.7;
 // `heroicOf` item at this source level.
 export const HEROIC_VARIANT_SOURCE_LEVEL = 22;
 
+// Base weapon DPS a weapon of this item level should deal. Weapon damage tracks item
+// level (quality drives the STAT budget instead, see primaryStatBudget). A gentle
+// linear curve FIT to the authored weapon ladder, not invented: the ilvl-20 rares sit
+// near 11 to 11.5, the ilvl-26 dungeon epics near 14 to 15, and this puts ilvl-31 at
+// 16.0, above the item-level-26 epics and below the hand-authored legendaries (item
+// level 33 at 17+). Slope 0.3/ilvl keeps it under that legendary ceiling at the cap.
+export function weaponDpsBudget(level: number): number {
+  return 6.7 + 0.3 * level;
+}
+
+// Rescale a weapon's min/max damage to hit `dps` at its existing swing speed, keeping
+// the low-to-high spread proportional. Returns rounded integers; the realized dps lands
+// within rounding of the target. Used to level a heroic upgrade's weapon damage to its
+// item level (content/heroic_variants.ts) and to author the heroic set weapons on-curve.
+export function scaleWeaponDamage(
+  weapon: { min: number; max: number; speed: number },
+  dps: number,
+): { min: number; max: number } {
+  const curAvg = (weapon.min + weapon.max) / 2;
+  if (curAvg <= 0) return { min: weapon.min, max: weapon.max };
+  const k = (dps * weapon.speed) / curAvg;
+  return {
+    min: Math.max(1, Math.round(weapon.min * k)),
+    max: Math.max(1, Math.round(weapon.max * k)),
+  };
+}
+
 // The total primary-stat points an item of this level + quality + slot should grant.
 export function primaryStatBudget(
   level: number,
