@@ -3118,6 +3118,15 @@
     --window-pad: 8px;
     transform: translate(-50%, -50%);
   }
+  body.mobile-touch.mobile-map-quest-open #quest-log-window {
+    max-height: clamp(88px, calc(var(--app-vh) / var(--ui-scale, 1) - 150px), 118px);
+    overflow: auto;
+  }
+  body.mobile-touch.mobile-map-quest-open #map-window {
+    top: calc(max(10px, env(safe-area-inset-top)) + 118px);
+    transform: translateX(-50%);
+    width: min(46vw, 300px, calc(var(--app-vh) - 140px));
+  }
   body.mobile-touch #map-canvas {
     width: 100%;
     height: auto;
@@ -3587,6 +3596,10 @@
     body.mobile-touch #map-window {
       top: max(10px, env(safe-area-inset-top));
       transform: translateX(-50%);
+      width: min(46vw, 300px, calc(var(--app-vh) - 140px));
+    }
+    body.mobile-touch.mobile-map-quest-open #map-window {
+      top: calc(max(10px, env(safe-area-inset-top)) + 118px);
       width: min(46vw, 300px, calc(var(--app-vh) - 140px));
     }
     body.mobile-touch.mobile-left-handed #mobile-extra-controls {

@@ -2037,6 +2037,18 @@ describe('client HTML shell', () => {
     );
   });
 
+  it('stacks the mobile map below the quest log when both are open', () => {
+    expect(hudTs).toContain("'mobile-map-quest-open'");
+    expect(hudTs).toContain('this.isWindowVisible(mapWindow)');
+    expect(hudTs).toContain('this.isWindowVisible(questLogWindow)');
+    expect(hudMobileCss).toContain('body.mobile-touch.mobile-map-quest-open #quest-log-window');
+    expect(hudMobileCss).toContain(
+      'max-height: clamp(88px, calc(var(--app-vh) / var(--ui-scale, 1) - 150px), 118px);',
+    );
+    expect(hudMobileCss).toContain('body.mobile-touch.mobile-map-quest-open #map-window');
+    expect(hudMobileCss).toContain('top: calc(max(10px, env(safe-area-inset-top)) + 118px);');
+  });
+
   it('caps mobile quest and NPC panels instead of stretching them edge to edge', () => {
     expect(hudMobileCss).toContain(
       'body.mobile-touch #quest-log-window,\n  body.mobile-touch #vendor-window,\n  body.mobile-touch #quest-dialog',

@@ -12,7 +12,6 @@ import {
   MobileControls,
   mapJoystickVector,
   mapLookVector,
-  pinchZoomDelta,
   RECENTER_DOUBLE_TAP_MS,
   resolveTouchInterface,
   saveHapticsEnabled,
@@ -224,25 +223,6 @@ describe('mapLookVector', () => {
 // origin away from the thumb and made every off-center touchdown instantly
 // walk the character: the issue #1229 drift. The origin is now the raw touch
 // point; the integration tests below pin the new contract.)
-
-describe('pinchZoomDelta', () => {
-  it('returns zero when the pinch distance is unchanged', () => {
-    expect(pinchZoomDelta(120, 120)).toBe(0);
-  });
-
-  it('zooms in (negative delta) when the fingers spread apart', () => {
-    expect(pinchZoomDelta(100, 150, 0.04)).toBeCloseTo(-2);
-  });
-
-  it('zooms out (positive delta) when the fingers pinch together', () => {
-    expect(pinchZoomDelta(150, 100, 0.04)).toBeCloseTo(2);
-  });
-
-  it('scales the delta by the magnitude of the spread', () => {
-    expect(pinchZoomDelta(100, 110, 0.04)).toBeCloseTo(-0.4);
-    expect(pinchZoomDelta(100, 200, 0.04)).toBeCloseTo(-4);
-  });
-});
 
 describe('haptics', () => {
   const makeStore = (initial: Record<string, string> = {}) => {
@@ -1073,7 +1053,7 @@ describe('MobileControls pointer lifecycle', () => {
     ]);
   });
 
-  it('cancels canvas swipe rotation when a second finger starts pinch zoom', () => {
+  it('cancels canvas swipe rotation when a second finger starts a pinch gesture', () => {
     const { canvas } = installMobileControlDom();
     const deltas: Array<{ dx: number; dy: number }> = [];
     const zooms: number[] = [];
@@ -1138,7 +1118,7 @@ describe('MobileControls pointer lifecycle', () => {
 
     expect(deltas).toEqual([{ dx: 16, dy: 0 }]);
     expect(lookActive).toEqual([true, false]);
-    expect(zooms.length).toBeGreaterThan(0);
+    expect(zooms).toEqual([]);
   });
 
   it('blocks swipe-look from starting over interactive HUD chrome (a button/window)', () => {
@@ -1289,7 +1269,7 @@ describe('MobileControls pointer lifecycle', () => {
     expect(lookActive).toEqual([true, false]);
   });
 
-  it('ends an active pinch-zoom gesture when a window opens mid-gesture', () => {
+  it('ends an active pinch gesture when a window opens mid-gesture', () => {
     const { canvas } = installMobileControlDom();
     const zooms: number[] = [];
     const input = {
@@ -1329,9 +1309,9 @@ describe('MobileControls pointer lifecycle', () => {
         clientY: 100,
       }),
     );
-    expect(zooms.length).toBe(1);
+    expect(zooms).toEqual([]);
 
-    // A window opens mid-gesture: the next move must stop zooming.
+    // A window opens mid-gesture: the next move must stop tracking the gesture.
     document.body.classList.add('mobile-window-open');
     canvas.dispatchEvent(
       pointerEvent('pointermove', {
@@ -1342,10 +1322,10 @@ describe('MobileControls pointer lifecycle', () => {
       }),
     );
 
-    expect(zooms.length).toBe(1);
+    expect(zooms).toEqual([]);
 
     // The pinch state was released, so even a further move from the surviving
-    // pointer (post window-close) must not resume zooming on its own.
+    // pointer (post window-close) must not resume the gesture on its own.
     document.body.classList.remove('mobile-window-open');
     canvas.dispatchEvent(
       pointerEvent('pointermove', {
@@ -1355,7 +1335,7 @@ describe('MobileControls pointer lifecycle', () => {
         clientY: 100,
       }),
     );
-    expect(zooms.length).toBe(1);
+    expect(zooms).toEqual([]);
   });
 
   it('never starts tracking a fresh pinch while a mobile window/menu is open', () => {

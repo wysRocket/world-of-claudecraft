@@ -36,11 +36,6 @@ const CAMERA_SENSITIVITY = 0.8;
 // decision 7); touchLookSpeed already covers sensitivity for both the camera
 // joystick and swipe-look, so this constant stays a fixed tuning value for now.
 const SWIPE_LOOK_DEADZONE_PX = 6;
-// Pinch: each pixel the two fingers spread/close maps to this many yards of
-// camera distance. Tuned so a comfortable thumb-to-finger pinch sweeps roughly
-// the full 3..22yd zoom range in one gesture.
-const PINCH_ZOOM_SCALE = 0.04;
-
 // Haptic feedback: short Vibration-API buzzes so touch actions feel physical.
 // On by default (own localStorage key, like music's ev_music_on); try/catch +
 // feature-detect guarded so it no-ops on desktop and under Vitest/jsdom.
@@ -262,7 +257,9 @@ export class MobileControls {
    *  translate use; the --joy-scale transform scales those visually. */
   private moveStickRadius = 1;
 
-  // two-finger pinch-to-zoom on the game view (phones have no scroll wheel)
+  // Track two-finger canvas gestures so they suppress swipe-look, but do not
+  // change camera distance. Pinch zoom proved too easy to trigger accidentally
+  // while using touch movement and combat controls.
   private pinchPointers = new Map<number, { x: number; y: number }>();
   private pinchPrevDist: number | null = null;
   private swipeLookPointer: number | null = null;
@@ -897,7 +894,8 @@ export class MobileControls {
   private onPinchMove(e: PointerEvent): void {
     if (!this.active || !this.pinchPointers.has(e.pointerId)) return;
     // A window opening mid-gesture ends the pinch immediately: menuOpen means
-    // every touch is now the modal's, so the gesture must stop zooming.
+    // every touch is now the modal's, so the gesture must stop suppressing camera
+    // swipes.
     if (document.body.classList.contains('mobile-window-open')) {
       this.releasePinch();
       return;
@@ -905,9 +903,7 @@ export class MobileControls {
     this.pinchPointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (this.pinchPointers.size === 2 && this.pinchPrevDist !== null) {
       e.preventDefault();
-      const cur = this.currentPinchDist();
-      this.input.zoomBy(pinchZoomDelta(this.pinchPrevDist, cur));
-      this.pinchPrevDist = cur;
+      this.pinchPrevDist = this.currentPinchDist();
     }
   }
 
@@ -1027,17 +1023,4 @@ export class MobileControls {
 export function mapLookVector(x: number, y: number, deadzone = DEADZONE): { x: number; y: number } {
   if (Math.hypot(x, y) < deadzone) return { x: 0, y: 0 };
   return { x: x * CAMERA_SENSITIVITY, y: y * CAMERA_SENSITIVITY };
-}
-
-/**
- * Camera-distance delta for a pinch frame, in yards. Fingers spreading apart
- * (curDist > prevDist) zooms IN, i.e. returns a negative delta to shrink camDist;
- * pinching together zooms out. Matches the sign convention of the wheel handler.
- */
-export function pinchZoomDelta(
-  prevDist: number,
-  curDist: number,
-  scale = PINCH_ZOOM_SCALE,
-): number {
-  return (prevDist - curDist) * scale;
 }
