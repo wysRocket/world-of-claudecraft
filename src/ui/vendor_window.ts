@@ -229,10 +229,14 @@ export function renderVendorWindow(
     footer.appendChild(sellJunkButton(deps));
   }
 
-  // Show as a flex column (the World Market precedent): the shared grammar
-  // (.window:has(> .window-frame) in components.css) then bounds the inner frame
-  // so the body scrolls internally while the titlebar/footer stay pinned, instead
-  // of the outer window overflowing.
-  el.style.display = 'flex';
+  // Desktop floats as a bounded flex column (the World Market precedent): the
+  // shared grammar (.window:has(> .window-frame) in components.css) then bounds the
+  // inner frame so the body scrolls internally while the titlebar/footer stay
+  // pinned. On the touch HUD the vendor docks 50/50 beside bags
+  // (body.mobile-touch.vendor-open in hud.mobile.css), which expects a block scroll
+  // container with sticky chrome; keep display:block there so the inline value never
+  // overrides the dock. Either value is a visible one (never 'none'), so the
+  // language-switch re-render guard (display !== 'none') still fires.
+  el.style.display = document.body.classList.contains('mobile-touch') ? 'block' : 'flex';
   el.scrollTop = scrollTop;
 }

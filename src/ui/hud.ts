@@ -4512,9 +4512,13 @@ export class Hud {
     this.playerFrameMover?.relocalize();
     if (this.questlogWindow.isOpen) this.questlogWindow.render();
     if ($('#bags').style.display !== 'none') this.renderBags();
-    if (this.openVendorNpcId !== null && $('#vendor-window').style.display === 'block')
+    // Gate on visibility, not a literal display value: the vendor root opens
+    // display:flex on desktop (bounded frame) and display:block on the touch dock,
+    // so a hard-coded === 'block' would leave the open vendor's text stale after a
+    // live language switch until reopen.
+    if (this.openVendorNpcId !== null && $('#vendor-window').style.display !== 'none')
       this.renderVendor();
-    if (this.openHeroicVendorNpcId !== null && $('#vendor-window').style.display === 'block')
+    if (this.openHeroicVendorNpcId !== null && $('#vendor-window').style.display !== 'none')
       this.renderHeroicVendor();
     if (this.marketWindow.isOpen) this.marketWindow.render();
     if (this.bankWindow.isOpen) this.bankWindow.render();

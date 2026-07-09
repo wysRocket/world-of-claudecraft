@@ -7,7 +7,7 @@
 // names pass through esc(), the empty stock state renders, the footer hosts the
 // primary sell action, and the close control routes to the injected onClose dep.
 
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ItemDef } from '../src/sim/types';
 import type { VendorView } from '../src/ui/vendor_view';
 import { renderVendorWindow, type VendorWindowDeps } from '../src/ui/vendor_window';
@@ -54,6 +54,12 @@ function vendorEl(): HTMLElement {
   document.body.classList.add('vendor-open');
   return el;
 }
+
+// The touch-HUD test toggles body.mobile-touch; clear it so it never leaks into a
+// later desktop-path assertion (the shared jsdom document.body persists).
+afterEach(() => {
+  document.body.classList.remove('mobile-touch');
+});
 
 describe('renderVendorWindow: frame adoption', () => {
   it('stamps the window-frame chrome on an INNER mount with titlebar, body, footer, close', () => {
@@ -120,6 +126,22 @@ describe('renderVendorWindow: move / resize / fit parity with the World Market',
     const order = Array.from(frame?.children ?? []).map((c) => (c as HTMLElement).className);
     expect(order).toEqual(['window-titlebar', 'window-body', 'window-footer']);
     expect(frame?.querySelectorAll('.window-body').length).toBe(1);
+  });
+
+  it('opens display:flex on desktop but display:block on the touch dock (both visible, never none)', () => {
+    // Desktop: flex, so the shared grammar can bound the inner frame.
+    const desktop = vendorEl();
+    renderVendorWindow(desktop, 'V', { goods: [], buyback: [] }, fakeDeps());
+    expect(desktop.style.display).toBe('flex');
+    expect(desktop.style.display).not.toBe('none');
+    // Touch HUD: block, so the inline value matches the 50/50 dock CSS
+    // (body.mobile-touch.vendor-open) instead of overriding it. Still !== 'none',
+    // so the language-switch re-render guard fires either way.
+    document.body.classList.add('mobile-touch');
+    const mobile = vendorEl();
+    renderVendorWindow(mobile, 'V', { goods: [], buyback: [] }, fakeDeps());
+    expect(mobile.style.display).toBe('block');
+    expect(mobile.style.display).not.toBe('none');
   });
 });
 

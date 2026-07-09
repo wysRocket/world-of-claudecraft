@@ -527,6 +527,22 @@ describe('client HTML shell', () => {
     ).toBe(true);
   });
 
+  it('re-renders the open vendor on a language switch regardless of its display value', () => {
+    // The vendor root opens display:flex on desktop (bounded frame) and display:block
+    // on the touch dock, so the language-switch re-render must gate on visibility
+    // (display !== 'none'), never a literal === 'block', or a live switch leaves the
+    // open copper/heroic vendor text stale until reopen (the regression this pins).
+    const refresh = hudTs.slice(hudTs.indexOf('private refreshLocalizedDynamicUi(): void {'));
+    const body = refresh.slice(0, refresh.indexOf('\n  }'));
+    expect(body).toContain(
+      "this.openVendorNpcId !== null && $('#vendor-window').style.display !== 'none'",
+    );
+    expect(body).toContain(
+      "this.openHeroicVendorNpcId !== null && $('#vendor-window').style.display !== 'none'",
+    );
+    expect(body).not.toContain("$('#vendor-window').style.display === 'block'");
+  });
+
   it('routes the cold-window closeManagedWindow cases through their painter close() for focus-return', () => {
     // closeManagedWindow must hand each cold window to its own painter close() so focus
     // returns to the opener (WCAG 2.4.3), not an inline el.style.display='none' that drops
