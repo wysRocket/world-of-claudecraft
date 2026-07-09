@@ -117,6 +117,7 @@ import {
 import * as companionMod from './delves/companion';
 import * as lockpickMod from './delves/lockpick_controller';
 import * as runsMod from './delves/runs';
+import { projectOutsideDungeonDoors } from './dungeon_door_clearance';
 import * as nythraxis from './encounters/nythraxis';
 // A3: ARENA_SPAWNS_A_2v2/B_2v2 (read only by the moved fiestaRevive) now live with
 // social/fiesta.ts. The dungeon-wall consts (DUNGEON_WALL_HW/X) are now read only by
@@ -1359,11 +1360,14 @@ export class Sim {
         }
         const ang = this.rng.range(0, Math.PI * 2);
         const r = Math.sqrt(this.rng.next()) * camp.radius;
-        const safe = this.findSafePos(
+        // Keep camp mobs out of every dungeon door's clear ring so approaching or
+        // zoning out of a dungeon never lands the player in a pack's aggro radius.
+        // Pure geometry on the already-rolled point: no rng, draw order unchanged.
+        const cleared = projectOutsideDungeonDoors(
           camp.center.x + Math.sin(ang) * r,
           camp.center.z + Math.cos(ang) * r,
-          minHeight,
         );
+        const safe = this.findSafePos(cleared.x, cleared.z, minHeight);
         const pos = this.groundPos(safe.x, safe.z);
         const level = this.rng.int(template.minLevel, template.maxLevel);
         const mob = createMob(this.nextId++, template, level, pos);
