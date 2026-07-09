@@ -310,6 +310,7 @@ export const da_DK: EnTranslations = {
       "jump": "Hop",
       "leaderboard": "Rangliste",
       "dailyRewards": "Belønninger",
+      "deeds": "Deeds",
       "nameplates": "Navne",
       "haptics": "Haptik",
       "hapticsOff": "Haptik fra",

@@ -3593,6 +3593,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.jump': '점프',
   'hudChrome.mobile.leaderboard': '순위',
   'hudChrome.mobile.dailyRewards': '보상',
+  'hudChrome.mobile.deeds': '업적',
   'hudChrome.mobile.nameplates': '이름표',
   'hudChrome.mobile.targetCycle': '대상 전환',
   'hudChrome.mobile.targetCycleShort': '대상',

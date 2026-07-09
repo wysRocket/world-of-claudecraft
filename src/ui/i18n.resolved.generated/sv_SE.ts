@@ -310,6 +310,7 @@ export const sv_SE: EnTranslations = {
       "jump": "Hoppa",
       "leaderboard": "Ranking",
       "dailyRewards": "Belöningar",
+      "deeds": "Deeds",
       "nameplates": "Namn",
       "haptics": "Haptik",
       "hapticsOff": "Haptik av",

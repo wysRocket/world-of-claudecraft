@@ -1585,8 +1585,17 @@ export class Hud {
     // Collapse/expand the deed tracker by clicking its header (the quest
     // tracker delegation pattern). The tracker is aria-hidden glanceable
     // decoration, so the header is pointer-only by design (no keydown arm).
+    // On the compact touch tier the rows are folded away (hud.mobile.css) and
+    // the header is a count chip: that tap opens the Book of Deeds instead of
+    // toggling a collapse the player cannot see.
     $('#deed-tracker').addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).closest('.dt-header')) this.toggleDeedTrackerCollapsed();
+      if (!(e.target as HTMLElement).closest('.dt-header')) return;
+      const body = document.body.classList;
+      if (body.contains('mobile-touch') && body.contains('hud-mobile-compact')) {
+        this.openDeeds();
+        return;
+      }
+      this.toggleDeedTrackerCollapsed();
     });
     // The delve board, lockpick panel, map window, and the bank + bags cluster are
     // non-modal overlays, so canUseGameKeys() stays true and the global jump (Space)
@@ -3659,6 +3668,7 @@ export class Hud {
     world: () => this.sim,
     closeOthers: () => this.closeOtherWindows('#deeds-window'),
     hideTooltip: () => this.hideTooltip(),
+    consumePeek: () => this.peekGuard.consume(),
     ...this.windowFocus('#deeds-window'),
     onWatchChanged: () => this.updateDeedTracker(),
   });

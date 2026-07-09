@@ -80,6 +80,12 @@ export interface DeedsWindowDeps extends PainterHostPresentation {
   world(): IWorld;
   closeOthers(): void;
   hideTooltip(): void;
+  /** True when this click is the release of a long-press tooltip peek, so the
+   *  card's action (watch toggle, title equip) must be SUPPRESSED: holding a
+   *  card to read its tooltip must not activate it on release. Wired to the
+   *  shared Hud TouchPeekGuard; a plain tap and every desktop click return
+   *  false (the bank cell contract). */
+  consumePeek(): boolean;
   captureFocus(): HTMLElement | null;
   restoreFocus(target: HTMLElement | null): void;
   /** The watch set changed: repaint the HUD deed tracker now. */
@@ -388,10 +394,18 @@ export class DeedsWindow {
     }
     if (foot !== '') foot = `<div class="deed-foot">${foot}</div>`;
     return (
-      `<div class="deed-card${entry.earned ? ' earned' : ' unearned'}">` +
+      `<div class="deed-card${entry.earned ? ' earned' : ' unearned'}" data-deed="${esc(entry.id)}">` +
       `<img class="deed-crest${entry.earned ? '' : ' desat'}" src="${iconDataUrl('crest', entry.crestId, DEED_CREST_SIZE)}" alt="">` +
       `<div class="deed-main">${body}${foot}</div></div>`
     );
+  }
+
+  /** Long-press peek content for a card: the untruncated name + desc (phone
+   *  cards ellipsize; the tooltip is the full read). Unknown ids (content
+   *  drift between rebuilds) render nothing. */
+  private cardTooltipHtml(id: string): string {
+    if (id === '') return '';
+    return `<b>${esc(deedName(id))}</b><div class="tt-sub">${esc(deedDesc(id))}</div>`;
   }
 
   private titlesHtml(model: DeedsViewModel): string {
@@ -448,8 +462,18 @@ export class DeedsWindow {
         this.render();
       });
     }
+    // Touch long-press peek: holding a card shows its tooltip (name + full
+    // desc; card text can truncate on a phone). The release click must then
+    // inspect, never activate, so both card actions below consume the guard.
+    for (const card of el.querySelectorAll<HTMLElement>('.deed-card')) {
+      this.deps.attachTooltip(card, () => this.cardTooltipHtml(card.dataset.deed ?? ''));
+    }
     for (const btn of el.querySelectorAll<HTMLElement>('[data-watch]')) {
       btn.addEventListener('click', () => {
+        if (this.deps.consumePeek()) {
+          this.deps.hideTooltip();
+          return;
+        }
         const id = btn.dataset.watch;
         if (!id) return;
         this.ensureWatchLoaded();
@@ -465,6 +489,10 @@ export class DeedsWindow {
     }
     for (const btn of el.querySelectorAll<HTMLElement>('[data-title]')) {
       btn.addEventListener('click', () => {
+        if (this.deps.consumePeek()) {
+          this.deps.hideTooltip();
+          return;
+        }
         const id = btn.dataset.title ?? '';
         // No optimistic local copy: the facet echoes the accepted change (the
         // offline sim synchronously, the mirror on the snapshot echo).

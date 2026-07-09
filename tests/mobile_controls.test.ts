@@ -508,6 +508,7 @@ function mobileCallbacks() {
     onMap: noop,
     onLeaderboard: noop,
     onDailyRewards: noop,
+    onDeeds: noop,
     onNameplates: () => false,
     onMusic: () => true,
     onRecenterCamera: noop,

@@ -310,6 +310,7 @@ export const zh_CN: EnTranslations = {
       "jump": "跳跃",
       "leaderboard": "排行榜",
       "dailyRewards": "奖励",
+      "deeds": "功绩",
       "nameplates": "姓名板",
       "haptics": "震动反馈",
       "hapticsOff": "震动反馈：关",

@@ -25,6 +25,11 @@ const chrome = readFileSync(
 );
 const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
 const hudCss = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
+const hudMobile = readFileSync(new URL('../src/styles/hud.mobile.css', import.meta.url), 'utf8');
+const mobileControlsSrc = readFileSync(
+  new URL('../src/game/mobile_controls.ts', import.meta.url),
+  'utf8',
+);
 const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const playHtml = readFileSync(new URL('../play.html', import.meta.url), 'utf8');
 
@@ -161,6 +166,101 @@ describe('entry HTMLs', () => {
       expect(html).toContain('id="deeds-window"');
       expect(html).toContain('<div id="deed-tracker" aria-hidden="true"></div>');
     }
+  });
+
+  it('ships the More-tray Deeds button in BOTH game entries (the /play shared-entry trap)', () => {
+    for (const html of [indexHtml, playHtml]) {
+      expect(html).toContain('id="mobile-deeds"');
+      expect(html).toContain('data-i18n="hudChrome.mobile.deeds"');
+      expect(html).toMatch(/id="mobile-deeds"[^>]*data-icon="book"/);
+    }
+    expect(chrome).toMatch(/deeds: 'Deeds',/);
+  });
+});
+
+describe('touch open chain (More tray -> Hud)', () => {
+  it('binds the tray button to the onDeeds callback and main.ts routes it to the toggle', () => {
+    expect(mobileControlsSrc).toContain(
+      "this.bindButton('mobile-deeds', () => this.callbacks.onDeeds());",
+    );
+    expect(mobileControlsSrc).toContain('onDeeds(): void;');
+    expect(mainSrc).toContain('onDeeds: () => hud.toggleDeeds(),');
+  });
+});
+
+describe('touch long-press peek', () => {
+  it('attaches the card tooltip and suppresses BOTH card actions on a peek release', () => {
+    expect(painter).toContain(
+      "this.deps.attachTooltip(card, () => this.cardTooltipHtml(card.dataset.deed ?? ''));",
+    );
+    // Each action arm consumes the shared guard FIRST: a peek release
+    // dismisses the tooltip and fires nothing (watch toggle and title equip).
+    expect(
+      painter.match(
+        /if \(this\.deps\.consumePeek\(\)\) \{\s*this\.deps\.hideTooltip\(\);\s*return;\s*\}/g,
+      )?.length,
+    ).toBe(2);
+    expect(hud).toMatch(
+      /new DeedsWindow\(\{[\s\S]{0,600}?consumePeek: \(\) => this\.peekGuard\.consume\(\),/,
+    );
+  });
+});
+
+describe('mobile layout (hud.mobile.css)', () => {
+  it('pins the standalone full-screen window inside the safe-area insets', () => {
+    const block = hudMobile.match(/body\.mobile-touch #deeds-window \{([^}]*)\}/)?.[1] as string;
+    expect(block).toBeTruthy();
+    expect(block).toContain('position: fixed;');
+    expect(block).toContain('left: max(10px, env(safe-area-inset-left));');
+    expect(block).toContain('right: max(10px, env(safe-area-inset-right));');
+    expect(block).toContain('top: max(10px, env(safe-area-inset-top));');
+    expect(block).toContain('bottom: max(10px, env(safe-area-inset-bottom));');
+    expect(block).toContain('transform: none;');
+    expect(block).toContain('max-width: none;');
+    expect(block).toContain('overflow: hidden;');
+  });
+
+  it('collapses the category rail to one horizontally scrollable chip row', () => {
+    const rail = hudMobile.match(
+      /body\.mobile-touch #deeds-window \.deeds-rail \{([^}]*)\}/,
+    )?.[1] as string;
+    expect(rail).toBeTruthy();
+    expect(rail).toContain('flex-direction: row;');
+    expect(rail).toContain('flex-wrap: nowrap;');
+    expect(rail).toContain('overflow-x: auto;');
+    expect(rail).toContain('overscroll-behavior-x: contain;');
+    expect(rail).toContain('-webkit-overflow-scrolling: touch;');
+    expect(hudMobile).toMatch(/body\.mobile-touch #deeds-window \.deeds-cat \{\s*flex: 0 0 auto;/);
+  });
+
+  it('lets the entry list yield on short landscape so the filter bar never clips', () => {
+    // The components.css 100px floor must give inside the max-height media
+    // block, or the flex column pushes the filter bar past the window edge
+    // (the bank buy-row regression shape).
+    const media = hudMobile.slice(hudMobile.indexOf('mobile deeds (standalone window + tracker)'));
+    const shortBlock = media.match(
+      /@media \(max-height: 480px\) \{([\s\S]*?)\n {2}\}/,
+    )?.[1] as string;
+    expect(shortBlock).toBeTruthy();
+    expect(shortBlock).toMatch(/#deeds-window \.deeds-scroll \{\s*min-height: 44px;/);
+    expect(shortBlock).toMatch(/#deeds-window \.deeds-body \{\s*min-height: 44px;/);
+  });
+
+  it('folds the tracker to a count chip on the compact tier and routes its tap to the Book', () => {
+    expect(hudMobile).toMatch(
+      /body\.mobile-touch\.hud-mobile-compact #deed-tracker \.dt-list \{\s*display: none;/,
+    );
+    expect(hudMobile).toMatch(
+      /body\.mobile-touch\.hud-mobile-compact #deed-tracker \.dt-chevron \{\s*display: none;/,
+    );
+    expect(hudMobile).toMatch(
+      /body\.mobile-touch #deed-tracker \.dt-list \{\s*max-height: 88px;\s*overflow: hidden;/,
+    );
+    // The hud delegation: compact touch tap opens the window, desktop keeps
+    // the collapse toggle.
+    expect(hud).toMatch(
+      /body\.contains\('mobile-touch'\) && body\.contains\('hud-mobile-compact'\)[\s\S]{0,80}?this\.openDeeds\(\);/,
+    );
   });
 });
 

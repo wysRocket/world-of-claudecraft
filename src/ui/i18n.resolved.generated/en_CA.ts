@@ -310,6 +310,7 @@ export const en_CA: EnTranslations = {
       "jump": "Jump",
       "leaderboard": "Ranks",
       "dailyRewards": "Rewards",
+      "deeds": "Deeds",
       "nameplates": "Names",
       "haptics": "Haptics",
       "hapticsOff": "Haptics Off",

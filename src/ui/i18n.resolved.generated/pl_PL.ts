@@ -310,6 +310,7 @@ export const pl_PL: EnTranslations = {
       "jump": "Skok",
       "leaderboard": "Rankingi",
       "dailyRewards": "Nagrody",
+      "deeds": "Deeds",
       "nameplates": "Nazwy",
       "haptics": "Wibracje",
       "hapticsOff": "Wibracje wył.",

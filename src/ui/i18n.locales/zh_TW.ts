@@ -3460,6 +3460,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.mobile.jump': '跳躍',
   'hudChrome.mobile.leaderboard': '排行榜',
   'hudChrome.mobile.dailyRewards': '獎勵',
+  'hudChrome.mobile.deeds': '功績',
   'hudChrome.mobile.nameplates': '名條',
   'hudChrome.mobile.targetCycle': '切換目標',
   'hudChrome.mobile.targetCycleShort': '目標',

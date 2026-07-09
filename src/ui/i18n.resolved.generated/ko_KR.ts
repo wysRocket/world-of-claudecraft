@@ -310,6 +310,7 @@ export const ko_KR: EnTranslations = {
       "jump": "점프",
       "leaderboard": "순위",
       "dailyRewards": "보상",
+      "deeds": "업적",
       "nameplates": "이름표",
       "haptics": "진동",
       "hapticsOff": "진동 꺼짐",

@@ -161,6 +161,10 @@ const INDEX_SECTIONS = [
   'skip links',
   'forced-colors',
   'print reset',
+  // Book of Deeds: the window/tracker bodies (components.css) and the
+  // standalone touch layout (hud.mobile.css); both modules load in both entries.
+  'deeds',
+  'mobile deeds (standalone window + tracker)',
 ];
 
 // The two index-only sections play.html does not ship, so its count is 58 (plus the
@@ -172,12 +176,12 @@ const PLAY_SECTIONS = INDEX_SECTIONS.filter((name) => !PLAY_OMITS.includes(name)
 const MANIFEST = INDEX_SECTIONS;
 
 describe('css_corpus section manifest', () => {
-  it('pins a non-vacuous manifest: 65 index + 63 play sections, no duplicate names', () => {
-    expect(INDEX_SECTIONS.length).toBe(65);
-    expect(PLAY_SECTIONS.length).toBe(63);
-    expect(MANIFEST.length).toBe(65);
-    expect(new Set(INDEX_SECTIONS).size).toBe(65);
-    expect(new Set(PLAY_SECTIONS).size).toBe(63);
+  it('pins a non-vacuous manifest: 67 index + 65 play sections, no duplicate names', () => {
+    expect(INDEX_SECTIONS.length).toBe(67);
+    expect(PLAY_SECTIONS.length).toBe(65);
+    expect(MANIFEST.length).toBe(67);
+    expect(new Set(INDEX_SECTIONS).size).toBe(67);
+    expect(new Set(PLAY_SECTIONS).size).toBe(65);
   });
 
   it('captures the live corpus markers (the marker regex is non-vacuous, not a zero match)', () => {

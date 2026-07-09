@@ -310,6 +310,7 @@ export const ja_JP: EnTranslations = {
       "jump": "ジャンプ",
       "leaderboard": "ランキング",
       "dailyRewards": "報酬",
+      "deeds": "功績",
       "nameplates": "ネームプレート",
       "haptics": "振動",
       "hapticsOff": "振動オフ",
