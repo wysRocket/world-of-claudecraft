@@ -9,25 +9,100 @@
 // Reproducibility is checked by tests/i18n_resolved_equivalence.test.ts.
 
 export const pending: Record<string, readonly string[]> = {
-  "es": [],
-  "es_ES": [],
-  "fr_FR": [],
-  "fr_CA": [],
+  "es": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "es_ES": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "fr_FR": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "fr_CA": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
   "en_CA": [],
-  "it_IT": [],
-  "de_DE": [],
+  "it_IT": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "de_DE": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
   "zh_CN": [],
   "zh_TW": [],
   "ko_KR": [],
   "ja_JP": [],
-  "pt_BR": [],
+  "pt_BR": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
   "ru_RU": [],
-  "cs_CZ": [],
-  "nl_NL": [],
-  "pl_PL": [],
-  "id_ID": [],
-  "tr_TR": [],
-  "sv_SE": [],
-  "vi_VN": [],
-  "da_DK": []
+  "cs_CZ": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "nl_NL": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "pl_PL": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "id_ID": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "tr_TR": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "sv_SE": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "vi_VN": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ],
+  "da_DK": [
+    "entities.quests.q_prof_intro.completion",
+    "entities.quests.q_prof_intro.objectives.0.label",
+    "entities.quests.q_prof_intro.text",
+    "entities.quests.q_prof_intro.title"
+  ]
 };
