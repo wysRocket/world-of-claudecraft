@@ -3687,7 +3687,8 @@
      bounds the frame as a height-clamped flex column; closed windows keep
      display:none. */
   #quest-log-window:has(> .window-frame),
-  #spellbook:has(> .window-frame) {
+  #spellbook:has(> .window-frame),
+  #mailbox-window:has(> .window-frame) {
     padding: 0;
     background: transparent;
     border: 0;
@@ -3727,6 +3728,16 @@
   }
   #spellbook .window-footer .spellbook-reset {
     white-space: nowrap;
+  }
+
+  /* Mailbox: the frame body is a flex column so the in-body inbox/send tabs stay
+     pinned above the #mailbox-body pane, which owns the inner scroll (the pre-frame
+     behavior). The reading pane / send form scroll inside #mailbox-body as before. */
+  #mailbox-window .window-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
   }
 
   /* ---------- social ---------- */

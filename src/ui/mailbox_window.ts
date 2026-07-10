@@ -10,12 +10,19 @@
 //
 // Cold, event-driven window: rendered on open and on a real signature change,
 // never from the per-frame hot path, so innerHTML rebuilds are fine here.
+//
+// Chrome comes from the shared window-frame builder (window_frame.ts): a titlebar
+// with a close control and a scrollable body. Like the vendor / options windows
+// the frame mounts on an INNER container (ensureFrame), so the shared
+// #mailbox-window root stays a pristine .window.panel (drag/resize/position live on
+// the root). The inbox/send tabs stay IN the body (behavior preserved): they carry
+// a dynamic unread count and rebuild on every render, so keeping them in-body needs
+// no frame-tab-rail state sync.
 
 import { audio } from '../game/audio';
 import { ITEMS } from '../sim/data';
 import type { InvSlot } from '../sim/types';
 import type { IWorld } from '../world_api';
-import { markDialogRoot } from './dialog_root';
 import { itemDisplayName, tEntity } from './entity_i18n';
 import { esc } from './esc';
 import { formatMoney, formatNumber, t } from './i18n';
@@ -32,6 +39,16 @@ import {
 } from './mailbox_view';
 import type { PainterHostPresentation } from './painter_host';
 import { svgIcon } from './ui_icons';
+import { renderWindowFrame, type WindowFrameParts } from './window_frame';
+import type { WindowFrameDescriptor } from './window_frame_view';
+
+// A closable frame with no tab rail (the inbox/send tabs live in the body) and no
+// footer. Every key is reused from the existing mailbox catalog.
+const MAILBOX_FRAME: WindowFrameDescriptor = {
+  id: 'mailbox-window',
+  titleKey: 'hudChrome.mailbox.title',
+  closeLabelKey: 'hudChrome.mailbox.close',
+};
 
 const QUALITY_DEFAULT_COLOR = 'var(--color-quality-default)';
 // Copper-per-denomination (mirrors market_view's COPPER_PER_*).
@@ -194,10 +211,38 @@ export class MailboxWindow {
     return row.subject.length > 0 ? row.subject : t('hudChrome.mailbox.noSubject');
   }
 
-  render(): void {
+  // Stamp the shared window frame cold at first open, then reuse it. The frame
+  // mounts on an inner container so the #mailbox-window root stays a pristine
+  // .window.panel; an intact mounted frame (its body present) is the reuse marker.
+  private ensureFrame(): WindowFrameParts {
     const el = this.deps.root();
+    const mounted = el.querySelector<HTMLElement>(':scope > .window-frame');
+    const body = mounted?.querySelector<HTMLElement>('.window-body');
+    if (mounted && body) {
+      return {
+        root: mounted,
+        body,
+        footer: mounted.querySelector<HTMLElement>('.window-footer'),
+        tabButtons: [],
+      };
+    }
+    const mount = document.createElement('div');
+    const parts = renderWindowFrame(mount, MAILBOX_FRAME, { onClose: () => this.close() });
+    el.replaceChildren(mount);
+    return parts;
+  }
+
+  render(): void {
     this.deps.hideTooltip();
-    markDialogRoot(el, { label: t('hudChrome.mailbox.title') });
+    const { root: frame, body } = this.ensureFrame();
+    // The frame builder resolves the title key WITHOUT interpolation; the mailbox
+    // title carries a muted subtitle, so paint it here onto the frame's title.
+    const titleEl = frame.querySelector<HTMLElement>('.window-title');
+    if (titleEl) {
+      titleEl.innerHTML = `${esc(t('hudChrome.mailbox.title'))} <span class="panel-subtitle">${esc(
+        t('hudChrome.mailbox.subtitle'),
+      )}</span>`;
+    }
     const info = this.deps.world().mailInfo;
     const inboxLabel =
       info && info.unread > 0
@@ -207,12 +252,12 @@ export class MailboxWindow {
         : t('hudChrome.mailbox.tabInbox');
     const tabButton = (id: MailTab, label: string) =>
       `<button type="button" class="mail-tab${this.tab === id ? ' sel' : ''}" data-tab="${id}" aria-pressed="${this.tab === id ? 'true' : 'false'}">${esc(label)}</button>`;
-    el.innerHTML =
-      `<div class="panel-title"><span>${esc(t('hudChrome.mailbox.title'))} <span class="panel-subtitle">${esc(t('hudChrome.mailbox.subtitle'))}</span></span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.mailbox.close'))}">${svgIcon('close')}</button></div>` +
+    // The inbox/send tabs and the content pane live inside the scrolling frame body;
+    // the tabs stay pinned above the pane (mailbox CSS makes the body a flex column).
+    body.innerHTML =
       `<div class="mail-tabs">${tabButton('inbox', inboxLabel)}${tabButton('send', t('hudChrome.mailbox.tabSend'))}</div>` +
       `<div id="mailbox-body"></div>`;
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
-    el.querySelectorAll('[data-tab]').forEach((node) => {
+    body.querySelectorAll('[data-tab]').forEach((node) => {
       node.addEventListener('click', () => {
         const next = (node as HTMLElement).dataset.tab as MailTab;
         if (next === this.tab) return;
