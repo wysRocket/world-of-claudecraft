@@ -2492,14 +2492,10 @@
        (bounded by the shared .window max-height) so tall content stays reachable. */
     overflow-y: auto;
   }
-  /* Fill the root when it is explicitly sized taller than its content (a resize):
-     with no fill the transparent root would show the world through the gap. Inert
-     (resolves to 0) while the root height stays content-driven. */
-  #char-window > .window-frame,
-  #talents-window > .window-frame,
-  #crafting-window > .window-frame {
-    min-height: 100%;
-  }
+  /* The resize gap fill (a root sized taller than its content must not show the
+     world through the transparent root) is now the ONE shared rule on every
+     direct-frame window: `.window:has(> .window-frame) > .window-frame`, in the
+     window-frame section below. char/talents/crafting used to carry it per-id. */
   /* Pin the titlebar while the root scrolls (fixed-header AAA chrome). */
   #char-window > .window-frame .window-titlebar,
   #talents-window > .window-frame .window-titlebar,
@@ -6331,6 +6327,23 @@
     z-index: 6;
     background: var(--panel-l1-bg);
   }
+  /* Resize gap fill for the heroic tenant: its frame nests under .heroic-shop, so
+     the shared `.window:has(> .window-frame) > .window-frame` rule (a direct-child
+     selector) cannot reach it. Fill the two-level chain the same way the flex
+     model does: the wrapper fills the resized root and the frame flex-grows to
+     fill the wrapper, so a root sized taller than the shop never shows the world
+     through the transparent root. Inert before a resize (min-height:100% resolves
+     to 0 against the content-driven root); root-scroll is preserved because the
+     wrapper grows to content when the shop is taller than the root. */
+  #vendor-window > .heroic-shop {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  #vendor-window > .heroic-shop > .window-frame {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 
   #map-canvas {
     /* Authored display size matching the 560x560 backing store (index.html /
@@ -8872,6 +8885,21 @@
   .window > .window-frame {
     flex: 1 1 auto;
     min-height: 0;
+  }
+  /* Resize gap fill, ONE rule for every direct-frame window so it can never
+     diverge across the batch (char/talents/crafting once had it per-id; the
+     sibling root-scroll windows, arena/vale_cup/loot_settings/town_focus/rite/
+     leaderboard/daily_rewards, did not, so a resize taller than their content
+     showed the 3D world through the transparent root). The root-scroll windows
+     keep display:block and grow their root height on a resize (window_resize.ts
+     writes el.style.height on the .window root, an explicit definite height); the
+     frame fills that height so nothing shows below short content. Inert for the
+     flex-model windows and before any resize: their .window carries only a
+     max-height (no explicit height), so the percentage resolves to 0 and the
+     min-height:0 shrink above stays intact; once a resize sets an explicit height
+     the frame already fills as flex:1, so this is a no-op change for them. */
+  .window:has(> .window-frame) > .window-frame {
+    min-height: 100%;
   }
   /* Corner ornaments: pure decoration (spec 6.1), zero layout impact
      (position: absolute, pointer-events: none), rendered only at fx medium and
