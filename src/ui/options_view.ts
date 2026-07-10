@@ -26,6 +26,7 @@ import {
   type OptionRow,
   RAIL_GROUPS,
   type RailGroupId,
+  rowEnv,
   SEARCH_SYNONYMS,
 } from './options_ia';
 
@@ -133,7 +134,7 @@ export const toggleIsOn = (current: number): boolean => current >= 0.5;
 export const boolToggleNextValue = (current: boolean): boolean => !current;
 
 // ---------------------------------------------------------------------------
-// Settings projection + environment the panel builders read from
+// Settings projection the control builders read from
 // ---------------------------------------------------------------------------
 
 /** The minimal settings projection the options view-model needs. The painter
@@ -145,14 +146,6 @@ export interface OptionsSettingsSource {
   bool(key: string): boolean;
   /** Static [min, max] range for a numeric setting key (from SETTING_RANGES). */
   range(key: string): { min: number; max: number };
-}
-
-/** Device/shell flags that gate which rows a panel shows. */
-export interface OptionsEnv {
-  /** useTouchInterface(): reveals the touch-only sliders. */
-  touch: boolean;
-  /** isNativeAppShell(): hides the Interface Mode picker (the shell forces touch). */
-  nativeShell: boolean;
 }
 
 const slider = (
@@ -200,210 +193,11 @@ const choice = (
 
 const note = (textKey: TranslationKey): NoteControl => ({ control: 'note', textKey });
 
-// The two-value low/high choice shared by the four advanced-preset sub-pickers.
-const lowHighOptions: ChoiceOption[] = [
-  { value: 0, labelKey: 'hud.options.terrainLow' },
-  { value: 1, labelKey: 'hud.options.terrainHigh' },
-];
-
-// ---------------------------------------------------------------------------
-// Main menu (cluster 5 routing)
-// ---------------------------------------------------------------------------
-
-/** A sub-view the main menu can route to (matches the painter's view discriminator). */
-export type OptionsPanelId =
-  | 'keybinds'
-  | 'controller'
-  | 'graphics'
-  | 'interface'
-  | 'audio'
-  | 'performance'
-  | 'bugreport';
-
-export type OptionsMenuAction =
-  | { kind: 'goto'; view: OptionsPanelId }
-  | { kind: 'logout' }
-  | { kind: 'close' };
-
-export interface OptionsMenuEntry {
-  labelKey: TranslationKey;
-  action: OptionsMenuAction;
-}
-
-/** The main Esc-menu button list. The "Report a Bug" row is online-only (it needs
- *  an authoritative server to receive the report). */
-export function buildOptionsMenu(opts: { bugReportAvailable: boolean }): OptionsMenuEntry[] {
-  const entries: OptionsMenuEntry[] = [
-    { labelKey: 'hud.options.keyBindings', action: { kind: 'goto', view: 'keybinds' } },
-    { labelKey: 'hudChrome.controller.title', action: { kind: 'goto', view: 'controller' } },
-    { labelKey: 'hud.options.graphics', action: { kind: 'goto', view: 'graphics' } },
-    { labelKey: 'hud.options.interface', action: { kind: 'goto', view: 'interface' } },
-    { labelKey: 'hud.options.audio', action: { kind: 'goto', view: 'audio' } },
-    { labelKey: 'hudChrome.perf.title', action: { kind: 'goto', view: 'performance' } },
-  ];
-  if (opts.bugReportAvailable)
-    entries.push({
-      labelKey: 'hudChrome.bugReport.menuButton',
-      action: { kind: 'goto', view: 'bugreport' },
-    });
-  entries.push({ labelKey: 'hud.options.logout', action: { kind: 'logout' } });
-  entries.push({ labelKey: 'hud.options.returnToGame', action: { kind: 'close' } });
-  return entries;
-}
-
-// ---------------------------------------------------------------------------
-// Graphics panel (cluster 3) -- the static WebGL preset is read as a plain
-// setting value here. This panel must NEVER read the FPS governor or define the
-// effects-quality cutoff: that resolver and per-element tiering live in their
-// own modules.
-// ---------------------------------------------------------------------------
-
-/** Body control rows for the Graphics sub-panel, in render order. The interleaved
- *  notes (browser-effects, interface-mode) live here; the painter appends the
- *  trailing graphics/reload notes + the reload button + footer as panel chrome. */
-export function buildGraphicsControls(s: OptionsSettingsSource, env: OptionsEnv): OptionsControl[] {
-  const out: OptionsControl[] = [];
-  const graphicsPresetOptions: ChoiceOption[] = [
-    { value: 1, labelKey: 'hud.options.graphicsPresetLow' },
-    { value: 2, labelKey: 'hud.options.graphicsPresetMedium' },
-    { value: 3, labelKey: 'hud.options.graphicsPresetHigh' },
-  ];
-  if (!env.nativeShell) {
-    graphicsPresetOptions.push(
-      { value: 4, labelKey: 'hud.options.graphicsPresetUltra' },
-      { value: 5, labelKey: 'hud.options.graphicsPresetAdvanced' },
-    );
-  }
-  out.push(choice(s, 'graphicsPreset', 'hud.options.graphicsQuality', graphicsPresetOptions, true));
-  // Advanced preset (5) reveals the four per-system low/high pickers.
-  if (Math.round(s.num('graphicsPreset')) === 5) {
-    out.push(choice(s, 'terrainDetail', 'hud.options.terrainDetail', lowHighOptions));
-    out.push(choice(s, 'foliageDensity', 'hud.options.foliageDensity', lowHighOptions));
-    out.push(choice(s, 'effectsQuality', 'hud.options.effectsQuality', lowHighOptions));
-    out.push(choice(s, 'shadowQuality', 'hud.options.shadowQuality', lowHighOptions));
-  }
-  out.push(
-    choice(s, 'browserEffects', 'hudChrome.options.browserEffects', [
-      { value: 0, labelKey: 'hudChrome.options.browserEffectsAuto' },
-      { value: 1, labelKey: 'hudChrome.options.browserEffectsFull' },
-      { value: 2, labelKey: 'hudChrome.options.browserEffectsReduced' },
-      { value: 3, labelKey: 'hudChrome.options.browserEffectsMinimal' },
-    ]),
-  );
-  out.push(note('hudChrome.options.browserEffectsNote'));
-  // Desktop vs on-screen touch controls. Hidden in the native shell (forces touch).
-  if (!env.nativeShell) {
-    out.push(
-      choice(
-        s,
-        'interfaceMode',
-        'hudChrome.options.interfaceMode',
-        [
-          { value: 0, labelKey: 'hudChrome.options.interfaceModeAuto' },
-          { value: 1, labelKey: 'hudChrome.options.interfaceModeDesktop' },
-          { value: 2, labelKey: 'hudChrome.options.interfaceModeTouch' },
-        ],
-        true,
-      ),
-    );
-    out.push(note('hudChrome.options.interfaceModeNote'));
-  }
-  out.push(slider(s, 'cameraSpeed', 'hud.options.cameraSpeed'));
-  // Camera Speed only scales mouselook; touch gets a dedicated look-rate slider.
-  if (env.touch) out.push(slider(s, 'touchLookSpeed', 'hud.options.touchLookSpeed'));
-  out.push(slider(s, 'brightness', 'hud.options.brightness'));
-  out.push(slider(s, 'cameraFov', 'hud.options.fieldOfView', 'degrees', 1));
-  out.push(slider(s, 'renderScale', 'hud.options.renderQuality'));
-  out.push(toggle(s, 'fullscreen', 'hud.options.fullscreen'));
-  out.push(toggle(s, 'showOverflowXp', 'game.settings.showOverflowXp'));
-  if (env.touch) out.push(slider(s, 'touchOpacity', 'hud.options.touchOpacity'));
-  out.push(toggle(s, 'weather', 'game.settings.weather'));
-  if (env.touch) out.push(slider(s, 'joystickScale', 'hud.options.joystickSize'));
-  if (env.touch) out.push(slider(s, 'actionButtonScale', 'hud.options.buttonSize'));
-  if (env.touch) out.push(slider(s, 'joystickDeadzone', 'hud.options.joystickDeadzone'));
-  if (env.touch) out.push(boolToggle(s, 'touchInvertLook', 'hud.options.invertLook'));
-  // Camera joystick is hidden/off by default (swipe-look is primary); left-handed
-  // layout already has a Key Bindings row (leftHandedTouch), but is surfaced here
-  // too since it is squarely a touch/graphics-panel concern for touch players.
-  if (env.touch)
-    out.push(boolToggle(s, 'mobileCameraJoystick', 'hudChrome.options.mobileCameraJoystick'));
-  if (env.touch) out.push(boolToggle(s, 'leftHandedTouch', 'hudChrome.options.mobileLeftHanded'));
-  return out;
-}
-
-// ---------------------------------------------------------------------------
-// Audio panel (cluster 4)
-// ---------------------------------------------------------------------------
-
-/** Body control rows for the Audio sub-panel: three volume sliders, the bespoke
- *  music on/off toggle (reads the live MusicDirector), then the three audio bool
- *  toggles. The painter appends the footer. */
-export function buildAudioControls(s: OptionsSettingsSource): OptionsControl[] {
-  return [
-    slider(s, 'sfxVolume', 'hud.options.soundEffects'),
-    slider(s, 'musicVolume', 'hud.options.musicVolume'),
-    slider(s, 'voiceVolume', 'hud.options.voiceVolume'),
-    { control: 'musicToggle', labelKey: 'hud.options.music' },
-    boolToggle(s, 'voiceEnabled', 'hud.options.npcVoices'),
-    boolToggle(s, 'footstepSfx', 'hudChrome.options.footstepSounds'),
-    boolToggle(s, 'clickFeedback', 'hudChrome.options.clickFeedback'),
-  ];
-}
-
-// ---------------------------------------------------------------------------
-// Controller panel (cluster 5) -- the enable/invert toggles + the three sliders.
-// The per-button remap rows are bespoke (a dropdown per pad button) and live in
-// the painter.
-// ---------------------------------------------------------------------------
-
-export function buildControllerControls(s: OptionsSettingsSource): OptionsControl[] {
-  return [
-    boolToggle(s, 'gamepadEnabled', 'hudChrome.controller.enable'),
-    boolToggle(s, 'gamepadInvertY', 'hudChrome.controller.invertY'),
-    slider(s, 'gamepadStickDeadzone', 'hudChrome.controller.deadzone'),
-    slider(s, 'gamepadCameraSpeed', 'hudChrome.controller.cameraSpeed', 'oneDecimal'),
-    slider(s, 'gamepadVibration', 'hudChrome.controller.vibration'),
-  ];
-}
-
-// ---------------------------------------------------------------------------
-// Interface & Comfort panel (cluster 5) -- the slider/boolToggle block that
-// follows the bespoke language picker + theme controls. The chat-timestamp and
-// chat-window-reset rows below it are bespoke and live in the painter.
-// ---------------------------------------------------------------------------
-
-export function buildInterfaceControls(s: OptionsSettingsSource): OptionsControl[] {
-  return [
-    // uiScale commits on release: applying it live rescales the whole UI (the
-    // options window included), which shoves the slider under the cursor and makes
-    // the value hard to land (issue 1558).
-    { ...slider(s, 'uiScale', 'hudChrome.options.uiScale'), commitOnChange: true },
-    slider(s, 'playerFrameScale', 'hudChrome.options.playerFrameScale'),
-    slider(s, 'targetFrameScale', 'hudChrome.options.targetFrameScale'),
-    slider(s, 'hudOpacity', 'hud.options.hudOpacity'),
-    slider(s, 'tooltipScale', 'hud.options.tooltipScale'),
-    slider(s, 'fctScale', 'hud.options.fctScale'),
-    slider(s, 'chatFontScale', 'hud.options.chatFontScale'),
-    slider(s, 'chatOpacity', 'hud.options.chatOpacity'),
-    boolToggle(s, 'compactChat', 'hud.options.compactChat'),
-    boolToggle(s, 'frostedPanels', 'hud.options.frostedPanels'),
-    boolToggle(s, 'highContrastText', 'hud.options.highContrastText'),
-    boolToggle(s, 'reduceMotion', 'hud.options.reduceMotion'),
-    boolToggle(s, 'showWalletOnCharacterScreen', 'hudChrome.options.showWalletOnCharacterScreen'),
-    boolToggle(s, 'showWalletOnPlayerCard', 'hudChrome.options.showWalletOnPlayerCard'),
-    boolToggle(s, 'showDevBadges', 'hudChrome.options.showDevBadges'),
-    boolToggle(s, 'showOwnNameplate', 'hudChrome.options.showOwnNameplate'),
-    boolToggle(s, 'landingHighContrast', 'hudChrome.options.highContrastBackground'),
-    boolToggle(s, 'invertLookY', 'hud.options.invertLookY'),
-    boolToggle(s, 'startAttackOnAbilityUse', 'hudChrome.options.startAttackOnAbility'),
-    boolToggle(s, 'walkByAutoloot', 'hudChrome.options.walkByAutoloot'),
-    boolToggle(s, 'groundReticle', 'hudChrome.options.groundReticle'),
-    boolToggle(s, 'aurasOnPlayerFrame', 'hudChrome.options.aurasOnPlayerFrame'),
-    boolToggle(s, 'showItemLevel', 'hudChrome.options.showItemLevel'),
-    boolToggle(s, 'showSecondaryActionBar', 'hudChrome.options.showSecondaryActionBar'),
-    boolToggle(s, 'showDailyRewardsChest', 'hudChrome.options.showDailyRewardsChest'),
-  ];
-}
+// (The pre-redesign per-panel builders, buildOptionsMenu / buildGraphicsControls /
+// buildAudioControls / buildControllerControls / buildInterfaceControls, are gone:
+// the options_ia tree + renderCategory + buildControlFromRow below are the one
+// live path since the Warden's Codex chrome landed, and the legacy builders had
+// no consumer left outside their own green pins.)
 
 // ---------------------------------------------------------------------------
 // Bug report (cluster 2) -- the ONE slice of IWorld the options window reads, so
@@ -631,9 +425,52 @@ export function buildControlFromRow(
     case 'musicToggle':
       return { control: 'musicToggle', labelKey: row.labelKey as TranslationKey };
     default:
-      // 'language' | 'themePreset': bespoke rows the painter renders directly.
+      // 'language' | 'themePreset' | 'chatTimestamps' | 'chatClock': bespoke rows
+      // (no settings.ts key) the painter renders directly.
       return null;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Environment-gated control binding: the ONE cap/gating path (S1)
+// ---------------------------------------------------------------------------
+
+/** The native app shell caps the graphics preset at High: the Ultra / Advanced
+ *  tiers (4 / 5) are desktop-browser-only. One named threshold, shared by every
+ *  render path so a mirror row can never offer a capped preset. */
+export const NATIVE_SHELL_MAX_GRAPHICS_PRESET = 3;
+
+/** True when the merged environment gating for a row admits the given host
+ *  environment. A keyed row resolves through rowEnv (its own markers merged over
+ *  its home category's); a keyless row carries only its own markers. */
+function rowAllowedInEnv(row: OptionRow, e: RailEnv): boolean {
+  const env: EnvGating = row.key ? rowEnv(row.key) : (row.env ?? {});
+  if (env.touchOnly && !e.touch) return false;
+  if (env.desktopOnly && e.touch) return false;
+  if (env.nativeShellHidden && e.nativeShell) return false;
+  return true;
+}
+
+/** Bind a row to a live control with the host environment applied. This is the
+ *  ONE gating path every render surface uses (the category detail pane, the
+ *  Overview pinned mirrors, the global search results), so the two env rules can
+ *  never be bypassed by a mirror row:
+ *  - an env-hidden row (e.g. the nativeShellHidden interfaceMode under the native
+ *    shell) returns null instead of a control;
+ *  - the native-shell graphicsPreset choice is capped at High wherever it renders.
+ *  Bespoke rows (language, theme, chat timestamps) still return null; the painter
+ *  renders them itself after its own gating. */
+export function buildEnvGatedControl(
+  s: OptionsSettingsSource,
+  row: OptionRow,
+  e: RailEnv,
+): OptionsControl | null {
+  if (!rowAllowedInEnv(row, e)) return null;
+  const control = buildControlFromRow(s, row);
+  if (!control) return null;
+  if (control.control === 'choice' && row.key === 'graphicsPreset' && e.nativeShell)
+    control.options = control.options.filter((o) => o.value <= NATIVE_SHELL_MAX_GRAPHICS_PRESET);
+  return control;
 }
 
 /** The per-category changed-from-defaults count: how many of a category's
