@@ -2763,7 +2763,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Un ataque poderoso que aumenta el daño cuerpo a cuerpo en {damage}. Se activa en tu siguiente golpe.',
   'entities.abilities.battle_shout.name': 'Bramido de Hierro',
   'entities.abilities.battle_shout.description':
-    'Aumenta tu poder de ataque en {buff} durante 2 min.',
+    'Un grito que aumenta el poder de ataque de todos los miembros del grupo un {buff}% durante 30 min.',
   'entities.abilities.commanding_shout.name': 'Grito Alentador',
   'entities.abilities.commanding_shout.description': 'Aumenta tu Aguante en 6 durante 1 hora.',
   'entities.abilities.demoralizing_shout.name': 'Aullido Pavoroso',

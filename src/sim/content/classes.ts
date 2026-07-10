@@ -448,8 +448,10 @@ export const ABILITIES: Record<string, AbilityDef> = {
     school: 'physical',
     requiresTarget: false,
     exclusiveGroup: 'warrior_shout',
-    effects: [{ type: 'buffTarget', kind: 'buff_ap_pct', value: 10, duration: 120, party: true }],
-    description: 'A shout that increases the attack power of all party members by $b% for 2 min.',
+    // 1800s matches the other five standardized class raid buffs (int, armor,
+    // AP, stamina, stats all run 30 min); 120s was the odd one out.
+    effects: [{ type: 'buffTarget', kind: 'buff_ap_pct', value: 10, duration: 1800, party: true }],
+    description: 'A shout that increases the attack power of all party members by $b% for 30 min.',
   },
   commanding_shout: {
     id: 'commanding_shout',

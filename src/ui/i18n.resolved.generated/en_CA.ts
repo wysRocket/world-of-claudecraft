@@ -5133,7 +5133,7 @@ export const en_CA: EnTranslations = {
       },
       "battle_shout": {
         "name": "Iron Bellow",
-        "description": "A shout that increases the attack power of all party members by {buff}% for 2 min."
+        "description": "A shout that increases the attack power of all party members by {buff}% for 30 min."
       },
       "commanding_shout": {
         "name": "Bolstering Cry",

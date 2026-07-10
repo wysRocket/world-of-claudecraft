@@ -640,7 +640,7 @@ const classAbilityNamesEn = {
       [
         'battle_shout',
         'Iron Bellow',
-        'A shout that increases the attack power of all party members by {buff}% for 2 min.',
+        'A shout that increases the attack power of all party members by {buff}% for 30 min.',
       ],
       ['commanding_shout', 'Bolstering Cry', 'Increases your Stamina by 6 for 1 hour.'],
       [
