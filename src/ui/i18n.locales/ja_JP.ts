@@ -56,6 +56,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.keybindEvicted':
     '{key} を {action} に割り当てました。{evicted} からは解除されました。',
   'hudChrome.options.keybindTaken': 'キー解除',
+  'hudChrome.options.conflictDot': 'キー競合',
+  'hudChrome.options.overviewConflictAlert': '一部のキー割り当てが競合しているか未設定です。',
+  'hudChrome.controller.duplicate': '{buttons} にも割り当て済み',
   'hudChrome.options.sec.quality': '品質',
   'hudChrome.options.sec.general': '一般',
   'hudChrome.options.sec.scaleText': '拡大と文字',

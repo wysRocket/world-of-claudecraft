@@ -619,6 +619,8 @@ export const tr_TR: EnTranslations = {
       "keybindEvicted": "Bound {key} to {action}; removed from {evicted}",
       "keybindTaken": "Key removed",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "Binding conflict",
+      "overviewConflictAlert": "Some key bindings conflict or are unbound.",
       "sec": {
         "quality": "Quality",
         "view": "View",
@@ -658,7 +660,8 @@ export const tr_TR: EnTranslations = {
       "buttons": "Tuş Düzeni",
       "resetButtons": "Tuş Düzenini Sıfırla",
       "menuAction": "Oyun Menüsü",
-      "help": "Sol çubuk hareket ettirir, sağ çubuk bakışı yönlendirir. Ekran üzeri işaretçiyi kullanmak için bir pencere açın."
+      "help": "Sol çubuk hareket ettirir, sağ çubuk bakışı yönlendirir. Ekran üzeri işaretçiyi kullanmak için bir pencere açın.",
+      "duplicate": "Also bound to {buttons}"
     },
     "perf": {
       "title": "Performans Katmanı",

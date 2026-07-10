@@ -619,6 +619,8 @@ export const pl_PL: EnTranslations = {
       "keybindEvicted": "Bound {key} to {action}; removed from {evicted}",
       "keybindTaken": "Key removed",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "Binding conflict",
+      "overviewConflictAlert": "Some key bindings conflict or are unbound.",
       "sec": {
         "quality": "Quality",
         "view": "View",
@@ -658,7 +660,8 @@ export const pl_PL: EnTranslations = {
       "buttons": "Układ przycisków",
       "resetButtons": "Resetuj układ przycisków",
       "menuAction": "Menu gry",
-      "help": "Lewa gałka porusza, prawa gałka rozgląda. Otwórz okno, aby użyć wskaźnika ekranowego."
+      "help": "Lewa gałka porusza, prawa gałka rozgląda. Otwórz okno, aby użyć wskaźnika ekranowego.",
+      "duplicate": "Also bound to {buttons}"
     },
     "perf": {
       "title": "Nakładka wydajności",

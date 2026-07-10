@@ -5949,6 +5949,7 @@
     padding: var(--spacing-sm) var(--spacing-md) var(--spacing-xs);
   }
   .opt-tab {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
@@ -6000,6 +6001,21 @@
     font-size: var(--text-xs);
     line-height: 18px;
     text-align: center;
+  }
+  /* Aggregate conflict dot: pinned to the tab corner so it survives the icon-only
+     collapse (the label/count are visually hidden under 900px, this stays). */
+  .opt-tab-dot {
+    position: absolute;
+    top: 5px;
+    inset-inline-end: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-notify-warning);
+  }
+  /* Controller duplicate chip sits left of the remap dropdown in the row control. */
+  .opt-dup-chip {
+    flex: none;
   }
   /* Detail: category header (display gold) + muted subhead, then sections. */
   .opt-cat-head {
@@ -8905,6 +8921,12 @@
     .opt-seg-btn.is-selected {
       outline: 2px solid Highlight;
       outline-offset: -2px;
+    }
+    /* The conflict dot conveys state by color, which the forced palette drops; keep
+       it visible via a system-colour fill (it pairs with the banner text + the tab's
+       aria-label, so AT already has the non-colour cue). */
+    .opt-tab-dot {
+      background: Mark;
     }
   }
 }

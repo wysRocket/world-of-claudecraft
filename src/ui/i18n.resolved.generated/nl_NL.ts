@@ -619,6 +619,8 @@ export const nl_NL: EnTranslations = {
       "keybindEvicted": "Bound {key} to {action}; removed from {evicted}",
       "keybindTaken": "Key removed",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "Binding conflict",
+      "overviewConflictAlert": "Some key bindings conflict or are unbound.",
       "sec": {
         "quality": "Quality",
         "view": "View",
@@ -658,7 +660,8 @@ export const nl_NL: EnTranslations = {
       "buttons": "Knopindeling",
       "resetButtons": "Knopindeling resetten",
       "menuAction": "Spelmenu",
-      "help": "Linkerstick beweegt, rechterstick kijkt rond. Open een venster om de aanwijzer op het scherm te gebruiken."
+      "help": "Linkerstick beweegt, rechterstick kijkt rond. Open een venster om de aanwijzer op het scherm te gebruiken.",
+      "duplicate": "Also bound to {buttons}"
     },
     "perf": {
       "title": "Prestatie-overlay",

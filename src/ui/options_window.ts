@@ -58,6 +58,7 @@ import {
 import type { TranslationKey } from './i18n.catalog';
 import {
   type ControllerBindRow,
+  type ControllerDuplicate,
   computeKeybindConflicts,
   evictedActions,
   type KeybindConflicts,
@@ -510,22 +511,33 @@ export class OptionsWindow {
     const hooks = this.deps.options();
     const changed = (id: CategoryId): number =>
       hooks ? categoryChangedCount(id, (key) => this.isChanged(hooks, key)) : 0;
+    // Aggregate conflict state feeds the per-category rail dot (spec section 7):
+    // the Keybinds dot on any keyboard conflict/unbound, the Controller dot on any
+    // controller duplicate. The dot lives OUTSIDE the label so it survives the
+    // 900px icon-collapse (a conflict stays visible even when the rail is a strip).
+    const conflicts = this.computeConflicts();
+    const conflictFor = (id: CategoryId): boolean =>
+      (id === 'keybinds' && conflicts.keyboardWarning) ||
+      (id === 'controller' && conflicts.controllerWarning);
     const model = renderRailModel(this.env(), changed);
-    rail.appendChild(this.railTab(model.overview));
+    rail.appendChild(this.railTab(model.overview, conflictFor(model.overview.id)));
     for (const group of model.groups) {
       const head = el('div', 'opt-rail-group');
       head.textContent = t(group.labelKey);
       rail.appendChild(head);
-      for (const tab of group.tabs) rail.appendChild(this.railTab(tab));
+      for (const tab of group.tabs) rail.appendChild(this.railTab(tab, conflictFor(tab.id)));
     }
   }
 
-  private railTab(tab: {
-    id: CategoryId;
-    iconSlug: string;
-    nameKey: TranslationKey;
-    changedCount: number;
-  }): HTMLElement {
+  private railTab(
+    tab: {
+      id: CategoryId;
+      iconSlug: string;
+      nameKey: TranslationKey;
+      changedCount: number;
+    },
+    hasConflict = false,
+  ): HTMLElement {
     const name = t(tab.nameKey);
     const btn = el('button', 'opt-tab');
     btn.type = 'button';
@@ -541,6 +553,12 @@ export class OptionsWindow {
     const label = el('span', 'opt-tab-label');
     label.textContent = name;
     btn.append(icon, label);
+    if (hasConflict) {
+      const dot = el('span', 'opt-tab-dot');
+      dot.setAttribute('role', 'img');
+      dot.setAttribute('aria-label', t('hudChrome.options.conflictDot'));
+      btn.appendChild(dot);
+    }
     if (tab.changedCount > 0) {
       const count = el('span', 'opt-tab-count');
       count.textContent = formatNumber(tab.changedCount, { maximumFractionDigits: 0 });
@@ -1481,6 +1499,24 @@ export class OptionsWindow {
       detail.appendChild(alert);
     }
 
+    // Keybind-conflict alert (spec section 3): a persistent .error-banner linking to
+    // Keybinds when any keyboard binding conflicts or is fully unbound, shown only
+    // where the Keybinds category is reachable (it hides on touch).
+    if (this.computeConflicts().keyboardWarning && !this.env().touch) {
+      const alert = el('div', 'error-banner');
+      const text = document.createElement('span');
+      text.textContent = t('hudChrome.options.overviewConflictAlert');
+      const goto = el('button', 'btn');
+      goto.type = 'button';
+      const keybindsName = t(
+        CATEGORIES.find((c) => c.id === 'keybinds')?.nameKey ?? ('' as TranslationKey),
+      );
+      goto.textContent = t('hudChrome.options.searchGoTo', { category: keybindsName });
+      goto.addEventListener('click', () => this.setActiveCategory('keybinds'));
+      alert.append(text, goto);
+      detail.appendChild(alert);
+    }
+
     // Pinned essentials: mirror rows writing their HOME key (no second home).
     const hooks = this.deps.options();
     const source = hooks ? this.settingsSource(hooks) : null;
@@ -2024,9 +2060,21 @@ export class OptionsWindow {
     }
     const opts = this.gamepadActionOptions();
     const kind = hooks.gamepad.kind();
+    // Duplicate groups (spec section 6): a pad MAY map two buttons to one action, so
+    // a shared row gets a chip NAMING its sibling buttons rather than being prevented.
+    const dupByAction = new Map<string, ControllerDuplicate>();
+    for (const dup of this.computeConflicts().controllerDuplicates)
+      dupByAction.set(dup.action, dup);
     for (const { button, action } of entries) {
       const buttonLabel = gamepadButtonLabel(button, kind);
       const { row, control } = this.optRow(buttonLabel);
+      const dup = dupByAction.get(action);
+      if (dup) {
+        const others = dup.labels.filter((_, i) => dup.buttons[i] !== button);
+        const chip = el('span', 'ui-badge badge-warning opt-dup-chip');
+        chip.textContent = t('hudChrome.controller.duplicate', { buttons: others.join(', ') });
+        control.appendChild(chip);
+      }
       const dd = this.deps.buildDropdown(
         opts,
         action,

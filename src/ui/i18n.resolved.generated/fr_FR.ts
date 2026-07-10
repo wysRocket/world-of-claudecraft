@@ -619,6 +619,8 @@ export const fr_FR: EnTranslations = {
       "keybindEvicted": "Bound {key} to {action}; removed from {evicted}",
       "keybindTaken": "Key removed",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "Binding conflict",
+      "overviewConflictAlert": "Some key bindings conflict or are unbound.",
       "sec": {
         "quality": "Quality",
         "view": "View",
@@ -658,7 +660,8 @@ export const fr_FR: EnTranslations = {
       "buttons": "Disposition des boutons",
       "resetButtons": "Réinitialiser la disposition des boutons",
       "menuAction": "Menu du jeu",
-      "help": "Le stick gauche déplace, le droit oriente la caméra. Ouvrez une fenêtre pour utiliser le pointeur à l'écran."
+      "help": "Le stick gauche déplace, le droit oriente la caméra. Ouvrez une fenêtre pour utiliser le pointeur à l'écran.",
+      "duplicate": "Also bound to {buttons}"
     },
     "perf": {
       "title": "Surcouche de performance",

@@ -290,6 +290,57 @@ describe('options_window: rebind UX (P4)', () => {
   });
 });
 
+describe('options_window: conflict surfacing (P4)', () => {
+  const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+
+  it('reads ONE keybind_conflicts aggregate for the whole surface', () => {
+    // The pure core adapts the two live tables (Attack Move omitted while off).
+    expect(painter).toContain('private keyboardConflictRows(): KeyboardBindRow[]');
+    expect(painter).toContain("a.id !== 'attackMove' || attackMoveOn");
+    expect(painter).toContain('private controllerConflictRows(): ControllerBindRow[]');
+    expect(painter).toContain('return computeKeybindConflicts(');
+  });
+
+  it('shows a per-category rail dot fed by the aggregate, outside the collapsing label', () => {
+    const rail = painter.slice(painter.indexOf('private renderRail(): void {'));
+    const body = rail.slice(0, rail.indexOf('\n  private railTab'));
+    expect(body).toContain('const conflicts = this.computeConflicts();');
+    expect(body).toContain("(id === 'keybinds' && conflicts.keyboardWarning)");
+    expect(body).toContain("(id === 'controller' && conflicts.controllerWarning)");
+    // The dot is a direct tab child (not inside .opt-tab-label), with an a11y name.
+    expect(painter).toContain("el('span', 'opt-tab-dot')");
+    expect(painter).toContain("t('hudChrome.options.conflictDot')");
+    // The dot is NOT in the 900px icon-collapse hidden set, so it survives collapse.
+    const collapse = components.slice(components.indexOf('@media (max-width: 900px)'));
+    const block = collapse.slice(0, collapse.indexOf('\n  }\n  /*'));
+    expect(block).not.toContain('opt-tab-dot');
+    // A forced-colours fill keeps the dot visible when the palette drops color.
+    const forced = components.slice(components.indexOf('@media (forced-colors: active)'));
+    expect(forced).toContain('.opt-tab-dot {');
+  });
+
+  it('links an Overview alert to Keybinds on a keyboard conflict (desktop only)', () => {
+    const overview = painter.slice(painter.indexOf('private renderOverview'));
+    const body = overview.slice(0, overview.indexOf('\n  private quickActionAvailable'));
+    expect(body).toContain('this.computeConflicts().keyboardWarning && !this.env().touch');
+    expect(body).toContain("t('hudChrome.options.overviewConflictAlert')");
+    expect(body).toContain("this.setActiveCategory('keybinds')");
+  });
+
+  it('chips a controller row that shares its action, naming the sibling buttons', () => {
+    const controller = painter.slice(painter.indexOf('private renderControllerButtons'));
+    const body = controller.slice(0, controller.indexOf('\n  // ----'));
+    expect(body).toContain('this.computeConflicts().controllerDuplicates');
+    expect(body).toContain('dup.labels.filter((_, i) => dup.buttons[i] !== button)');
+    expect(body).toContain("el('span', 'ui-badge badge-warning opt-dup-chip')");
+    expect(body).toContain("t('hudChrome.controller.duplicate', { buttons:");
+    // Reset + pad connect/disconnect still re-render the pane (preserved).
+    expect(body).toContain('hooks.gamepad.reset();');
+    const refresh = painter.slice(painter.indexOf('refreshControllerLabels(): void'));
+    expect(refresh.slice(0, refresh.indexOf('\n  //'))).toContain('this.renderDetail()');
+  });
+});
+
 describe('options_window: keyboard navigation (P3)', () => {
   const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
 

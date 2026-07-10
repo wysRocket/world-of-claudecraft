@@ -619,6 +619,8 @@ export const en_XA: EnTranslations = {
       "keybindEvicted": "[Ɓóúñð {key} ţó {action}; ŕéɱóʋéð ƒŕóɱ {evicted}]",
       "keybindTaken": "[Ķéý ŕéɱóʋéð]",
       "keybindUnbound": "[{action} ĥáš ñó ķéý]",
+      "conflictDot": "[Ɓíñðíñĝ çóñƒļíçţ]",
+      "overviewConflictAlert": "[Šóɱé ķéý ƀíñðíñĝš çóñƒļíçţ óŕ áŕé úñƀóúñð.]",
       "sec": {
         "quality": "[Ɋúáļíţý]",
         "view": "[Ʋíéŵ]",
@@ -658,7 +660,8 @@ export const en_XA: EnTranslations = {
       "buttons": "[Ɓúţţóñ Ļáýóúţ]",
       "resetButtons": "[Ŕéšéţ Ɓúţţóñ Ļáýóúţ]",
       "menuAction": "[Ĝáɱé Ɱéñú]",
-      "help": "[Ļéƒţ šţíçķ ɱóʋéš, ŕíĝĥţ šţíçķ ļóóķš. Óþéñ á ŵíñðóŵ ţó úšé ţĥé óñ-šçŕééñ þóíñţéŕ.]"
+      "help": "[Ļéƒţ šţíçķ ɱóʋéš, ŕíĝĥţ šţíçķ ļóóķš. Óþéñ á ŵíñðóŵ ţó úšé ţĥé óñ-šçŕééñ þóíñţéŕ.]",
+      "duplicate": "[Áļšó ƀóúñð ţó {buttons}]"
     },
     "perf": {
       "title": "[Þéŕƒóŕɱáñçé Óʋéŕļáý]",

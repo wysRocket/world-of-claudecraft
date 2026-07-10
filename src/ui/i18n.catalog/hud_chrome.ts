@@ -721,6 +721,11 @@ export const hudChromeStrings = {
     keybindEvicted: 'Bound {key} to {action}; removed from {evicted}',
     keybindTaken: 'Key removed',
     keybindUnbound: '{action} has no key',
+    // The aggregate rail warning dot (spec section 7) and the Overview alert row
+    // (spec section 3) for a keybind conflict / fully-unbound action. Both wordy, so
+    // their five non-Latin fills land in this same change (M16).
+    conflictDot: 'Binding conflict',
+    overviewConflictAlert: 'Some key bindings conflict or are unbound.',
     sec: {
       quality: 'Quality',
       view: 'View',
@@ -765,6 +770,10 @@ export const hudChromeStrings = {
     resetButtons: 'Reset Button Layout',
     menuAction: 'Game Menu',
     help: 'Left stick moves, right stick looks. Open a window to use the on-screen pointer.',
+    // Chip on a button row that shares its action with other buttons (spec section
+    // 6: a pad MAY map two buttons to one action, so this names the duplicate rather
+    // than preventing it). Wordy: its five non-Latin fills land in this same change.
+    duplicate: 'Also bound to {buttons}',
   },
   // Performance overlay (the customizable in-game stats panel + its Options
   // sub-view). Player-facing, so every label is a key here; the live numbers in

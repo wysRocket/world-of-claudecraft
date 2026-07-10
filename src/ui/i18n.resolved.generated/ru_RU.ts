@@ -619,6 +619,8 @@ export const ru_RU: EnTranslations = {
       "keybindEvicted": "{key} назначена на «{action}»; снята с «{evicted}».",
       "keybindTaken": "Клавиша снята",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "Конфликт клавиш",
+      "overviewConflictAlert": "Некоторые привязки клавиш конфликтуют или не назначены.",
       "sec": {
         "quality": "Качество",
         "view": "View",
@@ -658,7 +660,8 @@ export const ru_RU: EnTranslations = {
       "buttons": "Раскладка кнопок",
       "resetButtons": "Сбросить раскладку кнопок",
       "menuAction": "Игровое меню",
-      "help": "Левый стик — движение, правый — камера. Откройте окно, чтобы использовать экранный указатель."
+      "help": "Левый стик — движение, правый — камера. Откройте окно, чтобы использовать экранный указатель.",
+      "duplicate": "Также назначено на {buttons}"
     },
     "perf": {
       "title": "Оверлей производительности",

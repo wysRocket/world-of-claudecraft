@@ -619,6 +619,8 @@ export const zh_CN: EnTranslations = {
       "keybindEvicted": "已将 {key} 绑定到 {action}；已从 {evicted} 移除。",
       "keybindTaken": "按键已移除",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "按键冲突",
+      "overviewConflictAlert": "部分按键绑定存在冲突或未绑定。",
       "sec": {
         "quality": "画质",
         "view": "View",
@@ -658,7 +660,8 @@ export const zh_CN: EnTranslations = {
       "buttons": "按键布局",
       "resetButtons": "重置按键布局",
       "menuAction": "游戏菜单",
-      "help": "左摇杆移动，右摇杆控制镜头。打开窗口即可使用屏幕指针。"
+      "help": "左摇杆移动，右摇杆控制镜头。打开窗口即可使用屏幕指针。",
+      "duplicate": "也绑定到 {buttons}"
     },
     "perf": {
       "title": "性能监视器",

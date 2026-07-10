@@ -619,6 +619,8 @@ export const zh_TW: EnTranslations = {
       "keybindEvicted": "已將 {key} 綁定到 {action}；已從 {evicted} 移除。",
       "keybindTaken": "按鍵已移除",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "按鍵衝突",
+      "overviewConflictAlert": "部分按鍵綁定發生衝突或未綁定。",
       "sec": {
         "quality": "畫質",
         "view": "View",
@@ -658,7 +660,8 @@ export const zh_TW: EnTranslations = {
       "buttons": "按鍵配置",
       "resetButtons": "重設按鍵配置",
       "menuAction": "遊戲選單",
-      "help": "左搖桿移動，右搖桿控制鏡頭。開啟視窗即可使用螢幕指標。"
+      "help": "左搖桿移動，右搖桿控制鏡頭。開啟視窗即可使用螢幕指標。",
+      "duplicate": "也綁定到 {buttons}"
     },
     "perf": {
       "title": "效能監視器",

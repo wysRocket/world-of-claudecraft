@@ -56,6 +56,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.keybindEvicted':
     '{key}을 {action}에 지정했습니다. {evicted}에서는 해제되었습니다.',
   'hudChrome.options.keybindTaken': '키 해제됨',
+  'hudChrome.options.conflictDot': '키 충돌',
+  'hudChrome.options.overviewConflictAlert': '일부 키 지정이 충돌하거나 지정되지 않았습니다.',
+  'hudChrome.controller.duplicate': '{buttons}에도 지정됨',
   'hudChrome.options.sec.quality': '품질',
   'hudChrome.options.sec.general': '일반',
   'hudChrome.options.sec.scaleText': '배율 및 텍스트',

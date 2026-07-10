@@ -619,6 +619,8 @@ export const ja_JP: EnTranslations = {
       "keybindEvicted": "{key} を {action} に割り当てました。{evicted} からは解除されました。",
       "keybindTaken": "キー解除",
       "keybindUnbound": "{action} has no key",
+      "conflictDot": "キー競合",
+      "overviewConflictAlert": "一部のキー割り当てが競合しているか未設定です。",
       "sec": {
         "quality": "品質",
         "view": "View",
@@ -658,7 +660,8 @@ export const ja_JP: EnTranslations = {
       "buttons": "ボタン配置",
       "resetButtons": "ボタン配置をリセット",
       "menuAction": "ゲームメニュー",
-      "help": "左スティックで移動、右スティックで視点。ウィンドウを開くと画面ポインターが使えます。"
+      "help": "左スティックで移動、右スティックで視点。ウィンドウを開くと画面ポインターが使えます。",
+      "duplicate": "{buttons} にも割り当て済み"
     },
     "perf": {
       "title": "パフォーマンスオーバーレイ",
