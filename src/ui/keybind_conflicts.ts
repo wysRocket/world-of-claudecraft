@@ -28,6 +28,15 @@ export interface KeyboardBindRow {
   category: string;
   codes: readonly (string | null)[];
   allowShared?: boolean;
+  /** True when the DEFAULT layout ships this action with no binding (strafeLeft /
+   *  strafeRight: Q/E are reserved for the action bar, so the classic keyboard-turner
+   *  binds their own). Such a row, while it stays unbound, is EXPECTED state, not a
+   *  problem: it is excluded from the `unbound` list and the keyboardWarning aggregate
+   *  (a fresh/reset profile must not ship with the rail dot, Overview alert, and
+   *  banner lit out of the box). A row whose default WAS bound and which the player
+   *  explicitly cleared carries no flag and still counts. The per-row unbound cap
+   *  label is a render concern and stays visible either way. */
+  intentionalUnbound?: boolean;
 }
 
 /** One controller button's binding, adapted from GamepadBindings.entries(): the button
@@ -58,7 +67,9 @@ export interface ControllerDuplicate {
 }
 
 export interface KeybindConflicts {
-  /** Keyboard action ids with no bound code, in input order (banner + inline cue). */
+  /** Keyboard action ids with no bound code, in input order (banner + inline cue).
+   *  Rows unbound by the DEFAULT layout (intentionalUnbound) are excluded: they are
+   *  expected state and must not light the banner or the aggregate. */
   unbound: string[];
   /** Codes held by two or more non-shared keyboard actions, ascending unique. Under the
    *  steal invariant a rebind never creates one; a genuine default-layout collision (or a
@@ -83,8 +94,12 @@ export function computeKeybindConflicts(
   keyboard: readonly KeyboardBindRow[],
   controller: readonly ControllerBindRow[],
 ): KeybindConflicts {
-  // Unbound keyboard actions: every code slot empty.
-  const unbound = keyboard.filter((row) => row.codes.every((c) => c === null)).map((row) => row.id);
+  // Unbound keyboard actions: every code slot empty. A row unbound by the DEFAULT
+  // layout (intentionalUnbound) is expected state and never counts, so a fresh or
+  // reset profile does not ship permanently in the warning state.
+  const unbound = keyboard
+    .filter((row) => !row.intentionalUnbound && row.codes.every((c) => c === null))
+    .map((row) => row.id);
 
   // Duplicate codes: a code carried by 2+ NON-shared actions. Shared actions (Attack Move)
   // deliberately overlap another action's key, so they are excluded from both sides.

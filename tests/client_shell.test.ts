@@ -1029,9 +1029,17 @@ describe('client HTML shell', () => {
   });
 
   it('keeps the game menu free of duplicate and dev-only entries', () => {
-    const interfaceEntries = optionsViewTs.match(/labelKey: 'hud\.options\.interface'/g) ?? [];
+    // The legacy main-menu model (buildOptionsMenu) is gone from options_view.ts;
+    // the one Interface entry now lives in the options_ia category tree.
+    const optionsIaTs = readFileSync(
+      new URL('../src/ui/options_ia.ts', import.meta.url),
+      'utf8',
+    ).replace(/\r\n/g, '\n');
+    const interfaceEntries = optionsIaTs.match(/nameKey: 'hud\.options\.interface'/g) ?? [];
     expect(interfaceEntries).toHaveLength(1);
+    expect(optionsViewTs.match(/'hud\.options\.interface'/g) ?? []).toHaveLength(0);
     expect(optionsViewTs).not.toContain('Skin Select (dev)');
+    expect(optionsIaTs).not.toContain('Skin Select (dev)');
     expect(hudTs).not.toContain('Skin Select (dev)');
   });
 

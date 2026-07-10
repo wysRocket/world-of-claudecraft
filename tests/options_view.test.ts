@@ -12,17 +12,13 @@ import {
 } from '../src/ui/options_ia';
 import {
   boolToggleNextValue,
-  buildAudioControls,
   buildBugReportInfo,
   buildControlFromRow,
-  buildControllerControls,
-  buildGraphicsControls,
-  buildInterfaceControls,
-  buildOptionsMenu,
+  buildEnvGatedControl,
   categoryChangedCount,
   categoryResetKeys,
+  NATIVE_SHELL_MAX_GRAPHICS_PRESET,
   nonSettingRowMatches,
-  type OptionsControl,
   type OptionsSettingsSource,
   renderCategory,
   renderRailModel,
@@ -49,20 +45,6 @@ function makeSource(
       return r ? { min: r.min, max: r.max } : { min: 0, max: 1 };
     },
   };
-}
-
-// Render-order signature for a control list: a slider/toggle/boolToggle/choice
-// shows as its setting key, a note as note:<key>, the music toggle as musicToggle.
-function keysOf(controls: OptionsControl[]): string[] {
-  return controls.map((c) => {
-    if (c.control === 'note') return `note:${c.textKey}`;
-    if (c.control === 'musicToggle') return 'musicToggle';
-    return c.key;
-  });
-}
-
-function find(controls: OptionsControl[], key: string): OptionsControl | undefined {
-  return controls.find((c) => c.control !== 'note' && c.control !== 'musicToggle' && c.key === key);
 }
 
 // ---------------------------------------------------------------------------
@@ -92,261 +74,14 @@ describe('options_view: control primitive dispatch (cluster 1)', () => {
   });
 
   it('a slider descriptor carries the live value, range, step and format', () => {
-    const controls = buildGraphicsControls(makeSource({ cameraSpeed: 0.9, cameraFov: 75 }), {
-      touch: false,
-      nativeShell: false,
-    });
-    const cam = find(controls, 'cameraSpeed');
+    const cam = buildControlFromRow(makeSource({ cameraSpeed: 0.9 }), settingRow('cameraSpeed')!);
     expect(cam).toMatchObject({ control: 'slider', value: 0.9, step: 0.05, fmt: 'percent' });
     expect(cam).toMatchObject({
       min: SETTING_RANGES.cameraSpeed.min,
       max: SETTING_RANGES.cameraSpeed.max,
     });
-    const fov = find(controls, 'cameraFov');
+    const fov = buildControlFromRow(makeSource({ cameraFov: 75 }), settingRow('cameraFov')!);
     expect(fov).toMatchObject({ control: 'slider', value: 75, step: 1, fmt: 'degrees' });
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Cluster 3: graphics. Static preset read as a plain value; advanced/touch/
-// native-shell gating preserved; the preset + interfaceMode choices re-render.
-// ---------------------------------------------------------------------------
-describe('options_view: graphics dispatch matrix (cluster 3)', () => {
-  it('lists the base desktop controls in order, no advanced sub-pickers', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 4 }), {
-      touch: false,
-      nativeShell: false,
-    });
-    expect(keysOf(controls)).toEqual([
-      'graphicsPreset',
-      'browserEffects',
-      'note:hudChrome.options.browserEffectsNote',
-      'interfaceMode',
-      'note:hudChrome.options.interfaceModeNote',
-      'cameraSpeed',
-      'brightness',
-      'cameraFov',
-      'renderScale',
-      'fullscreen',
-      'showOverflowXp',
-      'weather',
-    ]);
-  });
-
-  it('the graphics preset picker is an enumerated choice [1..5] that re-renders', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 3 }), {
-      touch: false,
-      nativeShell: false,
-    });
-    const preset = find(controls, 'graphicsPreset');
-    expect(preset).toMatchObject({ control: 'choice', current: 3, rerender: true });
-    if (preset?.control === 'choice')
-      expect(preset.options.map((o) => o.value)).toEqual([1, 2, 3, 4, 5]);
-  });
-
-  it('reveals the four advanced sub-pickers only at preset 5', () => {
-    const advanced = buildGraphicsControls(makeSource({ graphicsPreset: 5 }), {
-      touch: false,
-      nativeShell: false,
-    });
-    expect(keysOf(advanced).slice(0, 5)).toEqual([
-      'graphicsPreset',
-      'terrainDetail',
-      'foliageDensity',
-      'effectsQuality',
-      'shadowQuality',
-    ]);
-    // each advanced sub-picker is a low/high choice that does NOT re-render
-    const terrain = find(advanced, 'terrainDetail');
-    expect(terrain).toMatchObject({ control: 'choice', rerender: false });
-    if (terrain?.control === 'choice') expect(terrain.options.map((o) => o.value)).toEqual([0, 1]);
-  });
-
-  it('the interfaceMode choice re-renders; browserEffects does not', () => {
-    const controls = buildGraphicsControls(makeSource(), { touch: false, nativeShell: false });
-    expect(find(controls, 'interfaceMode')).toMatchObject({ control: 'choice', rerender: true });
-    expect(find(controls, 'browserEffects')).toMatchObject({ control: 'choice', rerender: false });
-  });
-
-  it('hides Interface Mode + its note in the native app shell', () => {
-    const controls = buildGraphicsControls(makeSource(), { touch: false, nativeShell: true });
-    expect(find(controls, 'interfaceMode')).toBeUndefined();
-    expect(keysOf(controls)).not.toContain('note:hudChrome.options.interfaceModeNote');
-  });
-
-  it('caps native graphics presets at High for the native app shell', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 3 }), {
-      touch: true,
-      nativeShell: true,
-    });
-    const preset = find(controls, 'graphicsPreset');
-    expect(preset).toMatchObject({ control: 'choice', current: 3, rerender: true });
-    if (preset?.control === 'choice') expect(preset.options.map((o) => o.value)).toEqual([1, 2, 3]);
-  });
-
-  it('reveals the touch-only sliders only on a touch interface, in order', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 4 }), {
-      touch: true,
-      nativeShell: false,
-    });
-    const keys = keysOf(controls);
-    expect(keys).toContain('touchLookSpeed');
-    expect(keys).toContain('touchOpacity');
-    expect(keys).toContain('joystickScale');
-    expect(keys).toContain('actionButtonScale');
-    expect(keys).toContain('joystickDeadzone');
-    expect(keys).toContain('touchInvertLook');
-    expect(keys).toContain('mobileCameraJoystick');
-    expect(keys).toContain('leftHandedTouch');
-    // touchLookSpeed sits right after cameraSpeed
-    expect(keys[keys.indexOf('cameraSpeed') + 1]).toBe('touchLookSpeed');
-    // mobileCameraJoystick and leftHandedTouch are the last two touch-only rows,
-    // right after touchInvertLook, in that order.
-    const touchInvertIdx = keys.indexOf('touchInvertLook');
-    expect(keys[touchInvertIdx + 1]).toBe('mobileCameraJoystick');
-    expect(keys[touchInvertIdx + 2]).toBe('leftHandedTouch');
-  });
-
-  it('hides mobileCameraJoystick and leftHandedTouch on a desktop interface', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 4 }), {
-      touch: false,
-      nativeShell: false,
-    });
-    const keys = keysOf(controls);
-    expect(keys).not.toContain('mobileCameraJoystick');
-    expect(keys).not.toContain('leftHandedTouch');
-  });
-
-  it('gives mobileCameraJoystick and leftHandedTouch their correct i18n keys', () => {
-    const controls = buildGraphicsControls(makeSource({ graphicsPreset: 4 }), {
-      touch: true,
-      nativeShell: false,
-    });
-    expect(find(controls, 'mobileCameraJoystick')).toMatchObject({
-      control: 'boolToggle',
-      labelKey: 'hudChrome.options.mobileCameraJoystick',
-    });
-    expect(find(controls, 'leftHandedTouch')).toMatchObject({
-      control: 'boolToggle',
-      labelKey: 'hudChrome.options.mobileLeftHanded',
-    });
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Cluster 4: audio
-// ---------------------------------------------------------------------------
-describe('options_view: audio dispatch matrix (cluster 4)', () => {
-  it('lists three volume sliders, the bespoke music toggle, then the audio bool toggles', () => {
-    const controls = buildAudioControls(makeSource());
-    expect(keysOf(controls)).toEqual([
-      'sfxVolume',
-      'musicVolume',
-      'voiceVolume',
-      'musicToggle',
-      'voiceEnabled',
-      'footstepSfx',
-      'clickFeedback',
-    ]);
-    expect(find(controls, 'sfxVolume')).toMatchObject({ control: 'slider' });
-    expect(find(controls, 'voiceEnabled')).toMatchObject({ control: 'boolToggle' });
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Cluster 5: controller + the remaining interface toggles
-// ---------------------------------------------------------------------------
-describe('options_view: controller dispatch matrix (cluster 5)', () => {
-  it('lists the enable/invert toggles then the three controller sliders', () => {
-    const controls = buildControllerControls(makeSource());
-    expect(keysOf(controls)).toEqual([
-      'gamepadEnabled',
-      'gamepadInvertY',
-      'gamepadStickDeadzone',
-      'gamepadCameraSpeed',
-      'gamepadVibration',
-    ]);
-    expect(find(controls, 'gamepadEnabled')).toMatchObject({ control: 'boolToggle' });
-    // camera speed renders with a one-decimal readout, not a percent
-    expect(find(controls, 'gamepadCameraSpeed')).toMatchObject({
-      control: 'slider',
-      fmt: 'oneDecimal',
-    });
-  });
-});
-
-describe('options_view: interface dispatch matrix (cluster 5)', () => {
-  it('lists the comfort sliders then the comfort + accessibility bool toggles', () => {
-    const controls = buildInterfaceControls(makeSource());
-    expect(keysOf(controls)).toEqual([
-      'uiScale',
-      'playerFrameScale',
-      'targetFrameScale',
-      'hudOpacity',
-      'tooltipScale',
-      'fctScale',
-      'chatFontScale',
-      'chatOpacity',
-      'compactChat',
-      'frostedPanels',
-      'highContrastText',
-      'reduceMotion',
-      'showWalletOnCharacterScreen',
-      'showWalletOnPlayerCard',
-      'showDevBadges',
-      'showOwnNameplate',
-      'landingHighContrast',
-      'invertLookY',
-      'startAttackOnAbilityUse',
-      'walkByAutoloot',
-      'groundReticle',
-      'aurasOnPlayerFrame',
-      'showItemLevel',
-      'showSecondaryActionBar',
-      'showDailyRewardsChest',
-    ]);
-    expect(find(controls, 'reduceMotion')).toMatchObject({ control: 'boolToggle' });
-  });
-
-  it('marks only uiScale as commit-on-release; the other comfort sliders stay live (#1558)', () => {
-    const controls = buildInterfaceControls(makeSource());
-    // uiScale rescales the whole UI (window included), so it must apply on release.
-    expect(find(controls, 'uiScale')).toMatchObject({ control: 'slider', commitOnChange: true });
-    // Sibling sliders keep their live preview (no commitOnChange flag).
-    expect(find(controls, 'playerFrameScale')).not.toHaveProperty('commitOnChange');
-    expect(find(controls, 'tooltipScale')).not.toHaveProperty('commitOnChange');
-    expect(find(controls, 'fctScale')).not.toHaveProperty('commitOnChange');
-  });
-});
-
-// ---------------------------------------------------------------------------
-// Main menu routing (cluster 5)
-// ---------------------------------------------------------------------------
-describe('options_view: main menu routing', () => {
-  it('routes each row to its sub-view, with logout + close, omitting bug report offline', () => {
-    const offline = buildOptionsMenu({ bugReportAvailable: false });
-    expect(offline.map((e) => e.labelKey)).toEqual([
-      'hud.options.keyBindings',
-      'hudChrome.controller.title',
-      'hud.options.graphics',
-      'hud.options.interface',
-      'hud.options.audio',
-      'hudChrome.perf.title',
-      'hud.options.logout',
-      'hud.options.returnToGame',
-    ]);
-    expect(offline.at(-2)?.action).toEqual({ kind: 'logout' });
-    expect(offline.at(-1)?.action).toEqual({ kind: 'close' });
-    // exactly one interface entry (no duplicates), routing to the interface view
-    const interfaceRows = offline.filter((e) => e.labelKey === 'hud.options.interface');
-    expect(interfaceRows).toHaveLength(1);
-    expect(interfaceRows[0].action).toEqual({ kind: 'goto', view: 'interface' });
-  });
-
-  it('adds the online-only Report a Bug row when bug reporting is available', () => {
-    const online = buildOptionsMenu({ bugReportAvailable: true });
-    const bug = online.find((e) => e.labelKey === 'hudChrome.bugReport.menuButton');
-    expect(bug?.action).toEqual({ kind: 'goto', view: 'bugreport' });
   });
 });
 
@@ -415,16 +150,71 @@ describe('options_view: bug report info (cluster 2)', () => {
 // Determinism: same input -> same output (deterministic pure core)
 // ---------------------------------------------------------------------------
 describe('options_view: determinism', () => {
-  it('produces identical control lists for identical inputs', () => {
+  it('produces identical models and controls for identical inputs', () => {
     const src = makeSource({ graphicsPreset: 5, cameraSpeed: 0.8 }, { reduceMotion: true });
     const env = { touch: true, nativeShell: false };
-    expect(buildGraphicsControls(src, env)).toEqual(buildGraphicsControls(src, env));
-    expect(buildAudioControls(src)).toEqual(buildAudioControls(src));
-    expect(buildInterfaceControls(src)).toEqual(buildInterfaceControls(src));
-    expect(buildControllerControls(src)).toEqual(buildControllerControls(src));
-    expect(buildOptionsMenu({ bugReportAvailable: true })).toEqual(
-      buildOptionsMenu({ bugReportAvailable: true }),
+    expect(renderCategory('graphics', env)).toEqual(renderCategory('graphics', env));
+    expect(renderCategory('interface', env)).toEqual(renderCategory('interface', env));
+    expect(renderRailModel(env, () => 0)).toEqual(renderRailModel(env, () => 0));
+    const preset = settingRow('graphicsPreset')!;
+    expect(buildEnvGatedControl(src, preset, env)).toEqual(buildEnvGatedControl(src, preset, env));
+    expect(buildControlFromRow(src, preset)).toEqual(buildControlFromRow(src, preset));
+  });
+});
+
+// ---------------------------------------------------------------------------
+// buildEnvGatedControl: the ONE cap/env gating path (S1). Every render surface
+// (category detail, Overview pins, global search) binds rows through this, so
+// the native-shell preset cap and the env-hidden rows can never leak through a
+// mirror row.
+// ---------------------------------------------------------------------------
+describe('options_view: buildEnvGatedControl (S1)', () => {
+  const desktop = { touch: false, nativeShell: false };
+  const nativeShell = { touch: true, nativeShell: true };
+
+  it('caps the graphicsPreset choice at High under the native shell (and only there)', () => {
+    const row = settingRow('graphicsPreset')!;
+    const capped = buildEnvGatedControl(makeSource({ graphicsPreset: 3 }), row, nativeShell);
+    expect(capped).toMatchObject({ control: 'choice', key: 'graphicsPreset' });
+    if (capped?.control === 'choice') {
+      expect(capped.options.map((o) => o.value)).toEqual([1, 2, 3]);
+      expect(Math.max(...capped.options.map((o) => o.value))).toBe(
+        NATIVE_SHELL_MAX_GRAPHICS_PRESET,
+      );
+    }
+    const full = buildEnvGatedControl(makeSource({ graphicsPreset: 3 }), row, desktop);
+    if (full?.control === 'choice')
+      expect(full.options.map((o) => o.value)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it('returns null for the nativeShellHidden interfaceMode row under the native shell', () => {
+    // This is the Overview-pin leak: the pin path must drop the row exactly like
+    // the Controls detail pane does.
+    const row = settingRow('interfaceMode')!;
+    expect(buildEnvGatedControl(makeSource(), row, nativeShell)).toBeNull();
+    expect(buildEnvGatedControl(makeSource(), row, desktop)).toMatchObject({
+      control: 'choice',
+      key: 'interfaceMode',
+    });
+  });
+
+  it('hides a desktop-only row on touch and a touch-only row on desktop', () => {
+    const mouse = settingRow('mouseCamera')!;
+    expect(buildEnvGatedControl(makeSource(), mouse, { touch: true, nativeShell: false })).toBe(
+      null,
     );
+    expect(buildEnvGatedControl(makeSource(), mouse, desktop)).not.toBeNull();
+    // joystickScale inherits touchOnly from its Touch home category.
+    const joystick = settingRow('joystickScale')!;
+    expect(buildEnvGatedControl(makeSource(), joystick, desktop)).toBeNull();
+    expect(
+      buildEnvGatedControl(makeSource(), joystick, { touch: true, nativeShell: false }),
+    ).not.toBeNull();
+  });
+
+  it('still returns null for bespoke rows, which the painter renders itself', () => {
+    const lang = allRows().find((r) => r.control === 'language')!;
+    expect(buildEnvGatedControl(makeSource(), lang, desktop)).toBeNull();
   });
 });
 
@@ -510,6 +300,30 @@ describe('options_view: category detail model (P2)', () => {
     expect(keys).not.toContain('interfaceMode');
     // The inputMode section held only interfaceMode + its note, so it drops whole.
     expect(shell.sections.map((s) => s.id)).not.toContain('inputMode');
+  });
+
+  it('the Chat section carries the hud-owned chat-timestamp rows (S2), on every host', () => {
+    // Show + 12h/24h are keyless bespoke rows (hud localStorage state via the
+    // OptionsHooks chat accessors); a player with timestamps on must always have
+    // a surface to turn them off, so no env gate hides them anywhere.
+    for (const env of [
+      desktop,
+      { touch: true, nativeShell: false },
+      { touch: true, nativeShell: true },
+    ]) {
+      const chat = renderCategory('interface', env).sections.find((s) => s.id === 'chat');
+      const controls = chat?.rows.map((r) => r.control) ?? [];
+      expect(controls, `env ${JSON.stringify(env)}`).toContain('chatTimestamps');
+      expect(controls, `env ${JSON.stringify(env)}`).toContain('chatClock');
+    }
+    // Their labels are the shipped chatTimestamps keys (already localized).
+    const chat = renderCategory('interface', desktop).sections.find((s) => s.id === 'chat');
+    expect(chat?.rows.find((r) => r.control === 'chatTimestamps')?.labelKey).toBe(
+      'hudChrome.chatTimestamps.show',
+    );
+    expect(chat?.rows.find((r) => r.control === 'chatClock')?.labelKey).toBe(
+      'hudChrome.chatTimestamps.format',
+    );
   });
 });
 

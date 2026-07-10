@@ -17,12 +17,13 @@ import {
 const kbRow = (
   id: string,
   codes: (string | null)[],
-  opts: { category?: string; allowShared?: boolean } = {},
+  opts: { category?: string; allowShared?: boolean; intentionalUnbound?: boolean } = {},
 ): KeyboardBindRow => ({
   id,
   category: opts.category ?? 'Interface',
   codes,
   allowShared: opts.allowShared,
+  intentionalUnbound: opts.intentionalUnbound,
 });
 
 const padRow = (button: number, action: string, label = `#${button}`): ControllerBindRow => ({
@@ -50,13 +51,15 @@ function installStorage(): void {
 }
 
 // Adapter: the plain KeyboardBindRow shape the pure core consumes, read off a live
-// Keybinds instance exactly as the P4 wiring will.
+// Keybinds instance exactly as the options_window wiring does (intentionalUnbound
+// is sourced from the DEFAULT layout: an action shipping zero default codes).
 function rowsOf(kb: Keybinds): KeyboardBindRow[] {
   return BIND_ACTIONS.map((a) => ({
     id: a.id,
     category: a.category,
     codes: [kb.codeAt(a.id, 0), kb.codeAt(a.id, 1)],
     allowShared: a.allowShared,
+    intentionalUnbound: a.defaults.length === 0,
   }));
 }
 
@@ -89,6 +92,47 @@ describe('computeKeybindConflicts: keyboard unbound detection', () => {
     expect(r.unbound).toEqual(['b', 'c']);
     expect(r.keyboardWarning).toBe(true);
     expect(r.anyWarning).toBe(true);
+  });
+
+  it('does NOT count an intentionally-unbound row (empty DEFAULT layout) toward the aggregate', () => {
+    // strafeLeft/strafeRight ship unbound by DEFAULT (Q/E are reserved for the
+    // action bar), so a FRESH profile must not open in the warning state: no rail
+    // dot, no Overview alert, no banner entry. The per-row unbound cap label is a
+    // render concern and stays visible regardless.
+    const r = computeKeybindConflicts(
+      [
+        kbRow('strafeLeft', [null, null], { intentionalUnbound: true }),
+        kbRow('strafeRight', [null, null], { intentionalUnbound: true }),
+        kbRow('jump', ['Space', null]),
+      ],
+      [],
+    );
+    expect(r.unbound).toEqual([]);
+    expect(r.keyboardWarning).toBe(false);
+    expect(r.anyWarning).toBe(false);
+  });
+
+  it('still counts a row the player explicitly cleared (its default was bound)', () => {
+    // interact defaults to KeyF; the player clearing it leaves a real gap, so it
+    // stays in the unbound list even next to intentionally-unbound rows.
+    const r = computeKeybindConflicts(
+      [
+        kbRow('strafeLeft', [null, null], { intentionalUnbound: true }),
+        kbRow('interact', [null, null]),
+      ],
+      [],
+    );
+    expect(r.unbound).toEqual(['interact']);
+    expect(r.keyboardWarning).toBe(true);
+  });
+
+  it('an intentionally-unbound row the player later bound is simply bound (no warning)', () => {
+    const r = computeKeybindConflicts(
+      [kbRow('strafeLeft', ['KeyQ', null], { intentionalUnbound: true })],
+      [],
+    );
+    expect(r.unbound).toEqual([]);
+    expect(r.keyboardWarning).toBe(false);
   });
 });
 
@@ -219,12 +263,14 @@ describe('keybind_conflicts against the REAL Keybinds steal semantics', () => {
     const before = rowsOf(kb);
 
     // Post-modernization baseline: the default layout ships NO keyboard duplicate
-    // (the old KeyH collision is gone), and the strafe keys ship unbound-by-default,
-    // so they are the only baseline unbound actions (in registry order).
+    // (the old KeyH collision is gone), and the strafe keys ship unbound-by-default
+    // INTENTIONALLY (their empty default layout marks them intentionalUnbound), so a
+    // fresh profile carries no warning at all: no unbound entries, no lit aggregate.
     const baseline = computeKeybindConflicts(before, []);
     expect(baseline.duplicateCodes).toEqual([]);
-    expect(baseline.unbound).toEqual(['strafeLeft', 'strafeRight']);
-    expect(baseline.unbound).not.toContain('interact');
+    expect(baseline.unbound).toEqual([]);
+    expect(baseline.keyboardWarning).toBe(false);
+    expect(baseline.anyWarning).toBe(false);
 
     // interact defaults to its only code KeyF; steal it onto bags (default KeyB).
     expect(kb.codeAt('interact', 0)).toBe('KeyF');
@@ -237,10 +283,10 @@ describe('keybind_conflicts against the REAL Keybinds steal semantics', () => {
     // The real bind removed KeyF from interact, so the stolen code is on exactly one
     // action now (the steal never leaves the moved code duplicated), and still no dupes.
     expect(after.duplicateCodes).toEqual([]);
-    // interact, whose sole code was stolen, is now fully unbound and joins the strafe
-    // pair in the unbound list (registry order: strafe rows precede interact).
+    // interact, whose sole code was stolen, is now fully unbound; its DEFAULT layout
+    // was bound (KeyF), so it counts. The intentionally-unbound strafe pair stays out.
     expect(kb.codeAt('interact', 0)).toBeNull();
-    expect(after.unbound).toEqual(['strafeLeft', 'strafeRight', 'interact']);
+    expect(after.unbound).toEqual(['interact']);
     expect(after.keyboardWarning).toBe(true);
 
     // The KeyH pair no longer collides (Damage Meters moved to KeyZ).
