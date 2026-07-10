@@ -11336,6 +11336,12 @@ export class Hud {
   // -------------------------------------------------------------------------
 
   private townFocusDraft: Record<string, number> | null = null;
+  // WCAG 2.2 AA focus traps for the two standalone framed windows that lacked
+  // them: opening TRAPS Tab inside the dialog + lands focus on the first control,
+  // closing RETURNS focus to the opener (the shared FocusManager, like every other
+  // framed window). Held here so the close path can release the trap.
+  private townFocusTrap: FocusTrapHandle | null = null;
+  private craftingTrap: FocusTrapHandle | null = null;
 
   private isInTown(): boolean {
     const pos = this.sim.player.pos;
@@ -11350,7 +11356,11 @@ export class Hud {
     }
     this.closeOtherWindows('#town-focus-window');
     this.townFocusDraft = { ...this.sim.townFocus };
+    // Trap Tab inside the dialog and return focus to the opener on close (WCAG
+    // 2.4.3 / 2.1.2), like every other standalone framed window.
+    this.townFocusTrap = this.focusManager.open({ root: () => $('#town-focus-window') });
     this.renderTownFocus();
+    this.townFocusTrap.focusFirst();
   }
 
   private renderTownFocus(): void {
@@ -11382,6 +11392,8 @@ export class Hud {
   closeTownFocus(): void {
     $('#town-focus-window').style.display = 'none';
     this.townFocusDraft = null;
+    this.townFocusTrap?.release();
+    this.townFocusTrap = null;
     this.hideTooltip();
   }
 
@@ -11404,8 +11416,15 @@ export class Hud {
   }
 
   openCrafting(): void {
+    const wasHidden = $('#crafting-window').style.display !== 'block';
     this.closeOtherWindows('#crafting-window');
+    // Trap Tab inside the dialog and return focus to the opener on close (WCAG
+    // 2.4.3 / 2.1.2), like every other standalone framed window. Only install on a
+    // fresh open so a re-open while shown never stacks a second trap.
+    if (wasHidden)
+      this.craftingTrap = this.focusManager.open({ root: () => $('#crafting-window') });
     this.renderCrafting();
+    this.craftingTrap?.focusFirst();
   }
 
   private renderCrafting(): void {
@@ -11427,6 +11446,8 @@ export class Hud {
 
   closeCrafting(): void {
     $('#crafting-window').style.display = 'none';
+    this.craftingTrap?.release();
+    this.craftingTrap = null;
     this.hideTooltip();
   }
   // -------------------------------------------------------------------------

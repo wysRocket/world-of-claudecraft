@@ -8,6 +8,8 @@
 // (titlebar then body then footer), the +/- steppers and the footer Save action
 // route to the injected deps, and the close control routes to onClose.
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import type { TownFocusView } from '../src/ui/town_focus_view';
 import { renderTownFocusWindow, type TownFocusWindowDeps } from '../src/ui/town_focus_window';
@@ -125,5 +127,26 @@ describe('renderTownFocusWindow: body content + callbacks', () => {
     expect(onSave).toHaveBeenCalledTimes(1);
     el.querySelector<HTMLElement>('[data-window-close]')?.click();
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+});
+
+// The town-focus dialog is a full framed window, so hud.ts must wire it into the
+// shared FocusManager like every other one (the trap mechanics are unit-tested in
+// focus_manager.test.ts): TRAP Tab inside on open, focus-first, and RETURN focus
+// to the opener on close (WCAG 2.4.3 / 2.1.2). This guards the I3 fix.
+describe('town focus window: hud installs the WCAG focus trap (I3)', () => {
+  // cwd-relative (not import.meta.url): the jsdom env makes import.meta.url a
+  // non-file URL, so new URL(..., import.meta.url) would not resolve to a path.
+  const hud = readFileSync(join(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+
+  it('opens a focus trap + focus-first on open, releases + returns focus on close', () => {
+    const toggle = hud.slice(hud.indexOf('toggleTownFocus(): void {'));
+    const toggleBody = toggle.slice(0, toggle.indexOf('\n  private renderTownFocus'));
+    expect(toggleBody).toContain("this.focusManager.open({ root: () => $('#town-focus-window') })");
+    expect(toggleBody).toContain('this.townFocusTrap.focusFirst();');
+    const close = hud.slice(hud.indexOf('closeTownFocus(): void {'));
+    const closeBody = close.slice(0, close.indexOf('\n  }'));
+    expect(closeBody).toContain('this.townFocusTrap?.release();');
+    expect(closeBody).toContain('this.townFocusTrap = null;');
   });
 });

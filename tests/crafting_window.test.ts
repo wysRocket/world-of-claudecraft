@@ -9,6 +9,8 @@
 // recipe is disabled, the empty state renders, craft dispatch fires only for a
 // craftable recipe, and the close routes to the injected onClose dep.
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ItemDef } from '../src/sim/types';
 import type { CraftingRecipeRow, CraftingView } from '../src/ui/crafting_view';
@@ -206,5 +208,29 @@ describe('renderCraftingWindow: craft + close callbacks', () => {
     renderCraftingWindow(el, { recipes: [] }, fakeDeps({ onClose }));
     el.querySelector<HTMLElement>('[data-window-close]')?.click();
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+});
+
+// The crafting window's dialog chrome is a full framed window, so hud.ts must wire
+// it into the shared FocusManager like every other one (the trap mechanics are
+// unit-tested in focus_manager.test.ts): TRAP Tab inside on open, focus-first, and
+// RETURN focus to the opener on close (WCAG 2.4.3 / 2.1.2). This guards the I3 fix.
+describe('crafting window: hud installs the WCAG focus trap (I3)', () => {
+  // cwd-relative (not import.meta.url): the jsdom env makes import.meta.url a
+  // non-file URL, so new URL(..., import.meta.url) would not resolve to a path.
+  const hud = readFileSync(join(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+
+  it('opens a focus trap + focus-first on open, releases + returns focus on close', () => {
+    const open = hud.slice(hud.indexOf('openCrafting(): void {'));
+    const openBody = open.slice(0, open.indexOf('\n  }'));
+    // Installed on a FRESH open only (a re-open while shown must not stack a trap).
+    expect(openBody).toContain('if (wasHidden)');
+    expect(openBody).toContain("this.focusManager.open({ root: () => $('#crafting-window') })");
+    expect(openBody).toContain('this.craftingTrap?.focusFirst();');
+    const close = hud.slice(hud.indexOf('closeCrafting(): void {'));
+    const closeBody = close.slice(0, close.indexOf('\n  }'));
+    // release() (default returnFocus=true) returns focus to the opener, then clears.
+    expect(closeBody).toContain('this.craftingTrap?.release();');
+    expect(closeBody).toContain('this.craftingTrap = null;');
   });
 });
