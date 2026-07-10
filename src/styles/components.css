@@ -9235,7 +9235,12 @@
 
   /* Buttons: 36px, hover brightens the BORDER (never a transform scale, per the
      motion-sickness invariant), active adds an inset shade, disabled drops to
-     0.4 opacity, loading preserves width so the row never shifts. */
+     0.4 opacity, loading preserves width so the row never shifts.
+     The legacy same-layer .btn skin (the quest-dialog block earlier in this
+     file) leaks every property this block does not declare, so the resets here
+     are load-bearing: margin (10px/8px), outline (1px solid black), text-shadow,
+     the base box-shadow, the hover brightness filter, the :active translateY,
+     and the disabled grayscale filter are each neutralized explicitly. */
   .window-frame .btn {
     display: inline-flex;
     align-items: center;
@@ -9243,12 +9248,17 @@
     gap: var(--spacing-xs);
     height: var(--control-h);
     padding: 0 var(--spacing-md);
+    margin: 0;
     border: 1px solid var(--color-border-default);
     border-radius: var(--radius-sm);
+    outline: none;
     background: color-mix(in srgb, var(--color-text-light) 6%, transparent);
     color: var(--color-text-light);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
+    text-shadow: none;
+    box-shadow: none;
+    filter: none;
     cursor: var(--cursor-point);
     transition:
       border-color var(--dur-fast) var(--transition-ease),
@@ -9256,13 +9266,18 @@
   }
   .window-frame .btn:hover:not(:disabled) {
     border-color: var(--color-border-focus);
+    filter: none;
+    box-shadow: none;
   }
   .window-frame .btn:active:not(:disabled) {
     box-shadow: inset 0 2px 6px color-mix(in srgb, var(--color-bg-dark) 70%, transparent);
+    transform: none;
   }
   .window-frame .btn:disabled,
   .window-frame .btn[aria-disabled="true"] {
     opacity: 0.4;
+    filter: none;
+    box-shadow: none;
     cursor: default;
   }
   /* Loading: the label is hidden but its width is preserved (min-width), so the
@@ -9526,10 +9541,13 @@
   }
 
   /* Progress / resource bars: a track with a fill, resource variants coloured by
-     the existing resource tokens. */
+     the existing resource tokens. margin-top resets the legacy same-layer .bar
+     skin's 3px (hud.css targets this layer too); spacing comes from the parent
+     layout, never a baked bar margin. */
   .window-frame .bar {
     position: relative;
     height: 14px;
+    margin-top: 0;
     border: 1px solid var(--panel-edge);
     border-radius: var(--radius-sm);
     background: var(--color-bg-dark);
@@ -9632,6 +9650,16 @@
   .tab:focus-visible {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
+  }
+  /* The legacy same-layer .btn:focus-visible ring (the quest-dialog block) is
+     !important, and within one layer an !important declaration beats any normal
+     one regardless of specificity, so the token ring above would lose on framed
+     buttons. Re-assert it (and drop the legacy glow box-shadow) with !important
+     at higher specificity, which wins among important declarations. Tokens only. */
+  .window-frame .btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color) !important;
+    outline-offset: var(--focus-ring-offset) !important;
+    box-shadow: none !important;
   }
   /* Forced colours: keep the frame / panel borders and the focus ring alive via
      system colours (mirrors the base.css forced-colors section; the global

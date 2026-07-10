@@ -191,6 +191,7 @@ export const MIN_LARGE_CONTRAST = 3;
 const BASE_URGENCY_WARN = '#ff8800';
 const BASE_URGENCY_DANGER = '#ff6b5e'; // mirrors --color-hostile
 const BASE_NOTIFY_CRITICAL = '#ff8f85'; // mirrors --color-text-error
+const BASE_NOTIFY_SUCCESS = '#7fdc4f'; // mirrors --color-text-success
 
 /**
  * Repair a text colour so it clears `min` contrast against `panel`. We keep the
@@ -289,6 +290,15 @@ export function themeCssVars(knobs: ThemeKnobs): Record<string, string> {
     panelEdge,
     MIN_TEXT_CONTRAST,
   );
+  // Success mirrors the critical/warn repair: the static #7fdc4f alias computed
+  // ~1.3:1 as a badge-success border on the light Parchment panel. A badge
+  // border is a non-text UI element, so it holds the same large-text/non-text
+  // tier as warn and danger.
+  const notifySuccess = ensureReadable(
+    ensureReadable(BASE_NOTIFY_SUCCESS, panel, MIN_LARGE_CONTRAST),
+    panelEdge,
+    MIN_LARGE_CONTRAST,
+  );
   return {
     '--gold': accent,
     '--gold-dim': accentDim,
@@ -319,6 +329,7 @@ export function themeCssVars(knobs: ThemeKnobs): Record<string, string> {
     '--color-urgency-warn': urgencyWarn,
     '--color-urgency-danger': urgencyDanger,
     '--color-notify-critical': notifyCritical,
+    '--color-notify-success': notifySuccess,
     '--focus-ring-color': accentDim,
   };
 }
