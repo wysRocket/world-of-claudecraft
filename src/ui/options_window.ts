@@ -78,6 +78,7 @@ import {
   buildSearchIndex,
   CATEGORIES,
   type CategoryId,
+  categoriesForSearch,
   categorySettingKeys,
   OVERVIEW_PINS,
   OVERVIEW_QUICK_ACTIONS,
@@ -1776,6 +1777,7 @@ export class OptionsWindow {
     );
     // Group matches by home category, honoring env gating (hidden rows never surface).
     let total = 0;
+    const shownCats = new Set<CategoryId>();
     for (const cat of CATEGORIES) {
       const catMatches = matches.filter((m) => m.categoryId === cat.id);
       if (catMatches.length === 0) continue;
@@ -1786,6 +1788,7 @@ export class OptionsWindow {
       const rows = catMatches.filter((m) => visibleKeys.has(m.settingKey));
       if (rows.length === 0) continue;
       total += rows.length;
+      shownCats.add(cat.id);
       const group = el('div', 'opt-result-group');
       const crumb = el('div', 'opt-result-crumb');
       const name = document.createElement('span');
@@ -1793,7 +1796,14 @@ export class OptionsWindow {
       const goto = el('button', 'opt-goto');
       goto.type = 'button';
       goto.textContent = t('hudChrome.options.searchGoTo', { category: t(cat.nameKey) });
-      goto.addEventListener('click', () => this.setActiveCategory(cat.id));
+      // Go to section: jump to the home category and land a STEADY .is-active-row
+      // highlight on the target row (no flash animation), driven through the shared
+      // focus path so the cursor is identical to a keyboard/controller landing.
+      const landKey = rows[0].settingKey;
+      goto.addEventListener('click', () => {
+        this.setActiveCategory(cat.id);
+        this.highlightRow(landKey);
+      });
       crumb.append(name, goto);
       group.appendChild(crumb);
       for (const m of rows) {
@@ -1804,11 +1814,52 @@ export class OptionsWindow {
       }
       detail.appendChild(group);
     }
+    // Category-level synonym hits (P4): terms like "bind"/"hotkey"/"shortcut" surface
+    // the bespoke Keybinds category, which has no settings-key rows to index. Skip a
+    // category already shown above or hidden by the environment.
+    for (const catId of categoriesForSearch(query)) {
+      if (shownCats.has(catId)) continue;
+      const cat = CATEGORIES.find((c) => c.id === catId);
+      if (!cat || !this.categoryVisible(cat)) continue;
+      total++;
+      const group = el('div', 'opt-result-group');
+      const crumb = el('div', 'opt-result-crumb');
+      const name = document.createElement('span');
+      name.textContent = t(cat.nameKey);
+      const goto = el('button', 'opt-goto');
+      goto.type = 'button';
+      goto.textContent = t('hudChrome.options.searchGoTo', { category: t(cat.nameKey) });
+      goto.addEventListener('click', () => this.setActiveCategory(cat.id));
+      crumb.append(name, goto);
+      const sub = el('div', 'opt-result-sub');
+      sub.textContent = t(cat.subheadKey);
+      group.append(crumb, sub);
+      detail.appendChild(group);
+    }
     if (total === 0) {
       const empty = el('div', 'opt-empty');
       empty.textContent = t('hudChrome.options.searchEmpty');
       detail.appendChild(empty);
     }
+  }
+
+  /** True when a category is revealed under the current host environment (touch-only
+   *  hides on desktop; desktop-only hides on touch). Mirrors options_view gating. */
+  private categoryVisible(cat: { env?: { touchOnly?: boolean; desktopOnly?: boolean } }): boolean {
+    const e = this.env();
+    if (cat.env?.touchOnly && !e.touch) return false;
+    if (cat.env?.desktopOnly && e.touch) return false;
+    return true;
+  }
+
+  /** Land a steady .is-active-row highlight on a target row (search go-to): focus its
+   *  control, which fires the detail focusin cursor (the same steady inset the keyboard
+   *  and controller cursors use), then scroll it into view. No flash animation. */
+  private highlightRow(key: string): void {
+    const row = this.deps.root().querySelector<HTMLElement>(`.opt-row[data-key="${key}"]`);
+    if (!row) return;
+    (row.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? row).focus();
+    row.scrollIntoView?.({ block: 'nearest' });
   }
 
   // -------------------------------------------------------------------------

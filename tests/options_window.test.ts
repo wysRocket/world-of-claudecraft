@@ -341,6 +341,40 @@ describe('options_window: conflict surfacing (P4)', () => {
   });
 });
 
+describe('options_window: search go-to + synonyms + typeahead (P4)', () => {
+  const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
+
+  it('lands a steady .is-active-row highlight on the target row via the focus path', () => {
+    const search = painter.slice(painter.indexOf('private renderSearchResults'));
+    const body = search.slice(0, search.indexOf('\n  /** True when a category'));
+    // Go to section jumps to the home category then highlights the first matched row.
+    expect(body).toContain('this.setActiveCategory(cat.id);');
+    expect(body).toContain('this.highlightRow(landKey);');
+    // highlightRow focuses the row control, which fires the SAME steady focusin cursor
+    // the keyboard/controller use (no flash animation), then scrolls it into view.
+    expect(painter).toContain('private highlightRow(key: string): void {');
+    expect(painter).toContain('.opt-row[data-key="${key}"]');
+    expect(painter).toContain('.querySelector<HTMLElement>(FOCUSABLE_SELECTOR) ?? row).focus()');
+    expect(painter).toContain("row.scrollIntoView?.({ block: 'nearest' })");
+  });
+
+  it('surfaces the bespoke Keybinds category via the category synonym overlay', () => {
+    expect(painter).toContain('categoriesForSearch');
+    const search = painter.slice(painter.indexOf('private renderSearchResults'));
+    const body = search.slice(0, search.indexOf('\n  /** True when a category'));
+    expect(body).toContain('for (const catId of categoriesForSearch(query)) {');
+    expect(body).toContain('if (shownCats.has(catId)) continue;');
+    expect(body).toContain('this.categoryVisible(cat)');
+  });
+
+  it('gives long listboxes first-letter typeahead (language picker)', () => {
+    // The shared dropdown builder wires the pure typeahead for 7+ options.
+    expect(hud).toContain('items.length >= TYPEAHEAD_MIN_OPTIONS');
+    expect(hud).toContain('const target = typeaheadTarget(');
+    expect(hud).toContain('items[target].focus();');
+  });
+});
+
 describe('options_window: keyboard navigation (P3)', () => {
   const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
 

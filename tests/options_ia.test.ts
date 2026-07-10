@@ -4,7 +4,9 @@ import {
   allRows,
   buildSearchIndex,
   CATEGORIES,
+  CATEGORY_SEARCH_SYNONYMS,
   type CategoryId,
+  categoriesForSearch,
   categoryOf,
   categorySettingKeys,
   EXCLUDED_SETTING_KEYS,
@@ -362,5 +364,24 @@ describe('options_ia: structural search index', () => {
 
   it('is deterministic (same shape every build)', () => {
     expect(buildSearchIndex()).toEqual(buildSearchIndex());
+  });
+
+  it('surfaces the bespoke Keybinds category through the category synonym overlay (P4)', () => {
+    // The Keybinds bind table has no settings-key rows, so bind/binding/hotkey/
+    // shortcut reach it via the CATEGORY overlay, not SEARCH_SYNONYMS.
+    for (const term of ['bind', 'binding', 'keybind', 'hotkey', 'shortcut']) {
+      expect(CATEGORY_SEARCH_SYNONYMS[term], `${term} -> keybinds`).toBe('keybinds');
+    }
+    // Every category synonym targets a real category id.
+    const ids = new Set<CategoryId>(CATEGORIES.map((c) => c.id));
+    for (const target of Object.values(CATEGORY_SEARCH_SYNONYMS)) {
+      expect(ids.has(target), `synonym target '${target}' is a real category`).toBe(true);
+    }
+    // A query resolves to the Keybinds category (contains-match, like settings-key synonyms).
+    expect(categoriesForSearch('bind')).toContain('keybinds');
+    expect(categoriesForSearch('hotkey')).toContain('keybinds');
+    expect(categoriesForSearch('short')).toContain('keybinds'); // 'shortcut' contains 'short'
+    expect(categoriesForSearch('')).toEqual([]);
+    expect(categoriesForSearch('brightness')).toEqual([]); // not a category synonym
   });
 });

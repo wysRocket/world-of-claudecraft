@@ -196,7 +196,7 @@ import { devTierBadgeDataUrl, devTierByIndex, devTierDisplayName } from './dev_t
 import { markDialogRoot } from './dialog_root';
 import { discordRoleTagLabel } from './discord_role_tag';
 import { discordStatusBadgeDataUrl, discordStatusDisplayName } from './discord_tier';
-import { dropdownKeyNav } from './dropdown_nav';
+import { dropdownKeyNav, TYPEAHEAD_MIN_OPTIONS, typeaheadTarget } from './dropdown_nav';
 import { emoteIconUrl } from './emote_icons';
 import {
   classDisplayName,
@@ -12930,7 +12930,30 @@ export class Hud {
     });
     root.addEventListener('keydown', (e) => {
       const action = dropdownKeyNav(e.key, isOpen(), focusedIndex(), items.length);
-      if (action.kind === 'none') return;
+      if (action.kind === 'none') {
+        // First-letter typeahead for long listboxes (7+ options, e.g. the language
+        // picker): a single printable key jumps to the next matching option. Below
+        // the threshold, arrow navigation is enough (WAI-ARIA listbox convention).
+        if (
+          isOpen() &&
+          items.length >= TYPEAHEAD_MIN_OPTIONS &&
+          e.key.length === 1 &&
+          !e.ctrlKey &&
+          !e.altKey &&
+          !e.metaKey
+        ) {
+          const target = typeaheadTarget(
+            items.map((it) => it.textContent ?? ''),
+            focusedIndex(),
+            e.key,
+          );
+          if (target !== null) {
+            e.preventDefault();
+            items[target].focus();
+          }
+        }
+        return;
+      }
       // Tab closes the menu and returns focus to the trigger button (a real
       // tab-order element) WITHOUT preventDefault, so the native Tab/Shift+Tab
       // then deterministically advances/retreats from there. Without returning

@@ -748,12 +748,37 @@ export interface SearchIndexRow {
 }
 
 /** Explicit synonym overlay: search terms that do not appear in a row's label
- *  but should still find it. Keybind synonyms are P4. */
+ *  but should still find it. Targets a real indexed settings key. */
 export const SEARCH_SYNONYMS: Record<string, string> = {
   fps: 'showFps',
   framerate: 'showFps',
   motion: 'reduceMotion',
 };
+
+/** Category-level search synonyms (P4): terms that surface a whole CATEGORY rather
+ *  than a settings-key row. The Keybinds category is bespoke (its bind table has no
+ *  settings-key rows to index), so "bind / binding / hotkey / shortcut" reach it
+ *  through this overlay instead of SEARCH_SYNONYMS (which targets indexed keys). */
+export const CATEGORY_SEARCH_SYNONYMS: Record<string, CategoryId> = {
+  bind: 'keybinds',
+  binding: 'keybinds',
+  keybind: 'keybinds',
+  keybinds: 'keybinds',
+  hotkey: 'keybinds',
+  shortcut: 'keybinds',
+};
+
+/** The categories a query surfaces via CATEGORY_SEARCH_SYNONYMS (a term matches when
+ *  it contains the query, mirroring the settings-key synonym semantics). */
+export function categoriesForSearch(rawQuery: string): CategoryId[] {
+  const q = rawQuery.trim().toLowerCase();
+  if (!q) return [];
+  const ids = new Set<CategoryId>();
+  for (const [term, id] of Object.entries(CATEGORY_SEARCH_SYNONYMS)) {
+    if (term.includes(q)) ids.add(id);
+  }
+  return [...ids];
+}
 
 /** Build the STRUCTURAL search index from the SAME descriptor tables the panes
  *  render: one row per rendered control that carries a settings key + label, so

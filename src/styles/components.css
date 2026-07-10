@@ -6232,6 +6232,12 @@
     font-size: var(--text-xs);
     cursor: var(--cursor-point);
   }
+  /* Subhead line for a category-level search result (a synonym hit with no rows). */
+  .opt-result-sub {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-xs);
+  }
   .opt-empty {
     padding: var(--spacing-md);
     font-size: var(--text-sm);
