@@ -41,6 +41,7 @@ import {
   type DeedTrigger,
   dist2d,
   type Entity,
+  type ItemDef,
   MAX_LEVEL,
   type PlayerClass,
 } from './types';
@@ -361,21 +362,28 @@ export function markItemDiscovered(
   itemId: string,
   rolledQuality?: string,
 ): void {
-  const def = ITEMS[itemId];
-  if (!def) return; // bounded by construction: only real item ids enter the set
-  if (!meta.deedStats.itemsDiscovered.has(itemId)) {
-    meta.deedStats.itemsDiscovered.add(itemId);
-    ctx.deedDirtyPids.add(meta.entityId);
-  }
   // A heroic instance drops the generated heroic_<base> variant in place of
   // the base item (same display name, same set membership); collection deeds
-  // key on the BASE ids, so a variant discovery credits its base too. Bases
-  // are never variants themselves, so this recurses at most once, and the
-  // join-time seed funnels through here, retro-crediting held variants.
-  if (def.heroicOf) markItemDiscovered(ctx, meta, def.heroicOf);
-  const quality = rolledQuality ?? def.quality;
-  if (quality === 'rare' || quality === 'epic' || quality === 'legendary') {
-    markVisited(ctx, meta, `quality:${quality}`);
+  // key on the BASE ids, so a variant discovery credits its base too, even
+  // when the variant itself is already known (the join-time seed funnels
+  // through here, retro-crediting held variants). Bases are never variants
+  // themselves, so the walk visits at most two ids; the depth cap only
+  // guards against a malformed def cycle ever landing in content.
+  let id: string | undefined = itemId;
+  for (let depth = 0; id !== undefined && depth < 3; depth++) {
+    // Annotated: indexing by the reassigned `id` would otherwise circularly
+    // infer through def.heroicOf (TS7022).
+    const def: ItemDef | undefined = ITEMS[id];
+    if (!def) return; // bounded by construction: only real item ids enter the set
+    if (!meta.deedStats.itemsDiscovered.has(id)) {
+      meta.deedStats.itemsDiscovered.add(id);
+      ctx.deedDirtyPids.add(meta.entityId);
+    }
+    const quality = (id === itemId ? rolledQuality : undefined) ?? def.quality;
+    if (quality === 'rare' || quality === 'epic' || quality === 'legendary') {
+      markVisited(ctx, meta, `quality:${quality}`);
+    }
+    id = def.heroicOf;
   }
 }
 

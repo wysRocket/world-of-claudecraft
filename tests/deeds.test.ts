@@ -700,6 +700,26 @@ describe('persistence', () => {
     expect(meta.deedStats.itemsDiscovered.size).toBe(before);
   });
 
+  it('a malformed heroicOf cycle terminates the discovery walk and marks each id once', () => {
+    // Bases never carry heroicOf in real content, so the walk is depth two by
+    // construction; this pins that a malformed def cycle degrades to a bounded
+    // walk instead of unbounded recursion.
+    const sim = makeSim();
+    const { meta } = primary(sim);
+    ITEMS.qa_cycle_a = { ...ITEMS.boundstone_helm, id: 'qa_cycle_a', heroicOf: 'qa_cycle_b' };
+    ITEMS.qa_cycle_b = { ...ITEMS.boundstone_helm, id: 'qa_cycle_b', heroicOf: 'qa_cycle_a' };
+    try {
+      const before = meta.deedStats.itemsDiscovered.size;
+      markItemDiscovered(sim.ctx, meta, 'qa_cycle_a');
+      expect(meta.deedStats.itemsDiscovered.has('qa_cycle_a')).toBe(true);
+      expect(meta.deedStats.itemsDiscovered.has('qa_cycle_b')).toBe(true);
+      expect(meta.deedStats.itemsDiscovered.size).toBe(before + 2);
+    } finally {
+      delete ITEMS.qa_cycle_a;
+      delete ITEMS.qa_cycle_b;
+    }
+  });
+
   it('every visited mark a live sim writes stays inside the authored namespaces', () => {
     const sim = makeSim();
     const { meta } = primary(sim);
