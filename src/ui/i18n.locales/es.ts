@@ -3165,7 +3165,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Ataque brutal que inflige daño de arma más {damage}. (habilidad distintiva de Armas)',
   'entities.abilities.bloodthirst.name': 'Sangría',
   'entities.abilities.bloodthirst.description':
-    'Atacas al instante en un frenesí sangriento por un 60% de daño de arma más {damage}. (habilidad distintiva de Furia)',
+    'Atacas al instante en un frenesí sangriento por {damage}, te curas un 3% de tu salud máxima y generas 12 de ira. Tiene un 30% de probabilidad de Enfurecerte. (habilidad distintiva de Furia)',
   'entities.abilities.shield_slam.name': 'Quiebra de Escudo',
   'entities.abilities.shield_slam.description':
     'Golpeas al objetivo con tu escudo por un 50% de daño de arma más {damage} y generas una amenaza enorme. (habilidad distintiva de Protección)',

@@ -5693,7 +5693,7 @@ export const es_ES: EnTranslations = {
       },
       "bloodthirst": {
         "name": "Sangría",
-        "description": "Atacas al instante en un frenesí sangriento por un 60% de daño de arma más {damage}. (habilidad distintiva de Furia)"
+        "description": "Atacas al instante en un frenesí sangriento por {damage}, te curas un 3% de tu salud máxima y generas 12 de ira. Tiene un 30% de probabilidad de Enfurecerte. (habilidad distintiva de Furia)"
       },
       "raging_gale": {
         "name": "Twinstrike",
