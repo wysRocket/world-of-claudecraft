@@ -29,6 +29,9 @@ import type { WindowFrameDescriptor } from './window_frame_view';
  *
  * The frame lives on `el`'s direct-child `.window-frame`; a reuse returns the
  * existing titlebar / body / footer nodes so the caller repaints only the body.
+ * On the reuse path `descriptor` and `deps` are IGNORED: the frame keeps the
+ * chrome and callbacks it was built with, so passing different values on a
+ * repaint has no effect until the frame is rebuilt cold.
  */
 export function ensureWindowFrame(
   el: HTMLElement,

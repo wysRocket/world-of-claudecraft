@@ -203,16 +203,6 @@
     --cursor-sword: var(--cursor-point);
     --cursor-shield: var(--cursor-point);
 
-    /* AAA redesign, phase 0 (docs/design/ui-ux-redesign-spec.md section 9): a
-       single layering scale so no component invents an ad-hoc z-index. */
-    --z-hud: 10;
-    --z-window: 100;
-    --z-dock: 150;
-    --z-drawer: 200;
-    --z-modal: 300;
-    --z-toast: 400;
-    --z-tooltip: 500;
-
     /* Panel depth: three surface levels sharing one visual language. L0 is a
        translucent hairline-bordered scrim over the world (86 percent alpha of
        --panel-base); L1 aliases the existing --panel-bg gradient; L2 is the
@@ -237,24 +227,14 @@
     --color-scrim: rgba(0, 0, 0, 0.55);
     --scrim-blur: 4px;
 
-    /* Mobile drawer + bottom sheet. Snap values are percentages of --app-vh,
-       consumed by the sheet module, not literal lengths. */
-    --drawer-w: min(84%, 360px);
-    --drawer-bg: var(--panel-l1-bg);
-    --sheet-bg: var(--panel-l1-bg);
-    --sheet-radius: 12px 12px 0 0;
-    --sheet-handle-color: var(--color-border-default);
-    --sheet-snap-peek: 33;
-    --sheet-snap-half: 60;
-    --sheet-snap-full: 92;
-
     /* Combat urgency: emphasis colours layered over baseline cues, never the
        only cue. --color-urgency-warn is the established aggro-orange value
        (kept standalone, matching --color-delve-mob-aggro / --color-minimap-mob-aggro
-       above); --color-urgency-danger aliases --color-hostile. */
+       above); --color-urgency-danger aliases --color-hostile. The theme system
+       (src/ui/theme.ts) recomputes both per preset so they stay readable on a
+       light panel. */
     --color-urgency-warn: #ff8800;
     --color-urgency-danger: var(--color-hostile);
-    --urgency-pulse-dur: calc(1200ms * var(--motion-scale));
 
     /* Rarity: mirrors the QUALITY_COLOR table in src/ui/icons.ts verbatim
        (poor/common/uncommon/rare/epic/legendary) so CSS borders can share the
@@ -273,14 +253,11 @@
     --focus-ring-width: 2px;
     --focus-ring-offset: 2px;
 
-    /* Tooltip layer: near-solid (no translucency below 0.97 alpha, so a
-       tooltip never lets the world or an underlying window show through). */
-    --tooltip-bg: rgba(21, 21, 31, 0.97); /* --panel-base #15151f, near-solid */
-    --tooltip-border: var(--color-border-default);
-    --tooltip-max-w: 320px;
-
     /* Notification priority: colour per severity plus auto-dismiss timing
-       (critical persists and is not auto-dismissed by either duration). */
+       (critical persists and is not auto-dismissed by either duration). The
+       theme system (src/ui/theme.ts) recomputes the success / warning /
+       critical colours per preset so a badge border stays readable on a light
+       panel; these are the pre-theme :root defaults. */
     --color-notify-info: var(--color-border-default);
     --color-notify-success: var(--color-text-success);
     --color-notify-warning: var(--color-urgency-warn);

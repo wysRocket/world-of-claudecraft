@@ -20,7 +20,7 @@ import { esc } from './esc';
 import { formatMoney as formatLocalizedMoney, formatNumber, t } from './i18n';
 import type { PainterHostPresentation } from './painter_host';
 import type { VendorBuybackRow, VendorGoodsRow, VendorSellRow, VendorView } from './vendor_view';
-import { renderWindowFrame, type WindowFrameParts } from './window_frame';
+import { applyActiveWindowTab, renderWindowFrame, type WindowFrameParts } from './window_frame';
 import type { WindowFrameDescriptor } from './window_frame_view';
 
 /** Which of the three vendor tabs the body currently paints. */
@@ -118,20 +118,13 @@ function ensureFrame(
 
 /**
  * Force the tab rail + body to reflect `activeTab` (roving tabindex, aria-selected,
- * and the body's tabpanel id). The frame's own click handler already does this on a
- * click, but a Hud-driven repaint (a fresh open resets to Browse, a snapshot repaint
- * keeps the tab) must re-affirm it against the reused frame.
+ * aria-controls on the selected tab only, and the body's tabpanel id + labelling).
+ * The frame's own click handler already does this on a click, but a Hud-driven
+ * repaint (a fresh open resets to Browse, a snapshot repaint keeps the tab) must
+ * re-affirm it against the reused frame; both route through the one shared helper.
  */
 function syncActiveTab(parts: WindowFrameParts, activeTab: VendorTab): void {
-  for (const btn of parts.tabButtons) {
-    const selected = btn.dataset.windowTab === activeTab;
-    btn.setAttribute('aria-selected', String(selected));
-    btn.tabIndex = selected ? 0 : -1;
-    if (selected) {
-      const panelId = btn.getAttribute('aria-controls');
-      if (panelId) parts.body.id = panelId;
-    }
-  }
+  applyActiveWindowTab(parts.tabButtons, parts.body, activeTab);
 }
 
 /** The rarity-bordered item cell: icon plus a count in the corner when stacked. */
@@ -318,9 +311,13 @@ export function renderVendorWindow(
   deps: VendorWindowDeps,
 ): void {
   // The rebuild replaces the hovered row (its mouseleave never fires) and can
-  // collapse the scrolled list; drop the tooltip and restore the scroll.
+  // collapse the scrolled list; drop the tooltip and restore the scroll. On the
+  // desktop flex model the ROOT never scrolls (the frame's .window-body does),
+  // so capture both: the root covers the touch dock path (overflow-y on the
+  // root), the body covers desktop, and whichever did not scroll restores 0.
   deps.hideTooltip();
   const scrollTop = el.scrollTop;
+  const bodyScrollTop = el.querySelector<HTMLElement>('.window-body')?.scrollTop ?? 0;
 
   const parts = ensureFrame(el, deps, activeTab);
   const { body } = parts;
@@ -350,4 +347,5 @@ export function renderVendorWindow(
   // painter's only root touch).
   el.style.removeProperty('display');
   el.scrollTop = scrollTop;
+  parts.body.scrollTop = bodyScrollTop;
 }

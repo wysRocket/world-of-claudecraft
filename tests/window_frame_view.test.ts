@@ -140,6 +140,8 @@ describe('buildWindowFrameModel body as tabpanel', () => {
     expect(m.bodyId).toBe('vendor-window-panel-buy');
     // The selected tab's aria-controls target is exactly the body id.
     expect(m.tablist?.tabs.find((t) => t.selected)?.panelId).toBe(m.bodyId);
+    // The tabpanel is named by its ACTIVE tab (WAI-ARIA APG aria-labelledby).
+    expect(m.bodyLabelledBy).toBe('vendor-window-tab-buy');
   });
 
   it('follows the named active tab: the body id is that tab panel id', () => {
@@ -147,9 +149,10 @@ describe('buildWindowFrameModel body as tabpanel', () => {
     expect(m.bodyRole).toBe('tabpanel');
     expect(m.bodyId).toBe('vendor-window-panel-sell');
     expect(m.tablist?.tabs.find((t) => t.selected)?.panelId).toBe('vendor-window-panel-sell');
+    expect(m.bodyLabelledBy).toBe('vendor-window-tab-sell');
   });
 
-  it('keeps a plain body (derived -body id, no role) for a tab-less window', () => {
+  it('keeps a plain body (derived -body id, no role, no tab labelling) for a tab-less window', () => {
     const m = buildWindowFrameModel({
       id: 'loot-window',
       titleKey: 'hudChrome.dailyRewards.title',
@@ -157,6 +160,7 @@ describe('buildWindowFrameModel body as tabpanel', () => {
     });
     expect(m.bodyRole).toBeNull();
     expect(m.bodyId).toBe('loot-window-body');
+    expect(m.bodyLabelledBy).toBeNull();
   });
 });
 

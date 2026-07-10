@@ -402,6 +402,38 @@ describe('renderVendorWindow: tabs + close', () => {
     expect(el.querySelector('.window-body')?.id).toBe(sell?.getAttribute('aria-controls'));
   });
 
+  it('a Hud-driven tab switch against the REUSED frame re-points aria-controls + labelling', () => {
+    const el = vendorEl();
+    render(el, 'V', emptyView, fakeDeps(), { tab: 'browse' });
+    // Hud repaint with a different active tab (the onTabChange round trip).
+    render(el, 'V', emptyView, fakeDeps(), { tab: 'buyback' });
+    const buyback = el.querySelector<HTMLElement>('[data-window-tab="buyback"]');
+    const browse = el.querySelector<HTMLElement>('[data-window-tab="browse"]');
+    const body = el.querySelector<HTMLElement>('.window-body');
+    expect(buyback?.getAttribute('aria-controls')).toBe('vendor-window-panel-buyback');
+    // Only the selected tab controls the body: an unselected tab's derived
+    // panel id has no node, so keeping aria-controls there is a dangling idref.
+    expect(browse?.hasAttribute('aria-controls')).toBe(false);
+    expect(body?.id).toBe('vendor-window-panel-buyback');
+    expect(body?.getAttribute('aria-labelledby')).toBe('vendor-window-tab-buyback');
+  });
+
+  it('restores the BODY scroll across a repaint (the desktop flex model scrolls the body)', () => {
+    const el = vendorEl();
+    const view: VendorView = {
+      goods: [{ itemId: 'blade', item: item('blade'), price: 5, quantity: 1 }],
+      buyback: [],
+    };
+    render(el, 'V', view, fakeDeps(), { tab: 'browse' });
+    const body = el.querySelector<HTMLElement>('.window-body') as HTMLElement;
+    // The desktop flex model scrolls .window-body, never the root: a buy repaint
+    // must restore the list position or every purchase snaps the goods to top.
+    body.scrollTop = 120;
+    el.scrollTop = 0;
+    render(el, 'V', view, fakeDeps(), { tab: 'browse' });
+    expect(el.querySelector<HTMLElement>('.window-body')?.scrollTop).toBe(120);
+  });
+
   it('fires onTabChange with the activated tab id', () => {
     const el = vendorEl();
     const onTabChange = vi.fn();

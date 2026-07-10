@@ -397,6 +397,7 @@ import {
 import { type WeaponProcEffectDesc, weaponProcLines } from './weapon_proc_view';
 import { isWindowDragHandle } from './window_drag_handle';
 import { makeWindowFocus } from './window_focus';
+import { relocalizeWindowFrame } from './window_frame';
 import { installWindowResize, markResizableWindow } from './window_resize';
 import { formatXp, xpBarView } from './xp_bar';
 import { XpBarPainter } from './xp_bar_painter';
@@ -515,6 +516,10 @@ const MOB_TOOLTIP_MARGIN_RIGHT = 56;
 const MOB_TOOLTIP_MARGIN_BOTTOM = 60;
 const MOB_TOOLTIP_MOBILE_MINIMAP_GAP = 8;
 const MOB_TOOLTIP_MOBILE_EDGE_GAP = 8;
+// LT/RT page-scroll step for the generic gamepad menu fallback, as a fraction of
+// the trapped dialog's visible body height (mirrors the options window's
+// PAGE_SCROLL_FRACTION so paging feels identical across trapped dialogs).
+const TRAP_PAGE_SCROLL_FRACTION = 0.9;
 // The descriptor for a hidden target frame (no target, or a targeted world object).
 // unitFrameView reads only `present` when hiding, so the rest are no-op defaults; a
 // shared const avoids allocating a fresh descriptor for every hidden frame.
@@ -1981,13 +1986,37 @@ export class Hud {
     // their inset:0 CSS with an inline top/left/right:auto/bottom:auto that
     // never gets reset, breaking the full-screen layout for the rest of the
     // session (issue 1577 char/talents redo).
-    if (
-      document.body.classList.contains('mobile-touch') ||
-      el.dataset.windowMoved === '1' ||
-      el.id === 'loot-window' ||
-      el.id === 'confirm-dialog'
-    )
+    if (document.body.classList.contains('mobile-touch')) {
+      // A desktop session bakes inline cascade/drag geometry (left/top plus
+      // windowMoved); after an Interface Mode or rotation flip to touch that
+      // inline inset would beat the dock CSS for the rest of the session
+      // (inline wins over any layered rule), so clear it at show time. The
+      // cursor-anchored popups own their inline position in both modes and are
+      // left alone; inline width/height (the touch corner-band resize) stay.
+      if (el.id !== 'loot-window' && el.id !== 'confirm-dialog' && el.style.left !== '') {
+        el.style.removeProperty('left');
+        el.style.removeProperty('top');
+        el.style.removeProperty('right');
+        el.style.removeProperty('bottom');
+        el.style.removeProperty('transform');
+        delete el.dataset.windowMoved;
+      }
       return;
+    }
+    if (el.dataset.windowMoved === '1' || el.id === 'loot-window' || el.id === 'confirm-dialog')
+      return;
+    // A window that already carries a baked inline position was cascaded (or
+    // otherwise pinned) before: re-cascading from that persisted rect would
+    // compound another 28px of drift on every reopen while any other window is
+    // open, so only a window still at its stylesheet position cascades. The
+    // reopen still re-clamps in place (the old compounding cascade incidentally
+    // did this), so a position persisted at a larger viewport cannot reopen
+    // off-screen.
+    if (el.style.left !== '') {
+      const rect = el.getBoundingClientRect();
+      this.setWindowPixelPosition(el, rect.left, rect.top, rect);
+      return;
+    }
     // The vendor floats and cascades like the World Market, but its auto-opened
     // bags companion must NOT be pinned: the cascade would bake an inline left/top
     // onto #bags that outlives the pairing and beats the bank's later
@@ -4483,6 +4512,15 @@ export class Hud {
   }
 
   private refreshLocalizedDynamicUi(): void {
+    // Frame chrome first: every MOUNTED window frame (open or closed; the
+    // ensureFrame reuse paths keep a closed frame's chrome alive) re-resolves
+    // its stamped t() text (title, tab labels, close aria-label) from the key
+    // data attributes, so no frame keeps the pre-switch language for the
+    // session. Runs before the per-window renders below so a window that
+    // interpolates its title (vendor, quest log, ...) re-stamps it after.
+    for (const frame of document.querySelectorAll<HTMLElement>('.window-frame')) {
+      relocalizeWindowFrame(frame);
+    }
     this.refreshKeybindLabels();
     this.updateQuestTracker();
     this.updateDelveTracker();
@@ -14126,8 +14164,11 @@ export class Hud {
   }
 
   /** Route one resolved gamepad menu verb (spec section 5). When the Esc menu owns
-   *  focus it drives the full navigation; otherwise a minimal fallback keeps any
-   *  other trapped modal operable (B closes it, A activates the focused control). */
+   *  focus it drives the full navigation; otherwise a generic fallback keeps any
+   *  other trapped dialog (quest reward, crafting, town focus, delve board, loot
+   *  settings, rite, skin event, card modal, confirm/prompt) operable: B closes it,
+   *  A activates the focused control, D-pad Up/Down steps focus over the trap
+   *  root's visible focusables, and LT/RT page-scroll its body. */
   handleMenuGamepadIntent(intent: MenuIntentKind): void {
     const optionsRoot = $('#options-menu');
     const active = document.activeElement;
@@ -14145,6 +14186,18 @@ export class Hud {
       this.closeAll();
     } else if (intent === 'activate' && active instanceof HTMLElement) {
       active.click();
+    } else if (intent === 'rowPrev' || intent === 'rowNext') {
+      // The generic focus step (mirrors OptionsWindow.stepRowFocus): the pad's
+      // virtual cursor is suppressed in menu mode, so without this every
+      // non-options trapped dialog would lose pad focus movement entirely.
+      this.focusManager.stepTrapFocus(intent === 'rowNext' ? 1 : -1);
+    } else if (intent === 'pageUp' || intent === 'pageDown') {
+      const root = this.focusManager.activeTrapRoot();
+      const scroll = root?.querySelector<HTMLElement>('.window-body') ?? root;
+      if (scroll) {
+        scroll.scrollTop +=
+          (intent === 'pageDown' ? 1 : -1) * scroll.clientHeight * TRAP_PAGE_SCROLL_FRACTION;
+      }
     }
   }
 

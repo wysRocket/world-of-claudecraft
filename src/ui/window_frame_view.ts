@@ -106,12 +106,17 @@ export interface WindowFrameModel {
   titlebarClassName: string;
   titleClassName: string;
   /** The body region's id: `<id>-body` for a tab-less window; with tabs it is
-   *  the ACTIVE tab's panelId, so every tab's aria-controls names a node that
-   *  really exists whenever its tab is selected. */
+   *  the ACTIVE tab's panelId, so the selected tab's aria-controls names a node
+   *  that really exists. Only the SELECTED tab paints aria-controls (the other
+   *  tabs' derived panelIds have no node while inactive, and a dangling idref
+   *  is an axe failure); the consumer re-points it on every tab change. */
   bodyId: string;
   bodyClassName: string;
   /** 'tabpanel' when the window has tabs (the body IS the panel), else null. */
   bodyRole: 'tabpanel' | null;
+  /** aria-labelledby for the tabpanel body: the ACTIVE tab's tabId (a tabpanel
+   *  is named by its tab, WAI-ARIA APG); null for a tab-less window. */
+  bodyLabelledBy: string | null;
   /** Null for a non-closable window. */
   close: WindowFrameCloseModel | null;
   /** Null when the window has no tabs. */
@@ -143,6 +148,7 @@ export function buildWindowFrameModel(
   const tabDescs = descriptor.tabs ?? [];
   let tablist: WindowFrameTablistModel | null = null;
   let activePanelId: string | null = null;
+  let activeTabButtonId: string | null = null;
   if (tabDescs.length > 0) {
     const activeKey = tabDescs.some((tab) => tab.id === activeTabId)
       ? (activeTabId as string)
@@ -150,11 +156,15 @@ export function buildWindowFrameModel(
     const tabs = tabDescs.map((tab): WindowFrameTabModel => {
       const selected = tab.id === activeKey;
       const panelId = `${rootId}-panel-${tab.id}`;
-      if (selected) activePanelId = panelId;
+      const tabId = `${rootId}-tab-${tab.id}`;
+      if (selected) {
+        activePanelId = panelId;
+        activeTabButtonId = tabId;
+      }
       return {
         key: tab.id,
         labelKey: tab.labelKey,
-        tabId: `${rootId}-tab-${tab.id}`,
+        tabId,
         panelId,
         selected,
         tabIndex: selected ? 0 : -1,
@@ -180,6 +190,7 @@ export function buildWindowFrameModel(
     bodyId: activePanelId ?? `${rootId}-body`,
     bodyClassName: 'window-body',
     bodyRole: activePanelId ? 'tabpanel' : null,
+    bodyLabelledBy: activeTabButtonId,
     close,
     tablist,
     footer,
