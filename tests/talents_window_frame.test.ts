@@ -199,6 +199,36 @@ describe('TalentsWindow: status strip + tier rows (CHOICES tab)', () => {
     expect(body.querySelector('[data-act="save"]')).not.toBeNull();
   });
 
+  it('keeps every card inside its own tier band (one horizontal row per tier)', () => {
+    const el = talentsEl();
+    openWindow(el);
+    const ct = talentsFor('warrior')!;
+    const classRows = [...new Set(ct.nodes.filter((n) => n.tree === 'class').map((n) => n.row))]
+      .sort((a, b) => a - b)
+      .map(String);
+    // Each tier section stamps its content row, in ascending row order.
+    const tiers = Array.from(el.querySelectorAll<HTMLElement>('#tal-body .tal-tier'));
+    expect(tiers.map((tier) => tier.dataset.tierRow)).toEqual(classRows);
+    for (const tier of tiers) {
+      // Every card carries its tier's row stamp and lives inside THAT tier's
+      // cards grid, whose stylesheet contract places all of them on grid row 1
+      // (the tal-col-N class carries the column; the grid-row pin is
+      // source-guarded in talents_window.test.ts), so the cards of one tier
+      // always render as a single horizontal band beside the level rail.
+      for (const card of Array.from(tier.querySelectorAll<HTMLElement>('.tal-card'))) {
+        expect(card.dataset.tierRow).toBe(tier.dataset.tierRow);
+        expect(card.parentElement?.classList.contains('tal-tier-cards')).toBe(true);
+        expect(card.closest('.tal-tier')).toBe(tier);
+      }
+      // The rail is the tier's only other cell.
+      expect(tier.querySelector(':scope > .tal-tier-rail')).not.toBeNull();
+    }
+    // Cards never leak between tiers: the per-tier counts partition the card set.
+    const allCards = el.querySelectorAll('#tal-body .tal-card').length;
+    const perTier = tiers.reduce((a, tier) => a + tier.querySelectorAll('.tal-card').length, 0);
+    expect(perTier).toBe(allCards);
+  });
+
   it('level-locks the deep tiers when the point budget cannot open them', () => {
     const el = talentsEl();
     openWindow(el, { total: 1 }); // one point: only the free tier is reachable

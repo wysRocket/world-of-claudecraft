@@ -48,3 +48,24 @@ describe('talents_window: no magic values', () => {
     expect(painter.includes('–'), 'en dash found').toBe(false);
   });
 });
+
+describe('talents_window: tier-row alignment stylesheet contract', () => {
+  const css = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+
+  it('places every tier card explicitly on its tier grid row (no auto-placement)', () => {
+    // The one-horizontal-band-per-tier alignment the tiered layout promises:
+    // each tier's cards grid pins its cards to grid row 1 (the tal-col-N class
+    // carries the column, empty cells stay empty). The DOM-side half (a card
+    // never leaves its tier's band) is pinned in talents_window_frame.test.ts.
+    expect(css).toMatch(/\.tal-tier-cards > \.tal-card \{\s*grid-row: 1;\s*\}/);
+  });
+
+  it('releases the row pin only inside the narrow-container collapse', () => {
+    // When a tier collapses to a one-column stack the row pin must yield, or
+    // every stacked card would overlap in the single pinned row.
+    const collapse = css.slice(css.indexOf('@container (max-width: 700px)'));
+    const release = collapse.slice(0, collapse.indexOf('.tal-specs'));
+    expect(release).toContain('grid-row: auto;');
+    expect(release).toContain('grid-column: auto;');
+  });
+});

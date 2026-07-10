@@ -2038,7 +2038,43 @@
      window_frame.ts). Tier rows key on their unlock level (the left rail); each
      row is a three-column grid of talent cards. Tokens only. */
   #talents-window {
-    width: min(680px, calc(100vw - 24px));
+    width: min(900px, calc(100vw - 24px));
+  }
+  /* Full-height model: the talents window uses its whole height (no dead band
+     below the build panels on a tall or resized window). The root keeps the
+     painter's display:block open toggle but gets a definite default height (an
+     inline height from the resize grip overrides it); the frame fills it as a
+     flex column, the body is a non-scrolling flex column, #tal-body is the ONE
+     scroller (flex-fills), and .tal-foot rides the bottom as a full-width band. */
+  #talents-window:has(> .window-frame) {
+    height: min(780px, calc(100vh - 96px));
+  }
+  #talents-window > .window-frame {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  #talents-window #tal-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+  }
+  /* Wide windows: the content keeps a sane centered reading column, so three
+     cards never stretch across a 1900px window. width:100% (with border-box)
+     keeps the capped flex/block children stretching below the cap; the auto
+     inline margins center them above it. */
+  #talents-window .tal-status,
+  #talents-window .tal-tiers,
+  #talents-window .tal-help,
+  #talents-window .tal-specs,
+  #talents-window .tal-mastery,
+  #talents-window .tal-foot {
+    width: 100%;
+    max-width: 1160px;
+    margin-inline: auto;
+    box-sizing: border-box;
   }
   /* Titlebar: the class name rides beside the static "Talents" title; the auto
      right margin keeps the close control pinned to the edge. */
@@ -2084,19 +2120,28 @@
   }
   /* The body is the size container for the tier grid: the card columns collapse
      on narrow widths (the mobile sheet, a resized-down window) via container
-     queries below. */
+     queries below. Flex column + overflow hidden complete the full-height
+     model above (#tal-body is the one scroller). */
   #talents-window .window-body {
     container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
-  /* Tier rows: an unlock-level rail plus that tier's cards. */
+  /* Tier rows: an unlock-level rail plus that tier's cards. Inside the
+     flex-filled #tal-body the tier list grows into the free height and
+     space-between distributes it BETWEEN tiers, so a tall window reads as a
+     full panel instead of a top-packed strip with a dead band. */
   .tal-tiers {
     display: grid;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
+    align-content: space-between;
+    flex: 1 0 auto;
     margin: var(--spacing-xs) 0;
   }
   .tal-tier {
     display: grid;
-    grid-template-columns: 56px minmax(0, 1fr);
+    grid-template-columns: 72px minmax(0, 1fr);
     gap: var(--spacing-sm);
   }
   .tal-tier-rail {
@@ -2119,14 +2164,14 @@
   }
   .tal-tier-num {
     font-family: var(--font-display);
-    font-size: var(--text-lg);
+    font-size: var(--text-title);
     line-height: 1;
     color: var(--gold);
   }
   .tal-tier-lock {
-    width: 12px;
-    height: 12px;
-    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+    margin-top: 3px;
   }
   /* A level-locked tier (the point budget cannot open it yet) dims as a row. */
   .tal-tier.level-locked .tal-tier-num {
@@ -2150,14 +2195,21 @@
   .tal-card.tal-col-2 {
     grid-column: 3;
   }
-  /* Talent card: icon + name, state-coded border and fill. */
+  /* Talent card: icon + name, state-coded border and fill. Every card sits
+     EXPLICITLY on its tier's single grid row (never auto-placement), so the
+     cards of one tier always align in one horizontal band with the level rail;
+     empty cells stay empty. The narrow container query below releases the pin
+     (grid-row: auto) when the tier collapses to a one-column stack. */
+  .tal-tier-cards > .tal-card {
+    grid-row: 1;
+  }
   .tal-card {
     position: relative;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    min-height: 52px;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 68px;
+    padding: var(--spacing-sm) var(--spacing-md);
     border: 1px solid var(--color-talent-arrow-dim);
     border-radius: var(--radius-sm);
     background: var(--color-panel-l2-base);
@@ -2168,14 +2220,15 @@
   }
   .tal-card .tal-icon {
     flex: none;
-    width: 34px;
-    height: 34px;
+    width: 52px;
+    height: 52px;
     border: 1px solid var(--panel-edge);
     border-radius: var(--radius-sm);
     background-color: var(--color-bg-dark);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-bg-dark) 60%, transparent);
   }
   /* Shape identity survives the card layout: passives keep a circular icon and
      choice (octagon) cards keep their silhouette; actives stay square. */
@@ -2187,17 +2240,19 @@
   }
   .tal-card-text {
     display: grid;
-    gap: 1px;
+    gap: 2px;
     min-width: 0;
   }
   .tal-card-name {
-    font-size: var(--text-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    letter-spacing: 0.2px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   .tal-card-sub {
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     color: var(--gold-dim);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -2304,17 +2359,28 @@
     z-index: 1;
   }
   /* Narrow container (the mobile sheet, a resized-down window): each tier
-     stacks its cards in one column (column identity yields to the flow) and
-     the build panels stack. */
-  @container (max-width: 560px) {
+     stacks its cards in one column (column AND row identity yield to the flow;
+     the row release matters, or the one-row pin would overlap the stack), the
+     cards drop to compact sizing, and the build panels stack. */
+  @container (max-width: 700px) {
     .tal-tier {
-      grid-template-columns: 44px minmax(0, 1fr);
+      grid-template-columns: 48px minmax(0, 1fr);
     }
     .tal-tier-cards {
       grid-template-columns: minmax(0, 1fr);
     }
-    .tal-tier-cards .tal-card {
+    .tal-tier-cards > .tal-card {
       grid-column: auto;
+      grid-row: auto;
+      min-height: 56px;
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    .tal-card .tal-icon {
+      width: 44px;
+      height: 44px;
+    }
+    .tal-card-name {
+      font-size: var(--text-sm);
     }
     .tal-foot {
       grid-template-columns: 1fr;
@@ -2523,9 +2589,14 @@
     border: 0;
     outline: 0;
     box-shadow: none;
-    /* The generic .window:has(> .window-frame) rule sets overflow:hidden for the
-       flex-column windows; these stay block-scrolled, so restore the root scroll
-       (bounded by the shared .window max-height) so tall content stays reachable. */
+  }
+  /* The generic .window:has(> .window-frame) rule sets overflow:hidden for the
+     flex-column windows; char/crafting stay block-scrolled, so restore their
+     root scroll (bounded by the shared .window max-height) so tall content
+     stays reachable. Talents moved to the full-height model (its section
+     above): the root keeps the hidden overflow and #tal-body scrolls instead. */
+  #char-window:has(> .window-frame),
+  #crafting-window:has(> .window-frame) {
     overflow-y: auto;
   }
   /* The resize gap fill (a root sized taller than its content must not show the

@@ -3052,10 +3052,10 @@
     min-height: 44px;
   }
   /* Full-screen overlay (issue 1577 char/talents redo, see #char-window
-     above): the talents window covers the whole screen on touch and scrolls as
-     one sheet. The tiered-choices layout reflows on its own (the tier-card
-     grid collapses via the container query in components.css), so no
-     fit-to-view scale is needed. */
+     above): the talents window covers the whole screen on touch; #tal-body is
+     the one scroller (the full-height flex model in components.css). The
+     tiered-choices layout reflows on its own (the tier-card grid collapses via
+     the container query in components.css), so no fit-to-view scale is needed. */
   body.mobile-touch #talents-window {
     position: fixed;
     left: 0;
@@ -3063,10 +3063,27 @@
     top: 0;
     bottom: 0;
     width: auto;
+    /* The desktop full-height default (components.css) yields to the inset
+       pinning above, so the sheet always spans the whole viewport. */
+    height: auto;
     max-width: none;
     max-height: none;
     transform: none;
     z-index: 95 !important;
+  }
+  /* On the short touch sheet the desktop bottom-anchored build band would eat
+     most of a landscape phone's height and crop the tiers into a tiny scroll
+     area, so the BODY flows and scrolls as one column instead (still exactly
+     one scroller): tiers first, the build panels reachable by scrolling. */
+  body.mobile-touch #talents-window .window-body {
+    display: block;
+    overflow-y: auto;
+  }
+  body.mobile-touch #talents-window #tal-body {
+    display: block;
+    flex: none;
+    min-height: auto;
+    overflow: visible;
   }
   /* Touch targets: every tier card is a tap target (min 48px); the frame tab
      rail + grammar buttons already ride the shared 44px --control-h-touch bump. */

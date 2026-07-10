@@ -397,6 +397,12 @@ export class TalentsWindow {
     for (const tier of treeVM.tiers) {
       const row = document.createElement('section');
       row.className = `tal-tier${tier.levelLocked ? ' level-locked' : ''}`;
+      // The content row this tier band renders. Every card inside carries the
+      // same stamp, so a test can pin that a card never leaves its tier's band
+      // (the one-horizontal-row-per-tier alignment contract; the row placement
+      // itself is the explicit `.tal-tier-cards > .tal-card { grid-row: 1 }`
+      // stylesheet rule, released only by the narrow-container collapse).
+      row.dataset.tierRow = String(tier.row);
       row.setAttribute('aria-label', t('hudChrome.talents.tierLevel', { n: num(tier.level) }));
       const rail = document.createElement('div');
       rail.className = 'tal-tier-rail';
@@ -407,7 +413,11 @@ export class TalentsWindow {
       row.appendChild(rail);
       const cards = document.createElement('div');
       cards.className = 'tal-tier-cards';
-      for (const vm of tier.nodes) cards.appendChild(this.buildCard(vm, stage));
+      for (const vm of tier.nodes) {
+        const card = this.buildCard(vm, stage);
+        card.dataset.tierRow = String(tier.row);
+        cards.appendChild(card);
+      }
       row.appendChild(cards);
       tiers.appendChild(row);
     }
