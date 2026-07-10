@@ -226,11 +226,21 @@ describe('spec-gated kit filtering', () => {
     expect(fury).not.toContain('sunder_armor');
     // Reaver Strike is now excluded for Fury too (owner 2026-07-08).
     expect(fury).not.toContain('heroic_strike');
-    // Fury keeps its own kit (Twinstrike) plus ungated staples (execute) and the
-    // baseline Redhand spender.
+    // Fury keeps its own kit (Twinstrike) plus ungated staples (execute).
     expect(fury).toContain('raging_gale');
     expect(fury).toContain('execute');
-    expect(fury).toContain('overpower');
+    // Redhand hands off at Red Harvest (owner 2026-07-10): with no level given
+    // (or at/after 10) the book hides it for Fury.
+    expect(fury).not.toContain('overpower');
+  });
+
+  it('shows Redhand to a Fury warrior below the level-10 hand-off, hides it after', () => {
+    const at = (level: number): string[] =>
+      buildSpellbookView(
+        input({ classId: 'warrior' as PlayerClass, abilities: warriorKit, spec: 'fury', level }),
+      ).rows.map((r) => r.abilityId);
+    expect(at(9)).toContain('overpower'); // still Fury's only real rage spender
+    expect(at(10)).not.toContain('overpower'); // Red Harvest took the role
   });
 
   it('each spec sees only its own gated kit (no cross-spec leakage)', () => {

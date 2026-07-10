@@ -67,6 +67,10 @@ export interface SpellbookInput {
    *  book never dangles a "Trainable at level X" the committed spec can never
    *  learn. No committed spec keeps the whole kit, since any spec is still open. */
   spec?: string | null;
+  /** The player's level, gating `excludeSpecsAtLevel` hand-offs (Redhand stays in
+   *  a Fury book through 5-9, drops at 10). Omitted = the exclusion always
+   *  applies, the pre-hand-off behavior. */
+  level?: number;
   /** The player's learned abilities (sim.known). */
   known: readonly ResolvedAbility[];
   /** Ability ids currently on the action bar (drives the onBar / toggle state). */
@@ -93,19 +97,23 @@ export interface SpellbookInput {
 /** Can the committed spec ever learn this ability? Mirrors the sim's
  *  specs / excludeSpecs gate (classes.ts abilitiesKnownAt). A null spec keeps
  *  everything (nothing is committed yet). */
-function specCanLearn(abilityId: string, spec: string | null | undefined): boolean {
+function specCanLearn(abilityId: string, spec: string | null | undefined, level?: number): boolean {
   if (!spec) return true;
   const def = ABILITIES[abilityId];
   if (!def) return true;
   if (def.specs && !def.specs.includes(spec)) return false;
-  if (def.excludeSpecs?.includes(spec)) return false;
+  if (
+    def.excludeSpecs?.includes(spec) &&
+    (level === undefined || level >= (def.excludeSpecsAtLevel ?? 0))
+  )
+    return false;
   return true;
 }
 
 export function buildSpellbookView(input: SpellbookInput): SpellbookView {
   const barIds = new Set(input.barAbilityIds);
   const rows: SpellbookRow[] = input.abilities
-    .filter((abilityId) => specCanLearn(abilityId, input.spec))
+    .filter((abilityId) => specCanLearn(abilityId, input.spec, input.level))
     .map((abilityId) => {
       const known = input.known.find((k) => k.def.id === abilityId) ?? null;
       const onBar = known !== null && barIds.has(abilityId);

@@ -163,6 +163,7 @@ export class SpellbookWindow {
       classId,
       abilities: cls.abilities,
       spec: world.talents.spec,
+      level: world.player.level,
       known: world.known,
       barAbilityIds: this.deps.barAbilityIds(),
       abilityIdByBarSlot: this.deps.abilityIdByBarSlot(),
