@@ -195,4 +195,44 @@ describe('SocialWindow: close + hostile escaping', () => {
     expect(body.querySelector('img')).toBeNull();
     expect(body.innerHTML).toContain('&lt;img');
   });
+
+  it('escapes a hostile GUILD name and member name through esc() (guild render path)', () => {
+    // The guild tab renders through guildHtml (head + roster rows), a DISTINCT
+    // path from the friends rows: the guild name lands in .soc-guild-head and
+    // member names in the roster, so both must be pinned separately.
+    const hostile = '<img src=x onerror=alert(1)>';
+    const member = (name: string, rank: string) => ({
+      id: 2,
+      name,
+      cls: 'warrior',
+      level: 10,
+      realm: 'Ravenspire',
+      online: true,
+      rank,
+      lastLogin: null,
+    });
+    const world = fakeWorld({
+      social: socialInfo({
+        guild: {
+          id: 1,
+          name: hostile,
+          rank: 'leader',
+          members: [member('Hero', 'leader'), member(hostile, 'member')],
+          events: [],
+        } as never,
+      }),
+    });
+    const deps = fakeDeps({ world: () => world });
+    const w = new SocialWindow(deps);
+    w.toggle();
+    (deps.root().querySelector('[data-window-tab="guild"]') as HTMLElement).click();
+    const body = deps.root().querySelector('.soc-body') as HTMLElement;
+    // The guild head rendered, so the assertions exercise the guild path.
+    const head = body.querySelector('.soc-guild-head') as HTMLElement;
+    expect(head).not.toBeNull();
+    expect(body.querySelector('img')).toBeNull();
+    expect(head.innerHTML).toContain('&lt;img');
+    // The hostile member roster row is escaped too (no live element anywhere).
+    expect(body.innerHTML).toContain('&lt;img');
+  });
 });

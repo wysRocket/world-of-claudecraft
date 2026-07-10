@@ -3720,6 +3720,10 @@
   #quest-log-window .window-footer .btn {
     min-width: 0;
   }
+  /* An empty log renders no footer action: collapse the bar (spellbook parity). */
+  #quest-log-window .window-footer:empty {
+    display: none;
+  }
 
   /* Spellbook: the class kit list fills the scrolling body; the reset-bar action
      (form-bar classes only) sits in the footer, which collapses when empty so

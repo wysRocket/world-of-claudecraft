@@ -11,6 +11,7 @@
 // name is escaped.
 
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { ITEMS } from '../src/sim/data';
 import { MailboxWindow, type MailboxWindowDeps } from '../src/ui/mailbox_window';
 import { isWindowDragHandle } from '../src/ui/window_drag_handle';
 import type { IWorld, MailInfo } from '../src/world_api';
@@ -155,6 +156,43 @@ describe('MailboxWindow: tab switch + callbacks', () => {
     expect(w.isOpen).toBe(false);
     expect(deps.root().style.display).toBe('none');
     expect(restoreFocus).toHaveBeenCalled();
+  });
+});
+
+describe('MailboxWindow: reader attachments use the .item-cell grammar', () => {
+  it('renders an attachment as .item-cell with a rarity border, count corner, and a working take flow', () => {
+    const item = Object.values(ITEMS)[0];
+    const info = mailInfo({
+      unread: 0,
+      totalCount: 1,
+      messages: [
+        {
+          id: 7,
+          read: true,
+          copper: 0,
+          items: [{ itemId: item.id, count: 5 }],
+          kind: 'player',
+          letterId: null,
+          senderName: 'Bob',
+          subject: 'loot',
+          body: 'here you go',
+        },
+      ],
+    } as unknown as Partial<MailInfo>);
+    const world = fakeWorld(info);
+    const deps = fakeDeps({ world: () => world });
+    const w = new MailboxWindow(deps);
+    w.open();
+    // Read flow: clicking the row opens the reader (unchanged).
+    (deps.root().querySelector('.mail-row') as HTMLElement).click();
+    const cell = deps.root().querySelector<HTMLElement>('.mail-attachments .item-cell');
+    expect(cell).not.toBeNull();
+    expect(cell?.getAttribute('data-quality')).toBe(item.quality ?? 'common');
+    // The stack count sits in the cell corner (the vendor precedent), not an xN suffix.
+    expect(cell?.querySelector('.item-cell-count')?.textContent).toBe('5');
+    // Take flow byte-identical: the take action still routes IWorld.mailTake(id).
+    (deps.root().querySelector('#mail-actions .mail-action-btn') as HTMLElement).click();
+    expect(world.mailTake).toHaveBeenCalledWith(7);
   });
 });
 

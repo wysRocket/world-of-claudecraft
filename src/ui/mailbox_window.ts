@@ -374,10 +374,19 @@ export class MailboxWindow {
         const chip = document.createElement('span');
         chip.className = 'mail-attachment-item';
         if (item) {
-          const qColor = QUALITY_COLOR[item.quality ?? 'common'] ?? QUALITY_DEFAULT_COLOR;
-          const stack =
-            slot.count > 1 ? ` x${formatNumber(slot.count, { maximumFractionDigits: 0 })}` : '';
-          chip.innerHTML = `${this.deps.itemIcon(item)}<span style="color:${qColor}">${esc(itemDisplayName(item))}${esc(stack)}</span>`;
+          // The AAA .item-cell grammar (the vendor precedent, spec 6.1 to 6.3):
+          // rarity border via data-quality, stack count in the cell corner (was
+          // an " xN" text suffix), the shared focus ring from the grammar CSS.
+          // The quality-colored name label and the take/read flows are unchanged.
+          const quality = item.quality ?? 'common';
+          const qColor = QUALITY_COLOR[quality] ?? QUALITY_DEFAULT_COLOR;
+          const corner =
+            slot.count > 1
+              ? `<span class="item-cell-count">${esc(formatNumber(slot.count, { maximumFractionDigits: 0 }))}</span>`
+              : '';
+          chip.innerHTML =
+            `<span class="item-cell" data-quality="${esc(quality)}">${this.deps.itemIcon(item)}${corner}</span>` +
+            `<span style="color:${qColor}">${esc(itemDisplayName(item))}</span>`;
           this.deps.attachTooltip(chip, () => this.deps.itemTooltip(item));
         } else {
           chip.textContent = slot.itemId;
