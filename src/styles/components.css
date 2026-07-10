@@ -3283,6 +3283,34 @@
   body.mobile-touch .window-frame .chip {
     min-height: var(--touch-min);
   }
+  /* Touch: the slot grids re-track from the 42px desktop density to the larger
+     --touch-cell floor and REFLOW to fewer columns (live user feedback: the item
+     icons read too small to tap inside the 50/50 bank / market docks). The cells
+     are fluid aspect-ratio squares, so the wider track is what grows them, and
+     the icon inside already fills the cell. Cell size stays fixed at the floor;
+     the COLUMN COUNT is what yields. Desktop keeps its density and the dock
+     geometry (the 50/50 split rules in hud.mobile.css) is untouched. :is(), not a
+     two-selector list: the bank_window.test.ts scroll-contract slices anchor on
+     this file's first bank-grid rule OPENER, which must stay the base rule in the
+     bank section below (this block must not spell that opener out, even here). */
+  body.mobile-touch :is(.bag-grid, .bank-grid) {
+    grid-template-columns: repeat(auto-fill, minmax(var(--touch-cell), 1fr));
+  }
+  body.mobile-touch .window-frame .bag-grid .item-cell,
+  body.mobile-touch .window-frame .bank-grid .item-cell {
+    min-height: var(--touch-cell);
+  }
+  /* The bag-bar sockets (backpack + 4 equip slots) grow to the same touch floor so
+     every icon target in the window reads one size; the bar wraps so the capacity
+     counter drops to its own line instead of overflowing the narrowest dock halves
+     (five 56px sockets + the counter no longer always fit half of a 740px phone). */
+  body.mobile-touch .bag-socket {
+    width: var(--touch-cell);
+    height: var(--touch-cell);
+  }
+  body.mobile-touch .bag-bar {
+    flex-wrap: wrap;
+  }
   /* Short landscape phones: keep the bank-cluster chip filter-row ONE horizontally
      scrollable row so a two-row wrap never squeezes the docked grid to a sliver
      (the behavior the legacy .bag-chips rule protected, re-provided for the grammar

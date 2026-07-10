@@ -47,6 +47,10 @@ const hudMobileCss = readFileSync(
   new URL('../src/styles/hud.mobile.css', import.meta.url),
   'utf8',
 ).replace(/\r\n/g, '\n');
+const tokensCss = readFileSync(
+  new URL('../src/styles/tokens.css', import.meta.url),
+  'utf8',
+).replace(/\r\n/g, '\n');
 const indexExtraCss = readFileSync(
   new URL('../src/styles/index.extra.css', import.meta.url),
   'utf8',
@@ -2089,6 +2093,39 @@ describe('client HTML shell', () => {
       'body.mobile-touch #bags {\n    position: fixed;\n    left: 10px;\n    right: 10px;\n    bottom: 10px;',
     );
     expect(hudMobileCss).not.toContain('max-height: calc(38vh - 20px);');
+  });
+
+  it('re-tracks the touch slot grids to the comfortable --touch-cell floor', () => {
+    // Live user feedback on the bank-open 50/50 dock: the bag/bank item icons were
+    // too small to tap on a phone. On touch the slot grids re-track from the 42px
+    // desktop density to the --touch-cell floor and REFLOW to fewer columns (cell
+    // size fixed, column count yields), and the bag-bar sockets grow to the same
+    // floor with the bar wrapping so the capacity counter never overflows the
+    // narrowest dock halves. All scoped under body.mobile-touch so desktop keeps
+    // its density. The rendered-geometry twin (every dock state, real cascade)
+    // lives in tests/browser/target_size.browser.test.ts.
+    expect(tokensCss).toContain('--touch-cell: 56px;');
+    // :is(), not a two-selector list: the bank_window.test.ts scroll-contract
+    // slices anchor on the FIRST '.bank-grid {' occurrence in components.css,
+    // which must stay the base rule in the bank section.
+    expect(componentsCss).toContain(
+      'body.mobile-touch :is(.bag-grid, .bank-grid) {\n    grid-template-columns: repeat(auto-fill, minmax(var(--touch-cell), 1fr));',
+    );
+    expect(componentsCss).toContain(
+      'body.mobile-touch .window-frame .bag-grid .item-cell,\n  body.mobile-touch .window-frame .bank-grid .item-cell {\n    min-height: var(--touch-cell);',
+    );
+    expect(componentsCss).toContain(
+      'body.mobile-touch .bag-socket {\n    width: var(--touch-cell);\n    height: var(--touch-cell);',
+    );
+    expect(componentsCss).toContain('body.mobile-touch .bag-bar {\n    flex-wrap: wrap;');
+    // The desktop grids keep the dense 42px tracks (no touch value leaking into the
+    // unscoped base rules).
+    expect(componentsCss).toContain(
+      '.bag-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));',
+    );
+    expect(componentsCss).toContain(
+      '.bank-grid {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));',
+    );
   });
 
   it('combines Trader and Bags into a mobile split-pane modal', () => {
