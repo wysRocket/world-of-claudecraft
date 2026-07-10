@@ -8,8 +8,8 @@
     "casting lifecycle (C4a)",
     "effect dispatch + spell damage (C4b/C1)"
   ],
-  "draws": 411,
-  "drawDigest": "de54da05",
+  "draws": 421,
+  "drawDigest": "cb4febb2",
   "frames": [
     {
       "tick": 0,
@@ -173,8 +173,8 @@
       "state": "9b71349b",
       "events": "6e976f2d",
       "rng": {
-        "draws": 162,
-        "digest": "a72d4df2"
+        "draws": 163,
+        "digest": "5caeab93"
       }
     },
     {
@@ -184,30 +184,30 @@
       "state": "0355b2bb",
       "events": "1336b2fd",
       "rng": {
-        "draws": 254,
-        "digest": "8a8c6a7c"
+        "draws": 259,
+        "digest": "bf0b305f"
       }
     },
     {
       "tick": 120,
       "time": 6,
       "nextId": 410,
-      "state": "8c0d880c",
+      "state": "d337ded8",
       "events": "6e976f2d",
       "rng": {
-        "draws": 367,
-        "digest": "6d00992d"
+        "draws": 380,
+        "digest": "ed0c4a9f"
       }
     },
     {
       "tick": 128,
       "time": 6.4,
       "nextId": 410,
-      "state": "dd49eb3c",
+      "state": "f0aac01f",
       "events": "741638a5",
       "rng": {
-        "draws": 411,
-        "digest": "de54da05"
+        "draws": 421,
+        "digest": "cb4febb2"
       },
       "label": "final",
       "players": [
@@ -297,7 +297,7 @@
           "critChance": 0.056,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.056,
-          "facing": 0.025301,
+          "facing": -0.113451,
           "fallStartY": 1.5,
           "fiveSecondRule": 105.4,
           "hp": 50000,
@@ -348,7 +348,7 @@
           "critChance": 0.05,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": 2.467165,
+          "facing": -0.172454,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hostile": true,
@@ -363,9 +363,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 2.408616,
-            "y": 1.5,
-            "z": 14.146691
+            "x": -0.600457,
+            "y": 1.497999,
+            "z": 20.823045
           },
           "potionCooldownUntil": -1,
           "spawnPos": {
@@ -378,9 +378,9 @@
           },
           "templateId": "forest_wolf",
           "wanderTarget": {
-            "x": 3.767477,
-            "y": 1.5,
-            "z": 12.447024
+            "x": -1.188086,
+            "y": 1.250784,
+            "z": 24.196644
           },
           "wanderTimer": 28.7,
           "weapon": {
