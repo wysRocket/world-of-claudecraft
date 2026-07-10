@@ -76,7 +76,7 @@ describe('Heroic Leap: lifecycle resets', () => {
     sim.setPlayerLevel(MAX_LEVEL);
     const p: Entity = sim.player;
     p.gcdRemaining = 0;
-    sim.castAbility('heroic_leap', p.id, { x: p.pos.x + 12, y: p.pos.y, z: p.pos.z });
+    sim.castAbility('heroic_leap', p.id, { x: p.pos.x + 12, z: p.pos.z });
     expect(p.leap).not.toBeNull();
     sim.tick(); // one tick in: genuinely mid-flight
     const leap = p.leap;
