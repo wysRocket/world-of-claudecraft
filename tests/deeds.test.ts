@@ -643,6 +643,40 @@ describe('persistence', () => {
     expect(state.deedStats?.itemsDiscovered?.length).toBe(meta.deedStats.itemsDiscovered.size);
   });
 
+  it('a heroic variant credits its base item in the discovery ledger (drop and rejoin)', () => {
+    const sim = makeSim();
+    const { meta } = primary(sim);
+    // A heroic instance swaps a rare/epic drop for its generated heroic_<base>
+    // variant (same display name, same set membership); the collection deeds
+    // key on the BASE ids, so a variant discovery must credit both.
+    markItemDiscovered(sim.ctx, meta, 'heroic_boundstone_helm');
+    expect(meta.deedStats.itemsDiscovered.has('heroic_boundstone_helm')).toBe(true);
+    expect(meta.deedStats.itemsDiscovered.has('boundstone_helm')).toBe(true);
+
+    // A veteran who looted the variant before this rule joins with only the
+    // variant id in the persisted ledger and the item still in the bags: the
+    // join seed retro-credits the base.
+    const held: CharacterState = {
+      level: 20,
+      xp: 0,
+      copper: 0,
+      hp: 30,
+      resource: 0,
+      pos: { x: 2, z: -2 },
+      facing: 0,
+      equipment: {},
+      inventory: [{ itemId: 'heroic_boundstone_helm', count: 1 }],
+      questLog: [],
+      questsDone: [],
+      deedStats: { itemsDiscovered: ['heroic_boundstone_helm'] },
+    };
+    const sim2 = makeSim();
+    const pid = sim2.addPlayer('warrior', 'HeldVariant', { state: held });
+    const m2 = sim2.players.get(pid)!;
+    expect(m2.deedStats.itemsDiscovered.has('heroic_boundstone_helm')).toBe(true);
+    expect(m2.deedStats.itemsDiscovered.has('boundstone_helm')).toBe(true);
+  });
+
   it('the discovery ledger rejects ids that are not real items', () => {
     const sim = makeSim();
     const { meta } = primary(sim);

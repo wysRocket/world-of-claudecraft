@@ -337,10 +337,10 @@ function freeInstance(ctx: SimContext, inst: InstanceSlot): void {
 // Heroic Marks for every eligible participant (marksPerParticipant on the
 // tuning record: 1 for the five-mans, 3 for the Nythraxis raid). `recipients`
 // is the same downed-members-included snapshot handleDeath uses for XP and
-// loot rights. Each mark is its own personalFor slot (the loot pickup arm
-// grants one item per personal slot, so a single loot click takes them all)
-// and nobody can take another player's. Draws no rng, so the corpse loot
-// draw order is untouched.
+// loot rights. The marks ride ONE shared-personal slot (personalFor lists
+// every earner, count is the per-participant payout): whoever loots the
+// corpse hands every earner their marks at once, and nobody can take another
+// player's. Draws no rng, so the corpse loot draw order is untouched.
 //
 // Daily income gate: each dungeon pays a given character at most once per host
 // UTC day (delveDaily pattern), so the instance-reset farm cannot print marks.

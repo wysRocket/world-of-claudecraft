@@ -367,6 +367,12 @@ export function markItemDiscovered(
     meta.deedStats.itemsDiscovered.add(itemId);
     ctx.deedDirtyPids.add(meta.entityId);
   }
+  // A heroic instance drops the generated heroic_<base> variant in place of
+  // the base item (same display name, same set membership); collection deeds
+  // key on the BASE ids, so a variant discovery credits its base too. Bases
+  // are never variants themselves, so this recurses at most once, and the
+  // join-time seed funnels through here, retro-crediting held variants.
+  if (def.heroicOf) markItemDiscovered(ctx, meta, def.heroicOf);
   const quality = rolledQuality ?? def.quality;
   if (quality === 'rare' || quality === 'epic' || quality === 'legendary') {
     markVisited(ctx, meta, `quality:${quality}`);
