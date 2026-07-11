@@ -658,7 +658,7 @@ export const it_IT: EnTranslations = {
         "inputMode": "Modalità di input",
         "feel": "Sensibilità",
         "sticks": "Levette",
-        "look": "Aspetto",
+        "look": "Visuale",
         "buttons": "Pulsanti",
         "volume": "Audio",
         "toggles": "Interruttori",
@@ -7638,7 +7638,7 @@ export const it_IT: EnTranslations = {
       "q_prof_intro": {
         "title": "Un mestiere per ogni mano",
         "text": "A Eastbrook ogni anima pratica un mestiere oltre all’arte della spada, {playerName}. Ci sono vene di minerale sparse intorno alla città, quindi impugna un piccone e portami 5 pezzi. Estraili tu, bada bene, saprò riconoscere la differenza.",
-        "completion": "Vedi? Minerale nello zaino e calli sulle mani. Continua a estrarre minerali, tagliare legna e raccogliere erbe mentre percorri le strade. Quando torni in città, tieni d’occhio il tabellone delle Priorità della città vicino al mercato e il banco da lavoro lì accanto. C’è un buon affare in tutto questo, se ti interessa.",
+        "completion": "Vedi? Minerale nello zaino e calli sulle mani. Continua a estrarre minerali, tagliare legna e raccogliere erbe mentre percorri le strade. Quando torni in città, tieni d’occhio il tabellone delle Priorità della città vicino al mercato e il banco da lavoro lì accanto. C’è un mestiere onesto in tutto questo, se ti interessa.",
         "objectives": {
           "0": {
             "label": "Pezzo di Minerale"

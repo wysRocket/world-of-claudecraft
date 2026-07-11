@@ -658,7 +658,7 @@ export const pt_BR: EnTranslations = {
         "inputMode": "Modo de entrada",
         "feel": "Sensibilidade",
         "sticks": "Controles direcionais",
-        "look": "Visual",
+        "look": "Câmera",
         "buttons": "Botões",
         "volume": "Áudio",
         "toggles": "Opções de ativação",
@@ -7638,7 +7638,7 @@ export const pt_BR: EnTranslations = {
       "q_prof_intro": {
         "title": "Um ofício para cada mão",
         "text": "Cada pessoa em Eastbrook exerce um ofício além da espada, {playerName}. Há veios de minério espalhados pela cidade, então pegue uma picareta e traga 5 pedaços para mim. Extraia você mesmo, viu? Eu vou saber a diferença.",
-        "completion": "Viu só? Minério na mochila e calos nas mãos. Continue minerando, cortando madeira e colhendo ervas enquanto percorre as estradas. Quando voltar à cidade, preste atenção no quadro do Foco da Cidade perto do mercado e na bancada de criação ali ao lado. Há uma troca justa em tudo isso, se você quiser.",
+        "completion": "Viu só? Minério na mochila e calos nas mãos. Continue minerando, cortando madeira e colhendo ervas enquanto percorre as estradas. Quando voltar à cidade, preste atenção no quadro do Foco da Cidade perto do mercado e na bancada de criação ali ao lado. Dá para ganhar a vida honestamente com tudo isso, se você quiser.",
         "objectives": {
           "0": {
             "label": "Pedaço de Minério"

@@ -6549,10 +6549,10 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Dette nulstillingslink er ugyldigt eller udløbet. Anmod om et nyt.',
   'entities.items.chunk_of_ore.name': 'Malmklump',
   'entities.quests.q_prof_intro.completion':
-    'Kan du se? Malm i din taske og hård hud på dine hænder. Fortsæt med minedrift, skovhugst og urtesamling, mens du rejser ad vejene. Når du er tilbage i byen, så husk Byfokus-tavlen ved markedet og arbejdsbænken i nærheden. Der venter en hæderlig handel i det hele, hvis du ønsker den.',
+    'Kan du se? Malm i din taske og hård hud på dine hænder. Fortsæt med minedrift, skovhugst og urtesamling, mens du rejser ad vejene. Når du er tilbage i byen, så husk Byfokus-tavlen ved markedet og arbejdsbænken i nærheden. Der er et hæderligt levebrød i det alt sammen, hvis du ønsker det.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Malmklump',
   'entities.quests.q_prof_intro.text':
-    'Alle i Eastbrook har et håndværk ved siden af sværdet, {playerName}. Der ligger malmårer rundt om byen, så sving en hakke og bring mig 5 klumper. Bryd dem selv, vel at mærke; jeg kan kende forskel.',
+    'Alle i Østbæk har et håndværk ved siden af sværdet, {playerName}. Der ligger malmårer rundt om byen, så sving en hakke og bring mig 5 klumper. Bryd dem selv, vel at mærke; jeg kan kende forskel.',
   'entities.quests.q_prof_intro.title': 'Et håndværk til hver hånd',
   'hudChrome.auth.appleChoiceExpired': 'Dette Apple-login er udløbet. Log ind med Apple igen.',
   'hudChrome.auth.appleChoiceIntro':

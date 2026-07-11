@@ -658,7 +658,7 @@ export const ja_JP: EnTranslations = {
         "inputMode": "入力モード",
         "feel": "操作感",
         "sticks": "スティック",
-        "look": "外観",
+        "look": "視点",
         "buttons": "ボタン",
         "volume": "音量",
         "toggles": "切り替え",

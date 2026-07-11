@@ -6617,7 +6617,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.controller.duplicate': 'Przypisano również do {buttons}',
   'hudChrome.dailyRewards.reason.banned':
     'Masz zakaz udziału w codziennych nagrodach. Powód: {reason}',
-  'hudChrome.itemHeroicTag': '[TRYB HEROICZNY]',
+  'hudChrome.itemHeroicTag': '[HEROICZNY]',
   'hudChrome.itemSoulbound': 'Związany z duszą',
   'hudChrome.keybinds.categoryPet': 'Zwierzę',
   'hudChrome.keybinds.petAggressive': 'Zwierzę: Agresywne',

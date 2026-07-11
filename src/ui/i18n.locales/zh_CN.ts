@@ -23,7 +23,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.searchGoTo': '前往{category}',
   'hudChrome.options.sec.chat': '聊天',
   'hudChrome.options.sec.feel': '操作感',
-  'hudChrome.options.sec.look': '外观',
+  'hudChrome.options.sec.look': '视角',
   'hudChrome.options.sec.view': '视野',
   'hudChrome.readyCheck.notInPartyError': '你必须加入队伍才能发起就绪确认。',
   'hudChrome.readyCheck.inProgressError': '就绪确认已在进行中。',
@@ -2674,7 +2674,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_prof_intro.text':
     '伊斯特布鲁克的每个人都有除了剑术之外的手艺，{playerName}。镇子周围散落着矿脉，去挥镐采上5块矿石带给我。要亲自采，别耍花招，我看得出来。',
   'entities.quests.q_prof_intro.completion':
-    '看到了吧？矿石进了包里，手上也磨出了茧子。继续在路上采矿、伐木、采药，回到镇上时，留意市场旁的城镇专注面板和附近的制作台。只要你愿意，这里面都有正经买卖等着你。',
+    '看到了吧？矿石进了包里，手上也磨出了茧子。继续在路上采矿、伐木、采药，回到镇上时，留意市场旁的城镇专注面板和附近的制作台。只要你愿意，靠这些都能正经谋生。',
   'entities.quests.q_prof_intro.objectives.0.label': '矿石块',
   'entities.quests.q_wolves.title': '门前群狼',
   'entities.quests.q_wolves.text':

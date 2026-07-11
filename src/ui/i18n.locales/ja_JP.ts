@@ -23,7 +23,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.searchGoTo': '{category}へ移動',
   'hudChrome.options.sec.chat': 'チャット',
   'hudChrome.options.sec.feel': '操作感',
-  'hudChrome.options.sec.look': '外観',
+  'hudChrome.options.sec.look': '視点',
   'hudChrome.options.sec.view': '視野',
   'hudChrome.readyCheck.notInPartyError':
     '準備確認を開始するにはパーティーに参加している必要があります。',

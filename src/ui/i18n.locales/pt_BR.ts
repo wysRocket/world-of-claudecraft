@@ -6672,7 +6672,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.items.arcane_shard.name': 'Fragmento Arcano',
   'entities.items.chunk_of_ore.name': 'Pedaço de Minério',
   'entities.quests.q_prof_intro.completion':
-    'Viu só? Minério na mochila e calos nas mãos. Continue minerando, cortando madeira e colhendo ervas enquanto percorre as estradas. Quando voltar à cidade, preste atenção no quadro do Foco da Cidade perto do mercado e na bancada de criação ali ao lado. Há uma troca justa em tudo isso, se você quiser.',
+    'Viu só? Minério na mochila e calos nas mãos. Continue minerando, cortando madeira e colhendo ervas enquanto percorre as estradas. Quando voltar à cidade, preste atenção no quadro do Foco da Cidade perto do mercado e na bancada de criação ali ao lado. Dá para ganhar a vida honestamente com tudo isso, se você quiser.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Pedaço de Minério',
   'entities.quests.q_prof_intro.text':
     'Cada pessoa em Eastbrook exerce um ofício além da espada, {playerName}. Há veios de minério espalhados pela cidade, então pegue uma picareta e traga 5 pedaços para mim. Extraia você mesmo, viu? Eu vou saber a diferença.',
@@ -6761,7 +6761,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.sec.general': 'Geral',
   'hudChrome.options.sec.hudExtras': 'Extras da interface',
   'hudChrome.options.sec.inputMode': 'Modo de entrada',
-  'hudChrome.options.sec.look': 'Visual',
+  'hudChrome.options.sec.look': 'Câmera',
   'hudChrome.options.sec.motionContrast': 'Movimento e contraste',
   'hudChrome.options.sec.movement': 'Movimento',
   'hudChrome.options.sec.panels': 'Painéis',

@@ -23,7 +23,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.searchGoTo': 'Перейти к разделу «{category}»',
   'hudChrome.options.sec.chat': 'Чат',
   'hudChrome.options.sec.feel': 'Ощущения',
-  'hudChrome.options.sec.look': 'Вид',
+  'hudChrome.options.sec.look': 'Обзор',
   'hudChrome.options.sec.view': 'Обзор',
   'hudChrome.readyCheck.notInPartyError':
     'Чтобы начать проверку готовности, вы должны состоять в группе.',

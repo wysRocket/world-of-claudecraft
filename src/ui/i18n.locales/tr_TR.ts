@@ -13,7 +13,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'loading.tips.loadouts':
     'İpucu: puanları iki kez harcamadan farklı dizilimler arasında geçmek için birden fazla yetenek düzeni kaydet.',
   'loading.tips.market':
-    'İpucu: Dünya Pazarı, realm genelindeki oyuncularla alım satım yapmanı sağlar.',
+    'İpucu: Dünya Pazarı, dünya genelindeki oyuncularla alım satım yapmanı sağlar.',
   'loading.tips.professions':
     'İpucu: toplama ve üretim mesleklerini savaş sınıfının yanında geliştirebilirsin.',
   'loading.tips.pvp':
@@ -109,7 +109,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.sec.general': 'Genel',
   'hudChrome.options.sec.hudExtras': 'Ek HUD Öğeleri',
   'hudChrome.options.sec.inputMode': 'Giriş Modu',
-  'hudChrome.options.sec.look': 'Görünüm',
+  'hudChrome.options.sec.look': 'Bakış',
   'hudChrome.options.sec.motionContrast': 'Hareket ve Kontrast',
   'hudChrome.options.sec.movement': 'Hareket',
   'hudChrome.options.sec.panels': 'Paneller',

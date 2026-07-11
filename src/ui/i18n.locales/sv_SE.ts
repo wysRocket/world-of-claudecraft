@@ -6566,10 +6566,10 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Den här återställningslänken är ogiltig eller har gått ut. Begär en ny.',
   'entities.items.chunk_of_ore.name': 'Malmklump',
   'entities.quests.q_prof_intro.completion':
-    'Ser du? Malm i packningen och valkar på händerna. Fortsätt med gruvdrift, skogsavverkning och örtplockning medan du färdas längs vägarna. När du är tillbaka i staden, kom ihåg Stadsfokus-tavlan vid marknaden och arbetsbänken i närheten. Det finns en hederlig affär i alltihop, om du vill ha den.',
+    'Ser du? Malm i packningen och valkar på händerna. Fortsätt med gruvdrift, skogsavverkning och örtplockning medan du färdas längs vägarna. När du är tillbaka i staden, kom ihåg Stadsfokus-tavlan vid marknaden och arbetsbänken i närheten. Det går att försörja sig hederligt på alltihop, om du vill.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Malmklump',
   'entities.quests.q_prof_intro.text':
-    'Alla i Eastbrook har ett yrke vid sidan om svärdet, {playerName}. Det finns malmådror utspridda runt staden, så svinga en hacka och ge mig 5 klumpar. Bryt dem själv, märk väl; jag ser skillnaden.',
+    'Alla i Östbäck har ett yrke vid sidan om svärdet, {playerName}. Det finns malmådror utspridda runt staden, så svinga en hacka och ge mig 5 klumpar. Bryt dem själv, märk väl; jag ser skillnaden.',
   'entities.quests.q_prof_intro.title': 'Ett yrke för varje hand',
   'hudChrome.auth.appleChoiceExpired':
     'Den här Apple-inloggningen har gått ut. Logga in med Apple igen.',

@@ -658,7 +658,7 @@ export const ru_RU: EnTranslations = {
         "inputMode": "Режим ввода",
         "feel": "Ощущения",
         "sticks": "Стики",
-        "look": "Вид",
+        "look": "Обзор",
         "buttons": "Кнопки",
         "volume": "Громкость",
         "toggles": "Переключатели",

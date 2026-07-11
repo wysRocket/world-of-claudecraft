@@ -6699,7 +6699,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.items.arcane_shard.name': 'Frammento Arcano',
   'entities.items.chunk_of_ore.name': 'Pezzo di Minerale',
   'entities.quests.q_prof_intro.completion':
-    'Vedi? Minerale nello zaino e calli sulle mani. Continua a estrarre minerali, tagliare legna e raccogliere erbe mentre percorri le strade. Quando torni in città, tieni d’occhio il tabellone delle Priorità della città vicino al mercato e il banco da lavoro lì accanto. C’è un buon affare in tutto questo, se ti interessa.',
+    'Vedi? Minerale nello zaino e calli sulle mani. Continua a estrarre minerali, tagliare legna e raccogliere erbe mentre percorri le strade. Quando torni in città, tieni d’occhio il tabellone delle Priorità della città vicino al mercato e il banco da lavoro lì accanto. C’è un mestiere onesto in tutto questo, se ti interessa.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Pezzo di Minerale',
   'entities.quests.q_prof_intro.text':
     'A Eastbrook ogni anima pratica un mestiere oltre all’arte della spada, {playerName}. Ci sono vene di minerale sparse intorno alla città, quindi impugna un piccone e portami 5 pezzi. Estraili tu, bada bene, saprò riconoscere la differenza.',
@@ -6788,7 +6788,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.sec.general': 'Generale',
   'hudChrome.options.sec.hudExtras': 'Extra dell’interfaccia',
   'hudChrome.options.sec.inputMode': 'Modalità di input',
-  'hudChrome.options.sec.look': 'Aspetto',
+  'hudChrome.options.sec.look': 'Visuale',
   'hudChrome.options.sec.motionContrast': 'Movimento e contrasto',
   'hudChrome.options.sec.movement': 'Movimento',
   'hudChrome.options.sec.panels': 'Pannelli',

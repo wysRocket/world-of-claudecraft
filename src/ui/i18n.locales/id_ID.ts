@@ -13,7 +13,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'loading.tips.loadouts':
     'Kiat: simpan lebih dari satu set talenta agar dapat bertukar build tanpa menggunakan poin dua kali.',
   'loading.tips.market':
-    'Kiat: Pasar Dunia memungkinkanmu membeli dan menjual dengan pemain di seluruh realm.',
+    'Kiat: Pasar Dunia memungkinkanmu membeli dan menjual dengan pemain di seluruh dunia.',
   'loading.tips.professions':
     'Kiat: profesi pengumpulan dan kerajinan dapat dilatih bersamaan dengan kelas tempurmu.',
   'loading.tips.pvp':
@@ -22,7 +22,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Kiat: kamu dapat mengatur ulang talenta kapan saja saat tidak bertarung, jadi pilihan awal tidak akan menjadi jebakan.',
   'entities.items.chunk_of_ore.name': 'Bongkahan Bijih',
   'entities.quests.q_prof_intro.completion':
-    'Lihat? Bijih di tasmu dan kapalan di tanganmu. Teruslah menambang, menebang, dan memetik herba selama menjelajahi jalanan. Saat kembali ke kota, perhatikan papan Fokus Kota di dekat pasar dan bangku kerajinan di sebelahnya. Ada perdagangan yang layak di semua itu, jika kamu menginginkannya.',
+    'Lihat? Bijih di tasmu dan kapalan di tanganmu. Teruslah menambang, menebang, dan memetik herba selama menjelajahi jalanan. Saat kembali ke kota, perhatikan papan Fokus Kota di dekat pasar dan bangku kerajinan di sebelahnya. Semua itu bisa menjadi mata pencaharian yang layak, jika kamu menginginkannya.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Bongkahan Bijih',
   'entities.quests.q_prof_intro.text':
     'Setiap orang di Eastbrook menekuni pekerjaan selain mengayunkan pedang, {playerName}. Urat bijih tersebar di sekitar kota, jadi ayunkan beliung dan bawakan aku 5 bongkahan. Tambang sendiri, ingat, aku tahu bedanya.',
@@ -110,7 +110,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.sec.general': 'Umum',
   'hudChrome.options.sec.hudExtras': 'Ekstra HUD',
   'hudChrome.options.sec.inputMode': 'Mode Masukan',
-  'hudChrome.options.sec.look': 'Tampilan',
+  'hudChrome.options.sec.look': 'Arah Pandang',
   'hudChrome.options.sec.motionContrast': 'Gerakan dan Kontras',
   'hudChrome.options.sec.movement': 'Gerakan',
   'hudChrome.options.sec.panels': 'Panel',

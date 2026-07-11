@@ -23,7 +23,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.searchGoTo': '前往{category}',
   'hudChrome.options.sec.chat': '聊天',
   'hudChrome.options.sec.feel': '操作手感',
-  'hudChrome.options.sec.look': '外觀',
+  'hudChrome.options.sec.look': '視角',
   'hudChrome.options.sec.view': '視野',
   'hudChrome.readyCheck.notInPartyError': '你必須加入隊伍才能發起就緒確認。',
   'hudChrome.readyCheck.inProgressError': '就緒確認已在進行中。',
@@ -2676,7 +2676,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_prof_intro.text':
     '伊斯特布魯克的每個人都有除了劍術之外的手藝，{playerName}。鎮子周圍散落著礦脈，去揮鎬採上5塊礦石帶給我。要親自採，別耍花招，我看得出來。',
   'entities.quests.q_prof_intro.completion':
-    '看到了吧？礦石進了包裡，手上也磨出了繭子。繼續在路上採礦、伐木、採藥，回到鎮上時，留意市場旁的城鎮專注面板和附近的製作台。只要你願意，這裡面都有正經買賣等著你。',
+    '看到了吧？礦石進了包裡，手上也磨出了繭子。繼續在路上採礦、伐木、採藥，回到鎮上時，留意市場旁的城鎮專注面板和附近的製作台。只要你願意，靠這些都能正經謀生。',
   'entities.quests.q_prof_intro.objectives.0.label': '礦石塊',
   'entities.quests.q_wolves.title': '門前群狼',
   'entities.quests.q_wolves.text':

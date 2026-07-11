@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import type { TranslationKey } from '../src/ui/i18n.catalog';
 import { da_DK } from '../src/ui/i18n.locales/da_DK';
 import { es } from '../src/ui/i18n.locales/es';
 import { fr_FR } from '../src/ui/i18n.locales/fr_FR';
@@ -16,7 +17,7 @@ import { vi_VN } from '../src/ui/i18n.locales/vi_VN';
 import { zh_CN } from '../src/ui/i18n.locales/zh_CN';
 import { zh_TW } from '../src/ui/i18n.locales/zh_TW';
 
-const locales: Record<string, Record<string, string>> = {
+const locales: Record<string, Partial<Record<TranslationKey, string>>> = {
   da_DK,
   es,
   fr_FR,
@@ -35,6 +36,12 @@ const locales: Record<string, Record<string, string>> = {
   zh_TW,
 };
 
+function translation(locale: string, key: TranslationKey): string {
+  const value = locales[locale]?.[key];
+  if (typeof value !== 'string') throw new Error(`${locale} is missing ${key}`);
+  return value;
+}
+
 describe('reviewed localization semantics', () => {
   const lookLabels: Record<string, string> = {
     id_ID: 'Arah Pandang',
@@ -51,7 +58,7 @@ describe('reviewed localization semantics', () => {
 
   for (const [locale, expected] of Object.entries(lookLabels)) {
     it(`${locale} labels camera look controls accurately`, () => {
-      expect(locales[locale]['hudChrome.options.sec.look']).toBe(expected);
+      expect(translation(locale, 'hudChrome.options.sec.look')).toBe(expected);
     });
   }
 
@@ -63,7 +70,7 @@ describe('reviewed localization semantics', () => {
 
   for (const [locale, expectedTerm] of Object.entries(marketTerms)) {
     it(`${locale} does not leak raw English into the market tip`, () => {
-      const value = locales[locale]['loading.tips.market'];
+      const value = translation(locale, 'loading.tips.market');
       expect(value).not.toMatch(/\brealm\b/i);
       expect(value.toLocaleLowerCase(locale.replace('_', '-'))).toContain(expectedTerm);
     });
@@ -77,7 +84,7 @@ describe('reviewed localization semantics', () => {
 
   for (const [locale, expectedName] of Object.entries(eastbrookNames)) {
     it(`${locale} uses its established Eastbrook place name`, () => {
-      const value = locales[locale]['entities.quests.q_prof_intro.text'];
+      const value = translation(locale, 'entities.quests.q_prof_intro.text');
       expect(value).toContain(expectedName);
       expect(value).not.toContain('Eastbrook');
     });
@@ -99,12 +106,12 @@ describe('reviewed localization semantics', () => {
   for (const [locale, expectedEnding] of Object.entries(professionEndings)) {
     it(`${locale} translates honest trade as an occupation`, () => {
       expect(
-        locales[locale]['entities.quests.q_prof_intro.completion'].endsWith(expectedEnding),
+        translation(locale, 'entities.quests.q_prof_intro.completion').endsWith(expectedEnding),
       ).toBe(true);
     });
   }
 
   it('pl_PL labels a heroic item rather than heroic mode', () => {
-    expect(pl_PL['hudChrome.itemHeroicTag']).toBe('[HEROICZNY]');
+    expect(translation('pl_PL', 'hudChrome.itemHeroicTag')).toBe('[HEROICZNY]');
   });
 });

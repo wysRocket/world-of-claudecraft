@@ -12,7 +12,8 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Mẹo: gia nhập bang hội cho bạn một kênh trò chuyện riêng và danh sách chung các thành viên trong bang.',
   'loading.tips.loadouts':
     'Mẹo: lưu nhiều hơn một bộ tài năng để chuyển đổi giữa các lối xây dựng mà không phải dùng điểm hai lần.',
-  'loading.tips.market': 'Mẹo: Chợ Thế Giới cho phép bạn mua bán với người chơi trên toàn realm.',
+  'loading.tips.market':
+    'Mẹo: Chợ Thế Giới cho phép bạn mua bán với người chơi trên toàn thế giới.',
   'loading.tips.professions':
     'Mẹo: có thể rèn luyện nghề thu thập và chế tác song song với lớp chiến đấu của bạn.',
   'loading.tips.pvp':
@@ -110,7 +111,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.sec.general': 'Chung',
   'hudChrome.options.sec.hudExtras': 'Tính Năng HUD Bổ Sung',
   'hudChrome.options.sec.inputMode': 'Chế Độ Đầu Vào',
-  'hudChrome.options.sec.look': 'Diện Mạo',
+  'hudChrome.options.sec.look': 'Hướng Nhìn',
   'hudChrome.options.sec.motionContrast': 'Chuyển Động và Tương Phản',
   'hudChrome.options.sec.movement': 'Di Chuyển',
   'hudChrome.options.sec.panels': 'Bảng',

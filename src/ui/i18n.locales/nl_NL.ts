@@ -6655,7 +6655,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Zie je? Erts in je tas en eelt op je handen. Blijf mijnen, houthakken en kruiden plukken terwijl je over de wegen reist. Wanneer je terug in de stad bent, kijk dan naar het bord met de Stadsfocus bij de markt en de werkbank ernaast. Er valt met alles een eerlijke boterham te verdienen, als je dat wilt.',
   'entities.quests.q_prof_intro.objectives.0.label': 'Brok erts',
   'entities.quests.q_prof_intro.text':
-    'Iedereen in Eastbrook beoefent naast het zwaard een ambacht, {playerName}. Er liggen ertsaders rond de stad, dus zwaai met een pikhouweel en breng me 5 brokken. Delf ze zelf, hoor; ik merk het verschil.',
+    'Iedereen in Oostbeek beoefent naast het zwaard een ambacht, {playerName}. Er liggen ertsaders rond de stad, dus zwaai met een pikhouweel en breng me 5 brokken. Delf ze zelf, hoor; ik merk het verschil.',
   'entities.quests.q_prof_intro.title': 'Een ambacht voor iedere hand',
   'hudChrome.auth.appleChoiceExpired':
     'Deze aanmelding bij Apple is verlopen. Meld je opnieuw aan met Apple.',
