@@ -232,6 +232,7 @@ const FAMILY_ORDER = [
 // Encounter adds that only ever arrive via a boss `summonAdds` are not wild creatures, so
 // they are excluded here even though they are not flagged elite/boss.
 const campedMobIds = new Set(CAMPS.map((c) => c.mobId));
+const publishedMobIds = new Set();
 const famMap = {};
 for (const [id, m] of Object.entries({
   ...ZONE1_MOBS,
@@ -243,6 +244,7 @@ for (const [id, m] of Object.entries({
   if (id.startsWith('warlock_')) continue; // summoned pets, not wild creatures
   if (!campedMobIds.has(id)) continue; // summon-only encounter adds, never met in the open
   if (/vision/i.test(id) || /^Vision\b/.test(m.name)) continue; // cinematic apparitions, not creatures
+  if (!m.dmgBase && !m.dmgPerLevel) continue; // inert practice fixtures (the training dummy), not creatures
   const vk = mobVisualKey(id);
   const tint = tintFor(vk, m.color ?? 0xffffff);
   const tintHex = tint != null ? hex(tint) : null;
@@ -258,11 +260,30 @@ for (const [id, m] of Object.entries({
     ...(tintHex != null ? { tint: tintHex } : {}),
     ...(stillUrl(model, tintHex) ? { still: stillUrl(model, tintHex) } : {}),
   });
+  publishedMobIds.add(id);
 }
 const families = FAMILY_ORDER.filter((f) => famMap[f]).map((f) => ({
   family: f,
   creatures: [...famMap[f].values()].sort((a, b) => a.min - b.min || a.name.localeCompare(b.name)),
 }));
+
+// Which bestiary families actually live in each zone, from camp GEOGRAPHY (a camp's
+// center z falls inside exactly one zone's z-band), never from level-band overlap: a
+// creature whose levels straddle a zone border is not a resident of a zone it has no
+// camp in. Drives the world page's "who you will meet" cross-links.
+const zoneIdForZ = (zv) => ZONES.find((z) => zv >= z.zMin && zv <= z.zMax)?.id ?? null;
+const familiesByZone = {};
+for (const c of CAMPS) {
+  const m = MOBS[c.mobId];
+  if (!m || !publishedMobIds.has(c.mobId)) continue; // only bestiary-published creatures
+  const zid = zoneIdForZ(c.center.z);
+  if (!zid) continue;
+  familiesByZone[zid] ??= new Set();
+  familiesByZone[zid].add(m.family);
+}
+for (const z of zones) {
+  z.families = FAMILY_ORDER.filter((f) => familiesByZone[z.id]?.has(f));
+}
 
 // Delves: a spoiler-safe overview of each delve, the small-group instanced descents.
 // Only the high-level structural facts surface (display name, level floor, suggested
@@ -368,6 +389,8 @@ export interface GuideZoneInfo {
   hub: string;
   pois: string[];
   welcome: string;
+  /** Bestiary families with at least one camp inside this zone, in family order. */
+  families: string[];
 }
 
 export interface GuideDungeon {

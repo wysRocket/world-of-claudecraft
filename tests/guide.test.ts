@@ -11,6 +11,7 @@ import {
   GUIDE_FAMILIES,
   GUIDE_MODELS,
   GUIDE_WARLOCK_PETS,
+  GUIDE_ZONES,
 } from '../src/guide/content.generated';
 import { pageFor } from '../src/guide/pages';
 import { controls as controlsPage } from '../src/guide/pages/controls';
@@ -26,7 +27,7 @@ import {
   toSub,
 } from '../src/guide/routes';
 import { DEEDS } from '../src/sim/content/deeds';
-import { MOBS } from '../src/sim/data';
+import { CAMPS, MOBS } from '../src/sim/data';
 import { setLanguage, t } from '../src/ui/i18n';
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
@@ -360,6 +361,46 @@ describe('Guide bestiary spoiler safety', () => {
         generatedSource.includes(name),
         `raid/boss name "${name}" leaked into content.generated.ts`,
       ).toBe(false);
+    }
+  });
+});
+
+// The bestiary walks a hand-listed union of mob tables, and CAMPS is itself a growing
+// merge: a future zone or overworld mob file whose camps join CAMPS could be silently
+// dropped from the wiki while the freshness gate stays green (the generated file would
+// be "fresh" and just missing the creatures). These gates tie the published bestiary to
+// the camp registry, so a camped creature a player can walk into is never unlisted.
+describe('Guide bestiary completeness', () => {
+  const published = new Set(GUIDE_FAMILIES.flatMap((f) => f.creatures.map((c) => c.templateId)));
+  const isFixture = (m: { dmgBase?: number; dmgPerLevel?: number }) => !m.dmgBase && !m.dmgPerLevel;
+
+  it('publishes every camped, wild, non-fixture creature', () => {
+    const missing: string[] = [];
+    for (const camp of CAMPS) {
+      const m = MOBS[camp.mobId];
+      if (!m || m.elite || m.boss) continue;
+      if (camp.mobId.startsWith('warlock_')) continue;
+      if (/vision/i.test(camp.mobId) || /^Vision\b/.test(m.name)) continue;
+      if (isFixture(m)) continue; // inert practice fixtures (the training dummy)
+      if (!published.has(camp.mobId)) missing.push(`${camp.mobId} (${m.family})`);
+    }
+    expect(missing, `camped creatures missing from the bestiary: ${missing.join(', ')}`).toEqual(
+      [],
+    );
+  });
+
+  it('publishes no inert practice fixture as a creature', () => {
+    const fixtures = [...published].filter((id) => MOBS[id] && isFixture(MOBS[id]));
+    expect(fixtures, `inert fixtures leaked into the bestiary: ${fixtures.join(', ')}`).toEqual([]);
+  });
+
+  it('gives every zone a non-empty resident family list drawn from the bestiary', () => {
+    const familyNames = new Set(GUIDE_FAMILIES.map((f) => f.family));
+    for (const z of GUIDE_ZONES) {
+      expect(z.families.length, `zone ${z.id} lists no resident families`).toBeGreaterThan(0);
+      for (const fam of z.families) {
+        expect(familyNames.has(fam), `zone ${z.id} lists unknown family ${fam}`).toBe(true);
+      }
     }
   });
 });

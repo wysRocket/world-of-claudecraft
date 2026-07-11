@@ -50,6 +50,8 @@ export interface GuideZoneInfo {
   hub: string;
   pois: string[];
   welcome: string;
+  /** Bestiary families with at least one camp inside this zone, in family order. */
+  families: string[];
 }
 
 export interface GuideDungeon {
@@ -1260,7 +1262,15 @@ export const GUIDE_ZONES: GuideZoneInfo[] = [
       "Brightwood Glade",
       "The Sowfield"
     ],
-    "welcome": "Find Marshal Redbrook in town — he has work for you."
+    "welcome": "Find Marshal Redbrook in town — he has work for you.",
+    "families": [
+      "beast",
+      "spider",
+      "mudfin",
+      "burrower",
+      "humanoid",
+      "undead"
+    ]
   },
   {
     "id": "mirefen_marsh",
@@ -1279,7 +1289,15 @@ export const GUIDE_ZONES: GuideZoneInfo[] = [
       "Gravecaller Encampment",
       "The Sunken Bastion"
     ],
-    "welcome": "Report to Warden Fenwick at the Fenbridge gate."
+    "welcome": "Report to Warden Fenwick at the Fenbridge gate.",
+    "families": [
+      "beast",
+      "spider",
+      "mudfin",
+      "humanoid",
+      "troll",
+      "undead"
+    ]
   },
   {
     "id": "thornpeak_heights",
@@ -1300,7 +1318,17 @@ export const GUIDE_ZONES: GuideZoneInfo[] = [
       "Revenant Fields",
       "Gravewyrm Sanctum"
     ],
-    "welcome": "Captain Thessaly holds the wall at Highwatch — barely."
+    "welcome": "Captain Thessaly holds the wall at Highwatch — barely.",
+    "families": [
+      "beast",
+      "mudfin",
+      "burrower",
+      "humanoid",
+      "ogre",
+      "undead",
+      "elemental",
+      "dragonkin"
+    ]
   }
 ];
 
@@ -1610,16 +1638,6 @@ export const GUIDE_FAMILIES: GuideFamily[] = [
         "model": "mob_dark_caster",
         "tint": "#533566",
         "still": "/guide-stills/mob_dark_caster__533566.webp"
-      },
-      {
-        "name": "Training Dummy",
-        "min": 20,
-        "max": 20,
-        "rare": false,
-        "templateId": "training_dummy",
-        "model": "mob_bandit",
-        "tint": "#6b3a32",
-        "still": "/guide-stills/mob_bandit__6b3a32.webp"
       }
     ]
   },
