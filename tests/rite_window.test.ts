@@ -62,11 +62,15 @@ describe('RiteWindow: frame adoption', () => {
 });
 
 describe('RiteWindow: move / resize / fit parity', () => {
-  it('makes the titlebar a drag handle the Hud recognizes, but never the close button', () => {
+  it('is a STATIC dialog: not even its titlebar starts a drag (fix-round ruling)', () => {
+    // The rite ante picker is a transient centered popup in the same delve-NPC
+    // flow as the quest dialog and the delve board; the maintainer fix round
+    // put the whole family in STATIC_DIALOG_WINDOW_IDS (window_drag_handle.ts),
+    // superseding the earlier grammar-parity draggability this test pinned.
     new RiteWindow(fakeDeps()).render();
     const titlebar = el.querySelector<HTMLElement>('.window-titlebar') as HTMLElement;
     const closeBtn = el.querySelector<HTMLElement>('[data-window-close]') as HTMLElement;
-    expect(isWindowDragHandle(titlebar, el)).toBe(true);
+    expect(isWindowDragHandle(titlebar, el)).toBe(false);
     expect(isWindowDragHandle(closeBtn, el)).toBe(false);
   });
 });
