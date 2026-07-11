@@ -218,6 +218,8 @@ function makeCtx() {
     bankerIds: [],
     vcup: createVcState(),
     deedDirtyPids: new Set<number>(),
+    deedDirtyKeys: new Map<number, Set<string>>(),
+    worldBossEntityIds: [],
     deedRuntime: createDeedRuntime(),
     fiestaBotPids: [],
     bumpDeedStat: vi.fn(),

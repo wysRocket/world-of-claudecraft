@@ -330,6 +330,7 @@ export function resetDeedEncounter(ctx: SimContext, mob: Entity): void {
  *  hygiene; the per-pid session maps must not grow across logins). */
 export function dropDeedSessionState(ctx: SimContext, pid: number): void {
   ctx.deedDirtyPids.delete(pid);
+  ctx.deedDirtyKeys.delete(pid);
   ctx.deedRuntime.wolfKills.delete(pid);
   ctx.deedRuntime.saulTalks.delete(pid);
 }
@@ -338,8 +339,39 @@ export function dropDeedSessionState(ctx: SimContext, pid: number): void {
 // The seam callbacks (bound in buildSimContext)
 // ---------------------------------------------------------------------------
 
+// Keyed dirty marks. Every mark names WHICH trigger input changed so the
+// tick-tail evaluator re-checks only the deeds reading that input (a damage
+// tick re-checks the damage deeds, never all ~150 predicates). The generic
+// markDeedsDirty stays the catch-all FULL pass: sites that mutate mixed or
+// unindexed inputs (quest turn-in, level, talents, and similar) keep using
+// it, and it always subsumes narrow keys marked earlier in the tick. A dirty
+// pid with NO ctx.deedDirtyKeys entry also takes a full pass, so any direct
+// deedDirtyPids.add stays correct by construction.
+
+// Interned per-stat keys: the damage path marks one of these per instance,
+// so the key strings are built once, never per call.
+const STAT_DIRTY_KEYS = Object.fromEntries(DEED_STAT_KEYS.map((k) => [k, `stat:${k}`])) as Record<
+  DeedStatKey,
+  string
+>;
+
 export function markDeedsDirty(ctx: SimContext, pid: number): void {
   ctx.deedDirtyPids.add(pid);
+  // A full pass subsumes any narrow keys marked earlier this tick.
+  ctx.deedDirtyKeys.delete(pid);
+}
+
+/** Narrow mark: re-check only `key`'s subscribers at the tail. Never
+ *  downgrades a full-pass mark (a dirty pid without a keys entry). */
+function markDeedDirtyKey(ctx: SimContext, pid: number, key: string): void {
+  const keys = ctx.deedDirtyKeys.get(pid);
+  if (keys) {
+    keys.add(key);
+    return;
+  }
+  if (ctx.deedDirtyPids.has(pid)) return; // already marked for a full pass
+  ctx.deedDirtyPids.add(pid);
+  ctx.deedDirtyKeys.set(pid, new Set([key]));
 }
 
 export function bumpDeedStat(
@@ -350,7 +382,7 @@ export function bumpDeedStat(
 ): void {
   if (!(delta > 0)) return;
   meta.deedStats.counters[stat] += delta;
-  ctx.deedDirtyPids.add(meta.entityId);
+  markDeedDirtyKey(ctx, meta.entityId, STAT_DIRTY_KEYS[stat]);
 }
 
 /** Record an item id as discovered (first time it ever enters possession).
@@ -377,7 +409,7 @@ export function markItemDiscovered(
     if (!def) return; // bounded by construction: only real item ids enter the set
     if (!meta.deedStats.itemsDiscovered.has(id)) {
       meta.deedStats.itemsDiscovered.add(id);
-      ctx.deedDirtyPids.add(meta.entityId);
+      markDeedDirtyKey(ctx, meta.entityId, 'items');
     }
     const quality = (id === itemId ? rolledQuality : undefined) ?? def.quality;
     if (quality === 'rare' || quality === 'epic' || quality === 'legendary') {
@@ -390,7 +422,7 @@ export function markItemDiscovered(
 export function markVisited(ctx: SimContext, meta: PlayerMeta, markId: string): void {
   if (meta.deedStats.visited.has(markId)) return;
   meta.deedStats.visited.add(markId);
-  ctx.deedDirtyPids.add(meta.entityId);
+  markDeedDirtyKey(ctx, meta.entityId, 'visited');
 }
 
 /** Idempotent grant, the one path every unlock takes (evaluator and manual
@@ -411,7 +443,9 @@ export function grantDeed(
   const legacy = MILESTONE_DEED_TO_LEGACY[deedId];
   if (legacy) meta.unlockedMilestones.add(legacy);
   meta.wireRev++;
-  ctx.deedDirtyPids.add(meta.entityId);
+  // Grants change only the earned set (renown/milestones/wireRev have no
+  // trigger readers), so the meta deeds are the whole re-check surface.
+  markDeedDirtyKey(ctx, meta.entityId, 'earned');
   ctx.emit({
     type: 'deedUnlocked',
     deedId,
@@ -447,6 +481,105 @@ const NON_MANUAL_ORDER: readonly string[] = DEED_ORDER.filter(
   (id) => DEEDS[id].trigger.kind !== 'manual',
 );
 
+// Dirty keys per meter: only the discovery-ledger meters have a NARROW mark
+// site (markItemDiscovered); every other meter's backing state changes at
+// sites that request a full pass, so a narrow key would never fire for them.
+// Exported for the deeds_dirty_keys guard test, which instruments each
+// meter's reader and fails any future meter that reads narrow-marked state
+// (the deedStats ledgers) without declaring the matching key here.
+export const METER_DIRTY_KEYS: Record<DeedMeterId, readonly string[]> = {
+  prestigeRank: [],
+  talentPoints: [],
+  arenaRankedMatches: [],
+  arenaRankedWins: [],
+  vcupWins: [],
+  vcupGuildWins: [],
+  bankPurchasedSlots: [],
+  townFocusPoints: [],
+  delveLoreCount: [],
+  companionRankBest: [],
+  itemsDiscoveredCount: ['items'],
+  poorItemsDiscoveredCount: ['items'],
+};
+
+/** The narrow dirty keys whose marks must re-check a deed with this trigger.
+ *  Kinds returning [] are reachable only through full passes: their inputs
+ *  are mutated exclusively at markDeedsDirty sites. THE COMPLETENESS
+ *  CONTRACT: everything a narrow site mutates is read only by the trigger
+ *  kinds subscribed to that site's key (bumpDeedStat writes one counter,
+ *  read by 'stat' alone; markItemDiscovered writes itemsDiscovered, read by
+ *  'collectItems' and the two discovery meters; markVisited writes visited,
+ *  read by 'visit'/'visits'; grantDeed writes deedsEarned, read by 'meta';
+ *  the dungeon clear helper writes dungeonClears, read by 'dungeonClears').
+ *  Breaking it delays a grant to the player's next full pass; the
+ *  deeds_dirty_keys test pins the mapping against the content table. */
+export function narrowKeysForTrigger(trigger: DeedTrigger): readonly string[] {
+  switch (trigger.kind) {
+    case 'stat':
+      return [STAT_DIRTY_KEYS[trigger.stat]];
+    case 'collectItems':
+      return ['items'];
+    case 'visit':
+    case 'visits':
+      return ['visited'];
+    case 'meta':
+      // Also reads questsDone, but quest turn-ins request a full pass.
+      return ['earned'];
+    case 'dungeonClears':
+      return ['dungeonClears'];
+    case 'meter':
+      return METER_DIRTY_KEYS[trigger.meter];
+    case 'level':
+    case 'lifetimeXp':
+    case 'quest':
+    case 'quests':
+    case 'delveClears':
+    case 'arenaRating':
+    case 'craftSkill':
+    case 'gathering':
+    case 'flag':
+    case 'manual':
+      return [];
+  }
+}
+
+// key -> its subscribed deeds in NON_MANUAL_ORDER order, so keyed and full
+// passes always grant in the same sequence.
+const DIRTY_KEY_BUCKETS: ReadonlyMap<string, readonly string[]> = (() => {
+  const buckets = new Map<string, string[]>();
+  for (const id of NON_MANUAL_ORDER) {
+    for (const key of narrowKeysForTrigger(DEEDS[id].trigger)) {
+      let bucket = buckets.get(key);
+      if (!bucket) {
+        bucket = [];
+        buckets.set(key, bucket);
+      }
+      bucket.push(id);
+    }
+  }
+  return buckets;
+})();
+
+/** Test seam: the deeds subscribed to one narrow dirty key. */
+export function deedIdsForDirtyKey(key: string): readonly string[] {
+  return DIRTY_KEY_BUCKETS.get(key) ?? [];
+}
+
+// The ordered union of the buckets named by a keyed mark (single-key marks,
+// the overwhelmingly common case, reuse the prebuilt bucket allocation-free).
+function deedListForKeys(keys: ReadonlySet<string>): readonly string[] {
+  if (keys.size === 1) {
+    const [key] = keys;
+    return DIRTY_KEY_BUCKETS.get(key) ?? [];
+  }
+  const member = new Set<string>();
+  for (const key of keys) {
+    for (const id of DIRTY_KEY_BUCKETS.get(key) ?? []) member.add(id);
+  }
+  if (member.size === 0) return [];
+  return NON_MANUAL_ORDER.filter((id) => member.has(id));
+}
+
 // pointsGate-8 node ids per class (the bottom row of every tree), computed
 // once from the static talent registry so prog_deep_roots never walks the
 // tree per evaluation.
@@ -469,7 +602,12 @@ const METERS: Record<DeedMeterId, (meta: PlayerMeta) => number> = {
   vcupWins: (m) => m.vcupWins,
   vcupGuildWins: (m) => m.vcupGuildWins,
   bankPurchasedSlots: (m) => m.bank.purchasedSlots,
-  townFocusPoints: (m) => Object.values(m.townFocus).reduce((a, b) => a + b, 0),
+  townFocusPoints: (m) => {
+    // Allocation-free sum (tick-tail predicate: no Object.values array).
+    let n = 0;
+    for (const k in m.townFocus) n += m.townFocus[k];
+    return n;
+  },
   delveLoreCount: (m) => m.delveLoreUnlocked.size,
   companionRankBest: (m) => Math.max(0, ...Object.values(m.companionUpgrades)),
   itemsDiscoveredCount: (m) => m.deedStats.itemsDiscovered.size,
@@ -493,8 +631,9 @@ const FLAGS: Record<DeedFlagId, (meta: PlayerMeta, e: Entity) => boolean> = {
   talentSpecChosen: (m) => m.talents.spec !== null,
   talentCapstone: (m) => {
     const nodes = capstoneNodes(m.cls);
-    for (const [nodeId, ranks] of Object.entries(m.talents.ranks)) {
-      if (ranks > 0 && nodes.has(nodeId)) return true;
+    // Allocation-free walk (tick-tail predicate: no Object.entries tuples).
+    for (const nodeId in m.talents.ranks) {
+      if (m.talents.ranks[nodeId] > 0 && nodes.has(nodeId)) return true;
     }
     return false;
   },
@@ -544,12 +683,23 @@ function dungeonClearCount(
 }
 
 function delveClearCount(meta: PlayerMeta, delveId?: string, tier?: 'normal' | 'heroic'): number {
+  // Allocation-free filter over the '<delveId>' / '<delveId>:<tier>' keys
+  // (tick-tail predicate: no Object.entries tuples, no split arrays).
+  // ASSUMES at most one colon per key, the runs.ts clearKey format (delve ids
+  // are colon-free, tiers are normal/heroic); a second colon would change
+  // what counts as the tier segment.
   let n = 0;
-  for (const [key, count] of Object.entries(meta.delveClears)) {
-    const [keyDelve, keyTier] = key.split(':');
-    if (delveId !== undefined && keyDelve !== delveId) continue;
-    if (tier !== undefined && keyTier !== tier) continue;
-    n += count;
+  for (const key in meta.delveClears) {
+    const sep = key.indexOf(':');
+    if (delveId !== undefined) {
+      const head = sep === -1 ? key.length : sep;
+      if (head !== delveId.length || !key.startsWith(delveId)) continue;
+    }
+    if (tier !== undefined) {
+      if (sep === -1 || key.length - sep - 1 !== tier.length || !key.startsWith(tier, sep + 1))
+        continue;
+    }
+    n += meta.delveClears[key];
   }
   return n;
 }
@@ -620,6 +770,26 @@ export function checkDeedTrigger(meta: PlayerMeta, e: Entity, trigger: DeedTrigg
   }
 }
 
+/** One pass over `ids`, granting whatever holds; reports whether anything
+ *  granted (the fixpoint drivers loop on that). */
+function evaluateDeedList(
+  ctx: SimContext,
+  meta: PlayerMeta,
+  e: Entity,
+  ids: readonly string[],
+  opts: { retro?: boolean } | undefined,
+): boolean {
+  let granted = false;
+  for (const id of ids) {
+    if (meta.deedsEarned.has(id)) continue;
+    if (checkDeedTrigger(meta, e, DEEDS[id].trigger)) {
+      grantDeed(ctx, meta, id, opts);
+      granted = true;
+    }
+  }
+  return granted;
+}
+
 /** Check every unearned non-manual deed for one player and grant to a
  *  fixpoint within the same pass (metas over freshly granted deeds resolve
  *  immediately; bounded because each iteration must grant at least once). */
@@ -630,15 +800,36 @@ export function evaluateDeedsFor(
   retro: boolean,
 ): void {
   const opts = retro ? { retro: true } : undefined;
-  let granted = true;
-  while (granted) {
-    granted = false;
-    for (const id of NON_MANUAL_ORDER) {
-      if (meta.deedsEarned.has(id)) continue;
-      if (checkDeedTrigger(meta, e, DEEDS[id].trigger)) {
-        grantDeed(ctx, meta, id, opts);
-        granted = true;
-      }
+  while (evaluateDeedList(ctx, meta, e, NON_MANUAL_ORDER, opts)) {
+    // fixpoint: loop until a pass grants nothing
+  }
+}
+
+/** The keyed tick-tail arm: re-check only the buckets the tick's marks
+ *  named; an absent set means a full pass (markDeedsDirty and any direct
+ *  deedDirtyPids.add). A grant can only enable 'earned' readers (the meta
+ *  deeds), so the fixpoint widens the list once, to include that bucket,
+ *  instead of re-walking the whole catalog. Outcome-identical to the full
+ *  pass under the completeness contract on narrowKeysForTrigger. */
+function evaluateDeedsKeyed(
+  ctx: SimContext,
+  meta: PlayerMeta,
+  e: Entity,
+  keys: ReadonlySet<string> | undefined,
+): void {
+  if (!keys) {
+    evaluateDeedsFor(ctx, meta, e, false);
+    return;
+  }
+  let ids = deedListForKeys(keys);
+  if (ids.length === 0) return;
+  let widened = keys.has('earned');
+  while (evaluateDeedList(ctx, meta, e, ids, undefined)) {
+    if (!widened) {
+      widened = true;
+      const member = new Set(ids);
+      for (const id of DIRTY_KEY_BUCKETS.get('earned') ?? []) member.add(id);
+      ids = NON_MANUAL_ORDER.filter((id) => member.has(id));
     }
   }
 }
@@ -652,8 +843,13 @@ export function updateDeeds(ctx: SimContext): void {
   if (ctx.tickCount % 20 === 0) sweepProximityMarks(ctx);
   if (ctx.deedDirtyPids.size === 0) return;
   const pids = [...ctx.deedDirtyPids];
+  // Snapshot the keyed marks beside the set (grants during the pass re-mark
+  // the player, and both containers must drain together).
+  const keySnapshots = pids.map((pid) => ctx.deedDirtyKeys.get(pid));
   ctx.deedDirtyPids.clear();
-  for (const pid of pids) {
+  ctx.deedDirtyKeys.clear();
+  for (let i = 0; i < pids.length; i++) {
+    const pid = pids[i];
     const meta = ctx.players.get(pid);
     const e = ctx.entities.get(pid);
     if (!meta || !e) continue;
@@ -661,10 +857,11 @@ export function updateDeeds(ctx: SimContext): void {
     // Entity.level UP for a low-level player and must never satisfy level
     // deeds; the restore site re-marks the player dirty on bout exit.
     if (meta.fiestaRestore) continue;
-    evaluateDeedsFor(ctx, meta, e, false);
+    evaluateDeedsKeyed(ctx, meta, e, keySnapshots[i]);
     // Grants re-mark the player dirty (manual-site semantics); the in-pass
     // fixpoint already resolved everything, so drop the redundant mark.
     ctx.deedDirtyPids.delete(pid);
+    ctx.deedDirtyKeys.delete(pid);
   }
 }
 
@@ -672,9 +869,17 @@ export function updateDeeds(ctx: SimContext): void {
 // ZoneDef poi) and the Thunzharr witness mark. Deterministic: fixed cadence
 // on the sim clock, insertion-order player iteration, zero rng.
 function sweepProximityMarks(ctx: SimContext): void {
+  // Resolve the live boss through the scheduler's tracked ids (a seam view)
+  // instead of scanning the whole entity map every second: liveness is
+  // validated on read because a slot id lingers on the lootable corpse until
+  // the scheduler clears it. Witnessing is thereby scoped to the SCHEDULED
+  // rise, the deed's contract (a template copy staged outside the scheduler
+  // is not the waking peak rising).
   let thunzharr: Entity | null = null;
-  for (const ent of ctx.entities.values()) {
-    if (ent.kind === 'mob' && !ent.dead && ent.templateId === THUNZHARR_ID) {
+  for (const id of ctx.worldBossEntityIds) {
+    if (id === null) continue;
+    const ent = ctx.entities.get(id);
+    if (ent && ent.kind === 'mob' && !ent.dead && ent.templateId === THUNZHARR_ID) {
       thunzharr = ent;
       break;
     }
@@ -810,6 +1015,11 @@ export function onPlayerDeathForDeeds(ctx: SimContext, e: Entity): void {
   }
   // World boss: a contributor dying mid-fight loses only their own unbroken
   // credit (personal, so an open-world crowd cannot fail it for anyone else).
+  // Deliberately an entity scan, NOT the worldBossEntityIds view the 1 Hz
+  // sweep uses: kill credit (onWorldBossKilledForDeeds) works off whichever
+  // boss entity actually died, staged copies included, so the death taint
+  // must observe the same set. Per-death cadence, so the scan is off the
+  // hot path.
   for (const ent of ctx.entities.values()) {
     if (ent.kind !== 'mob' || ent.dead || ent.templateId !== THUNZHARR_ID) continue;
     if (ent.bossDamagers.has(e.id)) ensureEncounter(ctx, ent.id).diedPids.add(e.id);
@@ -876,6 +1086,9 @@ export function onDungeonFinalBossKilledForDeeds(
   const clearKey = heroic ? `${dungeonId}:heroic` : dungeonId;
   for (const meta of recipients) {
     meta.deedStats.dungeonClears[clearKey] = (meta.deedStats.dungeonClears[clearKey] ?? 0) + 1;
+    // The clear record is written directly (not through bumpDeedStat), so
+    // its readers need their own narrow mark beside the counter bumps.
+    markDeedDirtyKey(ctx, meta.entityId, 'dungeonClears');
     bumpDeedStat(ctx, meta, 'dungeonFinalBossKills', 1);
     const party = ctx.partyOf(meta.entityId);
     if (party && !party.raid && party.members.length === 5) {
@@ -1101,7 +1314,8 @@ export function onArenaMatchEndForDeeds(
       const meta = ctx.players.get(pid);
       if (!meta) continue;
       grantDeed(ctx, meta, 'pvp_arena_first_match');
-      ctx.deedDirtyPids.add(pid);
+      // Ratings and win/loss meters moved before this call: full pass.
+      markDeedsDirty(ctx, pid);
     }
     return;
   }
@@ -1212,7 +1426,8 @@ export function onCupStandingForDeeds(
   team: 'A' | 'B',
   winner: 'A' | 'B' | null,
 ): void {
-  ctx.deedDirtyPids.add(pid);
+  // The Cup win meters moved in the caller's standing loop: full pass.
+  markDeedsDirty(ctx, pid);
   if (winner !== team) return;
   if (match.roles[pid] !== 'keeper' || match.benched.has(pid)) return;
   const opposingScore = team === 'A' ? match.scoreB : match.scoreA;
@@ -1249,7 +1464,8 @@ export function onDelveClearForDeeds(
   meta: PlayerMeta,
   run: { tierId: string; deedMaxParty?: number },
 ): void {
-  ctx.deedDirtyPids.add(meta.entityId);
+  // delveClears (and the lore ledger) moved in the caller: full pass.
+  markDeedsDirty(ctx, meta.entityId);
   if (run.tierId === 'heroic' && (run.deedMaxParty ?? 1) <= 1) {
     grantDeed(ctx, meta, 'dlv_solo_heroic');
   }

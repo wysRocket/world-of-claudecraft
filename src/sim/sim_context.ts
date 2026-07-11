@@ -187,6 +187,16 @@ export interface SimContextPrimitives {
   // evaluated and cleared at the tick tail (deeds.ts updateDeeds). Sim-owned
   // Set mutated in place, so a read-only live view.
   readonly deedDirtyPids: Set<number>;
+  // Keyed dirty marks beside deedDirtyPids: pid -> the trigger-input keys
+  // that changed this tick (the deeds.ts narrow mark sites), so the tail
+  // evaluator re-checks only the deeds reading those inputs. A dirty pid with
+  // NO entry takes a full pass. Sim-owned Map mutated in place.
+  readonly deedDirtyKeys: Map<number, Set<string>>;
+  // The world-boss scheduler's live entity ids, one slot per WORLD_BOSSES
+  // entry (null while that boss is not up). Sim owns and reassigns slot
+  // VALUES in place; the deeds proximity sweep resolves the witness target
+  // through this instead of scanning the whole entity map every second.
+  readonly worldBossEntityIds: readonly (number | null)[];
   // Book of Deeds session runtime (per-attempt encounter windows, per-match
   // Vale Cup memory, the Saul talk counter). Sim-owned holder mutated in
   // place; nothing in it persists.
@@ -889,6 +899,12 @@ export function createSimContext(host: SimContextHost): SimContext {
     },
     get deedDirtyPids() {
       return host.deedDirtyPids;
+    },
+    get deedDirtyKeys() {
+      return host.deedDirtyKeys;
+    },
+    get worldBossEntityIds() {
+      return host.worldBossEntityIds;
     },
     get deedRuntime() {
       return host.deedRuntime;

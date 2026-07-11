@@ -1336,9 +1336,12 @@ export class Sim {
   private pendingMobRespawns: PendingMobRespawn[] = [];
   private groundAoEs: GroundAoE[] = [];
   // Book of Deeds: players whose deed-relevant state changed this tick (the
-  // evaluator drains it at the tick tail) and the session-only encounter/match
-  // bookkeeping behind the manual deeds. Both exposed as live SimContext views.
+  // evaluator drains it at the tick tail), the keyed marks naming WHICH
+  // trigger inputs changed (a dirty pid with no entry takes a full pass), and
+  // the session-only encounter/match bookkeeping behind the manual deeds. All
+  // exposed as live SimContext views.
   deedDirtyPids = new Set<number>();
+  deedDirtyKeys = new Map<number, Set<string>>();
   deedRuntime: DeedRuntime = createDeedRuntime();
   // World-boss scheduler, one slot per WORLD_BOSSES entry. `nextAt` is the next
   // sim-time (seconds) a boss is due to rise; `entityId` is the live boss entity
@@ -2089,6 +2092,7 @@ export class Sim {
     deedsMod.retroFallbackGrants(this.ctx, meta);
     deedsMod.evaluateDeedsFor(this.ctx, meta, player, true);
     this.deedDirtyPids.delete(player.id);
+    this.deedDirtyKeys.delete(player.id);
     return player.id;
   }
 
@@ -2343,7 +2347,7 @@ export class Sim {
     meta.skinCatalog = catalog;
     e.skin = idx;
     e.skinCatalog = catalog;
-    this.deedDirtyPids.add(meta.entityId); // col_true_colors reads the skin state
+    deedsMod.markDeedsDirty(this.ctx, meta.entityId); // col_true_colors reads the skin state
     return true;
   }
 
@@ -2358,7 +2362,7 @@ export class Sim {
     const e = this.entities.get(pid);
     if (e) {
       e.guild = guild;
-      this.deedDirtyPids.add(pid); // soc_guild_joined reads the stamped name
+      deedsMod.markDeedsDirty(this.ctx, pid); // soc_guild_joined reads the stamped name
     }
   }
 
@@ -2917,9 +2921,17 @@ export class Sim {
       get vcup() {
         return sim.vcup;
       },
-      // Book of Deeds live views (both mutated in place, never reassigned).
+      // Book of Deeds live views (all mutated in place, never reassigned).
       get deedDirtyPids() {
         return sim.deedDirtyPids;
+      },
+      get deedDirtyKeys() {
+        return sim.deedDirtyKeys;
+      },
+      // The world-boss scheduler's live ids: slot values reassigned in place,
+      // read by the deeds proximity sweep through the seam.
+      get worldBossEntityIds() {
+        return sim.worldBossEntityIds;
       },
       get deedRuntime() {
         return sim.deedRuntime;
@@ -3330,7 +3342,7 @@ export class Sim {
     if (r.e.resourceType === 'mana') r.e.resource = r.e.maxResource;
     this.refreshKnownAbilities(r.meta, false);
     this.syncPetLevel(r.e);
-    this.deedDirtyPids.add(r.meta.entityId); // level/lifetimeXp predicates re-check
+    deedsMod.markDeedsDirty(this.ctx, r.meta.entityId); // level/lifetimeXp predicates re-check
   }
 
   // -------------------------------------------------------------------------
@@ -3354,7 +3366,7 @@ export class Sim {
   private markTalentDeeds(ok: boolean, pid?: number): boolean {
     if (ok) {
       const r = this.resolve(pid);
-      if (r) this.deedDirtyPids.add(r.meta.entityId);
+      if (r) deedsMod.markDeedsDirty(this.ctx, r.meta.entityId);
     }
     return ok;
   }
@@ -3486,11 +3498,11 @@ export class Sim {
         // stay perpetually dirty for the tick-tail evaluator).
         const wasUnrested = meta.restedXp === 0;
         updateRested(p, meta);
-        if (wasUnrested && meta.restedXp > 0) this.deedDirtyPids.add(p.id);
+        if (wasUnrested && meta.restedXp > 0) deedsMod.markDeedsDirty(this.ctx, p.id);
         if (meta.pendingGatherGrants.length > 0) {
           drainGatheringGrants(meta);
           // Proficiency just became visible; the gathering predicates re-check.
-          this.deedDirtyPids.add(p.id);
+          deedsMod.markDeedsDirty(this.ctx, p.id);
         }
         lap?.('p.regen');
       } else if (p.ghost) {
@@ -5844,7 +5856,7 @@ export class Sim {
       return;
     }
     meta.townFocus = result.allocation as Record<string, number>;
-    this.deedDirtyPids.add(meta.entityId); // soc_civic_duty reads the allocation
+    deedsMod.markDeedsDirty(this.ctx, meta.entityId); // soc_civic_duty reads the allocation
   }
 
   interact(pid?: number): void {

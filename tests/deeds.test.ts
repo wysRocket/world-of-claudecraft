@@ -602,6 +602,10 @@ describe('persistence', () => {
     markVisited(sim.ctx, meta, 'poi:eastbrook_vale:Eastbrook');
     markItemDiscovered(sim.ctx, meta, 'glimmerfin_koi');
     meta.deedStats.dungeonClears['hollow_crypt:heroic'] = 2;
+    // A bare poke bypasses the clear helper's narrow mark; request the full
+    // pass the production write site performs (the keyed-marks contract), so
+    // both sims earn the clear deeds and the round-trip stays comparable.
+    sim.ctx.markDeedsDirty(meta.entityId);
     // The load path re-applies the saved title through the setter validator,
     // so the fixture earns the deed before selecting it (a bare field poke
     // would load as untitled by design).

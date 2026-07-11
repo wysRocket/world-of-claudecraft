@@ -435,6 +435,32 @@ describe('deedUnlocked through GameServer.detectActivity', () => {
     expect(broadcastSpy).not.toHaveBeenCalled();
   });
 
+  it('account quest lockouts applied at join grant their deeds without a later mark', async () => {
+    const fc = fakeWs();
+    const session = server.join(fc.ws as never, 7, 42, 'Hilda', 'warrior', null);
+    if ('error' in session) throw new Error(session.error);
+    tickAndDetect();
+    await settle();
+
+    // The lockout path pokes questsDone directly (bypassing the quest-credit
+    // mark site), so it must request its own full evaluator pass: the quest
+    // deed has to grant on the very next tick, not whenever some unrelated
+    // mark happens to arrive.
+    const quested = DEEDS.prog_callused_hands.trigger;
+    if (quested.kind !== 'quest') throw new Error('prog_callused_hands is no longer a quest deed');
+    (
+      server as unknown as {
+        applyAccountQuestLockouts(pid: number, c: unknown): void;
+      }
+    ).applyAccountQuestLockouts(session.pid, {
+      completedQuestIds: [quested.questId],
+      mechChromaIds: [],
+    });
+    tickAndDetect();
+    await settle();
+    expect(server.sim.meta(session.pid)?.deedsEarned.has('prog_callused_hands')).toBe(true);
+  });
+
   it('a non-marquee live unlock records without ever reading the opt-out flag', async () => {
     const fc = fakeWs();
     const session = server.join(fc.ws as never, 7, 42, 'Hilda', 'warrior', null);

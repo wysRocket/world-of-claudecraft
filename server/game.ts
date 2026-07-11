@@ -1886,6 +1886,9 @@ export class GameServer {
       meta.questsDone.add(questId);
       meta.questLog.delete(questId);
     }
+    // The bare adds bypass the quest-credit mark site, and the lockout quests
+    // can satisfy quest/meta deed triggers: request a full evaluator pass.
+    if (cosmetics.completedQuestIds.length > 0) this.sim.ctx.markDeedsDirty(pid);
   }
 
   private mergeAccountCosmetics(a: AccountCosmetics, b: AccountCosmetics): AccountCosmetics {
