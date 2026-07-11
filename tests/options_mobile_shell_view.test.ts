@@ -169,21 +169,15 @@ describe('options_mobile_shell_view: category list env gating', () => {
 // ---------------------------------------------------------------------------
 describe('options_mobile_shell_view: landing section order', () => {
   it('leads with the search field then the category grid (the front page)', () => {
-    expect(MOBILE_LANDING_ORDER).toEqual([
-      'search',
-      'categoryList',
-      'quickActions',
-      'alerts',
-      'pins',
-      'status',
-    ]);
+    // No quickActions slot: Reset to Defaults and Logout ride the grid as action
+    // tiles, so the landing has no separate button row.
+    expect(MOBILE_LANDING_ORDER).toEqual(['search', 'categoryList', 'alerts', 'pins', 'status']);
     const idx = (s: string) => MOBILE_LANDING_ORDER.indexOf(s as never);
     expect(idx('search')).toBe(0);
     // The category grid is the front page: directly under search, above the
-    // Overview quick actions / pins / status that follow it.
+    // alerts / pins / status that follow it.
     expect(idx('categoryList')).toBe(1);
-    expect(idx('categoryList')).toBeLessThan(idx('quickActions'));
-    expect(idx('quickActions')).toBeLessThan(idx('pins'));
+    expect(idx('categoryList')).toBeLessThan(idx('pins'));
     expect(idx('pins')).toBeLessThan(idx('status'));
   });
 });

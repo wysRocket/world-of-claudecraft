@@ -28,10 +28,19 @@ describe('options_mobile_shell: painter chrome', () => {
     expect(painter).toContain("el('span', 'opt-tab-dot')");
   });
 
-  it('renders a sticky Done bar with the gamepad legend above it when a pad is connected', () => {
+  it('renders the bottom bar ONLY as the gamepad legend host (no Done button)', () => {
+    // The Done button is gone (the header X is the one close control); the bar
+    // exists solely while a pad is connected, to host the legend strip.
     expect(painter).toContain("el('div', 'opt-mshell-bar')");
     expect(painter).toContain('const legend = deps.buildLegend();');
-    expect(painter).toContain("t('hudChrome.options.done')");
+    expect(painter).not.toContain("t('hudChrome.options.done')");
+    expect(painter).not.toContain('opt-mshell-done');
+  });
+
+  it('appends the Reset to Defaults + Logout action tiles to the grid', () => {
+    expect(painter).toContain("el('button', 'opt-mshell-cat is-danger')");
+    expect(painter).toContain("actionTile('hud.options.resetToDefaults', 'swap', deps.onResetAll)");
+    expect(painter).toContain("actionTile('hud.options.logout', 'prev', deps.onLogout)");
   });
 
   it('delegates each level body through the pure landing order + the injected renderers', () => {
@@ -40,17 +49,16 @@ describe('options_mobile_shell: painter chrome', () => {
     // a pushed page body is delegated (renderCategoryDetail / renderSystem / renderBugReport)
     expect(painter).toContain('deps.appendContentBody(content)');
     // the landing composes the shared Overview pieces
-    expect(painter).toContain('deps.appendQuickActions(lower)');
     expect(painter).toContain('deps.appendPins(lower)');
     expect(painter).toContain('deps.appendSearchResults(lower)');
   });
 
-  it('marks its close / back / Done controls data-close for the focus trap (F3)', () => {
+  it('marks its close / back controls data-close for the focus trap (F3)', () => {
     // focus-first on open skips [data-close] dismiss affordances (and preferred-
     // close flows target them), so the shell chrome must carry the marker like
-    // the shared frame X does: close, back chevron, and the sticky Done button.
+    // the shared frame X does: the close X and the back chevron.
     const marks = painter.match(/setAttribute\('data-close', ''\)/g) ?? [];
-    expect(marks).toHaveLength(3);
+    expect(marks).toHaveLength(2);
   });
 
   it('carries no literal hex color in TS (tokens/stylesheet only)', () => {
@@ -110,13 +118,12 @@ describe('options_window: mobile shell integration', () => {
     );
   });
 
-  it('hides the frame chrome on the NARROW shell (it paints its own header + Done bar)', () => {
+  it('hides the frame chrome on the NARROW shell (it paints its own header)', () => {
     const css = readFileSync(new URL('../src/styles/hud.mobile.css', import.meta.url), 'utf8');
     // Scoped :not(.opt-mrail): the wide rail two-pane KEEPS the frame chrome.
     expect(css).toContain(
       'body.mobile-touch #options-menu:not(.opt-mrail) > .window-frame > .window-titlebar',
     );
-    expect(css).toContain('.opt-mshell-done');
     // the reused .opt-* controls get touch floors + a 16px search input floor
     expect(css).toContain('body.mobile-touch #options-menu .opt-row');
     expect(css).toMatch(/body\.mobile-touch #options-menu \.search-input \{\s*font-size: 16px/);

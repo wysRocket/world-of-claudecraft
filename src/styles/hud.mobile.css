@@ -2474,6 +2474,18 @@
   .window:has(> .window-frame):not(#char-window):not(#talents-window):not(#crafting-window) {
     overflow-y: hidden;
   }
+  /* No root padding on ANY framed window (block-model ones included): the generic
+     mobile .window rule below pads the bottom by 18px + safe-area for the LEGACY
+     panels, whose own background paints the padding box. A framed window's root
+     is transparent (the frame child draws the chrome) and the frame fills only
+     the CONTENT box, so that padding read as an 18px see-through strip of world
+     along the bottom of every framed menu (live feedback: the dark background
+     "not rendering completely"). Layer order note: the components-layer per-id
+     neutralize rules already set padding:0, but this hud-mobile-layer .window
+     rule outranked them, so the fix must live in this layer too. */
+  body.mobile-touch .window:has(> .window-frame) {
+    padding: 0;
+  }
   body.mobile-touch #vendor-window {
     max-height: calc(58vh - 20px);
   }
@@ -4645,14 +4657,13 @@
     width: 100%;
     margin-bottom: var(--spacing-md);
   }
-  /* Front-page category grid: icon-over-label tiles that fluidly fill 2 to N
-     columns by width (no JS breakpoint), led by the primary Return-to-Game tile.
-     Each tile is the tap target that pushes its category page. */
+  /* Front-page category grid: icon-over-label tiles, each the tap target that
+     pushes its category page; the Reset to Defaults + Logout action tiles fill
+     the last two cells. Fixed 5 columns so the ten tiles read as a balanced
+     5 + 5 (live feedback). */
   .opt-mshell-grid {
     display: grid;
-    /* Fixed 4 columns so the eight category tiles read as a balanced 4 + 4
-       (auto-fill packed them 5 + 3 on a 900px landscape phone). */
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: var(--spacing-sm);
     margin-top: var(--spacing-sm);
   }
@@ -4675,6 +4686,18 @@
   .opt-mshell-cat:hover {
     border-color: var(--color-accent);
     background: color-mix(in srgb, var(--color-text-light) 8%, transparent);
+  }
+  /* The Reset to Defaults / Logout action tiles: the destructive tint the
+     .btn.is-danger footer actions carried (same tokens), on the tile shape. */
+  .opt-mshell-cat.is-danger {
+    border-color: var(--color-border-invalid);
+  }
+  .opt-mshell-cat.is-danger:hover {
+    border-color: var(--color-text-error);
+  }
+  .opt-mshell-cat.is-danger .opt-mshell-cat-icon,
+  .opt-mshell-cat.is-danger .opt-mshell-cat-label {
+    color: var(--color-text-error);
   }
   .opt-mshell-cat-icon {
     flex: none;
@@ -4713,7 +4736,8 @@
     position: absolute;
     inset: var(--spacing-xs) var(--spacing-xs) auto auto;
   }
-  /* Sticky bottom Done bar, with the gamepad legend above it when a pad connects. */
+  /* Sticky bottom bar: hosts ONLY the gamepad legend, and only renders while a
+     pad is connected (the Done button is gone; the header X closes). */
   .opt-mshell-bar {
     flex: none;
     display: flex;
@@ -4722,11 +4746,6 @@
     padding: var(--spacing-sm) var(--spacing-md);
     border-top: 1px solid var(--panel-edge);
     background: var(--color-panel-l2-base);
-  }
-  /* 48px to match the wide rail's frame-footer actions (same primary control). */
-  .opt-mshell-done {
-    width: 100%;
-    min-height: 48px;
   }
   .opt-mshell-cat:focus-visible {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
@@ -4744,7 +4763,12 @@
     column-gap: var(--spacing-lg);
     row-gap: var(--spacing-xs);
   }
-  body.mobile-touch #options-menu .opt-mshell-content .opt-section-head {
+  /* Only .opt-row children are half-width cells; EVERYTHING else spans the full
+     width (section heads, notes, pin home crumbs, the theme swatch grid, bespoke
+     buttons). An allowlist of specific classes here kept missing pieces: the
+     Overview pins' home crumbs and theme sub-blocks landed as stray right-column
+     cells (live feedback: the right side "not rendering properly"). */
+  body.mobile-touch #options-menu .opt-mshell-content .opt-section > :not(.opt-row) {
     grid-column: 1 / -1;
   }
   body.mobile-touch #options-menu .opt-mshell-content .opt-row {
@@ -4757,12 +4781,6 @@
   }
   body.mobile-touch #options-menu .opt-mshell-content .opt-row-control {
     justify-content: flex-start;
-  }
-  /* Notes / help text and any bespoke wide block (the theme colour swatch grid)
-     span the full width so they are never halved. */
-  body.mobile-touch #options-menu .opt-mshell-content .opt-note,
-  body.mobile-touch #options-menu .opt-mshell-content .theme-color-grid {
-    grid-column: 1 / -1;
   }
   /* Touch floors for the reused .opt-* controls inside the shell (spec section 9:
      48px rows, larger switch/segments, a 16px search input floor that does not

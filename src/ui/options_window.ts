@@ -340,6 +340,10 @@ export class OptionsWindow {
   // under body.mobile-touch in the NARROW (back-stack) mode, always reset to the
   // landing on open.
   private mobileNav: MobileNavState = initialNav();
+  // The level the last mobile paint rendered (serialized), so a SAME-page rebuild
+  // (a rerendering control change) can restore the content scroll instead of
+  // flinging the page back to the top; a level change starts fresh at 0.
+  private mobileLevelKey = '';
   // The layout the last render painted, so a live resize/rotate only re-renders
   // when it crosses the rail <-> back-stack boundary (a cold, boundary-only cost).
   private lastRenderMode: 'desktop' | MobileSettingsMode | null = null;
@@ -461,10 +465,19 @@ export class OptionsWindow {
   // -------------------------------------------------------------------------
 
   private renderMobile(body: HTMLElement, footer: HTMLElement | null): void {
+    // Preserve the content scroll across a SAME-PAGE rebuild: a control whose
+    // change re-renders (graphicsPreset, a pin choice) must not fling the page
+    // back to the top (live feedback). A level CHANGE (push/pop) starts at 0.
+    const levelKey = JSON.stringify(currentLevel(this.mobileNav));
+    const prevScroll =
+      levelKey === this.mobileLevelKey
+        ? (body.querySelector<HTMLElement>('.opt-mshell-content')?.scrollTop ?? 0)
+        : 0;
+    this.mobileLevelKey = levelKey;
     body.replaceChildren();
-    // The frame footer is hidden on touch (CSS); the shell carries its own Done
-    // bar. Clear any prior desktop footer content so a platform flip never leaves
-    // a stale row behind.
+    // The frame footer is hidden on touch (CSS); the shell has no footer of its
+    // own (the header X closes). Clear any prior desktop footer content so a
+    // platform flip never leaves a stale row behind.
     if (footer) footer.replaceChildren();
     // Assertive live region (announcements), a body-level child so a shell rebuild
     // keeps it; the shell is appended after it.
@@ -475,6 +488,10 @@ export class OptionsWindow {
     this.announceEl = announce;
     this.syncFromNav();
     renderMobileShell(body, this.mobileNav, this.mobileShellDeps());
+    if (prevScroll > 0) {
+      const content = body.querySelector<HTMLElement>('.opt-mshell-content');
+      if (content) content.scrollTop = prevScroll;
+    }
   }
 
   private mobileShellDeps(): MobileShellDeps {
@@ -498,7 +515,8 @@ export class OptionsWindow {
       headerTitle: () => this.mobileHeaderTitle(),
       searchActive: () => this.searchQuery.trim().length > 0,
       buildSearchField: (onInput) => this.buildMobileSearchField(onInput),
-      appendQuickActions: (parent) => this.appendOverviewQuickActions(parent),
+      onResetAll: () => this.runQuickAction('resetAll'),
+      onLogout: () => this.runQuickAction('logout'),
       appendLandingAlerts: (parent) => this.appendReloadAlert(parent),
       appendPins: (parent) => this.appendOverviewPins(parent),
       appendStatus: (parent) => this.appendOverviewStatus(parent),

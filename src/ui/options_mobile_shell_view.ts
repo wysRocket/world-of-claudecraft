@@ -195,23 +195,17 @@ export function mobileCategoryRows(
 // ---------------------------------------------------------------------------
 
 /** The mobile landing's section slots, in render order. */
-export type LandingSection =
-  | 'search'
-  | 'quickActions'
-  | 'alerts'
-  | 'pins'
-  | 'categoryList'
-  | 'status';
+export type LandingSection = 'search' | 'alerts' | 'pins' | 'categoryList' | 'status';
 
 /** The landing section order: the global search field directly beneath the
  *  header, then the category GRID (the settings front page: the primary content a
- *  player scans first, matching the reference mock), then the Overview quick
- *  actions, alert rows, pinned-essentials mirrors, and the status readout below
- *  it. While a search query is live the grid slot hosts the results instead. */
+ *  player scans first, matching the reference mock; Reset to Defaults and Logout
+ *  ride the grid as action tiles, so there is no separate quick-action button
+ *  row), then the alert rows, pinned-essentials mirrors, and the status readout.
+ *  While a search query is live the grid slot hosts the results instead. */
 export const MOBILE_LANDING_ORDER: readonly LandingSection[] = [
   'search',
   'categoryList',
-  'quickActions',
   'alerts',
   'pins',
   'status',

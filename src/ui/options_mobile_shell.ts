@@ -56,7 +56,10 @@ export interface MobileShellDeps {
   /** The persistent landing search field; `onInput` re-fills only the lower region
    *  (so the field keeps focus/caret while typing). */
   buildSearchField(onInput: () => void): HTMLElement;
-  appendQuickActions(parent: HTMLElement): void;
+  /** Reset every setting to its default (the grid's action tile). */
+  onResetAll(): void;
+  /** Log out / return to the title screen (the grid's action tile). */
+  onLogout(): void;
   appendLandingAlerts(parent: HTMLElement): void;
   appendPins(parent: HTMLElement): void;
   appendStatus(parent: HTMLElement): void;
@@ -155,9 +158,32 @@ function categoryRow(
   return btn;
 }
 
+/** A grid action tile (Reset to Defaults / Logout): the category-tile shape with
+ *  the danger tint, so the two destructive actions live in the grid instead of a
+ *  separate button row that crowded the landing. */
+function actionTile(
+  labelKey: TranslationKey,
+  iconName: 'swap' | 'prev',
+  onActivate: () => void,
+): HTMLButtonElement {
+  const label = t(labelKey);
+  const btn = el('button', 'opt-mshell-cat is-danger');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', label);
+  const icon = el('span', 'opt-mshell-cat-icon');
+  icon.innerHTML = svgIcon(iconName);
+  const text = el('span', 'opt-mshell-cat-text');
+  const name = el('span', 'opt-mshell-cat-label');
+  name.textContent = label;
+  text.appendChild(name);
+  btn.append(icon, text);
+  btn.addEventListener('click', () => onActivate());
+  return btn;
+}
+
 /** The landing's lower region (everything below the persistent search field):
- *  either the search results (when a query is live) or the quick actions +
- *  alerts + pins + stacked category list + status, in the pinned order. */
+ *  either the search results (when a query is live) or the category grid +
+ *  alerts + pins + status, in the pinned order. */
 function fillLandingLower(lower: HTMLElement, deps: MobileShellDeps): void {
   const searching = deps.searchActive();
   for (const section of MOBILE_LANDING_ORDER) {
@@ -166,9 +192,6 @@ function fillLandingLower(lower: HTMLElement, deps: MobileShellDeps): void {
     // category-list slot (which hosts the results), so nothing else stacks under it.
     if (searching && section !== 'categoryList') continue;
     switch (section) {
-      case 'quickActions':
-        deps.appendQuickActions(lower);
-        break;
       case 'alerts':
         deps.appendLandingAlerts(lower);
         break;
@@ -179,13 +202,15 @@ function fillLandingLower(lower: HTMLElement, deps: MobileShellDeps): void {
         if (searching) {
           deps.appendSearchResults(lower);
         } else {
-          // The settings front page: a card grid (icon over label), one tile per
-          // env-visible category. No Return-to-Game tile: the Done bar and the
-          // header close both already return to the game, so it would be a third
-          // redundant control.
+          // The settings front page: a 5-column card grid (icon over label), one
+          // tile per env-visible category plus the Reset to Defaults and Logout
+          // action tiles (10 tiles, 5 + 5). No Return-to-Game tile or Done bar:
+          // the header X is the one close control.
           const grid = el('div', 'opt-mshell-grid');
           const rows = mobileCategoryRows(deps.env(), deps.changedCount, deps.hasConflict);
           for (const row of rows) grid.appendChild(categoryRow(row, deps));
+          grid.appendChild(actionTile('hud.options.resetToDefaults', 'swap', deps.onResetAll));
+          grid.appendChild(actionTile('hud.options.logout', 'prev', deps.onLogout));
           lower.appendChild(grid);
         }
         break;
@@ -233,22 +258,16 @@ export function renderMobileShell(
     shell.appendChild(content);
   }
 
-  // Sticky bottom bar: the gamepad legend (only while a pad is connected) above a
-  // full-width Done button, on every level (spec section 9).
-  const bar = el('div', 'opt-mshell-bar');
+  // Sticky bottom bar: ONLY the gamepad legend, and only while a pad is
+  // connected. The Done button is gone (live feedback): the header X is the one
+  // close control, so with no pad the shell has no bottom bar at all and the
+  // content region keeps the full height.
   const legend = deps.buildLegend();
-  if (legend) bar.appendChild(legend);
-  const done = el('button', 'btn is-primary opt-mshell-done');
-  done.type = 'button';
-  // A dismiss affordance: focus-first on open must land on the landing content
-  // (search / first category row), never the sticky Done bar.
-  done.setAttribute('data-close', '');
-  done.textContent = t('hudChrome.options.done');
-  const doneLabel: TranslationKey = 'hudChrome.options.done';
-  done.setAttribute('aria-label', t(doneLabel));
-  done.addEventListener('click', () => deps.onClose());
-  bar.appendChild(done);
-  shell.appendChild(bar);
+  if (legend) {
+    const bar = el('div', 'opt-mshell-bar');
+    bar.appendChild(legend);
+    shell.appendChild(bar);
+  }
 
   container.appendChild(shell);
 }
