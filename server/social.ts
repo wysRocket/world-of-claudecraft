@@ -793,14 +793,19 @@ export class SocialService {
   // the earner on THEIR list chose to follow them, the position-push rule).
   // Pure delivery: the caller (game.ts) has already applied the marquee bar,
   // the retro gate, and the earner's opt-out; this resolves the audience and
-  // honours each recipient's ignore list like guild chat does. The earner
-  // never receives it (their own toast is client-side from the sim event).
+  // filters it BIDIRECTIONALLY: each recipient's ignore list is honoured like
+  // guild chat, and the earner's own block list also excludes a recipient
+  // (blockAdd only unfriends the earner's edge, so a blocked follower would
+  // otherwise stay in whoFriended and keep hearing these). The earner never
+  // receives it (their own toast is client-side from the sim event).
   async broadcastDeedUnlock(actor: SocialActor, deedId: string): Promise<void> {
     const event: SocialEvent = { type: 'deedBroadcast', characterName: actor.name, deedId };
-    const [membership, followerIds] = await Promise.all([
+    const [membership, followerIds, earnerBlockedIds] = await Promise.all([
       this.db.guildMembership(actor.characterId),
       this.db.whoFriended(actor.characterId),
+      this.db.blockedIds(actor.characterId),
     ]);
+    const earnerBlocked = new Set(earnerBlockedIds);
     const audience = new Set<number>(followerIds);
     if (membership) {
       for (const m of await this.db.guildMembers(membership.guildId)) audience.add(m.id);
@@ -809,6 +814,7 @@ export class SocialService {
       if (id === actor.characterId) continue;
       if (!this.tx.isOnline(id)) continue;
       if (this.tx.isIgnoring(id, actor.characterId)) continue;
+      if (earnerBlocked.has(id)) continue;
       this.tx.deliver(id, [event]);
     }
   }

@@ -1062,6 +1062,16 @@ describe('broadcastDeedUnlock', () => {
     expect(h.tx.eventsFor(4)).toHaveLength(1);
   });
 
+  it('skips a recipient the earner has ignored', async () => {
+    const h = await deedSetup();
+    await h.db.addBlock(1, 2); // the earner blocks guildmate 2
+    await h.db.addBlock(1, 4); // and follower 4 (blockAdd cannot unfriend THEIR edge)
+    await h.svc.broadcastDeedUnlock(h.actor(1), 'prog_veteran');
+    expect(h.tx.eventsFor(2)).toEqual([]);
+    expect(h.tx.eventsFor(4)).toEqual([]);
+    expect(h.tx.eventsFor(3)).toHaveLength(1); // unblocked guildmate still hears it
+  });
+
   it('delivers exactly once to a follower who is also a guildmate', async () => {
     const h = await deedSetup();
     await h.db.addFriend(2, 1); // guildmate 2 also follows the earner
