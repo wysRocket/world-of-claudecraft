@@ -970,6 +970,33 @@ describe('client HTML shell', () => {
     );
   });
 
+  it('offers a desktop micro-menu Discord entry in BOTH entries (not keybind-only)', () => {
+    // Before this, linking Discord was reachable only via the undocumented 'U'
+    // keybind: no menu item, button, or keybind-list mention told a desktop
+    // player the feature existed. #mm-discord in the micro-menu (alongside
+    // #mm-social, #mm-valecup, ...) gives it a visible, clickable affordance
+    // that mirrors the mobile tray's #mobile-discord button.
+    for (const [name, entry] of [
+      ['index.html', html],
+      ['play.html', playHtml],
+    ] as const) {
+      expect(entry, name).toContain('id="mm-discord"');
+      expect(entry, name).toMatch(/id="mm-discord"[^>]*data-icon="discord"/);
+      // Starts hidden; main.ts reveals it at boot on any build with Discord UI
+      // enabled, mirroring #mobile-discord's own gating.
+      expect(entry, name).toMatch(/id="mm-discord"\s+hidden/);
+      // Shows the 'U' default keybind as a discoverability hint, same as every
+      // other micro-menu button (#mm-social shows 'o', #mm-valecup shows 'y').
+      expect(entry, name).toMatch(/id="mm-discord"[^>]*>\s*<span class="keybind">u<\/span>/);
+    }
+    // main.ts wires the click through the Hud's discord hook (attachDiscordHook)
+    // to the same toggleDiscordPanel the 'U' keybind calls, and reveals/hides the
+    // button alongside the mobile tray entry via the shared syncDiscordEntries.
+    expect(mainTs).toContain('hud.attachDiscordHook(() => toggleDiscordPanel());');
+    expect(mainTs).toContain('function syncDiscordEntries(): void {');
+    expect(mainTs).toContain("const desktopBtn = document.getElementById('mm-discord');");
+  });
+
   it('ships the consumables quick bar in BOTH entries, collapsed by default', () => {
     for (const [name, entry] of [
       ['index.html', html],
