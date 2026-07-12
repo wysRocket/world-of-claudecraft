@@ -186,7 +186,7 @@ describe('delivery, dedupe, and the retry ladder', () => {
     });
   });
 
-  it('dedupes an in-flight (steamId, achievement) pair to one push', async () => {
+  it('dedupes an in-flight (account, steamId, achievement) triple to one push', async () => {
     enableSteam();
     let release: (ok: boolean) => void = () => {};
     pushMock.mockImplementationOnce(() => new Promise<boolean>((resolve) => (release = resolve)));
@@ -373,6 +373,35 @@ describe('unlink is a revocation barrier', () => {
     onDeedRecorded(ACCOUNT_ID, MAPPED_DEED_2);
     await settle();
     expect(pushMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("a reconcile for the NEW account is not swallowed by the OLD account's in-flight push", async () => {
+    enableSteam();
+    const ACCOUNT_B = ACCOUNT_ID + 1;
+    // Hold account A's push open so its pending entry is still live when the
+    // Steam account moves: the dedupe key must not collide across accounts,
+    // or B's reconcile item is silently discarded and nothing ever heals it
+    // (reconcile runs only at link time).
+    let releasePush: (ok: boolean) => void = () => {};
+    pushMock.mockImplementationOnce(
+      () => new Promise<boolean>((resolve) => (releasePush = resolve)),
+    );
+    onDeedRecorded(ACCOUNT_ID, MAPPED_DEED);
+    for (let i = 0; i < 10; i++) await Promise.resolve();
+    expect(pushMock).toHaveBeenCalledTimes(1);
+    // The Steam account moves from A to B: A's row is gone, B's row names S.
+    linkMock.mockImplementation(async (accountId: number) =>
+      accountId === ACCOUNT_B ? { steamId: STEAM_ID } : null,
+    );
+    earnedMock.mockResolvedValue([MAPPED_DEED]);
+    reconcileLink(ACCOUNT_B, STEAM_ID);
+    for (let i = 0; i < 10; i++) await Promise.resolve();
+    releasePush(true);
+    await settle();
+    expect(pushMock).toHaveBeenCalledTimes(2);
+    expect(pushMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({ steamId: STEAM_ID, achName: MAPPED_ACH }),
+    );
   });
 
   it('a warm cache from before a peer-process RELINK cannot push to the old id', async () => {

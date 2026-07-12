@@ -107,7 +107,11 @@ export function onLinkChanged(accountId: number, steamId: string | null): void {
 // ---------------------------------------------------------------------------
 // The push queue: a plain FIFO drained by one detached worker, with a pending
 // set (queued or in flight) so a duplicate delivery of the same
-// (steamId, achievement) pair collapses while one is already on its way.
+// (account, steamId, achievement) triple collapses while one is already on
+// its way. The account id is part of the key: when a Steam account moves
+// between WoCC accounts, the old account's in-flight item must not swallow
+// the new account's reconcile item (revalidation drops the old one, and
+// nothing but reconcile-on-link would ever redeliver the new one).
 // ---------------------------------------------------------------------------
 
 interface PushItem {
@@ -122,7 +126,7 @@ let draining = false;
 let drain: Promise<void> = Promise.resolve();
 
 function pushKey(item: PushItem): string {
-  return `${item.steamId}:${item.achName}`;
+  return `${item.accountId}:${item.steamId}:${item.achName}`;
 }
 
 function enqueue(item: PushItem): void {
