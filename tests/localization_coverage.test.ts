@@ -17,7 +17,13 @@ import {
 } from '../src/sim/data';
 import type { PlayerClass } from '../src/sim/types';
 import { abilityBuffValue } from '../src/ui/ability_damage';
-import { deedDesc, deedName, deedTitleText, deedTranslationManifest } from '../src/ui/deed_i18n';
+import {
+  deedDesc,
+  deedName,
+  deedTitleText,
+  deedTranslationManifest,
+  ensureDeedLocalesLoaded,
+} from '../src/ui/deed_i18n';
 import {
   assertEntityTranslationsReady,
   entityTranslationFallbackLog,
@@ -100,13 +106,19 @@ const locales: Record<string, typeof en> = {
 const RELEASE_TIER = process.env.I18N_RELEASE_TIER === '1';
 
 describe('i18n Localization Key Coverage', () => {
-  // Lazy locale flip: non-en locales are no longer statically resident. This suite
-  // setLanguage(non-en)s and reads synchronously via t()/tEntity/formatMoney/talent helpers,
-  // so make every supported locale resident up front - the test-harness mirror of the
-  // bootstrap's await-before-paint. Each setLanguage(lang) read then resolves the localized
-  // table instead of the English fallback.
+  // Lazy locale flip: non-en locales (and the deed locale tables, which ride their own
+  // dynamically imported chunk) are no longer statically resident. This suite
+  // setLanguage(non-en)s and reads synchronously via t()/tEntity/formatMoney/talent/deed
+  // helpers, so make every supported locale resident up front - the test-harness mirror of
+  // the bootstrap's await-before-paint. Each setLanguage(lang) read then resolves the
+  // localized table instead of the English fallback.
   beforeAll(async () => {
-    await Promise.all(supportedLanguages.map((lang) => ensureLocaleLoaded(lang)));
+    await Promise.all(
+      supportedLanguages.flatMap((lang) => [
+        ensureLocaleLoaded(lang),
+        ensureDeedLocalesLoaded(lang),
+      ]),
+    );
   });
 
   const placeholderPattern = /\b(TODO|TBD|FIXME|PLACEHOLDER|TRANSLATE|LOREM)\b/i;

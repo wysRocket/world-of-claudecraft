@@ -11,6 +11,7 @@ import {
   deedName,
   deedTitleText,
   deedTranslationManifest,
+  ensureDeedLocalesLoaded,
   titledDisplayName,
   titledNameDecoration,
 } from '../src/ui/deed_i18n';
@@ -179,7 +180,11 @@ describe('DEED_LOCALE_TABLES (the release fill)', () => {
     }
   });
 
-  it('resolves per language, with es_ES and fr_CA inheriting their base under the delve-term overrides', () => {
+  it('resolves per language, with es_ES and fr_CA inheriting their base under the delve-term overrides', async () => {
+    // Lazy deed locales: the tables ride one dynamically imported chunk, so
+    // make them resident first (the test-harness mirror of the bootstrap's
+    // await-before-paint); any non-en load makes every table resident.
+    await ensureDeedLocalesLoaded('de_DE');
     try {
       setLanguage('de_DE');
       expect(deedName('prog_first_steps')).toBe('Erste Schritte');
