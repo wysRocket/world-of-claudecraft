@@ -42,20 +42,38 @@ export function isMarqueeDeed(def: DeedDef): boolean {
 }
 
 /** Hidden deeds are invisible until earned, EXISTENCE included (the DeedDef
- *  contract), so anonymous and third-party surfaces must omit them; only the
- *  earner's own Book shows their copy. A drifted id (content removed) reads
- *  as not hidden: it can no longer spoil anything. */
+ *  contract). isHiddenDeedId answers ONLY "is this a KNOWN hidden deed"; it
+ *  reads an unknown id as NOT hidden (DEEDS[id]?.hidden is undefined). That
+ *  fail-open is sound for its one caller, the guild broadcast gate
+ *  (server/game.ts), which already drops any id with no live DeedDef before it
+ *  asks. Public surfaces must NOT reuse it: use isPubliclyListableDeedId, which
+ *  fails CLOSED. */
 export function isHiddenDeedId(deedId: string): boolean {
   return DEEDS[deedId]?.hidden === true;
 }
 
-/** The public form of the rarity aggregate: strip hidden deeds so an
- *  anonymous caller cannot enumerate their ids the moment one player earns
- *  one. Pure; the main.ts cache applies it once per refresh. */
+/** Whether an id may appear on an anonymous or third-party public surface: it
+ *  must resolve to a KNOWN, non-hidden deed. Fails CLOSED on an unknown id.
+ *  Production runs a mixed-version fleet over one shared database, so a NEWER
+ *  hidden deed's id (a descriptive slug any current client resolves to full
+ *  name and description) can reach an older process, and a binary rollback
+ *  reintroduces the same skew; either would spoil an unearned hidden deed. A
+ *  removed id dropped from public surfaces loses nothing, since no client can
+ *  render it anyway, and an owner's own Book never routes through this
+ *  predicate, so owners are unaffected. */
+export function isPubliclyListableDeedId(id: string): boolean {
+  const def = DEEDS[id];
+  return def !== undefined && def.hidden !== true;
+}
+
+/** The public form of the rarity aggregate: keep only publicly listable deeds
+ *  so an anonymous caller can neither enumerate a hidden deed's id the moment
+ *  one player earns it nor learn a newer/rolled-back id. Pure; the main.ts
+ *  cache applies it once per refresh. */
 export function publicRarityPayload(payload: DeedsRarity): DeedsRarity {
   const earned: Record<string, number> = {};
   for (const id in payload.earned) {
-    if (!isHiddenDeedId(id)) earned[id] = payload.earned[id];
+    if (isPubliclyListableDeedId(id)) earned[id] = payload.earned[id];
   }
   return { totalEligible: payload.totalEligible, earned };
 }

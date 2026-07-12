@@ -225,13 +225,22 @@ export function characterSheet(input: CharacterSheetInput): CharacterSheet {
       activeTitle: state.activeTitle ?? null,
       // Hidden deeds are invisible until earned, existence included, so the
       // PUBLIC arm strips them (a third-party viewer who has not earned one
-      // must not learn its id here); the owner HAS earned theirs, so the
-      // owner arm keeps them, matching the Book's own shelf. The strip can
-      // shorten the fetched window below its limit; hidden earns are rare by
-      // design.
+      // must not learn its id here); the owner HAS earned theirs, so the owner
+      // arm keeps them, matching the Book's own shelf. The public arm fails
+      // CLOSED: it also drops any id with no live DeedDef, because a
+      // mixed-version fleet (or a binary rollback) can surface a NEWER hidden
+      // deed's descriptive slug through an older process, which a current
+      // client would resolve to full name and description. Kept INLINE rather
+      // than shared with deeds_records so this db-free module never pulls the
+      // deeds-db graph into its import graph (a known partial-mock breakage
+      // class), and the rule of three is not yet met. The strip can shorten
+      // the fetched window below its limit; hidden earns are rare by design.
       recent:
         visibility === 'public'
-          ? (input.deedsRecent ?? []).filter((r) => DEEDS[r.deedId]?.hidden !== true)
+          ? (input.deedsRecent ?? []).filter((r) => {
+              const def = DEEDS[r.deedId];
+              return def !== undefined && def.hidden !== true;
+            })
           : (input.deedsRecent ?? []),
     },
     rank: rank ?? null,

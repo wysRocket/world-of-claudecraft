@@ -44,6 +44,7 @@ import {
   deedRecordsIdle,
   isHiddenDeedId,
   isMarqueeDeed,
+  isPubliclyListableDeedId,
   publicRarityPayload,
   recordDeedUnlock,
 } from '../server/deeds_records';
@@ -131,7 +132,9 @@ describe('isMarqueeDeed', () => {
 // ---------------------------------------------------------------------------
 // The hidden-deed strip for public surfaces (pure): existence is part of the
 // hidden contract, so the anonymous rarity payload must never carry a hidden
-// deed's id.
+// deed's id. The strip fails CLOSED: an id with no live DeedDef is dropped too,
+// since production runs a mixed-version fleet over one shared database and a
+// newer (or rolled-back) hidden deed's descriptive slug would otherwise leak.
 // ---------------------------------------------------------------------------
 
 describe('publicRarityPayload', () => {
@@ -148,9 +151,26 @@ describe('publicRarityPayload', () => {
     expect(isHiddenDeedId('prog_veteran')).toBe(false);
   });
 
-  it('a drifted id (content removed) passes through: nothing left to spoil', () => {
-    const out = publicRarityPayload({ totalEligible: 10, earned: { gone_deed: 1 } });
-    expect(out.earned).toEqual({ gone_deed: 1 });
+  it('fails closed on an unknown id: it is stripped, listable content stays, totalEligible untouched', () => {
+    // Fixture guard: gone_deed is absent from the catalog (an id a newer or
+    // rolled-back process could still emit); prog_veteran is present.
+    expect(DEEDS.gone_deed).toBeUndefined();
+    expect(DEEDS.prog_veteran).toBeDefined();
+    const out = publicRarityPayload({
+      totalEligible: 10,
+      earned: { gone_deed: 1, prog_veteran: 3 },
+    });
+    expect(out).toEqual({ totalEligible: 10, earned: { prog_veteran: 3 } });
+  });
+
+  it('isPubliclyListableDeedId is true only for a known, non-hidden deed', () => {
+    // Fixture-guard the exemplars against the real catalog.
+    expect(DEEDS.prog_veteran.hidden).not.toBe(true);
+    expect(DEEDS.hid_saul_footnote.hidden).toBe(true);
+    expect(DEEDS.gone_deed).toBeUndefined();
+    expect(isPubliclyListableDeedId('prog_veteran')).toBe(true);
+    expect(isPubliclyListableDeedId('hid_saul_footnote')).toBe(false); // hidden
+    expect(isPubliclyListableDeedId('gone_deed')).toBe(false); // unknown: fail closed
   });
 });
 
