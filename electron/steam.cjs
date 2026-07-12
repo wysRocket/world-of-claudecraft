@@ -41,12 +41,19 @@ function steamIntegrationEnabled({ distribution, env, isPackaged } = {}) {
 // garbage stamp degrades to the dev fallback rather than throwing: a
 // half-stamped build must still launch (only its Steam features degrade).
 function resolveSteamAppId({ packagedMetadata, env, isPackaged } = {}) {
+  // Both string branches hold the number branch's > 0 bar: app id 0 is not a
+  // real Steam app, so a "0" stamp or env override is garbage and degrades to
+  // the dev fallback like any other malformed id.
   const stamped = packagedMetadata?.wocDesktop?.steamAppId;
   if (typeof stamped === 'number' && Number.isInteger(stamped) && stamped > 0) return stamped;
-  if (typeof stamped === 'string' && /^\d+$/.test(stamped)) return Number(stamped);
+  if (typeof stamped === 'string' && /^\d+$/.test(stamped) && Number(stamped) > 0) {
+    return Number(stamped);
+  }
   if (isPackaged !== true) {
     const fromEnv = env?.WOC_STEAM_APP_ID;
-    if (typeof fromEnv === 'string' && /^\d+$/.test(fromEnv)) return Number(fromEnv);
+    if (typeof fromEnv === 'string' && /^\d+$/.test(fromEnv) && Number(fromEnv) > 0) {
+      return Number(fromEnv);
+    }
   }
   return SPACEWAR_APP_ID;
 }

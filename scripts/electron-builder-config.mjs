@@ -130,11 +130,12 @@ export function desktopBuilderConfig({
     // server rejects. That mistake must die at build time, not on players'
     // machines; a deliberate Spacewar test depot passes WOC_STEAM_APP_ID=480
     // explicitly. The unpackaged dev loop never runs this script.
-    if (!/^\d+$/.test(steamAppId)) {
+    if (!/^\d+$/.test(steamAppId) || Number(steamAppId) <= 0) {
       throw new Error(
-        `steam channel builds need a numeric WOC_STEAM_APP_ID in the build env; got ` +
-          `"${steamAppId}". Without it the packaged depot would init Steam with the ` +
-          'Spacewar dev id (480) and link tickets would verify against the wrong app.',
+        `steam channel builds need a positive numeric WOC_STEAM_APP_ID in the build env; ` +
+          `got "${steamAppId}". Without it the packaged depot would init Steam with the ` +
+          'Spacewar dev id (480) and link tickets would verify against the wrong app. ' +
+          'App id 0 is not a real Steam app, so a set-but-zero id is refused too.',
       );
     }
     // steamworks.js is an optionalDependency, so a plain server/web install (or

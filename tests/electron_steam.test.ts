@@ -68,6 +68,23 @@ describe('resolveSteamAppId', () => {
       SPACEWAR_APP_ID,
     );
   });
+
+  it('treats id 0 as garbage in every branch (number, stamp string, env string)', () => {
+    // 0 is all-digits, so a bare /^\d+$/ check would init Steam with app id 0;
+    // the string branches hold the number branch's > 0 bar instead.
+    expect(resolveSteamAppId({ packagedMetadata: { wocDesktop: { steamAppId: 0 } } })).toBe(
+      SPACEWAR_APP_ID,
+    );
+    expect(resolveSteamAppId({ packagedMetadata: { wocDesktop: { steamAppId: '0' } } })).toBe(
+      SPACEWAR_APP_ID,
+    );
+    expect(resolveSteamAppId({ env: { WOC_STEAM_APP_ID: '0' }, isPackaged: false })).toBe(
+      SPACEWAR_APP_ID,
+    );
+    expect(resolveSteamAppId({ env: { WOC_STEAM_APP_ID: '00' }, isPackaged: false })).toBe(
+      SPACEWAR_APP_ID,
+    );
+  });
 });
 
 describe('createSteamShell', () => {

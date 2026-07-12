@@ -212,6 +212,15 @@ describe('desktopBuilderConfig', () => {
     expect(() => desktopBuilderConfig({ base, distribution: 'steam', steamAppId: 'abc' })).toThrow(
       /WOC_STEAM_APP_ID/,
     );
+    // "0" is all-digits but not a real Steam app: the /^\d+$/ shape check
+    // alone would stamp app id 0 into the depot, so the gate requires a
+    // POSITIVE integer (the runtime string branch holds the same bar).
+    expect(() => desktopBuilderConfig({ base, distribution: 'steam', steamAppId: '0' })).toThrow(
+      /WOC_STEAM_APP_ID/,
+    );
+    expect(() => desktopBuilderConfig({ base, distribution: 'steam', steamAppId: '00' })).toThrow(
+      /WOC_STEAM_APP_ID/,
+    );
     // Pack mode gets no exemption: a local steam pack wants the same guard (a
     // deliberate Spacewar pack passes WOC_STEAM_APP_ID=480 explicitly).
     expect(() => desktopBuilderConfig({ base, distribution: 'steam', mode: 'pack' })).toThrow(
