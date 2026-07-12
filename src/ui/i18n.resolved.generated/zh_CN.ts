@@ -338,6 +338,8 @@ export const zh_CN: EnTranslations = {
       "talkBodyTouch": "靠近雷德布鲁克元帅并点击“使用”按钮与他交谈，然后接受他的任务。",
       "returnBodyTouch": "任务已完成。返回雷德布鲁克元帅处并点击“使用”按钮交付任务。",
       "doneBodyTouch": "你已掌握基础，{name}。东溪谷任你探索。点击“更多”，再点击“任务日志”，随时查看你的任务日志。祝你狩猎顺利。",
+      "slayTargetHint": "第一次战斗？按下 {targetKey} 或点击狼来选中它，然后使用快捷栏技能攻击它。",
+      "slayTargetHintTouch": "第一次战斗？点击狼来选中它，然后点击快捷栏技能攻击它。",
       "nextTipsTitle": "接下来去哪",
       "nextTipQuestLog": "打开任务日志（{key}）查找附近的下一个任务。",
       "nextTipMap": "查看世界地图（{key}）了解任务所在位置。",

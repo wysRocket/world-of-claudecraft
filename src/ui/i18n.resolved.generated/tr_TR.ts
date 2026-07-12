@@ -338,6 +338,8 @@ export const tr_TR: EnTranslations = {
       "talkBodyTouch": "Mareşal Redbrook'a yaklaş ve konuşmak için Kullan düğmesine dokun, ardından görevini kabul et.",
       "returnBodyTouch": "Görevin tamamlandı. Mareşal Redbrook'a dön ve teslim etmek için Kullan düğmesine dokun.",
       "doneBodyTouch": "Temelleri öğrendin, {name}. Vadi keşfetmen için senindir. Görev günlüğünü dilediğin an gözden geçirmek için Daha Fazla'ya, ardından Görevler'e dokun. İyi avlar.",
+      "slayTargetHint": "New to combat? Press {targetKey} or click a wolf to target it, then use an action bar ability to attack it.",
+      "slayTargetHintTouch": "New to combat? Tap a wolf to target it, then tap an action bar ability to attack it.",
       "nextTipsTitle": "Where to next",
       "nextTipQuestLog": "Open your Quest Log ({key}) to find your next task nearby.",
       "nextTipMap": "Check the World Map ({key}) to see where quests are waiting.",

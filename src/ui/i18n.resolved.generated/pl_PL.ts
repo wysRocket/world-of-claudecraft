@@ -338,6 +338,8 @@ export const pl_PL: EnTranslations = {
       "talkBodyTouch": "Stań blisko marszałka Redbrooka i dotknij przycisku Użyj, aby z nim porozmawiać, a następnie przyjmij jego zadanie.",
       "returnBodyTouch": "Twoje zadanie jest wykonane. Wróć do marszałka Redbrooka i dotknij przycisku Użyj, aby je oddać.",
       "doneBodyTouch": "Masz już podstawy, {name}. Dolina stoi przed tobą otworem. Dotknij Więcej, a potem Zadania, aby w każdej chwili przejrzeć swój dziennik. Dobrych łowów.",
+      "slayTargetHint": "New to combat? Press {targetKey} or click a wolf to target it, then use an action bar ability to attack it.",
+      "slayTargetHintTouch": "New to combat? Tap a wolf to target it, then tap an action bar ability to attack it.",
       "nextTipsTitle": "Where to next",
       "nextTipQuestLog": "Open your Quest Log ({key}) to find your next task nearby.",
       "nextTipMap": "Check the World Map ({key}) to see where quests are waiting.",

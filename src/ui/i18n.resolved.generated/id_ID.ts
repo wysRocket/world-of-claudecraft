@@ -338,6 +338,8 @@ export const id_ID: EnTranslations = {
       "talkBodyTouch": "Berdirilah dekat Marshal Redbrook dan ketuk tombol Use untuk berbicara, lalu terima tugasnya.",
       "returnBodyTouch": "Tugas Anda selesai. Kembalilah ke Marshal Redbrook dan ketuk tombol Use untuk menyerahkannya.",
       "doneBodyTouch": "Anda sudah menguasai dasarnya, {name}. Lembah ini milik Anda untuk dijelajahi. Ketuk More, lalu Quests, untuk meninjau catatan misi Anda kapan saja. Selamat berburu.",
+      "slayTargetHint": "New to combat? Press {targetKey} or click a wolf to target it, then use an action bar ability to attack it.",
+      "slayTargetHintTouch": "New to combat? Tap a wolf to target it, then tap an action bar ability to attack it.",
       "nextTipsTitle": "Where to next",
       "nextTipQuestLog": "Open your Quest Log ({key}) to find your next task nearby.",
       "nextTipMap": "Check the World Map ({key}) to see where quests are waiting.",
