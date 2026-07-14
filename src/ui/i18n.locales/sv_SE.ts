@@ -313,6 +313,9 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Slukar en magisk effekt (en gynnsam från en fiende eller en skadlig från en allierad) och helar dig med 6 % av din maximala hälsa.',
   'hudChrome.abilityError.shieldRequired': 'Du måste ha en sköld utrustad.',
+  'entities.abilities.collective_reversal.name': 'Kollektiv återgång',
+  'entities.abilities.collective_reversal.description':
+    'Spolar tillbaka tidslinjen för varje fallen medlem i din grupp eller raid och återupplivar dem vid kroppen med full hälsa och mana. Kan inte användas i strid. (Kronomanti)',
   'entities.abilities.sport_boot.description':
     'En lång, hög spark mot siktpunkten. Publiken älskar den.',
   'entities.abilities.sport_boot.name': 'Storspark',

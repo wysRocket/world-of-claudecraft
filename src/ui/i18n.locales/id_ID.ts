@@ -363,6 +363,9 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.readyCheck.notInPartyError':
     'Kamu harus berada dalam grup untuk memulai pemeriksaan kesiapan.',
   'hudChrome.readyCheck.inProgressError': 'Pemeriksaan kesiapan sedang berlangsung.',
+  'entities.abilities.collective_reversal.name': 'Pembalikan Kolektif',
+  'entities.abilities.collective_reversal.description':
+    'Memundurkan alur waktu setiap anggota grup atau raid yang gugur, menghidupkan mereka kembali di dekat jasad dengan kesehatan dan mana penuh. Tidak dapat digunakan saat bertarung. (Kronomansi)',
   'entities.abilities.sport_boot.description':
     'Tendangan lambung jauh ke arah titik bidik. Penonton menyukainya.',
   'entities.abilities.sport_boot.name': 'Tendangan Jauh',

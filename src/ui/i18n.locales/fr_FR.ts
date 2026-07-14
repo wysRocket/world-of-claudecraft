@@ -684,6 +684,9 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.wocStore.wtype.staff': 'Bâton',
   'hudChrome.wocStore.wtype.sword': 'Épée',
   'hudChrome.wocStore.wtype.wand': 'Baguette',
+  'entities.abilities.collective_reversal.name': 'Réversion collective',
+  'entities.abilities.collective_reversal.description':
+    'Rembobine la ligne temporelle de chaque membre mort de votre groupe ou raid et le ramène à la vie près de son corps avec tous ses points de vie et de mana. Ne peut pas être lancé en combat. (Chronomancie)',
   'entities.abilities.sport_boot.description':
     'Une longue balle bottée en cloche vers le point visé. La foule adore.',
   'entities.abilities.sport_boot.name': 'Grosse botte',

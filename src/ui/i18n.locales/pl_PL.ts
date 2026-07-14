@@ -317,6 +317,9 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Pożera efekt magiczny (korzystny z wroga albo szkodliwy z sojusznika) i leczy cię o 6% maksymalnego zdrowia.',
   'hudChrome.abilityError.shieldRequired': 'Musisz mieć założoną tarczę.',
+  'entities.abilities.collective_reversal.name': 'Zbiorowe odwrócenie',
+  'entities.abilities.collective_reversal.description':
+    'Cofa linię czasu każdego poległego członka grupy lub rajdu i przywraca go do życia przy ciele z pełnym zdrowiem i maną. Nie można użyć podczas walki. (Chronomancja)',
   'entities.abilities.sport_boot.description':
     'Długie, wysokie wykopnięcie w stronę punktu celowania. Trybuny to uwielbiają.',
   'entities.abilities.sport_boot.name': 'Potężny Wykop',

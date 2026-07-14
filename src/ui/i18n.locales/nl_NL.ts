@@ -315,6 +315,9 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Verslindt een magisch effect (een gunstig effect van een vijand of een schadelijk effect van een bondgenoot) en geneest je voor 6% van je maximale gezondheid.',
   'hudChrome.abilityError.shieldRequired': 'Je moet een schild hebben uitgerust.',
+  'entities.abilities.collective_reversal.name': 'Collectieve omkering',
+  'entities.abilities.collective_reversal.description':
+    'Spoelt de tijdlijn van elk gesneuveld lid van je groep of raid terug en brengt hen bij hun lichaam tot leven met volledige gezondheid en mana. Kan niet tijdens een gevecht worden gebruikt. (Chronomantie)',
   'entities.abilities.sport_boot.description':
     'Een lange, hoge uithaal richting het richtpunt. Het publiek smult ervan.',
   'entities.abilities.sport_boot.name': 'Grote Uithaal',

@@ -326,6 +326,9 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Verschlingt einen magischen Effekt (einen vorteilhaften von einem Gegner oder einen schädlichen von einem Verbündeten) und heilt Euch um 6 % Eurer maximalen Gesundheit.',
   'hudChrome.abilityError.shieldRequired': 'Ihr müsst einen Schild ausgerüstet haben.',
+  'entities.abilities.collective_reversal.name': 'Kollektive Umkehr',
+  'entities.abilities.collective_reversal.description':
+    'Spult die Zeitlinie jedes gefallenen Mitglieds eurer Gruppe oder Schlachtgruppe zurück und erweckt es bei seinem Körper mit voller Gesundheit und vollem Mana wieder. Kann nicht im Kampf gewirkt werden. (Chronomantie)',
   'entities.abilities.sport_boot.description':
     'Ein hoher, weiter Schlag Richtung Zielpunkt. Die Menge liebt es.',
   'entities.abilities.sport_boot.name': 'Weitschlag',

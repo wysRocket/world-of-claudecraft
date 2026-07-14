@@ -82,6 +82,7 @@ import { spawnFrozenOrb } from './frozen_orb';
 import { glacialFrontContains } from './glacial_front';
 import { applyGroupHaste } from './haste_burst';
 import { armHeroicLeap, relocateSwept } from './heroic_leap';
+import { resurrectDeadGroupMembers } from './mass_resurrection';
 import { applyRewind } from './rewind';
 import { spawnRingOfFrost } from './ring_of_frost';
 import { hasCastShield, noteSpellHit, spellDamageMultFromAuras } from './spell_combat';
@@ -594,6 +595,10 @@ export function runEffects(
           school: 'arcane',
           fx: 'temporalGlyph',
         });
+        break;
+      }
+      case 'massResurrectGroup': {
+        resurrectDeadGroupMembers(ctx, p, eff.hpFrac);
         break;
       }
       case 'perfectMoment': {

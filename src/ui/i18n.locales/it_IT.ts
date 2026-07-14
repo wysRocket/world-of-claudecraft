@@ -329,6 +329,9 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Divora un effetto magico (uno benefico da un nemico o uno dannoso da un alleato) e ti cura del 6% della salute massima.',
   'hudChrome.abilityError.shieldRequired': 'Devi avere uno scudo equipaggiato.',
+  'entities.abilities.collective_reversal.name': 'Inversione collettiva',
+  'entities.abilities.collective_reversal.description':
+    "Riavvolge la linea temporale di ogni membro morto del gruppo o dell'incursione, riportandolo in vita accanto al corpo con salute e mana al massimo. Non può essere lanciata in combattimento. (Cronomanzia)",
   'entities.abilities.sport_boot.description':
     'Un calcione alto e lungo verso il punto mirato. La folla lo adora.',
   'entities.abilities.sport_boot.name': 'Calcione',

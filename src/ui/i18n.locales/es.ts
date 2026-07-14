@@ -328,6 +328,9 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.voidfeast.description':
     'Devora un efecto mágico (uno beneficioso de un enemigo o uno perjudicial de un aliado) y te sana un 6% de tu salud máxima.',
   'hudChrome.abilityError.shieldRequired': 'Debes tener un escudo equipado.',
+  'entities.abilities.collective_reversal.name': 'Reversión colectiva',
+  'entities.abilities.collective_reversal.description':
+    'Rebobina a todos los miembros muertos de tu grupo o banda y los devuelve a la vida junto a sus cuerpos con la salud y el maná al máximo. No se puede lanzar en combate. (Cronomancia)',
   'entities.abilities.temporal_hourglass.name': 'Reloj de suspensión',
   'entities.abilities.temporal_hourglass.description':
     'Coloca un reloj de arena temporal en la ubicación seleccionada. Bajo un enemigo, lo suspende {hostilePveDuration} s en JcE o {hostilePvpDuration} s en JcJ e impide que actúe; cualquier daño rompe el efecto. Sobre tus pies o bajo un aliado del grupo, concede estasis durante {duration} s, impide recibir daño y actuar, recupera un {healing}% de la salud máxima y hace que los tiempos de reutilización se recuperen un {selfCooldownRecovery}% más rápido para ti o un {allyCooldownRecovery}% más rápido para un aliado. Si la ubicación está vacía, espera {groundDuration} s y afecta a la primera unidad válida que lo pise. El aura beneficiosa puede eliminarse manualmente.',
