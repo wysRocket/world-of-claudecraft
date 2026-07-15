@@ -17,7 +17,8 @@ Phase 2 (Generated flat TranslationKey union + baseUrl removal): IMPLEMENTED
 0313a58f6). All deliverables landed: the generator emits
 src/ui/i18n.catalog/translation_keys.generated.ts (committed, line-item, D6
 clean), TranslationKey re-exports it, baseUrl deleted, the membership test
-retired, freshness wiring complete. Measured: tsc 5.9.3 27.4s -> 12.9s local;
+retired, freshness wiring complete. DRAFT PR #1940 against release/v0.26.0
+(the Phase 2 QA session marks it ready after PASS). Measured: tsc 5.9.3 27.4s -> 12.9s local;
 the typescript@7.0.2 forward probe exits 0 in 2.4s (7.0.2 still the newest
 stable 7.x); both negative probes fail tsc; resolved output byte-identical.
 The OPEN item 8 rider spike RAN and recorded its measured result in item 8

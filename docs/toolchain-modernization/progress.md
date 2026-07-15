@@ -6,7 +6,7 @@
 |---|---|---|---|
 | Phase 1: Degit i18n aggregates | MERGED into release/v0.26.0 (PR #1931, merge 0313a58f6) | 2026-07-14 | 2026-07-14 |
 | Phase 1 QA | complete: PASS-WITH-FOLLOWUPS (criterion 2 re-scoped by the owner's OPEN item 8 decision; pending.ts durable fix specced as a follow-up); 2 SHOULD-FIX fixed | 2026-07-14 | 2026-07-14 |
-| Phase 2: Flat TranslationKey + baseUrl | implemented on feature/flat-translationkey-union; DRAFT PR pending QA | 2026-07-14 | |
+| Phase 2: Flat TranslationKey + baseUrl | implemented; DRAFT PR #1940 awaiting Phase 2 QA | 2026-07-14 | |
 | Phase 2 QA | not started | | |
 | Phase 3: CI parallel checks + FFmpeg | not started | | |
 | Phase 3 QA | not started | | |
