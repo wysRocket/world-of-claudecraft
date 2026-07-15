@@ -269,7 +269,6 @@ import { fctSpawnShape } from './fct_event';
 import { FctPainter } from './fct_painter';
 import { FocusManager, type FocusTrapHandle } from './focus_manager';
 import {
-  PARTY_FRAME_POS_KEY,
   PLAYER_FRAME_POS_KEY,
   resetFramePositionsOnce,
   TARGET_FRAME_POS_KEY,
@@ -409,7 +408,6 @@ import {
   chatPlayerContextActions,
   type PlayerContextAction,
   type PlayerContextActionId,
-  selfPlayerContextActions,
   streamerActionPlatform,
   streamerMenuActions,
 } from './player_context_menu';
@@ -1406,7 +1404,6 @@ export class Hud {
   // pointer drag, and a persisted top-left. Constructed once in initFrameMovers.
   private targetFrameMover: MovableFrame | null = null;
   private playerFrameMover: MovableFrame | null = null;
-  private partyFrameMover: MovableFrame | null = null;
   private windowObserver: MutationObserver | null = null;
   private windowZ = 50;
   private localIgnoredNames = new Set<string>();
@@ -1683,20 +1680,11 @@ export class Hud {
       this.openTargetFrameMenuAt(pe.clientX, pe.clientY);
     });
     this.bindMobileFrameLongPress($('#target-frame'), (x, y) => this.openTargetFrameMenuAt(x, y));
-    const playerFrame = $('#player-frame');
-    playerFrame.addEventListener('contextmenu', (ev) => {
+    $('#player-frame').addEventListener('contextmenu', (ev) => {
       ev.preventDefault();
       this.openSelfContextMenu((ev as MouseEvent).clientX, (ev as MouseEvent).clientY);
     });
-    playerFrame.addEventListener('keydown', (ev) => {
-      if (ev.key !== 'ContextMenu' && !(ev.shiftKey && ev.key === 'F10')) return;
-      ev.preventDefault();
-      ev.stopPropagation();
-      const rect = playerFrame.getBoundingClientRect();
-      this.openSelfContextMenu(rect.left, rect.bottom, playerFrame);
-      $('#ctx-menu').querySelector<HTMLElement>('.ctx-item')?.focus();
-    });
-    this.bindMobileFrameLongPress(playerFrame, (x, y) => this.openSelfContextMenu(x, y), {
+    this.bindMobileFrameLongPress($('#player-frame'), (x, y) => this.openSelfContextMenu(x, y), {
       ignoreSelector: 'button, #buff-bar, #debuff-bar',
     });
     $('#mm-char').addEventListener('click', () => this.toggleChar());
@@ -2839,23 +2827,13 @@ export class Hud {
         onPositioned: (active) => this.setPlayerFrameDetached(active),
       });
     }
-    this.partyFrameMover = new MovableFrame({
-      frame: this.partyFramesEl,
-      storageKey: PARTY_FRAME_POS_KEY,
-      unlockLabelKey: 'hudChrome.partyFrames.unlock',
-      lockLabelKey: 'hudChrome.partyFrames.lock',
-      draggingBodyClass: 'party-frame-dragging',
-      fallbackSize: { w: 360, h: 240 },
-      isMobileLayout,
-    });
   }
 
-  // Public: snap all movable unit frames back to their stock CSS spots and
+  // Public: snap both movable unit frames back to their stock CSS spots and
   // forget the saved drags. Wired to the "Reset Frame Positions" interface option.
   resetUnitFrames(): void {
     this.targetFrameMover?.reset();
     this.playerFrameMover?.reset();
-    this.partyFrameMover?.reset();
   }
 
   /** Repaint persisted visual-space geometry after a live UI Scale change. */
@@ -2863,7 +2841,6 @@ export class Hud {
     this.applyChatBoxGeometry();
     this.targetFrameMover?.reapplyPosition();
     this.playerFrameMover?.reapplyPosition();
-    this.partyFrameMover?.reapplyPosition();
   }
 
   // The player frame docks inside #actionbar-stack, whose #bottom-bar ancestor
@@ -3673,11 +3650,8 @@ export class Hud {
       classCss,
       onTarget: (pid) => this.sim.targetEntity(pid),
       onContextMenu: (pid, name, x, y) => this.openContextMenu(pid, name, x, y),
-      // Row hover hook. Clique-style mouseover casting (acting on the hovered member)
-      // is deferred until the authoritative cast-on-target sim path exists, so this is
-      // a no-op for now. Leaving the party moved from a per-frame button to the self
-      // portrait context menu.
-      onHover: () => {},
+      onLeave: () => this.sim.partyLeave(),
+      leaveLabel: () => t('hud.social.leaveParty'),
       chipLabel: () => t('hudChrome.unitFrame.partyChip'),
       onToggleCollapse: () => this.togglePartyCollapsed(),
       partyAuras: this.partyAurasDeps,
@@ -5057,7 +5031,6 @@ export class Hud {
     // the party rows above).
     this.targetFrameMover?.relocalize();
     this.playerFrameMover?.relocalize();
-    this.partyFrameMover?.relocalize();
     if (this.questlogWindow.isOpen) this.questlogWindow.render();
     if ($('#bags').style.display !== 'none') this.renderBags();
     if (this.openVendorNpcId !== null && $('#vendor-window').style.display === 'block')
@@ -14292,33 +14265,11 @@ export class Hud {
     // Hoist the cheap signature (a single string pass, no intermediate arrays) AHEAD
     // of the selector so an unchanged party short-circuits before selectPartyFrameMembers
     // allocates its sorted / filtered / mapped arrays.
-    const settings = this.optionsHooks?.settings;
-    const config = {
-      showSelf: settings?.get('partyFrameShowSelf') ?? false,
-      showResource: settings?.get('partyFrameShowResource') ?? true,
-      showAbsorbs: settings?.get('partyFrameShowAbsorbs') ?? true,
-      showAuras: settings?.get('partyFrameShowAuras') ?? true,
-      presentation: Math.round(settings?.get('partyFrameStyle') ?? 0) as 0 | 1 | 2,
-      healthText: Math.round(settings?.get('partyFrameHealthText') ?? 1) as 0 | 1 | 2 | 3,
-      sort: Math.round(settings?.get('partyFrameSort') ?? 0) as 0 | 1 | 2,
-    };
-    const sig = partyFrameSignature(
-      info,
-      this.sim.playerId,
-      this.sim.player.pos,
-      undefined,
-      config,
-    );
+    const sig = partyFrameSignature(info, this.sim.playerId, this.sim.player.pos);
     if (sig === this.lastPartySig) return;
     this.lastPartySig = sig;
-    const others = selectPartyFrameMembers(
-      info,
-      this.sim.playerId,
-      this.sim.player.pos,
-      undefined,
-      config,
-    );
-    this.partyFramesPainter.sync(others, info.leader, info.raid, config);
+    const others = selectPartyFrameMembers(info, this.sim.playerId, this.sim.player.pos);
+    this.partyFramesPainter.sync(others, info.leader, info.raid);
     // Re-dock the Loot Settings panel below the (just re-synced) party frames when their
     // size changes (row count / raid grouping). Gated so the layout measure runs on a real
     // geometry change, not every combat tick; positionLootSettingsPanel honors a manual drag.
@@ -14335,24 +14286,36 @@ export class Hud {
   // Context menu on players
   // -------------------------------------------------------------------------
 
-  private openSelfContextMenu(x: number, y: number, opener: HTMLElement | null = null): void {
+  private openSelfContextMenu(x: number, y: number): void {
     const el = $('#ctx-menu');
-    this.ctxMenuOpener = opener;
     const party = this.sim.partyInfo;
+    const canConvert =
+      !!party && party.leader === this.sim.playerId && !party.raid && party.members.length >= 5;
+    const canUnconvert =
+      !!party && party.leader === this.sim.playerId && party.raid && party.members.length <= 5;
     let html = `<div class="ctx-title ctx-title-player">${portraitChipHtml({ cls: this.sim.cfg.playerClass, skin: this.sim.player.skin ?? 0, name: this.sim.player.name, variant: 'sm' })}<span class="ctx-title-name">${esc(this.sim.player.name)}</span></div>`;
-    // Party membership actions (convert, loot, leave), the dungeon-difficulty
-    // toggle, and close, resolved by the pure selfPlayerContextActions. Leaving
-    // the party lives here now, not a permanent button under the party frames.
-    const actions = selfPlayerContextActions({
-      inParty: !!party,
-      isLeader: party?.leader === this.sim.playerId,
-      isRaid: party?.raid ?? false,
-      partySize: party?.members.length ?? 1,
-      isHeroic: this.sim.dungeonDifficulty() === 'heroic',
-    });
-    for (const action of actions) {
-      html += `<div class="ctx-item" data-act="${action.id}">${esc(action.label)}</div>`;
+    if (canConvert)
+      html += `<div class="ctx-item" data-act="convert-raid">${esc(t('hud.chat.context.convertToRaid'))}</div>`;
+    if (canUnconvert)
+      html += `<div class="ctx-item" data-act="convert-party">${esc(t('hud.chat.context.convertToParty'))}</div>`;
+    if (party)
+      html += `<div class="ctx-item" data-act="loot-settings">${esc(t('hudChrome.lootSettings.menuItem'))}</div>`;
+    // Dungeon difficulty (classic portrait-menu placement): the label states
+    // the ACTION (switch to the other difficulty). Solo players and party
+    // leaders only; the sim refuses the change from other members. The
+    // confirmation toast comes back from the sim ("Dungeon difficulty set
+    // to ..."), re-localized by sim_i18n like every sim emit.
+    if (!party || party.leader === this.sim.playerId) {
+      const isHeroic = this.sim.dungeonDifficulty() === 'heroic';
+      html += `<div class="ctx-item" data-act="dungeon-difficulty">${esc(
+        t(
+          isHeroic
+            ? 'hudChrome.dungeonDifficulty.setNormal'
+            : 'hudChrome.dungeonDifficulty.setHeroic',
+        ),
+      )}</div>`;
     }
+    html += `<div class="ctx-item" data-act="close">${esc(t('hud.chat.context.cancel'))}</div>`;
     el.innerHTML = html;
     hydratePortraits(el);
     el.style.display = 'block';
@@ -14368,7 +14331,6 @@ export class Hud {
         this.sim.convertRaidToParty();
         this.socialWindow.selectRaidTab();
       } else if (act === 'loot-settings') this.openLootSettings();
-      else if (act === 'leave-party') this.sim.partyLeave();
       else if (act === 'dungeon-difficulty') {
         this.sim.setDungeonDifficulty(
           this.sim.dungeonDifficulty() === 'heroic' ? 'normal' : 'heroic',
