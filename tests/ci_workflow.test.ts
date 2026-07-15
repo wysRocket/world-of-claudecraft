@@ -67,7 +67,9 @@ describe('CI workflow parity', () => {
       expect(job).toContain("github.event_name == 'workflow_dispatch'");
       expect(job).not.toContain('I18N_RELEASE_TIER');
     }
-    expect(releaseGate).toContain("I18N_RELEASE_TIER: '1'");
+    // Anchored to the JOB level (the 4-space env block): moving the flag onto
+    // a single step would silently run the four release test shards at PR tier.
+    expect(releaseGate).toContain("\n    env:\n      I18N_RELEASE_TIER: '1'");
     expect(releaseGate).toContain(
       "github.event_name == 'pull_request' && github.base_ref == 'main'",
     );
@@ -124,8 +126,12 @@ describe('CI workflow parity', () => {
     expect(workflow).not.toContain('npx vitest');
     // The local gate is the one place the whole suite still runs as a single
     // unsharded pass (bounded workers); a --shard flag there would silently
-    // turn the pre-merge gate into a partial run.
+    // turn the pre-merge gate into a partial run, deleting the step would
+    // silently drop tests from the gate entirely, and dropping the worker
+    // bound would reintroduce the documented core-contention flake mode.
     expect(gate).not.toContain('--shard');
+    expect(gate).toContain("'vitest (full suite)'");
+    expect(gate).toContain('--maxWorkers=');
     // pr-checks stays a single unsharded job: its serialized checks run once.
     expect(prChecks).not.toContain('strategy:');
     expect(prChecks).not.toContain('matrix:');
@@ -137,5 +143,20 @@ describe('CI workflow parity', () => {
     // typecheck, and the three builds. Every new non-test step added to
     // release-gate needs the same single-shard condition, and this count.
     expect(releaseGate.match(/if: matrix\.shard == 1/g)).toHaveLength(8);
+    // The release TEST step itself must stay un-gated (run on every shard):
+    // name-to-run adjacency proves no if: line sits between them, so a
+    // compensating double-edit (gate the test step, un-gate a build; count
+    // still 8) cannot silently shrink the release tier to a quarter of the
+    // suite.
+    expect(releaseGate).toMatch(
+      /- name: Run tests \(release tier[^\n]*\n {8}run: npm test -- --shard=\$\{\{ matrix\.shard \}\}\/4/,
+    );
+    // Structural step counts close the remaining direction: a NEW step added
+    // to either matrix job changes these totals and must consciously update
+    // this test (an unconditioned addition to release-gate would otherwise
+    // run four times per release push; pr-gate stays exactly checkout,
+    // setup-node, npm ci, and the sharded test run).
+    expect(prGate.match(/\n {6}- name: /g)).toHaveLength(4);
+    expect(releaseGate.match(/\n {6}- name: /g)).toHaveLength(12);
   });
 });
