@@ -1,8 +1,10 @@
 // The full local pre-merge gate: the CI checks from .github/workflows/ci.yml run
-// locally. Order: the pr-gate job's steps, with the parallel lint job's
-// changed-files biome pulled forward as an early fast-fail; on a release/**
-// branch the steps run release-tier (I18N_RELEASE_TIER=1), mirroring the
-// release-gate job. This script exists because ad-hoc shell chains get the gate
+// locally. Order: the PR tier's combined step list (CI splits it across the
+// parallel pr-gate and pr-checks jobs; this script runs the same list serially
+// by design), with the parallel lint job's changed-files biome pulled forward
+// as an early fast-fail; on a release/** branch the steps run release-tier
+// (I18N_RELEASE_TIER=1), mirroring the release-gate job. This script exists
+// because ad-hoc shell chains get the gate
 // wrong in two known ways: piping `npm test` through `tail` masks vitest's exit
 // code (a red run can print "PASS"), and an unbounded full run saturates every
 // core and flakes the heavy sim suites when other work shares the machine
