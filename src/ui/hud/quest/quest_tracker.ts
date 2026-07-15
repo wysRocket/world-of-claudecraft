@@ -3,7 +3,7 @@
 // quests and the player's collapse preference, so the collapse + per-objective
 // "done" logic is unit-testable without the DOM or a locale loaded.
 //
-// The thin consumer (hud.ts#updateQuestTracker) resolves quest/objective text
+// The thin consumer (quest_tracker_controller.ts) resolves quest/objective text
 // through t(), formats the count through formatNumber, and renders this view
 // model to HTML. Keeping this module fully string/DOM-free mirrors unit_portrait's
 // pure-core split (the consumer owns all t()/formatNumber, the way xp_bar's does),

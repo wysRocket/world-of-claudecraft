@@ -319,11 +319,7 @@ import {
 import { gossipMenuIsEmpty } from './hud/quest/gossip_menu';
 import { parseChatSegments } from './hud/quest/quest_link';
 import { QuestProgressBanner } from './hud/quest/quest_progress_banner';
-import {
-  type QuestTrackerView,
-  questTrackerView,
-  type TrackedQuest,
-} from './hud/quest/quest_tracker';
+import { QuestTrackerController } from './hud/quest/quest_tracker_controller';
 import { QuestLogWindow } from './hud/quest/questlog_window';
 import { buildHeroicVendorView } from './hud/vendor/heroic_vendor_view';
 import { renderHeroicVendorWindow } from './hud/vendor/heroic_vendor_window';
@@ -1221,6 +1217,7 @@ export class Hud {
   private readonly delveTracker: DelveTrackerController;
   private readonly lockpickController: LockpickController;
   private readonly riteController: RiteController;
+  private readonly questTracker: QuestTrackerController;
   private openGossipNpcId: number | null = null;
   private openQuestDetailId: string | null = null;
   private questDialogTrap: FocusTrapHandle | null = null;
@@ -1444,6 +1441,22 @@ export class Hud {
       schedule: (callback, delayMs) => {
         window.setTimeout(callback, delayMs);
       },
+    });
+    this.questTracker = new QuestTrackerController({
+      element: $('#quest-tracker'),
+      document,
+      world: () => this.sim,
+      settings: {
+        available: () => this.optionsHooks !== null,
+        collapsed: () =>
+          (this.optionsHooks?.settings.get('questTrackerCollapsed') ?? false) === true,
+        setCollapsed: (collapsed) => {
+          this.optionsHooks?.settings.set('questTrackerCollapsed', collapsed);
+        },
+      },
+      questTitle,
+      objectiveLabel: questObjectiveLabel,
+      click: () => audio.click(),
     });
     this.chatGeometry = new ChatGeometryController({
       document,
@@ -6886,87 +6899,13 @@ export class Hud {
   }
 
   private updateQuestTracker(): void {
-    const el = $('#quest-tracker');
-    const settings = this.optionsHooks?.settings;
-    let collapsed = (settings?.get('questTrackerCollapsed') ?? false) === true;
-    const quests: TrackedQuest[] = [];
-    for (const qp of this.sim.questLog.values()) {
-      const quest = QUESTS[qp.questId];
-      quests.push({
-        id: qp.questId,
-        // acceptance-order number, the same one the map badges + side list show
-        number: quests.length + 1,
-        title: questTitle(qp.questId),
-        complete: qp.state === 'ready',
-        objectives: quest.objectives.map((obj, i) => ({
-          label: questObjectiveLabel(qp.questId, i),
-          current: qp.counts[i],
-          total: obj.count,
-        })),
-      });
-    }
-    // Only persist the collapse choice while at least one quest is tracked: when
-    // the tracker empties (all quests turned in or abandoned) drop the flag, so a
-    // freshly accepted quest reappears expanded with its objectives visible
-    // rather than hidden behind a collapsed header. Self-limiting to a single
-    // write: once cleared, later empty frames read false and skip.
-    if (collapsed && quests.length === 0 && settings) {
-      settings.set('questTrackerCollapsed', false);
-      collapsed = false;
-    }
-    const html = this.questTrackerHtml(questTrackerView(quests, collapsed));
-    if (el.innerHTML !== html) el.innerHTML = html;
-  }
-
-  // Render the pure tracker view to the floating overlay's HTML. The header is a
-  // <button> (pointer-events re-enabled in CSS over the otherwise click-through
-  // overlay) that toggles the collapse; a delegated listener on #quest-tracker
-  // (see the event-binding constructor) handles activation so it survives these
-  // innerHTML rebuilds.
-  private questTrackerHtml(view: QuestTrackerView): string {
-    if (!view.visible) return '';
-    const chevron = view.collapsed ? '▸' : '▾'; // U+25B8 right / U+25BE down triangle
-    // The leading space keeps a separator in the button's accessible name
-    // ("Quests (5)", not "Quests(5)"); the visual gap is the flex `gap`.
-    const count = view.collapsed
-      ? ` <span class="qt-count">${esc(t('hudChrome.questTracker.count', { count: this.questNumber(view.count) }))}</span>`
-      : '';
-    // State-aware hover hint: clicking collapses while expanded, expands while collapsed.
-    const hint = esc(
-      t(
-        view.collapsed
-          ? 'hudChrome.questTracker.expandHint'
-          : 'hudChrome.questTracker.collapseHint',
-      ),
-    );
-    // aria-controls points at the row list (kept in the DOM, empty when collapsed)
-    // so assistive tech ties the toggle to the region it shows/hides.
-    const html =
-      `<button type="button" class="qt-header" aria-expanded="${!view.collapsed}" aria-controls="qt-list" title="${hint}">` +
-      `<span class="qt-chevron" aria-hidden="true">${chevron}</span>` +
-      `<span class="qt-h-label">${esc(t('questUi.tracker.title'))}</span>${count}</button>`;
-    let rows = '';
-    for (const q of view.quests) {
-      rows += `<div class="qt-title" role="button" tabindex="0" data-quest="${esc(q.id)}"><span class="qt-num">${esc(this.questNumber(q.number))}</span>${esc(q.title)}${q.complete ? ` <span class="quest-complete">(${esc(t('questUi.tracker.complete'))})</span>` : ''}</div>`;
-      for (const o of q.objectives) {
-        rows += `<div class="qt-obj${o.done ? ' done' : ''}">- ${esc(this.questProgressText(o.label, o.current, o.total))}</div>`;
-      }
-    }
-    return `${html}<div id="qt-list">${rows}</div>`;
+    this.questTracker.update();
   }
 
   /** Flip the persisted tracker-collapsed preference (the header click/keyboard
    *  activation), preserving keyboard focus across the innerHTML rebuild. */
   private toggleQuestTrackerCollapsed(): void {
-    const settings = this.optionsHooks?.settings;
-    if (!settings) return;
-    const refocus =
-      document.activeElement instanceof HTMLElement &&
-      document.activeElement.classList.contains('qt-header');
-    settings.set('questTrackerCollapsed', !settings.get('questTrackerCollapsed'));
-    audio.click();
-    this.updateQuestTracker();
-    if (refocus) ($('#quest-tracker').querySelector('.qt-header') as HTMLElement | null)?.focus();
+    this.questTracker.toggleCollapsed();
   }
 
   // -------------------------------------------------------------------------
