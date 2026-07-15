@@ -710,6 +710,23 @@ describe('discord/members-meta', () => {
     // 'not-a-role' clears to null; no name/joinedAt provided -> nulls.
     expect(calls[1]).toEqual([pool, 'u2', null, null, null]);
   });
+
+  it('caps each request at 1000 members (pins the batch size the bot mirrors)', async () => {
+    process.env.DISCORD_BOT_SECRET = DISCORD_SECRET;
+
+    // The bot chunks its member-meta pushes at MEMBERS_META_BATCH (1000) because
+    // this endpoint processes only the first 1000 of each request. Pin the cap so
+    // it cannot drift back and start silently dropping the tail (see #1986).
+    const members = Array.from({ length: 1001 }, (_, i) => ({ discord_user_id: `u${i}` }));
+    const r = await runRoute('POST', '/internal/discord/members-meta', {
+      headers: DISCORD_HEADERS,
+      body: { members },
+    });
+
+    expect(r.status).toBe(200);
+    expect(r.body).toEqual({ success: true, data: { updated: 1000 }, error: null });
+    expect(vi.mocked(setDiscordMemberMeta).mock.calls).toHaveLength(1000);
+  });
 });
 
 // ---------------------------------------------------------------------------

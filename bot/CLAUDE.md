@@ -84,8 +84,14 @@ is posted). Boot loads `.env`/`.env.local` when present but runs fine from ambie
 env alone (`process.loadEnvFile`).
 
 ## Limits / notes
-- Guild state is seeded from `GUILD_CREATE`; very large guilds may not send all
-  members up front (request-guild-members opcode is not implemented). Fine for
-  small/medium servers.
+- Guild state is seeded from `GUILD_CREATE` and then kept live: `GUILD_MEMBER_ADD`
+  seeds a joiner's roles/join date, `GUILD_MEMBER_UPDATE` reconciles a member's
+  role set (so a role granted or revoked after boot reflects on the next push), and
+  `GUILD_MEMBER_REMOVE` clears their stored flair. Large guilds (over
+  `large_threshold`, sent in IDENTIFY) omit offline members from `GUILD_CREATE`, so
+  the bot requests the full roster with the request-guild-members opcode (op 8) and
+  consumes the `GUILD_MEMBERS_CHUNK` stream. Member-meta pushes to the server are
+  batched at its 1000-per-request cap (`MEMBERS_META_BATCH`, mirroring
+  `server/internal.ts`).
 - "Speaking" indicators are not live (that needs a voice-gateway connection); the
   voice list shows membership + self-mute.

@@ -9,17 +9,27 @@ import {
   buildRelayMessage,
   buildWelcomeMessage,
   buildWhoamiContent,
+  chunk,
+  clearedMemberMeta,
   computeRoleSync,
   GATEWAY_INTENTS,
+  GATEWAY_OP,
+  GUILD_LARGE_THRESHOLD,
   heartbeatIntervalMs,
   identifyPayload,
+  indexSpecialRoleIds,
   isSlashCommand,
   levelNickSuffix,
+  MEMBERS_META_BATCH,
+  memberRolesFromPayload,
   NICK_MAX,
   type RelayItem,
+  reconcileMemberRolesFromUpdate,
   relayAvatarUrl,
   relayRespondUrl,
+  requestGuildMembersPayload,
   tierRoleName,
+  topSpecialRoleKeyFor,
   voiceMembersForChannel,
 } from '../bot/logic';
 
@@ -34,6 +44,111 @@ describe('gateway protocol helpers', () => {
     expect(heartbeatIntervalMs({ d: { heartbeat_interval: 41250 } })).toBe(41250);
     expect(heartbeatIntervalMs({ d: { heartbeat_interval: 10 } })).toBe(1000); // floored
     expect(heartbeatIntervalMs({})).toBe(41250); // default
+  });
+
+  it('raises the large_threshold so offline members ship in GUILD_CREATE', () => {
+    expect(GUILD_LARGE_THRESHOLD).toBe(250);
+    expect((identifyPayload('tok').d as Record<string, unknown>).large_threshold).toBe(250);
+  });
+
+  it('requests the full member list with op 8 (query "" / limit 0 / presences)', () => {
+    expect(GATEWAY_OP.REQUEST_GUILD_MEMBERS).toBe(8); // Discord opcode, pinned
+    expect(requestGuildMembersPayload('guild-1')).toEqual({
+      op: 8,
+      d: { guild_id: 'guild-1', query: '', limit: 0, presences: true },
+    });
+  });
+});
+
+describe('special-role resolution (staff flair)', () => {
+  // A guild that (as in the bug report) has BOTH an "Admin" and an "Admins" role,
+  // plus a higher-priority "Levy St" role and a non-special role.
+  const guildRoles = [
+    { id: 'r-admin', name: 'Admin' },
+    { id: 'r-admins', name: 'Admins' },
+    { id: 'r-levy', name: 'Levy St' },
+    { id: 'r-member', name: 'Member' },
+  ];
+
+  it('indexes ALL ids that map to a key so either "Admin" or "Admins" resolves', () => {
+    const index = indexSpecialRoleIds(guildRoles);
+    // Both admin-aliased role ids are kept (the old first-wins map dropped one).
+    expect(index.get('r-admin')).toBe('admin');
+    expect(index.get('r-admins')).toBe('admin');
+    expect(index.get('r-member')).toBeUndefined(); // not a special role
+    // A holder of EITHER admin role id resolves to the 'admin' flair.
+    expect(topSpecialRoleKeyFor(['r-admin'], index)).toBe('admin');
+    expect(topSpecialRoleKeyFor(['r-admins'], index)).toBe('admin');
+    expect(topSpecialRoleKeyFor(['r-member'], index)).toBeNull();
+  });
+
+  it('picks the highest-priority special role a member holds', () => {
+    const index = indexSpecialRoleIds(guildRoles);
+    // Levy St (priority 11) outranks Admin (10) per the shared catalog.
+    expect(topSpecialRoleKeyFor(['r-admins', 'r-levy'], index)).toBe('levyst');
+  });
+
+  it('reflects a live GUILD_MEMBER_UPDATE role grant in the resolved flair', () => {
+    const index = indexSpecialRoleIds(guildRoles);
+    // Before: the member holds only a non-special role -> no flair.
+    const before = ['r-member'];
+    expect(topSpecialRoleKeyFor(before, index)).toBeNull();
+    // A GUILD_MEMBER_UPDATE arrives granting the Admins role: Discord sends the
+    // member's COMPLETE role list, so the reconciled state replaces the cache.
+    const after = reconcileMemberRolesFromUpdate({ roles: ['r-member', 'r-admins'] });
+    expect(after).toEqual(['r-member', 'r-admins']);
+    // After: 'admin' now resolves where it did not before (the core bug fix).
+    expect(topSpecialRoleKeyFor(after ?? [], index)).toBe('admin');
+  });
+
+  it('leaves the cache untouched when an update carries no roles array', () => {
+    expect(reconcileMemberRolesFromUpdate({ nick: 'Nyx' })).toBeNull();
+    expect(reconcileMemberRolesFromUpdate({ roles: ['a', 2, 'b', null] })).toEqual(['a', 'b']);
+  });
+
+  it('extracts a member payload role-id array, dropping non-strings', () => {
+    expect(memberRolesFromPayload({ roles: ['x', 'y'] })).toEqual(['x', 'y']);
+    expect(memberRolesFromPayload({ roles: [1, 'z', {}] })).toEqual(['z']);
+    expect(memberRolesFromPayload({})).toEqual([]);
+  });
+});
+
+describe('members-meta batching + clearing', () => {
+  it('batches the full roster in server-cap-sized requests without dropping the tail', () => {
+    // The server caps EACH members-meta request at this many members.
+    expect(MEMBERS_META_BATCH).toBe(1000);
+
+    // A large-guild backfill: 2500 members. The old single-slice push kept only
+    // the first 1000, so members 1000..2499 never got meta pushed. Batching must
+    // split at exactly 1000 and cover the whole roster including the tail.
+    const ids = Array.from({ length: 2500 }, (_, i) => `u${i}`);
+    const batches = chunk(ids, MEMBERS_META_BATCH);
+
+    expect(batches.map((b) => b.length)).toEqual([1000, 1000, 500]); // split at 1000, tail kept
+    for (const b of batches) expect(b.length).toBeLessThanOrEqual(MEMBERS_META_BATCH);
+    // Every member appears exactly once, in order (nothing dropped past the cap).
+    expect(batches.flat()).toEqual(ids);
+    expect(batches.flat()).toContain('u2499'); // the tail member is covered
+  });
+
+  it('chunk clamps a non-positive size and never emits empty batches', () => {
+    expect(chunk([], 1000)).toEqual([]); // empty roster -> no request
+    expect(chunk(['a', 'b', 'c'], 0)).toEqual([['a'], ['b'], ['c']]); // size clamped to 1
+    expect(chunk(['a', 'b', 'c'], 2)).toEqual([['a', 'b'], ['c']]);
+  });
+
+  it('builds a clearing meta record that drops an ex-member flair', () => {
+    // On GUILD_MEMBER_REMOVE the bot sends this (plus setMember(id, false)) so the
+    // ex-member loses their in-game verified/staff tag. A null role key is what the
+    // server treats as "clear the special-role flair"; name/join-date stay null so
+    // nothing is re-asserted. The old removal path only deleted the local cache and
+    // left this server state stale, so this record + its null role are the fix.
+    expect(clearedMemberMeta('123')).toEqual({
+      discord_user_id: '123',
+      name: null,
+      joinedAtMs: null,
+      role: null,
+    });
   });
 });
 
