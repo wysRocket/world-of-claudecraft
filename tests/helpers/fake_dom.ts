@@ -159,6 +159,10 @@ export class FakeElement extends EventTarget {
     return matches as unknown as T[];
   }
 
+  querySelector<T extends Element = Element>(selector: string): T | null {
+    return this.querySelectorAll<T>(selector)[0] ?? null;
+  }
+
   setRect(rect: { left: number; top: number; width: number; height: number }): void {
     this.rect = { ...rect };
   }

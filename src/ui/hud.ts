@@ -48,8 +48,6 @@ import type { ZoneDef } from '../sim/data';
 import {
   ABILITIES,
   CLASSES,
-  COMPANION_UPGRADE_COSTS,
-  DELVE_AFFIXES,
   DELVE_LIST,
   DELVES,
   DUNGEON_LIST,
@@ -73,7 +71,6 @@ import { canEquipItem } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemLevel, itemScore } from '../sim/item_level';
 import { requiredLevelFor } from '../sim/item_level_req';
 import type { Ante, PickAction } from '../sim/lockpick';
-import { PICK_ACTIONS } from '../sim/lockpick';
 import { FOCUS_POINT_BUDGET, isInTownZone } from '../sim/professions/focus';
 import { type QuestObjectiveRef, questObjectivesForMob } from '../sim/quest_targets';
 import type { ResolvedAbility } from '../sim/sim';
@@ -105,7 +102,6 @@ import {
   MAX_LEVEL,
   MELEE_RANGE,
   MILESTONES,
-  type RiteIntensity,
   type SimEvent,
   SUNDER_ARMOR_PCT_PER_STACK,
   virtualLevel,
@@ -116,7 +112,6 @@ import { worldBossIdFromLockout } from '../sim/world_boss';
 import {
   type CharacterProfile,
   type DailyRewardStatus,
-  type DelveRunInfo,
   type IWorld,
   isOverheadEmoteId,
   OVERHEAD_EMOTES,
@@ -290,10 +285,11 @@ import {
 } from './hud/chat/chat_line';
 import { type ChatClock, clampChatClock, formatChatTimestamp } from './hud/chat/chat_timestamp';
 import { ChatWindowController } from './hud/chat/chat_window_controller';
+import { DelveBoardController } from './hud/delve/delve_board_controller';
 import { DelveMapPainter } from './hud/delve/delve_map_painter';
-import { PICK_ACTION_HOTKEYS } from './hud/delve/lockpick_panel';
-import { LockpickWindow } from './hud/delve/lockpick_window';
-import { RiteWindow } from './hud/delve/rite_window';
+import { DelveTrackerController } from './hud/delve/delve_tracker_controller';
+import { LockpickController } from './hud/delve/lockpick_controller';
+import { RiteController } from './hud/delve/rite_controller';
 import { corpseHarvestView } from './hud/loot/corpse_harvest_view';
 import { renderCorpseHarvestPicker } from './hud/loot/corpse_harvest_window';
 import { reconcileLootRolls as computeLootRollReconcile } from './hud/loot/loot_roll_reconcile';
@@ -823,17 +819,6 @@ const CHAT_TEMPLATE_KEYS = {
   roll: 'hud.chat.templates.roll',
   say: 'hud.chat.templates.say',
 } satisfies Record<string, TranslationKey>;
-const DELVE_AFFIX_COLORS: Record<string, string> = {
-  restless_graves: '#8b7355',
-  bad_air: '#6a8a6a',
-  candleblind: '#c9a227',
-  old_mechanisms: '#7a8a9a',
-  flooded_paths: '#4a7a9a',
-  grave_tax: '#9a6a4a',
-  unstable_roof: '#8a6a5a',
-  cult_remnants: '#7a4a8a',
-  chapel_candle: '#ffd100',
-};
 type MobileHotbarDrag = {
   pointerId: number;
   sourceIndex: number;
@@ -1232,31 +1217,10 @@ export class Hud {
   >();
   private openVendorNpcId: number | null = null;
   private openHeroicVendorNpcId: number | null = null;
-  private openDelveBoardNpcId: number | null = null;
-  private lastDelveTrackerSig = '';
-  private selectedDelveTier: 'normal' | 'heroic' = 'normal';
-  private delveBoardTab: 'delve' | 'shop' = 'delve';
-  private delveTrap: FocusTrapHandle | null = null;
-  private lockpickTrap: FocusTrapHandle | null = null;
-  private lockpickKeyHandler: ((e: KeyboardEvent) => void) | null = null;
-  // The board paints from the authoritative world.lockpickState (never a cached
-  // copy), and owns the per-page countdown with a generation guard. hud.ts keeps
-  // only offer routing, focus restore, and keybinds.
-  private readonly lockpickWindow = new LockpickWindow({
-    getState: () => this.sim.lockpickState,
-    tierName: (tier) => this.lockpickTierName(tier),
-    onEngage: (objectId, ante) => this.submitLockpickEngage(objectId, ante),
-    onAction: (action) => this.submitLockpickAction(action),
-    onAbort: () => this.submitLockpickAbort(),
-    onClose: () => this.closeLockpick(),
-  });
-  // Drowned Reliquary Rite difficulty popup. Opened on the delveRiteChoosePrompt
-  // cue (approaching the risen reliquary), closed once playback starts.
-  private riteTrap: FocusTrapHandle | null = null;
-  private readonly riteWindow = new RiteWindow({
-    onChoose: (intensity) => this.submitRiteChoose(intensity),
-    onClose: () => this.closeRitePanel(),
-  });
+  private readonly delveBoard: DelveBoardController;
+  private readonly delveTracker: DelveTrackerController;
+  private readonly lockpickController: LockpickController;
+  private readonly riteController: RiteController;
   private openGossipNpcId: number | null = null;
   private openQuestDetailId: string | null = null;
   private questDialogTrap: FocusTrapHandle | null = null;
@@ -1428,6 +1392,48 @@ export class Hud {
         return !!match && match.team !== null;
       },
       showAttackButton: () => this.optionsHooks?.settings.get('showAttackButton') ?? true,
+    });
+    this.delveTracker = new DelveTrackerController({
+      element: $('#delve-tracker'),
+      world: () => this.sim,
+      delveName: delveDisplayName,
+      mobName: mobDisplayName,
+      attachTooltip: (element, html) => this.attachTooltip(element, html),
+      closeRitePanel: (restoreFocus) => this.closeRitePanel(restoreFocus),
+    });
+    this.delveBoard = new DelveBoardController({
+      element: $('#delve-board'),
+      world: () => this.sim,
+      openFocusTrap: () => this.focusManager.open({ root: () => $('#delve-board') }),
+      closeOtherWindows: (selector) => this.closeOtherWindows(selector),
+      hideTooltip: () => this.hideTooltip(),
+      attachTooltip: (element, html) => this.attachTooltip(element, html),
+      itemIcon: (item) => this.itemIcon(item),
+      itemTooltip: (item) => this.itemTooltip(item),
+      delveName: delveDisplayName,
+      preloadInterior: (event) => this.renderer.handleEvent(event),
+    });
+    this.riteController = new RiteController({
+      panel: $('#delve-rite-panel'),
+      openFocusTrap: () => this.focusManager.open({ root: () => $('#delve-rite-panel') }),
+      choose: (intensity) => this.sim.delveRiteChoose(intensity),
+    });
+    this.lockpickController = new LockpickController({
+      panel: $('#lockpick-panel'),
+      keyboardTarget: window,
+      openFocusTrap: () => this.focusManager.open({ root: () => $('#lockpick-panel') }),
+      getState: () => this.sim.lockpickState,
+      engage: (objectId, ante) => this.sim.lockpickEngage(objectId, ante),
+      act: (action) => this.sim.lockpickAction(action),
+      abort: () => this.sim.lockpickAbort(),
+      drainEvents: () => {
+        const drain = (this.sim as { drainEvents?: () => SimEvent[] }).drainEvents;
+        return drain ? drain.call(this.sim) : null;
+      },
+      handleEvents: (events) => this.handleEvents(events),
+      showBanner: (text) => this.showBanner(text),
+      log: (text, color) => this.log(text, color),
+      hideTooltip: () => this.hideTooltip(),
     });
     this.chatGeometry = new ChatGeometryController({
       document,
@@ -6232,7 +6238,7 @@ export class Hud {
       }
     }
     this.meters.update();
-    this.lockpickWindow.repaintIfChanged();
+    this.lockpickController.repaintIfChanged();
     this.tutorial.update(sim, this.renderer, this.keybinds);
     this.reconcileLootRolls();
     this.reconcileLootRollStatus(now);
@@ -6958,194 +6964,15 @@ export class Hud {
   // -------------------------------------------------------------------------
 
   openDelveBoard(npcId: number): void {
-    const npc = this.sim.entities.get(npcId);
-    if (npc?.kind !== 'npc') return;
-    const delve = Object.values(DELVES).find((d) => d.boardNpcId === npc.templateId);
-    if (!delve) return;
-    if ($('#delve-board').style.display !== 'block')
-      this.delveTrap = this.focusManager.open({ root: () => $('#delve-board') });
-    this.openDelveBoardNpcId = npcId;
-    this.selectedDelveTier = 'normal';
-    this.delveBoardTab = 'delve';
-    this.closeOtherWindows('#delve-board');
-    $('#delve-board').style.display = 'block';
-    this.renderDelveBoard(true);
+    this.delveBoard.open(npcId);
   }
 
   private renderDelveBoard(focus = false): void {
-    const el = $('#delve-board');
-    const npcId = this.openDelveBoardNpcId;
-    if (npcId === null) {
-      el.style.display = 'none';
-      return;
-    }
-    const npc = this.sim.entities.get(npcId);
-    if (npc?.kind !== 'npc') {
-      this.closeDelveBoard();
-      return;
-    }
-    const delve = Object.values(DELVES).find((d) => d.boardNpcId === npc.templateId);
-    if (!delve) {
-      this.closeDelveBoard();
-      return;
-    }
-    const delveName = delveDisplayName(delve.id);
-    const partySize = this.sim.partyInfo?.members.length ?? 1;
-    const partyTooLarge = partySize > delve.maxPlayers;
-    const canEnter = this.sim.player.level >= delve.minLevel && !partyTooLarge;
-    const tierNormal = t('delveUi.board.tier.normal');
-    const tierHeroic = t('delveUi.board.tier.heroic');
-    const marks = formatNumber(this.sim.delveMarks, { maximumFractionDigits: 0 });
-    const tab = this.delveBoardTab;
-    const tabBtn = (id: 'delve' | 'shop', label: string): string =>
-      `<button type="button" class="delve-tab${tab === id ? ' active' : ''}" role="tab" aria-selected="${tab === id}" data-board-tab="${id}">${esc(label)}</button>`;
-    let body: string;
-    if (tab === 'shop') {
-      body = this.delveShopBodyHtml(delve.id);
-    } else {
-      const companionId = delve.autoCompanionId ?? 'companion_tessa';
-      const companionRank = this.sim.companionUpgrades[companionId] ?? 1;
-      const companionRankLabel = t('delveUi.board.companion.rank', {
-        rank: formatNumber(companionRank, { maximumFractionDigits: 0 }),
-      });
-      const companionMaxRank = Math.max(...Object.keys(COMPANION_UPGRADE_COSTS).map(Number));
-      const nextRank = companionRank + 1;
-      const nextCost = COMPANION_UPGRADE_COSTS[nextRank];
-      const companionNameKey = companionId === 'companion_edda' ? 'edda' : 'tessa';
-      const companionName = t(`delveUi.board.companion.${companionNameKey}` as TranslationKey);
-      let companionAction: string;
-      if (companionRank >= companionMaxRank || !nextCost) {
-        companionAction = `<div class="delve-companion-max quest-muted">${esc(t('delveUi.board.companion.maxRank'))}</div>`;
-      } else {
-        const costMarks = formatNumber(nextCost.marks, { maximumFractionDigits: 0 });
-        const nextRankLabel = formatNumber(nextRank, { maximumFractionDigits: 0 });
-        const affordable = this.sim.delveMarks >= nextCost.marks;
-        companionAction =
-          `<button type="button" class="btn delve-companion-upgrade" data-companion-upgrade="${esc(companionId)}"` +
-          ` aria-label="${esc(t('delveUi.board.companion.upgradeAria', { name: companionName, rank: nextRankLabel, marks: costMarks }))}"` +
-          `${affordable ? '' : ' disabled'}>${esc(t('delveUi.board.companion.upgrade', { rank: nextRankLabel, marks: costMarks }))}</button>`;
-      }
-      const tierRow = ['normal', 'heroic']
-        .map((tierId) => {
-          const label = tierId === 'heroic' ? tierHeroic : tierNormal;
-          const selected = this.selectedDelveTier === tierId ? ' selected' : '';
-          return `<button type="button" class="delve-tier-btn${selected}" data-tier-pick="${esc(tierId)}" aria-pressed="${this.selectedDelveTier === tierId}">${esc(label)}</button>`;
-        })
-        .join('');
-      body =
-        `<div class="delve-board-greeting">${esc(t(delve.id === 'drowned_litany' ? 'delveUi.npc.halvenMarsh.greeting' : 'delveUi.npc.halven.greeting', { playerName: this.sim.player.name }))}</div>` +
-        `<div class="delve-tier-row">${tierRow}</div>` +
-        `<div class="delve-companion-row"><div class="delve-companion-label">${esc(t('delveUi.board.companion.pick'))}</div>` +
-        `<div class="delve-companion-name">${esc(companionName)} <span class="quest-muted">(${esc(companionRankLabel)})</span></div>` +
-        `<div class="delve-companion-boon quest-muted">${esc(t('delveUi.board.companion.boon'))}</div>` +
-        `${companionAction}</div>` +
-        `<button type="button" class="btn delve-enter-btn" data-delve-enter aria-label="${esc(t('delveUi.board.enterAria', { delve: delveName, tier: this.selectedDelveTier === 'heroic' ? tierHeroic : tierNormal }))}"${canEnter ? '' : ' disabled'}>${esc(t('delveUi.board.enter'))}</button>`;
-    }
-    el.innerHTML =
-      `<div class="panel-title"><span>${esc(t('delveUi.board.title'))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.dialog.close'))}">${svgIcon('close')}</button></div>` +
-      `<div class="delve-board-name">${esc(delveName)}</div>` +
-      `<div class="delve-board-meta">${esc(t('delveUi.board.marks', { count: marks }))}</div>` +
-      `<div class="delve-board-req${this.sim.player.level >= delve.minLevel ? '' : ' req-unmet'}">${esc(t('delveUi.board.minLevel', { level: formatNumber(delve.minLevel, { maximumFractionDigits: 0 }) }))}</div>` +
-      `<div class="delve-board-req${partyTooLarge ? ' req-unmet' : ''}">${esc(t('delveUi.board.partyTooLarge', { max: formatNumber(delve.maxPlayers, { maximumFractionDigits: 0 }) }))}</div>` +
-      `<div class="delve-tabs" role="tablist" aria-label="${esc(t('delveUi.board.title'))}">${tabBtn('delve', t('delveUi.board.tabDelve'))}${tabBtn('shop', t('delveUi.board.tabShop'))}</div>` +
-      `<div class="delve-board-body" role="tabpanel">${body}</div>`;
-    el.querySelectorAll('[data-board-tab]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const next = (btn as HTMLElement).dataset.boardTab as 'delve' | 'shop';
-        if (next === this.delveBoardTab) return;
-        this.delveBoardTab = next;
-        this.renderDelveBoard(true);
-      });
-    });
-    if (tab === 'shop') {
-      this.bindDelveShopHandlers(el, delve.id);
-    } else {
-      el.querySelectorAll('[data-tier-pick]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          this.selectedDelveTier = (btn as HTMLElement).dataset.tierPick as 'normal' | 'heroic';
-          this.renderDelveBoard(true);
-        });
-      });
-      el.querySelector('[data-companion-upgrade]')?.addEventListener('click', (ev) => {
-        const btn = ev.currentTarget as HTMLElement;
-        const id = btn.dataset.companionUpgrade;
-        if (!id) return;
-        this.sim.companionUpgrade(id);
-        this.renderDelveBoard(true);
-      });
-      el.querySelector('[data-delve-enter]')?.addEventListener('click', () => {
-        const tierId = this.selectedDelveTier;
-        this.sim.enterDelve(delve.id, tierId);
-        // enterDelve queues delveEntered for the next sim tick; kick interior
-        // prebuild now so the first rendered frame is not a fog void.
-        this.renderer.handleEvent({ type: 'delveEntered', delveId: delve.id, tierId });
-        this.closeDelveBoard();
-      });
-    }
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.closeDelveBoard());
-    if (focus) this.delveTrap?.focusFirst(tab === 'shop' ? '.delve-shop-buy' : '.delve-enter-btn');
-  }
-
-  // Brother Halven's Marks-vendor stock for the open delve. Offers + lock state
-  // come resolved through IWorld (delveShopOffers); item display (name/quality/
-  // icon/tooltip) is rendered locally like the silver vendor. The buy itself is
-  // server-authoritative -- a locked or unaffordable offer is also re-checked sim-side.
-  private delveShopBodyHtml(delveId: string): string {
-    const rows = this.sim
-      .delveShopOffers(delveId)
-      .map((offer) => {
-        const item = ITEMS[offer.itemId];
-        if (!item) return '';
-        const qColor = QUALITY_COLOR[item.quality ?? 'common'] ?? '#fff';
-        const name = itemDisplayName(item);
-        const marksLabel = formatNumber(offer.marks, { maximumFractionDigits: 0 });
-        const priceLabel = t('delveUi.shop.price', { marks: marksLabel });
-        const affordable = this.sim.delveMarks >= offer.marks;
-        let action: string;
-        if (!offer.unlocked) {
-          const req = offer.requiresHeroicClear
-            ? t('delveUi.shop.reqHeroic')
-            : t('delveUi.shop.reqClears', {
-                count: formatNumber(offer.requiresClears, { maximumFractionDigits: 0 }),
-              });
-          action = `<span class="delve-shop-req">${esc(req)}</span>`;
-        } else {
-          const buyAria = t('delveUi.shop.buyAria', { item: name, marks: marksLabel });
-          action = `<button type="button" class="delve-shop-buy" data-buy="${esc(offer.itemId)}" aria-label="${esc(buyAria)}"${affordable ? '' : ' disabled'}>${esc(t('delveUi.shop.buy'))}</button>`;
-        }
-        const priceCls = offer.unlocked && !affordable ? ' unaffordable' : '';
-        return (
-          `<div class="delve-shop-row${offer.unlocked ? '' : ' locked'}" role="listitem" data-shop-item="${esc(offer.itemId)}">` +
-          `${this.itemIcon(item)}` +
-          `<div class="delve-shop-info"><span class="delve-shop-name" style="color:${qColor}">${esc(name)}</span>` +
-          `<span class="delve-shop-price${priceCls}">${esc(priceLabel)}</span></div>` +
-          `${action}</div>`
-        );
-      })
-      .join('');
-    if (!rows) return `<div class="delve-shop-empty">${esc(t('delveUi.shop.empty'))}</div>`;
-    return `<div class="delve-shop-list" role="list">${rows}</div>`;
-  }
-
-  private bindDelveShopHandlers(el: HTMLElement, delveId: string): void {
-    el.querySelectorAll('[data-shop-item]').forEach((row) => {
-      const item = ITEMS[(row as HTMLElement).dataset.shopItem ?? ''];
-      if (item) this.attachTooltip(row as HTMLElement, () => this.itemTooltip(item));
-    });
-    el.querySelectorAll('[data-buy]').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        if ((btn as HTMLButtonElement).disabled) return;
-        this.sim.delveBuyShopItem(delveId, (btn as HTMLElement).dataset.buy ?? '');
-      });
-    });
+    this.delveBoard.render(focus);
   }
 
   private closeDelveBoard(restoreFocus = true): void {
-    $('#delve-board').style.display = 'none';
-    this.openDelveBoardNpcId = null;
-    this.hideTooltip();
-    this.delveTrap?.release(restoreFocus);
-    this.delveTrap = null;
+    this.delveBoard.close(restoreFocus);
   }
 
   // ---------------------------------------------------------------------------
@@ -7157,53 +6984,20 @@ export class Hud {
   // ---------------------------------------------------------------------------
 
   private openLockpickAnte(objectId: number, bountiful = false): void {
-    const el = $('#lockpick-panel');
-    if (el.style.display !== 'block')
-      this.lockpickTrap = this.focusManager.open({ root: () => $('#lockpick-panel') });
-    el.style.display = 'block';
-    this.bindLockpickKeys();
-    this.lockpickWindow.renderAnte(objectId, bountiful);
-    this.lockpickTrap?.focusFirst('.lp-ante-btn');
-  }
-
-  // The lockpick loot tier names are shared with the combat-log lines, so reuse
-  // the sim.lockpick.tier* keys rather than minting parallel lockpickUi ones.
-  private lockpickTierName(tier: 'premium' | 'medium' | 'low'): string {
-    return t(
-      tier === 'premium'
-        ? 'sim.lockpick.tierPremium'
-        : tier === 'medium'
-          ? 'sim.lockpick.tierMedium'
-          : 'sim.lockpick.tierLow',
-    );
+    this.lockpickController.openAnte(objectId, bountiful);
   }
 
   // A lockpickSession event means the authoritative board is live in
   // world.lockpickState; show the panel and let the window paint from it.
   private openLockpickBoard(): void {
-    const el = $('#lockpick-panel');
-    if (el.style.display !== 'block')
-      this.lockpickTrap = this.focusManager.open({ root: () => $('#lockpick-panel') });
-    el.style.display = 'block';
-    this.bindLockpickKeys();
-    this.lockpickWindow.openBoard();
+    this.lockpickController.openBoard();
   }
 
   private endLockpick(
     outcome: 'success' | 'fail' | 'abandoned',
     tier?: 'premium' | 'medium' | 'low',
   ): void {
-    const summary =
-      outcome === 'success'
-        ? tier
-          ? t('lockpickUi.summary.success', { tier: this.lockpickTierName(tier) })
-          : t('lockpickUi.summary.successGeneric')
-        : outcome === 'fail'
-          ? t('lockpickUi.summary.fail')
-          : t('lockpickUi.summary.abandoned');
-    if (outcome === 'success') this.showBanner(summary);
-    this.log(summary, outcome === 'success' ? '#7fdc4f' : outcome === 'fail' ? '#ff7a6a' : '#ccc');
-    this.closeLockpick();
+    this.lockpickController.end(outcome, tier);
   }
 
   private openDelveLoot(chestId: number, items: { itemId: string; count: number }[]): void {
@@ -7237,220 +7031,39 @@ export class Hud {
     this.centerPopupInViewport(el);
   }
 
-  private bindLockpickKeys(): void {
-    if (this.lockpickKeyHandler) return;
-    const handler = (e: KeyboardEvent): void => {
-      if ($('#lockpick-panel').style.display !== 'block') return;
-      // A live board exists iff the authoritative session is non-null; otherwise
-      // the panel is the ante selector and only Escape (close) applies.
-      const live = this.sim.lockpickState;
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        if (live) this.submitLockpickAbort();
-        else this.closeLockpick();
-        return;
-      }
-      if (!live) return;
-      if (e.repeat) return;
-      const key = e.key.toLowerCase();
-      const idx = (PICK_ACTION_HOTKEYS as readonly string[]).indexOf(key);
-      if (idx < 0) return;
-      const action = PICK_ACTIONS[idx];
-      if (!live.allowed.includes(action)) return;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      this.submitLockpickAction(action);
-    };
-    this.lockpickKeyHandler = handler;
-    window.addEventListener('keydown', handler, true); // capture: beats game input
-  }
-
-  /** Offline sim queues lockpick events until the 20 Hz tick; flush them now so
-   * the step feedback toast, timer, and audio react immediately. The board
-   * POSITION never depends on this (it always paints from world.lockpickState);
-   * online has no drainEvents and reacts to the normal event stream instead. */
   flushLockpickEvents(): void {
-    const drain = (this.sim as { drainEvents?: () => SimEvent[] }).drainEvents;
-    if (!drain) return;
-    const events = drain.call(this.sim);
-    if (events.length > 0) this.handleEvents(events);
+    this.lockpickController.flushEvents();
   }
 
-  /** Engage through the HUD path (always flushes queued sim events). Dev consoles
-   * should call this instead of sim.lockpickEngage directly. */
   submitLockpickEngage(objectId: number, ante: Ante): void {
-    this.sim.lockpickEngage(objectId, ante);
-    this.flushLockpickEvents();
+    this.lockpickController.submitEngage(objectId, ante);
   }
 
   submitLockpickAction(action: PickAction): void {
-    this.sim.lockpickAction(action);
-    this.flushLockpickEvents();
-    // Safety net for any path that didn't emit a step event (e.g. a rejected
-    // action): realign the board to the authoritative state.
-    this.lockpickWindow.repaintIfChanged();
+    this.lockpickController.submitAction(action);
   }
 
   submitLockpickAbort(): void {
-    this.lockpickWindow.stopTimer();
-    this.sim.lockpickAbort();
-    this.flushLockpickEvents();
+    this.lockpickController.submitAbort();
   }
 
   private closeLockpick(restoreFocus = true): void {
-    $('#lockpick-panel').style.display = 'none';
-    this.lockpickWindow.close();
-    this.hideTooltip();
-    if (this.lockpickKeyHandler) {
-      window.removeEventListener('keydown', this.lockpickKeyHandler, true);
-      this.lockpickKeyHandler = null;
-    }
-    this.lockpickTrap?.release(restoreFocus);
-    this.lockpickTrap = null;
+    this.lockpickController.close(restoreFocus);
   }
 
   // Drowned Reliquary Rite: the difficulty popup opens when a player interacts
   // with the risen reliquary (delveRiteChoosePrompt) and closes once the chosen
   // sequence starts playing (the first delveRitePulse) or on dismiss.
   private openRitePanel(): void {
-    const el = $('#delve-rite-panel');
-    if (el.style.display !== 'block')
-      this.riteTrap = this.focusManager.open({ root: () => $('#delve-rite-panel') });
-    el.style.display = 'block';
-    this.riteWindow.render();
-    this.riteTrap?.focusFirst('.lp-ante-btn');
-  }
-
-  private submitRiteChoose(intensity: RiteIntensity): void {
-    this.sim.delveRiteChoose(intensity);
-    this.closeRitePanel();
+    this.riteController.open();
   }
 
   private closeRitePanel(restoreFocus = true): void {
-    const el = $('#delve-rite-panel');
-    if (el.style.display === 'none') return;
-    el.style.display = 'none';
-    this.riteTrap?.release(restoreFocus);
-    this.riteTrap = null;
-  }
-
-  private delveObjectiveLine(run: DelveRunInfo): string {
-    const isFinale = run.moduleIndex >= run.moduleCount - 1;
-    if (!isFinale) return t('delveUi.objective.clear_room');
-    if (run.objective.kind === 'kill_boss') {
-      const bossId = DELVES[run.delveId]?.bosses[0] ?? 'deacon_varric';
-      return t('delveUi.objective.kill_boss', { boss: mobDisplayName(bossId) });
-    }
-    return t(`delveUi.objective.${run.objective.kind}` as TranslationKey);
-  }
-
-  private delveAffixLabel(affixId: string): string {
-    const affix = DELVE_AFFIXES[affixId];
-    if (!affix) return affixId;
-    if (affix.blessing) return t(`delveUi.blessing.${affixId}` as TranslationKey);
-    return t(`delveUi.affix.${affixId}` as TranslationKey);
+    this.riteController.close(restoreFocus);
   }
 
   private updateDelveTracker(): void {
-    const el = $('#delve-tracker');
-    const run = this.sim.delveRun;
-    if (!run) {
-      this.lastDelveTrackerSig = '';
-      if (el.innerHTML !== '') el.innerHTML = '';
-      el.style.display = 'none';
-      // The run ended (walk-out, death release, completion teardown) while the
-      // difficulty popup could still be up; do not leave it floating over the
-      // outdoor world.
-      this.closeRitePanel(false);
-      return;
-    }
-    // State-driven close: the popup is only valid while the rite awaits a
-    // choice. The first pulse event also closes it, but that event is
-    // interest-scoped to the apse, so a party member elsewhere in the delve
-    // relies on this wire-state check instead.
-    if (run.rite && run.rite.phase !== 'choose') this.closeRitePanel(false);
-    const sig = JSON.stringify([
-      run.delveId,
-      run.tierId,
-      run.moduleIndex,
-      run.moduleCount,
-      run.modules,
-      run.objective,
-      run.affixes,
-      run.completed,
-      run.exitPortalOpen,
-      run.rite,
-      this.sim.delveMarks,
-    ]);
-    if (sig === this.lastDelveTrackerSig) return;
-    this.lastDelveTrackerSig = sig;
-    el.style.display = 'block';
-    const delveName = delveDisplayName(run.delveId);
-    const tierLabel =
-      run.tierId === 'heroic' ? t('delveUi.board.tier.heroic') : t('delveUi.board.tier.normal');
-    const modId = run.modules[run.moduleIndex];
-    const modName = modId ? t(`delveUi.moduleName.${modId}` as TranslationKey) : '';
-    const moduleLine = t('delveUi.tracker.module', {
-      current: formatNumber(run.moduleIndex + 1, { maximumFractionDigits: 0 }),
-      total: formatNumber(run.moduleCount, { maximumFractionDigits: 0 }),
-    });
-    const objectiveLine = this.delveObjectiveLine(run);
-    const complete =
-      run.objective.complete || run.completed
-        ? ` <span class="quest-complete">(${esc(t('delveUi.tracker.complete'))})</span>`
-        : '';
-    let affixHtml = '';
-    if (run.affixes.length > 0) {
-      affixHtml = `<div class="dt-affix-row"><span class="dt-affix-label">${esc(t('delveUi.tracker.affix'))}</span>`;
-      for (const affixId of run.affixes) {
-        const color = DELVE_AFFIX_COLORS[affixId] ?? '#888';
-        affixHtml += `<span class="dt-affix-icon" data-affix="${esc(affixId)}" style="background:${color}" role="img" tabindex="0" aria-label="${esc(this.delveAffixLabel(affixId))}"></span>`;
-      }
-      affixHtml += '</div>';
-    }
-    const marks = formatNumber(this.sim.delveMarks, { maximumFractionDigits: 0 });
-    // Drowned Reliquary Rite: a phase-by-phase guidance line so the player
-    // always knows the next step (approach, watch, repeat with F, claim).
-    let riteHint = '';
-    if (run.rite) {
-      const riteText =
-        run.rite.phase === 'choose'
-          ? t('delveUi.tracker.riteChoose')
-          : run.rite.phase === 'playback'
-            ? t('delveUi.tracker.ritePlayback')
-            : run.rite.phase === 'input'
-              ? t('delveUi.tracker.riteInput', {
-                  current: formatNumber(run.rite.current, { maximumFractionDigits: 0 }),
-                  total: formatNumber(run.rite.total, { maximumFractionDigits: 0 }),
-                })
-              : t('delveUi.tracker.riteOpen');
-      riteHint = `<div class="dt-obj dt-hint">-> ${esc(riteText)}</div>`;
-    }
-    let exitHint = '';
-    if (run.moduleIndex < run.moduleCount - 1) {
-      if (run.exitPortalOpen) {
-        exitHint = `<div class="dt-obj dt-hint">-> ${esc(t('delveUi.tracker.exitHintOpen'))}</div>`;
-      } else {
-        exitHint = `<div class="dt-obj dt-hint">${esc(t('delveUi.tracker.exitHintLocked'))}</div>`;
-      }
-    }
-    el.innerHTML =
-      `<div class="dt-header">${esc(t('delveUi.tracker.title'))}</div>` +
-      `<div class="dt-title">${esc(delveName)} <span class="dt-tier">${esc(tierLabel)}</span>${complete}</div>` +
-      `<div class="dt-obj">- ${esc(moduleLine)}${modName ? `: ${esc(modName)}` : ''}</div>` +
-      `<div class="dt-obj${run.objective.complete ? ' done' : ''}">- ${esc(t('delveUi.tracker.objective'))}: ${esc(objectiveLine)}</div>` +
-      riteHint +
-      exitHint +
-      `<div class="dt-obj">- ${esc(t('delveUi.tracker.marks', { count: marks }))}</div>` +
-      affixHtml;
-    el.querySelectorAll('.dt-affix-icon').forEach((icon) => {
-      const affixId = (icon as HTMLElement).dataset.affix ?? '';
-      this.attachTooltip(
-        icon as HTMLElement,
-        () => `<div class="tt-title">${esc(this.delveAffixLabel(affixId))}</div>`,
-      );
-    });
+    this.delveTracker.update();
   }
 
   // -------------------------------------------------------------------------
@@ -8488,7 +8101,7 @@ export class Hud {
           if (this.openHeroicVendorNpcId !== null) this.renderHeroicVendor();
           // A delve Marks purchase rides the same 'vendor' event; refresh the shop
           // tab so the balance and per-offer affordability update after a buy.
-          if (this.openDelveBoardNpcId !== null) this.renderDelveBoard();
+          if (this.delveBoard.isOpen) this.renderDelveBoard();
           break;
         }
         case 'skinEvent':
@@ -9195,7 +8808,7 @@ export class Hud {
           sfx.playUi('lockpick_begin');
           break;
         case 'lockpickStep': {
-          this.lockpickWindow.onStep(ev.result);
+          this.lockpickController.onStep(ev.result);
           switch (ev.result) {
             case 'advanced': {
               let pick = Math.floor(Math.random() * 4);

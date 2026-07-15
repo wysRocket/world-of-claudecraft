@@ -39,6 +39,8 @@ import {
 /** Callbacks + reads the window needs from the HUD. It never imports Hud or a
  * concrete world; the HUD wires these to IWorld + its own orchestration. */
 export interface LockpickWindowDeps {
+  /** Resolve the owned panel without relying on a global document. */
+  panel?(): HTMLElement | null;
   /** The authoritative fogged view (world.lockpickState), or null when idle. */
   getState(): LockpickView | null;
   /** Localized loot-tier name (shares the sim.lockpick.tier* keys). */
@@ -64,7 +66,7 @@ export class LockpickWindow {
   constructor(private readonly deps: LockpickWindowDeps) {}
 
   private panel(): HTMLElement | null {
-    return document.getElementById('lockpick-panel');
+    return this.deps.panel?.() ?? document.getElementById('lockpick-panel');
   }
 
   // --- Ante selector -------------------------------------------------------
@@ -271,11 +273,12 @@ export class LockpickWindow {
   }
 
   private paintTimer(remaining: number, seconds: number): void {
-    const bar = document.getElementById('lp-timer-bar') as HTMLElement | null;
+    const panel = this.panel();
+    const bar = panel?.querySelector<HTMLElement>('#lp-timer-bar') ?? null;
     if (bar) bar.style.width = `${(remaining / seconds) * 100}%`;
-    const val = document.getElementById('lp-timer-value');
+    const val = panel?.querySelector<HTMLElement>('#lp-timer-value') ?? null;
     if (val) val.textContent = t('lockpickUi.seconds', { seconds: remaining.toFixed(1) });
-    const wrap = document.querySelector('.lp-timer') as HTMLElement | null;
+    const wrap = panel?.querySelector<HTMLElement>('.lp-timer') ?? null;
     if (wrap) wrap.classList.toggle('lp-timer-urgent', remaining < 3);
   }
 

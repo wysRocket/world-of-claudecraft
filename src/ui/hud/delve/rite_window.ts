@@ -13,6 +13,8 @@ import { formatNumber, type TranslationKey, t } from '../../i18n';
 import { svgIcon } from '../../ui_icons';
 
 export interface RiteWindowDeps {
+  /** Resolve the owned panel without relying on a global document. */
+  panel?(): HTMLElement | null;
   /** Player picked a difficulty (sends the server-authoritative choose command). */
   onChoose(intensity: RiteIntensity): void;
   /** Dismiss the popup without choosing. */
@@ -37,7 +39,7 @@ export class RiteWindow {
   constructor(private readonly deps: RiteWindowDeps) {}
 
   private panel(): HTMLElement | null {
-    return document.getElementById('delve-rite-panel');
+    return this.deps.panel?.() ?? document.getElementById('delve-rite-panel');
   }
 
   render(): void {
