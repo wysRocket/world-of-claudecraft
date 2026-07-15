@@ -386,6 +386,22 @@ describe('append-only insertion helpers (synthetic sources)', () => {
 });
 
 // ---------------------------------------------------------------------------
+// Toolchain pin: the active tsc binary.
+// ---------------------------------------------------------------------------
+
+describe('toolchain pin: node_modules/.bin/tsc', () => {
+  it('is the TypeScript 7 native binary, not the 6.x API wrapper', () => {
+    // Both installed majors type-check this repo clean, so a silent bin flip
+    // back to the 6.x wrapper (the `typescript` alias, whose bin is tsc6)
+    // keeps every other suite green while quietly forfeiting the native
+    // toolchain's speed; this pin is the one place that flip goes red.
+    const probe = spawnSync(TSC, ['--version'], { cwd: REPO, encoding: 'utf8' });
+    expect(probe.status, `tsc --version failed:\n${probe.stdout}\n${probe.stderr}`).toBe(0);
+    expect(probe.stdout.trim()).toMatch(/^Version 7\./);
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Golden end-to-end.
 // ---------------------------------------------------------------------------
 
