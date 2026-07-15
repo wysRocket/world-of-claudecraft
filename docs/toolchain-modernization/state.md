@@ -24,9 +24,14 @@ release/v0.26.0-shard-probe push (run 29419856005 fully green at 258s wall,
 branch deleted after observation). Reviews: test-coverage-auditor PASS (its
 NICE-TO-HAVE closed by the gate --shard absence pin, commit 0e78e1147),
 privacy-security-review PASS (0 CRITICAL; operational branch-protection
-check-name note recorded at OPEN item 4). Full measurement record in
-progress.md Phase 4. Next: Phase 4 QA (phase-04-qa.md), which marks PR #1967
-ready for review on PASS.
+check-name note recorded at OPEN item 4), qa-checklist READY (0 BLOCKING, 0
+SHOULD-FIX). RETARGETED 2026-07-15 per owner direction: v0.26.0 shipped (the
+release-to-main merge b948d47f1, PR #1959) and release/v0.27.0 was cut from
+it with a tree identical to this branch's base 9d6d1e4c0, so the retarget
+merge 946d2754d brought zero tree changes and PR #1967's base moved to
+release/v0.27.0; all recorded run evidence predates the retarget and remains
+valid. Full measurement record in progress.md Phase 4. Next: Phase 4 QA
+(phase-04-qa.md), which marks PR #1967 ready for review on PASS.
 Phase 4 execution notes for later phases are below.
 
 Phase 3 (CI parallel checks job + FFmpeg from npm static binaries): IMPLEMENTED

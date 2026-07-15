@@ -10,7 +10,7 @@
 | Phase 2 QA | complete: PASS (0 BLOCKING; 2 SHOULD-FIX found and resolved: the committed teeth successor test + the recorded cadence deviation; 7 doc corrections) | 2026-07-14 | 2026-07-14 |
 | Phase 3: CI parallel checks + FFmpeg | MERGED into release/v0.26.0 (PR #1945, merge fecfce196) | 2026-07-14 | 2026-07-15 |
 | Phase 3 QA | complete: PASS (0 BLOCKING; 8 SHOULD-FIX found and resolved; release base merged in as e0f442637; 2 tests added) | 2026-07-15 | 2026-07-15 |
-| Phase 4: Test sharding | IMPLEMENTED (draft PR #1967 off release/v0.26.0) | 2026-07-15 | |
+| Phase 4: Test sharding | IMPLEMENTED (draft PR #1967; retargeted to release/v0.27.0 per owner direction) | 2026-07-15 | |
 | Phase 4 QA | not started | | |
 | Phase 5: TypeScript 7 flip | not started | | |
 | Phase 5 QA (closes packet) | not started | | |
@@ -351,6 +351,20 @@ tests added, dead code removed, deferrals.
   operational branch-protection check-name drift, recorded at state.md OPEN item 4;
   re-reviewed and re-affirmed at the extended range including the base merge and
   the pin-fix commit).
+  qa-checklist verdict READY (0 BLOCKING, 0 SHOULD-FIX; verified the pure move
+  helper by helper, re-derived every new ci_workflow pin against the real ci.yml
+  including the count of 8 single-shard conditions, confirmed the determinism
+  suite survived the split and the file-scope timeout reached all three files,
+  biome and dash/emoji scans clean; its two VERIFY items, shard completeness and
+  the full tsc+builds, are satisfied by the three green runs and the gate manual
+  tail; no further domain reviewers to dispatch).
+  RETARGETED 2026-07-15 per owner direction: the owner shipped v0.26.0 (the
+  release-to-main merge b948d47f1, PR #1959) and cut release/v0.27.0 from it;
+  that tip's tree is identical to this branch's base 9d6d1e4c0, so the merge
+  946d2754d brought zero tree changes (clean regen), and PR #1967's base was
+  switched to release/v0.27.0. The recorded scratch-probe and run evidence
+  predates the retarget and remains valid (the ci.yml surfaces are identical
+  on both bases).
   Versus the pre-shard baseline: 547 to 564s wall on the two post-merge Phase 3
   samples, so the PR tier now completes in roughly a third of the wall time.
   Reviews (all COVERAGE-prompted): test-coverage-auditor PASS (0 BLOCKING, 0
