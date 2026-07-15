@@ -46,7 +46,6 @@ import {
   MOBS,
   NPCS,
   QUESTS,
-  questRewardItem,
   WORLD_MAX_X,
   WORLD_MAX_Z,
   WORLD_MIN_X,
@@ -54,7 +53,6 @@ import {
   ZONES,
   zoneAt,
 } from '../sim/data';
-import { CHRONICLER_TEMPLATE_IDS } from '../sim/deeds';
 import { specialRoleColor } from '../sim/discord_roles';
 import { canEquipItem } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemLevel, itemScore } from '../sim/item_level';
@@ -85,7 +83,6 @@ import {
   FAERIE_FIRE_ARMOR_PCT,
   FISHING_CAST_ID,
   type ItemDef,
-  isQuestTurnInNpc,
   MAX_LEVEL,
   MELEE_RANGE,
   MILESTONES,
@@ -178,7 +175,6 @@ import {
 } from './deeds_view';
 import { DeedsWindow } from './deeds_window';
 import { devTierBadgeDataUrl, devTierByIndex, devTierDisplayName } from './dev_tier';
-import { markDialogRoot } from './dialog_root';
 import { discordRoleTagLabel } from './discord_role_tag';
 import { discordStatusBadgeDataUrl, discordStatusDisplayName } from './discord_tier';
 import { dropdownKeyNav } from './dropdown_nav';
@@ -281,7 +277,7 @@ import { LootRollController } from './hud/loot/loot_roll_controller';
 import { lootSettingsView } from './hud/loot/loot_settings_view';
 import { renderLootSettingsWindow } from './hud/loot/loot_settings_window';
 import { PlayerCardController } from './hud/player_card/player_card_controller';
-import { gossipMenuIsEmpty } from './hud/quest/gossip_menu';
+import { QuestDialogController } from './hud/quest/quest_dialog_controller';
 import { parseChatSegments } from './hud/quest/quest_link';
 import { QuestProgressBanner } from './hud/quest/quest_progress_banner';
 import { QuestTrackerController } from './hud/quest/quest_tracker_controller';
@@ -1152,14 +1148,7 @@ export class Hud {
   private readonly lockpickController: LockpickController;
   private readonly riteController: RiteController;
   private readonly questTracker: QuestTrackerController;
-  private openGossipNpcId: number | null = null;
-  private openQuestDetailId: string | null = null;
-  private questDialogTrap: FocusTrapHandle | null = null;
-  private questDialogOpenedAtMs = 0;
-  // The NPC whose voice line is currently sounding, so update() can fade it by
-  // distance as the player walks away. Outlives the dialog window (which closes at
-  // 8) and is cleared once the clip ends. null when no dialogue voice is playing.
-  private voiceNpcId: number | null = null;
+  private readonly questDialog: QuestDialogController;
   // swing timer: the period is captured from the reset edge (swingTimer jumping
   // up), so the bar tracks real swing speed including haste / ranged weapons.
   private swingPeriod = 0;
@@ -1375,6 +1364,44 @@ export class Hud {
       questTitle,
       objectiveLabel: questObjectiveLabel,
       click: () => audio.click(),
+    });
+    this.questDialog = new QuestDialogController({
+      element: $('#quest-dialog'),
+      document,
+      world: () => this.sim,
+      now: () => performance.now(),
+      text: {
+        npcName: npcDisplayName,
+        mobName: mobDisplayName,
+        npcTitle: npcDisplayTitle,
+        npcGreeting,
+        delveName: delveDisplayName,
+        questTitle,
+        questNarrative,
+        objectiveLabel: questObjectiveLabel,
+        number: (value) => this.questNumber(value),
+        progress: (label, current, total) => this.questProgressText(label, current, total),
+        suggestedPlayers: (count) => this.questSuggestedPlayersHtml(count),
+        money: (copper) => this.moneyHtml(copper),
+      },
+      openFocusTrap: (root) => this.focusManager.open({ root }),
+      closeTransient: () => this.closeOtherWindows('#quest-dialog'),
+      hideTooltip: () => this.hideTooltip(),
+      itemIcon: (item) => this.itemIcon(item),
+      itemTooltip: (item) => this.itemTooltip(item),
+      attachTooltip: (element, html) => this.attachTooltip(element, html),
+      openChronicles: () => this.openDeeds('chronicle'),
+      openVendor: (npcId) => this.openVendor(npcId),
+      openHeroicVendor: (npcId) => this.openHeroicVendor(npcId),
+      openMarket: () => this.openMarket(),
+      openDelveBoard: (npcId) => this.openDelveBoard(npcId),
+      openValeCup: () => this.toggleValeCup(),
+      voice: {
+        play: (key) => voice.play(key),
+        isPlaying: () => voice.isPlaying(),
+        setDistance: (distance) =>
+          voice.setDistanceGain(distance === null ? 0 : voiceDistanceGain(distance)),
+      },
     });
     this.lootRolls = new LootRollController({
       document,
@@ -4447,18 +4474,7 @@ export class Hud {
     this.vcupMatchHud.relocalize();
     this.vcupBriefing.relocalize();
     this.vcupCharge.relocalize();
-    const dialog = $('#quest-dialog');
-    if (dialog.style.display !== 'block' || this.openGossipNpcId === null) return;
-    const npc = this.sim.entities.get(this.openGossipNpcId);
-    if (!npc) {
-      this.closeQuestDialog();
-      return;
-    }
-    if (this.openQuestDetailId && QUESTS[this.openQuestDetailId]) {
-      this.renderQuestDetail(npc, this.openQuestDetailId);
-    } else {
-      this.renderGossip(npc);
-    }
+    this.questDialog.relocalize();
   }
 
   private abilityTooltip(res: ResolvedAbility): string {
@@ -6224,18 +6240,7 @@ export class Hud {
     // chat burst on the fast tier once chat goes quiet.
     if (fastHud) this.chatAnnouncer.flush(now);
 
-    // Fade a talking NPC's voice line by distance as the player walks away, so a
-    // dialogue trails off naturally instead of holding full volume. Per-frame for a
-    // smooth ramp; independent of the dialog window (which closes at 8), so the
-    // voice keeps fading until the clip ends or the player is out of earshot.
-    if (this.voiceNpcId !== null) {
-      if (!voice.isPlaying()) {
-        this.voiceNpcId = null;
-      } else {
-        const vnpc = sim.entities.get(this.voiceNpcId);
-        voice.setDistanceGain(vnpc ? voiceDistanceGain(dist2d(p.pos, vnpc.pos)) : 0);
-      }
-    }
+    this.questDialog.updateVoice();
     this.meters.update();
     this.lockpickController.repaintIfChanged();
     this.tutorial.update(sim, this.renderer, this.keybinds);
@@ -6700,13 +6705,7 @@ export class Hud {
         const npc = sim.entities.get(this.openHeroicVendorNpcId);
         if (!npc || dist2d(p.pos, npc.pos) > 8) this.closeHeroicVendor();
       }
-      // Close the quest/gossip dialog once the player walks out of talking range
-      // (or the NPC is gone), the same way the vendor window auto-closes above. You
-      // open within INTERACT_RANGE (5), so the wider 8 threshold never fires on open.
-      if (this.openGossipNpcId !== null) {
-        const npc = sim.entities.get(this.openGossipNpcId);
-        if (!npc || dist2d(p.pos, npc.pos) > 8) this.closeQuestDialog();
-      }
+      this.questDialog.updateProximity();
     }
 
     // when a bout begins, get the queue panel out of the way for the fight. Route through
@@ -8092,7 +8091,7 @@ export class Hud {
           break;
         case 'questAccepted':
           sfx.playUi('quest_accept', { gain: 1.8 });
-          this.refreshGossip();
+          this.questDialog.refresh();
           break;
         case 'questProgress': {
           const progressText = this.localizeQuestProgressText(ev.questId, ev.text);
@@ -8100,7 +8099,7 @@ export class Hud {
           // The classic yellow top-center flash ("Forest Wolf slain: 3/8"); the
           // log line above stays the durable, announced copy.
           this.questBanner.show(progressText);
-          this.refreshGossip();
+          this.questDialog.refresh();
           break;
         }
         case 'questReady': {
@@ -8111,12 +8110,12 @@ export class Hud {
             }),
           );
           sfx.playUi('quest_ready', { gain: 4.5 });
-          this.refreshGossip();
+          this.questDialog.refresh();
           break;
         }
         case 'questDone':
           sfx.playUi('quest_complete', { gain: 1.8 });
-          this.refreshGossip();
+          this.questDialog.refresh();
           break;
         case 'chat': {
           // OFFLINE ONLY. Online, the server drops an ignored player's public chat
@@ -8282,7 +8281,7 @@ export class Hud {
               voice.play(voiced.state.key, { gain: voicedYellGain(ev.from) });
               // A distinct overheard yell, not a dialogue: do not let the per-frame
               // distance fade attenuate it by a talked-to NPC's position.
-              this.voiceNpcId = null;
+              this.questDialog.clearVoiceSource();
             }
           }
           break;
@@ -9652,374 +9651,15 @@ export class Hud {
   // -------------------------------------------------------------------------
 
   openQuestDialog(npcId: number): void {
-    const npc = this.sim.entities.get(npcId);
-    if (npc?.kind !== 'npc') return;
-    // A banker never gossips: divert to the sim interact, whose banker intercept
-    // emits the bank event this HUD opens on (case 'bank'), identically in both
-    // worlds. Routing through the sim keeps proximity server-authoritative; the
-    // authored greeting stays un-rendered by design (a deliberate QA adjudication).
-    if (NPCS[npc.templateId]?.banker) {
-      this.sim.targetEntity(npc.id);
-      this.sim.interact();
-      return;
-    }
-    // A chronicler never gossips either: route the talk through the sim (the
-    // visited mark + the Saul consecutive-talk counter live there, identically
-    // in both worlds), then open the Book at the Chronicles section
-    // client-side; the authored greeting stays un-rendered like the banker's.
-    if ((CHRONICLER_TEMPLATE_IDS as readonly string[]).includes(npc.templateId)) {
-      this.sim.targetEntity(npc.id);
-      this.sim.interact();
-      this.openDeeds('chronicle');
-      return;
-    }
-    this.questDialogOpenedAtMs = performance.now();
-    if ($('#quest-dialog').style.display !== 'block')
-      this.questDialogTrap = this.focusManager.open({ root: () => $('#quest-dialog') });
-    this.closeOtherWindows('#quest-dialog');
-    // Voice the greeting only on the initial open — renderGossip also runs when
-    // navigating back from a quest detail or after accept/turn-in, where a
-    // re-greeting would be noise.
-    voice.play(`greeting__${npc.templateId}`);
-    this.voiceNpcId = npc.id;
-    this.renderGossip(npc);
+    this.questDialog.open(npcId);
   }
 
-  // closeIfEmpty is set only when re-rendering after an accept/turn-in click:
-  // a fresh NPC visit (or navigating Back) always shows the greeting even with
-  // an empty menu, but once the player has just resolved the one thing the NPC
-  // had to offer (the common case for a tutorial giver with a single starter
-  // quest), an empty menu means there is nothing left to do here and the
-  // window should close itself instead of hanging open with just the greeting.
-  private renderGossip(npc: Entity, closeIfEmpty = false): void {
-    const def = NPCS[npc.templateId];
-    // accepted-but-unfinished quests are tracked in the quest log; the NPC
-    // only offers new quests (at the giver) and turn-ins (at the turn-in NPC)
-    const interesting = npc.questIds.filter((q) => {
-      const st = this.sim.questState(q);
-      return (
-        (st === 'available' && QUESTS[q].giverNpcId === npc.templateId) ||
-        (st === 'ready' && isQuestTurnInNpc(QUESTS[q], npc.templateId))
-      );
-    });
-    const discussionQuests = [...this.sim.questLog.values()]
-      .filter((qp) => qp.state === 'active' && npc.questIds.includes(qp.questId))
-      .filter((qp) =>
-        QUESTS[qp.questId].objectives.some(
-          (objective, objectiveIndex) =>
-            objective.type === 'interact' &&
-            objective.targetNpcId === npc.templateId &&
-            qp.counts[objectiveIndex] < objective.count,
-        ),
-      )
-      .map((qp) => qp.questId);
-    const hasVendor = npc.vendorItems.length > 0;
-    const hasMarket = !!def?.market;
-    const hasHeroicVendor = !!def?.heroicVendor;
-    const hasDelveBoard = Object.values(DELVES).some((d) => d.boardNpcId === npc.templateId);
-    const hasVcup = npc.templateId === 'groundskeeper_bram';
-    if (
-      closeIfEmpty &&
-      gossipMenuIsEmpty({
-        questCount: interesting.length,
-        discussionCount: discussionQuests.length,
-        hasVendor,
-        hasMarket,
-        hasHeroicVendor,
-        hasDelveBoard,
-        hasVcup,
-      })
-    ) {
-      this.closeQuestDialog();
-      return;
-    }
-    this.openGossipNpcId = npc.id;
-    this.openQuestDetailId = null;
-    const el = $('#quest-dialog');
-    markDialogRoot(el, { labelledBy: 'quest-dialog-title' });
-    const npcName = def ? npcDisplayName(npc.templateId) : mobDisplayName(npc.templateId);
-    const npcTitle = def ? npcDisplayTitle(def.id) : '';
-    let html = `<div class="panel-title"><span id="quest-dialog-title">${esc(npcName)}<span class="quest-muted"> &lt;${esc(npcTitle)}&gt;</span></span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.dialog.close'))}">${svgIcon('close')}</button></div>`;
-    html += `<div class="qd-text">"${esc(def ? npcGreeting(def.id, this.sim.cfg.playerClass, this.sim.player.name) : t('questUi.dialog.greetingFallback'))}"</div>`;
-    if (interesting.length > 0) {
-      for (const qid of interesting) {
-        const st = this.sim.questState(qid);
-        const icon =
-          st === 'ready' ? '<span class="gold">?</span> ' : '<span class="gold">!</span> ';
-        const title = questTitle(qid);
-        const aria =
-          st === 'ready'
-            ? t('questUi.dialog.readyQuestAria', { name: title })
-            : t('questUi.dialog.availableQuestAria', { name: title });
-        html += `<button type="button" class="qd-list-item" data-quest="${esc(qid)}" aria-label="${esc(aria)}">${icon}${esc(title)}</button>`;
-      }
-    }
-    if (discussionQuests.length > 0) {
-      for (const qid of discussionQuests) {
-        const title = questTitle(qid);
-        html += `<button type="button" class="qd-list-item" data-discuss="${esc(qid)}" aria-label="${esc(t('questUi.dialog.discussQuestAria', { name: title }))}"><span class="gold">?</span> ${esc(t('questUi.dialog.discussQuest', { name: title }))}</button>`;
-      }
-    }
-    if (hasVendor) {
-      html += `<button type="button" class="qd-list-item" data-vendor="1" aria-label="${esc(t('questUi.dialog.browseGoodsAria', { name: npcName }))}"><span class="quest-complete">$</span> ${esc(t('questUi.dialog.browseGoods'))}</button>`;
-    }
-    if (hasMarket) {
-      html += `<button type="button" class="qd-list-item" data-market="1" aria-label="${esc(t('questUi.dialog.worldMarketAria'))}"><span class="gold">${svgIcon('market')}</span> ${esc(t('questUi.dialog.worldMarket'))}</button>`;
-    }
-    if (hasHeroicVendor) {
-      html += `<button type="button" class="qd-list-item" data-heroic-shop="1" aria-label="${esc(t('questUi.dialog.browseGoodsAria', { name: npcName }))}"><span class="quest-complete">$</span> ${esc(t('questUi.dialog.browseGoods'))}</button>`;
-    }
-    if (hasDelveBoard) {
-      const delveForNpc = Object.values(DELVES).find((d) => d.boardNpcId === npc.templateId);
-      const openLabel = delveForNpc
-        ? delveDisplayName(delveForNpc.id)
-        : t('delveUi.board.openDelve');
-      html += `<button type="button" class="qd-list-item" data-delve-board="1" aria-label="${esc(t('delveUi.board.openDelveAria', { name: npcName }))}"><span class="gold">${svgIcon('skull')}</span> ${esc(openLabel)}</button>`;
-    }
-    // Groundskeeper Bram keeps the book of fixtures at the Sowfield gate: his
-    // gossip menu opens the Vale Cup window (the delve-board button precedent).
-    if (hasVcup) {
-      html += `<button type="button" class="qd-list-item" data-vcup="1" aria-label="${esc(t('hudChrome.vcup.gossipOpenAria'))}"><span class="gold">${svgIcon('ball')}</span> ${esc(t('hudChrome.vcup.gossipOpen'))}</button>`;
-    }
-    el.innerHTML = html;
-    el.querySelectorAll('[data-quest]').forEach((item) => {
-      item.addEventListener('click', () =>
-        this.renderQuestDetail(npc, (item as HTMLElement).dataset.quest ?? ''),
-      );
-    });
-    el.querySelectorAll('[data-discuss]').forEach((item) => {
-      item.addEventListener('click', () => {
-        this.sim.targetEntity(npc.id);
-        this.sim.interact();
-        (item as HTMLButtonElement).disabled = true;
-      });
-    });
-    el.querySelector('[data-vendor]')?.addEventListener('click', () => {
-      this.closeQuestDialog(false);
-      this.openVendor(npc.id);
-    });
-    el.querySelector('[data-heroic-shop]')?.addEventListener('click', () => {
-      this.closeQuestDialog(false);
-      this.openHeroicVendor(npc.id);
-    });
-    el.querySelector('[data-market]')?.addEventListener('click', () => {
-      this.closeQuestDialog(false);
-      this.openMarket();
-    });
-    el.querySelector('[data-delve-board]')?.addEventListener('click', () => {
-      this.closeQuestDialog(false);
-      this.openDelveBoard(npc.id);
-    });
-    el.querySelector('[data-vcup]')?.addEventListener('click', () => {
-      this.closeQuestDialog(false);
-      this.toggleValeCup();
-    });
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.closeQuestDialog());
-    el.style.display = 'block';
-    this.questDialogTrap?.focusFirst();
-  }
-
-  private renderQuestDetail(npc: Entity, questId: string): void {
-    const el = $('#quest-dialog');
-    const quest = QUESTS[questId];
-    this.openQuestDetailId = questId;
-    const state = this.sim.questState(questId);
-    const text = questNarrative(
-      questId,
-      state === 'ready' ? 'completion' : 'text',
-      this.sim.player.name,
-    );
-    voice.play(state === 'ready' ? `quest__${questId}__complete` : `quest__${questId}__offer`);
-    this.voiceNpcId = npc.id;
-    markDialogRoot(el, { labelledBy: 'quest-dialog-title' });
-    let html = `<div class="panel-title"><span id="quest-dialog-title">${esc(questTitle(questId))}${this.questSuggestedPlayersHtml(quest.suggestedPlayers)}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.dialog.close'))}">${svgIcon('close')}</button></div>`;
-    if (state === 'available' && quest.minLevel) {
-      html += `<div class="qd-req">${esc(t('questUi.detail.requiresLevel', { level: this.questNumber(quest.minLevel) }))}</div>`;
-    }
-    html += `<div class="qd-text">${esc(text)}</div>`;
-    if (state !== 'ready') {
-      const qp = this.sim.questLog.get(questId);
-      html += `<div class="qd-sub">${esc(t('questUi.detail.objectives'))}</div>`;
-      html += quest.objectives
-        .map(
-          (o, i) =>
-            `<div class="qd-obj">${esc(this.questProgressText(questObjectiveLabel(questId, i), qp ? Math.min(qp.counts[i], o.count) : 0, o.count))}</div>`,
-        )
-        .join('');
-    }
-    html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div>`;
-    html += `<div class="qd-obj">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(quest.xpReward) }))} &nbsp; ${this.moneyHtml(quest.copperReward)}</div>`;
-    const rewardItem = questRewardItem(quest, this.sim.cfg.playerClass);
-    if (rewardItem) {
-      const item = ITEMS[rewardItem];
-      html += `<div class="qd-reward-row" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span>${this.itemIcon(item)}<span class="qd-reward-name" style="color:${QUALITY_COLOR[item.quality ?? 'common'] ?? '#fff'}">${esc(itemDisplayName(item))}</span></div>`;
-    }
-    el.innerHTML = html;
-    const rewardRow = el.querySelector('[data-reward]') as HTMLElement | null;
-    if (rewardRow && rewardItem)
-      this.attachTooltip(rewardRow, () => this.itemTooltip(ITEMS[rewardItem]));
-
-    if (state === 'available') {
-      const btn = document.createElement('button');
-      btn.className = 'btn';
-      btn.type = 'button';
-      btn.textContent = t('questUi.dialog.accept');
-      btn.addEventListener('click', () => {
-        this.sim.acceptQuest(questId);
-        this.sim.reportTelemetry('quest_accept', {
-          timeMs: performance.now() - this.questDialogOpenedAtMs,
-        });
-        this.renderGossip(npc, true);
-      });
-      el.appendChild(btn);
-    } else if (state === 'ready') {
-      const btn = document.createElement('button');
-      btn.className = 'btn';
-      btn.type = 'button';
-      btn.textContent = t('questUi.dialog.completeQuest');
-      btn.addEventListener('click', () => {
-        this.sim.turnInQuest(questId);
-        this.sim.reportTelemetry('quest_turnin', {
-          timeMs: performance.now() - this.questDialogOpenedAtMs,
-        });
-        this.renderGossip(npc, true);
-      });
-      el.appendChild(btn);
-    }
-    const back = document.createElement('button');
-    back.className = 'btn';
-    back.type = 'button';
-    back.textContent = t('questUi.dialog.back');
-    back.addEventListener('click', () => this.renderGossip(npc));
-    el.appendChild(back);
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.closeQuestDialog());
-    el.style.display = 'block';
-    this.questDialogTrap?.focusFirst();
-  }
-
-  // Open the read-only quest detail for a chat-link click. Shows Accept only when the
-  // viewer is in the link author's party AND the quest is available; the server
-  // re-validates on accept. Non-party / ineligible viewers see view-only info.
   openLinkedQuestDialog(questId: string, fromPid?: number): void {
-    const quest = QUESTS[questId];
-    if (!quest) return;
-    this.openGossipNpcId = null;
-    if ($('#quest-dialog').style.display !== 'block')
-      this.questDialogTrap = this.focusManager.open({ root: () => $('#quest-dialog') });
-    this.closeOtherWindows('#quest-dialog');
-    const el = $('#quest-dialog');
-    const state = this.sim.questState(questId);
-    const inSharerParty =
-      fromPid !== undefined &&
-      (this.sim.partyInfo?.members.some((m) => m.pid === fromPid) ?? false);
-    markDialogRoot(el, { labelledBy: 'quest-dialog-title' });
-    let html = `<div class="panel-title"><span id="quest-dialog-title">${esc(questTitle(questId))}${this.questSuggestedPlayersHtml(quest.suggestedPlayers)} <span class="quest-muted">&lt;${esc(t('hudChrome.questShare.dialogTitle'))}&gt;</span></span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.dialog.close'))}">${svgIcon('close')}</button></div>`;
-    if (quest.minLevel)
-      html += `<div class="qd-req">${esc(t('questUi.detail.requiresLevel', { level: this.questNumber(quest.minLevel) }))}</div>`;
-    html += `<div class="qd-text">${esc(questNarrative(questId, 'text', this.sim.player.name))}</div>`;
-    html += `<div class="qd-sub">${esc(t('questUi.detail.objectives'))}</div>`;
-    html += quest.objectives
-      .map(
-        (o, i) =>
-          `<div class="qd-obj">${esc(this.questProgressText(questObjectiveLabel(questId, i), 0, o.count))}</div>`,
-      )
-      .join('');
-    html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div>`;
-    html += `<div class="qd-obj">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(quest.xpReward) }))} &nbsp; ${this.moneyHtml(quest.copperReward)}</div>`;
-    const rewardItem = questRewardItem(quest, this.sim.cfg.playerClass);
-    if (rewardItem) {
-      const item = ITEMS[rewardItem];
-      html += `<div class="qd-reward-row" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span>${this.itemIcon(item)}<span class="qd-reward-name" style="color:${QUALITY_COLOR[item.quality ?? 'common'] ?? '#fff'}">${esc(itemDisplayName(item))}</span></div>`;
-    }
-    el.innerHTML = html;
-    const rewardRow = el.querySelector('[data-reward]') as HTMLElement | null;
-    if (rewardRow && rewardItem)
-      this.attachTooltip(rewardRow, () => this.itemTooltip(ITEMS[rewardItem]));
-    if (inSharerParty && state === 'available') {
-      const btn = document.createElement('button');
-      btn.className = 'btn';
-      btn.type = 'button';
-      btn.textContent = t('questUi.dialog.accept');
-      btn.addEventListener('click', () => {
-        if (fromPid === undefined) return;
-        this.sim.acceptLinkedQuest(questId, fromPid);
-        this.closeQuestDialog();
-      });
-      el.appendChild(btn);
-    } else {
-      // View-only: explain why no Accept. Non-party -> join hint; in-party but
-      // ineligible -> the reason (already on it / done / requirements unmet).
-      const hint = document.createElement('div');
-      hint.className = 'qd-req';
-      hint.textContent = !inSharerParty
-        ? t('hudChrome.questShare.viewOnlyHint')
-        : state === 'done'
-          ? t('hudChrome.questShare.alreadyDone')
-          : state === 'active' || state === 'ready'
-            ? t('hudChrome.questShare.alreadyOn')
-            : t('hudChrome.questShare.ineligible');
-      el.appendChild(hint);
-    }
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.closeQuestDialog());
-    el.style.display = 'block';
-    this.questDialogTrap?.focusFirst();
-  }
-
-  private renderQuestDiscussion(npc: Entity, questId: string, page: number): void {
-    const el = $('#quest-dialog');
-    const pages = [
-      questNarrative(questId, 'text', this.sim.player.name),
-      questNarrative(questId, 'completion', this.sim.player.name),
-    ];
-    const clampedPage = Math.max(0, Math.min(page, pages.length - 1));
-    markDialogRoot(el, { labelledBy: 'quest-dialog-title' });
-    el.innerHTML =
-      `<div class="panel-title"><span id="quest-dialog-title">${esc(questTitle(questId))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.dialog.close'))}">${svgIcon('close')}</button></div>` +
-      `<div class="qd-text">${esc(pages[clampedPage])}</div>`;
-    const action = document.createElement('button');
-    action.className = 'btn';
-    action.type = 'button';
-    if (clampedPage < pages.length - 1) {
-      action.textContent = t('questUi.dialog.continue');
-      action.addEventListener('click', () =>
-        this.renderQuestDiscussion(npc, questId, clampedPage + 1),
-      );
-    } else {
-      action.textContent = t('questUi.dialog.done');
-      action.addEventListener('click', () => {
-        this.sim.targetEntity(npc.id);
-        this.sim.interact();
-        this.renderGossip(npc);
-      });
-    }
-    el.appendChild(action);
-    const back = document.createElement('button');
-    back.className = 'btn';
-    back.type = 'button';
-    back.textContent = t('questUi.dialog.back');
-    back.addEventListener('click', () => this.renderGossip(npc));
-    el.appendChild(back);
-    el.querySelector('[data-close]')?.addEventListener('click', () => this.closeQuestDialog());
-    el.style.display = 'block';
-    this.questDialogTrap?.focusFirst();
+    this.questDialog.openLinked(questId, fromPid);
   }
 
   closeQuestDialog(restoreFocus = true): void {
-    $('#quest-dialog').style.display = 'none';
-    this.openGossipNpcId = null;
-    this.openQuestDetailId = null;
-    this.hideTooltip();
-    this.questDialogTrap?.release(restoreFocus);
-    this.questDialogTrap = null;
-  }
-
-  // Re-render the open gossip dialog after quest state changes so completed
-  // quests can never be accepted again from a stale dialog.
-  private refreshGossip(): void {
-    if (this.openGossipNpcId === null || $('#quest-dialog').style.display !== 'block') return;
-    const npc = this.sim.entities.get(this.openGossipNpcId);
-    if (npc) this.renderGossip(npc);
-    else this.closeQuestDialog();
+    this.questDialog.close(restoreFocus);
   }
 
   // -------------------------------------------------------------------------

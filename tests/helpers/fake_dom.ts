@@ -146,6 +146,10 @@ export class FakeElement extends EventTarget {
     return this.attributes.get(name) ?? null;
   }
 
+  removeAttribute(name: string): void {
+    this.attributes.delete(name);
+  }
+
   querySelectorAll<T extends Element = Element>(selector: string): T[] {
     const className = selector.startsWith('.') ? selector.slice(1) : null;
     const matches: FakeElement[] = [];
