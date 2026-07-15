@@ -1614,6 +1614,33 @@ export const ru_RU: EnTranslations = {
       "unlock": "Переместить рамку игрока",
       "lock": "Закрепить рамку игрока"
     },
+    "partyFrames": {
+      "section": "Рамки группы и рейда",
+      "unlock": "Переместить рамки группы и рейда",
+      "lock": "Закрепить рамки группы и рейда",
+      "style": "Стиль рамок",
+      "styleAutomatic": "Автоматически",
+      "styleClassic": "Классические рамки группы",
+      "styleRaid": "Рамки рейда",
+      "scale": "Масштаб рамок",
+      "width": "Ширина рамок",
+      "height": "Высота рамок",
+      "spacing": "Интервал между рамками",
+      "columns": "Столбцы рейда",
+      "healthText": "Текст здоровья",
+      "healthNone": "None",
+      "healthPercent": "Проценты",
+      "healthCurrent": "Текущее",
+      "healthCurrentMax": "Текущее / Максимум",
+      "sort": "Сортировка игроков",
+      "sortGroup": "Группа",
+      "sortRole": "Role",
+      "sortName": "Name",
+      "showResource": "Показывать ману, ярость и энергию",
+      "showAbsorbs": "Показывать щиты поглощения",
+      "showAuras": "Показывать усиления и ослабления",
+      "showSelf": "Показывать вашу рамку"
+    },
     "frameReset": {
       "label": "Сбросить положение рамок"
     },

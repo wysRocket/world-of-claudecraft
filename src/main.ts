@@ -1557,6 +1557,17 @@ async function startGame(
       if (!v) hud.cancelGroundAim();
       return;
     }
+    if (
+      key === 'partyFrameShowResource' ||
+      key === 'partyFrameShowAbsorbs' ||
+      key === 'partyFrameShowAuras' ||
+      key === 'partyFrameShowSelf'
+    ) {
+      // Read live by Hud.updatePartyFrames (its config is rebuilt from settings each
+      // sync); persisting the choice is the only page-level work needed.
+      settings.set(key, !!value);
+      return;
+    }
     if (key === 'attackMove') {
       const v = settings.set('attackMove', !!value);
       if (!v) input.clearClickMove();
@@ -1748,6 +1759,27 @@ async function startGame(
         break;
       case 'targetFrameScale':
         document.documentElement.style.setProperty('--target-frame-scale', String(v));
+        break;
+      case 'partyFrameScale':
+        document.documentElement.style.setProperty('--party-frame-scale', String(v));
+        break;
+      case 'partyFrameWidth':
+        document.documentElement.style.setProperty('--party-frame-width', `${v}px`);
+        break;
+      case 'partyFrameHeight':
+        document.documentElement.style.setProperty('--party-frame-height', `${v}px`);
+        break;
+      case 'partyFrameSpacing':
+        document.documentElement.style.setProperty('--party-frame-spacing', `${v}px`);
+        break;
+      case 'partyFrameColumns':
+        document.documentElement.style.setProperty('--party-frame-columns', String(Math.round(v)));
+        break;
+      case 'partyFrameHealthText':
+      case 'partyFrameSort':
+      case 'partyFrameStyle':
+        // Read live by Hud.updatePartyFrames; persistence above is the only
+        // page-level work needed.
         break;
       case 'aurasOnPlayerFrame':
         hud.setAurasOnPlayerFrame(!!v);

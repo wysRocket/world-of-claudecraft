@@ -1614,6 +1614,33 @@ export const zh_CN: EnTranslations = {
       "unlock": "移动玩家框",
       "lock": "锁定玩家框"
     },
+    "partyFrames": {
+      "section": "队伍和团队框体",
+      "unlock": "移动队伍和团队框体",
+      "lock": "锁定队伍和团队框体",
+      "style": "框体样式",
+      "styleAutomatic": "自动",
+      "styleClassic": "经典队伍框体",
+      "styleRaid": "团队框体",
+      "scale": "框体缩放",
+      "width": "框体宽度",
+      "height": "框体高度",
+      "spacing": "框体间距",
+      "columns": "团队列数",
+      "healthText": "生命值文字",
+      "healthNone": "None",
+      "healthPercent": "百分比",
+      "healthCurrent": "当前值",
+      "healthCurrentMax": "当前 / 最大",
+      "sort": "玩家排序",
+      "sortGroup": "小队",
+      "sortRole": "Role",
+      "sortName": "Name",
+      "showResource": "显示法力、怒气和能量",
+      "showAbsorbs": "显示吸收护盾",
+      "showAuras": "显示增益和减益",
+      "showSelf": "显示你的框体"
+    },
     "frameReset": {
       "label": "重置框体位置"
     },

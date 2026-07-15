@@ -1614,6 +1614,33 @@ export const ko_KR: EnTranslations = {
       "unlock": "플레이어 프레임 이동",
       "lock": "플레이어 프레임 고정"
     },
+    "partyFrames": {
+      "section": "파티 및 공격대 프레임",
+      "unlock": "파티 및 공격대 프레임 이동",
+      "lock": "파티 및 공격대 프레임 고정",
+      "style": "프레임 스타일",
+      "styleAutomatic": "자동",
+      "styleClassic": "클래식 파티 프레임",
+      "styleRaid": "공격대 프레임",
+      "scale": "프레임 배율",
+      "width": "프레임 너비",
+      "height": "프레임 높이",
+      "spacing": "프레임 간격",
+      "columns": "공격대 열 수",
+      "healthText": "생명력 텍스트",
+      "healthNone": "None",
+      "healthPercent": "백분율",
+      "healthCurrent": "현재 값",
+      "healthCurrentMax": "현재 / 최대",
+      "sort": "플레이어 정렬",
+      "sortGroup": "그룹",
+      "sortRole": "Role",
+      "sortName": "Name",
+      "showResource": "마나, 분노, 에너지 표시",
+      "showAbsorbs": "흡수 보호막 표시",
+      "showAuras": "버프 및 디버프 표시",
+      "showSelf": "내 프레임 표시"
+    },
     "frameReset": {
       "label": "프레임 위치 초기화"
     },

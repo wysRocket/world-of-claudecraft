@@ -1614,6 +1614,33 @@ export const zh_TW: EnTranslations = {
       "unlock": "移動玩家框",
       "lock": "鎖定玩家框"
     },
+    "partyFrames": {
+      "section": "隊伍和團隊框體",
+      "unlock": "移動隊伍和團隊框體",
+      "lock": "鎖定隊伍和團隊框體",
+      "style": "框體樣式",
+      "styleAutomatic": "自動",
+      "styleClassic": "經典隊伍框體",
+      "styleRaid": "團隊框體",
+      "scale": "框體縮放",
+      "width": "框體寬度",
+      "height": "框體高度",
+      "spacing": "框體間距",
+      "columns": "團隊欄數",
+      "healthText": "生命值文字",
+      "healthNone": "None",
+      "healthPercent": "百分比",
+      "healthCurrent": "目前值",
+      "healthCurrentMax": "目前 / 最大",
+      "sort": "玩家排序",
+      "sortGroup": "小隊",
+      "sortRole": "Role",
+      "sortName": "Name",
+      "showResource": "顯示法力、怒氣和能量",
+      "showAbsorbs": "顯示吸收護盾",
+      "showAuras": "顯示增益和減益",
+      "showSelf": "顯示你的框體"
+    },
     "frameReset": {
       "label": "重置框體位置"
     },

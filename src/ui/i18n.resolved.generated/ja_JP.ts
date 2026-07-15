@@ -1614,6 +1614,33 @@ export const ja_JP: EnTranslations = {
       "unlock": "プレイヤーフレームを移動",
       "lock": "プレイヤーフレームを固定"
     },
+    "partyFrames": {
+      "section": "パーティ・レイドフレーム",
+      "unlock": "パーティ・レイドフレームを移動",
+      "lock": "パーティ・レイドフレームを固定",
+      "style": "フレームスタイル",
+      "styleAutomatic": "自動",
+      "styleClassic": "クラシックパーティフレーム",
+      "styleRaid": "レイドフレーム",
+      "scale": "フレームスケール",
+      "width": "フレームの幅",
+      "height": "フレームの高さ",
+      "spacing": "フレームの間隔",
+      "columns": "レイドの列数",
+      "healthText": "体力テキスト",
+      "healthNone": "None",
+      "healthPercent": "パーセント",
+      "healthCurrent": "現在値",
+      "healthCurrentMax": "現在値 / 最大値",
+      "sort": "プレイヤーの並び順",
+      "sortGroup": "グループ",
+      "sortRole": "Role",
+      "sortName": "Name",
+      "showResource": "マナ・怒り・エネルギーを表示",
+      "showAbsorbs": "吸収シールドを表示",
+      "showAuras": "バフとデバフを表示",
+      "showSelf": "自分のフレームを表示"
+    },
     "frameReset": {
       "label": "フレーム位置をリセット"
     },

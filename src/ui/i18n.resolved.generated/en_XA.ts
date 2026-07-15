@@ -1614,6 +1614,33 @@ export const en_XA: EnTranslations = {
       "unlock": "[Ɱóʋé þļáýéŕ ƒŕáɱé]",
       "lock": "[Ļóçķ þļáýéŕ ƒŕáɱé]"
     },
+    "partyFrames": {
+      "section": "[Þáŕţý áñð Ŕáíð Ƒŕáɱéš]",
+      "unlock": "[Ɱóʋé þáŕţý áñð ŕáíð ƒŕáɱéš]",
+      "lock": "[Ļóçķ þáŕţý áñð ŕáíð ƒŕáɱéš]",
+      "style": "[Ƒŕáɱé Šţýļé]",
+      "styleAutomatic": "[Áúţóɱáţíç]",
+      "styleClassic": "[Çļáššíç Þáŕţý Ƒŕáɱéš]",
+      "styleRaid": "[Ŕáíð Ƒŕáɱéš]",
+      "scale": "[Ƒŕáɱé Šçáļé]",
+      "width": "[Ƒŕáɱé Ŵíðţĥ]",
+      "height": "[Ƒŕáɱé Ĥéíĝĥţ]",
+      "spacing": "[Ƒŕáɱé Šþáçíñĝ]",
+      "columns": "[Ŕáíð Çóļúɱñš]",
+      "healthText": "[Ĥéáļţĥ Ţéẋţ]",
+      "healthNone": "[Ñóñé]",
+      "healthPercent": "[Þéŕçéñţ]",
+      "healthCurrent": "[Çúŕŕéñţ]",
+      "healthCurrentMax": "[Çúŕŕéñţ / Ɱáẋ]",
+      "sort": "[Šóŕţ Þļáýéŕš]",
+      "sortGroup": "[Ĝŕóúþ]",
+      "sortRole": "[Ŕóļé]",
+      "sortName": "[Ñáɱé]",
+      "showResource": "[Šĥóŵ Ɱáñá, Ŕáĝé, áñð Éñéŕĝý]",
+      "showAbsorbs": "[Šĥóŵ Áƀšóŕƀ Šĥíéļðš]",
+      "showAuras": "[Šĥóŵ Ɓúƒƒš áñð Ðéƀúƒƒš]",
+      "showSelf": "[Šĥóŵ Ýóúŕ Ƒŕáɱé]"
+    },
     "frameReset": {
       "label": "[Ŕéšéţ Ƒŕáɱé Þóšíţíóñš]"
     },
