@@ -10,10 +10,10 @@ import { discordInviteUrl } from './discord_status';
 import { FocusManager, type FocusTrapHandle } from './focus_manager';
 import { formatDateTime, t } from './i18n';
 import {
+  type NewsReleaseEntry,
   newsEmptyHtml,
   newsErrorHtml,
   newsLoadingHtml,
-  type NewsReleaseEntry,
   renderWelcomeNews,
 } from './news_feed';
 import { mountStorePromoCard, type StorePromoCardController } from './store_promo_card';
@@ -24,7 +24,6 @@ import {
   nextLastSeenReleaseId,
   setArmoryOpenIntent,
   type WelcomeChestInput,
-  type WelcomeConnectionInput,
   type WelcomeDiscordInput,
   type WelcomeNewsInput,
   type WelcomePlatformInput,

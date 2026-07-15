@@ -138,6 +138,22 @@ describe('welcome_screen_view: NEW-badge marker logic', () => {
     expect(nextLastSeenReleaseId(releases, 10)).toBe(10);
     expect(nextLastSeenReleaseId([], 3)).toBe(3);
   });
+
+  it('preserves extra fields on a superset type (e.g. the full release body/url/prerelease shape the Welcome Screen painter renders from), not just the minimal WelcomeReleaseSummary shape', () => {
+    const fullReleases = releases.map((r) => ({
+      ...r,
+      body: `body for ${r.tag}`,
+      url: `https://example.com/${r.tag}`,
+      prerelease: false,
+    }));
+    const marked = markNewReleases(fullReleases, 4);
+    expect(marked.find((r) => r.id === 5)).toMatchObject({
+      body: 'body for v0.26.0',
+      url: 'https://example.com/v0.26.0',
+      prerelease: false,
+      isNew: true,
+    });
+  });
 });
 
 describe('welcome_screen_view: one-shot Armory-open intent', () => {

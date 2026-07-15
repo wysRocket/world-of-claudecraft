@@ -908,9 +908,7 @@ describe('client HTML shell', () => {
     // DEFAULT_DISCORD_INVITE_URL in discord_status.ts), and the Ko-fi page,
     // pinned to the shells' URLs.
     expect(mainTs).toContain("const DONATE_URL = 'https://ko-fi.com/worldofclaudecraft';");
-    expect(mainTs).toContain(
-      "window.open(discordInviteUrl(), '_blank', 'noopener,noreferrer');",
-    );
+    expect(mainTs).toContain("window.open(discordInviteUrl(), '_blank', 'noopener,noreferrer');");
     expect(mainTs).toContain(
       "onDonate: () => window.open(DONATE_URL, '_blank', 'noopener,noreferrer'),",
     );

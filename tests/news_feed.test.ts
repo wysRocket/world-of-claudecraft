@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { loadNewsInto, type NewsReleaseEntry, renderReleaseBody } from '../src/ui/news_feed';
+import {
+  loadNewsInto,
+  type NewsReleaseEntry,
+  renderReleaseArticle,
+  renderReleaseBody,
+  renderWelcomeNews,
+} from '../src/ui/news_feed';
 
 describe('renderReleaseBody', () => {
   it('escapes raw HTML in the source markdown', () => {
@@ -66,5 +72,94 @@ describe('loadNewsInto', () => {
 
   it('is a no-op with a null host', async () => {
     await expect(loadNewsInto(null, async () => [])).resolves.toBeUndefined();
+  });
+});
+
+describe('renderReleaseArticle: NEW badge', () => {
+  const release: NewsReleaseEntry = {
+    id: 1,
+    tag: 'v1.0.0',
+    name: 'v1.0.0',
+    body: 'notes',
+    url: 'https://example.com/releases/1',
+    prerelease: false,
+    publishedAt: '2026-01-01T00:00:00Z',
+  };
+
+  it('omits the NEW badge by default', () => {
+    expect(renderReleaseArticle(release)).not.toContain('news-badge');
+  });
+
+  it('renders the NEW badge when isNew is true', () => {
+    const html = renderReleaseArticle(release, { isNew: true });
+    expect(html).toContain('news-badge');
+  });
+
+  it('does not render the NEW badge when isNew is explicitly false', () => {
+    expect(renderReleaseArticle(release, { isNew: false })).not.toContain('news-badge');
+  });
+});
+
+describe('renderWelcomeNews: the Welcome Screen compact news column', () => {
+  const releases = (n: number): (NewsReleaseEntry & { isNew: boolean })[] =>
+    Array.from({ length: n }, (_, i) => ({
+      id: n - i,
+      tag: `v${n - i}.0.0`,
+      name: `v${n - i}.0.0`,
+      body: `notes for ${n - i}`,
+      url: `https://example.com/releases/${n - i}`,
+      prerelease: false,
+      publishedAt: '2026-01-01T00:00:00Z',
+      isNew: i === 0,
+    }));
+
+  it('renders the empty state when there are no releases', () => {
+    expect(renderWelcomeNews([], 'https://example.com/releases')).toContain('news-empty');
+  });
+
+  it('renders the latest release fully expanded (a news-item article) with its NEW badge', () => {
+    const html = renderWelcomeNews(releases(1), 'https://example.com/releases');
+    expect(html).toContain('news-item');
+    expect(html).toContain('notes for 1');
+    expect(html).toContain('news-badge');
+  });
+
+  it('collapses every OLDER release to a version + date <details> row that expands in place', () => {
+    const html = renderWelcomeNews(releases(3), 'https://example.com/releases');
+    // The latest is a full article, not a collapsed row.
+    expect(html).toContain('news-item');
+    // The two older releases are native <details> disclosures (expand in place,
+    // no JS wiring needed): one per older release.
+    expect((html.match(/<details class="ws-news-collapsed">/g) ?? []).length).toBe(2);
+    expect(html).toContain('v2.0.0');
+    expect(html).toContain('v1.0.0');
+    // Each collapsed row still carries its rendered body, just inside the
+    // native disclosure rather than expanded up front.
+    expect(html).toContain('notes for 2');
+    expect(html).toContain('notes for 1');
+  });
+
+  it('marks every NEW release, not only the expanded latest: a collapsed row for an older release also carries the badge when it is new too', () => {
+    const all = releases(3).map((r) => ({ ...r, isNew: true }));
+    const html = renderWelcomeNews(all, 'https://example.com/releases');
+    expect((html.match(/news-badge/g) ?? []).length).toBe(3);
+  });
+
+  it('a not-new older release renders its collapsed row without a badge', () => {
+    const html = renderWelcomeNews(releases(3), 'https://example.com/releases');
+    // releases(3) marks only index 0 (the latest, v3) as new; v2/v1 are not.
+    expect((html.match(/news-badge/g) ?? []).length).toBe(1);
+  });
+
+  it('appends a "View all updates on GitHub" link at the bottom, pointed at the given URL', () => {
+    const html = renderWelcomeNews(releases(2), 'https://github.com/example/repo/releases');
+    expect(html).toContain('ws-news-view-all');
+    expect(html).toContain('href="https://github.com/example/repo/releases"');
+    expect(html.indexOf('ws-news-view-all')).toBeGreaterThan(html.indexOf('ws-news-collapsed'));
+  });
+
+  it('escapes the URL passed for the view-all link', () => {
+    const html = renderWelcomeNews(releases(1), 'https://example.com/"><script>x</script>');
+    expect(html).not.toContain('<script>x</script>');
   });
 });

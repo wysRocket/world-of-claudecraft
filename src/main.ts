@@ -3189,7 +3189,16 @@ async function startOffline(
   if (welcomeRoot) {
     await new Promise<void>((resolve) => {
       welcomeScreen = mountWelcomeScreen(welcomeRoot, {
-        platform: { nativeApp: false, desktopApp: false, mobileTouch: false, offline: true },
+        // offline: true already forces every store/chest/discord-desktop tile off in the
+        // gating matrix regardless of platform, but mobileTouch/nativeApp still drive the
+        // touch-vs-keyboard Continue hint ("Tap to continue"), so derive them for real
+        // instead of hardcoding false (the online mount below does the same).
+        platform: {
+          nativeApp: NATIVE_APP,
+          desktopApp: DESKTOP_APP,
+          mobileTouch: document.body.classList.contains('mobile-touch'),
+          offline: true,
+        },
         fetchReleases: () => api.releases(20),
         fetchArmoryPromoEnabled: () => Promise.resolve(false),
         fetchDiscord: () =>
