@@ -15,7 +15,7 @@ describe('Talents V2 icon routing', () => {
     return option;
   };
 
-  const spec = (cls: 'warrior' | 'mage', specId?: string): SpecDef => {
+  const spec = (cls: 'warrior' | 'mage' | 'rogue', specId?: string): SpecDef => {
     const talents = talentsFor(cls);
     const found = specId
       ? talents?.specs.find((candidate) => candidate.id === specId)
@@ -53,20 +53,29 @@ describe('Talents V2 icon routing', () => {
     });
   });
 
+  it('uses the authored Mage spec panel art for all three mage specs', () => {
+    for (const id of ['arcane', 'fire', 'frost']) {
+      expect(talentSpecIconRef(spec('mage', id))).toEqual({
+        kind: 'image',
+        url: `/ui/specs/mage/${id}.png`,
+      });
+    }
+  });
+
   it('falls back to a procedural signature icon for classes without authored spec art', () => {
-    const mage = spec('mage');
-    expect(talentSpecIconRef(mage)).toEqual({ kind: 'ability', id: mage.signature });
+    const rogue = spec('rogue');
+    expect(talentSpecIconRef(rogue)).toEqual({ kind: 'ability', id: rogue.signature });
   });
 
   it('keeps the spec glyph as the final fallback when the signature is unknown', () => {
     const fallbackSpec = {
-      ...spec('mage'),
+      ...spec('rogue'),
       signature: 'missing_signature',
-      icon: 'M',
+      icon: 'R',
     } satisfies SpecDef;
     expect(talentSpecIconRef(fallbackSpec)).toEqual<TalentSpecIconRef>({
       kind: 'text',
-      text: 'M',
+      text: 'R',
     });
   });
 });

@@ -30,6 +30,7 @@ const TALENT_STAT_CREST: Record<string, string> = {
 };
 
 const WARRIOR_SPEC_ART = new Set(['arms', 'fury', 'prot']);
+const MAGE_SPEC_ART = new Set(['arcane', 'fire', 'frost']);
 
 export function talentEffectIconRef(effect: TalentEffect | undefined): TalentIconRef {
   const chargeMod = effect?.ability?.find((mod) => mod.ability === 'charge');
@@ -81,6 +82,9 @@ export function talentRowOptionIconRef(option: TalentRowOption): TalentIconRef {
 export function talentSpecIconRef(spec: SpecDef): TalentSpecIconRef {
   if (spec.class === 'warrior' && WARRIOR_SPEC_ART.has(spec.id)) {
     return { kind: 'image', url: `/ui/specs/warrior/${spec.id}.webp` };
+  }
+  if (spec.class === 'mage' && MAGE_SPEC_ART.has(spec.id)) {
+    return { kind: 'image', url: `/ui/specs/mage/${spec.id}.png` };
   }
   if (ABILITIES[spec.signature]) return { kind: 'ability', id: spec.signature };
   return { kind: 'text', text: spec.icon };
