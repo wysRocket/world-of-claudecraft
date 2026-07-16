@@ -4244,7 +4244,7 @@ export class Hud {
         ({
           balance: null,
           skus: [],
-          nativeRails: { sol: false, woc: false },
+          nativeRails: { sol: false, usdc: false, woc: false },
         } satisfies ClaudiumSnapshot);
       this.setClaudiumLauncherBalance(snapshot.balance);
       return snapshot;

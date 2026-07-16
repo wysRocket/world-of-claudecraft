@@ -1919,7 +1919,7 @@ async function startGame(
     const nativePriceCache = new Map<string, { amountBase: string; atMs: number }>();
     const nativePriceCacheTtlMs = 60_000;
     const nativeAmountBase = (
-      rail: 'sol' | 'woc',
+      rail: 'sol' | 'usdc' | 'woc',
       sku: string,
       amountBase: string | null | undefined,
     ): string | null => {
@@ -1955,21 +1955,24 @@ async function startGame(
         const { balance, skus, nativeRails } = pack;
         const wallet = await loadWallet();
         const walletAddress = wallet.currentWallet().address;
-        const [solBalance, wocBalance] = walletAddress
+        const [solBalance, usdcBalance, wocBalance] = walletAddress
           ? await Promise.all([
               economy.solBalance(walletAddress),
+              economy.usdcBalance(walletAddress),
               wallet.fetchWocBalance(walletAddress, true),
             ])
-          : [{ lamports: null }, null];
+          : [{ lamports: null }, { amountBase: null }, null];
         const nativePrices = await Promise.all(
           skus.map(async (row) => {
-            const [sol, woc] = await Promise.all([
+            const [sol, usdc, woc] = await Promise.all([
               nativeRails.sol ? economy.nativePrice('sol', row.sku) : null,
+              nativeRails.usdc ? economy.nativePrice('usdc', row.sku) : null,
               nativeRails.woc ? economy.nativePrice('woc', row.sku) : null,
             ]);
             return {
               sku: row.sku,
               solAmountBase: nativeAmountBase('sol', row.sku, sol?.amountBase),
+              usdcAmountBase: nativeAmountBase('usdc', row.sku, usdc?.amountBase),
               wocAmountBase: nativeAmountBase('woc', row.sku, woc?.amountBase),
             };
           }),
@@ -1981,6 +1984,7 @@ async function startGame(
           nativeRails,
           walletBalances: {
             solLamports: solBalance.lamports,
+            usdcBaseUnits: usdcBalance.amountBase,
             wocBaseUnits: wocBalanceBaseUnits(wocBalance),
           },
           nativePrices,
