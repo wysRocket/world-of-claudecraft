@@ -614,11 +614,15 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
   // markup already used in this file (4x sellValue, travelers_knapsack's
   // exact ratio, with linen_pouch and spring_water close by at 4.17x), not
   // a new balance number.
+  // Crafting materials are common (white): they are reagents, not vendor trash, so
+  // they must never fall into the junk sweep (sellAllJunk in src/sim/items.ts vendors
+  // every quality 'poor' item). Their tier is read from sellValue/buyValue, not the
+  // rarity color. Enforced by tests/crafting_materials_quality.test.ts.
   thorium_ore: {
     id: 'thorium_ore',
     name: 'Thorium Ore',
     kind: 'junk',
-    quality: 'rare',
+    quality: 'common',
     sellValue: 15,
     buyValue: 60,
   },
@@ -626,7 +630,7 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     id: 'arcanite_bar',
     name: 'Arcanite Bar',
     kind: 'junk',
-    quality: 'epic',
+    quality: 'common',
     sellValue: 40,
     buyValue: 160,
   },
@@ -634,7 +638,7 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     id: 'ashwood_log',
     name: 'Ashwood Log',
     kind: 'junk',
-    quality: 'rare',
+    quality: 'common',
     sellValue: 15,
     buyValue: 60,
   },
@@ -642,7 +646,7 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     id: 'elderwood_log',
     name: 'Elderwood Log',
     kind: 'junk',
-    quality: 'epic',
+    quality: 'common',
     sellValue: 40,
     buyValue: 160,
   },
@@ -650,7 +654,7 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     id: 'goldleaf_herb',
     name: 'Goldleaf Herb',
     kind: 'junk',
-    quality: 'rare',
+    quality: 'common',
     sellValue: 15,
     buyValue: 60,
   },
@@ -658,7 +662,7 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     id: 'sunpetal_herb',
     name: 'Sunpetal Herb',
     kind: 'junk',
-    quality: 'epic',
+    quality: 'common',
     sellValue: 40,
     buyValue: 160,
   },
@@ -1396,34 +1400,41 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     quality: 'poor',
     sellValue: 5,
   },
+  // These three are crafting reagents (COMMON_RECIPES), so they are common (white),
+  // NOT quality 'poor', or the junk sweep (sellAllJunk in src/sim/items.ts) would
+  // vendor them. See the enchanting materials note below and
+  // tests/crafting_materials_quality.test.ts.
   spider_leg: {
     id: 'spider_leg',
     name: 'Twitching Spider Leg',
     kind: 'junk',
-    quality: 'poor',
+    quality: 'common',
     sellValue: 4,
   },
   bone_fragments: {
     id: 'bone_fragments',
     name: 'Bone Fragments',
     kind: 'junk',
-    quality: 'poor',
+    quality: 'common',
     sellValue: 7,
   },
   linen_scrap: {
     id: 'linen_scrap',
     name: 'Linen Scrap',
     kind: 'junk',
-    quality: 'poor',
+    quality: 'common',
     sellValue: 3,
   },
 
   // --- Enchanting materials ------------------------------------------------
   // Disenchant yield (src/sim/professions/enchanting.ts), tiered by the
   // disenchanted item's rarity: common/uncommon -> dust, rare -> essence,
-  // epic/legendary -> shard. Consumed as reagents by the ENCHANTS table
-  // (content/enchants.ts). Reuses the 'junk' kind, same as bone_fragments/
-  // linen_scrap/spider_leg above (this repo has no dedicated material kind).
+  // epic/legendary -> shard. The material qualities mirror that ladder on
+  // purpose (dust white, essence uncommon, shard rare); only quality 'poor' is
+  // swept by sellAllJunk, so none of them are at risk. Consumed as reagents by
+  // the ENCHANTS table (content/enchants.ts). Reuses the 'junk' kind, same as
+  // bone_fragments/linen_scrap/spider_leg above (this repo has no dedicated
+  // material kind).
   arcane_dust: {
     id: 'arcane_dust',
     name: 'Arcane Dust',
