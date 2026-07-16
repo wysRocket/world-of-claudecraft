@@ -5408,6 +5408,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Klik Kiri',
   'hudChrome.options.clickMoveRight': 'Klik Kanan',
   'hudChrome.options.footstepSounds': 'Suara Langkah Kaki',
+  'hudChrome.options.interfaceSounds': 'Suara Antarmuka dan Umpan Balik',
   'hudChrome.options.highContrastBackground': 'Latar Kontras Tinggi',
   'hudChrome.options.showItemLevel': 'Tampilkan Level Item',
   'hudChrome.options.itemLevelLine': 'Level Item {level}',

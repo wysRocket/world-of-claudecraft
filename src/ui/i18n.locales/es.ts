@@ -1581,6 +1581,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Clic izquierdo',
   'hudChrome.options.clickMoveRight': 'Clic derecho',
   'hudChrome.options.footstepSounds': 'Sonidos de pasos',
+  'hudChrome.options.interfaceSounds': 'Sonidos de interfaz y respuesta',
   'hudChrome.options.showWalletOnCharacterScreen': 'Mostrar cartera en la pantalla de personajes',
   'hudChrome.options.showWalletOnPlayerCard': 'Mostrar cartera en la tarjeta de jugador',
   'hudChrome.playerCard.showWalletBadge': 'Mostrar insignia de cartera',

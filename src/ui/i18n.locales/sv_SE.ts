@@ -5278,6 +5278,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Vänsterklick',
   'hudChrome.options.clickMoveRight': 'Högerklick',
   'hudChrome.options.footstepSounds': 'Fotstegsljud',
+  'hudChrome.options.interfaceSounds': 'Gränssnitts- och responsljud',
   'hudChrome.options.highContrastBackground': 'Bakgrund med hög kontrast',
   'hudChrome.options.showItemLevel': 'Visa föremålsnivå',
   'hudChrome.options.itemLevelLine': 'Föremålsnivå {level}',

@@ -5369,6 +5369,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Nhấp Trái',
   'hudChrome.options.clickMoveRight': 'Nhấp Phải',
   'hudChrome.options.footstepSounds': 'Âm Thanh Bước Chân',
+  'hudChrome.options.interfaceSounds': 'Âm Thanh Giao Diện và Phản Hồi',
   'hudChrome.options.highContrastBackground': 'Nền Tương Phản Cao',
   'hudChrome.options.showItemLevel': 'Hiển Thị Cấp Vật Phẩm',
   'hudChrome.options.itemLevelLine': 'Cấp Vật Phẩm {level}',

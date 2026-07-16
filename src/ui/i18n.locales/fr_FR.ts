@@ -1961,6 +1961,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Clic gauche',
   'hudChrome.options.clickMoveRight': 'Clic droit',
   'hudChrome.options.footstepSounds': 'Sons de pas',
+  'hudChrome.options.interfaceSounds': 'Sons d’interface et retours sonores',
   'hudChrome.options.showWalletOnCharacterScreen':
     'Afficher le portefeuille sur l’écran des personnages',
   'hudChrome.options.showWalletOnPlayerCard': 'Afficher le portefeuille sur la carte de joueur',

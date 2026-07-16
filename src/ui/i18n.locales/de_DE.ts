@@ -1597,6 +1597,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Linksklick',
   'hudChrome.options.clickMoveRight': 'Rechtsklick',
   'hudChrome.options.footstepSounds': 'Schrittgeräusche',
+  'hudChrome.options.interfaceSounds': 'Interface- und Feedback-Sounds',
   'hudChrome.options.showWalletOnCharacterScreen': 'Wallet auf dem Charakterbildschirm anzeigen',
   'hudChrome.options.showWalletOnPlayerCard': 'Wallet auf der Spielerkarte anzeigen',
   'hudChrome.playerCard.showWalletBadge': 'Wallet-Abzeichen anzeigen',

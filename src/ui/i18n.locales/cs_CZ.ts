@@ -3116,6 +3116,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Levé kliknutí',
   'hudChrome.options.clickMoveRight': 'Pravé kliknutí',
   'hudChrome.options.footstepSounds': 'Zvuky kroků',
+  'hudChrome.options.interfaceSounds': 'Zvuky rozhraní a odezvy',
   'hudChrome.options.groundReticle': 'Zaměřovací kruh na zemi',
   'hudChrome.options.highContrastBackground': 'Vysoce kontrastní pozadí',
   'hudChrome.options.interfaceMode': 'Režim rozhraní',

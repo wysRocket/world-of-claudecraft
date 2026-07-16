@@ -5318,6 +5318,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Lewy przycisk',
   'hudChrome.options.clickMoveRight': 'Prawy przycisk',
   'hudChrome.options.footstepSounds': 'Dźwięki kroków',
+  'hudChrome.options.interfaceSounds': 'Dźwięki interfejsu i reakcji',
   'hudChrome.options.highContrastBackground': 'Tło o wysokim kontraście',
   'hudChrome.options.showItemLevel': 'Pokaż poziom przedmiotu',
   'hudChrome.options.itemLevelLine': 'Poziom przedmiotu {level}',

@@ -5337,6 +5337,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Sol Tık',
   'hudChrome.options.clickMoveRight': 'Sağ Tık',
   'hudChrome.options.footstepSounds': 'Ayak Sesleri',
+  'hudChrome.options.interfaceSounds': 'Arayüz ve Geri Bildirim Sesleri',
   'hudChrome.options.highContrastBackground': 'Yüksek Kontrastlı Arka Plan',
   'hudChrome.options.showItemLevel': 'Eşya Seviyesini Göster',
   'hudChrome.options.itemLevelLine': 'Eşya Seviyesi {level}',

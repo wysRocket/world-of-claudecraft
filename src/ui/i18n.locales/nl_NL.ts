@@ -5349,6 +5349,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Linkermuisklik',
   'hudChrome.options.clickMoveRight': 'Rechtermuisklik',
   'hudChrome.options.footstepSounds': 'Voetstapgeluiden',
+  'hudChrome.options.interfaceSounds': 'Interface- en feedbackgeluiden',
   'hudChrome.options.highContrastBackground': 'Hoog-contrastachtergrond',
   'hudChrome.options.showItemLevel': 'Itemniveau tonen',
   'hudChrome.options.itemLevelLine': 'Itemniveau {level}',

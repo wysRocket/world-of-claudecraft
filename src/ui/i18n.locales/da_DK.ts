@@ -5280,6 +5280,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.clickMoveLeft': 'Venstreklik',
   'hudChrome.options.clickMoveRight': 'Højreklik',
   'hudChrome.options.footstepSounds': 'Fodtrinslyde',
+  'hudChrome.options.interfaceSounds': 'Brugerflade- og feedbacklyde',
   'hudChrome.options.highContrastBackground': 'Baggrund med høj kontrast',
   'hudChrome.options.showItemLevel': 'Vis genstandsniveau',
   'hudChrome.options.itemLevelLine': 'Genstandsniveau {level}',
