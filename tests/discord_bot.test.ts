@@ -10,6 +10,7 @@ import {
   buildWelcomeMessage,
   buildWhoamiContent,
   chunk,
+  clearDepartedFlair,
   clearedMemberMeta,
   computeRoleSync,
   GATEWAY_INTENTS,
@@ -186,6 +187,94 @@ describe('departed-member reconcile (flair cleared after an offline leave)', () 
     expect(rosterComplete(9, 10)).toBe(false); // partial seed: never reconcile
     expect(rosterComplete(0, 0)).toBe(false); // no member_count: never reconcile
     expect(rosterComplete(5, 0)).toBe(false);
+  });
+
+  it('clearDepartedFlair pushes null-role meta BEFORE dropping the membership flag', async () => {
+    // The clear order matters for the reader: the meta row (role: null) is what
+    // drops the visible flair, so it lands before the membership flag flips.
+    const ops: string[] = [];
+    const io = {
+      pushMembersMeta: async (records: { discord_user_id: string }[]) => {
+        ops.push(`meta:${records.map((r) => r.discord_user_id).join(',')}`);
+      },
+      setMember: async (id: string, guildMember: boolean) => {
+        ops.push(`member:${id}:${guildMember}`);
+      },
+    };
+    const cleared = await clearDepartedFlair(['u1', 'u2'], () => false, io);
+    expect(ops).toEqual(['meta:u1,u2', 'member:u1:false', 'member:u2:false']);
+    expect(cleared).toEqual(['u1', 'u2']);
+  });
+
+  it('clearDepartedFlair batches the meta clears under the members-meta cap', async () => {
+    const ops: string[] = [];
+    const io = {
+      pushMembersMeta: async (records: unknown[]) => {
+        ops.push(`meta:${records.length}`);
+      },
+      setMember: async (id: string) => {
+        ops.push(`member:${id}`);
+      },
+    };
+    await clearDepartedFlair(['a', 'b', 'c'], () => false, io, 2);
+    // Split at the injected cap with the tail kept, and the ordering is GLOBAL:
+    // every meta batch lands before ANY membership flag flips (a per-batch
+    // interleave of meta and flag writes would fail here).
+    expect(ops).toEqual(['meta:2', 'meta:1', 'member:a', 'member:b', 'member:c']);
+  });
+
+  it('clearDepartedFlair re-evaluates membership FRESH before each flag write', async () => {
+    // u1 rejoins WHILE the meta push is in flight (GUILD_MEMBER_ADD mutates the
+    // live cache during the await). The flag phase must re-read membership and
+    // skip the rejoiner: an implementation that snapshots the non-member set
+    // once before the pushes would wrongly setMember('u1', false) here.
+    const members = new Set<string>();
+    const ops: string[] = [];
+    const io = {
+      pushMembersMeta: async (records: { discord_user_id: string }[]) => {
+        ops.push(`meta:${records.map((r) => r.discord_user_id).join(',')}`);
+        members.add('u1'); // the rejoin lands during this await
+      },
+      setMember: async (id: string, guildMember: boolean) => {
+        ops.push(`member:${id}:${guildMember}`);
+      },
+    };
+    const cleared = await clearDepartedFlair(['u1', 'u2'], (id) => members.has(id), io);
+    expect(ops).toEqual(['meta:u1,u2', 'member:u2:false']);
+    expect(cleared).toEqual(['u2']);
+  });
+
+  it('clearDepartedFlair skips a member re-observed between the diff and the writes', async () => {
+    // u2 rejoined (GUILD_MEMBER_ADD) after the roster diff flagged them: the
+    // membership predicate is re-checked before EVERY write, so u2 is neither
+    // meta-cleared nor unflagged, and the live event handlers keep their state.
+    const ops: string[] = [];
+    const io = {
+      pushMembersMeta: async (records: { discord_user_id: string }[]) => {
+        ops.push(`meta:${records.map((r) => r.discord_user_id).join(',')}`);
+      },
+      setMember: async (id: string, guildMember: boolean) => {
+        ops.push(`member:${id}:${guildMember}`);
+      },
+    };
+    const cleared = await clearDepartedFlair(['u1', 'u2'], (id) => id === 'u2', io);
+    expect(ops).toEqual(['meta:u1', 'member:u1:false']);
+    expect(cleared).toEqual(['u1']);
+  });
+
+  it('clearDepartedFlair makes no calls at all when everyone was re-observed', async () => {
+    let calls = 0;
+    const io = {
+      pushMembersMeta: async () => {
+        calls++;
+      },
+      setMember: async () => {
+        calls++;
+      },
+    };
+    expect(await clearDepartedFlair(['u1'], () => true, io)).toEqual([]);
+    expect(await clearDepartedFlair([], () => false, io)).toEqual([]);
+    expect(calls).toBe(0); // no empty meta push, no member write
   });
 
   it('staleFlairedIds returns exactly the flagged ids missing from the roster', () => {

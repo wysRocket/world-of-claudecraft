@@ -284,6 +284,45 @@ export function staleFlairedIds(
   return flaggedIds.filter((id) => !rosterIds.has(id));
 }
 
+/**
+ * Clear the server-side flair state for departed members: push a null-role
+ * members-meta record for each (batched under the same cap as the roster
+ * push), THEN drop each member's guild_member flag. IO arrives as injected
+ * callbacks so the ordering, batching, and the re-observed-member skip are
+ * unit-testable without a network: `isMember` is re-checked before EVERY write
+ * because a member can rejoin (GUILD_MEMBER_ADD) between the roster diff and
+ * these awaits, and the live event handlers own a present member's state.
+ * Returns the ids whose membership flag was cleared.
+ */
+export async function clearDepartedFlair(
+  staleIds: readonly string[],
+  isMember: (id: string) => boolean,
+  io: {
+    pushMembersMeta: (
+      records: {
+        discord_user_id: string;
+        name: string | null;
+        joinedAtMs: number | null;
+        role: string | null;
+      }[],
+    ) => Promise<unknown>;
+    setMember: (id: string, guildMember: boolean) => Promise<unknown>;
+  },
+  batchSize: number = MEMBERS_META_BATCH,
+): Promise<string[]> {
+  for (const batch of chunk(staleIds, batchSize)) {
+    const records = batch.filter((id) => !isMember(id)).map(clearedMemberMeta);
+    if (records.length) await io.pushMembersMeta(records);
+  }
+  const cleared: string[] = [];
+  for (const id of staleIds) {
+    if (isMember(id)) continue;
+    await io.setMember(id, false);
+    cleared.push(id);
+  }
+  return cleared;
+}
+
 // ── Level-on-name (Discord nickname) ─────────────────────────────────────────
 // A class "icon" + the in-game level attached to the member's Discord name, so a
 // linked player's level shows next to their name in the server (e.g. "Aldric ⚔20").

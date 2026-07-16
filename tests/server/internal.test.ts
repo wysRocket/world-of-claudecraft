@@ -82,11 +82,12 @@ import { withErrors } from '../../server/http/middleware/with_errors';
 import type { Method, Middleware } from '../../server/http/types';
 import {
   configureInternalRuntime,
+  handleInternalApi,
   type InternalRuntime,
   resetInternalRuntimeForTests,
   routes,
 } from '../../server/internal';
-import { type FakeRes, fakeCtx } from './helpers';
+import { FakeRes, fakeCtx, makeReq } from './helpers';
 
 // The two shared secrets and their matching headers. The gate reads the env var
 // PER REQUEST, so each test sets the one it needs and passes the header.
@@ -775,6 +776,32 @@ describe('discord/flaired-ids', () => {
     expect(r.status).toBe(401);
     expect(r.reached).toBe(false);
     expect(vi.mocked(discordIdsWithGuildFlair)).not.toHaveBeenCalled();
+  });
+
+  it('the legacy ladder arm answers with the same body as the RouteDef arm', async () => {
+    // flaired-ids landed AFTER the migration, so it lives on both dispatch arms
+    // per the dual-edit rule. The db-touching internal routes are excluded from
+    // the parity corpus replay, so pin the twin bodies against each other here:
+    // a behavior edit that reaches only one arm fails this test.
+    process.env.DISCORD_BOT_SECRET = DISCORD_SECRET;
+    vi.mocked(discordIdsWithGuildFlair).mockResolvedValue(['u1', 'u2']);
+
+    const viaRouteDef = await runRoute('GET', '/internal/discord/flaired-ids', {
+      headers: DISCORD_HEADERS,
+    });
+    expect(viaRouteDef.status).toBe(200);
+
+    const req = makeReq({
+      method: 'GET',
+      url: '/internal/discord/flaired-ids',
+      headers: DISCORD_HEADERS,
+    });
+    const res = new FakeRes();
+    // The game runtime is only consumed by the restart-countdown arm.
+    await handleInternalApi(req, res as unknown as http.ServerResponse, null as never);
+
+    expect(res.statusCode).toBe(200);
+    expect(JSON.parse(res.body)).toEqual(viaRouteDef.body);
   });
 });
 

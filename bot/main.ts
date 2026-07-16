@@ -24,6 +24,7 @@ import {
   buildRelayMessage,
   buildWhoamiContent,
   chunk,
+  clearDepartedFlair,
   clearedMemberMeta,
   computeRoleSync,
   GUILD_LARGE_THRESHOLD,
@@ -437,22 +438,18 @@ async function main(): Promise<void> {
   // so their stored membership flag + role key would stay stale forever. After a
   // COMPLETE roster seed (small-guild GUILD_CREATE, or the final op 8 chunk),
   // diff the server's flagged ids against the live roster and clear exactly the
-  // departed ones: their meta row (null role) first, then the membership flag.
-  // A server fetch failure (null) changes nothing, and a member re-observed
-  // between steps is skipped: the live event handlers own their state.
+  // departed ones (clearDepartedFlair owns the ordering, batching, and the
+  // re-observed-member skip; it is unit-tested with fake IO). A server fetch
+  // failure (null) changes nothing.
   const reconcileDepartedMembers = async (): Promise<void> => {
     if (!rosterComplete(memberRoles.size, memberTotal)) return;
     const flagged = await server.flairedIds();
     if (!flagged) return;
     const stale = staleFlairedIds(flagged, new Set(memberRoles.keys()));
-    for (const batch of chunk(stale, MEMBERS_META_BATCH)) {
-      const records = batch.filter((id) => !memberRoles.has(id)).map(clearedMemberMeta);
-      if (records.length) await server.pushMembersMeta(records);
-    }
-    for (const id of stale) {
-      if (memberRoles.has(id)) continue;
-      await server.setMember(id, false);
-    }
+    await clearDepartedFlair(stale, (id) => memberRoles.has(id), {
+      pushMembersMeta: (records) => server.pushMembersMeta(records),
+      setMember: (id, guildMember) => server.setMember(id, guildMember),
+    });
   };
 
   // Daily Discord-engagement reward: the first time a linked member posts a message
