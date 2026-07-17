@@ -19,8 +19,8 @@
 
 import { describe, expect, it } from 'vitest';
 import { characterSheet } from '../server/character_sheet';
-import { computeDeedsBoard, type DeedsBoardSourceRow } from '../server/deeds_board';
 import type { CharacterRow } from '../server/db';
+import { computeDeedsBoard, type DeedsBoardSourceRow } from '../server/deeds_board';
 import { DEED_ORDER, DEEDS } from '../src/sim/content/deeds';
 import { freshDeedStats } from '../src/sim/deeds';
 import { completionCounts, countsTowardCompletion } from '../src/sim/deeds_completion';
