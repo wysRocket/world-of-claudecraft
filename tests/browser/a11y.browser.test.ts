@@ -176,7 +176,7 @@ describe('axe: talents window', () => {
       );
       win.open();
 
-      const cards = Array.from(root.querySelectorAll<HTMLElement>('.tal-spec'));
+      const cards = Array.from(root.querySelectorAll<HTMLElement>('.ts-panel'));
       expect(cards, `${cls} specialization cards`).toHaveLength(3);
       for (const card of cards) {
         const name = card.querySelector<HTMLElement>('.ts-name');

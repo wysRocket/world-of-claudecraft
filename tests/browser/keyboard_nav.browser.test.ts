@@ -196,9 +196,15 @@ describe('keyboard-nav: Talents V2 authoritative choices', () => {
   }
 
   it('commits an unselected spec, then navigates to its six choice rows', () => {
+    // The ported spec-panel design splits the two actions: clicking a panel
+    // commits (and stays on the tab); View talents commits if needed AND jumps
+    // to Choices. Drive the single-action path through View talents.
     const fixture = openTalents({ spec: null, rows: {} });
-    const firstSpec = req(fixture.root.querySelector<HTMLButtonElement>('.tal-spec'), 'first spec');
-    firstSpec.click();
+    const viewTalents = req(
+      fixture.root.querySelector<HTMLButtonElement>('.ts-panel .ts-view-talents'),
+      'first spec View talents',
+    );
+    viewTalents.click();
 
     expect(fixture.commits).toEqual(['arms']);
     expect(fixture.root.querySelector('[data-tab="rows"]')?.getAttribute('aria-selected')).toBe(
@@ -211,7 +217,14 @@ describe('keyboard-nav: Talents V2 authoritative choices', () => {
 
   it('clicking the committed spec only navigates and does not recommit it', () => {
     const fixture = openTalents({ spec: 'arms', rows: {} });
-    req(fixture.root.querySelector<HTMLButtonElement>('.tal-spec.sel'), 'committed spec').click();
+    // Clicking the committed panel is a no-op (no recommit, no navigation).
+    req(fixture.root.querySelector<HTMLElement>('.ts-panel.sel'), 'committed spec panel').click();
+    expect(fixture.commits).toEqual([]);
+    // Its View talents button navigates to Choices without recommitting.
+    req(
+      fixture.root.querySelector<HTMLButtonElement>('.ts-panel.sel .ts-view-talents'),
+      'committed spec View talents',
+    ).click();
 
     expect(fixture.commits).toEqual([]);
     expect(fixture.root.querySelector('[data-tab="rows"]')?.getAttribute('aria-selected')).toBe(

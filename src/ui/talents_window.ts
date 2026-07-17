@@ -223,13 +223,6 @@ export class TalentsWindow {
       });
       const panel = document.createElement('div');
       panel.className = `ts-panel${entry.selected ? ' sel' : ''}`;
-      panel.setAttribute('role', 'radio');
-      panel.setAttribute('aria-checked', String(entry.selected));
-      panel.setAttribute(
-        'tabindex',
-        index === (selectedIndex >= 0 ? selectedIndex : 0) ? '0' : '-1',
-      );
-      panel.setAttribute('aria-label', `${specName}, ${roleLabel(spec.role)}`);
       let html =
         `<div class="ts-panel-head">${specIconHtml(talentSpecIconRef(spec))}` +
         `<div class="ts-panel-title"><div class="ts-name">${esc(specName)}</div><div class="ts-role">${roleLabel(spec.role)}</div></div></div>` +
@@ -258,6 +251,33 @@ export class TalentsWindow {
         html += '</div></div>';
       }
       panel.innerHTML = html;
+      // The HEAD is the radio control (focusable, arrow-roved, checked state),
+      // NOT the panel: the panel also contains the focusable View talents button
+      // and the example-ability tiles, and a focusable descendant inside an
+      // interactive element is an axe nested-interactive violation.
+      const head = panel.querySelector<HTMLElement>('.ts-panel-head');
+      if (head) {
+        head.setAttribute('role', 'radio');
+        head.setAttribute('aria-checked', String(entry.selected));
+        head.setAttribute(
+          'tabindex',
+          index === (selectedIndex >= 0 ? selectedIndex : 0) ? '0' : '-1',
+        );
+        head.setAttribute('aria-label', `${specName}, ${roleLabel(spec.role)}`);
+        head.addEventListener('keydown', (event) => {
+          const keyEvent = event as KeyboardEvent;
+          if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
+            keyEvent.preventDefault();
+            this.selectSpec(entry);
+            return;
+          }
+          const next = rovingTarget(keyEvent.key, index, view.specs.length, 'both');
+          if (next === null) return;
+          keyEvent.preventDefault();
+          this.selectSpec(view.specs[next]);
+          this.deps.root().querySelector<HTMLElement>('.ts-panel.sel .ts-panel-head')?.focus();
+        });
+      }
       // Hover/focus tooltip per example ability: reuse the HUD's rich ability
       // tooltip so a new player can read what each does before committing.
       for (const exEl of Array.from(panel.querySelectorAll<HTMLElement>('.ts-ex'))) {
@@ -277,19 +297,6 @@ export class TalentsWindow {
       });
       panel.appendChild(viewBtn);
       panel.addEventListener('click', () => this.selectSpec(entry));
-      panel.addEventListener('keydown', (event) => {
-        const keyEvent = event as KeyboardEvent;
-        if (keyEvent.key === 'Enter' || keyEvent.key === ' ') {
-          keyEvent.preventDefault();
-          this.selectSpec(entry);
-          return;
-        }
-        const next = rovingTarget(keyEvent.key, index, view.specs.length, 'both');
-        if (next === null) return;
-        keyEvent.preventDefault();
-        this.selectSpec(view.specs[next]);
-        this.deps.root().querySelector<HTMLElement>('.ts-panel.sel')?.focus();
-      });
       grid.appendChild(panel);
     });
     body.appendChild(grid);

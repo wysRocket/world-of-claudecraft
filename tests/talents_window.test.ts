@@ -55,10 +55,12 @@ describe('talents_window: no magic values', () => {
 
   it('renders accessible choice rows and explicit spec actions', () => {
     // Spec cards are a keyboard radiogroup (click/Enter commits); View talents
-    // is the explicit navigate action.
+    // is the explicit navigate action. The radio control is the panel HEAD, not
+    // the panel, so the focusable button/tiles inside the panel are not nested
+    // in an interactive element (axe nested-interactive).
     expect(painter).toContain("grid.setAttribute('role', 'radiogroup');");
-    expect(painter).toContain("panel.setAttribute('role', 'radio');");
-    expect(painter).toContain("panel.setAttribute('aria-checked', String(entry.selected));");
+    expect(painter).toContain("head.setAttribute('role', 'radio');");
+    expect(painter).toContain("head.setAttribute('aria-checked', String(entry.selected));");
     expect(painter).toContain("t('hudChrome.specPanel.viewTalents')");
     expect(styles).toContain('.tal-rows');
     expect(styles).toContain('.tal-row-opts');
