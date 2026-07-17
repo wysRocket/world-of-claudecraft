@@ -183,6 +183,10 @@ const PCT_FIELDS = new Set([
   'cooldownPct',
   'castPct',
   'buffPct',
+  // Balance pass: ability-scoped crit chance (Redhanded, shown as "30%") and
+  // proc trigger fire chance (Venom Dividend, shown as "20% chance").
+  'critPct',
+  'chance',
   // Serpent's Venom (hunter choice row): the added dot totals a fraction of the
   // direct hit (effect_dispatch resolves total = lastDirectDamage * directPct),
   // shown as "50% of its damage".

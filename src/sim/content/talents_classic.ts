@@ -180,9 +180,11 @@ const ROGUE_SPECS: SpecDef[] = [
     'x',
     'A burst specialist using critical strikes and finishers.',
     'cold_blood',
+    // Balance pass (maintainer sheet): the backstab identity (the classic
+    // Improved Backstab 30%), not a bleed rider on Subtlety's turf.
     'Redhanded',
-    'Increases your bleed damage by 20% and critical strike chance by 3%.',
-    { global: { dotDmgPct: 0.2 }, stats: { crit: 0.03 } },
+    "Increases Craven Thrust's critical strike chance by 30%.",
+    { ability: [{ ability: 'backstab', critPct: 0.3 }] },
   ),
   spec(
     'combat',
@@ -192,9 +194,11 @@ const ROGUE_SPECS: SpecDef[] = [
     '/',
     'A sustained fighter focused on direct weapon strikes.',
     'blade_flurry',
+    // Balance pass (maintainer sheet): the only mastery in the game with a
+    // penalty loses it.
     "Scrapper's Edge",
-    'Increases attack speed by 10% and reduces melee ability damage by 10%.',
-    { global: { meleeHastePct: 0.1, meleeDmgPct: -0.1 } },
+    'Increases attack speed by 10%.',
+    { global: { meleeHastePct: 0.1 } },
   ),
   spec(
     'subtlety',
@@ -204,9 +208,18 @@ const ROGUE_SPECS: SpecDef[] = [
     '>',
     'A stealth attacker built around openers, control, and avoidance.',
     'hemorrhage',
+    // Balance pass (maintainer sheet): tuned down from +40% crit damage and
+    // +10% Agility; the stealth-speed identity comes in instead (the Duskveil
+    // slow eases from 50% toward 25% at full mastery).
     'False Face',
-    'Increases the damage of your critical strikes by 40% and your Agility by 10%.',
-    { global: { critDmgPhysPct: 0.4 }, stats: { agiPct: 0.1 } },
+    'Increases the damage of your critical strikes by 25%, and you move 50% faster while in Duskveil.',
+    {
+      global: { critDmgPhysPct: 0.25 },
+      ability: [
+        { ability: 'stealth', buffPct: 0.5 },
+        { ability: 'vanish', buffPct: 0.5 },
+      ],
+    },
   ),
 ];
 

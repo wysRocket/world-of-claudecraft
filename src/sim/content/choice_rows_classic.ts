@@ -941,16 +941,20 @@ export const ROGUE_CHOICE_ROWS: ClassChoiceRows = {
           effect: { grant: { ability: 'ghostly_strike' } },
         },
         {
+          // Balance pass: was a flat 5 energy on EVERY poisoned auto (a
+          // permanent ~40% passive energy-regen boost on dual-wield swing
+          // rates). Now the Combat Potency shape: chance-based.
           id: 'rog_r14_deadly_brew',
           name: 'Venom Dividend',
-          description: 'Landed melee auto-attacks with an active poison restore 5 energy.',
+          description:
+            'Landed melee auto-attacks with an active poison have a 20% chance to restore 15 energy.',
           icon: 'deadly_poison',
           effect: {
             proc: {
               id: 'rog_deadly_brew',
               name: 'Venom Dividend',
-              trigger: { on: 'meleeSwingWhile', auraKind: 'imbue' },
-              responses: [{ kind: 'resource', amount: 5 }],
+              trigger: { on: 'meleeSwingWhile', auraKind: 'imbue', chance: 0.2 },
+              responses: [{ kind: 'resource', amount: 15 }],
             },
           },
         },

@@ -287,7 +287,8 @@ export const TALENT_ABILITIES_V2_A = {
     school: 'physical',
     requiresTarget: true,
     effects: [{ type: 'blinkForward', distance: 24 }],
-    description: 'Steps through the shadows toward your target. (Rogue talent)',
+    description:
+      'Steps through the shadows toward your target without breaking Duskveil. (Rogue talent)',
   },
 
   silence: {

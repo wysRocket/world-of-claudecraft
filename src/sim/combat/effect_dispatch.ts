@@ -108,8 +108,14 @@ function isStealthToggle(ability: AbilityDef): boolean {
 function preservesStealth(ability: AbilityDef): boolean {
   // Sap is the classic no-reveal opener: it incapacitates from range without a
   // melee swing, so unlike Cheap Shot/Ambush/Garrote it must not blow the
-  // caster's own stealth (issue #1890).
-  return isStealthToggle(ability) || ability.id === 'sprint' || ability.id === 'sap';
+  // caster's own stealth (issue #1890). Shadeslip repositions without acting
+  // on the target, so it keeps Duskveil too (balance pass, maintainer sheet).
+  return (
+    isStealthToggle(ability) ||
+    ability.id === 'sprint' ||
+    ability.id === 'sap' ||
+    ability.id === 'shadowstep'
+  );
 }
 
 // Resolve the exclusiveGroup for an AURA id: either a plain ability id (a
