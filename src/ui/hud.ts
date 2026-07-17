@@ -31,7 +31,6 @@ import {
 import { DEED_ORDER, DEEDS } from '../sim/content/deeds';
 import { HEROIC_MARK_ITEM_ID } from '../sim/content/dungeon_difficulty';
 import { HEROIC_VENDOR_STOCK } from '../sim/content/heroic_vendor';
-import { MECH_CHROMAS } from '../sim/content/skins';
 import { FIRST_TALENT_LEVEL, type TalentAllocation, talentsFor } from '../sim/content/talents';
 import type { ZoneDef } from '../sim/data';
 import {
@@ -123,12 +122,10 @@ import { CalendarWindow } from './calendar_window';
 import { CardDuelWindow } from './card_duel_window';
 import { CastBarPainter } from './cast_bar_painter';
 import { charBagsPaired } from './char_bags_pairing_core';
+import { type CharSkinPainterHost, paintCharSkinPicker } from './char_skin_window';
 import { buildPaperdollView, type PaperdollSlot } from './char_view';
 import { CharWindow } from './char_window';
-import {
-  activeCharacterAppearancePreview,
-  characterAppearanceOptions,
-} from './character_appearance';
+import { activeCharacterAppearancePreview } from './character_appearance';
 import {
   ignoreKey,
   type PlayerSocialFlags,
@@ -269,7 +266,6 @@ import {
 import { type ChatClock, clampChatClock, formatChatTimestamp } from './hud/chat/chat_timestamp';
 import { ChatWindowController } from './hud/chat/chat_window_controller';
 import { SkinEventController } from './hud/cosmetics/skin_event_controller';
-import { mechChromaName } from './hud/cosmetics/skin_event_i18n';
 import { DelveBoardController } from './hud/delve/delve_board_controller';
 import { DelveMapPainter } from './hud/delve/delve_map_painter';
 import { DelveTrackerController } from './hud/delve/delve_tracker_controller';
@@ -10335,108 +10331,24 @@ export class Hud {
   }
 
   private renderCharSkinPicker(): void {
-    const row = $('#char-skin-row') as HTMLElement | null;
-    if (!row) return;
-    const cls = this.sim.cfg.playerClass;
-    const options = characterAppearanceOptions(cls, this.sim.accountCosmetics.mechChromaIds);
-    row.innerHTML = '';
-    row.style.setProperty('--class-color', classCss(cls));
-    if (options.length <= 1) return;
-    if (options.some((option) => option.kind === 'mech') && !this.mechAssetsPromise) {
-      this.mechAssetsPromise = preloadMechAssets();
-    }
-    const current = Math.max(0, this.sim.player.skin ?? 0);
-    const currentCatalog = this.sim.player.skinCatalog ?? 'class';
-    for (const option of options) {
-      const labelNumber = formatNumber(option.label, { maximumFractionDigits: 0 });
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = `skin-swatch${option.kind === currentCatalog && option.skin === current ? ' sel' : ''}`;
-      b.textContent = labelNumber;
-      b.setAttribute('role', 'listitem');
-      b.setAttribute(
-        'aria-label',
-        option.kind === 'class'
-          ? t('auth.chromaOption', { n: labelNumber })
-          : mechChromaName(option.chromaId),
-      );
-      b.addEventListener('click', () => {
-        row.querySelectorAll('.skin-swatch').forEach((x) => {
-          x.classList.remove('sel');
-        });
-        b.classList.add('sel');
-        if (option.kind === 'class') {
-          this.sim.changeSkin(option.skin, 'class');
-          const preview = activeCharacterAppearancePreview(
-            this.sim.cfg.playerClass,
-            option.skin,
-            'class',
-          );
-          this.mountCharPreview(
-            $('#char-model-preview'),
-            this.sim.cfg.playerClass,
-            preview.skin,
-            preview.visualKey,
-          );
-          return;
-        }
-        this.sim.changeSkin(option.skin, 'mech');
-        if (!this.mechAssetsPromise) this.mechAssetsPromise = preloadMechAssets();
-        const mechAssets = this.mechAssetsPromise;
-        void mechAssets
-          .then(() => {
-            if (
-              ($('#char-window') as HTMLElement).style.display === 'block' &&
-              b.classList.contains('sel')
-            ) {
-              const preview = activeCharacterAppearancePreview(
-                this.sim.cfg.playerClass,
-                option.skin,
-                'mech',
-              );
-              this.mountCharPreview(
-                $('#char-model-preview'),
-                this.sim.cfg.playerClass,
-                preview.skin,
-                preview.visualKey,
-              );
-            }
-          })
-          .catch((err) => console.error('failed to load mech cosmetic preview:', err));
-        audio.click();
-      });
-      if (option.kind === 'mech') {
-        this.attachTooltip(
-          b,
-          () =>
-            `<div class="tt-name">${esc(mechChromaName(option.chromaId))}</div><div class="tt-sub">${esc(t('skinEvent.unlocked'))}</div>`,
-        );
-      }
-      row.appendChild(b);
-    }
-    const currentChroma = currentCatalog === 'mech' ? MECH_CHROMAS[current] : null;
-    if (currentChroma && this.sim.accountCosmetics.mechChromaIds.includes(currentChroma.id)) {
-      const unequip = document.createElement('button');
-      unequip.type = 'button';
-      unequip.className = 'skin-unequip-btn';
-      unequip.textContent = t('skinEvent.unequip');
-      unequip.setAttribute('aria-label', t('skinEvent.unequip'));
-      unequip.addEventListener('click', () => {
-        this.sim.unequipMechChroma(currentChroma.id);
-        audio.click();
-        this.renderBags();
-        this.renderCharIfOpen();
-      });
-      this.attachTooltip(
-        unequip,
-        () =>
-          `<div class="tt-name">${esc(mechChromaName(currentChroma.id))}</div><div class="tt-sub">${esc(t('skinEvent.unequip'))}</div>`,
-      );
-      row.appendChild(unequip);
-    }
+    paintCharSkinPicker(this.skinHost());
   }
 
-  // -------------------------------------------------------------------------
+  private skinHost(): CharSkinPainterHost {
+    return {
+      sim: this.sim,
+      preloadMechAssets: () => {
+        if (!this.mechAssetsPromise) this.mechAssetsPromise = preloadMechAssets();
+        return this.mechAssetsPromise;
+      },
+      mountCharPreview: (container, cls, skin, previewKey) =>
+        this.mountCharPreview(container, cls, skin, previewKey),
+      attachTooltip: (el, html) => this.attachTooltip(el, html),
+      renderBags: () => this.renderBags(),
+      renderCharIfOpen: () => this.renderCharIfOpen(),
+    };
+  }
+
   // Post-cap progression (Max-Level XP Overflow): character-sheet block,
   // milestone badges, prestige dialog, and the lifetime-XP leaderboard panel.
   // -------------------------------------------------------------------------

@@ -143,6 +143,7 @@ const UI_PURE_CORES = [
   'src/ui/mob_tooltip_view.ts',
   'src/ui/talents_view.ts',
   'src/ui/social_view.ts',
+  'src/ui/tab_strip_view.ts',
   'src/ui/bags_view.ts',
   'src/ui/bank_view.ts',
   'src/ui/item_set_tooltip_view.ts',
