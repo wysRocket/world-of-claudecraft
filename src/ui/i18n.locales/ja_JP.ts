@@ -2185,6 +2185,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'itemUi.stats.dps': '秒間ダメージ',
   'itemUi.stats.critChance': 'クリティカル率',
   'itemUi.stats.dodge': '回避',
+  'itemUi.stats.parry': '受け流し',
   'itemUi.tooltip.qualityKind': '{quality} {kind}',
   'itemUi.tooltip.currentlyEquipped': '現在の装備',
   'itemUi.tooltip.ifYouEquip': 'これを装備すると',

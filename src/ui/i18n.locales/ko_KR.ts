@@ -2173,6 +2173,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'itemUi.stats.dps': '초당 피해',
   'itemUi.stats.critChance': '치명타율',
   'itemUi.stats.dodge': '회피',
+  'itemUi.stats.parry': '무기 막기',
   'itemUi.tooltip.qualityKind': '{quality} {kind}',
   'itemUi.tooltip.currentlyEquipped': '현재 착용 중',
   'itemUi.tooltip.ifYouEquip': '이것을 착용하면',

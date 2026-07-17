@@ -99,6 +99,8 @@ describe('Mass Barrier shields only the 5 nearest', () => {
     sim.setPlayerLevel(20);
     expect(sim.applyTalents({ spec: 'frost', rows: { 17: 'mag_r17_mass_barrier' } })).toBe(true);
     const p = sim.player;
+    // Recipients are group-scoped (party/raid only), so raid all 7 allies with
+    // the caster: fill the 5-player party, convert to raid, invite the rest.
     const allies: Entity[] = [];
     for (let i = 0; i < 7; i++) {
       const id = sim.addPlayer('warrior', `A${i}`);
@@ -106,6 +108,13 @@ describe('Mass Barrier shields only the 5 nearest', () => {
       e.pos = { x: p.pos.x + 1 + i, y: p.pos.y, z: p.pos.z }; // increasing distance
       e.prevPos = { ...e.pos };
       allies.push(e);
+      if (i === 4) {
+        (
+          sim as unknown as { party: { convertPartyToRaid(pid: number): void } }
+        ).party.convertPartyToRaid(p.id);
+      }
+      sim.partyInvite(id, p.id);
+      sim.partyAccept(id);
     }
     const hasShield = (e: Entity) => e.auras.some((a) => a.id === 'mass_barrier');
     p.resource = p.maxResource;

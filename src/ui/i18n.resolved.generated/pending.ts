@@ -453,18 +453,10 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.specPanel.specUnlockHint",
     "itemUi.stats.parry"
   ],
-  "zh_CN": [
-    "itemUi.stats.parry"
-  ],
-  "zh_TW": [
-    "itemUi.stats.parry"
-  ],
-  "ko_KR": [
-    "itemUi.stats.parry"
-  ],
-  "ja_JP": [
-    "itemUi.stats.parry"
-  ],
+  "zh_CN": [],
+  "zh_TW": [],
+  "ko_KR": [],
+  "ja_JP": [],
   "pt_BR": [
     "entities.abilities.arcane_surge.description",
     "entities.abilities.arcane_surge.name",
@@ -545,9 +537,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.specPanel.specUnlockHint",
     "itemUi.stats.parry"
   ],
-  "ru_RU": [
-    "itemUi.stats.parry"
-  ],
+  "ru_RU": [],
   "cs_CZ": [
     "entities.abilities.arcane_surge.description",
     "entities.abilities.arcane_surge.name",

@@ -5860,7 +5860,7 @@ export const ru_RU: EnTranslations = {
       "dps": "Урон/сек",
       "critChance": "Шанс крита",
       "dodge": "Уклонение",
-      "parry": "Parry"
+      "parry": "Парирование"
     },
     "tooltip": {
       "qualityKind": "{quality} {kind}",

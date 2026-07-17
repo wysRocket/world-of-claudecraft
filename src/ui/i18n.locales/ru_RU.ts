@@ -2210,6 +2210,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'itemUi.stats.dps': 'Урон/сек',
   'itemUi.stats.critChance': 'Шанс крита',
   'itemUi.stats.dodge': 'Уклонение',
+  'itemUi.stats.parry': 'Парирование',
   'itemUi.tooltip.qualityKind': '{quality} {kind}',
   'itemUi.tooltip.currentlyEquipped': 'Сейчас надето',
   'itemUi.tooltip.ifYouEquip': 'Если надеть это',

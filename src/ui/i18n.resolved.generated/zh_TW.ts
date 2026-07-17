@@ -5860,7 +5860,7 @@ export const zh_TW: EnTranslations = {
       "dps": "每秒傷害",
       "critChance": "暴擊機率",
       "dodge": "閃躲",
-      "parry": "Parry"
+      "parry": "招架"
     },
     "tooltip": {
       "qualityKind": "{quality}{kind}",

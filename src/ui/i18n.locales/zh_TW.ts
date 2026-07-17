@@ -2104,6 +2104,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'itemUi.stats.dps': '每秒傷害',
   'itemUi.stats.critChance': '暴擊機率',
   'itemUi.stats.dodge': '閃躲',
+  'itemUi.stats.parry': '招架',
   'itemUi.tooltip.qualityKind': '{quality}{kind}',
   'itemUi.tooltip.currentlyEquipped': '目前已裝備',
   'itemUi.tooltip.ifYouEquip': '裝備後',

@@ -5860,7 +5860,7 @@ export const ko_KR: EnTranslations = {
       "dps": "초당 피해",
       "critChance": "치명타율",
       "dodge": "회피",
-      "parry": "Parry"
+      "parry": "무기 막기"
     },
     "tooltip": {
       "qualityKind": "{quality} {kind}",
