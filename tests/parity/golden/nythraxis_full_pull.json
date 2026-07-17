@@ -9030,7 +9030,7 @@
       "tick": 628,
       "time": 31.4,
       "nextId": 422,
-      "state": "8e21a363",
+      "state": "29140f78",
       "events": "fcce9ba4",
       "rng": {
         "draws": 3004,
@@ -9883,6 +9883,10 @@
               },
               {
                 "count": 1,
+                "itemId": "crownforged_dreadhelm"
+              },
+              {
+                "count": 1,
                 "itemId": "soulflame_cowl"
               },
               {
@@ -10263,7 +10267,7 @@
       "tick": 630,
       "time": 31.5,
       "nextId": 422,
-      "state": "342a8052",
+      "state": "c2ba10bf",
       "events": "741638a5",
       "rng": {
         "draws": 3013,
@@ -10274,7 +10278,7 @@
       "tick": 640,
       "time": 32,
       "nextId": 422,
-      "state": "8e3fa155",
+      "state": "e1b38e1e",
       "events": "741638a5",
       "rng": {
         "draws": 3051,
@@ -10285,7 +10289,7 @@
       "tick": 650,
       "time": 32.5,
       "nextId": 422,
-      "state": "d88534c9",
+      "state": "e227ae2a",
       "events": "741638a5",
       "rng": {
         "draws": 3107,
@@ -10296,7 +10300,7 @@
       "tick": 660,
       "time": 33,
       "nextId": 422,
-      "state": "e39549de",
+      "state": "ee86f1e7",
       "events": "741638a5",
       "rng": {
         "draws": 3150,
@@ -10307,7 +10311,7 @@
       "tick": 670,
       "time": 33.5,
       "nextId": 422,
-      "state": "3e64c308",
+      "state": "b02ee139",
       "events": "741638a5",
       "rng": {
         "draws": 3191,
@@ -10318,7 +10322,7 @@
       "tick": 680,
       "time": 34,
       "nextId": 422,
-      "state": "bf401c13",
+      "state": "399863e0",
       "events": "741638a5",
       "rng": {
         "draws": 3251,
@@ -10329,7 +10333,7 @@
       "tick": 688,
       "time": 34.4,
       "nextId": 422,
-      "state": "86efbb6c",
+      "state": "39fae80d",
       "events": "db2b6c90",
       "rng": {
         "draws": 3293,
@@ -11179,6 +11183,10 @@
               {
                 "count": 1,
                 "itemId": "soulflame_mantle"
+              },
+              {
+                "count": 1,
+                "itemId": "crownforged_dreadhelm"
               },
               {
                 "count": 1,
