@@ -240,7 +240,7 @@ export const TALENT_ABILITIES_V2_A = {
     requiresTarget: false,
     offGcd: true,
     effects: [{ type: 'clearCooldowns', abilities: ['sprint', 'evasion', 'vanish'] }],
-    description: 'Finishes the cooldown on Sprint, Evasion, and Vanish. (Rogue talent)',
+    description: 'Finishes the cooldown on Swift Heels, Ghostfoot, and Smokestep. (Rogue talent)',
   },
   ghostly_strike: {
     id: 'ghostly_strike',

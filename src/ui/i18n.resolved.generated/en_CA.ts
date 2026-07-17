@@ -6102,7 +6102,7 @@ export const en_CA: EnTranslations = {
       },
       "charge": {
         "name": "Onrush",
-        "description": "Charges an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range."
+        "description": "Rushes an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range."
       },
       "thunder_clap": {
         "name": "Quaking Blow",
@@ -6142,7 +6142,7 @@ export const en_CA: EnTranslations = {
       },
       "taunt": {
         "name": "Goad",
-        "description": "Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec."
+        "description": "Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec."
       },
       "fireball": {
         "name": "Cinderbolt",
@@ -6178,7 +6178,7 @@ export const en_CA: EnTranslations = {
       },
       "hot_streak": {
         "name": "Hot Streak",
-        "description": "Passive: two critical strikes in a row with your Fire spells (Cinderbolt, Cinderfall, Scorch, Pyrelance or Flamestrike) make your next Pyrelance or Flamestrike instant and free. The spenders count toward the NEXT streak, free casts included; a Flamestrike counts once however many enemies it strikes, and only the initial impact ever counts. (Fire)"
+        "description": "Passive: two critical strikes in a row with your Fire spells (Cinderbolt, Cinderfall, Scald, Pyrelance or Flamestrike) make your next Pyrelance or Flamestrike instant and free. The spenders count toward the NEXT streak, free casts included; a Flamestrike counts once however many enemies it strikes, and only the initial impact ever counts. (Fire)"
       },
       "ice_floes": {
         "name": "Ice Floes",
@@ -6282,7 +6282,7 @@ export const en_CA: EnTranslations = {
       },
       "scorch": {
         "name": "Scald",
-        "description": "Scorches the enemy for {damage} Fire damage. Quick to cast."
+        "description": "Scalds the enemy for {damage} Fire damage. Quick to cast."
       },
       "pyroblast": {
         "name": "Pyrelance",
@@ -6302,7 +6302,7 @@ export const en_CA: EnTranslations = {
       },
       "backstab": {
         "name": "Craven Thrust",
-        "description": "Backstab the target for 150% weapon damage plus {damage}. Must be behind the target. Requires a dagger. Awards 1 combo point."
+        "description": "Drive your dagger into the target's back for 150% weapon damage plus {damage}. Must be behind the target. Requires a dagger. Awards 1 combo point."
       },
       "gouge": {
         "name": "Eye Jab",
@@ -6326,7 +6326,7 @@ export const en_CA: EnTranslations = {
       },
       "ambush": {
         "name": "Lurker's Strike",
-        "description": "Ambush the target for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point."
+        "description": "Strike from the shadows for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point."
       },
       "stealth": {
         "name": "Duskveil",
@@ -6338,7 +6338,7 @@ export const en_CA: EnTranslations = {
       },
       "garrote": {
         "name": "Throat Wire",
-        "description": "Garrote the enemy, causing {damage} damage now and bleeding it for {overTime} over 18 sec. Must be stealthed. Awards 1 combo point."
+        "description": "Loop a wire around the enemy's throat, causing {damage} damage now and bleeding it for {overTime} over 18 sec. Must be stealthed. Awards 1 combo point."
       },
       "cheap_shot": {
         "name": "Gut Punch",
@@ -6362,7 +6362,7 @@ export const en_CA: EnTranslations = {
       },
       "vanish": {
         "name": "Smokestep",
-        "description": "Vanish from sight, entering Duskveil even in combat. You move 50% slower while hidden. Lasts up to 10 sec."
+        "description": "Melt from sight, entering Duskveil even in combat. You move 50% slower while hidden. Lasts up to 10 sec."
       },
       "instant_poison": {
         "name": "Adder's Bite",
@@ -6374,7 +6374,7 @@ export const en_CA: EnTranslations = {
       },
       "blind": {
         "name": "Dirt Toss",
-        "description": "Blinds the target, causing it to wander disoriented for 8 sec. Any damage breaks the effect."
+        "description": "Tosses dirt into the target's eyes, causing it to wander disoriented for 8 sec. Any damage breaks the effect."
       },
       "seal_of_righteousness": {
         "name": "Oathbrand",
@@ -6410,7 +6410,7 @@ export const en_CA: EnTranslations = {
       },
       "holy_taunt": {
         "name": "Sacred Goad",
-        "description": "Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec."
+        "description": "Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec."
       },
       "flash_of_light": {
         "name": "Lightmend",
@@ -6646,7 +6646,7 @@ export const en_CA: EnTranslations = {
       },
       "growl": {
         "name": "Menace",
-        "description": "Growls at the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec. Bruin Form only."
+        "description": "Menaces the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec. Bruin Form only."
       },
       "cat_form": {
         "name": "Wolf Form",
@@ -6662,7 +6662,7 @@ export const en_CA: EnTranslations = {
       },
       "swipe": {
         "name": "Sweeping Claws",
-        "description": "Swipe nearby enemies for {damage} damage. Causes extra threat. Bruin Form only."
+        "description": "Sweep your claws through nearby enemies for {damage} damage. Causes extra threat. Bruin Form only."
       },
       "regrowth": {
         "name": "Second Bloom",
@@ -6830,7 +6830,7 @@ export const en_CA: EnTranslations = {
       },
       "conflagrate": {
         "name": "Conflagrate",
-        "description": "Consumes your Immolate on the enemy to ignite them for {damage} Fire damage. (Destruction signature)"
+        "description": "Consumes your Burning Pact on the enemy to ignite them for {damage} Fire damage. (Destruction signature)"
       },
       "moonkin_form": {
         "name": "Moonwing Form",
@@ -7162,7 +7162,7 @@ export const en_CA: EnTranslations = {
       },
       "temporal_acceleration": {
         "name": "Temporal Acceleration",
-        "description": "Accelerates the flow of time for your group or raid, increasing attack, casting, and channeling speed by 30% for 15 sec. Allies recently affected by Temporal Acceleration or Bloodlust are too exhausted to benefit. (Chronomancy)"
+        "description": "Accelerates the flow of time for your group or raid, increasing attack, casting, and channeling speed by 30% for 15 sec. Allies recently affected by Temporal Acceleration or Storm Chorus are too exhausted to benefit. (Chronomancy)"
       },
       "perfect_moment": {
         "name": "Perfect Moment",
@@ -7186,7 +7186,7 @@ export const en_CA: EnTranslations = {
       },
       "preparation": {
         "name": "Contingency",
-        "description": "Finishes the cooldown on Sprint, Evasion, and Vanish. (Rogue talent)"
+        "description": "Finishes the cooldown on Swift Heels, Ghostfoot, and Smokestep. (Rogue talent)"
       },
       "presence_of_mind": {
         "name": "Racing Mind",

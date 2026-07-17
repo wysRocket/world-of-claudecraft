@@ -643,7 +643,7 @@ const classAbilityNamesEn = {
       [
         'charge',
         'Onrush',
-        'Charges an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range.',
+        'Rushes an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range.',
       ],
       [
         'thunder_clap',
@@ -685,7 +685,7 @@ const classAbilityNamesEn = {
       [
         'taunt',
         'Goad',
-        'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+        'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
       ],
       [
         'fireball',
@@ -730,7 +730,7 @@ const classAbilityNamesEn = {
       [
         'hot_streak',
         'Hot Streak',
-        'Passive: two critical strikes in a row with your Fire spells (Cinderbolt, Cinderfall, Scorch, Pyrelance or Flamestrike) make your next Pyrelance or Flamestrike instant and free. The spenders count toward the NEXT streak, free casts included; a Flamestrike counts once however many enemies it strikes, and only the initial impact ever counts. (Fire)',
+        'Passive: two critical strikes in a row with your Fire spells (Cinderbolt, Cinderfall, Scald, Pyrelance or Flamestrike) make your next Pyrelance or Flamestrike instant and free. The spenders count toward the NEXT streak, free casts included; a Flamestrike counts once however many enemies it strikes, and only the initial impact ever counts. (Fire)',
       ],
       [
         'ice_floes',
@@ -853,7 +853,7 @@ const classAbilityNamesEn = {
         'Aetherburst',
         'A burst of Arcane energy hits all nearby enemies for {damage} Arcane damage.',
       ],
-      ['scorch', 'Scald', 'Scorches the enemy for {damage} Fire damage. Quick to cast.'],
+      ['scorch', 'Scald', 'Scalds the enemy for {damage} Fire damage. Quick to cast.'],
       [
         'pyroblast',
         'Pyrelance',
@@ -869,7 +869,7 @@ const classAbilityNamesEn = {
       [
         'backstab',
         'Craven Thrust',
-        'Backstab the target for 150% weapon damage plus {damage}. Must be behind the target. Requires a dagger. Awards 1 combo point.',
+        "Drive your dagger into the target's back for 150% weapon damage plus {damage}. Must be behind the target. Requires a dagger. Awards 1 combo point.",
       ],
       [
         'gouge',
@@ -891,7 +891,7 @@ const classAbilityNamesEn = {
       [
         'ambush',
         "Lurker's Strike",
-        'Ambush the target for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point.',
+        'Strike from the shadows for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point.',
       ],
       [
         'stealth',
@@ -902,7 +902,7 @@ const classAbilityNamesEn = {
       [
         'garrote',
         'Throat Wire',
-        'Garrote the enemy, causing {damage} damage now and bleeding it for {overTime} over 18 sec. Must be stealthed. Awards 1 combo point.',
+        "Loop a wire around the enemy's throat, causing {damage} damage now and bleeding it for {overTime} over 18 sec. Must be stealthed. Awards 1 combo point.",
       ],
       [
         'cheap_shot',
@@ -932,7 +932,7 @@ const classAbilityNamesEn = {
       [
         'vanish',
         'Smokestep',
-        'Vanish from sight, entering Duskveil even in combat. You move 50% slower while hidden. Lasts up to 10 sec.',
+        'Melt from sight, entering Duskveil even in combat. You move 50% slower while hidden. Lasts up to 10 sec.',
       ],
       [
         'instant_poison',
@@ -947,7 +947,7 @@ const classAbilityNamesEn = {
       [
         'blind',
         'Dirt Toss',
-        'Blinds the target, causing it to wander disoriented for 8 sec. Any damage breaks the effect.',
+        "Tosses dirt into the target's eyes, causing it to wander disoriented for 8 sec. Any damage breaks the effect.",
       ],
       [
         'seal_of_righteousness',
@@ -984,7 +984,7 @@ const classAbilityNamesEn = {
       [
         'holy_taunt',
         'Sacred Goad',
-        'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+        'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
       ],
       [
         'flash_of_light',
@@ -1211,7 +1211,7 @@ const classAbilityNamesEn = {
       [
         'growl',
         'Menace',
-        'Growls at the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec. Bruin Form only.',
+        'Menaces the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec. Bruin Form only.',
       ],
       [
         'cat_form',
@@ -1227,7 +1227,7 @@ const classAbilityNamesEn = {
       [
         'swipe',
         'Sweeping Claws',
-        'Swipe nearby enemies for {damage} damage. Causes extra threat. Bruin Form only.',
+        'Sweep your claws through nearby enemies for {damage} damage. Causes extra threat. Bruin Form only.',
       ],
       [
         'regrowth',
@@ -1422,7 +1422,7 @@ const classAbilityNamesEn = {
       [
         'conflagrate',
         'Conflagrate',
-        'Consumes your Immolate on the enemy to ignite them for {damage} Fire damage. (Destruction signature)',
+        'Consumes your Burning Pact on the enemy to ignite them for {damage} Fire damage. (Destruction signature)',
       ],
       [
         'moonkin_form',
@@ -1818,7 +1818,7 @@ const classAbilityNamesEn = {
       [
         'temporal_acceleration',
         'Temporal Acceleration',
-        'Accelerates the flow of time for your group or raid, increasing attack, casting, and channeling speed by 30% for 15 sec. Allies recently affected by Temporal Acceleration or Bloodlust are too exhausted to benefit. (Chronomancy)',
+        'Accelerates the flow of time for your group or raid, increasing attack, casting, and channeling speed by 30% for 15 sec. Allies recently affected by Temporal Acceleration or Storm Chorus are too exhausted to benefit. (Chronomancy)',
       ],
       [
         'perfect_moment',
@@ -1844,7 +1844,7 @@ const classAbilityNamesEn = {
       [
         'preparation',
         'Contingency',
-        'Finishes the cooldown on Sprint, Evasion, and Vanish. (Rogue talent)',
+        'Finishes the cooldown on Swift Heels, Ghostfoot, and Smokestep. (Rogue talent)',
       ],
       [
         'presence_of_mind',
@@ -2174,7 +2174,7 @@ export const classAbilityNames = {
         [
           'holy_taunt',
           'Sacred Goad',
-          'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+          'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
         ],
         [
           'flash_of_light',
@@ -2971,7 +2971,7 @@ export const classAbilityNames = {
         [
           'holy_taunt',
           'Sacred Goad',
-          'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+          'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
         ],
         [
           'flash_of_light',
@@ -3699,7 +3699,7 @@ export const classAbilityNames = {
         [
           'holy_taunt',
           'Sacred Goad',
-          'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+          'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
         ],
         [
           'flash_of_light',
@@ -4421,7 +4421,7 @@ export const classAbilityNames = {
         [
           'holy_taunt',
           'Sacred Goad',
-          'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+          'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
         ],
         [
           'flash_of_light',
@@ -7311,7 +7311,7 @@ export const classAbilityNames = {
         [
           'holy_taunt',
           'Sacred Goad',
-          'Taunts the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
+          'Goads the target: your threat rises to match its most hated enemy and it is compelled to attack you for 3 sec.',
         ],
         [
           'flash_of_light',
