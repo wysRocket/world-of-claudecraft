@@ -903,6 +903,10 @@ export function runEffects(
             );
           }
         }
+        // Voidfeast: the devour heal pays out only when something was eaten.
+        if (dispelled > 0 && eff.selfHealPctMaxOnDispel) {
+          ctx.applyHeal(p, p, Math.round(p.maxHp * eff.selfHealPctMaxOnDispel), ability.name);
+        }
         break;
       }
       case 'silence': {
@@ -1001,7 +1005,10 @@ export function runEffects(
           ability: ability.name,
           kind: 'hit',
         });
-        p.resource = Math.min(p.maxResource, p.resource + eff.mana);
+        // Improved Life Tap (a talent buffPct on the ability): more mana per
+        // tap, same health price, the classic shape.
+        const tapMana = Math.round(eff.mana * (1 + (mods.abilities[ability.id]?.buffPct ?? 0)));
+        p.resource = Math.min(p.maxResource, p.resource + tapMana);
         // The sap is a MOMENT: the life-fountain burst sells health becoming power.
         ctx.emit({
           type: 'spellfx',

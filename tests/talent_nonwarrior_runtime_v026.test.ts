@@ -153,7 +153,9 @@ describe('retained v0.26 non-Warrior row runtime contracts', () => {
     expect(resolved(sim, 'drain_life').castWhileMoving).toBe(true);
   });
 
-  it('arms Blood Credit only when Hard Bargain actually converts health', () => {
+  it('Blood Credit pays 20% more mana per tap and arms nothing', () => {
+    // Balance pass: the instant-bolt relay is gone; the option is the classic
+    // Improved Life Tap (rank 3 at 20: 85 hp -> 102 mana).
     const sim = simWithRows('warlock', { 11: 'wlk_r11_improved_life_tap' });
     sim.player.hp = 1;
     sim.player.resource = 0;
@@ -163,13 +165,12 @@ describe('retained v0.26 non-Warrior row runtime contracts', () => {
     expect(sim.player.hp).toBe(1);
     expect(sim.player.resource).toBe(0);
     expect(sim.player.gcdRemaining).toBe(0);
-    expect(sim.player.auras.some((entry) => entry.id === 'wlk_blood_credit')).toBe(false);
 
     sim.player.hp = 100;
     sim.castAbility('life_tap');
     expect(sim.player.hp).toBe(15);
-    expect(sim.player.resource).toBe(85);
-    expect(sim.player.auras.some((entry) => entry.id === 'wlk_blood_credit')).toBe(true);
+    expect(sim.player.resource).toBe(102);
+    expect(sim.player.auras.some((entry) => entry.id === 'wlk_blood_credit')).toBe(false);
   });
 
   it('casts Typhoon in caster form and Red Haze after shifting', () => {

@@ -155,10 +155,11 @@ describe('Talents V2 movement and control primitives', () => {
     expect(daze).toMatchObject({ kind: 'slow', value: 0.5, remaining: 4 });
   });
 
-  it('uses Frost Trap stun control rather than a movable root', () => {
+  it('uses Frost Trap armed stun control rather than a movable root', () => {
+    // Balance pass (G6): Rime Snare is an armed trap at the hunter's feet
+    // now; the freeze lands on first contact after the arm delay.
     const sim = new Sim({ seed: 5, playerClass: 'hunter', autoEquip: true });
     const enemy = addHostile(sim, 4);
-    sim.player.castAim = { ...enemy.pos };
     const beforeHp = enemy.hp;
     const rng = sim.ctx.rng as typeof sim.ctx.rng & {
       range(min: number, max: number): number;
@@ -171,9 +172,15 @@ describe('Talents V2 movement and control primitives', () => {
     };
 
     runAbilityEffect(sim, null, 'frost_trap');
+    expect(damageRolls).toBe(0); // placement draws no damage roll
+    rng.range = originalRange; // ambient sim rng during the ticks is not ours
+    expect(enemy.auras).toHaveLength(0); // placed, not an instant nova
+    enemy.pos.x = sim.player.pos.x;
+    enemy.pos.z = sim.player.pos.z;
+    enemy.aiState = 'idle';
+    for (let i = 0; i < 40; i++) sim.tick();
 
     expect(enemy.hp).toBe(beforeHp);
-    expect(damageRolls).toBe(0);
     expect(
       enemy.auras.some((entry) => entry.id === 'frost_trap_freeze' && entry.kind === 'stun'),
     ).toBe(true);

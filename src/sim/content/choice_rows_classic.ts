@@ -1648,7 +1648,7 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
     {
       level: 5,
       theme: 'malefic_cadence',
-      decision: 'Gloom-to-Blackrot cadence vs Blackrot control vs pact-fed instant bolt',
+      decision: 'Gloom-to-Blackrot cadence vs Blackrot control vs stronger Burning Pact',
       options: [
         {
           id: 'wlk_r5_bane',
@@ -1683,25 +1683,14 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
           },
         },
         {
+          // Balance pass: was Pact Reversal, one of FOUR instant-Gloom-Bolt
+          // relays. Now the fire lane's flat damage talent (Improved Immolate
+          // shape).
           id: 'wlk_r5_improved_immolate',
-          name: 'Pact Reversal',
-          description: 'Every 3rd Burning Pact makes your next Gloom Bolt within 8 sec instant.',
+          name: 'Pact Deepened',
+          description: 'Burning Pact deals 20% more damage.',
           icon: 'immolate',
-          effect: {
-            proc: {
-              id: 'wlk_improved_immolate',
-              name: 'Pact Reversal',
-              trigger: { on: 'castNth', n: 3, abilities: ['immolate'] },
-              responses: [
-                {
-                  kind: 'empowerNext',
-                  aura: 'next_cast_instant',
-                  abilities: ['shadow_bolt'],
-                  duration: 8,
-                },
-              ],
-            },
-          },
+          effect: { ability: [{ ability: 'immolate', dmgPct: 0.2 }] },
         },
       ],
     },
@@ -1736,29 +1725,17 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
     {
       level: 11,
       theme: 'dark_sustenance',
-      decision: 'Hard Bargain tempo vs mobile Consume vs reactive ward',
+      decision: 'richer Hard Bargain vs mobile Consume vs reactive ward',
       options: [
         {
+          // Balance pass: was an every-tap instant-bolt relay (a free, no
+          // cooldown trigger made every Gloom Bolt in the game instant). Now
+          // the classic Improved Life Tap.
           id: 'wlk_r11_improved_life_tap',
           name: 'Blood Credit',
-          description:
-            'Hard Bargain makes your next Gloom Bolt or Burning Pact within 8 sec instant.',
+          description: 'Hard Bargain grants 20% more mana.',
           icon: 'life_tap',
-          effect: {
-            proc: {
-              id: 'wlk_blood_credit',
-              name: 'Blood Credit',
-              trigger: { on: 'castNth', n: 1, abilities: ['life_tap'] },
-              responses: [
-                {
-                  kind: 'empowerNext',
-                  aura: 'next_cast_instant',
-                  abilities: ['shadow_bolt', 'immolate'],
-                  duration: 8,
-                },
-              ],
-            },
-          },
+          effect: { ability: [{ ability: 'life_tap', buffPct: 0.2 }] },
         },
         {
           id: 'wlk_r11_fel_concentration',
@@ -1787,7 +1764,7 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
     {
       level: 14,
       theme: 'school_weaving',
-      decision: 'DoT-fed bolt damage vs bolt-fed instant pact vs fire-fed shadow discount',
+      decision: 'DoT-fed bolt damage vs harder Sear vs fire-fed shadow discount',
       options: [
         {
           id: 'wlk_r14_amplify_curse',
@@ -1797,25 +1774,13 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
           effect: { ability: [{ ability: 'shadow_bolt', dmgPctVsDotted: 0.2 }] },
         },
         {
+          // Balance pass: was Ashen Relay (bolt-fed instant Burning Pact).
+          // Now a Sear lane talent for the school-weaving row.
           id: 'wlk_r14_ruin',
-          name: 'Ashen Relay',
-          description: 'Every 3rd Gloom Bolt makes your next Burning Pact within 8 sec instant.',
+          name: 'Ashen Focus',
+          description: 'Sear deals 25% more damage and costs 25% less.',
           icon: 'shadowburn',
-          effect: {
-            proc: {
-              id: 'wlk_desolation',
-              name: 'Ashen Relay',
-              trigger: { on: 'castNth', n: 3, abilities: ['shadow_bolt'] },
-              responses: [
-                {
-                  kind: 'empowerNext',
-                  aura: 'next_cast_instant',
-                  abilities: ['immolate'],
-                  duration: 8,
-                },
-              ],
-            },
-          },
+          effect: { ability: [{ ability: 'searing_pain', dmgPct: 0.25, costPct: -0.25 }] },
         },
         {
           id: 'wlk_r14_shadow_mastery',
@@ -1845,7 +1810,7 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
     {
       level: 17,
       theme: 'under_pressure',
-      decision: 'instant horror vs fear-to-bolt tempo vs reactive self-heal',
+      decision: 'instant horror vs snap Harrow vs reactive self-heal',
       options: [
         {
           id: 'wlk_r17_death_coil',
@@ -1855,25 +1820,14 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
           effect: { grant: { ability: 'death_coil' } },
         },
         {
+          // Balance pass: was Cruel Awakening (every Harrow armed an instant
+          // bolt: fear, bolt breaks it, re-fear, forever). New talent in the
+          // slot on the Snap Bewitch precedent: instant cast, real cooldown.
           id: 'wlk_r17_improved_fear',
-          name: 'Cruel Awakening',
-          description: 'Harrow makes your next Gloom Bolt within 8 sec instant.',
+          name: 'Snapdread',
+          description: 'Harrow becomes instant but gains a 16 sec cooldown.',
           icon: 'fear',
-          effect: {
-            proc: {
-              id: 'wlk_cruel_awakening',
-              name: 'Cruel Awakening',
-              trigger: { on: 'castNth', n: 1, abilities: ['fear'] },
-              responses: [
-                {
-                  kind: 'empowerNext',
-                  aura: 'next_cast_instant',
-                  abilities: ['shadow_bolt'],
-                  duration: 8,
-                },
-              ],
-            },
-          },
+          effect: { ability: [{ ability: 'fear', castPct: -1, cooldownFlat: 16 }] },
         },
         {
           id: 'wlk_r17_demonic_resilience',
@@ -1924,16 +1878,23 @@ export const WARLOCK_CHOICE_ROWS: ClassChoiceRows = {
           },
         },
         {
+          // Balance pass: Hexstorm survives as the warlock's ONE instant-bolt
+          // proc, now behind an internal cooldown.
           id: 'wlk_r20_curse_mastery',
           name: 'Hexstorm',
           description:
-            'Every 3rd Blackrot or Hex of Anguish makes your next Gloom Bolt within 8 sec instant.',
+            'Every 3rd Blackrot or Hex of Anguish makes your next Gloom Bolt within 8 sec instant, at most once every 10 sec.',
           icon: 'curse_of_agony',
           effect: {
             proc: {
               id: 'wlk_curse_mastery',
               name: 'Hexstorm',
-              trigger: { on: 'castNth', n: 3, abilities: ['corruption', 'curse_of_agony'] },
+              trigger: {
+                on: 'castNth',
+                n: 3,
+                abilities: ['corruption', 'curse_of_agony'],
+                icd: 10,
+              },
               responses: [
                 {
                   kind: 'empowerNext',

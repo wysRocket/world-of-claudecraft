@@ -326,10 +326,16 @@ const WARLOCK_SPECS: SpecDef[] = [
     'x',
     'A burst caster using Gloom Bolt, fire, and Duskfire.',
     'conflagrate',
+    // Balance pass (maintainer sheet): the Destruction mastery is a scoped
+    // nuke amp (the Brittlebreak shape), not a fire-crit multiplier.
     'Desolation',
-    'Your Fire spell critical strikes deal double damage, and ' +
-      'your critical strike chance is increased by 2%.',
-    { global: { critDmgSpellPct: 0.5 }, stats: { crit: 0.02 } },
+    'Increases Ruinbolt and Gloom Bolt damage by 20%.',
+    {
+      ability: [
+        { ability: 'chaos_bolt', dmgPct: 0.2 },
+        { ability: 'shadow_bolt', dmgPct: 0.2 },
+      ],
+    },
   ),
 ];
 

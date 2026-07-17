@@ -1697,8 +1697,10 @@ export type AbilityEffect =
       hitsPrimary?: boolean;
     }
   // Removes magic-only auras in the ally/enemy direction. `steal` transfers a
-  // stripped enemy benefit to the caster (Spellsteal).
-  | { type: 'dispel'; count: number; steal?: boolean }
+  // stripped enemy benefit to the caster (Spellsteal). `selfHealPctMaxOnDispel`
+  // heals the caster this fraction of max health ONLY when something was
+  // actually devoured (Voidfeast: no free heal off an empty target).
+  | { type: 'dispel'; count: number; steal?: boolean; selfHealPctMaxOnDispel?: number }
   | { type: 'silence'; duration: number }
   // `maxTargets` (Intimidating Shout) caps how many hostiles within radius are
   // feared; absent = fear every hostile in radius (the warlock-style AoE fear).

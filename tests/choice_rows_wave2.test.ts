@@ -235,16 +235,24 @@ describe('druid wave 2 choice rows', () => {
 });
 
 describe('warlock wave 2 choice rows', () => {
-  it('Fire and curse rhythms empower Shadow Bolt', () => {
+  it('only Hexstorm still empowers Gloom Bolt, behind its internal cooldown', () => {
+    // Balance pass: Pact Deepened and Ashen Focus are flat ability talents
+    // (the instant-relay soup is gone); Hexstorm survives with an icd.
     const { sim, p } = rig('warlock', 20, {
       5: 'wlk_r5_improved_immolate',
       14: 'wlk_r14_ruin',
       20: 'wlk_r20_curse_mastery',
     });
     for (let i = 0; i < 3; i++) completeCast(sim, 'immolate');
-    expect(p.auras.some((a) => a.id === 'wlk_improved_immolate')).toBe(true);
+    expect(p.auras.some((a) => a.id === 'wlk_improved_immolate')).toBe(false);
+    const immolate = sim.resolvedAbility('immolate');
+    expect(immolate?.effects[0]).toMatchObject({ type: 'directDamage' });
     for (let i = 0; i < 3; i++) completeCast(sim, 'curse_of_agony');
     expect(p.auras.some((a) => a.id === 'wlk_curse_mastery')).toBe(true);
+    // Inside the 10 sec icd three more curses do NOT re-arm it.
+    p.auras.length = 0;
+    for (let i = 0; i < 3; i++) completeCast(sim, 'curse_of_agony');
+    expect(p.auras.some((a) => a.id === 'wlk_curse_mastery')).toBe(false);
   });
 
   it('Deepened Hex and defensive pact hooks change live combat outcomes', () => {
