@@ -233,7 +233,19 @@ export function runEffects(
     const chargeState = p.abilityCharges?.raging_gale;
     if (chargeState && chargeState.charges < chargeState.maxCharges) {
       chargeState.charges += 1;
-      if (chargeState.charges >= chargeState.maxCharges) chargeState.recharge = 0;
+      // The refunded charge hands back its own per-charge timer (the newest =
+      // the longest; recharges[] is kept sorted ascending). Leaving it behind
+      // orphans a frozen timer on a full pool (the tick skips full pools),
+      // which the next spend would stack beside and recharge early off.
+      if (chargeState.recharges) {
+        chargeState.recharges.pop();
+        chargeState.recharge = chargeState.recharges[0] ?? 0;
+      } else if (chargeState.charges >= chargeState.maxCharges) {
+        // Legacy sequential save not yet converted to per-charge timers (the
+        // first recharge tick does that): a full pool clears the lone timer,
+        // a partial refund keeps it running, exactly the old model.
+        chargeState.recharge = 0;
+      }
       p.cooldowns.delete('raging_gale');
     }
   }

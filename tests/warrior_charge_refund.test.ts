@@ -42,13 +42,33 @@ describe('Cleaving Blows (Fury): Red Harvest refunds a charge of Twinstrike', ()
       maxCharges: 2,
       recharge: 8,
       rechargeLength: 8,
+      recharges: [8], // parallel model: the spent charge runs its own timer
     });
     p.resource = 100;
     p.gcdRemaining = 0;
     sim.castAbility('red_harvest');
     expect(p.abilityCharges?.raging_gale?.charges).toBe(2); // refunded to full
     expect(p.abilityCharges?.raging_gale?.recharge).toBe(0); // full pool: timer cleared
+    expect(p.abilityCharges?.raging_gale?.recharges).toEqual([]); // no orphaned timer
     expect(p.cooldowns.has('raging_gale')).toBe(false);
+  });
+
+  it('a refund hands back its timer: the next spend cannot recharge early off an orphan', () => {
+    // The regression this pins: a refund-to-full that cleared only the
+    // `recharge` mirror left its per-charge timer in recharges[]; the timer
+    // froze while the pool was full (the tick skips full pools), then the next
+    // spend stacked a second timer beside it and the pool refilled a whole
+    // recharge cycle early.
+    const { sim, p } = makeFuryWarrior(17);
+    p.gcdRemaining = 0;
+    sim.castAbility('raging_gale');
+    p.resource = 100;
+    p.gcdRemaining = 0;
+    sim.castAbility('red_harvest'); // refund back to full
+    p.gcdRemaining = 0;
+    sim.castAbility('raging_gale'); // spend again: exactly ONE timer may run
+    expect(p.abilityCharges?.raging_gale?.charges).toBe(1);
+    expect(p.abilityCharges?.raging_gale?.recharges).toEqual([8]);
   });
 
   it('a refund from an EMPTY pool re-opens it and keeps the recharge running', () => {
@@ -64,7 +84,24 @@ describe('Cleaving Blows (Fury): Red Harvest refunds a charge of Twinstrike', ()
     sim.castAbility('red_harvest');
     expect(p.abilityCharges?.raging_gale?.charges).toBe(1);
     expect(p.abilityCharges?.raging_gale?.recharge).toBe(8); // second use still recharging
+    expect(p.abilityCharges?.raging_gale?.recharges).toEqual([8]); // refunded charge gave back ITS timer
     expect(p.cooldowns.has('raging_gale')).toBe(false); // castable again right away
+  });
+
+  it('a legacy sequential save (no recharges[] yet) keeps its running timer on refund', () => {
+    // Old JSONB saves carry only the sequential `recharge`; the first recharge
+    // tick converts them to per-charge timers (updateTimers). A refund landing
+    // BEFORE that conversion must not zero the running timer on a still-partial
+    // pool: the old model kept it, and the conversion then staggers off it.
+    const { sim, p } = makeFuryWarrior(19);
+    p.abilityCharges = {
+      raging_gale: { charges: 0, maxCharges: 2, recharge: 5, rechargeLength: 8 },
+    };
+    p.resource = 100;
+    p.gcdRemaining = 0;
+    sim.castAbility('red_harvest');
+    expect(p.abilityCharges?.raging_gale?.charges).toBe(1);
+    expect(p.abilityCharges?.raging_gale?.recharge).toBe(5); // still running
   });
 
   it('does NOT refund when the passive is absent', () => {

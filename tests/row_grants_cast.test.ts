@@ -88,6 +88,20 @@ describe('every row-granted spell casts on its class', () => {
           p.resource = p.maxResource;
           p.gcdRemaining = 0;
         }
+        if (g.ability === 'voidfeast') {
+          // Devour gate (requiresDispellable): the cast is refused unless the
+          // target carries a beneficial magic aura to eat; seed one.
+          sim.ctx.applyAura(mob, {
+            id: 'test_devourable_ward',
+            name: 'Devourable Ward',
+            kind: 'buff_ap',
+            value: 10,
+            remaining: 20,
+            duration: 20,
+            sourceId: mob.id,
+            school: 'arcane',
+          });
+        }
         const cdBefore = p.cooldowns.get(g.ability);
         const events: SimEvent[] = [];
         sim.castAbility(g.ability);
