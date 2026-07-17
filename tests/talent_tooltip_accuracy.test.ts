@@ -119,8 +119,9 @@ describe('talent tooltip accuracy (all 9 classes x 3 specs)', () => {
       if (!entry) throw new Error(`no talent entry matched for ${cls}`);
       return entry.render();
     };
+    // Balance pass: Swift Verdicts is a cooldown cut now, not banked charges.
     const swift = render('paladin', (e) => e.id === 'pal_r14_swift_verdicts');
-    expect(swift).toContain('stores 2 uses');
+    expect(swift).toContain('cooldown is reduced by 20%');
 
     // Balance pass: the option is now Steady Draw, a plain cast-speed talent.
     const sniper = render('hunter', (e) => e.id === 'hun_r14_sniper_training');

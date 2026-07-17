@@ -98,9 +98,13 @@ describe('retained v0.26 all-class Talents V2 semantics', () => {
       return option;
     };
 
-    expect(rowOption('paladin', 'pal_r14_swift_verdicts').name).toBe('Twin Verdicts');
+    // Balance pass: Swift Verdicts is a cooldown cut (10 -> 8 sec), not
+    // banked charges.
+    expect(rowOption('paladin', 'pal_r14_swift_verdicts').name).toBe('Swift Verdicts');
     const verdict = resolved('paladin', 'judgement', { 14: 'pal_r14_swift_verdicts' });
-    expect(verdict).toMatchObject({ cost: 30, charges: 2, bonusCharges: 1 });
+    expect(verdict).toMatchObject({ cost: 30 });
+    expect(verdict.cooldown).toBeCloseTo(8);
+    expect(verdict.bonusCharges ?? 0).toBe(0);
 
     // Balance pass: hun_r14_sniper_training is Steady Draw now (the Rattling
     // Ambush reset+free relay was the worst loop in the game).

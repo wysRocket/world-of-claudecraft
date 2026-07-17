@@ -401,14 +401,16 @@ export const PALADIN_CHOICE_ROWS: ClassChoiceRows = {
     {
       level: 14,
       theme: 'reckoning',
-      decision: 'banked Verdicts vs area holy burst vs Oathbrand-fed Verdict tempo',
+      decision: 'faster Verdicts vs area holy burst vs Oathbrand-fed Verdict tempo',
       options: [
         {
+          // Balance pass (maintainer sheet): banked double Verdicts are out.
+          // The classic Improved Judgement shape instead.
           id: 'pal_r14_swift_verdicts',
-          name: 'Twin Verdicts',
-          description: 'Verdict stores 2 uses.',
+          name: 'Swift Verdicts',
+          description: "Verdict's cooldown is reduced by 20%.",
           icon: 'judgement',
-          effect: { ability: [{ ability: 'judgement', bonusCharges: 1 }] },
+          effect: { ability: [{ ability: 'judgement', cooldownPct: -0.2 }] },
         },
         {
           id: 'pal_r14_holy_wrath',
