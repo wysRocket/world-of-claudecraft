@@ -364,6 +364,10 @@ export function meleeSwing(
     threatFlat?: number;
     threatMult?: number;
     forceCrit?: boolean;
+    // Ability-scoped crit chance ADD (talent ResolvedAbilityMod.critPct); the
+    // weaponStrike path threads it here so per-ability crit talents reach the
+    // shared hit table.
+    critBonus?: number;
     onDealt?: (amount: number) => void;
     whiteDualWieldPenalty?: boolean;
   },
@@ -440,7 +444,9 @@ export function meleeSwing(
     imbueBonus;
   const critChance = Math.max(
     0.005,
-    attacker.critChance - Math.max(0, target.level - attacker.level) * 0.002,
+    attacker.critChance +
+      (opts.critBonus ?? 0) -
+      Math.max(0, target.level - attacker.level) * 0.002,
   );
   const crit =
     ctx.rng.chance(consumeNextAttackCrit(ctx, attacker) ? 1 : critChance) ||

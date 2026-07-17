@@ -5291,6 +5291,7 @@ export class Sim {
       threatFlat?: number;
       threatMult?: number;
       forceCrit?: boolean;
+      critBonus?: number;
       onDealt?: (amount: number) => void;
     },
   ): boolean {

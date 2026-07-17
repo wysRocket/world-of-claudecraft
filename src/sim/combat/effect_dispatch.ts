@@ -286,6 +286,9 @@ export function runEffects(
           threatFlat: res.threatFlat,
           threatMult: res.threatMult,
           forceCrit: sureCrit,
+          // Ability-scoped crit talents (ResolvedAbilityMod.critPct, e.g. the
+          // Redhanded Craven Thrust mastery) ride the shared hit table.
+          critBonus: mods.abilities[ability.id]?.critPct ?? 0,
           onDealt:
             areaEcho || sweeping
               ? (amount) => {
@@ -326,12 +329,15 @@ export function runEffects(
         if (!target) break;
         if (!ctx.isHostileTo(p, target)) break;
         const rooted = isRootedOrChilled(target);
+        const abilityMod = mods.abilities[ability.id];
         const critChance =
           (isSpell && rooted
             ? ctx.spellCrit(p) + mods.global.critVsRooted
             : isSpell
               ? ctx.spellCrit(p)
               : p.critChance) +
+          // Ability-scoped crit talents (ResolvedAbilityMod.critPct).
+          (abilityMod?.critPct ?? 0) +
           // Shatter (combat/frost_mage.ts): bonus spell crit chance against a
           // target this cast treats as frozen. 0 for everyone else.
           (isSpell && frozen.treatAsFrozen ? SHATTER_CRIT_BONUS : 0);
@@ -345,7 +351,6 @@ export function runEffects(
         // Ice Lance against a frozen-counting target (combat/frost_mage.ts):
         // the per-cast resolution carries its 3x; 1 for every other cast.
         if (isSpell && frozen.treatAsFrozen) dmg *= frozen.damageMult;
-        const abilityMod = mods.abilities[ability.id];
         const vsDotted = abilityMod?.dmgPctVsDotted ?? 0;
         const requiredDot = abilityMod?.dmgPctVsDottedAbility;
         if (

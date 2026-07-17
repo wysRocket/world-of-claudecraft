@@ -73,6 +73,10 @@ export interface AbilityModEffect {
   cooldownFlat?: number;
   castPct?: number;
   buffPct?: number;
+  // Ability-scoped critical strike chance ADD (the classic Improved Backstab
+  // shape). Reaches the weaponStrike hit table (meleeSwing critBonus) and the
+  // directDamage crit roll in effect_dispatch.ts.
+  critPct?: number;
   castWhileMoving?: boolean;
   damagePushbackImmune?: boolean;
   bonusCharges?: number;
@@ -228,6 +232,7 @@ export interface ResolvedAbilityMod {
   cooldownFlat: number;
   castPct: number;
   buffPct: number;
+  critPct: number;
   castWhileMoving: boolean;
   damagePushbackImmune: boolean;
   bonusCharges: number;
@@ -502,6 +507,7 @@ function zeroAbilityMod(): ResolvedAbilityMod {
     cooldownFlat: 0,
     castPct: 0,
     buffPct: 0,
+    critPct: 0,
     castWhileMoving: false,
     damagePushbackImmune: false,
     bonusCharges: 0,
@@ -604,6 +610,7 @@ export function accumulateTalentEffect(
     target.cooldownFlat += (ability.cooldownFlat ?? 0) * multiplier;
     target.castPct += (ability.castPct ?? 0) * multiplier;
     target.buffPct += (ability.buffPct ?? 0) * multiplier;
+    target.critPct += (ability.critPct ?? 0) * multiplier;
     target.bonusCharges += (ability.bonusCharges ?? 0) * multiplier;
     if (ability.castWhileMoving) target.castWhileMoving = true;
     if (ability.damagePushbackImmune) target.damagePushbackImmune = true;

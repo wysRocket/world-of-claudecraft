@@ -666,6 +666,7 @@ export interface SimContextCallbacks {
       threatFlat?: number;
       threatMult?: number;
       forceCrit?: boolean;
+      critBonus?: number;
       onDealt?: (amount: number) => void;
     },
   ): boolean;

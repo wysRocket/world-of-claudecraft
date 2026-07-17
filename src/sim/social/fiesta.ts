@@ -156,6 +156,7 @@ export function mergeAugmentMods(base: TalentModifiers, augIds: string[]): Talen
           flatDmg: 0,
           costPct: 0,
           cooldownPct: 0,
+          critPct: 0,
           cooldownFlat: 0,
           castPct: 0,
           buffPct: 0,
