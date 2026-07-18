@@ -2193,7 +2193,6 @@ async function startGame(
         t('questUi.errors.tooFar'),
         t('hudChrome.gathering.notReady'),
         t('errors.nothingInteract'),
-        online === null,
       ),
       input,
       mobileControls,
@@ -2327,7 +2326,7 @@ async function startGame(
       return;
     }
     const e = world.entities.get(id);
-    const interactionOutcome = handlePickedEntity(world, hud, id, button, x, y, online === null);
+    const interactionOutcome = handlePickedEntity(world, hud, id, button, x, y);
     const didInteractImmediately = interactionOutcome === true;
     if (e && e.id !== world.player.id) {
       // Mark the entity when you engage it: a left-click target, or the click-to-move
@@ -2341,7 +2340,7 @@ async function startGame(
       // regular click handler still performs target/interact behavior.
       if (
         isClickMoveButton &&
-        shouldApproachPickedEntity(world.player, e, didInteractImmediately, online === null)
+        shouldApproachPickedEntity(world.player, e, didInteractImmediately)
       ) {
         const target = resolvedClickMoveTarget({ x: e.pos.x, z: e.pos.z });
         input.setClickMoveTarget(target, 3.5, e.id, clickMovePathTo(target));
