@@ -3,7 +3,8 @@
 Status: incremental implementation plan. A mandatory transition to five abilities is on hold.
 Broad class redesign still requires owner approval and PBE validation. The first Fury
 corrections shipped in the v0.27.1 hotfix (PR #2112); their measured results are recorded
-below.
+below. In flight: the Frost proc-stacking and CC-immunity correction (draft PR #2115) and the
+Battle Rhythm resource-only follow-up (draft PR #2117).
 
 This document applies `docs/design/class-design-rules.md` to Cryomancy Mage and Bloodrush
 Warrior. It reduces excess damage, redundant mechanics, and mobile input burden without replacing
@@ -21,7 +22,9 @@ throughput layers than they need. The next phase is therefore incremental:
 5. Talk directly with heavy mobile users before changing the action-bar model.
 
 Builder, spender, proc, offensive cooldown, and defensive cooldown remain useful labels for
-explaining a core loop. They are not a required five-ability destination.
+explaining a core loop. They are not a required five-ability destination. The endorsed working
+shape is five recurring combat buttons, not five total abilities: the recurring loop stays
+small, and situational identity tools remain explicit buttons.
 
 The community keep-list constrains every cut. Players singled out dual wielding, area attacks,
 mobility, slows, and Execute as abilities they love. Cuts target redundancy and hidden multipliers,
@@ -228,9 +231,9 @@ Use this order for the first complexity audit:
 1. Remove passive or talent throughput that does not change the next decision.
 2. Make the long-duration Iron Bellow group buff automatic or fold it into existing group setup so
    it does not occupy a maintenance input.
-3. Put Emboldening Roar and Valor Roar into one clear support choice or shared roar slot if mobile
-   bars still carry both. Preserve their offensive and defensive identities as mutually exclusive
-   behavior rather than stacking both effects.
+3. Consolidate Emboldening Roar and Valor Roar into one clear support choice or shared roar
+   slot rather than preserving both. Keep their offensive and defensive identities as mutually
+   exclusive behavior rather than stacking both effects.
 4. Keep Early Grave active for the first pass. Players called out Execute as useful and satisfying;
    automatically attaching it to Red Harvest removes its timing decision. A contextual rotation
    button may select Early Grave when its health gate is valid without deleting the manual action.
