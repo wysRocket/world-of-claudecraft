@@ -182,7 +182,7 @@ The Warrior rows keep six decisions but stop creating six additional throughput 
 | 17 | Each option carries several throughput effects | Select one offensive-slot identity |
 | 20 | Another offensive effect stacks with level 17 | Modify or replace the selected offensive slot |
 
-Immediate corrections:
+Choice-row corrections:
 
 - Anger Management stops multiplying both white and ability rage. Its legal role is rage
   smoothing or overflow protection.
@@ -201,6 +201,9 @@ Immediate corrections:
 Enrage also follows the one-effect rule. Haste carries the fantasy, so the independent damage
 percentage is removed during consolidation.
 
+The delivery plan below assigns each correction to an immediate atomic PR or to the PBE
+consolidation.
+
 ## Talent and aura stacking invariant
 
 Every throughput effect declares one of these ownership categories:
@@ -217,15 +220,66 @@ choice that buffs allies does not also buff its caster.
 On-kill effects refresh instead of stacking. Cooldown recovery targets one named slot. A copied
 attack or spell uses a fixed talent-owned budget instead of copying already-amplified output.
 
-## Delivery sequence
+## Atomic delivery plan
 
-1. Land this design package.
-2. Land the immediate Frost slice and remove Temporal Rift.
-3. Land the Fury white-damage slice.
-4. Land the Fury rage and choice-row slice.
-5. Run the full Frost and Fury kit consolidations through PBE after owner approval.
-6. Add the final cross-spec 10 to 15 percent gate once all required rotations and gear fixtures
-   exist.
+This package lands as atomic code PRs. Each PR changes exactly one power source or one
+slot, ships with its own deterministic fails-before and passes-after evidence, and reverts
+independently of the others. Two corrections never share a PR when one can be reverted
+without the other. Every PR follows the change protocol in
+`docs/design/spell-balance-framework.md`: pin the behavior with a fixture, change the one
+source, show the fixture flip, re-run the three profiles, and name any PBE or raid
+validation a target-dummy fixture cannot prove.
 
-Each behavior change gets deterministic fails-before and passes-after evidence. A code PR must
-name any requested PBE or raid validation that cannot be proven by a target-dummy fixture.
+### Frost sequence
+
+The immediate Frost slice becomes four independent PRs. They touch different mechanics and
+can land in any order:
+
+| PR | One change | Evidence |
+|---|---|---|
+| F1 | Replace Temporal Rift with Shifting Ward; stable option id, saved-build migration, descriptions | Talent test pins the new barrier-breaks-roots behavior and the removed stun, root, and silence ignore; fails before, passes after |
+| F2 | Remove Shatter's critical-damage bonus; frozen-target critical chance stays | Pinned Shatter interaction test |
+| F3 | Remove Brain Freeze's direct damage bonus; instant Winterlash stays | Pinned Brain Freeze interaction test |
+| F4 | Frozen Orb feeds the Icicle loop without generating Fingers of Frost | Proc-attribution test: Orb advances Icicles only |
+
+Each PR updates the player-facing talent descriptions it touches in the same change.
+
+### Fury sequence
+
+The Fury corrections are ordered. Damage-based rage converts whatever white damage
+remains, so the white-damage corrections land before the rage corrections; changing both
+in one PR would hide each source's contribution.
+
+| PR | One change | Depends on | Evidence |
+|---|---|---|---|
+| W1 | Fury measurement fixture: one two-handed loadout versus the supported dual-wield loadouts at comparable total item level, reporting main-hand and offhand white damage, attack power by item, and rage by hand | None | Test-only PR with no behavior change; fixture output is checked in |
+| W2 | Explicit Fury offhand stat budget that normalizes the combined weapon-stat contribution | W1 | Fixture shows the combined budget outside the band before, inside after |
+| W3 | Offhand white-damage tuning, plus a Titan's Grip white-damage modifier only if the measured loadout still exceeds the band | W2 | Fixture white DPS within 10 to 15 percent of the one-weapon baseline |
+| W4 | Warrior white hits use the shared `rageFromDealing` coefficient instead of the Warrior-only 9 in `src/sim/combat/damage.ts`; offhand rage is supplementary and derives from the corrected offhand damage | W3 | Rage-by-hand fixture rows fail before, pass after |
+| W5 | Recklessness loses rage generation and keeps critical reliability | W4 | Talent interaction test |
+| W6 | Battle Rhythm loses its damage multiplier and remains resource behavior only | W4 | Talent interaction test |
+| W7 | Active rage tuned around an explicit Red Harvest cadence; continuous uptime cannot refill to the cap before the spender is ready | W4 to W6 | Sustained-profile resource-stability row plus the leveling-checkpoint rage report |
+
+### Choice-row corrections
+
+The remaining one-effect removals are immediate atomic PRs of the same shape as W5 and W6,
+one talent per PR, measured against the corrected rage accounting:
+
+- Anger Management keeps only rage smoothing or overflow protection.
+- Combat Mastery grants one effect per stance.
+- Bloodbath becomes one nonstacking effect that refreshes.
+- Colossal Might targets one named cooldown.
+
+The slot replacements, Bladestorm for area damage and Sanguine Aura for group support, and
+the Enrage damage-percentage removal ship with the full kit consolidation after owner
+approval and PBE validation. Avatar already satisfies the one-effect rule and needs no
+immediate PR.
+
+### Consolidation and the final gate
+
+1. Land the design package (this PR).
+2. Land the Frost and Fury atomic PRs above.
+3. Run the full Frost and Fury kit consolidations through PBE after owner approval.
+4. Add the cross-spec 10 to 15 percent sustained single-target gate as its own measurement
+   PR once the required rotations and gear fixtures exist for every damage specialization.
+   It enforces the band and changes no coefficients.
