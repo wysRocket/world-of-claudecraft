@@ -120,6 +120,7 @@ export function resolveVisualThemeTarget(publicDir, target) {
 
 export function collectMissingVisualThemeTargetWarnings(catalog, publicDir, targetExists) {
   const warnings = [];
+  const checkedTargets = new Set();
   for (const theme of Object.keys(catalog).sort()) {
     if (theme !== REPLACEABLE_THEME) {
       throw new Error(`[visual-theme catalog]: unsupported theme ${JSON.stringify(theme)}`);
@@ -132,6 +133,8 @@ export function collectMissingVisualThemeTargetWarnings(catalog, publicDir, targ
       logicalPath(from, '[visual-theme catalog]', 'replacement.from');
       const target = entries[from];
       const resolved = resolveVisualThemeTarget(publicDir, target);
+      if (checkedTargets.has(target)) continue;
+      checkedTargets.add(target);
       if (!targetExists(resolved)) {
         warnings.push(`[visual-theme] ${theme} target not built yet: ${target}`);
       }

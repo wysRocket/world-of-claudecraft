@@ -234,6 +234,28 @@ describe('visual theme manifest builder', () => {
     ]);
   });
 
+  it('warns once when multiple replacements share a missing target', () => {
+    const catalog = buildVisualThemeCatalog([
+      specFile(
+        'shared.json',
+        themeSpec([
+          { from: 'models/oak_1.glb', to: 'models/emberwood/oak.glb' },
+          { from: 'models/oak_2.glb', to: 'models/emberwood/oak.glb' },
+        ]),
+      ),
+    ]);
+    const seen: string[] = [];
+    const warnings = collectMissingVisualThemeTargetWarnings(catalog, '/repo/public', (target) => {
+      seen.push(target);
+      return false;
+    });
+
+    expect(seen).toEqual([path.resolve('/repo/public/models/emberwood/oak.glb')]);
+    expect(warnings).toEqual([
+      '[visual-theme] emberwood target not built yet: models/emberwood/oak.glb',
+    ]);
+  });
+
   it('distinguishes fresh and stale serialized catalogs', () => {
     const generated = serializeVisualThemeCatalog(buildVisualThemeCatalog([]));
     expect(isVisualThemeCatalogFresh(generated, generated)).toBe(true);
