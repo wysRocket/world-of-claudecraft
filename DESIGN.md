@@ -1,15 +1,15 @@
-# World of ClaudeCraft Design Language
+# Endless Glory Design Language
 
 **Status:** Adopted standard. Interface changes land in the phases of section 15, in
 order, never as isolated fragments.
-**Scope:** The desktop game client (the `index.html` and `play.html` entries). Because
+**Scope:** The offline-first desktop game client (the single `index.html` entry). Because
 mobile is the same client consuming the same `src/styles/tokens.css` and `src/ui/theme.ts`,
 the token, theme, and typography phases restyle mobile on day one and owe mobile
 screenshots; only mobile-specific LAYOUT work is deferred to its own program. Every change
 still owes the mobile-coverage decisions in section 13.5.
 **Updated:** 2026-07-15.
 
-This document is the source of truth for how World of ClaudeCraft's interface should look,
+This document is the source of truth for how Endless Glory's interface should look,
 move, and feel. It pairs the approved design references (section 2) with the systems this
 repo already has: the token and theme engine, the painter families, the fairness, i18n,
 accessibility, and performance contracts. Where this document and the current code
@@ -335,7 +335,7 @@ to Alegreya. Never introduce a blackletter or decorative medieval face anywhere.
 
 ### 5.2 Self-host the fonts
 
-The game entries currently load Google Fonts from the CDN; the guide already self-hosts the
+The game entry currently loads Google Fonts from the CDN; the guide already self-hosts the
 same families from `public/fonts/` with subset `@font-face` rules (`src/guide/styles.css`).
 Move the game entries to the same pattern in the foundation phase:
 
@@ -346,8 +346,8 @@ Move the game entries to the same pattern in the foundation phase:
 - Land the `@font-face` rules as a new `fonts.css` module in the `src/styles/` barrel
   (update the pinned import order in `tests/styles_extraction.test.ts` and the section
   manifest in `tests/css_corpus.test.ts` in the same change); preload only the two
-  above-the-fold faces from each entry, exactly like `guide.html` does.
-- Remove the CDN `<link>`s from `index.html` and `play.html`, and trim the now-unused
+  above-the-fold faces from the game entry, exactly like `guide.html` does.
+- Remove the CDN `<link>`s from `index.html`, and trim the now-unused
   Google Fonts origins from the desktop CSP (`electron/shell_guards.cjs` and its pinned
   `tests/electron_shell_guards.test.ts`) in the same change.
 

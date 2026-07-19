@@ -29,6 +29,7 @@
     "electron:pack:steam": "node scripts/electron-build.mjs pack steam",
     "electron:build": "node scripts/electron-build.mjs build",
     "electron:build:steam": "node scripts/electron-build.mjs build steam",
+    "icons:build": "node scripts/build_native_icons.mjs",
     "preview": "vite preview",
     "format": "biome format --write .",
     "format:check": "biome format .",
