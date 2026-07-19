@@ -28,7 +28,7 @@ export interface CraftTrend {
 // normalized upstream, but this classifier stays total over any input).
 function skillOf(skills: CraftSkills, craftId: string): number {
   const value = skills[craftId];
-  return typeof value === 'number' && value > 0 ? value : 0;
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
 }
 
 /** Classify the leading adjacent-pair trend in `skills`, or null when every

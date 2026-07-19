@@ -1,7 +1,9 @@
 // Authored mail content for the Ravenpost (the in-game mail service): the
-// welcome letter every character receives once, and the NPC thank-you letters
-// select quests send after their turn-in. Data-as-code, merged nowhere: the
-// PostOffice (src/sim/mail/post_office.ts) reads these tables directly.
+// welcome letter every character receives once, the Heroic Marks reward
+// letter, the NPC thank-you letters select quests send after their turn-in,
+// and the Guild trend letters (one per adjacent craft pair, Professions 2.0
+// Phase 7). Data-as-code, merged nowhere: the PostOffice
+// (src/sim/mail/post_office.ts) reads these tables directly.
 //
 // English here is the source of truth; the client localizes each letter by its
 // stable `letterId` through the entity dictionary (src/ui/entity_i18n.ts kind
