@@ -13254,7 +13254,7 @@ export function abilityRequirementLines(def: AbilityDef): string[] {
 // shown with the scaling contribution called out as a "(+N)" suffix, e.g.
 // "66 to 74 (+29)", so a caster sees both the base and exactly what their Spell
 // Power adds, and watches it climb as gear changes.
-function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling): string {
+export function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling): string {
   // " (+N)" callout for the scaling contribution (Spell Power / Attack Power),
   // omitted when there is none. Punctuation + formatted number only (no words).
   const suffix = (eff: AbilityEffect) => {
@@ -13317,7 +13317,7 @@ function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling): stri
     case 'hot':
       return formatAbilityNumber(secondary.total) + suffix(secondary);
     case 'absorb':
-      return formatAbilityNumber(secondary.amount);
+      return formatAbilityNumber(secondary.amount) + suffix(secondary);
     case 'imbue':
       return formatAbilityNumber(secondary.bonus);
     default:

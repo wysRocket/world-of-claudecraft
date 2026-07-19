@@ -471,6 +471,8 @@ export const CLASSES: Record<PlayerClass, ClassDef> = {
 // Abilities — classic-era rank values and learn levels (levels 1-10)
 // ---------------------------------------------------------------------------
 
+const MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF = 0.5;
+
 export const ABILITIES: Record<string, AbilityDef> = {
   // ====================== WARRIOR ======================
   heroic_strike: {
@@ -2429,10 +2431,41 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     // The original level-20 shield moved down to the spec pick at level 5.
     // Rank it through the leveling curve instead of granting its cap value early.
-    effects: [{ type: 'absorb', amount: 50, duration: 60 }],
+    effects: [
+      {
+        type: 'absorb',
+        amount: 50,
+        duration: 60,
+        spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+      },
+    ],
     ranks: [
-      { rank: 2, level: 12, cost: 65, effects: [{ type: 'absorb', amount: 90, duration: 60 }] },
-      { rank: 3, level: 18, cost: 90, effects: [{ type: 'absorb', amount: 130, duration: 60 }] },
+      {
+        rank: 2,
+        level: 12,
+        cost: 65,
+        effects: [
+          {
+            type: 'absorb',
+            amount: 90,
+            duration: 60,
+            spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+          },
+        ],
+      },
+      {
+        rank: 3,
+        level: 18,
+        cost: 90,
+        effects: [
+          {
+            type: 'absorb',
+            amount: 130,
+            duration: 60,
+            spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+          },
+        ],
+      },
     ],
     description: 'Shields you in ice, absorbing $d damage for 60 sec.',
   },
@@ -5965,10 +5998,41 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     // The fire spec's PERSONAL BARRIER slot (Frost carries Frostveil): the
     // shared row talents hook either id via PERSONAL_BARRIER_IDS.
-    effects: [{ type: 'absorb', amount: 50, duration: 60 }],
+    effects: [
+      {
+        type: 'absorb',
+        amount: 50,
+        duration: 60,
+        spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+      },
+    ],
     ranks: [
-      { rank: 2, level: 12, cost: 65, effects: [{ type: 'absorb', amount: 90, duration: 60 }] },
-      { rank: 3, level: 18, cost: 90, effects: [{ type: 'absorb', amount: 130, duration: 60 }] },
+      {
+        rank: 2,
+        level: 12,
+        cost: 65,
+        effects: [
+          {
+            type: 'absorb',
+            amount: 90,
+            duration: 60,
+            spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+          },
+        ],
+      },
+      {
+        rank: 3,
+        level: 18,
+        cost: 90,
+        effects: [
+          {
+            type: 'absorb',
+            amount: 130,
+            duration: 60,
+            spellPowerCoeff: MAGE_PERSONAL_BARRIER_SPELL_POWER_COEFF,
+          },
+        ],
+      },
     ],
     description: 'Wreathe yourself in flame, absorbing $d damage for 60 sec. (Fire)',
   },

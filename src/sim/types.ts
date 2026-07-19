@@ -1812,7 +1812,7 @@ export type AbilityEffect =
       radius: number;
     }
   | { type: 'hot'; total: number; duration: number; interval: number } // renew, rejuvenation
-  | { type: 'absorb'; amount: number; duration: number } // power word: shield
+  | { type: 'absorb'; amount: number; duration: number; spellPowerCoeff?: number } // power word: shield
   | { type: 'imbue'; bonus: number; duration: number; judgeMin?: number; judgeMax?: number } // seals / rockbiter: extra damage per swing
   | { type: 'judgement'; dmgMult?: number; flat?: number } // consume your imbue, deal its judgement damage to the target
   | { type: 'lifeTap'; hp: number; mana: number }

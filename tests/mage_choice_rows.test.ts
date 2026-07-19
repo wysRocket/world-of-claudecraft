@@ -89,7 +89,9 @@ describe('mage choice rows (owner tree)', () => {
   it('Warded cuts damage 15% and heals for 10% mage max health on break', () => {
     const { sim, p } = rig({ 8: 'mag_r8_warded' }, 8);
     const mob = addTargetMob(sim);
-    sim.castAbility('ice_barrier'); // rank 1: 50 absorb
+    sim.castAbility('ice_barrier');
+    const initialBarrier =
+      p.auras.find((aura) => aura.id === 'ice_barrier' && aura.kind === 'absorb')?.value ?? 0;
     const breakHeal = Math.round(p.maxHp * 0.1);
     const deal = (n: number) =>
       (
@@ -107,8 +109,8 @@ describe('mage choice rows (owner tree)', () => {
       ).dealDamage(mob, p, n, false, 'physical', null, 'hit');
     p.hp -= 100; // the break heal resolves before the landing hit: leave room
     const hp0 = p.hp;
-    deal(100); // Warded cuts to 85: 50 absorbed, break heal resolves, then 35 lands
-    expect(p.hp).toBe(hp0 + breakHeal - 35);
+    deal(100);
+    expect(p.hp).toBe(hp0 + breakHeal - (85 - initialBarrier));
     expect(p.auras.some((a) => a.id === 'ice_barrier' && a.kind === 'absorb')).toBe(false);
   });
 

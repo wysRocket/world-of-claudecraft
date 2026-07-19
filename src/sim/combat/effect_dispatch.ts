@@ -26,6 +26,7 @@ import type { PlayerMeta, ResolvedAbility } from '../sim';
 import type { SimContext } from '../sim_context';
 import {
   abilityScalingPower,
+  absorbBonus,
   directHealBonus,
   directHitBonus,
   dotTickBonus,
@@ -798,7 +799,7 @@ export function runEffects(
           kind: 'absorb',
           remaining: eff.duration,
           duration: eff.duration,
-          value: eff.amount,
+          value: eff.amount + absorbBonus(p.spellPower, eff.spellPowerCoeff ?? 0),
           sourceId: p.id,
           school: ability.school,
         });
