@@ -1222,6 +1222,11 @@ export class Hud {
   private openVendorNpcId: number | null = null;
   private openHeroicVendorNpcId: number | null = null;
   private openTrainNpcId: number | null = null;
+  // Standalone trapping window (the professions/mailbox shape, NOT the
+  // vendor's docked bags pairing): capture the opener + install the Tab trap
+  // at open, return focus on close (src/ui/CLAUDE.md focus contract).
+  private readonly trainWindowFocus = this.windowFocus('#train-window');
+  private trainOpenerFocus: HTMLElement | null = null;
   // Craft tier-up snapshot (Professions 2.0 Phase 6): the last SYNCED
   // craftSkills observation handleEvents diffs for tier crossings. null until
   // the first synced observation, which initializes silently (no toasts for
@@ -8770,7 +8775,10 @@ export class Hud {
               }),
               '#7fdc4f',
             );
-          } else {
+          } else if (ev.reason) {
+            // A reason-less deny is the malformed-recipe-id probe arm
+            // (resolveTrain's silent arm): nothing legible to tell the player,
+            // so render nothing (the event still lands for probes).
             this.log(
               ev.reason === 'train_tier_unmet'
                 ? t('hudChrome.training.tierUnmet', {
@@ -10819,6 +10827,7 @@ export class Hud {
     this.closeOtherWindows('#train-window');
     this.openTrainNpcId = npcId;
     this.renderTrain();
+    this.trainOpenerFocus = this.trainWindowFocus.captureFocus();
   }
 
   private renderTrain(): void {
@@ -10849,6 +10858,8 @@ export class Hud {
     $('#train-window').style.display = 'none';
     this.openTrainNpcId = null;
     this.hideTooltip();
+    this.trainWindowFocus.restoreFocus(this.trainOpenerFocus);
+    this.trainOpenerFocus = null;
   }
 
   // -------------------------------------------------------------------------

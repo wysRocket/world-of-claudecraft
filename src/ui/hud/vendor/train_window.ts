@@ -10,6 +10,7 @@
 // decision, never hidden.
 
 import { craftNameText } from '../../char_window';
+import { markDialogRoot } from '../../dialog_root';
 import { itemDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { formatMoney, formatNumber, t } from '../../i18n';
@@ -47,6 +48,9 @@ export function renderTrainWindow(
   // The rebuild replaces the hovered row (its mouseleave never fires) and
   // collapses the scrolled list; drop the tooltip and restore the scroll.
   deps.hideTooltip();
+  // A standalone trapping window (the mailbox shape), not the vendor's docked
+  // bags pairing: announce it as a labeled dialog for the focus contract.
+  markDialogRoot(el, { label: t('hudChrome.training.title', { name: masterName }) });
   const scrollTop = el.scrollTop;
   el.innerHTML = `<div class="panel-title"><span>${esc(t('hudChrome.training.title', { name: masterName }))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.training.close'))}">${svgIcon('close')}</button></div>`;
 

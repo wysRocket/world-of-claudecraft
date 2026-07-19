@@ -63,6 +63,13 @@ describe('hud.ts trainResult event arm (source pins)', () => {
     expect(arm).not.toMatch(/showBanner|showToast|this\.audio|playSfx|playCue|celebrat/i);
   });
 
+  it('renders nothing for a reason-less deny (the malformed-recipe-id probe arm)', () => {
+    const arm = trainResultArm();
+    // resolveTrain's silent arm emits ok:false with reason undefined; the deny
+    // log call must be guarded on ev.reason so that arm stays render-free.
+    expect(arm).toContain('else if (ev.reason)');
+  });
+
   it('repaints the open train window AND the open crafting window', () => {
     const arm = trainResultArm();
     expect(arm).toContain('this.renderTrain();');
