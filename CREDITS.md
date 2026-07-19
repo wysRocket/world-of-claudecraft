@@ -9,6 +9,7 @@ provided as a courtesy.
 
 | Assets | Author | Source | License |
 |---|---|---|---|
+| EndlessGlory Emberwood Chronicle Eastbrook art | EndlessGlory | Project-owned original work | Project asset |
 | Character models + animations (knight, mage, rogue, barbarian, hooded rogue), weapons/shields | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0 | CC0 1.0 |
 | Skeleton character models + animations, bone weapons | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Skeletons-1.0 | CC0 1.0 |
 | Dungeon modular kit (walls, floors, pillars, torches, banners, chests, furniture) | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Dungeon-Remastered-1.0 | CC0 1.0 |
