@@ -10,6 +10,7 @@ import { loadBrowserslistFloors } from './scripts/browserslist_targets.mjs';
 // Untyped zero-dep build helper (same convention as the other scripts/*.mjs tools).
 // vite.config.ts is outside tsconfig `include`, so this import is never type-checked.
 import { templateModulepreload } from './scripts/i18n_modulepreload.mjs';
+import { visualThemeHtmlPlugin } from './scripts/lib/visual_theme_html';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
@@ -69,7 +70,6 @@ const appBuildId =
   gitSha() ??
   appBuildDate.replace(/[-:TZ.]/g, '').slice(0, 12);
 const desktopApiOrigin = env(['VITE_DESKTOP_API_ORIGIN']);
-const visualThemeBuildDefault = env(['VITE_VISUAL_THEME']) ?? 'classic';
 const isDesktopDevBuild = env(['VITE_DESKTOP_APP']) === '1';
 const apiProxyTarget =
   env(['WOC_DEV_API_TARGET']) ??
@@ -132,18 +132,6 @@ function staticPageAliasPlugin() {
     });
   };
   return { name: 'woc-static-page-alias', configureServer: attach, configurePreviewServer: attach };
-}
-
-function visualThemeHtmlPlugin() {
-  return {
-    name: 'woc-visual-theme-bootstrap',
-    transformIndexHtml(html: string): string {
-      return html.replaceAll(
-        '__VISUAL_THEME_BUILD_DEFAULT__',
-        JSON.stringify(visualThemeBuildDefault),
-      );
-    },
-  };
 }
 
 // Phase 4 (i18n Lazy Locales): after the production build, resolve each lazy locale
