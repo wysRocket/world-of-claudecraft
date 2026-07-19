@@ -280,6 +280,7 @@ import {
   type WelcomeScreenController,
 } from './ui/welcome_screen_window';
 import { formatXp } from './ui/xp_bar';
+import { applyVisualTheme } from './visual_theme';
 import type { IWorld, LeaderboardEntry } from './world_api';
 
 const WORLD_SEED = 20061; // fixed: Endless Glory is a persistent place
@@ -9068,6 +9069,7 @@ function fadeOutHomepageMusic(durationMs = 1600): void {
 // (startGame() re-applies via its own ThemeStore once the world loads.)
 (() => {
   try {
+    applyVisualTheme(document.documentElement);
     const vars = new ThemeStore().cssVars();
     for (const name of Object.keys(vars))
       document.documentElement.style.setProperty(name, vars[name]);
