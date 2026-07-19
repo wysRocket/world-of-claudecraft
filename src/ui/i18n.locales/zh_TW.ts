@@ -6740,6 +6740,46 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.letters.heroic_marks_reward.subject': '你的英勇印記',
   'entities.letters.heroic_marks_reward.body':
     '你的部隊清剿了英勇試煉，而你在後排作戰，或已倒在塵土之中。你的鎖定同樣已經生效，因此你那一份英勇印記飛到了這裡，而非就此遺失。好好使用它們。\n\n- 英勇軍需官',
+  'entities.letters.guild_trend_engineering_alchemy.sender': '工匠公會',
+  'entities.letters.guild_trend_engineering_alchemy.subject': '關於你的工程學與鍊金術',
+  'entities.letters.guild_trend_engineering_alchemy.body':
+    '工匠：\n\n你鑽研工程學與鍊金術的名聲已傳到公會：稱好裝藥，量好試劑，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。締結這一對技藝的人，終會贏得爆破師之名。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_alchemy_cooking.sender': '工匠公會',
+  'entities.letters.guild_trend_alchemy_cooking.subject': '關於你的鍊金術與烹飪',
+  'entities.letters.guild_trend_alchemy_cooking.body':
+    '工匠：\n\n你鑽研鍊金術與烹飪的名聲已傳到公會：熬好藥劑，調好菜餚，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。締結這一對技藝的人，終會贏得藥劑師之名。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_cooking_leatherworking.sender': '工匠公會',
+  'entities.letters.guild_trend_cooking_leatherworking.subject': '關於你的烹飪與製皮',
+  'entities.letters.guild_trend_cooking_leatherworking.body':
+    '工匠：\n\n你鑽研烹飪與製皮的名聲已傳到公會：端出菜餚，鞣好皮革，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_leatherworking_tailoring.sender': '工匠公會',
+  'entities.letters.guild_trend_leatherworking_tailoring.subject': '關於你的製皮與裁縫',
+  'entities.letters.guild_trend_leatherworking_tailoring.body':
+    '工匠：\n\n你鑽研製皮與裁縫的名聲已傳到公會：裁好皮革，縫好衣料，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。締結這一對技藝的人，終會贏得製裝師之名。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_tailoring_inscription.sender': '工匠公會',
+  'entities.letters.guild_trend_tailoring_inscription.subject': '關於你的裁縫與銘文學',
+  'entities.letters.guild_trend_tailoring_inscription.body':
+    '工匠：\n\n你鑽研裁縫與銘文學的名聲已傳到公會：縫好衣線，寫好銘文，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_inscription_enchanting.sender': '工匠公會',
+  'entities.letters.guild_trend_inscription_enchanting.subject': '關於你的銘文學與附魔',
+  'entities.letters.guild_trend_inscription_enchanting.body':
+    '工匠：\n\n你鑽研銘文學與附魔的名聲已傳到公會：寫滿卷軸，織入魔力，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.sender': '工匠公會',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.subject': '關於你的附魔與珠寶設計',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.body':
+    '工匠：\n\n你鑽研附魔與珠寶設計的名聲已傳到公會：注入魔力，磨亮寶石，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.sender': '工匠公會',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.subject': '關於你的珠寶設計與武器鍛造',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.body':
+    '工匠：\n\n你鑽研珠寶設計與武器鍛造的名聲已傳到公會：鑲好寶石，磨利刀鋒，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.sender': '工匠公會',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.subject': '關於你的武器鍛造與護甲鍛造',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.body':
+    '工匠：\n\n你鑽研武器鍛造與護甲鍛造的名聲已傳到公會：淬好刀刃，敲合甲片，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。締結這一對技藝的人，終會贏得鐵匠之名。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
+  'entities.letters.guild_trend_armorcrafting_engineering.sender': '工匠公會',
+  'entities.letters.guild_trend_armorcrafting_engineering.subject': '關於你的護甲鍛造與工程學',
+  'entities.letters.guild_trend_armorcrafting_engineering.body':
+    '工匠：\n\n你鑽研護甲鍛造與工程學的名聲已傳到公會：鉚好甲片，校準齒輪，兩門技藝相輔相成。能同時打磨相鄰兩門技藝的手，正是準備好調諧的手。請到東溪鎮拜訪哈德倫鐵匠：眼下由他代諸位大師發言。用親手做出的成果向他證明你的技藝，他便會把這兩門技藝調諧為你的主修。\n\n謹此，\n工匠公會',
   'hudChrome.calendar.title': '活動日曆',
   'hudChrome.calendar.close': '關閉日曆',
   'hudChrome.calendar.keybindLabel': '活動日曆',

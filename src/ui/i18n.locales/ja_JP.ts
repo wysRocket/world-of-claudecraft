@@ -7084,6 +7084,49 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.letters.heroic_marks_reward.subject': 'あなたの英雄の印',
   'entities.letters.heroic_marks_reward.body':
     'あなたが後方で、あるいは倒れて戦っている間に、あなたの部隊が英雄級の試練を突破しました。ロックアウトは同じように科されたので、あなたの分の英雄の印は失われることなく、ここへ飛んできました。大切に使ってください。\n\n- 英雄級補給官',
+  'entities.letters.guild_trend_engineering_alchemy.sender': '製作ギルド',
+  'entities.letters.guild_trend_engineering_alchemy.subject': '工作と錬金術の腕前について',
+  'entities.letters.guild_trend_engineering_alchemy.body':
+    '職人へ\n\n工作と錬金術に励むあなたの評判がギルドに届いています。火薬を量り、試薬を計り、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。この組を結んだ者は、やがて爆破師の名を得ます。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_alchemy_cooking.sender': '製作ギルド',
+  'entities.letters.guild_trend_alchemy_cooking.subject': '錬金術と料理の腕前について',
+  'entities.letters.guild_trend_alchemy_cooking.body':
+    '職人へ\n\n錬金術と料理に励むあなたの評判がギルドに届いています。秘薬を煎じ、皿の味を調え、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。この組を結んだ者は、やがて薬師の名を得ます。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_cooking_leatherworking.sender': '製作ギルド',
+  'entities.letters.guild_trend_cooking_leatherworking.subject': '料理と皮革加工の腕前について',
+  'entities.letters.guild_trend_cooking_leatherworking.body':
+    '職人へ\n\n料理と皮革加工に励むあなたの評判がギルドに届いています。料理を仕上げ、革をなめし、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_leatherworking_tailoring.sender': '製作ギルド',
+  'entities.letters.guild_trend_leatherworking_tailoring.subject': '皮革加工と裁縫の腕前について',
+  'entities.letters.guild_trend_leatherworking_tailoring.body':
+    '職人へ\n\n皮革加工と裁縫に励むあなたの評判がギルドに届いています。革を裁ち、布を縫い、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。この組を結んだ者は、やがて装具師の名を得ます。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_tailoring_inscription.sender': '製作ギルド',
+  'entities.letters.guild_trend_tailoring_inscription.subject': '裁縫と銘文の腕前について',
+  'entities.letters.guild_trend_tailoring_inscription.body':
+    '職人へ\n\n裁縫と銘文に励むあなたの評判がギルドに届いています。縫い目を整え、銘を書き入れ、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_inscription_enchanting.sender': '製作ギルド',
+  'entities.letters.guild_trend_inscription_enchanting.subject': '銘文とエンチャントの腕前について',
+  'entities.letters.guild_trend_inscription_enchanting.body':
+    '職人へ\n\n銘文とエンチャントに励むあなたの評判がギルドに届いています。巻物に銘を記し、魔力を編み、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.sender': '製作ギルド',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.subject':
+    'エンチャントと宝石細工の腕前について',
+  'entities.letters.guild_trend_enchanting_jewelcrafting.body':
+    '職人へ\n\nエンチャントと宝石細工に励むあなたの評判がギルドに届いています。魔力を吹き込み、石を磨き、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.sender': '製作ギルド',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.subject':
+    '宝石細工と武器鍛冶の腕前について',
+  'entities.letters.guild_trend_jewelcrafting_weaponcrafting.body':
+    '職人へ\n\n宝石細工と武器鍛冶に励むあなたの評判がギルドに届いています。宝石を据え、刃を研ぎ、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.sender': '製作ギルド',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.subject':
+    '武器鍛冶と防具鍛冶の腕前について',
+  'entities.letters.guild_trend_weaponcrafting_armorcrafting.body':
+    '職人へ\n\n武器鍛冶と防具鍛冶に励むあなたの評判がギルドに届いています。刃を鍛え、板金を合わせ、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。この組を結んだ者は、やがて鍛冶師の名を得ます。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
+  'entities.letters.guild_trend_armorcrafting_engineering.sender': '製作ギルド',
+  'entities.letters.guild_trend_armorcrafting_engineering.subject': '防具鍛冶と工作の腕前について',
+  'entities.letters.guild_trend_armorcrafting_engineering.body':
+    '職人へ\n\n防具鍛冶と工作に励むあなたの評判がギルドに届いています。板金を鋲で留め、歯車を調え、二つの技が互いを高め合っていると。隣り合う技を共に磨く手は、調律の備えができた証です。イーストブルックの鍛冶師ハルドレンを訪ねてください。今は彼が親方たちの代弁を務めています。自らの手がけた仕事で腕前を示せば、彼がその二つの技をあなたの主専攻として調律してくれるでしょう。\n\n敬意を込めて、\n製作ギルド',
   'hudChrome.calendar.title': 'イベントカレンダー',
   'hudChrome.calendar.close': 'カレンダーを閉じる',
   'hudChrome.calendar.keybindLabel': 'イベントカレンダー',
