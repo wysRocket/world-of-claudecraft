@@ -101,4 +101,35 @@ describe('hud event switch stays wired to the ids', () => {
     const block = source.slice(caseStart, source.indexOf('break;', caseStart));
     expect(block.includes('audio.lootItem')).toBe(false);
   });
+
+  it('the achievement cue on gatherRareEvent is finder-only (the other D1 half)', () => {
+    // The zone fanout delivers one copy per in-zone recipient; only the
+    // finder may hear the celebratory cue. A regression that cues every
+    // recipient (or drops the cue) would pass the wording pins above, so
+    // bind the cue call to the finder guard: the conditional must appear in
+    // the case block BEFORE the cue call (same index-order technique as the
+    // flavor-to-key pin).
+    const source = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+    const caseStart = source.indexOf("case 'gatherRareEvent'");
+    expect(caseStart).toBeGreaterThan(-1);
+    const block = source.slice(caseStart, source.indexOf('break;', caseStart));
+    const guard = block.indexOf('ev.finderPid === sim.playerId');
+    const cue = block.indexOf('audio.achievement()');
+    expect(guard).toBeGreaterThan(-1);
+    expect(cue).toBeGreaterThan(guard);
+  });
+
+  it('both lines color through the existing quality token family only', () => {
+    // Acceptance criterion 5: the gather line is rarity-colored and the
+    // broadcast line rides the epic token; a regression to a fixed default
+    // color (or an ad-hoc hex) keeps every wording pin green, so pin the
+    // color arguments at the source level.
+    const source = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+    const gatherStart = source.indexOf("case 'gatherResult'");
+    const gatherBlock = source.slice(gatherStart, source.indexOf('break;', gatherStart));
+    expect(gatherBlock.includes('QUALITY_COLOR[ev.rarity]')).toBe(true);
+    const rareStart = source.indexOf("case 'gatherRareEvent'");
+    const rareBlock = source.slice(rareStart, source.indexOf('break;', rareStart));
+    expect(rareBlock.includes('QUALITY_COLOR.epic')).toBe(true);
+  });
 });

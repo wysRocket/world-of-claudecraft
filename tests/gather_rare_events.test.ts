@@ -438,6 +438,42 @@ describe('grant truncation at the command boundary (full bags)', () => {
     throw new Error('no rare event within 2000 harvests');
   });
 
+  it('a signed roll with zero free slots grants unsigned into the stack, never past capacity', () => {
+    const { sim, pid, nodeId, meta } = simAtOreNode();
+    const capacity = bagCapacity(meta.bags);
+    // Max proficiency so signed (rare-or-better) rolls appear quickly.
+    meta.gatheringProficiency.mining = 100;
+    for (let i = 0; i < 3000; i++) {
+      // The crossing case: the bag is slot-full and the ONLY room is fungible
+      // top-up on a partial copper stack. That room passes the capacity
+      // pre-gate (ctx.canAddItem counts stack top-up), but a signed instance
+      // needs a genuinely free slot (instances never merge), so a signed roll
+      // here must fall back to an unsigned top-up grant, never overflow.
+      meta.inventory.length = 0;
+      for (let f = 0; f < capacity - 1; f++)
+        meta.inventory.push({ itemId: 'bone_fragments', count: 1 });
+      meta.inventory.push({ itemId: 'copper_ore', count: 15 });
+      delete meta.nodeHarvestReadyAt[nodeId];
+      if (!sim.harvestNode(nodeId, pid)) continue;
+      const events = sim.drainEvents();
+      const gather = events.find((e) => e.type === 'gatherResult');
+      if (gather?.type !== 'gatherResult') throw new Error('expected gatherResult');
+      // Truncation, not overflow, on EVERY iteration (fungible rolls included).
+      expect(meta.inventory.length).toBeLessThanOrEqual(capacity);
+      const wouldSign = gather.rareEvent !== null || isSignableMaterialRarity(gather.rarity);
+      if (!wouldSign) continue;
+      // The signed-roll arm: no instance landed, the stack absorbed the
+      // granted count, and gatherResult.qty reports that granted count.
+      expect(meta.inventory.length).toBe(capacity);
+      expect(meta.inventory.filter((s) => s.itemId === 'copper_ore' && s.instance)).toHaveLength(0);
+      const stack = meta.inventory.find((s) => s.itemId === 'copper_ore' && !s.instance);
+      expect(gather.qty).toBeGreaterThanOrEqual(1);
+      expect(stack?.count).toBe(15 + gather.qty);
+      return;
+    }
+    throw new Error('no signed roll within 3000 attempts');
+  });
+
   it('a fungible yield larger than the remaining stack room truncates to what fits', () => {
     const { sim, pid, nodeId, meta } = simAtOreNode();
     const capacity = bagCapacity(meta.bags);

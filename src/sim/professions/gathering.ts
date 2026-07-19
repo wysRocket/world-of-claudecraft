@@ -2,12 +2,12 @@
 // SimContext seam. The backing counters live on PlayerMeta (sim.ts); this
 // module holds the pure functions. Each gathering profession is an
 // independent, additive counter: granting one never touches another (no
-// shared/conserved pool). No world nodes exist yet (see issue #1119), so the
-// only producer today is the ALLOW_DEV_COMMANDS `/dev gather` chat cheat
-// (src/sim/social/chat.ts), which QUEUES a grant here; the queue is drained
-// once per player during the normal 20 Hz tick loop (sim.ts `tick()`, next to
-// `updateRested`), so a grant only ever takes effect on the deterministic tick
-// path, never out of band.
+// shared/conserved pool). Proficiency producers: world-node harvests
+// (resolveHarvest below, via the harvestNode command) and the
+// ALLOW_DEV_COMMANDS `/dev gather` chat cheat (src/sim/social/chat.ts). Both
+// QUEUE a grant here; the queue is drained once per player during the normal
+// 20 Hz tick loop (sim.ts `tick()`, next to `updateRested`), so a grant only
+// ever takes effect on the deterministic tick path, never out of band.
 
 import { bagCapacity } from '../bags';
 import { GATHER_NODES } from '../content/gather_nodes';
@@ -304,25 +304,32 @@ export function harvestNode(ctx: SimContext, nodeId: string, pid?: number): bool
   // the truncation. Both rng draws already happened in resolveHarvest, so
   // truncation never shifts the draw order.
   let grantedQty = 0;
-  if (signed) {
-    // Signed instances never merge into stacks (bags.ts addStacked, #1165):
-    // each unit is its own slot. The first unit lands unconditionally on the
-    // strength of the fungible pre-gate above (the corpse-harvest precedent,
-    // interaction.ts); every further unit needs a genuinely free slot, so an
-    // oversized rare-event windfall truncates instead of overflowing the bag.
-    const capacity = bagCapacity(meta.bags);
-    for (let i = 0; i < qty; i++) {
-      if (i > 0 && meta.inventory.length >= capacity) break;
-      ctx.addItemInstance(itemId, { signer: meta.name }, meta.entityId);
-      grantedQty++;
-    }
-  } else {
-    // Fungible grant: find the largest count that still fits (stack top-up
-    // plus free slots, ctx.canAddItem). The pre-gate guarantees at least 1.
+  // Fungible grant: find the largest count that still fits (stack top-up
+  // plus free slots, ctx.canAddItem). The pre-gate guarantees at least 1.
+  const grantFungibleFit = (): number => {
     let fit = qty;
     while (fit > 1 && !ctx.canAddItem(itemId, fit, meta.entityId)) fit--;
     ctx.addItem(itemId, fit, meta.entityId);
-    grantedQty = fit;
+    return fit;
+  };
+  if (signed) {
+    // Signed instances never merge into stacks (bags.ts addStacked, #1165):
+    // each unit is its own slot, so EVERY unit (the first included) needs a
+    // genuinely free slot and an oversized rare-event windfall truncates
+    // instead of overflowing the bag. The fungible pre-gate above can pass on
+    // stack top-up room alone, so when no free slot exists the yield falls
+    // back to an unsigned top-up grant (the truncation contract wins over
+    // signing in that self-inflicted edge; the crossing-case pin lives in
+    // tests/gather_rare_events.test.ts).
+    const capacity = bagCapacity(meta.bags);
+    for (let i = 0; i < qty; i++) {
+      if (meta.inventory.length >= capacity) break;
+      ctx.addItemInstance(itemId, { signer: meta.name }, meta.entityId);
+      grantedQty++;
+    }
+    if (grantedQty === 0) grantedQty = grantFungibleFit();
+  } else {
+    grantedQty = grantFungibleFit();
   }
   ctx.onNodeGatheredForQuests(node, itemId, meta);
   // Zone gather mark: one entry per zone and node type ever harvested.

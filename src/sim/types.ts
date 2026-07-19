@@ -3516,7 +3516,10 @@ export type SimEvent = { pid?: number } & (
   // emitted per player currently in the node's zone, `pid` being the RECIPIENT
   // (the chat fanout idiom); finderPid/finderName identify the harvester. Ids
   // plus values only, text-free on purpose: the client renders its own
-  // localized line off `flavor` (the gatherEvent.* keys).
+  // localized line off `flavor` (the gatherEvent.* keys). The HUD reads only
+  // flavor/finderName/finderPid today; zoneId/nodeType/itemId are forward
+  // payload for the Phase 15 per-family deeds/tuning consumers (asserted by
+  // the Phase 4 tests so the shape is already load-bearing on the wire).
   | {
       type: 'gatherRareEvent';
       pid: number;

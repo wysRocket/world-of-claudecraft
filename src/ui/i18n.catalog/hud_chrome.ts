@@ -2178,8 +2178,11 @@ export const hudChromeStrings = {
     // #1866: click/tap/interact-key error when a targeted node's per-viewer
     // respawn timer has not elapsed yet (IWorldProfessions#nodeHarvestableByMe).
     notReady: 'This resource node has not respawned for you yet.',
-    // Harvest loot line (Professions 2.0 Phase 4), rendered from the id-based
-    // gatherResult SimEvent in the "You receive:" loot-family wording.
+    // Harvest feedback line (Professions 2.0 Phase 4), rendered from the
+    // id-based gatherResult SimEvent. Deliberately worded APART from the
+    // loot family: the grant hub's own 'loot' event already prints
+    // "You receive:" for the same harvest, so this line must never regress
+    // into that wording (divergence pin: tests/gather_event_i18n.test.ts).
     gatherLine: 'You gather: {name}.',
     gatherLineQty: 'You gather: {name} x{qty}.',
   },
