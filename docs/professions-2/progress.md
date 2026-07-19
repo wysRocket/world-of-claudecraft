@@ -22,7 +22,7 @@ Update this file at the end of every implementation and QA session. Statuses:
 | 7 | The Guild letter and quest objectives | complete | 2026-07-19 | 2026-07-19 |
 | 7 QA | Verify the Guild letter and quest objectives | complete | 2026-07-19 | 2026-07-19 |
 | 8 | Stations and masters (sim and server) | complete | 2026-07-19 | 2026-07-19 |
-| 8 QA | Verify stations and masters | not started | | |
+| 8 QA | Verify stations and masters | complete | 2026-07-19 | 2026-07-19 |
 | 9 | Station presence and recipe training | not started | | |
 | 9 QA | Verify station presence and training | not started | | |
 | 10 | Recipe ladders and materials content | not started | | |
@@ -647,3 +647,43 @@ Eastbrook, a deliberate buy-then-travel loop to reconsider in Phase 9
 stocking. STILL OPEN (unchanged from Phase 7): the Guild letter's
 call to action dead-ends pre-q_prof_intro; the masters ship with
 EMPTY questIds hooks and no redirect was silently implemented.
+
+Phase 8 QA (2026-07-19): PASS with fixes, zero blocking. Nine-agent
+fan-out (three packet audits plus privacy-security, migration-safety,
+cross-platform-sync, architecture, frontend-seam and the closing
+qa-checklist; database-performance did not match the diff), every
+agent complete first try under the 30-call budget, with the phase
+validation matrix pre-verified green at the untouched tip and passed
+to every agent as ground. The correctness audit ran six live
+headless-Sim probes (deny away from the station, wrong-type deny,
+at-station success, all nine field recipes far from any station, the
+full mobile place/craft/expire cycle against real ticks, caster-recipe
+radius behavior at 19 vs 30 out) plus proof that FIELD_RECIPES equals
+the pre-phase nine COMMON_RECIPES ids. Findings: 18 total, 3
+should-fix, all fixed: the Phase 9 phase file still pointed its
+reader at the deleted crafting_hub.ts (swept to stations.ts and the
+crafting.ts gate), the /dev mobilestation arm had zero coverage (now
+proves the cheat routes through the real specialization gate), and
+the hud station_required deny toast had no binding pin (source-pinned
+in profession_identity_card.test.ts). Fixed NITs: the FIELD_RECIPES
+set pin was a tautology against its own definition source (now pins
+the nine literal ids), the mobile expiry boundary was only incidental
+(exact strict-below pin added: active at expiry-1, expired at the
+expiry tick), and two comments (stations.ts header, CraftResultView)
+implied a mobile-arm proximity check the spec'd gate deliberately
+does not have (reworded). Dissolved on verification: the
+crafting_hub test filename misnomer (its header documents the
+deliberate keep for the deeds.ts anchors), the hud fallthrough
+mislabel (unreachable by construction and documented in-code), the
+slow-band set allocation (cold painter, throttled, pre-phase
+equivalent), and the place_mobile_station rate-limit worry
+(self-scoped transient slot overwrite, no growth, no rng, no db).
+Closed decisively: guide freshness (wiki:content regenerates no
+diff; the guide does not enumerate town NPCs). Deferred with notes
+in state.md: the Eastbrook loom-toolworks radius overlap (design
+observation for Phase 9 props and minimap), the consumer-less
+MobileCraftingStation pos/placedAtTick/playerId fields (Phase 9
+props are the natural consumer), the expired station object
+lingering on the meta slot until the next placement (benign, every
+reader checks isStationActive), and the mobile-viewport station row
+being screenshot-verified only.

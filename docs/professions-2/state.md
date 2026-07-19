@@ -649,7 +649,21 @@ tables, i18n key namespaces, files created)
   desc fills dropped for the release refill). The nine former hub
   recipes relocated from Highwatch to their typed stations (seven in
   Eastbrook, tannery in Fenbridge); Highwatch keeps the apothecary
-  (no alchemy station recipe exists yet, forward content).
+  (no alchemy station recipe exists yet, forward content). Phase 8 QA
+  drift notes (2026-07-19): Eastbrook loom-to-toolworks separation is
+  about 13.6 against STATION_RADIUS 20, so standing at the loom also
+  satisfies the toolworks gate (and forge-to-kitchens clears by only
+  1.6), accepted town-square density with no strand and no info
+  hiding, for Phase 9 props/minimap to be aware of;
+  MobileCraftingStation.pos, placedAtTick, and playerId are recorded
+  but consumer-less today (the gate reads craftId plus expiresAtTick
+  only; Phase 9 props are the natural pos consumer); an expired
+  mobileStation object lingers on the meta slot until the next
+  placement (benign, every reader checks isStationActive);
+  content/professions.ts reads ZONE1/2/3_ZONE.id at module init (no
+  runtime cycle today because the zone modules never import
+  professions content, but a future reverse import would see
+  undefined during init).
 - Phase 13: (planned) disenchantItem/applyEnchant/salvageItem IWorld
   members + wire commands.
 
