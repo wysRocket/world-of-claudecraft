@@ -8340,6 +8340,60 @@ export const ru_RU: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "Ториевые чешуйчатые ноговицы"
       },
+      "homespun_hood": {
+        "name": "Домотканый капюшон"
+      },
+      "homespun_mitts": {
+        "name": "Домотканые рукавицы"
+      },
+      "silverthread_slippers": {
+        "name": "Туфли из серебряной нити"
+      },
+      "goldweave_robe": {
+        "name": "Златотканое одеяние"
+      },
+      "goldweave_leggings": {
+        "name": "Златотканые поножи"
+      },
+      "silkspun_satchel": {
+        "name": "Шёлкопряденая сумка"
+      },
+      "silkbinders_raiment": {
+        "name": "Облачение шёлкоткача"
+      },
+      "sunweave_mantle": {
+        "name": "Солнцетканая мантия"
+      },
+      "sunweave_treads": {
+        "name": "Солнцетканая поступь"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "Поножи из кожи Фенбриджа"
+      },
+      "fenbridge_hide_boots": {
+        "name": "Сапоги из кожи Фенбриджа"
+      },
+      "fenbridge_hide_belt": {
+        "name": "Пояс из кожи Фенбриджа"
+      },
+      "marshstalker_jerkin": {
+        "name": "Куртка болотного охотника"
+      },
+      "marshstalker_hood": {
+        "name": "Капюшон болотного охотника"
+      },
+      "marshstalker_spaulders": {
+        "name": "Наплечники болотного охотника"
+      },
+      "mirewarden_jerkin": {
+        "name": "Куртка стража трясины"
+      },
+      "mirewarden_leggings": {
+        "name": "Поножи стража трясины"
+      },
+      "mirewarden_treads": {
+        "name": "Поступь стража трясины"
+      },
       "conjured_water4": {
         "name": "Сотворённая родниковая вода"
       },

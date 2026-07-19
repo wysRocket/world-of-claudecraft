@@ -8340,6 +8340,60 @@ export const ko_KR: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "토륨 비늘 각반"
       },
+      "homespun_hood": {
+        "name": "손으로 짠 두건"
+      },
+      "homespun_mitts": {
+        "name": "손으로 짠 벙어리장갑"
+      },
+      "silverthread_slippers": {
+        "name": "은실 슬리퍼"
+      },
+      "goldweave_robe": {
+        "name": "황금직조 로브"
+      },
+      "goldweave_leggings": {
+        "name": "황금직조 각반"
+      },
+      "silkspun_satchel": {
+        "name": "실크 방적 가방"
+      },
+      "silkbinders_raiment": {
+        "name": "실크결속의 의복"
+      },
+      "sunweave_mantle": {
+        "name": "태양직조 망토"
+      },
+      "sunweave_treads": {
+        "name": "태양직조 발보호구"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "펜브릿지 가죽 각반"
+      },
+      "fenbridge_hide_boots": {
+        "name": "펜브릿지 가죽 장화"
+      },
+      "fenbridge_hide_belt": {
+        "name": "펜브릿지 가죽 허리띠"
+      },
+      "marshstalker_jerkin": {
+        "name": "늪추적자 웃옷"
+      },
+      "marshstalker_hood": {
+        "name": "늪추적자 두건"
+      },
+      "marshstalker_spaulders": {
+        "name": "늪추적자 어깨보호구"
+      },
+      "mirewarden_jerkin": {
+        "name": "진흙수호자 웃옷"
+      },
+      "mirewarden_leggings": {
+        "name": "진흙수호자 각반"
+      },
+      "mirewarden_treads": {
+        "name": "진흙수호자 발보호구"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },

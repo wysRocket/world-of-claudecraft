@@ -8340,6 +8340,60 @@ export const fr_CA: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "Thoriumscale Leggings"
       },
+      "homespun_hood": {
+        "name": "Homespun Hood"
+      },
+      "homespun_mitts": {
+        "name": "Homespun Mitts"
+      },
+      "silverthread_slippers": {
+        "name": "Silverthread Slippers"
+      },
+      "goldweave_robe": {
+        "name": "Goldweave Robe"
+      },
+      "goldweave_leggings": {
+        "name": "Goldweave Leggings"
+      },
+      "silkspun_satchel": {
+        "name": "Silkspun Satchel"
+      },
+      "silkbinders_raiment": {
+        "name": "Silkbinder's Raiment"
+      },
+      "sunweave_mantle": {
+        "name": "Sunweave Mantle"
+      },
+      "sunweave_treads": {
+        "name": "Sunweave Treads"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "Fenbridge Hide Leggings"
+      },
+      "fenbridge_hide_boots": {
+        "name": "Fenbridge Hide Boots"
+      },
+      "fenbridge_hide_belt": {
+        "name": "Fenbridge Hide Belt"
+      },
+      "marshstalker_jerkin": {
+        "name": "Marshstalker Jerkin"
+      },
+      "marshstalker_hood": {
+        "name": "Marshstalker Hood"
+      },
+      "marshstalker_spaulders": {
+        "name": "Marshstalker Spaulders"
+      },
+      "mirewarden_jerkin": {
+        "name": "Mirewarden Jerkin"
+      },
+      "mirewarden_leggings": {
+        "name": "Mirewarden Leggings"
+      },
+      "mirewarden_treads": {
+        "name": "Mirewarden Treads"
+      },
       "conjured_water4": {
         "name": "Eau de source conjurée"
       },

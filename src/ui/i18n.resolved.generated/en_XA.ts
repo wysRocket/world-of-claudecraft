@@ -8340,6 +8340,60 @@ export const en_XA: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "[Ţĥóŕíúɱšçáļé Ļéĝĝíñĝš]"
       },
+      "homespun_hood": {
+        "name": "[Ĥóɱéšþúñ Ĥóóð]"
+      },
+      "homespun_mitts": {
+        "name": "[Ĥóɱéšþúñ Ɱíţţš]"
+      },
+      "silverthread_slippers": {
+        "name": "[Šíļʋéŕţĥŕéáð Šļíþþéŕš]"
+      },
+      "goldweave_robe": {
+        "name": "[Ĝóļðŵéáʋé Ŕóƀé]"
+      },
+      "goldweave_leggings": {
+        "name": "[Ĝóļðŵéáʋé Ļéĝĝíñĝš]"
+      },
+      "silkspun_satchel": {
+        "name": "[Šíļķšþúñ Šáţçĥéļ]"
+      },
+      "silkbinders_raiment": {
+        "name": "[Šíļķƀíñðéŕ'š Ŕáíɱéñţ]"
+      },
+      "sunweave_mantle": {
+        "name": "[Šúñŵéáʋé Ɱáñţļé]"
+      },
+      "sunweave_treads": {
+        "name": "[Šúñŵéáʋé Ţŕéáðš]"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "[Ƒéñƀŕíðĝé Ĥíðé Ļéĝĝíñĝš]"
+      },
+      "fenbridge_hide_boots": {
+        "name": "[Ƒéñƀŕíðĝé Ĥíðé Ɓóóţš]"
+      },
+      "fenbridge_hide_belt": {
+        "name": "[Ƒéñƀŕíðĝé Ĥíðé Ɓéļţ]"
+      },
+      "marshstalker_jerkin": {
+        "name": "[Ɱáŕšĥšţáļķéŕ Ĵéŕķíñ]"
+      },
+      "marshstalker_hood": {
+        "name": "[Ɱáŕšĥšţáļķéŕ Ĥóóð]"
+      },
+      "marshstalker_spaulders": {
+        "name": "[Ɱáŕšĥšţáļķéŕ Šþáúļðéŕš]"
+      },
+      "mirewarden_jerkin": {
+        "name": "[Ɱíŕéŵáŕðéñ Ĵéŕķíñ]"
+      },
+      "mirewarden_leggings": {
+        "name": "[Ɱíŕéŵáŕðéñ Ļéĝĝíñĝš]"
+      },
+      "mirewarden_treads": {
+        "name": "[Ɱíŕéŵáŕðéñ Ţŕéáðš]"
+      },
       "conjured_water4": {
         "name": "[Çóñĵúŕéð Šþŕíñĝŵáţéŕ]"
       },

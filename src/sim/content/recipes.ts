@@ -365,15 +365,17 @@ export const COMBO_RECIPES: ProfessionRecipeRecord[] = [
   },
 ];
 
-// Phase 10 trained ladder set (Professions 2.0): the weaponcrafting and
-// armorcrafting recipe ladders, three rungs per craft at skillReq 0/25/50, all
-// trainer-taught at forgemistress_darva and forge-bound. Outputs are the new
-// crafted weapon/armor ItemDefs in content/profession_items.ts. Post-Phase-9
-// content, so every record carries a non-empty `acquisition` list (never
-// grandfathered). The two scaffolding fields are normalized to one cross-craft
-// convention shared by both ladders (skillReq 0 -> 10/10, skillReq 25 -> 16/15,
-// skillReq 50 -> 20/20); the outputs' stats and values were budgeted against
-// real comparables and are authored unchanged in profession_items.ts.
+// Phase 10 trained ladder set (Professions 2.0): the weaponcrafting,
+// armorcrafting, tailoring, and leatherworking recipe ladders, three rungs per
+// craft at skillReq 0/25/50, all trainer-taught and station-bound (forge for
+// the weapon/armor crafts, loom for tailoring at weaver_ottilie, tannery for
+// leatherworking at tanner_hesk). Outputs are the new crafted weapon/armor/bag
+// ItemDefs in content/profession_items.ts. Post-Phase-9 content, so every
+// record carries a non-empty `acquisition` list (never grandfathered). The two
+// scaffolding fields are normalized to one cross-craft convention shared by all
+// ladders (skillReq 0 -> 10/10, skillReq 25 -> 16/15, skillReq 50 -> 20/20); the
+// outputs' stats and values were budgeted against real comparables and are
+// authored unchanged in profession_items.ts.
 export const LADDER_RECIPES: ProfessionRecipeRecord[] = [
   // --- weaponcrafting ------------------------------------------------------
   {
@@ -669,6 +671,297 @@ export const LADDER_RECIPES: ProfessionRecipeRecord[] = [
     level: 20,
     acquisition: ['trainer'],
     stationType: 'forge',
+  },
+  // --- tailoring -----------------------------------------------------------
+  {
+    id: 'recipe_homespun_hood',
+    professionId: 'tailoring',
+    resultItemId: 'homespun_hood',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'homespun_cloth', count: 4 },
+      { itemId: 'linen_scrap', count: 2 },
+      { itemId: 'spool_of_thread', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_homespun_mitts',
+    professionId: 'tailoring',
+    resultItemId: 'homespun_mitts',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'homespun_cloth', count: 3 },
+      { itemId: 'spool_of_thread', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_silverthread_slippers',
+    professionId: 'tailoring',
+    resultItemId: 'silverthread_slippers',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'linen_scrap', count: 3 },
+      { itemId: 'silverleaf_herb', count: 2 },
+      { itemId: 'spool_of_thread', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_goldweave_robe',
+    professionId: 'tailoring',
+    resultItemId: 'goldweave_robe',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'spider_silk', count: 4 },
+      { itemId: 'goldleaf_herb', count: 2 },
+      { itemId: 'spool_of_thread', count: 2 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_goldweave_leggings',
+    professionId: 'tailoring',
+    resultItemId: 'goldweave_leggings',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'homespun_cloth', count: 4 },
+      { itemId: 'goldleaf_herb', count: 2 },
+      { itemId: 'spool_of_thread', count: 1 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_silkspun_satchel',
+    professionId: 'tailoring',
+    resultItemId: 'silkspun_satchel',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'spider_silk', count: 6 },
+      { itemId: 'goldleaf_herb', count: 2 },
+      { itemId: 'spool_of_thread', count: 2 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_silkbinders_raiment',
+    professionId: 'tailoring',
+    resultItemId: 'silkbinders_raiment',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'pristine_silk', count: 1 },
+      { itemId: 'sunpetal_herb', count: 2 },
+      { itemId: 'spider_silk', count: 4 },
+      { itemId: 'spool_of_thread', count: 2 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_sunweave_mantle',
+    professionId: 'tailoring',
+    resultItemId: 'sunweave_mantle',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'sunpetal_herb', count: 1 },
+      { itemId: 'homespun_cloth', count: 4 },
+      { itemId: 'spool_of_thread', count: 2 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  {
+    id: 'recipe_sunweave_treads',
+    professionId: 'tailoring',
+    resultItemId: 'sunweave_treads',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'sunpetal_herb', count: 1 },
+      { itemId: 'goldleaf_herb', count: 2 },
+      { itemId: 'spider_silk', count: 3 },
+      { itemId: 'spool_of_thread', count: 1 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'loom',
+  },
+  // --- leatherworking ------------------------------------------------------
+  {
+    id: 'recipe_fenbridge_hide_leggings',
+    professionId: 'leatherworking',
+    resultItemId: 'fenbridge_hide_leggings',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 3 },
+      { itemId: 'spider_leg', count: 2 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_fenbridge_hide_boots',
+    professionId: 'leatherworking',
+    resultItemId: 'fenbridge_hide_boots',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 2 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_fenbridge_hide_belt',
+    professionId: 'leatherworking',
+    resultItemId: 'fenbridge_hide_belt',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 2 },
+      { itemId: 'spider_leg', count: 1 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 0,
+    itemLevelBudget: 10,
+    level: 10,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_marshstalker_jerkin',
+    professionId: 'leatherworking',
+    resultItemId: 'marshstalker_jerkin',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 4 },
+      { itemId: 'spider_silk', count: 2 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_marshstalker_hood',
+    professionId: 'leatherworking',
+    resultItemId: 'marshstalker_hood',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 3 },
+      { itemId: 'spider_leg', count: 2 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_marshstalker_spaulders',
+    professionId: 'leatherworking',
+    resultItemId: 'marshstalker_spaulders',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 3 },
+      { itemId: 'homespun_cloth', count: 2 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 25,
+    itemLevelBudget: 16,
+    level: 15,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_mirewarden_jerkin',
+    professionId: 'leatherworking',
+    resultItemId: 'mirewarden_jerkin',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'pristine_hide', count: 1 },
+      { itemId: 'rough_hide', count: 4 },
+      { itemId: 'thorium_ore', count: 1 },
+      { itemId: 'tanning_agent', count: 2 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_mirewarden_leggings',
+    professionId: 'leatherworking',
+    resultItemId: 'mirewarden_leggings',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 5 },
+      { itemId: 'thorium_ore', count: 1 },
+      { itemId: 'tanning_agent', count: 1 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
+  },
+  {
+    id: 'recipe_mirewarden_treads',
+    professionId: 'leatherworking',
+    resultItemId: 'mirewarden_treads',
+    resultCount: 1,
+    reagents: [
+      { itemId: 'rough_hide', count: 4 },
+      { itemId: 'spider_silk', count: 2 },
+      { itemId: 'thorium_ore', count: 1 },
+    ],
+    skillReq: 50,
+    itemLevelBudget: 20,
+    level: 20,
+    acquisition: ['trainer'],
+    stationType: 'tannery',
   },
 ];
 

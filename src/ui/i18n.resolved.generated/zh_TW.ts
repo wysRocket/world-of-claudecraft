@@ -8340,6 +8340,60 @@ export const zh_TW: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "瑟銀鱗腿甲"
       },
+      "homespun_hood": {
+        "name": "手織兜帽"
+      },
+      "homespun_mitts": {
+        "name": "手織連指手套"
+      },
+      "silverthread_slippers": {
+        "name": "銀線便鞋"
+      },
+      "goldweave_robe": {
+        "name": "金織長袍"
+      },
+      "goldweave_leggings": {
+        "name": "金織護腿"
+      },
+      "silkspun_satchel": {
+        "name": "絲紡挎包"
+      },
+      "silkbinders_raiment": {
+        "name": "縛絲法衣"
+      },
+      "sunweave_mantle": {
+        "name": "陽織披肩"
+      },
+      "sunweave_treads": {
+        "name": "陽織足墊"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "芬橋皮護腿"
+      },
+      "fenbridge_hide_boots": {
+        "name": "芬橋皮靴"
+      },
+      "fenbridge_hide_belt": {
+        "name": "芬橋皮腰帶"
+      },
+      "marshstalker_jerkin": {
+        "name": "沼澤潛獵者皮甲"
+      },
+      "marshstalker_hood": {
+        "name": "沼澤潛獵者兜帽"
+      },
+      "marshstalker_spaulders": {
+        "name": "沼澤潛獵者肩甲"
+      },
+      "mirewarden_jerkin": {
+        "name": "泥沼守衛皮甲"
+      },
+      "mirewarden_leggings": {
+        "name": "泥沼守衛護腿"
+      },
+      "mirewarden_treads": {
+        "name": "泥沼守衛足墊"
+      },
       "conjured_water4": {
         "name": "魔法泉水"
       },

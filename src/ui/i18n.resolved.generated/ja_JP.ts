@@ -8340,6 +8340,60 @@ export const ja_JP: EnTranslations = {
       "thoriumscale_leggings": {
         "name": "トリウム鱗のレギンス"
       },
+      "homespun_hood": {
+        "name": "手織りのフード"
+      },
+      "homespun_mitts": {
+        "name": "手織りのミトン"
+      },
+      "silverthread_slippers": {
+        "name": "銀糸のスリッパ"
+      },
+      "goldweave_robe": {
+        "name": "金織りのローブ"
+      },
+      "goldweave_leggings": {
+        "name": "金織りのレギンス"
+      },
+      "silkspun_satchel": {
+        "name": "絹紡ぎのサッチェル"
+      },
+      "silkbinders_raiment": {
+        "name": "絹縛りの法衣"
+      },
+      "sunweave_mantle": {
+        "name": "陽織りのマント"
+      },
+      "sunweave_treads": {
+        "name": "陽織りの足具"
+      },
+      "fenbridge_hide_leggings": {
+        "name": "フェンブリッジ革のレギンス"
+      },
+      "fenbridge_hide_boots": {
+        "name": "フェンブリッジ革のブーツ"
+      },
+      "fenbridge_hide_belt": {
+        "name": "フェンブリッジ革のベルト"
+      },
+      "marshstalker_jerkin": {
+        "name": "沼追跡者のジャーキン"
+      },
+      "marshstalker_hood": {
+        "name": "沼追跡者のフード"
+      },
+      "marshstalker_spaulders": {
+        "name": "沼追跡者の肩当て"
+      },
+      "mirewarden_jerkin": {
+        "name": "泥沼の番人のジャーキン"
+      },
+      "mirewarden_leggings": {
+        "name": "泥沼の番人のレギンス"
+      },
+      "mirewarden_treads": {
+        "name": "泥沼の番人の足具"
+      },
       "conjured_water4": {
         "name": "魔法の湧き水"
       },
