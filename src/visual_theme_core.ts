@@ -23,6 +23,7 @@ export function themedAssetPath(
   if (theme === 'classic') return url;
   const leadingSlash = url.startsWith('/') ? '/' : '';
   const logical = url.replace(/^\/+/, '');
-  const replacement = catalog[theme]?.[logical];
+  const entries = catalog[theme];
+  const replacement = entries && Object.hasOwn(entries, logical) ? entries[logical] : undefined;
   return replacement ? `${leadingSlash}${replacement}` : url;
 }

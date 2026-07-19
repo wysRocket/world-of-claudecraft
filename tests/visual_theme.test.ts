@@ -41,4 +41,8 @@ describe('visual theme core', () => {
       '/models/props/house_1.glb',
     );
   });
+
+  it('does not treat inherited catalog keys as replacements', () => {
+    expect(themedAssetPath('constructor', 'emberwood', { emberwood: {} })).toBe('constructor');
+  });
 });
