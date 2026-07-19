@@ -1520,18 +1520,18 @@ export const ABILITIES: Record<string, AbilityDef> = {
       "Loose three icy bolts for $d Frost damage each and plant Winter's Chill on the target: its next 2 incoming compatible spells treat it as frozen. Brain Freeze makes Winterlash instant, 30% harder, and skips its cooldown. (Frost)",
   },
   // Frozen Orb: the roaming proc generator (combat/frozen_orb.ts). Instant,
-  // 30s cooldown; the orb drifts forward pulsing frost damage + a 30% snare
+  // 45s cooldown; the orb drifts forward pulsing frost damage + a 30% snare
   // once per second for 8s. First strike guarantees a Fingers of Frost stack,
   // then 20% per striking pulse. Blizzard shortens its cooldown (below).
   frozen_orb: {
     id: 'frozen_orb',
     name: 'Frozen Orb',
     class: 'mage',
-    learnLevel: 12,
+    learnLevel: 15,
     specs: ['frost'],
     cost: 50,
     castTime: 0,
-    cooldown: 30,
+    cooldown: 45,
     range: 0,
     school: 'frost',
     requiresTarget: false,
