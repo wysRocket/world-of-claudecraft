@@ -10,6 +10,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   CRAFT_RING,
+  MOBILE_CRAFTING_STATION_DURATION_TICKS,
   STATION_RADIUS,
   STATION_TYPE_BY_CRAFT,
   STATIONS,
@@ -26,7 +27,10 @@ import { ZONE2_ZONE } from '../src/sim/content/zone2';
 import { ZONE3_ZONE } from '../src/sim/content/zone3';
 import { ITEMS, NPCS } from '../src/sim/data';
 import { craftItem, resolveCraft } from '../src/sim/professions/crafting';
-import { placeMobileStationForPlayer } from '../src/sim/professions/mobile_station';
+import {
+  isStationActive,
+  placeMobileStationForPlayer,
+} from '../src/sim/professions/mobile_station';
 import { isAtStation, stationsOfType, stationTypeForCraft } from '../src/sim/professions/stations';
 import { Sim } from '../src/sim/sim';
 
@@ -120,7 +124,23 @@ describe('station content (Phase 8)', () => {
 
   it('FIELD_RECIPES is exactly the nine common recipes, and stamps split hands-vs-stations', () => {
     expect(COMMON_RECIPES.length).toBe(9);
-    expect([...FIELD_RECIPES].sort()).toEqual(COMMON_RECIPES.map((r) => r.id).sort());
+    // Pinned to the nine LITERAL ids, not COMMON_RECIPES-derived: FIELD_RECIPES
+    // is defined AS Set(COMMON_RECIPES ids) (recipes.ts), so a derived compare
+    // is a tautology; only the literal list trips when a content edit adds,
+    // drops, or swaps a common recipe.
+    expect([...FIELD_RECIPES].sort()).toEqual(
+      [
+        'recipe_eastbrook_arming_sword',
+        'recipe_eastbrook_chain_vest',
+        'recipe_eastbrook_wool_trousers',
+        'recipe_tanned_leather_jerkin',
+        'recipe_tough_jerky',
+        'recipe_minor_healing_potion',
+        'recipe_eastbrook_ritual_vestments',
+        'recipe_eastbrook_druids_hide',
+        'recipe_eastbrook_warded_leggings',
+      ].sort(),
+    );
     // Hands: no common or combo recipe carries a stationType.
     for (const recipe of [...COMMON_RECIPES, ...COMBO_RECIPES]) {
       expect(recipe.stationType, `${recipe.id} must stay field-craftable`).toBeUndefined();
@@ -288,6 +308,25 @@ describe('resolveCraft station gate (Phase 8: position-only, per type)', () => {
     const reloaded = makeSim(7);
     const reloadedPid = reloaded.addPlayer('warrior', 'Reloaded', { state: state ?? undefined });
     expect((reloaded as any).players.get(reloadedPid).mobileStation).toBeNull();
+  });
+
+  it('mobile-station activity is strict at the boundary: active at expiry-1, expired AT expiry', () => {
+    const sim = makeSim();
+    const pid = sim.playerId;
+    const meta = (sim as any).players.get(pid);
+    meta.craftSkills.engineering = 75;
+    const station = placeMobileStationForPlayer((sim as any).ctx, 'engineering', pid);
+    expect(station).toBeDefined();
+    if (!station) return;
+    // isStationActive is a strict < on expiresAtTick: the expiry tick itself
+    // is already inactive (the offline expired-arm test above overwrites the
+    // tick wholesale, so only this pin holds the exact boundary).
+    expect(isStationActive(station, station.expiresAtTick - 1)).toBe(true);
+    expect(isStationActive(station, station.expiresAtTick)).toBe(false);
+    // The window is the content constant, anchored at the placement tick.
+    expect(station.expiresAtTick - station.placedAtTick).toBe(
+      MOBILE_CRAFTING_STATION_DURATION_TICKS,
+    );
   });
 });
 

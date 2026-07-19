@@ -368,3 +368,18 @@ describe('crafting window station-range repaint liveness (source pins)', () => {
     expect(hud).toContain('this.lastCraftingStationSig = stationTypesSignature(inRangeStations);');
   });
 });
+
+describe('craftResult deny toast names the station (source pins)', () => {
+  const hud = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+
+  it('station_required resolves the type from recipe content (no station field rides the event)', () => {
+    expect(hud).toMatch(
+      /ev\.reason === 'station_required' \? recipeById\(ev\.recipeId\)\?\.stationType : undefined/,
+    );
+  });
+
+  it('a resolved type renders the NAMED toast via stationRequired + stationNameText', () => {
+    expect(hud).toContain("t('hudChrome.crafting.stationRequired', {");
+    expect(hud).toContain('station: stationNameText(deniedStationType),');
+  });
+});
