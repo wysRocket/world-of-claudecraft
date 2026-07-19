@@ -2,7 +2,12 @@ import { VISUAL_THEME_CATALOG } from './visual_theme_catalog.generated';
 import { resolveVisualTheme, themedAssetPath, type VisualThemeId } from './visual_theme_core';
 
 const search = typeof location === 'undefined' ? '' : location.search;
-const buildDefault = import.meta.env.VITE_VISUAL_THEME;
+const stampedDefault =
+  typeof document === 'undefined' ? undefined : document.documentElement.dataset.visualTheme;
+const buildDefault =
+  stampedDefault === 'classic' || stampedDefault === 'emberwood'
+    ? stampedDefault
+    : import.meta.env.VITE_VISUAL_THEME;
 
 export const ACTIVE_VISUAL_THEME: VisualThemeId = resolveVisualTheme(search, buildDefault);
 
