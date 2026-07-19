@@ -617,9 +617,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.unitFrame.playerLabel': 'Ваш персонаж',
   'hudChrome.unitFrame.targetAnnounce': 'Цель: {name}',
   'hudChrome.unitFrame.targetLabel': 'Ваша цель',
-  'seo.officialLabel': 'Официальный сайт World of ClaudeCraft',
+  'seo.officialLabel': 'Официальный сайт Endless Glory',
   'seo.officialBody':
-    'worldofclaudecraft.com - официальная бесплатная браузерная MMO для мира Claudemoon. Играйте онлайн с постоянным персонажем, исследуйте мир в одиночку офлайн, читайте wiki и переходите по проверенным ссылкам сообщества с этого сайта.',
+    'endlessglory.vercel.app - официальная бесплатная браузерная MMO для мира Claudemoon. Играйте онлайн с постоянным персонажем, исследуйте мир в одиночку офлайн, читайте wiki и переходите по проверенным ссылкам сообщества с этого сайта.',
   'hudChrome.questShare.notShareable': 'Этим заданием нельзя поделиться.',
   'hudChrome.questShare.notInSharerParty':
     'Вы должны состоять в группе игрока {name}, чтобы принять это задание.',
@@ -1137,7 +1137,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'stats.accountsCreated': 'Игроки',
   'stats.playersOnline': 'Игроков в сети',
   'stats.realmName': 'Название игрового мира',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
   'footer.githubLabel': 'Проект с открытым исходным кодом',
   'footer.whitepaper': 'Белая книга',
@@ -1278,7 +1278,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'wallet.mobileAppHelp':
     'Выберите Phantom или Solflare. Приложение кошелька запросит подтверждение. Не закрывайте игру и вернитесь в нее после завершения.',
   'wallet.standaloneAppHelp':
-    'Подключение кошелька пока недоступно в приложении с главного экрана. Для Phantom или Solflare откройте World of ClaudeCraft в Safari или Chrome.',
+    'Подключение кошелька пока недоступно в приложении с главного экрана. Для Phantom или Solflare откройте Endless Glory в Safari или Chrome.',
   'wallet.openAppTitle': 'Продолжить в {wallet}',
   'wallet.openAppHelp':
     'Откройте {wallet}, чтобы проверить этот запрос. Не закрывайте вкладку с игрой, пока открыто приложение кошелька.',
@@ -1286,7 +1286,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'wallet.manualReturnBrowserHelp':
     'После подтверждения вернитесь на вкладку с игрой. Если iOS откроет другой браузер, закройте его и вручную вернитесь в исходный браузер.',
   'wallet.manualReturnStandaloneHelp':
-    'После подтверждения вернитесь в World of ClaudeCraft с экрана «Домой». Если iOS откроет браузер, закройте его и снова откройте приложение с экрана «Домой».',
+    'После подтверждения вернитесь в Endless Glory с экрана «Домой». Если iOS откроет браузер, закройте его и снова откройте приложение с экрана «Домой».',
   'wallet.preparingAppButton': 'Подготовка {wallet}...',
   'wallet.walletAppUnavailable':
     'Не удалось подготовить {wallet}. Закройте это окно и повторите попытку.',
@@ -1305,12 +1305,12 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.extensionHelp':
     'Совместимое расширение кошелька не найдено. Установите или разблокируйте Phantom, Solflare либо другой браузерный кошелек Solana и повторите попытку.',
   'wallet.browser.safety':
-    'World of ClaudeCraft никогда не запрашивает фразу восстановления или закрытый ключ.',
+    'Endless Glory никогда не запрашивает фразу восстановления или закрытый ключ.',
   'wallet.browser.continueWith': 'Продолжить с {wallet}',
   'wallet.browser.reviewTitle': 'Проверьте запрос в кошельке',
   'wallet.browser.reviewBody': 'Следуйте подсказке {wallet}. Не закрывайте эту страницу браузера.',
   'wallet.browser.completeTitle': 'Авторизация кошелька завершена',
-  'wallet.browser.completeBody': 'Можно вернуться в приложение World of ClaudeCraft.',
+  'wallet.browser.completeBody': 'Можно вернуться в приложение Endless Glory.',
   'wallet.browser.returnButton': 'Вернуться в приложение',
   'wallet.browser.failed':
     'Авторизация кошелька не удалась или истекла. Вернитесь в приложение и повторите попытку.',
@@ -1371,7 +1371,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'playerCard.levelClass': 'Уровень {level} - {className}',
   'playerCard.topPercent': 'ТОП {percent}%',
   'playerCard.realmSubtitle': 'Мир {realm}',
-  'playerCard.defaultRealm': 'Мир ClaudeCraft',
+  'playerCard.defaultRealm': 'Мир EndlessGlory',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.recruited': 'приглашено: {count}',
   'playerCard.footerHandle': '@{handle}',
@@ -1380,8 +1380,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Арена',
   'playerCard.shareTierBit': ', держатель $WOC ранга {tier}',
   'playerCard.shareText':
-    'Я создаю свою легенду в World of ClaudeCraft: уровень {level}, {className}{tierBit}. Присоединяйтесь к моему миру:',
-  'playerCard.nativeShareTitle': 'Мир ClaudeCraft',
+    'Я создаю свою легенду в Endless Glory: уровень {level}, {className}{tierBit}. Присоединяйтесь к моему миру:',
+  'playerCard.nativeShareTitle': 'Мир EndlessGlory',
   'playerCard.fileNameFallback': 'игрок',
   'playerCard.actionShareX': 'Поделиться в X',
   'playerCard.actionCopyReferral': 'Копировать реферальную ссылку',
@@ -1442,9 +1442,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'controls.emoteWheel': 'Удерживать колесо эмоций',
   'controls.friends': 'Друзья и гильдия',
   'controls.chat': 'Открыть чат',
-  'seo.title': 'World of ClaudeCraft: веб-MMO в классическом стиле',
+  'seo.title': 'Endless Glory: веб-MMO в классическом стиле',
   'seo.description':
-    'Отправьтесь в эпическое приключение в World of ClaudeCraft, микро-MMO в классическом стиле прямо в браузере. Присоединяйтесь к постоянному общему миру, развивайте классы и побеждайте врагов.',
+    'Отправьтесь в эпическое приключение в Endless Glory, микро-MMO в классическом стиле прямо в браузере. Присоединяйтесь к постоянному общему миру, развивайте классы и побеждайте врагов.',
   'seo.genre': 'MMORPG',
   'seo.playMode': 'Многопользовательская игра',
   'seo.applicationCategory': 'Игра',
@@ -1454,9 +1454,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'a11y.mainNavigation': 'Основная навигация',
   'a11y.languageSelection': 'Выбор языка',
   'a11y.characterActions': 'Действия персонажа',
-  'a11y.githubProject': 'Открыть проект World of ClaudeCraft на GitHub',
-  'a11y.discordCommunity': 'Присоединиться к Discord-сообществу World of ClaudeCraft',
-  'a11y.donateProject': 'Пожертвовать на поддержку World of ClaudeCraft',
+  'a11y.githubProject': 'Открыть проект Endless Glory на GitHub',
+  'a11y.discordCommunity': 'Присоединиться к Discord-сообществу Endless Glory',
+  'a11y.donateProject': 'Пожертвовать на поддержку Endless Glory',
   'entryGuard.body':
     'Игра неожиданно закрылась при входе в мир, поэтому графика теперь установлена на {preset}. Вы можете изменить это в переключателе графики ниже или в настройках игры.',
   'entryGuard.dismiss': 'Закрыть',
@@ -1629,19 +1629,19 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Для настоящего полноэкранного режима на iPhone или iPad сначала добавьте эту страницу на домашний экран.',
   'mobilePreflight.iosShareStep': 'В Safari нажмите Поделиться, затем На экран Домой.',
   'mobilePreflight.iosOpenStep':
-    'Откройте World of ClaudeCraft через новый значок на домашнем экране.',
+    'Откройте Endless Glory через новый значок на домашнем экране.',
   'mobilePreflight.androidStandaloneDetail':
     'Вы в полноэкранном режиме приложения. Держите устройство горизонтально.',
   'mobilePreflight.androidInstallDetail':
     'Для полноэкранного режима на Android установите эту страницу или добавьте ее на главный экран.',
   'mobilePreflight.androidInstallStep':
     'В Chrome откройте меню, затем выберите Установить приложение или Добавить на главный экран.',
-  'mobilePreflight.androidOpenStep': 'Откройте World of ClaudeCraft через новый значок.',
+  'mobilePreflight.androidOpenStep': 'Откройте Endless Glory через новый значок.',
   'mobilePreflight.otherStandaloneDetail': 'Держите устройство в полноэкранном альбомном режиме.',
   'mobilePreflight.otherInstallDetail':
     'Установите эту страницу или добавьте ее на главный экран для лучшего мобильного полноэкранного опыта.',
-  'serverUnavailable.title': 'World of ClaudeCraft - мир недоступен',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.title': 'Endless Glory - мир недоступен',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.eyebrow': 'Технические работы',
   'serverUnavailable.heading': 'Мир временно недоступен.',
   'serverUnavailable.body':
@@ -4104,7 +4104,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'mode.caNote':
     'WOC - токен нашего сообщества. Он не нужен для игры. Присоединяйтесь к Discord, чтобы обсудить применение и экосистему WOC.',
   'mode.play': 'Играть',
-  'mode.playAria': 'Играть в World of ClaudeCraft',
+  'mode.playAria': 'Играть в Endless Glory',
   'mode.serverAria': 'Выберите мир: В сети или Не в сети',
   'mode.serverLabel': 'Выберите свой мир',
   'mode.serverOffline': 'Не в сети',
@@ -4654,8 +4654,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bags.backpack': 'Рюкзак',
   'hudChrome.bags.socketEmpty': 'Пустая ячейка для сумки',
   'hudChrome.bags.unequipHint': 'Нажмите, чтобы снять эту сумку',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.tagline': 'Классическая MMO, в которую можно играть бесплатно прямо в браузере.',
   'guide.skipToContent': 'Перейти к основному содержимому',
   'guide.loading': 'Загрузка...',
@@ -4762,11 +4762,11 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'guide.footer.github': 'Исходный код на GitHub',
   'guide.footer.discord': 'Присоединиться к Discord',
   'guide.footer.communityWiki': 'Вики сообщества',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.language.label': 'Язык',
   'guide.language.select': 'Выберите язык',
   'guide.home.eyebrow': 'Классическая браузерная MMO',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.subtitle':
     'Выполняйте задания, объединяйтесь в группы и исследуйте созданный вручную мир бесплатно прямо в браузере.',
   'guide.home.ctaPlay': 'Играть',
@@ -5139,7 +5139,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Хладнокровные охотники со своим особым шипением и хваткой, непохожие на теплокровных зверей.',
   'guide.worldPage.heading': 'Мир',
   'guide.worldPage.intro':
-    'World of ClaudeCraft - это единый цельный край, который вы пересекаете пешком, три зоны, протянувшиеся с юга на север. Здесь нет быстрых перемещений, так что дорога - это часть приключения.',
+    'Endless Glory - это единый цельный край, который вы пересекаете пешком, три зоны, протянувшиеся с юга на север. Здесь нет быстрых перемещений, так что дорога - это часть приключения.',
   'guide.worldPage.hub': 'Опорная база',
   'guide.worldPage.valeBlurb':
     'Зеленая стартовая долина, где новые герои набираются опыта на волках и разбойниках вокруг города Восточный Брод.',
@@ -6390,7 +6390,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.event.hint': 'Объявите о рейде, встрече или событии',
   'hudChrome.discord.relay.help.hint': 'Попросите сообщество о помощи',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.viewCharacter': 'Показать {name}',
   'hudChrome.discord.rank': 'Ранг',
@@ -6480,9 +6480,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.devBadge.unlink': 'Отвязать GitHub',
   'hudChrome.nativeUpdate.title': 'Доступно обновление',
   'hudChrome.nativeUpdate.body':
-    'Доступна новая версия World of ClaudeCraft. Обновите сейчас, чтобы получить последние исправления и улучшения.',
+    'Доступна новая версия Endless Glory. Обновите сейчас, чтобы получить последние исправления и улучшения.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'Доступна версия {version} World of ClaudeCraft. Обновите сейчас, чтобы получить последние исправления и улучшения.',
+    'Доступна версия {version} Endless Glory. Обновите сейчас, чтобы получить последние исправления и улучшения.',
   'hudChrome.nativeUpdate.notNow': 'Не сейчас',
   'hudChrome.nativeUpdate.update': 'Обновить',
   'hudChrome.cameraPrompt.title': 'Выберите камеру',
@@ -6499,19 +6499,19 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Обновление {version} готово. Оно установится при выходе из игры, либо перезапустите сейчас.',
   'desktop.update.restart': 'Перезапустить сейчас',
   'desktop.update.later': 'Позже',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.crash.body': 'Игровой экран перестал отвечать. Перезагрузить его?',
   'desktop.crash.reload': 'Перезагрузить',
   'desktop.crash.quit': 'Выйти',
   'desktop.crash.fatalBody':
-    'World of ClaudeCraft столкнулась с непредвиденной ошибкой и будет закрыта.',
+    'Endless Glory столкнулась с непредвиденной ошибкой и будет закрыта.',
   'gpuNotice.bodyDesktop':
     'Игра работает без GPU-ускорения и будет сильно тормозить. Обновите драйверы видеокарты и перезапустите игру. В Windows также выберите для игры режим «Высокая производительность» в разделе Параметры > Система > Дисплей > Графика.',
   'gpuNotice.bodyWeb':
     'Игра работает без GPU-ускорения и будет сильно тормозить. Включите аппаратное ускорение в настройках браузера, обновите драйверы видеокарты и перезапустите браузер.',
   'gpuNotice.dismiss': 'Закрыть',
   'editor.appTitle': 'Редактор карт',
-  'editor.docTitle': 'Редактор карт - World of ClaudeCraft',
+  'editor.docTitle': 'Редактор карт - Endless Glory',
   'editor.untitledMap': 'Карта без названия',
   'editor.playtestPlayerName': 'Картограф',
   'editor.topbar.label': 'Действия редактора',

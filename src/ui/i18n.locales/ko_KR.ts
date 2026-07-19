@@ -621,9 +621,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.unitFrame.playerLabel': '내 캐릭터',
   'hudChrome.unitFrame.targetAnnounce': '대상: {name}',
   'hudChrome.unitFrame.targetLabel': '내 대상',
-  'seo.officialLabel': 'World of ClaudeCraft 공식 웹사이트',
+  'seo.officialLabel': 'Endless Glory 공식 웹사이트',
   'seo.officialBody':
-    'worldofclaudecraft.com은 Claudemoon 월드의 공식 무료 브라우저 MMO입니다. 지속 캐릭터로 온라인 플레이를 하거나, 오프라인에서 혼자 탐험하고, 위키를 읽고, 이 사이트에서 검증된 커뮤니티 링크를 확인하세요.',
+    'endlessglory.vercel.app은 Claudemoon 월드의 공식 무료 브라우저 MMO입니다. 지속 캐릭터로 온라인 플레이를 하거나, 오프라인에서 혼자 탐험하고, 위키를 읽고, 이 사이트에서 검증된 커뮤니티 링크를 확인하세요.',
   'hudChrome.questShare.notShareable': '이 퀘스트는 공유할 수 없습니다.',
   'hudChrome.questShare.notInSharerParty':
     '{name}님의 파티에 속해 있어야 이 퀘스트를 수락할 수 있습니다.',
@@ -1126,7 +1126,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'stats.accountsCreated': '플레이어',
   'stats.playersOnline': '현재 접속자 수',
   'stats.realmName': '월드 이름',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
   'footer.githubLabel': '오픈 소스 프로젝트',
   'footer.whitepaper': '백서',
@@ -1260,7 +1260,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'wallet.mobileAppHelp':
     'Phantom 또는 Solflare를 선택하세요. 지갑 앱에서 승인을 요청합니다. 게임을 열어 둔 채 완료 후 돌아오세요.',
   'wallet.standaloneAppHelp':
-    '홈 화면 앱에서는 아직 지갑 연결을 사용할 수 없습니다. Phantom 또는 Solflare를 사용하려면 Safari나 Chrome에서 World of ClaudeCraft를 여세요.',
+    '홈 화면 앱에서는 아직 지갑 연결을 사용할 수 없습니다. Phantom 또는 Solflare를 사용하려면 Safari나 Chrome에서 Endless Glory를 여세요.',
   'wallet.openAppTitle': '{wallet}에서 계속',
   'wallet.openAppHelp':
     '{wallet}을 열어 이 요청을 확인하세요. 지갑 앱을 사용하는 동안 이 게임 탭을 열어 두세요.',
@@ -1268,7 +1268,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'wallet.manualReturnBrowserHelp':
     '승인 후 이 게임 탭으로 돌아오세요. iOS에서 다른 브라우저가 열리면 닫고 원래 브라우저로 직접 돌아오세요.',
   'wallet.manualReturnStandaloneHelp':
-    '승인 후 홈 화면에서 World of ClaudeCraft로 돌아오세요. iOS에서 브라우저가 열리면 닫고 홈 화면 앱을 다시 여세요.',
+    '승인 후 홈 화면에서 Endless Glory로 돌아오세요. iOS에서 브라우저가 열리면 닫고 홈 화면 앱을 다시 여세요.',
   'wallet.preparingAppButton': '{wallet} 준비 중...',
   'wallet.walletAppUnavailable': '{wallet}을 준비하지 못했습니다. 이 창을 닫고 다시 시도하세요.',
   'wallet.flowConnect': '지갑을 선택하세요. 인증은 자동으로 계속됩니다.',
@@ -1283,12 +1283,12 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.paymentBody': '계정에 연결된 지갑을 선택하고 이 브라우저에서 거래를 승인하세요.',
   'wallet.browser.extensionHelp':
     '호환되는 지갑 확장 프로그램을 찾지 못했습니다. Phantom, Solflare 또는 다른 Solana 브라우저 지갑을 설치하거나 잠금 해제한 뒤 다시 시도하세요.',
-  'wallet.browser.safety': 'World of ClaudeCraft는 복구 문구나 개인 키를 요청하지 않습니다.',
+  'wallet.browser.safety': 'Endless Glory는 복구 문구나 개인 키를 요청하지 않습니다.',
   'wallet.browser.continueWith': '{wallet}(으)로 계속',
   'wallet.browser.reviewTitle': '지갑에서 검토',
   'wallet.browser.reviewBody': '{wallet}의 안내를 따르세요. 이 브라우저 페이지를 열어 두세요.',
   'wallet.browser.completeTitle': '지갑 인증 완료',
-  'wallet.browser.completeBody': 'World of ClaudeCraft 데스크톱 앱으로 돌아갈 수 있습니다.',
+  'wallet.browser.completeBody': 'Endless Glory 데스크톱 앱으로 돌아갈 수 있습니다.',
   'wallet.browser.returnButton': '데스크톱 앱으로 돌아가기',
   'wallet.browser.failed':
     '지갑 인증에 실패했거나 만료되었습니다. 데스크톱 앱으로 돌아가 다시 시도하세요.',
@@ -1348,7 +1348,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'playerCard.levelClass': '{level}레벨 - {className}',
   'playerCard.topPercent': '상위 {percent}%',
   'playerCard.realmSubtitle': '{realm} 월드',
-  'playerCard.defaultRealm': 'ClaudeCraft의 세계',
+  'playerCard.defaultRealm': 'EndlessGlory의 세계',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.recruited': '{count}명 모집',
   'playerCard.footerHandle': '@{handle}',
@@ -1357,8 +1357,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': '투기장',
   'playerCard.shareTierBit': ', {tier} 등급 $WOC 보유자',
   'playerCard.shareText':
-    'World of ClaudeCraft에서 제 전설을 벼리고 있습니다: {level}레벨 {className}{tierBit}. 제 월드에 합류하세요:',
-  'playerCard.nativeShareTitle': 'ClaudeCraft의 세계',
+    'Endless Glory에서 제 전설을 벼리고 있습니다: {level}레벨 {className}{tierBit}. 제 월드에 합류하세요:',
+  'playerCard.nativeShareTitle': 'EndlessGlory의 세계',
   'playerCard.fileNameFallback': '플레이어',
   'playerCard.actionShareX': 'X에 공유',
   'playerCard.actionCopyReferral': '추천 링크 복사',
@@ -1419,9 +1419,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'controls.emoteWheel': '감정표현 휠 길게 누르기',
   'controls.friends': '친구 및 길드',
   'controls.chat': '채팅창 열기',
-  'seo.title': 'World of ClaudeCraft: 클래식 스타일 웹 MMO',
+  'seo.title': 'Endless Glory: 클래식 스타일 웹 MMO',
   'seo.description':
-    '브라우저에서 바로 즐기는 클래식 스타일 마이크로 MMO, World of ClaudeCraft에서 장대한 모험을 시작하세요. 지속되는 공유 월드에 접속해 직업을 성장시키고 적을 물리치세요.',
+    '브라우저에서 바로 즐기는 클래식 스타일 마이크로 MMO, Endless Glory에서 장대한 모험을 시작하세요. 지속되는 공유 월드에 접속해 직업을 성장시키고 적을 물리치세요.',
   'seo.genre': 'MMORPG',
   'seo.playMode': '멀티플레이어',
   'seo.applicationCategory': '게임',
@@ -1431,9 +1431,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'a11y.mainNavigation': '기본 탐색',
   'a11y.languageSelection': '언어 선택',
   'a11y.characterActions': '캐릭터 작업',
-  'a11y.githubProject': 'GitHub에서 World of ClaudeCraft 프로젝트 열기',
-  'a11y.discordCommunity': 'World of ClaudeCraft Discord 커뮤니티 참여',
-  'a11y.donateProject': 'World of ClaudeCraft 후원하기',
+  'a11y.githubProject': 'GitHub에서 Endless Glory 프로젝트 열기',
+  'a11y.discordCommunity': 'Endless Glory Discord 커뮤니티 참여',
+  'a11y.donateProject': 'Endless Glory 후원하기',
   'entryGuard.body':
     '월드 입장 중 게임이 예기치 않게 종료되어 그래픽이 {preset}(으)로 설정되었습니다. 아래 그래픽 선택기나 게임 내 옵션에서 변경할 수 있습니다.',
   'entryGuard.dismiss': '닫기',
@@ -1596,18 +1596,18 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.iosInstallDetail':
     'iPhone 또는 iPad에서 진짜 전체 화면을 사용하려면 먼저 이 페이지를 홈 화면에 추가하세요.',
   'mobilePreflight.iosShareStep': 'Safari에서 공유를 누른 뒤 홈 화면에 추가를 선택하세요.',
-  'mobilePreflight.iosOpenStep': '새 홈 화면 아이콘에서 World of ClaudeCraft를 여세요.',
+  'mobilePreflight.iosOpenStep': '새 홈 화면 아이콘에서 Endless Glory를 여세요.',
   'mobilePreflight.androidStandaloneDetail': '전체 화면 앱 모드입니다. 기기를 가로로 유지하세요.',
   'mobilePreflight.androidInstallDetail':
     'Android에서 전체 화면을 사용하려면 이 페이지를 설치하거나 홈 화면에 추가하세요.',
   'mobilePreflight.androidInstallStep':
     'Chrome에서 메뉴를 누른 뒤 앱 설치 또는 홈 화면에 추가를 선택하세요.',
-  'mobilePreflight.androidOpenStep': '새 아이콘에서 World of ClaudeCraft를 여세요.',
+  'mobilePreflight.androidOpenStep': '새 아이콘에서 Endless Glory를 여세요.',
   'mobilePreflight.otherStandaloneDetail': '기기를 가로 전체 화면으로 유지하세요.',
   'mobilePreflight.otherInstallDetail':
     '최상의 모바일 전체 화면 경험을 위해 이 페이지를 설치하거나 홈 화면에 추가하세요.',
-  'serverUnavailable.title': 'World of ClaudeCraft - 월드 이용 불가',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.title': 'Endless Glory - 월드 이용 불가',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.eyebrow': '월드 점검',
   'serverUnavailable.heading': '월드를 일시적으로 이용할 수 없습니다.',
   'serverUnavailable.body':
@@ -4056,7 +4056,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'mode.caNote':
     'WOC는 커뮤니티 토큰입니다. 플레이에는 필요하지 않습니다. WOC의 활용과 선순환 구조에 관해 이야기하려면 Discord에 참여하세요.',
   'mode.play': '플레이',
-  'mode.playAria': 'World of ClaudeCraft 플레이',
+  'mode.playAria': 'Endless Glory 플레이',
   'mode.serverAria': '월드 선택: 온라인 또는 오프라인',
   'mode.serverLabel': '월드를 선택하세요',
   'mode.serverOffline': '오프라인',
@@ -4594,8 +4594,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bags.backpack': '배낭',
   'hudChrome.bags.socketEmpty': '빈 가방 칸',
   'hudChrome.bags.unequipHint': '클릭하여 이 가방을 해제',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.tagline': '브라우저에서 무료로 즐기는 클래식 스타일 MMO입니다.',
   'guide.skipToContent': '본문으로 건너뛰기',
   'guide.loading': '불러오는 중...',
@@ -4702,11 +4702,11 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'guide.footer.github': 'GitHub 소스 코드',
   'guide.footer.discord': 'Discord 참여하기',
   'guide.footer.communityWiki': '커뮤니티 위키',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.language.label': '언어',
   'guide.language.select': '언어 선택',
   'guide.home.eyebrow': '클래식 스타일 브라우저 MMO',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.subtitle':
     '퀘스트를 수행하고, 파티를 맺고, 손수 빚은 세계를 브라우저에서 무료로 탐험하세요.',
   'guide.home.ctaPlay': '지금 플레이',
@@ -5073,7 +5073,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '쉭쉭거리는 소리와 날카로운 물어뜯기를 지닌 냉혈 사냥꾼들로, 온혈 야수들과는 뚜렷이 다릅니다.',
   'guide.worldPage.heading': '세계',
   'guide.worldPage.intro':
-    'World of ClaudeCraft는 두 발로 가로지르는 하나로 이어진 대지이며, 남에서 북으로 펼쳐진 세 개의 지역으로 이루어져 있습니다. 빠른 이동이 없으니, 여정 자체가 모험의 일부입니다.',
+    'Endless Glory는 두 발로 가로지르는 하나로 이어진 대지이며, 남에서 북으로 펼쳐진 세 개의 지역으로 이루어져 있습니다. 빠른 이동이 없으니, 여정 자체가 모험의 일부입니다.',
   'guide.worldPage.hub': '본거지',
   'guide.worldPage.valeBlurb':
     '새내기 영웅들이 동개울 마을 주변에서 늑대와 산적을 상대로 실력을 갈고닦는 푸른 시작의 골짜기.',
@@ -6275,7 +6275,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.event.hint': '레이드, 모임 또는 이벤트 공지',
   'hudChrome.discord.relay.help.hint': '커뮤니티에 도움 요청',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.viewCharacter': '{name} 보기',
   'hudChrome.discord.rank': '등급',
@@ -6367,9 +6367,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.devBadge.unlink': 'GitHub 연결 해제',
   'hudChrome.nativeUpdate.title': '업데이트 사용 가능',
   'hudChrome.nativeUpdate.body':
-    'World of ClaudeCraft의 새 버전을 사용할 수 있습니다. 지금 업데이트하여 최신 수정 사항과 개선 사항을 받으세요.',
+    'Endless Glory의 새 버전을 사용할 수 있습니다. 지금 업데이트하여 최신 수정 사항과 개선 사항을 받으세요.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'World of ClaudeCraft 버전 {version}을(를) 사용할 수 있습니다. 지금 업데이트하여 최신 수정 사항과 개선 사항을 받으세요.',
+    'Endless Glory 버전 {version}을(를) 사용할 수 있습니다. 지금 업데이트하여 최신 수정 사항과 개선 사항을 받으세요.',
   'hudChrome.nativeUpdate.notNow': '나중에',
   'hudChrome.nativeUpdate.update': '업데이트',
   'hudChrome.cameraPrompt.title': '카메라 선택',
@@ -6385,18 +6385,18 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '업데이트 {version} 준비 완료. 게임을 종료하면 자동으로 설치되며, 지금 다시 시작할 수도 있습니다.',
   'desktop.update.restart': '지금 다시 시작',
   'desktop.update.later': '나중에',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.crash.body': '게임 화면이 응답하지 않습니다. 다시 불러올까요?',
   'desktop.crash.reload': '다시 불러오기',
   'desktop.crash.quit': '종료',
-  'desktop.crash.fatalBody': 'World of ClaudeCraft에 예기치 않은 오류가 발생하여 종료해야 합니다.',
+  'desktop.crash.fatalBody': 'Endless Glory에 예기치 않은 오류가 발생하여 종료해야 합니다.',
   'gpuNotice.bodyDesktop':
     '게임이 GPU 가속 없이 실행되고 있어 매우 느립니다. 그래픽 드라이버를 업데이트한 뒤 게임을 다시 시작하세요. Windows에서는 설정 > 시스템 > 디스플레이 > 그래픽에서 이 게임을 "고성능"으로 설정하세요.',
   'gpuNotice.bodyWeb':
     '게임이 GPU 가속 없이 실행되고 있어 매우 느립니다. 브라우저 설정에서 하드웨어 가속을 켜고 그래픽 드라이버를 업데이트한 뒤 브라우저를 다시 시작하세요.',
   'gpuNotice.dismiss': '닫기',
   'editor.appTitle': '맵 편집기',
-  'editor.docTitle': '맵 편집기 - World of ClaudeCraft',
+  'editor.docTitle': '맵 편집기 - Endless Glory',
   'editor.untitledMap': '제목 없는 맵',
   'editor.playtestPlayerName': '지도제작자',
   'editor.topbar.label': '편집기 동작',

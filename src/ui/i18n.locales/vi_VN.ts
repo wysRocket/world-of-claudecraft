@@ -237,7 +237,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Liên kết ví',
   'wallet.bagLink': 'Xác minh ví',
   'wallet.bagReconnect': 'Kết nối lại ví',
-  'wallet.browser.completeBody': 'Bạn có thể quay lại ứng dụng máy tính World of ClaudeCraft.',
+  'wallet.browser.completeBody': 'Bạn có thể quay lại ứng dụng máy tính Endless Glory.',
   'wallet.browser.completeTitle': 'Ủy quyền ví hoàn tất',
   'wallet.browser.continueWith': 'Tiếp tục với {wallet}',
   'wallet.browser.extensionHelp':
@@ -254,12 +254,12 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.reviewBody': 'Làm theo hướng dẫn từ {wallet}. Giữ trang trình duyệt này mở.',
   'wallet.browser.reviewTitle': 'Xem xét trong ví của bạn',
   'wallet.browser.safety':
-    'World of ClaudeCraft không bao giờ yêu cầu cụm từ khôi phục hoặc khóa riêng tư của bạn.',
+    'Endless Glory không bao giờ yêu cầu cụm từ khôi phục hoặc khóa riêng tư của bạn.',
   'wallet.browser.title': 'Kết Nối Ví Solana',
   'wallet.manualReturnBrowserHelp':
     'Sau khi phê duyệt, hãy quay lại tab trò chơi này. Nếu iOS mở một trình duyệt khác, hãy đóng nó và quay lại trình duyệt gốc thủ công.',
   'wallet.manualReturnStandaloneHelp':
-    'Sau khi phê duyệt, hãy quay lại World of ClaudeCraft từ Màn hình chính của bạn. Nếu iOS mở một trình duyệt, hãy đóng nó và mở lại ứng dụng Màn hình chính thủ công.',
+    'Sau khi phê duyệt, hãy quay lại Endless Glory từ Màn hình chính của bạn. Nếu iOS mở một trình duyệt, hãy đóng nó và mở lại ứng dụng Màn hình chính thủ công.',
   'wallet.mobileAppHelp':
     'Hãy chọn Phantom hoặc Solflare. Ứng dụng ví của bạn sẽ yêu cầu phê duyệt. Giữ trò chơi này mở và quay lại khi hoàn thành.',
   'wallet.openAppButton': 'Mở {wallet}',
@@ -268,7 +268,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'wallet.openAppTitle': 'Tiếp tục trong {wallet}',
   'wallet.preparingAppButton': 'Đang chuẩn bị {wallet}...',
   'wallet.standaloneAppHelp':
-    'Kết nối ví chưa có sẵn trong ứng dụng Màn hình chính. Hãy mở World of ClaudeCraft trong Safari hoặc Chrome để sử dụng Phantom hoặc Solflare.',
+    'Kết nối ví chưa có sẵn trong ứng dụng Màn hình chính. Hãy mở Endless Glory trong Safari hoặc Chrome để sử dụng Phantom hoặc Solflare.',
   'wallet.walletAppUnavailable': 'Không thể chuẩn bị {wallet}. Hãy đóng cửa sổ này và thử lại.',
   'entities.abilities.primal_reflexes.description':
     'Bản năng của bạn trở nên sắc bén, tăng 50% cơ hội né đòn trong 6 giây.',
@@ -1150,7 +1150,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'editor.confirm.discardBody': 'Bạn có thay đổi chưa lưu trên "{name}". Bỏ chúng đi?',
   'editor.confirm.discardTitle': 'Bỏ các thay đổi?',
   'editor.confirm.ok': 'OK',
-  'editor.docTitle': 'Trình Chỉnh Sửa Bản Đồ - World of ClaudeCraft',
+  'editor.docTitle': 'Trình Chỉnh Sửa Bản Đồ - Endless Glory',
   'editor.eraseTool.blockerHint': 'Nhấp gần một tường chắn sẽ gỡ bức tường đó thay vì thứ khác.',
   'editor.eraseTool.hint':
     'Nhấp vào một vật thể đã đặt để gỡ nó, hoặc nhấp vào nền đất đã điêu khắc để gỡ dấu mới nhất dưới con trỏ.',
@@ -1813,9 +1813,9 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.sources.header': 'Cấu thành từ:',
   'hudChrome.statInfo.sources.talents': 'Talent và hiệu ứng: {value}',
   'a11y.characterActions': 'Hành động nhân vật',
-  'a11y.discordCommunity': 'Tham gia cộng đồng Discord của World of ClaudeCraft',
-  'a11y.donateProject': 'Quyên góp ủng hộ World of ClaudeCraft',
-  'a11y.githubProject': 'Mở dự án GitHub của World of ClaudeCraft',
+  'a11y.discordCommunity': 'Tham gia cộng đồng Discord của Endless Glory',
+  'a11y.donateProject': 'Quyên góp ủng hộ Endless Glory',
+  'a11y.githubProject': 'Mở dự án GitHub của Endless Glory',
   'a11y.goHome': 'Về trang chủ',
   'a11y.languageSelection': 'Chọn ngôn ngữ',
   'a11y.mainNavigation': 'Điều hướng chính',
@@ -3910,7 +3910,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'fiesta.word.shutdown': 'CHẶN ĐỨNG!',
   'fiesta.word.spree': 'CHUỖI {n}×!',
   'fiesta.word.wave': 'CƯỜNG HÓA!',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.discordLabel': 'Tham Gia Discord',
   'footer.githubLabel': 'Dự Án Mã Nguồn Mở',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
@@ -4177,8 +4177,8 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'guide.bestiary.levelsSame': 'Cấp {min}',
   'guide.bestiary.notedLabel': 'Đáng chú ý',
   'guide.bestiary.rare': 'Hiếm',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.breadcrumb.home': 'Hướng Dẫn',
   'guide.breadcrumb.label': 'Đường dẫn',
   'guide.chooser.clear': 'Xóa bộ lọc',
@@ -4440,7 +4440,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'guide.footer.discord': 'Tham gia Discord',
   'guide.footer.github': 'Mã nguồn trên GitHub',
   'guide.footer.playNow': 'Chơi Ngay',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.gear.consumablesElixirs':
     'Tiên dược ban một hiệu ứng tăng cường tạm thời khi bạn phiêu lưu, một lợi thế nhỏ giúp ích khi bạn muốn tiến xa hơn một chút.',
   'guide.gear.consumablesFood':
@@ -4607,7 +4607,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Thế giới có thể chơi đơn, nhưng chiến lợi phẩm tốt nhất chờ đợi sau một tổ đội ăn ý.',
   'guide.home.subtitle':
     'Làm nhiệm vụ, hợp sức và khám phá một thế giới được dựng thủ công, miễn phí ngay trong trình duyệt của bạn.',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.what.heading': 'Một MMO cổ điển, được làm ra để dễ bắt nhịp',
   'guide.home.what.pillarClassesBody':
     'Đỡ đòn, trị liệu hoặc gây sát thương. Mỗi lớp chơi đúng theo cách nguyên mẫu của nó nên có, với tài năng để biến nó thành của riêng bạn.',
@@ -5024,7 +5024,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'guide.worldPage.heading': 'Thế giới',
   'guide.worldPage.hub': 'Căn cứ nhà',
   'guide.worldPage.intro':
-    'World of ClaudeCraft là một vùng đất liền mạch mà bạn băng qua bằng đôi chân, ba khu vực trải dài từ nam tới bắc. Không có di chuyển nhanh, nên hành trình là một phần của cuộc phiêu lưu.',
+    'Endless Glory là một vùng đất liền mạch mà bạn băng qua bằng đôi chân, ba khu vực trải dài từ nam tới bắc. Không có di chuyển nhanh, nên hành trình là một phần của cuộc phiêu lưu.',
   'guide.worldPage.mapHeading': 'Con đường lên phương bắc',
   'guide.worldPage.mapSub':
     'Ba khu vực, từ nam tới bắc, mỗi nơi cao hơn một bậc về cấp độ. Hãy theo dấu vết nhiệm vụ và vùng đất sẽ đưa bạn từ thung lũng tới những đỉnh cao.',
@@ -6235,7 +6235,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Để chơi toàn màn hình trên Android, hãy cài đặt trang này hoặc thêm vào Màn hình chính trước.',
   'mobilePreflight.androidInstallStep':
     'Trong Chrome, chạm vào menu, rồi chọn Cài đặt ứng dụng hoặc Thêm vào Màn hình chính.',
-  'mobilePreflight.androidOpenStep': 'Mở World of ClaudeCraft từ biểu tượng mới.',
+  'mobilePreflight.androidOpenStep': 'Mở Endless Glory từ biểu tượng mới.',
   'mobilePreflight.androidStandaloneDetail':
     'Bạn đang ở chế độ ứng dụng toàn màn hình. Hãy giữ thiết bị ở chế độ ngang.',
   'mobilePreflight.baseLandscape': 'Hãy xoay thiết bị sang ngang trước khi vào thế giới.',
@@ -6244,7 +6244,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.continue': 'Tiếp Tục Vào Game',
   'mobilePreflight.iosInstallDetail':
     'Để chơi toàn màn hình thực sự trên iPhone hoặc iPad, hãy cài đặt trang này vào Màn hình chính trước.',
-  'mobilePreflight.iosOpenStep': 'Mở World of ClaudeCraft từ biểu tượng mới trên Màn hình chính.',
+  'mobilePreflight.iosOpenStep': 'Mở Endless Glory từ biểu tượng mới trên Màn hình chính.',
   'mobilePreflight.iosShareStep':
     'Trong Safari, chạm vào Chia sẻ, rồi chọn Thêm vào Màn hình chính.',
   'mobilePreflight.iosStandaloneDetail':
@@ -6269,7 +6269,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Đăng nhập vào thế giới. Các nhân vật của bạn sống trên máy chủ và bạn chia sẻ thế giới với tất cả những người khác đang trực tuyến.',
   'mode.onlineTitle': 'Chơi Trực Tuyến',
   'mode.play': 'Chơi',
-  'mode.playAria': 'Chơi World of ClaudeCraft',
+  'mode.playAria': 'Chơi Endless Glory',
   'mode.serverAria': 'Chọn thế giới: Trực Tuyến hoặc Ngoại Tuyến',
   'mode.serverLabel': 'Chọn thế giới của bạn',
   'mode.serverOffline': 'Ngoại Tuyến',
@@ -6304,14 +6304,14 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Đấu Trường',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.close': 'Đóng thẻ người chơi',
-  'playerCard.defaultRealm': 'World of ClaudeCraft',
+  'playerCard.defaultRealm': 'Endless Glory',
   'playerCard.fileNameFallback': 'nguoichoi',
   'playerCard.footerCta': 'Rèn nên huyền thoại của bạn: {siteUrl}',
   'playerCard.footerHandle': '@{handle}',
   'playerCard.footerHandleWithRecruits': '@{handle} - {recruited}',
   'playerCard.levelClass': 'Cấp {level} - {className}',
   'playerCard.loading': 'Đang rèn thẻ của bạn...',
-  'playerCard.nativeShareTitle': 'World of ClaudeCraft',
+  'playerCard.nativeShareTitle': 'Endless Glory',
   'playerCard.poseBattle': 'Chiến Đấu',
   'playerCard.poseGroup': 'Tư Thế',
   'playerCard.poseHero': 'Anh Hùng',
@@ -6325,7 +6325,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'playerCard.renderFailedStatus': 'Kết xuất thẻ thất bại.',
   'playerCard.shareButton': 'Chia Sẻ Thẻ Người Chơi',
   'playerCard.shareText':
-    'Tôi đang rèn nên huyền thoại của mình trong World of ClaudeCraft: {className} cấp {level}{tierBit}. Hãy tham gia thế giới của tôi:',
+    'Tôi đang rèn nên huyền thoại của mình trong Endless Glory: {className} cấp {level}{tierBit}. Hãy tham gia thế giới của tôi:',
   'playerCard.shareTierBit': ', người nắm giữ $WOC hạng {tier}',
   'playerCard.statusDownloaded': 'Đã tải xuống thẻ.',
   'playerCard.statusGenericError': 'Đã có lỗi xảy ra.',
@@ -6427,21 +6427,21 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'realmTypes.rpPvp': 'RP-PvP',
   'seo.applicationCategory': 'Trò chơi',
   'seo.description':
-    'Bắt đầu cuộc phiêu lưu hoành tráng trong World of ClaudeCraft, một micro-MMO phong cách cổ điển chơi trực tiếp trên trình duyệt của bạn. Tham gia một thế giới chung bền vững, lên cấp các lớp nhân vật và đánh bại kẻ thù!',
+    'Bắt đầu cuộc phiêu lưu hoành tráng trong Endless Glory, một micro-MMO phong cách cổ điển chơi trực tiếp trên trình duyệt của bạn. Tham gia một thế giới chung bền vững, lên cấp các lớp nhân vật và đánh bại kẻ thù!',
   'seo.genre': 'MMORPG',
   'seo.officialBody':
-    'worldofclaudecraft.com là trang MMO trên trình duyệt miễn phí chính thức cho thế giới Claudemoon. Chơi trực tuyến với một nhân vật bền vững, khám phá đơn lẻ ngoại tuyến, đọc wiki và theo dõi các liên kết cộng đồng đã được xác minh từ trang này.',
-  'seo.officialLabel': 'Trang web World of ClaudeCraft chính thức',
+    'endlessglory.vercel.app là trang MMO trên trình duyệt miễn phí chính thức cho thế giới Claudemoon. Chơi trực tuyến với một nhân vật bền vững, khám phá đơn lẻ ngoại tuyến, đọc wiki và theo dõi các liên kết cộng đồng đã được xác minh từ trang này.',
+  'seo.officialLabel': 'Trang web Endless Glory chính thức',
   'seo.operatingSystem': 'Trình duyệt web',
   'seo.playMode': 'Nhiều người chơi',
-  'seo.title': 'World of ClaudeCraft: MMO Web Phong Cách Cổ Điển',
+  'seo.title': 'Endless Glory: MMO Web Phong Cách Cổ Điển',
   'serverUnavailable.body':
     'Chúng tôi đang khởi động lại dịch vụ trò chơi và dự kiến Claudemoon sẽ trở lại trong giây lát. Trang này sẽ tự động tiếp tục kiểm tra.',
   'serverUnavailable.eyebrow': 'Bảo trì thế giới',
   'serverUnavailable.heading': 'Thế giới tạm thời không khả dụng.',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.status': 'Sớm trở lại',
-  'serverUnavailable.title': 'World of ClaudeCraft - Thế Giới Không Khả Dụng',
+  'serverUnavailable.title': 'Endless Glory - Thế Giới Không Khả Dụng',
   'settings.languageLoadFailed': 'Không thể tải ngôn ngữ đó. Giữ nguyên ngôn ngữ hiện tại của bạn.',
   'settings.languageLoadUnavailable': 'Ngôn ngữ đó không khả dụng.',
   'settings.languageLoading': 'Đang tải ngôn ngữ...',
@@ -6794,7 +6794,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.guildXp': 'Tổng XP',
   'hudChrome.leaderboard.guildEmpty': 'Chưa có bang hội nào được xếp hạng.',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.close': 'Đóng',
   'hudChrome.discord.keybind': 'Bảng Discord',
@@ -6912,10 +6912,10 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.help.hint': 'Nhờ cộng đồng giúp đỡ',
   'hudChrome.options.showSecondaryActionBar': 'Hiện Thanh Hành Động Phụ',
   'desktop.crash.body': 'Khung trò chơi đã ngừng hoạt động. Tải lại chứ?',
-  'desktop.crash.fatalBody': 'World of ClaudeCraft gặp lỗi không mong muốn và cần đóng lại.',
+  'desktop.crash.fatalBody': 'Endless Glory gặp lỗi không mong muốn và cần đóng lại.',
   'desktop.crash.quit': 'Thoát',
   'desktop.crash.reload': 'Tải lại',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.update.downloading': 'Đang tải bản cập nhật {version}...',
   'desktop.update.later': 'Để sau',
   'desktop.update.ready':
@@ -6966,9 +6966,9 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.dailyRewards.walletPriceBody': 'Hiện chưa có giá WOC. Vui lòng quay lại sau ít phút.',
   'hudChrome.dailyRewards.walletValue': 'Giá Trị Ví (WOC)',
   'hudChrome.nativeUpdate.body':
-    'Đã có phiên bản mới của World of ClaudeCraft. Cập nhật ngay để nhận các bản sửa lỗi và cải tiến mới nhất.',
+    'Đã có phiên bản mới của Endless Glory. Cập nhật ngay để nhận các bản sửa lỗi và cải tiến mới nhất.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'Đã có phiên bản {version} của World of ClaudeCraft. Cập nhật ngay để nhận các bản sửa lỗi và cải tiến mới nhất.',
+    'Đã có phiên bản {version} của Endless Glory. Cập nhật ngay để nhận các bản sửa lỗi và cải tiến mới nhất.',
   'hudChrome.nativeUpdate.notNow': 'Không phải bây giờ',
   'hudChrome.nativeUpdate.title': 'Có Bản Cập Nhật',
   'hudChrome.nativeUpdate.update': 'Cập Nhật',

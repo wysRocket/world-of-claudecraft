@@ -791,8 +791,8 @@ export const pt_BR: EnTranslations = {
     },
     "nativeUpdate": {
       "title": "Atualização disponível",
-      "body": "Uma nova versão do World of ClaudeCraft está disponível. Atualize agora para receber as últimas correções e melhorias.",
-      "bodyWithVersion": "A versão {version} do World of ClaudeCraft está disponível. Atualize agora para receber as últimas correções e melhorias.",
+      "body": "Uma nova versão do Endless Glory está disponível. Atualize agora para receber as últimas correções e melhorias.",
+      "bodyWithVersion": "A versão {version} do Endless Glory está disponível. Atualize agora para receber as últimas correções e melhorias.",
       "notNow": "Agora não",
       "update": "Atualizar"
     },
@@ -1735,7 +1735,7 @@ export const pt_BR: EnTranslations = {
     },
     "discord": {
       "title": "Discord",
-      "panelTitle": "World of ClaudeCraft",
+      "panelTitle": "Endless Glory",
       "open": "Discord",
       "close": "Fechar",
       "keybind": "Painel do Discord",
@@ -2529,8 +2529,8 @@ export const pt_BR: EnTranslations = {
     }
   },
   "guide": {
-    "brand": "World of ClaudeCraft",
-    "brandShort": "ClaudeCraft",
+    "brand": "Endless Glory",
+    "brandShort": "EndlessGlory",
     "tagline": "Um MMO estilo clássico que você joga de graça no seu navegador.",
     "skipToContent": "Pular para o conteúdo principal",
     "loading": "Carregando...",
@@ -2595,7 +2595,7 @@ export const pt_BR: EnTranslations = {
       "github": "Código no GitHub",
       "discord": "Entre no Discord",
       "communityWiki": "Wiki da Comunidade",
-      "rights": "World of ClaudeCraft",
+      "rights": "Endless Glory",
       "linksLabel": "Links de jogo e comunidade"
     },
     "language": {
@@ -2618,7 +2618,7 @@ export const pt_BR: EnTranslations = {
     },
     "home": {
       "eyebrow": "MMO de navegador estilo clássico",
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "subtitle": "Cumpra missões, forme grupo e explore um mundo feito à mão, de graça no seu navegador.",
       "ctaPlay": "Jogar Agora",
       "ctaLearn": "Como Jogar",
@@ -3119,7 +3119,7 @@ export const pt_BR: EnTranslations = {
     },
     "worldPage": {
       "heading": "O mundo",
-      "intro": "World of ClaudeCraft é uma terra contínua que você atravessa a pé, três zonas dispostas de sul a norte. Não há viagem rápida, então a jornada faz parte da aventura.",
+      "intro": "Endless Glory é uma terra contínua que você atravessa a pé, três zonas dispostas de sul a norte. Não há viagem rápida, então a jornada faz parte da aventura.",
       "hub": "Base de operações",
       "mapHeading": "A estrada para o norte",
       "mapSub": "Três zonas, do sul ao norte, cada uma um degrau acima em nível. Siga a trilha das missões e a terra leva você do vale aos picos.",
@@ -3628,7 +3628,7 @@ export const pt_BR: EnTranslations = {
   },
   "editor": {
     "appTitle": "Editor de Mapas",
-    "docTitle": "Editor de Mapas - World of ClaudeCraft",
+    "docTitle": "Editor de Mapas - Endless Glory",
     "untitledMap": "Mapa sem Título",
     "playtestPlayerName": "Cartógrafo",
     "topbar": {
@@ -4103,7 +4103,7 @@ export const pt_BR: EnTranslations = {
     "realmName": "Nome do mundo"
   },
   "footer": {
-    "copyright": "2026 World of ClaudeCraft",
+    "copyright": "2026 Endless Glory",
     "githubLink": "https://github.com/levy-street/world-of-claudecraft",
     "githubLabel": "Projeto de código aberto",
     "whitepaper": "Whitepaper",
@@ -4159,7 +4159,7 @@ export const pt_BR: EnTranslations = {
     "serverOnline": "Online",
     "serverOffline": "Offline",
     "play": "Jogar",
-    "playAria": "Jogar World of ClaudeCraft",
+    "playAria": "Jogar Endless Glory",
     "serverLabel": "Escolha seu mundo",
     "serverAria": "Escolher mundo: Online ou Offline",
     "serverOfflineSub": "Mundo local instantâneo",
@@ -4270,12 +4270,12 @@ export const pt_BR: EnTranslations = {
     "helpLinkedDisconnectedWithBalance": "As vantagens de titular estão ativas. Conecte o app quando precisar assinar ou gastar.",
     "extensionHelp": "Para ver uma carteira aqui, mantenha ativa uma extensão de carteira do navegador, como a Solflare Wallet.",
     "mobileAppHelp": "Escolha Phantom ou Solflare. Seu app de carteira pedirá aprovação. Mantenha o jogo aberto e retorne a ele quando terminar.",
-    "standaloneAppHelp": "As conexões de carteira ainda não estão disponíveis no aplicativo da Tela Inicial. Abra o World of ClaudeCraft no Safari ou Chrome para usar Phantom ou Solflare.",
+    "standaloneAppHelp": "As conexões de carteira ainda não estão disponíveis no aplicativo da Tela Inicial. Abra o Endless Glory no Safari ou Chrome para usar Phantom ou Solflare.",
     "openAppTitle": "Continuar em {wallet}",
     "openAppHelp": "Abra {wallet} para revisar esta solicitação. Mantenha esta aba do jogo aberta enquanto o app da carteira estiver ativo.",
     "openAppButton": "Abrir {wallet}",
     "manualReturnBrowserHelp": "Após a aprovação, retorne a esta aba do jogo. Se o iOS abrir outro navegador, feche-o e retorne ao navegador original manualmente.",
-    "manualReturnStandaloneHelp": "Após a aprovação, retorne ao World of ClaudeCraft pela sua Tela Inicial. Se o iOS abrir um navegador, feche-o e reabra o aplicativo da Tela Inicial manualmente.",
+    "manualReturnStandaloneHelp": "Após a aprovação, retorne ao Endless Glory pela sua Tela Inicial. Se o iOS abrir um navegador, feche-o e reabra o aplicativo da Tela Inicial manualmente.",
     "preparingAppButton": "Preparando {wallet}...",
     "walletAppUnavailable": "{wallet} não pôde ser preparado. Feche esta janela e tente novamente.",
     "flowConnect": "Escolha uma carteira. A verificação continua automaticamente.",
@@ -4290,12 +4290,12 @@ export const pt_BR: EnTranslations = {
       "linkBody": "Escolha uma extensão de carteira neste navegador. Você assinará uma mensagem de verificação e depois retornará ao aplicativo para desktop.",
       "paymentBody": "Escolha a carteira vinculada à sua conta e aprove a transação neste navegador.",
       "extensionHelp": "Nenhuma extensão de carteira compatível foi encontrada. Instale ou desbloqueie Phantom, Solflare ou outra carteira Solana para navegador e tente novamente.",
-      "safety": "O World of ClaudeCraft nunca pede sua frase de recuperação nem sua chave privada.",
+      "safety": "O Endless Glory nunca pede sua frase de recuperação nem sua chave privada.",
       "continueWith": "Continuar com {wallet}",
       "reviewTitle": "Revisar na sua carteira",
       "reviewBody": "Siga o prompt de {wallet}. Mantenha esta página do navegador aberta.",
       "completeTitle": "Autorização de carteira concluída",
-      "completeBody": "Você pode retornar ao aplicativo para desktop do World of ClaudeCraft.",
+      "completeBody": "Você pode retornar ao aplicativo para desktop do Endless Glory.",
       "returnButton": "Retornar ao aplicativo para desktop",
       "failed": "A autorização da carteira falhou ou expirou. Retorne ao aplicativo para desktop e tente novamente.",
       "retry": "Tentar novamente"
@@ -4393,7 +4393,7 @@ export const pt_BR: EnTranslations = {
     "levelClass": "Nível {level} - {className}",
     "topPercent": "TOP {percent}%",
     "realmSubtitle": "Mundo {realm}",
-    "defaultRealm": "Mundo de ClaudeCraft",
+    "defaultRealm": "Mundo de EndlessGlory",
     "brandWordmark": "WORLD OF CLAUDECRAFT",
     "recruited": "{count} recrutados",
     "footerHandle": "@{handle}",
@@ -4401,8 +4401,8 @@ export const pt_BR: EnTranslations = {
     "footerCta": "Forje sua lenda: {siteUrl}",
     "arenaStat": "Arena",
     "shareTierBit": ", titular de $WOC de nível {tier}",
-    "shareText": "Estou forjando minha lenda em World of ClaudeCraft: nível {level} {className}{tierBit}. Entre no meu mundo:",
-    "nativeShareTitle": "Mundo de ClaudeCraft",
+    "shareText": "Estou forjando minha lenda em Endless Glory: nível {level} {className}{tierBit}. Entre no meu mundo:",
+    "nativeShareTitle": "Mundo de EndlessGlory",
     "fileNameFallback": "jogador",
     "actionShareX": "Compartilhar no X",
     "actionCopyReferral": "Copiar link de indicação",
@@ -5050,14 +5050,14 @@ export const pt_BR: EnTranslations = {
     }
   },
   "seo": {
-    "title": "World of ClaudeCraft: MMO web em estilo clássico",
-    "description": "Embarque em uma aventura épica em World of ClaudeCraft, um micro-MMO de estilo clássico jogável diretamente no navegador. Entre em um mundo compartilhado persistente, evolua classes e derrote inimigos!",
+    "title": "Endless Glory: MMO web em estilo clássico",
+    "description": "Embarque em uma aventura épica em Endless Glory, um micro-MMO de estilo clássico jogável diretamente no navegador. Entre em um mundo compartilhado persistente, evolua classes e derrote inimigos!",
     "genre": "MMORPG",
     "playMode": "Multijogador",
     "applicationCategory": "Jogo",
     "operatingSystem": "Navegador web",
-    "officialLabel": "Site oficial de World of ClaudeCraft",
-    "officialBody": "worldofclaudecraft.com é o MMO de navegador gratuito oficial do mundo Claudemoon. Jogue online com um personagem persistente, explore solo offline, leia a wiki e siga os links verificados da comunidade a partir deste site."
+    "officialLabel": "Site oficial de Endless Glory",
+    "officialBody": "endlessglory.vercel.app é o MMO de navegador gratuito oficial do mundo Claudemoon. Jogue online com um personagem persistente, explore solo offline, leia a wiki e siga os links verificados da comunidade a partir deste site."
   },
   "a11y": {
     "goHome": "Ir para a página inicial",
@@ -5065,9 +5065,9 @@ export const pt_BR: EnTranslations = {
     "mainNavigation": "Navegação principal",
     "languageSelection": "Seleção de idioma",
     "characterActions": "Ações de personagem",
-    "githubProject": "Abrir o projeto World of ClaudeCraft no GitHub",
-    "discordCommunity": "Entrar na comunidade World of ClaudeCraft no Discord",
-    "donateProject": "Doar para apoiar World of ClaudeCraft"
+    "githubProject": "Abrir o projeto Endless Glory no GitHub",
+    "discordCommunity": "Entrar na comunidade Endless Glory no Discord",
+    "donateProject": "Doar para apoiar Endless Glory"
   },
   "entryGuard": {
     "title": "Gráficos reduzidos",
@@ -5146,11 +5146,11 @@ export const pt_BR: EnTranslations = {
       "later": "Depois"
     },
     "crash": {
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "body": "A visualização do jogo parou de funcionar. Recarregar?",
       "reload": "Recarregar",
       "quit": "Sair",
-      "fatalBody": "O World of ClaudeCraft encontrou um erro inesperado e precisa fechar."
+      "fatalBody": "O Endless Glory encontrou um erro inesperado e precisa fechar."
     }
   },
   "gpuNotice": {
@@ -5283,17 +5283,17 @@ export const pt_BR: EnTranslations = {
     "iosStandaloneDetail": "Você está no modo tela cheia pela tela inicial. Mantenha o dispositivo na horizontal.",
     "iosInstallDetail": "Para tela cheia real no iPhone ou iPad, adicione esta página à tela inicial primeiro.",
     "iosShareStep": "No Safari, toque em Compartilhar e depois em Adicionar à Tela de Início.",
-    "iosOpenStep": "Abra World of ClaudeCraft pelo novo ícone na tela inicial.",
+    "iosOpenStep": "Abra Endless Glory pelo novo ícone na tela inicial.",
     "androidStandaloneDetail": "Você está no modo de app em tela cheia. Mantenha o dispositivo na horizontal.",
     "androidInstallDetail": "Para tela cheia no Android, instale esta página ou adicione-a à tela inicial primeiro.",
     "androidInstallStep": "No Chrome, toque no menu e depois em Instalar app ou Adicionar à tela inicial.",
-    "androidOpenStep": "Abra World of ClaudeCraft pelo novo ícone.",
+    "androidOpenStep": "Abra Endless Glory pelo novo ícone.",
     "otherStandaloneDetail": "Mantenha o dispositivo em tela cheia horizontal.",
     "otherInstallDetail": "Instale ou adicione esta página à tela inicial para a melhor experiência móvel em tela cheia."
   },
   "serverUnavailable": {
-    "title": "World of ClaudeCraft - Mundo indisponível",
-    "logoAlt": "World of ClaudeCraft",
+    "title": "Endless Glory - Mundo indisponível",
+    "logoAlt": "Endless Glory",
     "eyebrow": "Manutenção do mundo",
     "heading": "O mundo está temporariamente indisponível.",
     "body": "Estamos reiniciando o serviço do jogo e esperamos que Claudemoon volte em breve. Esta página continuará verificando automaticamente.",

@@ -791,8 +791,8 @@ export const tr_TR: EnTranslations = {
     },
     "nativeUpdate": {
       "title": "Güncelleme Mevcut",
-      "body": "World of ClaudeCraft'ın yeni bir sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
-      "bodyWithVersion": "World of ClaudeCraft'ın {version} sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
+      "body": "Endless Glory'ın yeni bir sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
+      "bodyWithVersion": "Endless Glory'ın {version} sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
       "notNow": "Şimdi Değil",
       "update": "Güncelle"
     },
@@ -1735,7 +1735,7 @@ export const tr_TR: EnTranslations = {
     },
     "discord": {
       "title": "Discord",
-      "panelTitle": "World of ClaudeCraft",
+      "panelTitle": "Endless Glory",
       "open": "Discord",
       "close": "Kapat",
       "keybind": "Discord Paneli",
@@ -2529,8 +2529,8 @@ export const tr_TR: EnTranslations = {
     }
   },
   "guide": {
-    "brand": "World of ClaudeCraft",
-    "brandShort": "ClaudeCraft",
+    "brand": "Endless Glory",
+    "brandShort": "EndlessGlory",
     "tagline": "Tarayıcınızda ücretsiz oynayabileceğiniz klasik tarzda bir MMO.",
     "skipToContent": "Ana içeriğe geç",
     "loading": "Yükleniyor...",
@@ -2595,7 +2595,7 @@ export const tr_TR: EnTranslations = {
       "github": "GitHub'daki Kaynak",
       "discord": "Discord'a Katıl",
       "communityWiki": "Topluluk Wiki'si",
-      "rights": "World of ClaudeCraft",
+      "rights": "Endless Glory",
       "linksLabel": "Oyun ve topluluk bağlantıları"
     },
     "language": {
@@ -2618,7 +2618,7 @@ export const tr_TR: EnTranslations = {
     },
     "home": {
       "eyebrow": "Klasik tarz tarayıcı MMO'su",
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "subtitle": "Görev yap, grup kur ve elle kurulmuş bir dünyayı keşfet; tarayıcında ücretsiz.",
       "ctaPlay": "Şimdi Oyna",
       "ctaLearn": "Nasıl Oynanır",
@@ -3119,7 +3119,7 @@ export const tr_TR: EnTranslations = {
     },
     "worldPage": {
       "heading": "Dünya",
-      "intro": "World of ClaudeCraft, yürüyerek aştığınız tek ve kesintisiz bir diyardır; güneyden kuzeye dizilmiş üç bölge. Hızlı seyahat yoktur, bu yüzden yolculuğun kendisi maceranın bir parçasıdır.",
+      "intro": "Endless Glory, yürüyerek aştığınız tek ve kesintisiz bir diyardır; güneyden kuzeye dizilmiş üç bölge. Hızlı seyahat yoktur, bu yüzden yolculuğun kendisi maceranın bir parçasıdır.",
       "hub": "Ana üs",
       "mapHeading": "Kuzeye giden yol",
       "mapSub": "Güneyden kuzeye üç bölge, her biri seviye olarak bir basamak daha yüksek. Görev izini takip edin, diyar sizi vadiden zirvelere taşır.",
@@ -3628,7 +3628,7 @@ export const tr_TR: EnTranslations = {
   },
   "editor": {
     "appTitle": "Harita Editörü",
-    "docTitle": "Harita Editörü - World of ClaudeCraft",
+    "docTitle": "Harita Editörü - Endless Glory",
     "untitledMap": "Adsız Harita",
     "playtestPlayerName": "Haritacı",
     "topbar": {
@@ -4103,7 +4103,7 @@ export const tr_TR: EnTranslations = {
     "realmName": "Dünya Adı"
   },
   "footer": {
-    "copyright": "2026 World of ClaudeCraft",
+    "copyright": "2026 Endless Glory",
     "githubLink": "https://github.com/levy-street/world-of-claudecraft",
     "githubLabel": "Açık Kaynak Proje",
     "whitepaper": "Teknik Doküman",
@@ -4159,7 +4159,7 @@ export const tr_TR: EnTranslations = {
     "serverOnline": "Çevrimiçi",
     "serverOffline": "Çevrimdışı",
     "play": "Oyna",
-    "playAria": "World of ClaudeCraft oyna",
+    "playAria": "Endless Glory oyna",
     "serverLabel": "Dünyanı seç",
     "serverAria": "Dünya seç: Çevrimiçi veya Çevrimdışı",
     "serverOfflineSub": "Anında yerel dünya",
@@ -4270,12 +4270,12 @@ export const tr_TR: EnTranslations = {
     "helpLinkedDisconnectedWithBalance": "Sahip ayrıcalıkları etkin. İmzalamanız veya harcamanız gerektiğinde uygulamayı bağlayın.",
     "extensionHelp": "Burada bir cüzdan görmek için Solflare Wallet gibi bir tarayıcı cüzdan uzantısını etkin tutun.",
     "mobileAppHelp": "Phantom veya Solflare'i seç. Cüzdan uygulan onay isteyecek. Bu oyunu açık bırak ve bittiğinde geri dön.",
-    "standaloneAppHelp": "Ana Ekran uygulamasında cüzdan bağlantıları henüz mevcut değil. Phantom veya Solflare kullanmak için World of ClaudeCraft'ı Safari veya Chrome'da aç.",
+    "standaloneAppHelp": "Ana Ekran uygulamasında cüzdan bağlantıları henüz mevcut değil. Phantom veya Solflare kullanmak için Endless Glory'ı Safari veya Chrome'da aç.",
     "openAppTitle": "{wallet}'da devam et",
     "openAppHelp": "Bu isteği incelemek için {wallet}'u aç. Cüzdan uygulaması etkinken bu oyun sekmesini açık bırak.",
     "openAppButton": "{wallet}'u aç",
     "manualReturnBrowserHelp": "Onayladıktan sonra bu oyun sekmesine dön. iOS başka bir tarayıcı açarsa, kapat ve orijinal tarayıcıya manuel olarak dön.",
-    "manualReturnStandaloneHelp": "Onayladıktan sonra Ana Ekranından World of ClaudeCraft'a dön. iOS bir tarayıcı açarsa, kapat ve Ana Ekran uygulamasını manuel olarak yeniden aç.",
+    "manualReturnStandaloneHelp": "Onayladıktan sonra Ana Ekranından Endless Glory'a dön. iOS bir tarayıcı açarsa, kapat ve Ana Ekran uygulamasını manuel olarak yeniden aç.",
     "preparingAppButton": "{wallet} hazırlanıyor...",
     "walletAppUnavailable": "{wallet} hazırlanamadı. Bu pencereyi kapat ve tekrar dene.",
     "flowConnect": "Bir cüzdan seçin. Doğrulama otomatik olarak devam eder.",
@@ -4290,12 +4290,12 @@ export const tr_TR: EnTranslations = {
       "linkBody": "Bu tarayıcıda bir cüzdan uzantısı seç. Bir doğrulama mesajı imzalayacak, ardından masaüstü uygulamasına döneceksin.",
       "paymentBody": "Hesabına bağlı cüzdanı seç ve bu tarayıcıda işlemi onayla.",
       "extensionHelp": "Uyumlu cüzdan uzantısı bulunamadı. Phantom, Solflare veya başka bir Solana tarayıcı cüzdanını yükle ya da kilidini aç, ardından tekrar dene.",
-      "safety": "World of ClaudeCraft hiçbir zaman kurtarma ifadeni veya özel anahtarını istemez.",
+      "safety": "Endless Glory hiçbir zaman kurtarma ifadeni veya özel anahtarını istemez.",
       "continueWith": "{wallet} ile devam et",
       "reviewTitle": "Cüzdanında incele",
       "reviewBody": "{wallet}'dan gelen istemi takip et. Bu tarayıcı sayfasını açık bırak.",
       "completeTitle": "Cüzdan yetkilendirmesi tamamlandı",
-      "completeBody": "World of ClaudeCraft masaüstü uygulamasına dönebilirsin.",
+      "completeBody": "Endless Glory masaüstü uygulamasına dönebilirsin.",
       "returnButton": "Masaüstü uygulamasına dön",
       "failed": "Cüzdan yetkilendirmesi başarısız oldu veya süresi doldu. Masaüstü uygulamasına dön ve tekrar dene.",
       "retry": "Tekrar dene"
@@ -4393,7 +4393,7 @@ export const tr_TR: EnTranslations = {
     "levelClass": "Seviye {level} - {className}",
     "topPercent": "İLK %{percent}",
     "realmSubtitle": "{realm} Dünyası",
-    "defaultRealm": "World of ClaudeCraft",
+    "defaultRealm": "Endless Glory",
     "brandWordmark": "WORLD OF CLAUDECRAFT",
     "recruited": "{count} davet edildi",
     "footerHandle": "@{handle}",
@@ -4401,8 +4401,8 @@ export const tr_TR: EnTranslations = {
     "footerCta": "Efsaneni yarat: {siteUrl}",
     "arenaStat": "Arena",
     "shareTierBit": ", {tier}-derece $WOC sahibi",
-    "shareText": "World of ClaudeCraft'ta efsanemi yaratıyorum: Seviye {level} {className}{tierBit}. Dünyama katıl:",
-    "nativeShareTitle": "World of ClaudeCraft",
+    "shareText": "Endless Glory'ta efsanemi yaratıyorum: Seviye {level} {className}{tierBit}. Dünyama katıl:",
+    "nativeShareTitle": "Endless Glory",
     "fileNameFallback": "oyuncu",
     "actionShareX": "X'te Paylaş",
     "actionCopyReferral": "Davet Bağlantısını Kopyala",
@@ -5050,14 +5050,14 @@ export const tr_TR: EnTranslations = {
     }
   },
   "seo": {
-    "title": "World of ClaudeCraft: Klasik Tarzı Web MMO'su",
-    "description": "Doğrudan tarayıcında oynanabilen klasik tarzı bir mikro MMO olan World of ClaudeCraft'ta destansı bir maceraya atıl. Kalıcı bir ortak dünyaya katıl, sınıfları geliştir ve düşmanları alt et!",
+    "title": "Endless Glory: Klasik Tarzı Web MMO'su",
+    "description": "Doğrudan tarayıcında oynanabilen klasik tarzı bir mikro MMO olan Endless Glory'ta destansı bir maceraya atıl. Kalıcı bir ortak dünyaya katıl, sınıfları geliştir ve düşmanları alt et!",
     "genre": "MMORPG",
     "playMode": "Çok Oyunculu",
     "applicationCategory": "Oyun",
     "operatingSystem": "Web tarayıcısı",
-    "officialLabel": "Resmi World of ClaudeCraft web sitesi",
-    "officialBody": "worldofclaudecraft.com, Claudemoon dünyasının resmi ücretsiz tarayıcı MMO'sudur. Kalıcı bir karakterle çevrimiçi oyna, çevrimdışı tek başına keşfet, wiki'yi oku ve bu siteden doğrulanmış topluluk bağlantılarını takip et."
+    "officialLabel": "Resmi Endless Glory web sitesi",
+    "officialBody": "endlessglory.vercel.app, Claudemoon dünyasının resmi ücretsiz tarayıcı MMO'sudur. Kalıcı bir karakterle çevrimiçi oyna, çevrimdışı tek başına keşfet, wiki'yi oku ve bu siteden doğrulanmış topluluk bağlantılarını takip et."
   },
   "a11y": {
     "goHome": "Ana sayfaya git",
@@ -5065,9 +5065,9 @@ export const tr_TR: EnTranslations = {
     "mainNavigation": "Ana gezinme",
     "languageSelection": "Dil seçimi",
     "characterActions": "Karakter eylemleri",
-    "githubProject": "World of ClaudeCraft GitHub projesini aç",
-    "discordCommunity": "World of ClaudeCraft Discord topluluğuna katıl",
-    "donateProject": "World of ClaudeCraft'a destek olmak için bağış yap"
+    "githubProject": "Endless Glory GitHub projesini aç",
+    "discordCommunity": "Endless Glory Discord topluluğuna katıl",
+    "donateProject": "Endless Glory'a destek olmak için bağış yap"
   },
   "entryGuard": {
     "title": "Grafikler düşürüldü",
@@ -5146,11 +5146,11 @@ export const tr_TR: EnTranslations = {
       "later": "Daha Sonra"
     },
     "crash": {
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "body": "Oyun görünümü çalışmayı durdurdu. Yeniden yüklensin mi?",
       "reload": "Yeniden Yükle",
       "quit": "Çık",
-      "fatalBody": "World of ClaudeCraft beklenmeyen bir hatayla karşılaştı ve kapatılması gerekiyor."
+      "fatalBody": "Endless Glory beklenmeyen bir hatayla karşılaştı ve kapatılması gerekiyor."
     }
   },
   "gpuNotice": {
@@ -5283,17 +5283,17 @@ export const tr_TR: EnTranslations = {
     "iosStandaloneDetail": "Ana ekran tam ekran modundasınız. Cihazı yatay konumda tutun.",
     "iosInstallDetail": "iPhone veya iPad'de gerçek tam ekran için önce bu sayfayı Ana Ekranınıza yükleyin.",
     "iosShareStep": "Safari'de Paylaş'a, ardından Ana Ekrana Ekle'ye dokunun.",
-    "iosOpenStep": "World of ClaudeCraft'ı yeni Ana Ekran simgesinden açın.",
+    "iosOpenStep": "Endless Glory'ı yeni Ana Ekran simgesinden açın.",
     "androidStandaloneDetail": "Tam ekran uygulama modundasınız. Cihazı yatay konumda tutun.",
     "androidInstallDetail": "Android'de tam ekran için önce bu sayfayı yükleyin veya Ana ekranınıza ekleyin.",
     "androidInstallStep": "Chrome'da menüye dokunun, ardından Uygulamayı yükle veya Ana ekrana ekle seçeneğini seçin.",
-    "androidOpenStep": "World of ClaudeCraft'ı yeni simgeden açın.",
+    "androidOpenStep": "Endless Glory'ı yeni simgeden açın.",
     "otherStandaloneDetail": "Cihazınızı yatay tam ekran konumunda tutun.",
     "otherInstallDetail": "En iyi tam ekran mobil deneyim için bu sayfayı yükleyin veya Ana ekranınıza ekleyin."
   },
   "serverUnavailable": {
-    "title": "World of ClaudeCraft - Dünya Kullanılamıyor",
-    "logoAlt": "World of ClaudeCraft",
+    "title": "Endless Glory - Dünya Kullanılamıyor",
+    "logoAlt": "Endless Glory",
     "eyebrow": "Dünya bakımı",
     "heading": "Dünya geçici olarak kullanılamıyor.",
     "body": "Oyun hizmetini yeniden başlatıyoruz ve Claudemoon'un kısa süre içinde geri döneceğini umuyoruz. Bu sayfa otomatik olarak denetlemeye devam edecek.",
