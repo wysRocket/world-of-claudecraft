@@ -20,6 +20,7 @@ describe('visual theme core', () => {
 
   it('falls back to a validated build default and then classic', () => {
     expect(resolveVisualTheme('', 'emberwood')).toBe('emberwood');
+    expect(resolveVisualTheme('?visual=invalid', 'emberwood')).toBe('emberwood');
     expect(resolveVisualTheme('', 'invalid')).toBe('classic');
   });
 
