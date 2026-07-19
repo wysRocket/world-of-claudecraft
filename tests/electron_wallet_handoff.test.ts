@@ -34,6 +34,12 @@ describe('Electron wallet browser handoff', () => {
     ).toBeNull();
   });
 
+  it('emits the same registered legacy callback scheme from the browser return page', () => {
+    const entry = readFileSync(join(__dirname, '..', 'src', 'wallet_handoff.ts'), 'utf8');
+    expect(entry).toContain('worldofclaudecraft://wallet-handoff?code=');
+    expect(entry).not.toContain('endlessglory://wallet-handoff');
+  });
+
   it('localizes the standalone browser page title at runtime', () => {
     const root = join(__dirname, '..');
     const html = readFileSync(join(root, 'wallet-handoff.html'), 'utf8');

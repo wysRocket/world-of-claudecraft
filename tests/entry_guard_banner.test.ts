@@ -2,7 +2,7 @@
 //
 // Thin-painter coverage for the world-entry crash recovery banner: localized preset
 // display names (including the unknown-preset fallback), body interpolation through
-// t(), the missing-shell no-op (play.html), and the dataset guard that keeps a
+// t(), the partial-shell no-op, and the dataset guard that keeps a
 // repeat show from stacking dismiss listeners. The decision logic itself is covered
 // in tests/entry_crash_guard.test.ts.
 import { beforeEach, describe, expect, it } from 'vitest';

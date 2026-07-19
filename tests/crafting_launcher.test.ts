@@ -20,12 +20,11 @@ const keybindsSrc = read('../src/game/keybinds.ts');
 const uiIcons = read('../src/ui/ui_icons.ts');
 const chrome = read('../src/ui/i18n.catalog/hud_chrome.ts');
 const indexHtml = read('../index.html');
-const playHtml = read('../play.html');
 const hudCss = read('../src/styles/hud.css');
 
 describe('desktop micro-menu launcher', () => {
-  it('ships the side-menu Crafting button in BOTH game entries, under Bags', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('ships the side-menu Crafting button under Bags', () => {
+    for (const html of [indexHtml]) {
       expect(html).toMatch(/id="mm-crafting"[^>]*data-icon="crafting"/);
       expect(html).toMatch(/id="mm-crafting"[^>]*data-i18n-title="hudChrome\.crafting\.title"/);
       // Dock order: bags, then crafting, then the arena activity cluster.
@@ -47,8 +46,8 @@ describe('desktop micro-menu launcher', () => {
 });
 
 describe('mobile More-tray launcher', () => {
-  it('ships the More-tray Crafting button in BOTH game entries (the /play shared-entry trap)', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('ships the More-tray Crafting button in the game entry', () => {
+    for (const html of [indexHtml]) {
       expect(html).toMatch(/id="mobile-crafting"[^>]*data-icon="crafting"/);
       expect(html).toMatch(/id="mobile-crafting"[^>]*data-i18n-title="hudChrome\.crafting\.title"/);
       // Tray order mirrors the desktop rationale: right after Bags.
@@ -87,7 +86,7 @@ describe('shared behavior across all screen sizes', () => {
     expect(chrome).toMatch(/crafting:\s*\{[^}]*title:\s*'Crafting'/);
     // Both surfaces and the mobile label span all read the same key, so the
     // desktop tooltip and the tray caption can never drift apart.
-    for (const html of [indexHtml, playHtml]) {
+    for (const html of [indexHtml]) {
       expect(html).toMatch(
         /id="mobile-crafting"[^>]*>\s*<span class="mobile-label" data-i18n="hudChrome\.crafting\.title">/,
       );
@@ -120,10 +119,9 @@ describe('side rail height budget', () => {
     expect(hudCss).toMatch(/#side-buttons \{[^}]*bottom: 74px;/);
   });
 
-  it('the compacted rail fits the 1366x768 budget in both game entries', () => {
+  it('the compacted rail fits the 1366x768 budget', () => {
     for (const [name, html] of [
       ['index.html', indexHtml],
-      ['play.html', playHtml],
     ] as const) {
       const start = html.indexOf('id="side-buttons"');
       expect(start, name).toBeGreaterThan(-1);

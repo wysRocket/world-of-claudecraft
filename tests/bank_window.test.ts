@@ -15,7 +15,6 @@ const mobileCss = readFileSync(new URL('../src/styles/hud.mobile.css', import.me
 const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
 const mainSrc = readFileSync(new URL('../src/main.ts', import.meta.url), 'utf8');
 const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const playHtml = readFileSync(new URL('../play.html', import.meta.url), 'utf8');
 
 describe('bank_window: no magic values', () => {
   it('carries no literal hex color in TS (quality color comes from QUALITY_COLOR + a token)', () => {
@@ -230,9 +229,6 @@ describe('bank_window: static window element is wired in both game entries', () 
     expect(indexHtml).toContain('id="bank-window"');
   });
 
-  it('play.html declares #bank-window', () => {
-    expect(playHtml).toContain('id="bank-window"');
-  });
 });
 
 describe('bank_window: search / sort / deposit-all', () => {

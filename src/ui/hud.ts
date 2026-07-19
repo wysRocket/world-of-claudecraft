@@ -5718,7 +5718,7 @@ export class Hud {
   // Build the mobile action ring: a SECOND createActionBarView instance over a
   // 6-slot descriptor (slot 0 the fixed attack toggle, slots 1-5 the paged action
   // buttons) plus a MobileActionRingPainter reusing ActionBarPainter for the
-  // per-slot writes. The static container/buttons live in index.html/play.html
+  // per-slot writes. The static container/buttons live in index.html
   // (#mobile-action-ring); on a build that omits them (neither game entry does,
   // but this stays defensive like an optional-row-less template case above) the
   // ring silently stays unbuilt and update() skips painting it.

@@ -1,6 +1,6 @@
 // Game-client style barrel (declares the @layer order, loads tokens + base, etc.).
-// index.html and play.html both bootstrap through this module, so this one import
-// styles both game entries; admin/guide use their own entries and inline CSS.
+// index.html bootstraps through this module; admin/guide use their own entries
+// and inline CSS.
 import './styles/index.css';
 import { syncAppViewport as syncAppViewportShared } from './game/app_viewport';
 import { audio } from './game/audio';
@@ -288,7 +288,7 @@ import {
 import { formatXp } from './ui/xp_bar';
 import type { IWorld, LeaderboardEntry } from './world_api';
 
-const WORLD_SEED = 20061; // fixed: World of ClaudeCraft is a persistent place
+const WORLD_SEED = 20061; // fixed: Endless Glory is a persistent place
 const CLICK_MOVE_TURN_RATE = 4.2; // rad/sec; responsive turning while the camera stays decoupled from click spam
 const CLICK_MOVE_WAYPOINT_STOP = 0.8; // yards; intermediate A* corners should roll through, not stutter-stop
 const CLICK_MOVE_REROUTE_DISTANCE = 4; // yards; live entity targets can move this far before we recompute the path
@@ -361,7 +361,7 @@ applyNativeDeviceLanguage({
   language: navigator.language,
 });
 
-const SITE_URL = 'https://worldofclaudecraft.com/';
+const SITE_URL = 'https://endlessglory.vercel.app/';
 
 const RESOURCE_KEYS = {
   mana: 'classDetails.resources.mana',
@@ -867,7 +867,7 @@ function nextPaint(): Promise<void> {
 // every failure path recovers via fatalOverlay's reload.
 let hasBegunWorldEntry = false;
 
-// The one live Welcome Screen instance, if the DOM has it (absent on /play).
+// The one live Welcome Screen instance, if the DOM has it.
 // module-scoped so enterWorld/startOffline and the intro-finish hook below can
 // share the single mounted controller.
 let welcomeScreen: WelcomeScreenController | null = null;
@@ -3796,9 +3796,8 @@ function show(el: string): void {
   ];
   document.body.dataset.startPanel = el.slice(1);
 
-  // Find currently visible panel. Not every entry carries every panel: play.html omits
-  // #discord-choice-panel (the chooser is an index.html-only flow), so resolve each id
-  // defensively and skip a missing one rather than dereferencing null.
+  // Find the currently visible panel. Resolve each id defensively so partial DOM
+  // fixtures and feature-gated panels do not dereference null.
   const currentActiveId = panels.find((id) => {
     const panel = document.querySelector(id);
     return panel !== null && !panel.hasAttribute('hidden');
@@ -3913,8 +3912,7 @@ function loginNavItem(): HTMLElement | null {
 const loggedInNavItems = ['#nav-item-account', '#nav-item-logout'];
 
 function enterLoggedInChrome(): void {
-  // Entries that lack the homepage account/logout nav tabs (e.g. the focused
-  // play.html entry) won't have these <li>s; toggling them is a no-op there.
+  // Partial shells without the account/logout nav tabs treat this as a no-op.
   loggedInNavItems.forEach((sel) => {
     const li = document.querySelector<HTMLElement>(sel);
     if (li) li.hidden = false;
@@ -3996,9 +3994,8 @@ function paintAccountPortal(
   preserveEmailInput = false,
   twoFactorEnabled = false,
 ): void {
-  // The account portal lives only in index.html; focused entries such as
-  // play.html omit it, so there is nothing to paint (token revalidation and the
-  // nav chrome in loadAccountPortal still run).
+  // Feature-gated or partial shells may omit the account portal; token
+  // revalidation and the nav chrome in loadAccountPortal still run.
   const loggedOut = $('#account-logged-out') as HTMLElement | null;
   if (!loggedOut) return;
   loggedOut.hidden = model.loggedIn;
@@ -4142,8 +4139,7 @@ function tryFocusWalletButton(attempt = 0): void {
 let accountPortalWired = false;
 function setupAccountPortal(): void {
   if (accountPortalWired) return;
-  // The homepage account portal lives only in index.html; focused entries such
-  // as play.html omit it entirely, so there is nothing to wire there.
+  // Feature-gated or partial shells may omit the account portal entirely.
   if (!document.getElementById('account-password-form')) return;
   accountPortalWired = true;
 
@@ -4903,8 +4899,8 @@ async function enterWorld(c: CharacterSummary, button?: HTMLButtonElement): Prom
   // (desktop web only) the Season 1 Armory promo. Shown instead of the bare
   // loading screen while the realm connection establishes behind it; Continue
   // is the only way forward, gated on the same readiness condition the old
-  // auto-poll used to gate startGame on. Falls back to the old bare loading
-  // screen if the welcome-screen DOM is absent (the /play entry lacks it).
+  // auto-poll used to gate startGame on. Falls back to the bare loading screen
+  // if a partial shell omits the welcome-screen DOM.
   const welcomeRoot = $('#welcome-screen');
   let started = false;
   const proceedToGame = () => {
@@ -5337,36 +5333,34 @@ function updateSeoMetadata(lang: SupportedLanguage): void {
         '@graph': [
           {
             '@type': 'WebSite',
-            '@id': 'https://worldofclaudecraft.com/#website',
-            name: 'World of ClaudeCraft',
-            alternateName: 'World of Claudecraft',
+            '@id': 'https://endlessglory.vercel.app/#website',
+            name: 'Endless Glory',
             url: canonicalHref,
             inLanguage: languageTag(lang),
             description: t('seo.description'),
-            publisher: { '@id': 'https://worldofclaudecraft.com/#organization' },
+            publisher: { '@id': 'https://endlessglory.vercel.app/#organization' },
           },
           {
             '@type': 'Organization',
-            '@id': 'https://worldofclaudecraft.com/#organization',
-            name: 'World of ClaudeCraft',
-            url: 'https://worldofclaudecraft.com/',
-            logo: 'https://worldofclaudecraft.com/woc_logo_square.webp',
+            '@id': 'https://endlessglory.vercel.app/#organization',
+            name: 'Endless Glory',
+            url: 'https://endlessglory.vercel.app/',
+            logo: 'https://endlessglory.vercel.app/endless-glory-square.png',
             sameAs,
           },
           {
             '@type': 'VideoGame',
-            '@id': 'https://worldofclaudecraft.com/#game',
-            name: 'World of ClaudeCraft',
-            alternateName: 'World of Claudecraft',
+            '@id': 'https://endlessglory.vercel.app/#game',
+            name: 'Endless Glory',
             genre: t('seo.genre'),
             playMode: t('seo.playMode'),
             applicationCategory: t('seo.applicationCategory'),
             operatingSystem: t('seo.operatingSystem'),
             url: canonicalHref,
-            image: 'https://worldofclaudecraft.com/woc_logo_square.webp',
+            image: 'https://endlessglory.vercel.app/endless-glory-square.png',
             description: t('seo.description'),
             inLanguage: languageTag(lang),
-            publisher: { '@id': 'https://worldofclaudecraft.com/#organization' },
+            publisher: { '@id': 'https://endlessglory.vercel.app/#organization' },
             sameAs,
           },
         ],
@@ -7555,9 +7549,7 @@ function wireStartScreens(): void {
     );
   }
 
-  // play.html is online-only: it ships no #btn-offline compat trigger, no
-  // #offline-select panel, and no realm dropdown, so every offline / dropdown
-  // hook below resolves defensively and skips wiring when the markup is absent.
+  // Resolve offline controls defensively for partial DOM fixtures.
   if (offlineBtn) {
     offlineBtn.addEventListener('click', handleOfflineSelect);
     offlineBtn.addEventListener('keydown', (e) =>
@@ -7568,7 +7560,6 @@ function wireStartScreens(): void {
   // --- Play console: realm dropdown + single Play CTA -----------------------
   // The dropdown only chooses the destination (defaults to Online); the Play
   // button commits, routing to the same online/offline flows as the legacy cards.
-  // play.html has no dropdown: its Play button commits straight to online below.
   const serverSelect = $('#server-select');
   const serverTrigger = $('#server-select-trigger') as HTMLButtonElement | null;
   const serverMenu = $('#server-select-menu');
@@ -8006,10 +7997,10 @@ function wireStartScreens(): void {
   // --- Password reset ("forgot password") flow -------------------------------
   // Step 1 (#forgot-panel): request an emailed reset link. Step 2 (#reset-panel):
   // set a new password from the emailed ?reset=<token> link (RESET_TOKEN).
-  // These panels live ONLY in index.html. play.html reuses the login chrome
-  // (#login-panel/#mode-select) without them, so guard the whole block on the
-  // panel's presence: a bare $('#btn-forgot-open') is querySelector(...) as T and
-  // returns null off index.html, so addEventListener would throw and abort the
+  // Guard the block on the panel's presence so partial DOM fixtures do not
+  // abort the rest of wireStartScreens when addEventListener sees a null node.
+  // A bare $('#btn-forgot-open') is querySelector(...) as T and
+  // returns null when omitted, so addEventListener would throw and abort the
   // rest of wireStartScreens (the session-restore branch below included). The
   // ?reset= restore branch further down already guards the same way (getElementById).
   const forgotPanel = document.getElementById('forgot-panel') as HTMLFormElement | null;
@@ -8297,8 +8288,7 @@ function wireStartScreens(): void {
     }
   });
 
-  // Wire dynamic validation clearing on typing. The offline name input only
-  // exists on the landing page (play.html is online-only), so skip a missing one.
+  // Wire dynamic validation clearing on typing; skip a feature-gated input.
   [offlineNameInput, newCharNameInput].filter(Boolean).forEach((input) => {
     const errorEl = input.id === 'char-name' ? offlineError : charselectError;
     input.addEventListener('input', () => {
@@ -8613,9 +8603,8 @@ function wireStartScreens(): void {
   };
   showExternalAuthChoice = showDiscordChoice;
   const wireDiscordChoice = () => {
-    // The first-login chooser lives only on the main entry (index.html); play.html omits
-    // it (Discord OAuth always redirects to '/'), so bail before touching nodes that are
-    // not present, mirroring the null-guarded sibling wirings (CTA banner, keep modal).
+    // Discord OAuth always redirects to '/'. Bail before touching an omitted,
+    // feature-gated chooser, mirroring the null-guarded sibling wirings.
     if (!document.getElementById('discord-choice-panel')) return;
     $('#btn-discord-create').addEventListener('click', () => {
       if (!pendingDiscordChoice || discordChoiceBusy) return;
@@ -8714,9 +8703,8 @@ function wireStartScreens(): void {
   }
   // A first-time Discord login with no account yet parks a choice here: show the
   // create-new / link-existing chooser instead of the normal session restore.
-  // The chooser only exists on index.html (the OAuth callback always redirects to '/').
-  // Guard on its presence so other entries (play.html) fall through to normal session
-  // restore instead of stranding the user on a chooser panel that is not in the DOM.
+  // The OAuth callback always redirects to '/'. Guard on the chooser's presence
+  // so a feature-gated shell restores the normal session instead of stranding.
   const parkedDiscordChoice =
     DISCORD_BUILD_ENABLED && document.getElementById('discord-choice-panel')
       ? readDiscordChoice()
@@ -9027,7 +9015,7 @@ function wireStartScreens(): void {
 
   // Initialize 3D character preview once assets are ready
   assetsReady().then(() => {
-    // Resolve each panel defensively: play.html (online-only) has no #offline-select.
+    // Resolve each panel defensively for partial DOM fixtures.
     const activePanelId = ['#charselect-panel', '#offline-select'].find((id) => {
       const panel = $(id) as HTMLElement | null;
       return panel !== null && !panel.hasAttribute('hidden');

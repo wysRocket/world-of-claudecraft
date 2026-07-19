@@ -2583,8 +2583,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.iosInstallDetail':
     'Per il vero schermo intero su iPhone o iPad, installa prima questa pagina nella schermata Home.',
   'mobilePreflight.iosShareStep': 'In Safari, tocca Condividi e poi Aggiungi alla schermata Home.',
-  'mobilePreflight.iosOpenStep':
-    'Apri Endless Glory dalla nuova icona nella schermata Home.',
+  'mobilePreflight.iosOpenStep': 'Apri Endless Glory dalla nuova icona nella schermata Home.',
   'mobilePreflight.androidStandaloneDetail':
     'Sei in modalità app a schermo intero. Mantieni il dispositivo in orizzontale.',
   'mobilePreflight.androidInstallDetail':
@@ -6997,8 +6996,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'errors.api.desktopCodeInvalid':
     'Il codice di accesso desktop non è valido o è scaduto. Riprova.',
   'desktop.crash.body': 'La vista di gioco ha smesso di funzionare. Ricaricarla?',
-  'desktop.crash.fatalBody':
-    'Endless Glory ha riscontrato un errore imprevisto e deve chiudersi.',
+  'desktop.crash.fatalBody': 'Endless Glory ha riscontrato un errore imprevisto e deve chiudersi.',
   'desktop.crash.quit': 'Esci',
   'desktop.crash.reload': 'Ricarica',
   'desktop.crash.title': 'Endless Glory',

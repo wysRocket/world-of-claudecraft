@@ -35,7 +35,7 @@ const server = http.createServer((req, res) => {
 });
 
 const EXPECTED_LINKS = [
-  'https://worldofclaudecraft.com/',
+  'https://endlessglory.vercel.app/',
   'https://x.com/WoClaudecraft',
   'https://www.instagram.com/worldofclaudecraft/',
   'https://www.tiktok.com/@worldofclaudecraft',
@@ -77,7 +77,7 @@ async function main() {
     ok(errs.length === 0, `[${t.name}] no console/page errors`);
 
     // Core structural assertions (run on every device).
-    ok((await page.title()) === 'World of ClaudeCraft - Official Links', `[${t.name}] localized title`);
+    ok((await page.title()) === 'Endless Glory - Official Links', `[${t.name}] localized title`);
     ok((await page.locator('h1').count()) === 1, `[${t.name}] exactly one h1`);
     ok((await page.locator('h2').count()) === 1, `[${t.name}] exactly one h2`);
     ok((await page.locator('a.btn').count()) === 7, `[${t.name}] 7 link buttons`);

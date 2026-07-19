@@ -22,9 +22,9 @@ const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').rep
 // in-game mobile-touch controls section moved into src/styles/hud.mobile.css (@layer
 // hud.mobile), the orphaned chrome + paperdoll/bags into hud.css/components.css and
 // the pre-start rule into base.css, and BOTH inline <style> blocks were emptied
-// (play.html reconciled to the shared modules). So mobile-touch assertions read
+// (the game entry uses the shared modules). So mobile-touch assertions read
 // hudMobileCss; the per-entry #rotate-device orientation gate lives in
-// index.extra.css / play.extra.css. Note biome reformats the moved rules one-
+// index.extra.css. Note biome reformats the moved rules one-
 // declaration-per-line, so the repointed expectations use that format, not the compact
 // inline form.
 const baseCss = readFileSync(new URL('../src/styles/base.css', import.meta.url), 'utf8').replace(
@@ -51,10 +51,6 @@ const indexExtraCss = readFileSync(
   new URL('../src/styles/index.extra.css', import.meta.url),
   'utf8',
 ).replace(/\r\n/g, '\n');
-const playHtml = readFileSync(new URL('../play.html', import.meta.url), 'utf8').replace(
-  /\r\n/g,
-  '\n',
-);
 const privacyHtml = readFileSync(
   new URL('../public/privacy.html', import.meta.url),
   'utf8',
@@ -150,7 +146,7 @@ const partyFrameRowTs = readFileSync(
 ).replace(/\r\n/g, '\n');
 // The mobile collapse chip is painter-created (built by party_chip.ts, driven by the
 // party painter), so it is entry-agnostic: there is no static chip markup to keep in
-// sync across index.html / play.html. These guards read the painter + chip builder +
+// stay synchronized with index.html. These guards read the painter + chip builder +
 // the mobile CSS instead of a static id.
 const partyChipTs = readFileSync(
   new URL('../src/ui/party_chip.ts', import.meta.url),
@@ -211,10 +207,10 @@ describe('client HTML shell', () => {
     // updateMapWindow() writes the sr-only summary on every redraw via
     // setText($('#map-summary'), ...), which is not null-guarded, so the element
     // MUST exist in every entry that ships the map window or opening the map
-    // throws. index.html and play.html both boot src/main.ts and both carry the
-    // map window, so the live region + canvas accessible name must be in both.
+    // throws. index.html boots src/main.ts and carries the map window, so the
+    // live region + canvas accessible name must be present.
     expect(hudTs).toContain("const summaryEl = $('#map-summary');");
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain('id="map-canvas"');
       expect(entry).toContain('data-i18n-aria="hud.core.mapCanvasLabel"');
       expect(entry).toContain('<span id="map-summary"');
@@ -231,7 +227,7 @@ describe('client HTML shell', () => {
     // the null-guard, silently never shows) on that entry. #2106's review
     // caught play.html shipping the reconnect countdown work without this
     // element; pin both entries so it cannot regress unnoticed.
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain('id="loading-screen"');
       expect(entry).toContain('id="ls-fill"');
       expect(entry).toContain('id="ls-status"');
@@ -243,7 +239,7 @@ describe('client HTML shell', () => {
   });
 
   it('places skip links as the first focusable elements in BOTH entries', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       const skipMain = entry.indexOf('class="hud-skip" href="#ui"');
       const skipChat = entry.indexOf('class="hud-skip" href="#chatlog"');
       expect(skipMain).toBeGreaterThan(-1);
@@ -261,7 +257,7 @@ describe('client HTML shell', () => {
   });
 
   it('carries the combat / target / chat live regions in BOTH entries without double-announcing', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       // The chat pane keeps role="log" + tabindex="-1" (visible scrollback + the "skip
       // to chat" landing target) but flips to aria-live="off": role="log" carries an IMPLICIT
       // polite, and #chatlog goes display:none on the combat tab, so it must NOT announce.
@@ -294,7 +290,7 @@ describe('client HTML shell', () => {
   });
 
   it('drops the user-scalable viewport scale-lock in BOTH entries (16px anti-zoom floor stays)', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain(
         '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />',
       );
@@ -332,11 +328,10 @@ describe('client HTML shell', () => {
 
   it('labels the player frame as a role=group with a localized name in BOTH entries', () => {
     // #player-frame is a role="group" with a t()-localized accessible name via
-    // data-i18n-aria. index.html and play.html both boot src/main.ts and ship the same
-    // in-game HUD, so the group label must be present in BOTH entries or a screen
-    // reader on one of them announces a bare unlabelled div. Pinning the full opening
+    // data-i18n-aria. index.html boots src/main.ts and ships the in-game HUD, so the
+    // group label must be present. Pinning the full opening
     // tag also locks the attribute order + the exact i18n key across entries.
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain(
         'id="player-frame" class="unitframe" role="group" tabindex="0" aria-haspopup="menu" data-i18n-aria="hudChrome.unitFrame.playerLabel"',
       );
@@ -347,9 +342,8 @@ describe('client HTML shell', () => {
     // #castbar (player) and #tf-castbar (target) go through one cast_bar
     // painter and makes each a progressbar with aria-value bounds + a t()-localized
     // accessible name via data-i18n-aria (hydrated in main.ts). index.html and
-    // play.html ship the same in-game HUD, so both bars must carry the role +
-    // accessible name in BOTH entries or a screen reader on one announces a bare bar.
-    for (const entry of [html, playHtml]) {
+    // game entry ships both bars, so each must carry the role and accessible name.
+    for (const entry of [html]) {
       expect(entry).toContain(
         'id="castbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-i18n-aria="hudChrome.castBar.playerAria"',
       );
@@ -362,11 +356,10 @@ describe('client HTML shell', () => {
   it('labels the target frame as a role=group with a localized name in BOTH entries', () => {
     // #target-frame is a second unit_frame instance and gets a
     // role="group" with a t()-localized accessible name via data-i18n-aria (hydrated
-    // in main.ts, the same path as the player frame). index.html and play.html ship
-    // the same in-game HUD, so the group label must be present in BOTH or a screen
-    // reader on one announces a bare unlabelled div. Pinning the full opening tag also
+    // in main.ts, the same path as the player frame). The group label must be present
+    // or a screen reader announces a bare unlabelled div. Pinning the full opening tag also
     // locks the attribute order + the exact i18n key across entries.
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain(
         'id="target-frame" class="unitframe" role="group" data-i18n-aria="hudChrome.unitFrame.targetLabel"',
       );
@@ -376,10 +369,9 @@ describe('client HTML shell', () => {
   it('labels the party-frames region as a role=group with a localized name in BOTH entries', () => {
     // Each party member is a focusable role="button" named by its visible
     // member text, and labels the #party-frames container as a role="group" via
-    // data-i18n-aria (hydrated in main.ts). index.html and play.html ship the same HUD,
-    // so the region label must be present in BOTH or a screen reader on one entry
+    // data-i18n-aria (hydrated in main.ts). The region label must be present or a screen reader
     // announces a bare unlabelled div. The full opening tag locks the i18n key too.
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain(
         'id="party-frames" role="group" data-i18n-aria="hudChrome.unitFrame.partyLabel"',
       );
@@ -414,13 +406,12 @@ describe('client HTML shell', () => {
 
   it('keeps the mobile party-collapse chip painter-created (entry-agnostic, no static markup)', () => {
     // The chip is built by party_chip.ts and placed by the party painter, so it is NOT
-    // static markup that must ship in both index.html / play.html. Pin that: the chip id
-    // appears in the builder, and NEITHER entry carries a static #party-chip.
+    // static markup that must ship in index.html. Pin that: the chip id
+    // appears in the builder, and the entry carries no static #party-chip.
     expect(partyChipTs).toContain("export const PARTY_CHIP_ID = 'party-chip';");
     expect(partyChipTs).toContain('doc.createElement');
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry, name).not.toContain('id="party-chip"');
     }
@@ -450,10 +441,9 @@ describe('client HTML shell', () => {
   it('ships the mobile chat keyboard-dismiss chevron in BOTH entries, hidden until chat opens', () => {
     // The dismiss chevron blurs the composer so the on-screen keyboard drops WITHOUT
     // closing chat. It is STATIC markup (a fixed button seated at the composer's corner),
-    // so it must ship in both index.html / play.html or one entry loses the affordance.
+    // so it must ship in index.html.
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry, name).toContain('id="chat-dismiss"');
       // Carries the chevron icon hook (hydrateIcons swaps [data-icon] for inline SVG).
@@ -676,7 +666,6 @@ describe('client HTML shell', () => {
     // top-level sibling declared above #start-screen, exactly like #discord-window.
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       const modalAt = entry.indexOf('id="discord-keep-modal"');
       const windowAt = entry.indexOf('id="discord-window"');
@@ -716,7 +705,8 @@ describe('client HTML shell', () => {
     expect(mainTs).toContain('const enterOnlinePlayFlow = () => {');
     expect(mainTs).toContain('if (api.token) {');
     expect(mainTs).toContain('goToLoggedInPlay();');
-    expect(mainTs).toContain("setupNavBtn(navBtnPlay, '#hero-view', enterOnlinePlayFlow);");
+    expect(mainTs).toContain("setupNavBtn(navBtnPlay, '#hero-view', () => {");
+    expect(mainTs).toContain('handleOfflineSelect();');
     expect(mainTs).toContain('const handleOnlineSelect = () => {');
     expect(mainTs).toContain("show('#login-panel');");
   });
@@ -725,53 +715,46 @@ describe('client HTML shell', () => {
     expect(html).toContain(
       '<meta name="robots" content="index, follow, max-image-preview:large" />',
     );
-    expect(html).toContain('<link rel="canonical" href="https://worldofclaudecraft.com/" />');
-    expect(html).toContain('<meta property="og:site_name" content="World of ClaudeCraft" />');
-    expect(html).toContain('"alternateName": "World of Claudecraft"');
+    expect(html).toContain('<link rel="canonical" href="https://endlessglory.vercel.app/" />');
+    expect(html).toContain('<meta property="og:site_name" content="Endless Glory" />');
+    expect(html).not.toContain('"alternateName": "World of Claudecraft"');
     expect(html).toContain('"https://github.com/levy-street/world-of-claudecraft"');
-    expect(mainTs).toContain("alternateName: 'World of Claudecraft'");
+    expect(mainTs).not.toContain("alternateName: 'World of Claudecraft'");
     expect(mainTs).toContain("'https://github.com/levy-street/world-of-claudecraft'");
     expect(robotsTxt.trim()).toBe(
-      'User-agent: *\nAllow: /\n\nSitemap: https://worldofclaudecraft.com/sitemap.xml\nSitemap: https://worldofclaudecraft.com/sitemap-characters.xml',
+      'User-agent: *\nAllow: /\n\nSitemap: https://endlessglory.vercel.app/sitemap.xml\nSitemap: https://endlessglory.vercel.app/sitemap-characters.xml',
     );
-    expect(robotsTxt).toContain('Sitemap: https://worldofclaudecraft.com/sitemap.xml');
+    expect(robotsTxt).toContain('Sitemap: https://endlessglory.vercel.app/sitemap.xml');
     // The dynamic per-character sitemap (served by the game server) is advertised too.
-    expect(robotsTxt).toContain('Sitemap: https://worldofclaudecraft.com/sitemap-characters.xml');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/</loc>');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/links</loc>');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/play</loc>');
-    expect(playHtml).toContain(
-      '<link rel="canonical" href="https://worldofclaudecraft.com/play" />',
-    );
-    expect(playHtml).toContain(
-      '<meta property="og:url" content="https://worldofclaudecraft.com/play" />',
-    );
-    expect(playHtml).toContain('"url": "https://worldofclaudecraft.com/play"');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/privacy</loc>');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/terms</loc>');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/data-deletion</loc>');
-    expect(sitemapXml).toContain('<loc>https://worldofclaudecraft.com/support</loc>');
+    expect(robotsTxt).toContain('Sitemap: https://endlessglory.vercel.app/sitemap-characters.xml');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/</loc>');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/links</loc>');
+    expect(sitemapXml).not.toContain('/play</loc>');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/privacy</loc>');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/terms</loc>');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/data-deletion</loc>');
+    expect(sitemapXml).toContain('<loc>https://endlessglory.vercel.app/support</loc>');
     expect(privacyHtml).toContain(
-      '<link rel="canonical" href="https://worldofclaudecraft.com/privacy" />',
+      '<link rel="canonical" href="https://endlessglory.vercel.app/privacy" />',
     );
     expect(privacyHtml).toContain('<h1>Privacy Policy</h1>');
     expect(privacyHtml).toContain('href="/support">Support</a>');
     expect(privacyHtml).toContain('href="/data-deletion">Data Deletion</a>');
     expect(termsHtml).toContain(
-      '<link rel="canonical" href="https://worldofclaudecraft.com/terms" />',
+      '<link rel="canonical" href="https://endlessglory.vercel.app/terms" />',
     );
     expect(termsHtml).toContain('<h1>Terms and Conditions</h1>');
     expect(termsHtml).toContain('href="/support">Support</a>');
     expect(termsHtml).toContain('href="/data-deletion">Data Deletion</a>');
     expect(dataDeletionHtml).toContain(
-      '<link rel="canonical" href="https://worldofclaudecraft.com/data-deletion" />',
+      '<link rel="canonical" href="https://endlessglory.vercel.app/data-deletion" />',
     );
     expect(dataDeletionHtml).toContain('<h1>Data Deletion</h1>');
     expect(dataDeletionHtml).toContain('href="mailto:woc@levystreet.com"');
     expect(dataDeletionHtml).toContain('href="https://discord.com/invite/worldofclaudecraft"');
     expect(dataDeletionHtml).toContain('href="/support">Support</a>');
     expect(supportHtml).toContain(
-      '<link rel="canonical" href="https://worldofclaudecraft.com/support" />',
+      '<link rel="canonical" href="https://endlessglory.vercel.app/support" />',
     );
     expect(supportHtml).toContain('<h1>Support</h1>');
     expect(supportHtml).toContain('href="mailto:woc@levystreet.com"');
@@ -855,9 +838,6 @@ describe('client HTML shell', () => {
     expect(html).toContain(
       'Portrait mode is not supported. Rotate your device to landscape to continue.',
     );
-    expect(playHtml).toContain(
-      'Portrait mode is not supported. Rotate your device to landscape to continue.',
-    );
   });
 
   it('releases the start-screen character preview before entering the world', () => {
@@ -923,7 +903,6 @@ describe('client HTML shell', () => {
     // Ko-fi community link.
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry, name).toContain('id="mobile-discord"');
       // Carries the icon hook (hydrateIcons swaps [data-icon] for the inline SVG).
@@ -951,7 +930,6 @@ describe('client HTML shell', () => {
     );
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry.match(/href="https:\/\/ko-fi\.com\/worldofclaudecraft"/g), name).toHaveLength(3);
       expect(entry, name).not.toContain('https://github.com/sponsors/levy-street');
@@ -966,7 +944,6 @@ describe('client HTML shell', () => {
     // that mirrors the mobile tray's #mobile-discord button.
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry, name).toContain('id="mm-discord"');
       expect(entry, name).toMatch(/id="mm-discord"[^>]*data-icon="discord"/);
@@ -993,7 +970,6 @@ describe('client HTML shell', () => {
   it('ships the consumables quick bar in BOTH entries, collapsed by default', () => {
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       expect(entry, name).toContain('id="mobile-consumables"');
       // aria-label on a role-less div is prohibited ARIA (ignored by screen
@@ -1045,7 +1021,7 @@ describe('client HTML shell', () => {
   });
 
   it('carries identical mobile-action-ring markup in BOTH entries', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain('id="actionbar3"');
       expect(entry).toContain('id="mobile-action-ring"');
       expect(entry).toContain('id="mobile-action-attack"');
@@ -1060,7 +1036,7 @@ describe('client HTML shell', () => {
   });
 
   it('stacks the optional third desktop row above the secondary row in both entries', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       const third = entry.indexOf('id="actionbar3"');
       const secondary = entry.indexOf('id="actionbar2"');
       const primary = entry.indexOf('id="actionbar"');
@@ -1084,7 +1060,7 @@ describe('client HTML shell', () => {
   });
 
   it('carries the same community-tray links in BOTH entries, with no duplicate Discord entry', () => {
-    for (const entry of [html, playHtml]) {
+    for (const entry of [html]) {
       expect(entry).toContain('<a class="community-link github"');
       expect(entry).toContain('<a class="community-link donate"');
       expect(entry).not.toContain('<a class="community-link discord"');
@@ -1567,15 +1543,10 @@ describe('client HTML shell', () => {
     expect(html).toContain(
       '<span id="mobile-more-title" data-i18n="hud.core.mobileMore">More</span>',
     );
-    expect(playHtml).toContain(
-      '<span id="mobile-more-title" data-i18n="hud.core.mobileMore">More</span>',
-    );
     expect(html).toContain('id="mobile-more-close"');
     expect(html).toContain('<div id="mobile-extra-grid">');
-    // Daily Rewards, the Book of Deeds, and Crafting ride the More grid in BOTH
-    // entries (play.html historically lags index.html; these pins keep them in
-    // step).
-    for (const entry of [html, playHtml]) {
+    // Daily Rewards, the Book of Deeds, and Crafting ride the More grid.
+    for (const entry of [html]) {
       expect(entry).toContain('id="mobile-daily-rewards"');
       expect(entry).toContain('id="mobile-deeds"');
       expect(entry).toContain('id="mobile-crafting"');
@@ -1689,13 +1660,12 @@ describe('client HTML shell', () => {
     );
   });
 
-  it('replaces the dual mode cards with one Play CTA and a realm selector', () => {
+  it('ships one offline Play CTA without the retired realm selector', () => {
     expect(html).toContain('id="btn-play"');
-    expect(html).toContain('id="server-select"');
-    expect(html).toContain('id="server-select-menu"');
-    expect(html).toContain('role="listbox"');
-    // Legacy online/offline triggers persist as hidden automation hooks.
-    expect(html).toContain('id="btn-online"');
+    expect(html).not.toContain('id="server-select"');
+    expect(html).not.toContain('id="server-select-menu"');
+    expect(html).not.toContain('id="btn-online"');
+    // The hidden offline trigger remains as a compatibility hook for the shared wiring.
     expect(html).toContain('id="btn-offline"');
     expect(html).not.toContain('class="mode-card');
     expect(hudMobileCss).not.toContain('.mode-row {');
@@ -1798,7 +1768,6 @@ describe('client HTML shell', () => {
   it('keeps the mobile bar at top-left and leaves low-frequency actions in the More tray', () => {
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       const combatControls = entry.slice(
         entry.indexOf('<div id="mobile-combat-controls">'),
@@ -1893,7 +1862,6 @@ describe('client HTML shell', () => {
   it('keeps joystick autorun on the move pad and Jump on the ring bottom row', () => {
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       const moveJoystick = entry.slice(
         entry.indexOf('<div id="mobile-move-joystick"'),
@@ -1972,7 +1940,6 @@ describe('client HTML shell', () => {
   it('keeps the Target swap, Use, Jump and page toggle in the action ring markup', () => {
     for (const [name, entry] of [
       ['index.html', html],
-      ['play.html', playHtml],
     ] as const) {
       const ring = entry.slice(
         entry.indexOf('<div id="mobile-action-ring"'),

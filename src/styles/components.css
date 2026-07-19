@@ -8867,8 +8867,8 @@
     align-items: center;
   }
   #map-canvas {
-    /* Authored display size matching the 560x560 backing store (index.html /
-       play.html). Without a CSS length the canvas box is a replaced intrinsic size,
+    /* Authored display size matching the 560x560 backing store in index.html.
+       Without a CSS length the canvas box is a replaced intrinsic size,
        which does NOT scale in lockstep with the window frame under the #ui
        zoom var(--ui-scale): the map underfilled the frame below 100% and clipped
        past it above 100% (issue 1559). A px length zoom-scales exactly like the
@@ -10524,9 +10524,7 @@
   }
 
   /* ── Discord in-game panel (#discord-window) + widget ─────────────────── */
-  /* Shared by BOTH game entries (index.html and play.html): the panel the U key
-     and the mobile More tray Discord button open. Relocated from index.extra.css
-     when play.html gained the Discord entry. */
+  /* The panel the U key and the mobile More tray Discord button open. */
   #discord-window {
     position: fixed;
     top: 50%;
@@ -11558,7 +11556,7 @@
       text-align: center;
       animation: ws-rise 0.55s ease-out 0.05s backwards;
     }
-    /* No live character render mounted (WebGL unavailable, /play, or assets
+    /* No live character render mounted (WebGL unavailable or assets
        still warming): re-center the greeting across the hero space so the
        stage reads as intentional, not abandoned. */
     #welcome-screen:has(#ws-stage:empty) .ws-header {

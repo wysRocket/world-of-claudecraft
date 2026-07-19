@@ -253,8 +253,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.reviewBody':
     'Postępuj zgodnie z monitem od {wallet}. Pozostaw tę stronę przeglądarki otwartą.',
   'wallet.browser.reviewTitle': 'Sprawdź w swoim portfelu',
-  'wallet.browser.safety':
-    'Endless Glory nigdy nie prosi o frazę odzyskiwania ani klucz prywatny.',
+  'wallet.browser.safety': 'Endless Glory nigdy nie prosi o frazę odzyskiwania ani klucz prywatny.',
   'wallet.browser.title': 'Podłącz portfel Solana',
   'wallet.manualReturnBrowserHelp':
     'Po zatwierdzeniu wróć do tej karty gry. Jeśli iOS otworzy inną przeglądarkę, zamknij ją i wróć ręcznie do oryginalnej przeglądarki.',

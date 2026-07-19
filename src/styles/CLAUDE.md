@@ -5,9 +5,9 @@
 
 # src/styles/ - extracted HUD CSS (tokens + layers)
 
-All game CSS for the two game entries (`index.html` + `play.html`), extracted from the old
-inline `<style>` blocks into one directory under a single `@layer` order, imported
-once from `src/main.ts` via the `index.css` barrel (admin/guide keep their own entries). No
+All game CSS for `index.html`, extracted from the old inline `<style>` blocks into one
+directory under a single `@layer` order, imported once from `src/main.ts` via the
+`index.css` barrel (admin/guide keep their own entries). No
 CSS framework; hand-authored, Lightning-compiled.
 
 ## Module shape and the @layer order
@@ -22,7 +22,7 @@ that order. Modules, in cascade order:
 | `hud` | (reserved, empty) | declared in the order but unused; `hud.css` targets `@layer components`, not this slot |
 | `shell` | `shell.css` | desktop pre-game shell + char-select |
 | `hud-mobile` | `hud.mobile.css` | the in-game mobile-touch block, ordered AFTER `shell` so in-game mobile overrides of pre-game shell elements win |
-| `index-extra` / `play-extra` | `index.extra.css` / `play.extra.css` | per-entry (a `<link>` in index.html / play.html, not the barrel): the `#rotate-device` orientation gate in BOTH, plus an index-only UNLAYERED Discord-integration block (auth divider, nameplate/unit-frame Discord PFP chips, chat command menu, CTA banner) that outranks every layered rule and does not ship on `/play`; wiring guarded by `tests/per_entry_css_wiring.test.ts` |
+| `index-extra` | `index.extra.css` | linked from `index.html`, outside the barrel: the `#rotate-device` orientation gate plus an UNLAYERED Discord-integration block (auth divider, nameplate/unit-frame Discord PFP chips, chat command menu, CTA banner) that outranks every layered rule; wiring guarded by `tests/per_entry_css_wiring.test.ts` |
 
 Flat layer names and the hud/components same-layer tie-break are documented in full in the
 `index.css` barrel header (a DOT in a `@layer` name is a SUBLAYER, which silently reorders

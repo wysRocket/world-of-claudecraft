@@ -4,8 +4,8 @@
 // pattern in scripts/wiki/build_content.mjs (never import raw .ts): routes.ts pulls a
 // type-only import from ui/i18n, which esbuild erases, so the bundle is data-only.
 //
-// It REPLACES only the <url> entries whose <loc> contains "/guide", preserving every
-// other entry (home, play, links, merch, legal pages) byte-for-byte. Deterministic:
+// It REPLACES the guide entries, drops the retired /play entry, and normalizes every
+// preserved static URL to the current public origin. Deterministic:
 // reads the route data + the existing sitemap, writes the file. Run via
 // `node scripts/build_sitemap.mjs`; wired into `npm run build`.
 import * as esbuild from 'esbuild';
@@ -14,7 +14,8 @@ import path from 'node:path';
 
 const root = process.cwd();
 const sitemapPath = path.join(root, 'public', 'sitemap.xml');
-const ORIGIN = 'https://worldofclaudecraft.com';
+const ORIGIN = 'https://endlessglory.vercel.app';
+const LEGACY_ORIGIN = 'https://worldofclaudecraft.com';
 
 const entrySource = `
   export { GUIDE_ROUTES, hrefFor } from './src/guide/routes.ts';
@@ -87,12 +88,27 @@ const isGuideBlock = (block) => {
   );
 };
 
-const nonGuide = blocks.filter((b) => !isGuideBlock(b));
+const isRetiredBlock = (block) => {
+  const m = block.match(/<loc>\s*([^<]*?)\s*<\/loc>/);
+  if (!m) return false;
+  try {
+    return new URL(m[1]).pathname === '/play';
+  } catch {
+    return m[1] === '/play';
+  }
+};
+const normalizePreservedBlock = (block) => block.replaceAll(LEGACY_ORIGIN, ORIGIN);
+const keepPreservedBlock = (block) => !isGuideBlock(block) && !isRetiredBlock(block);
+const nonGuide = blocks.filter(keepPreservedBlock).map(normalizePreservedBlock);
 // Place the regenerated guide block where the first guide entry used to be, so the file's
-// ordering stays stable (home/links/merch/play, then guide, then legal pages).
+// ordering stays stable (home/links/merch, then guide, then legal pages).
 const firstGuideIndex = blocks.findIndex(isGuideBlock);
-const before = firstGuideIndex === -1 ? blocks : blocks.slice(0, firstGuideIndex).filter((b) => !isGuideBlock(b));
-const after = firstGuideIndex === -1 ? [] : blocks.slice(firstGuideIndex).filter((b) => !isGuideBlock(b));
+const before = firstGuideIndex === -1
+  ? blocks.filter(keepPreservedBlock).map(normalizePreservedBlock)
+  : blocks.slice(0, firstGuideIndex).filter(keepPreservedBlock).map(normalizePreservedBlock);
+const after = firstGuideIndex === -1
+  ? []
+  : blocks.slice(firstGuideIndex).filter(keepPreservedBlock).map(normalizePreservedBlock);
 const merged = firstGuideIndex === -1
   ? [...nonGuide, ...guideEntries]
   : [...before, ...guideEntries, ...after];

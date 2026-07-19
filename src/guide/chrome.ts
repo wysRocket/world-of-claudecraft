@@ -116,7 +116,7 @@ export function buildChrome(
           <div class="guide-nav-actions">
             ${searchHtml()}
             ${languagePickerHtml()}
-            <a class="guide-cta" href="/play">${esc(t('guide.nav.playNow'))}</a>
+            <a class="guide-cta" href="/">${esc(t('guide.nav.playNow'))}</a>
           </div>
         </nav>
       </div>
@@ -134,7 +134,7 @@ export function buildChrome(
       <div class="guide-footer-inner">
         <p class="guide-footer-blurb">${esc(t('guide.footer.blurb'))}</p>
         <nav class="guide-footer-links" aria-label="${esc(t('guide.footer.linksLabel'))}">
-          <a class="guide-cta guide-cta-sm" href="/play">${esc(t('guide.footer.playNow'))}</a>
+          <a class="guide-cta guide-cta-sm" href="/">${esc(t('guide.footer.playNow'))}</a>
           <a href="https://github.com/levy-street/world-of-claudecraft" target="_blank" rel="noopener">${esc(t('guide.footer.github'))}</a>
           <a href="https://discord.com/invite/worldofclaudecraft" target="_blank" rel="noopener">${esc(t('guide.footer.discord'))}</a>
         </nav>
