@@ -11,6 +11,17 @@ describe('offline-only game entry', () => {
     expect(read('scripts/release_version.mjs')).toContain("htmlFiles: ['index.html']");
   });
 
+  it('keeps active verification and contributor guidance on the single entry', () => {
+    for (const path of [
+      'scripts/homepage_verify.mjs',
+      'DESIGN.md',
+      '.claude/skills/review-pr/SKILL.md',
+    ]) {
+      const source = read(path);
+      expect(source, path).not.toMatch(/play\.html|\/play\b/);
+    }
+  });
+
   it('routes every user-facing Play CTA to the offline root', () => {
     for (const path of [
       'guide.html',

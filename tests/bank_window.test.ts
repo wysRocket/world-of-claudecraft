@@ -228,7 +228,6 @@ describe('bank_window: static window element is wired in both game entries', () 
   it('index.html declares #bank-window', () => {
     expect(indexHtml).toContain('id="bank-window"');
   });
-
 });
 
 describe('bank_window: search / sort / deposit-all', () => {

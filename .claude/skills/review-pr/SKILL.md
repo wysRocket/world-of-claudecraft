@@ -1,10 +1,10 @@
 ---
 name: review-pr
-description: Review a GitHub pull request for World of ClaudeCraft the way the maintainer does. Use when asked to review a PR, look at a PR, or check a PR (a github.com/.../pull/<n> link or a PR number). Fetches the PR, classifies the change by domain (sim, wire/parity, render, ui, server, i18n), verifies the repo's invariants against the real code (not the PR description), checks the merge-conflict scope, independently confirms any consequential finding, then posts a short, plain, friendly GitHub review with severity-tagged findings. Not for reviewing the local working tree (that is /code-review).
+description: Review a GitHub pull request for Endless Glory the way the maintainer does. Use when asked to review a PR, look at a PR, or check a PR (a github.com/.../pull/<n> link or a PR number). Fetches the PR, classifies the change by domain (sim, wire/parity, render, ui, server, i18n), verifies the repo's invariants against the real code (not the PR description), checks the merge-conflict scope, independently confirms any consequential finding, then posts a short, plain, friendly GitHub review with severity-tagged findings. Not for reviewing the local working tree (that is /code-review).
 user-invocable: true
 ---
 
-# Review a PR (World of ClaudeCraft house style)
+# Review a PR (Endless Glory house style)
 
 This repo takes many small AI-authored contributions, so review is the gate that keeps
 the invariants intact. A good review here is not a vibe check of the diff: it verifies
@@ -84,13 +84,13 @@ sub `CLAUDE.md` files are the source of truth; this is the checklist.
   on `renderer.ts`. Pure geometry/math extracted and unit-tested without Three.
 - Watch per-frame cost (samples/allocations in the hot path).
 
-**UI (`src/ui/**`, `index.html`) -> seam + modularity + i18n + parity + a11y.**
+**UI (`src/ui/**`, `index.html`) -> seam + modularity + i18n + a11y.**
 - `IWorld` only; never reach into a concrete world. A new window/panel is its own module
   the HUD composes (`chat_window.ts` pattern), not a new banner section in `hud.ts`.
   Pure clamping/geometry/formatting extracted and tested.
-- **play.html CSS parity:** `play.html` is a separate build entry that carries the same
-  chrome DOM. CSS added to `index.html` for shared chrome must be mirrored into
-  `play.html` or it breaks on `/play`. Check this explicitly (a recurring miss).
+- **Single offline-first entry:** `index.html` is the only game entry. UI changes must
+  preserve the offline root flow and must not add a second game entry or a user-facing
+  remote-play route.
 - Persistence (window pos, settings) restores clamped to the current viewport; drag /
   resize no-op on mobile; check keyboard operability + aria on new controls.
 
@@ -189,6 +189,6 @@ their domains.
 | `src/sim/**` | Rng-only, no wall-clock, total-order sorts, no DOM/Three import |
 | `server/game.ts` + `online.ts` + `types.ts` | wire round-trip or server-local + `blankEntity` parity; server authority |
 | `src/render/**` | reads not mutates; own module; per-frame cost |
-| `src/ui/**` + `index.html` | IWorld seam; own module; play.html CSS parity; a11y/mobile; i18n |
+| `src/ui/**` + `index.html` | IWorld seam; own module; single offline-first entry; a11y/mobile; i18n |
 | `server/**` routes/db | token-scoped auth; parameterized SQL; additive idempotent DDL; no oversharing; tests |
 | i18n strings | English `t()` in catalog only; all other locales are release-time maintainer work, do not flag; line-item slice conflict = regen |

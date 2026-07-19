@@ -410,9 +410,7 @@ describe('client HTML shell', () => {
     // appears in the builder, and the entry carries no static #party-chip.
     expect(partyChipTs).toContain("export const PARTY_CHIP_ID = 'party-chip';");
     expect(partyChipTs).toContain('doc.createElement');
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry, name).not.toContain('id="party-chip"');
     }
     // The Hud drives the chip only in a party AND on the touch HUD: setCollapse takes the
@@ -442,9 +440,7 @@ describe('client HTML shell', () => {
     // The dismiss chevron blurs the composer so the on-screen keyboard drops WITHOUT
     // closing chat. It is STATIC markup (a fixed button seated at the composer's corner),
     // so it must ship in index.html.
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry, name).toContain('id="chat-dismiss"');
       // Carries the chevron icon hook (hydrateIcons swaps [data-icon] for inline SVG).
       expect(entry, name).toMatch(/id="chat-dismiss"[^>]*data-icon="next"/);
@@ -664,9 +660,7 @@ describe('client HTML shell', () => {
     // lower z-index:100 stacking context, so a keep-modal nested inside it would be
     // invisible in-game and trapped below the top-level #discord-window. It must be a
     // top-level sibling declared above #start-screen, exactly like #discord-window.
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       const modalAt = entry.indexOf('id="discord-keep-modal"');
       const windowAt = entry.indexOf('id="discord-window"');
       const startAt = entry.indexOf('id="start-screen"');
@@ -901,9 +895,7 @@ describe('client HTML shell', () => {
     // this drawer button is the touch path to Discord (the account panel when
     // available, else the community invite). Donate mirrors the desktop shell's
     // Ko-fi community link.
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry, name).toContain('id="mobile-discord"');
       // Carries the icon hook (hydrateIcons swaps [data-icon] for the inline SVG).
       expect(entry, name).toMatch(/id="mobile-discord"[^>]*data-icon="discord"/);
@@ -928,9 +920,7 @@ describe('client HTML shell', () => {
     expect(mainTs).toContain(
       "onDonate: () => window.open(DONATE_URL, '_blank', 'noopener,noreferrer'),",
     );
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry.match(/href="https:\/\/ko-fi\.com\/worldofclaudecraft"/g), name).toHaveLength(3);
       expect(entry, name).not.toContain('https://github.com/sponsors/levy-street');
     }
@@ -942,9 +932,7 @@ describe('client HTML shell', () => {
     // player the feature existed. #mm-discord in the micro-menu (alongside
     // #mm-social, #mm-valecup, ...) gives it a visible, clickable affordance
     // that mirrors the mobile tray's #mobile-discord button.
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry, name).toContain('id="mm-discord"');
       expect(entry, name).toMatch(/id="mm-discord"[^>]*data-icon="discord"/);
       // Starts hidden; main.ts reveals it at boot on any build with Discord UI
@@ -968,9 +956,7 @@ describe('client HTML shell', () => {
   });
 
   it('ships the consumables quick bar in BOTH entries, collapsed by default', () => {
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       expect(entry, name).toContain('id="mobile-consumables"');
       // aria-label on a role-less div is prohibited ARIA (ignored by screen
       // readers); the container carries role="group" so the name is exposed.
@@ -1766,9 +1752,7 @@ describe('client HTML shell', () => {
   });
 
   it('keeps the mobile bar at top-left and leaves low-frequency actions in the More tray', () => {
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       const combatControls = entry.slice(
         entry.indexOf('<div id="mobile-combat-controls">'),
         entry.indexOf('<div id="mobile-action-ring"'),
@@ -1860,9 +1844,7 @@ describe('client HTML shell', () => {
   });
 
   it('keeps joystick autorun on the move pad and Jump on the ring bottom row', () => {
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       const moveJoystick = entry.slice(
         entry.indexOf('<div id="mobile-move-joystick"'),
         entry.indexOf('<div id="mobile-camera-joystick"'),
@@ -1938,9 +1920,7 @@ describe('client HTML shell', () => {
   });
 
   it('keeps the Target swap, Use, Jump and page toggle in the action ring markup', () => {
-    for (const [name, entry] of [
-      ['index.html', html],
-    ] as const) {
+    for (const [name, entry] of [['index.html', html]] as const) {
       const ring = entry.slice(
         entry.indexOf('<div id="mobile-action-ring"'),
         entry.indexOf('<div id="mobile-extra-controls"'),

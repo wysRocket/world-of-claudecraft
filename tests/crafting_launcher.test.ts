@@ -120,9 +120,7 @@ describe('side rail height budget', () => {
   });
 
   it('the compacted rail fits the 1366x768 budget', () => {
-    for (const [name, html] of [
-      ['index.html', indexHtml],
-    ] as const) {
+    for (const [name, html] of [['index.html', indexHtml]] as const) {
       const start = html.indexOf('id="side-buttons"');
       expect(start, name).toBeGreaterThan(-1);
       const rail = html.slice(start, html.indexOf('</div>', start));

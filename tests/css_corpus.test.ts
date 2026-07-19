@@ -73,10 +73,7 @@ function extractedStyleCss(): string {
 }
 
 // The whole game-HUD CSS corpus: the game entry's inline <style> UNION src/styles.
-const CORPUS = [
-  inlineStyleCss('index.html'),
-  extractedStyleCss(),
-].join('\n');
+const CORPUS = [inlineStyleCss('index.html'), extractedStyleCss()].join('\n');
 const CORPUS_SECTIONS = new Set(sectionNames(CORPUS));
 
 // PINNED manifest: the ten-dash section banners, enumerated live from the shipped
