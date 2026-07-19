@@ -20,7 +20,7 @@ import { vcupNationName } from './vale_cup_window';
 const num = (n: number): string => formatNumber(n, { maximumFractionDigits: 0 });
 
 export interface ValeCupIndicatorDeps {
-  /** The pre-existing <button id="vcup-indicator"> (index.html + play.html). */
+  /** The pre-existing <button id="vcup-indicator"> in index.html. */
   root(): HTMLElement;
   /** Open the Vale Cup window (Hud.toggleValeCup). */
   open(): void;

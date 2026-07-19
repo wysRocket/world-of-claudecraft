@@ -153,7 +153,7 @@
   },
   "build": {
     "appId": "com.worldofclaudecraft.desktop",
-    "productName": "World of ClaudeCraft",
+    "productName": "Endless Glory",
     "icon": "build/icon.png",
     "files": [
       "dist/**",
@@ -179,7 +179,7 @@
     },
     "protocols": [
       {
-        "name": "World of ClaudeCraft Login",
+        "name": "Endless Glory Login",
         "schemes": [
           "worldofclaudecraft"
         ]

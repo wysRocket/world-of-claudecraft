@@ -30,7 +30,6 @@ const hudCss = read('../src/styles/hud.css');
 const hudMobile = read('../src/styles/hud.mobile.css');
 const mobileControlsSrc = read('../src/game/mobile_controls.ts');
 const indexHtml = read('../index.html');
-const playHtml = read('../play.html');
 
 describe('painter hygiene', () => {
   it('keeps hex/px literals out of the painter TS (tokens and classes only)', () => {
@@ -195,8 +194,8 @@ describe('hud wiring', () => {
 });
 
 describe('entry HTMLs', () => {
-  it('wires the window root and the tracker container in BOTH game entries', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('wires the window root and the tracker container in the game entry', () => {
+    for (const html of [indexHtml]) {
       expect(html).toContain('id="deeds-window"');
       // No aria-hidden on the container: the collapse header is a real,
       // keyboard-reachable toggle (the quest-tracker contract).
@@ -205,8 +204,8 @@ describe('entry HTMLs', () => {
     }
   });
 
-  it('ships the More-tray Deeds button in BOTH game entries (the /play shared-entry trap)', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('ships the More-tray Deeds button in the game entry', () => {
+    for (const html of [indexHtml]) {
       expect(html).toContain('id="mobile-deeds"');
       expect(html).toContain('data-i18n="hudChrome.mobile.deeds"');
       expect(html).toMatch(/id="mobile-deeds"[^>]*data-icon="book"/);
@@ -214,8 +213,8 @@ describe('entry HTMLs', () => {
     expect(chrome).toMatch(/deeds: 'Deeds',/);
   });
 
-  it('ships the side-menu Deeds button in BOTH game entries, under the quest log', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('ships the side-menu Deeds button under the quest log', () => {
+    for (const html of [indexHtml]) {
       expect(html).toMatch(/id="mm-deeds"[^>]*data-icon="book"/);
       expect(html).toMatch(/id="mm-deeds"[^>]*data-i18n-title="hudChrome\.deeds\.title"/);
       // Dock order: quest log, then deeds, then map.

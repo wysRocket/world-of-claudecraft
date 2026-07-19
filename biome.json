@@ -48,7 +48,7 @@
   },
   "overrides": [
     {
-      "includes": ["index.html", "play.html", "guide.html"],
+      "includes": ["index.html", "guide.html"],
       "formatter": {
         "enabled": false
       },

@@ -35,11 +35,11 @@ try {
   await page.goto(`${BASE}/wiki`, { waitUntil: 'networkidle0' });
   await page.waitForSelector('.guide-hero-title', { timeout: 8000 });
   const heroText = await page.$eval('.guide-hero-title', (el) => el.textContent.trim());
-  check('home hero renders', /World of ClaudeCraft/i.test(heroText), heroText);
+  check('home hero renders', /Endless Glory/i.test(heroText), heroText);
   check('top nav present', (await page.$$('.guide-nav-link')).length >= 4);
   check(
-    'Play CTA points at /play',
-    (await page.$eval('.guide-cta', (el) => el.getAttribute('href'))) === '/play',
+    'Play CTA points at the offline root entry',
+    (await page.$eval('.guide-cta', (el) => el.getAttribute('href'))) === '/',
   );
   check('home hides the docs sidebar', await page.$eval('#guide-sidebar', (el) => el.hidden));
   check('html lang set', (await page.$eval('html', (el) => el.lang)).length > 0);

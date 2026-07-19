@@ -12,8 +12,8 @@ their own CLAUDE.md: `sim/` (+ `sim/content/`, `sim/professions/`, `sim/pvp/`),
 (below). Read the local one before working in an area.
 
 ## Entries (what loads what)
-- `index.html` AND `play.html` both load `src/main.ts`. Guard index-only DOM
-  lookups with `?.`: `/play` lacks the marketing shell, and an unguarded lookup
+- `index.html` loads `src/main.ts`. Guard feature-gated DOM lookups with `?.`:
+  partial test and embedded shells can omit marketing controls, and an unguarded lookup
   throws there (a bug class that has shipped before).
 - `guide.html` loads `src/guide/main.ts`; `editor.html` loads `src/editor/main.ts`;
   `admin.html` is the standalone Svelte admin SPA (`src/admin/`).

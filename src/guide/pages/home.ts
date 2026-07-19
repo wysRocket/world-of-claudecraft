@@ -16,7 +16,7 @@ function heroHtml(): string {
         <h1 class="guide-hero-title" id="guide-hero-title">${esc(t('guide.home.title'))}</h1>
         <p class="guide-hero-sub">${esc(t('guide.home.subtitle'))}</p>
         <div class="guide-hero-cta">
-          <a class="guide-cta" href="/play">${esc(t('guide.home.ctaPlay'))}</a>
+          <a class="guide-cta" href="/">${esc(t('guide.home.ctaPlay'))}</a>
           <a class="guide-cta guide-cta-ghost" href="${esc(hrefFor('how-to-play'))}">${esc(t('guide.home.ctaLearn'))}</a>
         </div>
       </div>
@@ -134,7 +134,7 @@ function communityHtml(): string {
       <h2 class="guide-section-h" id="guide-community-h">${esc(t('guide.home.community.heading'))}</h2>
       <p class="guide-section-sub">${esc(t('guide.home.community.body'))}</p>
       <div class="guide-community-cta">
-        <a class="guide-cta" href="/play">${esc(t('guide.home.community.play'))}</a>
+        <a class="guide-cta" href="/">${esc(t('guide.home.community.play'))}</a>
         <a class="guide-cta guide-cta-ghost" href="https://discord.com/invite/worldofclaudecraft" target="_blank" rel="noopener">${esc(t('guide.home.community.discord'))}</a>
         <a class="guide-cta guide-cta-ghost" href="https://github.com/levy-street/world-of-claudecraft" target="_blank" rel="noopener">${esc(t('guide.home.community.github'))}</a>
       </div>

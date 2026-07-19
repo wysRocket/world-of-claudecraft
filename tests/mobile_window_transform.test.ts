@@ -15,11 +15,9 @@ import { describe, expect, it } from 'vitest';
 // Both-sides-pinned windows (left AND right set, e.g. #social-window,
 // #report-window) are a different, stretched layout and are out of scope here.
 //
-// The HUD chrome ships in two build entries (`index.html` at `/` and `play.html`
-// at `/play`, vite.config.ts). Both load the shared style modules through the
-// src/styles/index.css barrel, so the guard runs over BOTH entries: a fix or a
-// regression in one must not silently diverge from the other.
-const HTML_ENTRIES = ['../index.html', '../play.html'];
+// The HUD chrome ships in the offline game entry (`index.html` at `/`) and loads
+// the shared style modules through the src/styles/index.css barrel.
+const HTML_ENTRIES = ['../index.html'];
 
 // The shared style modules each entry loads via the barrel. The CSS extraction moved the
 // base chrome (base.css), the .window shell (layout.css), the HUD chrome (hud.css)
@@ -142,7 +140,7 @@ describe.each(HTML_ENTRIES)('mobile window positioning (%s)', (entry) => {
 });
 
 // Phase 4: the modal backdrop (#mobile-window-backdrop). A static element in
-// both HTML entries, hidden by default / on desktop, shown as a full-screen dim
+// the game HTML entry, hidden by default / on desktop, shown as a full-screen dim
 // layer only under body.mobile-touch.mobile-window-open.
 describe.each(HTML_ENTRIES)('mobile window backdrop (%s)', (entry) => {
   const html = readFileSync(fileURLToPath(new URL(entry, import.meta.url)), 'utf8');

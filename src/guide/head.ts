@@ -24,7 +24,7 @@ import { type GuideRoute, hrefFor } from './routes';
 
 // The site origin. Matches index.html's canonical/og:url host exactly.
 const ORIGIN = 'https://endlessglory.vercel.app';
-const LOGO = `${ORIGIN}/woc_logo_square.webp`;
+const LOGO = `${ORIGIN}/endless-glory-square.png`;
 const GITHUB_URL = 'https://github.com/levy-street/world-of-claudecraft';
 const DISCORD_URL = 'https://discord.com/invite/worldofclaudecraft';
 
@@ -215,17 +215,16 @@ function webSiteNode(inLanguage: string): Record<string, unknown> {
 }
 
 // The VideoGame node (home), mirroring index.html's block, plus a sameAs trail and the
-// /play url so answer engines can route players straight into the game.
+// root URL so answer engines route players into the offline-first game entry.
 function videoGameNode(description: string, inLanguage: string): Record<string, unknown> {
   return {
     '@type': 'VideoGame',
     name: t('guide.brand'),
-    alternateName: 'World of Claudecraft',
     genre: t('seo.genre'),
     playMode: t('seo.playMode'),
     applicationCategory: t('seo.applicationCategory'),
     operatingSystem: t('seo.operatingSystem'),
-    url: `${ORIGIN}/play`,
+    url: `${ORIGIN}/`,
     image: LOGO,
     description,
     inLanguage,

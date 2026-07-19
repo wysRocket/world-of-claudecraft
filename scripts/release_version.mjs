@@ -22,7 +22,7 @@ const PATHS = {
   gradle: 'android/app/build.gradle',
   pbxproj: 'ios/App/App.xcodeproj/project.pbxproj',
   desktopModule: 'src/game/desktop_download.ts',
-  htmlFiles: ['index.html', 'play.html'],
+  htmlFiles: ['index.html'],
   readmeRoot: 'README.md',
   readmeDir: 'docs/i18n',
 };
@@ -261,8 +261,7 @@ export function collectReleaseVersionFailures({
     if (!html.includes(expectedArtifact)) {
       failures.push(`${path} is missing the macOS desktop download URL for ${expected}`);
     }
-    // Only pages that carry a Linux link must have it on the release version;
-    // play.html links only the dmg and stays exempt.
+    // Only pages that carry a Linux link must have it on the release version.
     LINUX_APPIMAGE_RE.lastIndex = 0;
     if (LINUX_APPIMAGE_RE.test(html) && !html.includes(expectedLinuxArtifact)) {
       failures.push(`${path} has a stale Linux desktop download URL, expected ${expected}`);

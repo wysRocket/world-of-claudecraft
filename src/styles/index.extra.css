@@ -4,7 +4,7 @@
    which sheet the browser parses first.
 
    The ONLY per-entry rule today is the #rotate-device orientation gate.
-   index.html uses the same mobile gameplay contract as play.html: portrait is
+   index.html uses the mobile gameplay contract: portrait is
    not supported in-game, so the rotate overlay is shown whenever a touch device
    is game-active in portrait. Layer name is flat (index-extra), NOT dotted, so
    it is a top-level layer placed last by the order below, after hud-mobile. */

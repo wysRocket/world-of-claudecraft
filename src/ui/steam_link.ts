@@ -14,7 +14,7 @@ import { t } from './i18n';
 //
 // Extracted from main.ts so the client entry stays a firewall; the shell ids
 // referenced here exist only in index.html, so every lookup keeps tolerating
-// absence (main.ts is shared with play.html).
+// absence in feature-gated or partial shells.
 
 // Flash a message into the Steam status line for 4s, then restore whatever it
 // was showing (the flashGithubError shape in main.ts, targeting #steam-status).

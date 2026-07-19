@@ -14,7 +14,6 @@ import { describe, expect, it } from 'vitest';
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const hudCss = readFileSync(join(repoRoot, 'src', 'styles', 'hud.css'), 'utf8');
 const indexHtml = readFileSync(join(repoRoot, 'index.html'), 'utf8');
-const playHtml = readFileSync(join(repoRoot, 'play.html'), 'utf8');
 
 function wrapperMarkup(html: string): string {
   const start = html.indexOf('<div id="right-tracker-stack">');
@@ -33,8 +32,8 @@ function wrapperMarkup(html: string): string {
 }
 
 describe('delves quest tracker layout', () => {
-  it('both game entries wrap quest-tracker and delve-tracker in one right-tracker-stack container', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('wraps quest-tracker and delve-tracker in one right-tracker-stack container', () => {
+    for (const html of [indexHtml]) {
       const markup = wrapperMarkup(html);
       expect(markup).not.toBe('');
       expect(markup).toContain('id="quest-tracker"');
@@ -42,8 +41,8 @@ describe('delves quest tracker layout', () => {
     }
   });
 
-  it('exactly one #delve-tracker element exists per entry (never shown twice at once)', () => {
-    for (const html of [indexHtml, playHtml]) {
+  it('exactly one #delve-tracker element exists (never shown twice at once)', () => {
+    for (const html of [indexHtml]) {
       const matches = html.match(/id="delve-tracker"/g) ?? [];
       expect(matches.length).toBe(1);
     }

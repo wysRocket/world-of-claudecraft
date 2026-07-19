@@ -1621,8 +1621,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.iosInstallDetail':
     'Для настоящего полноэкранного режима на iPhone или iPad сначала добавьте эту страницу на домашний экран.',
   'mobilePreflight.iosShareStep': 'В Safari нажмите Поделиться, затем На экран Домой.',
-  'mobilePreflight.iosOpenStep':
-    'Откройте Endless Glory через новый значок на домашнем экране.',
+  'mobilePreflight.iosOpenStep': 'Откройте Endless Glory через новый значок на домашнем экране.',
   'mobilePreflight.androidStandaloneDetail':
     'Вы в полноэкранном режиме приложения. Держите устройство горизонтально.',
   'mobilePreflight.androidInstallDetail':
@@ -6475,8 +6474,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'desktop.crash.body': 'Игровой экран перестал отвечать. Перезагрузить его?',
   'desktop.crash.reload': 'Перезагрузить',
   'desktop.crash.quit': 'Выйти',
-  'desktop.crash.fatalBody':
-    'Endless Glory столкнулась с непредвиденной ошибкой и будет закрыта.',
+  'desktop.crash.fatalBody': 'Endless Glory столкнулась с непредвиденной ошибкой и будет закрыта.',
   'gpuNotice.bodyDesktop':
     'Игра работает без GPU-ускорения и будет сильно тормозить. Обновите драйверы видеокарты и перезапустите игру. В Windows также выберите для игры режим «Высокая производительность» в разделе Параметры > Система > Дисплей > Графика.',
   'gpuNotice.bodyWeb':

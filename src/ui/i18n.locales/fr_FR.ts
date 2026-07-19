@@ -7423,8 +7423,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'errors.api.desktopCodeInvalid':
     "Le code de connexion de l'application de bureau est invalide ou expiré. Veuillez réessayer.",
   'desktop.crash.body': "L'affichage du jeu a cessé de fonctionner. Le recharger ?",
-  'desktop.crash.fatalBody':
-    'Endless Glory a rencontré une erreur inattendue et doit se fermer.',
+  'desktop.crash.fatalBody': 'Endless Glory a rencontré une erreur inattendue et doit se fermer.',
   'desktop.crash.quit': 'Quitter',
   'desktop.crash.reload': 'Recharger',
   'desktop.crash.title': 'Endless Glory',

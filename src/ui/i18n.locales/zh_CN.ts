@@ -6066,8 +6066,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.devBadge.linkedAs': '已关联为 {login}',
   'hudChrome.devBadge.unlink': '取消关联 GitHub',
   'hudChrome.nativeUpdate.title': '有可用更新',
-  'hudChrome.nativeUpdate.body':
-    'Endless Glory 有新版本可用。立即更新以获取最新修复和改进。',
+  'hudChrome.nativeUpdate.body': 'Endless Glory 有新版本可用。立即更新以获取最新修复和改进。',
   'hudChrome.nativeUpdate.bodyWithVersion':
     'Endless Glory {version} 版本已可用。立即更新以获取最新修复和改进。',
   'hudChrome.nativeUpdate.notNow': '暂不',

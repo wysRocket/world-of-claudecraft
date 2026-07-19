@@ -500,7 +500,7 @@ export function diffChangedPaths(diff) {
 // CSS, local input/camera/mobile controls, and the two HTML shells. A change here can alter
 // what the client looks like even when it does not map to a specific window target above.
 const VISUAL_PREFIXES = ['src/render/', 'src/ui/', 'src/styles/', 'src/game/'];
-const VISUAL_FILES = ['index.html', 'play.html'];
+const VISUAL_FILES = ['index.html'];
 
 // Not visual even under those prefixes: the i18n text tables (labels are text, not layout),
 // and the test/doc files that sit alongside the code.
@@ -520,9 +520,9 @@ function isVisualPath(path) {
 }
 
 // A change touches the mobile/responsive surface: the mobile HUD CSS, the touch controls,
-// or the /play shell (which carries its own chrome and mobile layout).
+// or a future shell with its own chrome and mobile layout.
 function isMobilePath(path) {
-  return path.includes('hud.mobile') || path.includes('mobile') || path.includes('play.html');
+  return path.includes('hud.mobile') || path.includes('mobile');
 }
 
 // Decide, from the changed files alone, WHAT to shoot:

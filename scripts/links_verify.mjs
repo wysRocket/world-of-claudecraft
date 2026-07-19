@@ -38,7 +38,7 @@ const server = http.createServer((req, res) => {
 
 const PORT = 8799;
 const EXPECTED_LINKS = [
-  'https://worldofclaudecraft.com/',
+  'https://endlessglory.vercel.app/',
   'https://x.com/WoClaudecraft',
   'https://www.instagram.com/worldofclaudecraft/',
   'https://www.tiktok.com/@worldofclaudecraft',
@@ -74,7 +74,7 @@ async function main() {
     ok(errors.length === 0, `no page/console errors (got: ${JSON.stringify(errors)})`);
 
     const title = await page.title();
-    ok(title === 'World of ClaudeCraft - Official Links', `document.title is localized ("${title}")`);
+    ok(title === 'Endless Glory - Official Links', `document.title is localized ("${title}")`);
 
     const htmlLang = await page.evaluate(() => document.documentElement.lang);
     ok(htmlLang === 'en', `html lang = en (got "${htmlLang}")`);
@@ -141,7 +141,7 @@ async function main() {
     });
     ok(ld && ld !== 'INVALID', `JSON-LD present and valid`);
     const sameAs = ld && ld !== 'INVALID' ? (ld.about?.sameAs ?? []) : [];
-    ok(EXPECTED_LINKS.filter((u) => u !== 'https://worldofclaudecraft.com/').every((u) => sameAs.includes(u)),
+    ok(EXPECTED_LINKS.filter((u) => u !== 'https://endlessglory.vercel.app/').every((u) => sameAs.includes(u)),
       `JSON-LD sameAs lists all 6 social profiles (${sameAs.length})`);
 
     // Verified wax seals must render as red discs (literal hex, not unresolved var()).

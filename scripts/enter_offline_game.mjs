@@ -47,7 +47,7 @@ export async function enterOfflineGame(page, opts = {}) {
   await page.evaluate(() => document.querySelector('#mobile-preflight-continue')?.click());
   // The post-login Welcome Screen (news, Discord strip, Continue) now sits between
   // Enter World and the actual game boot on every entry whose DOM has #welcome-screen
-  // (index.html; absent on /play). Continue enables immediately offline (no connection
+  // in index.html. Continue enables immediately offline (no connection
   // to wait on), so click through it the moment it appears. No-op when the screen is
   // absent (a future pre-game UI change stays a one-line fix here, per the file header).
   await page

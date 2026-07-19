@@ -238,8 +238,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Vincular cartera',
   'wallet.bagLink': 'Verificar cartera',
   'wallet.bagReconnect': 'Volver a conectar cartera',
-  'wallet.browser.completeBody':
-    'Puedes volver a la aplicación de escritorio de Endless Glory.',
+  'wallet.browser.completeBody': 'Puedes volver a la aplicación de escritorio de Endless Glory.',
   'wallet.browser.completeTitle': 'Autorización de cartera completada',
   'wallet.browser.continueWith': 'Continuar con {wallet}',
   'wallet.browser.extensionHelp':

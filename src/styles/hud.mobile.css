@@ -436,7 +436,7 @@
 
   /* ---------- mobile window backdrop ---------- */
   /* Phase 4 of the mobile combat HUD rework: a static full-screen dim layer
-     (#mobile-window-backdrop, in both index.html and play.html) shown whenever a
+     (#mobile-window-backdrop in index.html) shown whenever a
      window is open on touch, so a menu explicitly blocks touches to whatever is
      behind it instead of relying on DOM occlusion order (several windows are
      translucent / don't fully cover the viewport). Hidden by default and on

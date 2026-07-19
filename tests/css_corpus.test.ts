@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 
 // Section-by-section completeness guard for the game-HUD CSS, the floor the CSS
 // extraction regresses against. That extraction relocates CSS section by
-// section out of the inline <style> blocks in index.html / play.html into
+// section out of the inline <style> blocks in index.html into
 // src/styles/*.css, then flip the build to Lightning CSS. A whitespace- or
 // byte-level check would either go red on every cosmetic reformat or, worse,
 // pass while a whole rule block is silently dropped. So this guard keys on the
@@ -13,9 +13,9 @@ import { describe, expect, it } from 'vitest';
 // banner comment /* ---------- name ---------- */, and the guard asserts that the
 // full set of those section names still exists somewhere in the corpus.
 //
-// THE CORPUS IS A UNION: both entries' inline <style> text UNION the contents of
+// THE CORPUS IS A UNION: the game entry's inline <style> text UNION the contents of
 // src/styles/*.css. Today src/styles/ does not exist, so the union is just the
-// two inline blocks. That union is the whole point: when the extraction moves a section
+// inline blocks. That union is the whole point: when the extraction moves a section
 // out of an inline block and into a src/styles module keyed on the SAME ten-dash
 // marker, the section leaves the inline block but reappears in the module, so the
 // union stays complete and this guard stays green. A section that vanishes from
@@ -72,10 +72,9 @@ function extractedStyleCss(): string {
   return parts.join('\n');
 }
 
-// The whole game-HUD CSS corpus: both entries' inline <style> UNION src/styles.
+// The whole game-HUD CSS corpus: the game entry's inline <style> UNION src/styles.
 const CORPUS = [
   inlineStyleCss('index.html'),
-  inlineStyleCss('play.html'),
   extractedStyleCss(),
 ].join('\n');
 const CORPUS_SECTIONS = new Set(sectionNames(CORPUS));
@@ -90,9 +89,6 @@ const CORPUS_SECTIONS = new Set(sectionNames(CORPUS));
 // and dropdown, vendor, bags, social, map) so one window's body can no longer be
 // dropped without this guard going red. As the extraction migrates sections out of the inline
 // <style> they reappear in src/styles modules, so the union corpus stays complete.
-// play.html is a near-clone that ships 57 of these (it omits the two in PLAY_OMITS;
-// tooltip is shared via hud.css and the windows via components.css / layout.css, all of
-// which play loads). play's set is a subset of index's, so this is the union.
 const INDEX_SECTIONS = [
   'UI chrome icons (inline SVG from ui_icons.ts, tinted via currentColor)',
   'nameplates',
@@ -171,25 +167,17 @@ const INDEX_SECTIONS = [
   'mobile deeds (standalone window + tracker)',
 ];
 
-// The two index-only sections play.html does not ship, so its count is 58 (plus the
-// three global sections both entries load via base.css = 61).
-const PLAY_OMITS = ['new-adventurer tutorial', 'UI theme picker'];
-const PLAY_SECTIONS = INDEX_SECTIONS.filter((name) => !PLAY_OMITS.includes(name));
-
-// play's set is a subset of index's, so the union manifest is just INDEX_SECTIONS.
 const MANIFEST = INDEX_SECTIONS;
 
 describe('css_corpus section manifest', () => {
-  it('pins a non-vacuous manifest: 69 index + 67 play sections, no duplicate names', () => {
+  it('pins a non-vacuous 69-section manifest with no duplicate names', () => {
     expect(INDEX_SECTIONS.length).toBe(69);
-    expect(PLAY_SECTIONS.length).toBe(67);
     expect(MANIFEST.length).toBe(69);
     expect(new Set(INDEX_SECTIONS).size).toBe(69);
-    expect(new Set(PLAY_SECTIONS).size).toBe(67);
   });
 
   it('captures the live corpus markers (the marker regex is non-vacuous, not a zero match)', () => {
-    // CORPUS is both entries' inline <style> UNION src/styles. Even after the
+    // CORPUS is the entry's inline <style> UNION src/styles. Even after the
     // extraction relocates sections into src/styles, every section stays in this union, so
     // the captured set never drops below the manifest size. A vacuous pattern (the
     // four-dash trap) would make this zero; the teeth tests below prove the dash
@@ -203,7 +191,7 @@ describe('css_corpus section completeness (inline UNION src/styles)', () => {
     const missing = MANIFEST.filter((name) => !CORPUS_SECTIONS.has(name));
     expect(
       missing,
-      `section banners missing from index/play inline <style> UNION src/styles/*.css ` +
+      `section banners missing from index inline <style> UNION src/styles/*.css ` +
         `(a section dropped during CSS extraction, or a renamed banner):\n${missing.join('\n')}`,
     ).toEqual([]);
   });
@@ -280,8 +268,8 @@ describe('css_corpus per-file brace balance', () => {
     }
   });
 
-  it('balances both entries inline style blocks', () => {
-    for (const entry of ['index.html', 'play.html']) {
+  it('balances the game entry inline style blocks', () => {
+    for (const entry of ['index.html']) {
       expect(braceBalance(inlineStyleCss(entry)), `${entry} inline styles`).toBe(0);
     }
   });
