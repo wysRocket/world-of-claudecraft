@@ -786,8 +786,8 @@ export const zh_CN: EnTranslations = {
     },
     "nativeUpdate": {
       "title": "有可用更新",
-      "body": "World of ClaudeCraft 有新版本可用。立即更新以获取最新修复和改进。",
-      "bodyWithVersion": "World of ClaudeCraft {version} 版本已可用。立即更新以获取最新修复和改进。",
+      "body": "Endless Glory 有新版本可用。立即更新以获取最新修复和改进。",
+      "bodyWithVersion": "Endless Glory {version} 版本已可用。立即更新以获取最新修复和改进。",
       "notNow": "暂不",
       "update": "更新"
     },
@@ -1728,7 +1728,7 @@ export const zh_CN: EnTranslations = {
     },
     "discord": {
       "title": "Discord",
-      "panelTitle": "World of ClaudeCraft",
+      "panelTitle": "Endless Glory",
       "open": "Discord",
       "close": "关闭",
       "keybind": "Discord 面板",
@@ -2439,8 +2439,8 @@ export const zh_CN: EnTranslations = {
     }
   },
   "guide": {
-    "brand": "World of ClaudeCraft",
-    "brandShort": "ClaudeCraft",
+    "brand": "Endless Glory",
+    "brandShort": "EndlessGlory",
     "tagline": "一款可在浏览器中免费畅玩的经典风格 MMO。",
     "skipToContent": "跳至正文",
     "loading": "加载中……",
@@ -2505,7 +2505,7 @@ export const zh_CN: EnTranslations = {
       "github": "GitHub 上的源代码",
       "discord": "加入 Discord",
       "communityWiki": "社区维基",
-      "rights": "World of ClaudeCraft",
+      "rights": "Endless Glory",
       "linksLabel": "游玩与社区链接"
     },
     "language": {
@@ -2528,7 +2528,7 @@ export const zh_CN: EnTranslations = {
     },
     "home": {
       "eyebrow": "经典风格浏览器 MMO",
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "subtitle": "在你的浏览器中免费接受任务、组队、探索一个纯手工打造的世界。",
       "ctaPlay": "立即游玩",
       "ctaLearn": "游戏入门",
@@ -3029,7 +3029,7 @@ export const zh_CN: EnTranslations = {
     },
     "worldPage": {
       "heading": "世界",
-      "intro": "World of ClaudeCraft 是一片连绵不绝、需你徒步穿越的大陆，三大区域由南向北依次铺展。这里没有快速旅行，因此旅途本身便是冒险的一部分。",
+      "intro": "Endless Glory 是一片连绵不绝、需你徒步穿越的大陆，三大区域由南向北依次铺展。这里没有快速旅行，因此旅途本身便是冒险的一部分。",
       "hub": "大本营",
       "mapHeading": "向北之路",
       "mapSub": "三片区域，自南向北，每一片的等级都更高一级。跟着任务线走，这片土地便会带你从山谷一路抵达群峰。",
@@ -3538,7 +3538,7 @@ export const zh_CN: EnTranslations = {
   },
   "editor": {
     "appTitle": "地图编辑器",
-    "docTitle": "地图编辑器 - World of ClaudeCraft",
+    "docTitle": "地图编辑器 - Endless Glory",
     "untitledMap": "未命名地图",
     "playtestPlayerName": "制图师",
     "topbar": {
@@ -4013,7 +4013,7 @@ export const zh_CN: EnTranslations = {
     "realmName": "服务器名称"
   },
   "footer": {
-    "copyright": "2026 World of ClaudeCraft",
+    "copyright": "2026 Endless Glory",
     "githubLink": "https://github.com/levy-street/world-of-claudecraft",
     "githubLabel": "开源项目",
     "whitepaper": "白皮书",
@@ -4069,7 +4069,7 @@ export const zh_CN: EnTranslations = {
     "serverOnline": "在线",
     "serverOffline": "离线",
     "play": "开始游戏",
-    "playAria": "开始游玩 World of ClaudeCraft",
+    "playAria": "开始游玩 Endless Glory",
     "serverLabel": "选择你的世界",
     "serverAria": "选择世界：在线或离线",
     "serverOfflineSub": "即时本地世界",
@@ -4180,12 +4180,12 @@ export const zh_CN: EnTranslations = {
     "helpLinkedDisconnectedWithBalance": "持有者特权已启用。需要签名或消费时请连接应用。",
     "extensionHelp": "若要在此处看到钱包，请保持 Solflare Wallet 等浏览器钱包扩展处于启用状态。",
     "mobileAppHelp": "选择 Phantom 或 Solflare。钱包应用会请求批准。请保持游戏打开，完成后返回游戏。",
-    "standaloneAppHelp": "主屏幕应用暂不支持连接钱包。若要使用 Phantom 或 Solflare，请在 Safari 或 Chrome 中打开 World of ClaudeCraft。",
+    "standaloneAppHelp": "主屏幕应用暂不支持连接钱包。若要使用 Phantom 或 Solflare，请在 Safari 或 Chrome 中打开 Endless Glory。",
     "openAppTitle": "在 {wallet} 中继续",
     "openAppHelp": "打开 {wallet} 查看此请求。钱包应用处于活动状态时，请保持此游戏标签页打开。",
     "openAppButton": "打开 {wallet}",
     "manualReturnBrowserHelp": "批准后请返回此游戏标签页。如果 iOS 打开了其他浏览器，请将其关闭并手动返回原浏览器。",
-    "manualReturnStandaloneHelp": "批准后请从主屏幕返回 World of ClaudeCraft。如果 iOS 打开了浏览器，请将其关闭并重新打开主屏幕应用。",
+    "manualReturnStandaloneHelp": "批准后请从主屏幕返回 Endless Glory。如果 iOS 打开了浏览器，请将其关闭并重新打开主屏幕应用。",
     "preparingAppButton": "正在准备 {wallet}...",
     "walletAppUnavailable": "无法准备 {wallet}。请关闭此窗口并重试。",
     "flowConnect": "选择一个钱包。验证会自动继续。",
@@ -4200,12 +4200,12 @@ export const zh_CN: EnTranslations = {
       "linkBody": "在此浏览器中选择钱包扩展。签署验证消息后返回桌面应用。",
       "paymentBody": "选择已关联到账号的钱包，并在此浏览器中批准交易。",
       "extensionHelp": "未找到兼容的钱包扩展。请安装或解锁 Phantom、Solflare 或其他 Solana 浏览器钱包，然后重试。",
-      "safety": "World of ClaudeCraft 绝不会索要助记词或私钥。",
+      "safety": "Endless Glory 绝不会索要助记词或私钥。",
       "continueWith": "使用 {wallet} 继续",
       "reviewTitle": "在钱包中查看",
       "reviewBody": "按照 {wallet} 中的提示操作。请保持此浏览器页面打开。",
       "completeTitle": "钱包授权完成",
-      "completeBody": "现在可以返回 World of ClaudeCraft 桌面应用。",
+      "completeBody": "现在可以返回 Endless Glory 桌面应用。",
       "returnButton": "返回桌面应用",
       "failed": "钱包授权失败或已过期。请返回桌面应用并重试。",
       "retry": "重试"
@@ -4303,7 +4303,7 @@ export const zh_CN: EnTranslations = {
     "levelClass": "{level}级 - {className}",
     "topPercent": "前 {percent}%",
     "realmSubtitle": "{realm} 世界",
-    "defaultRealm": "ClaudeCraft 世界",
+    "defaultRealm": "EndlessGlory 世界",
     "brandWordmark": "WORLD OF CLAUDECRAFT",
     "recruited": "已招募 {count} 人",
     "footerHandle": "@{handle}",
@@ -4311,8 +4311,8 @@ export const zh_CN: EnTranslations = {
     "footerCta": "铸就你的传说：{siteUrl}",
     "arenaStat": "竞技场",
     "shareTierBit": "，{tier}级 $WOC 持有者",
-    "shareText": "我正在 World of ClaudeCraft 中铸就传说：{level}级 {className}{tierBit}。加入我的世界：",
-    "nativeShareTitle": "ClaudeCraft 世界",
+    "shareText": "我正在 Endless Glory 中铸就传说：{level}级 {className}{tierBit}。加入我的世界：",
+    "nativeShareTitle": "EndlessGlory 世界",
     "fileNameFallback": "玩家",
     "actionShareX": "分享到 X",
     "actionCopyReferral": "复制推荐链接",
@@ -4952,14 +4952,14 @@ export const zh_CN: EnTranslations = {
     }
   },
   "seo": {
-    "title": "World of ClaudeCraft：经典风格网页 MMO",
-    "description": "在 World of ClaudeCraft 展开史诗冒险。这是一款可直接在浏览器中游玩的经典风格微型 MMO。加入持续共享的世界，提升职业等级，击败敌人！",
+    "title": "Endless Glory：经典风格网页 MMO",
+    "description": "在 Endless Glory 展开史诗冒险。这是一款可直接在浏览器中游玩的经典风格微型 MMO。加入持续共享的世界，提升职业等级，击败敌人！",
     "genre": "MMORPG",
     "playMode": "多人游戏",
     "applicationCategory": "游戏",
     "operatingSystem": "网页浏览器",
-    "officialLabel": "World of ClaudeCraft 官方网站",
-    "officialBody": "worldofclaudecraft.com 是 Claudemoon 世界的官方免费浏览器 MMO。你可以用持久角色在线游玩，也可以离线单人探索，阅读 wiki，并从本站访问已验证的社区链接。"
+    "officialLabel": "Endless Glory 官方网站",
+    "officialBody": "endlessglory.vercel.app 是 Claudemoon 世界的官方免费浏览器 MMO。你可以用持久角色在线游玩，也可以离线单人探索，阅读 wiki，并从本站访问已验证的社区链接。"
   },
   "a11y": {
     "goHome": "前往主页",
@@ -4967,9 +4967,9 @@ export const zh_CN: EnTranslations = {
     "mainNavigation": "主导航",
     "languageSelection": "语言选择",
     "characterActions": "角色操作",
-    "githubProject": "打开 World of ClaudeCraft 的 GitHub 项目",
-    "discordCommunity": "加入 World of ClaudeCraft 的 Discord 社区",
-    "donateProject": "捐赠支持 World of ClaudeCraft"
+    "githubProject": "打开 Endless Glory 的 GitHub 项目",
+    "discordCommunity": "加入 Endless Glory 的 Discord 社区",
+    "donateProject": "捐赠支持 Endless Glory"
   },
   "entryGuard": {
     "title": "已降低图形设置",
@@ -5046,11 +5046,11 @@ export const zh_CN: EnTranslations = {
       "later": "稍后"
     },
     "crash": {
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "body": "游戏画面已停止响应。要重新加载吗？",
       "reload": "重新加载",
       "quit": "退出",
-      "fatalBody": "World of ClaudeCraft 遇到意外错误，需要关闭。"
+      "fatalBody": "Endless Glory 遇到意外错误，需要关闭。"
     }
   },
   "gpuNotice": {
@@ -5183,17 +5183,17 @@ export const zh_CN: EnTranslations = {
     "iosStandaloneDetail": "你正在从主屏幕以全屏模式运行。请保持横屏。",
     "iosInstallDetail": "若要在 iPhone 或 iPad 上获得真正全屏，请先将此页面添加到主屏幕。",
     "iosShareStep": "在 Safari 中点击分享，然后选择添加到主屏幕。",
-    "iosOpenStep": "从新的主屏幕图标打开 World of ClaudeCraft。",
+    "iosOpenStep": "从新的主屏幕图标打开 Endless Glory。",
     "androidStandaloneDetail": "你正在全屏应用模式中。请保持横屏。",
     "androidInstallDetail": "若要在 Android 上全屏，请先安装此页面或将其添加到主屏幕。",
     "androidInstallStep": "在 Chrome 中点击菜单，然后选择安装应用或添加到主屏幕。",
-    "androidOpenStep": "从新图标打开 World of ClaudeCraft。",
+    "androidOpenStep": "从新图标打开 Endless Glory。",
     "otherStandaloneDetail": "请保持设备处于横屏全屏。",
     "otherInstallDetail": "安装此页面或将其添加到主屏幕，以获得最佳移动端全屏体验。"
   },
   "serverUnavailable": {
-    "title": "World of ClaudeCraft - 服务器不可用",
-    "logoAlt": "World of ClaudeCraft",
+    "title": "Endless Glory - 服务器不可用",
+    "logoAlt": "Endless Glory",
     "eyebrow": "服务器维护",
     "heading": "服务器暂时不可用。",
     "body": "我们正在重启游戏服务，Claudemoon 应会很快恢复。此页面会自动继续检查。",

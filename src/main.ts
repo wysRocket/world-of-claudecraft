@@ -7518,10 +7518,12 @@ function wireStartScreens(): void {
     }
   };
 
-  onlineBtn.addEventListener('click', handleOnlineSelect);
-  onlineBtn.addEventListener('keydown', (e) =>
-    handleKeyboardActivation(e as KeyboardEvent, handleOnlineSelect),
-  );
+  if (onlineBtn) {
+    onlineBtn.addEventListener('click', handleOnlineSelect);
+    onlineBtn.addEventListener('keydown', (e) =>
+      handleKeyboardActivation(e as KeyboardEvent, handleOnlineSelect),
+    );
+  }
 
   // play.html is online-only: it ships no #btn-offline compat trigger, no
   // #offline-select panel, and no realm dropdown, so every offline / dropdown
@@ -7669,11 +7671,12 @@ function wireStartScreens(): void {
       else handleOnlineSelect();
     });
 
-    applyServerMode('online');
+    applyServerMode('offline');
   } else if (btnPlay) {
-    // Online-only entry (play.html): no realm dropdown in the console, so the
-    // Play button commits straight to the online flow.
-    btnPlay.addEventListener('click', handleOnlineSelect);
+    // The offline-first landing page no longer renders the realm dropdown, but
+    // keeps #btn-offline as its compatibility signal. Route its primary Play
+    // CTA to the local world; reserve online for an online-only shell.
+    btnPlay.addEventListener('click', offlineBtn ? handleOfflineSelect : handleOnlineSelect);
   }
 
   if (btnStartOffline) {
@@ -8407,7 +8410,10 @@ function wireStartScreens(): void {
     });
   };
 
-  setupNavBtn(navBtnPlay, '#hero-view', enterOnlinePlayFlow);
+  setupNavBtn(navBtnPlay, '#hero-view', () => {
+    switchMainView('#hero-view');
+    handleOfflineSelect();
+  });
 
   setupNavBtn(navBtnHighscores, '#highscores-view', () => {
     switchMainView('#highscores-view');

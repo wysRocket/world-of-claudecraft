@@ -247,7 +247,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Länka plånbok',
   'wallet.bagLink': 'Verifiera plånbok',
   'wallet.bagReconnect': 'Återanslut plånbok',
-  'wallet.browser.completeBody': 'Du kan återvända till skrivbordsappen för World of ClaudeCraft.',
+  'wallet.browser.completeBody': 'Du kan återvända till skrivbordsappen för Endless Glory.',
   'wallet.browser.completeTitle': 'Plånboksbehörighet slutförd',
   'wallet.browser.continueWith': 'Fortsätt med {wallet}',
   'wallet.browser.extensionHelp':
@@ -264,12 +264,12 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.reviewBody': 'Följ uppmaningen från {wallet}. Håll denna webbläsarsida öppen.',
   'wallet.browser.reviewTitle': 'Granska i din plånbok',
   'wallet.browser.safety':
-    'World of ClaudeCraft ber aldrig om din återställningsfras eller privata nyckel.',
+    'Endless Glory ber aldrig om din återställningsfras eller privata nyckel.',
   'wallet.browser.title': 'Anslut en Solana-plånbok',
   'wallet.manualReturnBrowserHelp':
     'Efter godkännande, återgå till denna spelflik. Om iOS öppnar en annan webbläsare, stäng den och återgå till den ursprungliga webbläsaren manuellt.',
   'wallet.manualReturnStandaloneHelp':
-    'Efter godkännande, återgå till World of ClaudeCraft från din hemskärm. Om iOS öppnar en webbläsare, stäng den och öppna hemskärmsappen manuellt igen.',
+    'Efter godkännande, återgå till Endless Glory från din hemskärm. Om iOS öppnar en webbläsare, stäng den och öppna hemskärmsappen manuellt igen.',
   'wallet.mobileAppHelp':
     'Välj Phantom eller Solflare. Din plånboksapp ber om godkännande. Håll det här spelet öppet och återgå till det när du är klar.',
   'wallet.openAppButton': 'Öppna {wallet}',
@@ -278,7 +278,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'wallet.openAppTitle': 'Fortsätt i {wallet}',
   'wallet.preparingAppButton': 'Förbereder {wallet}...',
   'wallet.standaloneAppHelp':
-    'Plånboksanslutningar är ännu inte tillgängliga i hemskärmsappen. Öppna World of ClaudeCraft i Safari eller Chrome för att använda Phantom eller Solflare.',
+    'Plånboksanslutningar är ännu inte tillgängliga i hemskärmsappen. Öppna Endless Glory i Safari eller Chrome för att använda Phantom eller Solflare.',
   'wallet.walletAppUnavailable':
     '{wallet} kunde inte förberedas. Stäng det här fönstret och försök igen.',
   'entities.abilities.primal_reflexes.description':
@@ -1113,7 +1113,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'editor.confirm.discardBody': 'Du har osparade ändringar i "{name}". Kasta dem?',
   'editor.confirm.discardTitle': 'Kasta ändringarna?',
   'editor.confirm.ok': 'OK',
-  'editor.docTitle': 'Kartredigerare - World of ClaudeCraft',
+  'editor.docTitle': 'Kartredigerare - Endless Glory',
   'editor.eraseTool.blockerHint': 'Klickar du nära en spärrvägg tas den väggen bort i stället.',
   'editor.eraseTool.hint':
     'Klicka på en placerad resurs för att ta bort den, eller klicka på skulpterad mark för att ta bort den nyaste stämpeln under pekaren.',
@@ -1678,7 +1678,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'worldContent.delveRiteShrineSkullInteract': 'Skallhelgedom: Tryck på F för att röra vid den',
   'worldContent.mailboxName': 'Brevlåda',
   'entities.npcs.auctioneer_voss.greeting':
-    'World of ClaudeCraft-marknaden är öppen även här, {className}. Köp från varje äventyrare i riket, eller lägg ut dina egna varor.',
+    'Endless Glory-marknaden är öppen även här, {className}. Köp från varje äventyrare i riket, eller lägg ut dina egna varor.',
   'entities.npcs.auctioneer_voss.name': 'Auktionsförrättare Voss',
   'entities.npcs.auctioneer_voss.title': 'Väktare av världsmarknaden',
   'hudChrome.devBadge.badgeTitle': 'Utvecklare: {tier}',
@@ -1767,9 +1767,9 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.sources.header': 'Består av:',
   'hudChrome.statInfo.sources.talents': 'Talanger och effekter: {value}',
   'a11y.characterActions': 'Karaktärshandlingar',
-  'a11y.discordCommunity': 'Gå med i World of ClaudeCraft-gemenskapen på Discord',
-  'a11y.donateProject': 'Donera för att stödja World of ClaudeCraft',
-  'a11y.githubProject': 'Öppna GitHub-projektet World of ClaudeCraft',
+  'a11y.discordCommunity': 'Gå med i Endless Glory-gemenskapen på Discord',
+  'a11y.donateProject': 'Donera för att stödja Endless Glory',
+  'a11y.githubProject': 'Öppna GitHub-projektet Endless Glory',
   'a11y.goHome': 'Gå till startsidan',
   'a11y.languageSelection': 'Språkval',
   'a11y.mainNavigation': 'Huvudnavigering',
@@ -3846,7 +3846,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'fiesta.word.shutdown': 'AVKLARAD!',
   'fiesta.word.spree': '{n}× SVIT!',
   'fiesta.word.wave': 'FÖRSTÄRKNINGAR!',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.discordLabel': 'Gå med i Discord',
   'footer.githubLabel': 'Projekt med öppen källkod',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
@@ -4112,8 +4112,8 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'guide.bestiary.levelsSame': 'Nivå {min}',
   'guide.bestiary.notedLabel': 'Värt att notera',
   'guide.bestiary.rare': 'Sällsynt',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.breadcrumb.home': 'Guide',
   'guide.breadcrumb.label': 'Brödsmula',
   'guide.chooser.clear': 'Rensa',
@@ -4375,7 +4375,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'guide.footer.discord': 'Gå med i Discord',
   'guide.footer.github': 'Källkod på GitHub',
   'guide.footer.playNow': 'Spela nu',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.gear.consumablesElixirs':
     'Elixir ger en tillfällig förstärkning medan du äventyrar, en liten fördel som hjälper när du vill pressa lite längre.',
   'guide.gear.consumablesFood':
@@ -4539,7 +4539,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Världen går att klara solo, men det bästa bytet väntar bakom en bra grupp.',
   'guide.home.subtitle':
     'Lös uppdrag, slå er samman och utforska en handbyggd värld, gratis i din webbläsare.',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.what.heading': 'Ett klassiskt MMO, gjort för att tas upp',
   'guide.home.what.pillarClassesBody':
     'Tanka, läk eller dela ut skadan. Varje klass spelas så som dess arketyp bör, med talanger för att göra den till din egen.',
@@ -4951,7 +4951,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'guide.worldPage.heading': 'Världen',
   'guide.worldPage.hub': 'Hembas',
   'guide.worldPage.intro':
-    'World of ClaudeCraft är ett enda sammanhängande land som du korsar till fots, tre zoner lagda från söder till norr. Det finns ingen snabbresa, så resan är en del av äventyret.',
+    'Endless Glory är ett enda sammanhängande land som du korsar till fots, tre zoner lagda från söder till norr. Det finns ingen snabbresa, så resan är en del av äventyret.',
   'guide.worldPage.mapHeading': 'Vägen norrut',
   'guide.worldPage.mapSub':
     'Tre zoner, från söder till norr, var och en ett steg högre i nivå. Följ uppdragsspåret så bär landet dig från dalen till topparna.',
@@ -6167,7 +6167,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'För helskärm på Android, installera den här sidan eller lägg först till den på din Hemskärm.',
   'mobilePreflight.androidInstallStep':
     'I Chrome, tryck på menyn och sedan Installera app eller Lägg till på Hemskärmen.',
-  'mobilePreflight.androidOpenStep': 'Öppna World of ClaudeCraft från den nya ikonen.',
+  'mobilePreflight.androidOpenStep': 'Öppna Endless Glory från den nya ikonen.',
   'mobilePreflight.androidStandaloneDetail':
     'Du är i helskärmsläge för appen. Håll enheten i liggande läge.',
   'mobilePreflight.baseLandscape': 'Rotera din enhet till liggande läge innan du går in i världen.',
@@ -6176,7 +6176,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.continue': 'Fortsätt till spelet',
   'mobilePreflight.iosInstallDetail':
     'För äkta helskärm på iPhone eller iPad, installera först den här sidan på din Hemskärm.',
-  'mobilePreflight.iosOpenStep': 'Öppna World of ClaudeCraft från den nya Hemskärmsikonen.',
+  'mobilePreflight.iosOpenStep': 'Öppna Endless Glory från den nya Hemskärmsikonen.',
   'mobilePreflight.iosShareStep': 'I Safari, tryck på Dela och sedan Lägg till på Hemskärmen.',
   'mobilePreflight.iosStandaloneDetail':
     'Du är i helskärmsläge från hemskärmen. Håll enheten i liggande läge.',
@@ -6199,7 +6199,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Logga in på världen. Dina karaktärer lever på servern och du delar världen med alla andra som är inloggade.',
   'mode.onlineTitle': 'Spela online',
   'mode.play': 'Spela',
-  'mode.playAria': 'Spela World of ClaudeCraft',
+  'mode.playAria': 'Spela Endless Glory',
   'mode.serverAria': 'Välj värld: Online eller Offline',
   'mode.serverLabel': 'Välj din värld',
   'mode.serverOffline': 'Offline',
@@ -6234,14 +6234,14 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Arena',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.close': 'Stäng spelarkort',
-  'playerCard.defaultRealm': 'World of ClaudeCraft',
+  'playerCard.defaultRealm': 'Endless Glory',
   'playerCard.fileNameFallback': 'spelare',
   'playerCard.footerCta': 'Skapa din legend: {siteUrl}',
   'playerCard.footerHandle': '@{handle}',
   'playerCard.footerHandleWithRecruits': '@{handle} - {recruited}',
   'playerCard.levelClass': 'Nivå {level} - {className}',
   'playerCard.loading': 'Skapar ditt kort...',
-  'playerCard.nativeShareTitle': 'World of ClaudeCraft',
+  'playerCard.nativeShareTitle': 'Endless Glory',
   'playerCard.poseBattle': 'Strid',
   'playerCard.poseGroup': 'Pose',
   'playerCard.poseHero': 'Hjälte',
@@ -6255,7 +6255,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'playerCard.renderFailedStatus': 'Kortrenderingen misslyckades.',
   'playerCard.shareButton': 'Dela spelarkort',
   'playerCard.shareText':
-    'Jag skapar min legend i World of ClaudeCraft: Nivå {level} {className}{tierBit}. Gå med i min värld:',
+    'Jag skapar min legend i Endless Glory: Nivå {level} {className}{tierBit}. Gå med i min värld:',
   'playerCard.shareTierBit': ', {tier}-rankad $WOC-innehavare',
   'playerCard.statusDownloaded': 'Kortet nedladdat.',
   'playerCard.statusGenericError': 'Något gick fel.',
@@ -6358,21 +6358,21 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'realmTypes.rpPvp': 'RP-PvP',
   'seo.applicationCategory': 'Spel',
   'seo.description':
-    'Ge dig ut på ett episkt äventyr i World of ClaudeCraft, en klassiskt inspirerad mikro-MMO som du spelar direkt i din webbläsare. Anslut till en beständig delad värld, höj nivå på klasser och besegra fiender!',
+    'Ge dig ut på ett episkt äventyr i Endless Glory, en klassiskt inspirerad mikro-MMO som du spelar direkt i din webbläsare. Anslut till en beständig delad värld, höj nivå på klasser och besegra fiender!',
   'seo.genre': 'MMORPG',
   'seo.officialBody':
-    'worldofclaudecraft.com är den officiella gratis webbläsar-MMO:n för Claudemoon-världen. Spela online med en beständig karaktär, utforska solo offline, läs wikin och följ verifierade gemenskapslänkar från den här webbplatsen.',
-  'seo.officialLabel': 'Officiell webbplats för World of ClaudeCraft',
+    'endlessglory.vercel.app är den officiella gratis webbläsar-MMO:n för Claudemoon-världen. Spela online med en beständig karaktär, utforska solo offline, läs wikin och följ verifierade gemenskapslänkar från den här webbplatsen.',
+  'seo.officialLabel': 'Officiell webbplats för Endless Glory',
   'seo.operatingSystem': 'Webbläsare',
   'seo.playMode': 'Flerspelarläge',
-  'seo.title': 'World of ClaudeCraft: Klassiskt inspirerad webb-MMO',
+  'seo.title': 'Endless Glory: Klassiskt inspirerad webb-MMO',
   'serverUnavailable.body':
     'Vi startar om speltjänsten och förväntar oss att Claudemoon är tillbaka inom kort. Den här sidan fortsätter att kontrollera automatiskt.',
   'serverUnavailable.eyebrow': 'Världsunderhåll',
   'serverUnavailable.heading': 'Världen är tillfälligt otillgänglig.',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.status': 'Tillbaka snart',
-  'serverUnavailable.title': 'World of ClaudeCraft - Världen otillgänglig',
+  'serverUnavailable.title': 'Endless Glory - Världen otillgänglig',
   'settings.languageLoadFailed': 'Kunde inte ladda det språket. Behåller ditt nuvarande språk.',
   'settings.languageLoadUnavailable': 'Det språket är inte tillgängligt.',
   'settings.languageLoading': 'Laddar språk...',
@@ -6726,7 +6726,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.guildXp': 'Total XP',
   'hudChrome.leaderboard.guildEmpty': 'Inga rankade gillen ännu.',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.close': 'Stäng',
   'hudChrome.discord.keybind': 'Discord-panel',
@@ -6846,10 +6846,10 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'errors.api.desktopCodeInvalid':
     'Inloggningskoden för skrivbordsappen är ogiltig eller har gått ut. Försök igen.',
   'desktop.crash.body': 'Spelvyn slutade fungera. Ladda om den?',
-  'desktop.crash.fatalBody': 'World of ClaudeCraft stötte på ett oväntat fel och måste stängas.',
+  'desktop.crash.fatalBody': 'Endless Glory stötte på ett oväntat fel och måste stängas.',
   'desktop.crash.quit': 'Avsluta',
   'desktop.crash.reload': 'Ladda om',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.update.downloading': 'Laddar ner uppdatering {version}...',
   'desktop.update.later': 'Senare',
   'desktop.update.ready':
@@ -6901,9 +6901,9 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'WOC-prissättningen är otillgänglig just nu. Kom tillbaka snart.',
   'hudChrome.dailyRewards.walletValue': 'Plånbokens värde (WOC)',
   'hudChrome.nativeUpdate.body':
-    'En ny version av World of ClaudeCraft är tillgänglig. Uppdatera nu för de senaste korrigeringarna och förbättringarna.',
+    'En ny version av Endless Glory är tillgänglig. Uppdatera nu för de senaste korrigeringarna och förbättringarna.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'Version {version} av World of ClaudeCraft är tillgänglig. Uppdatera nu för de senaste korrigeringarna och förbättringarna.',
+    'Version {version} av Endless Glory är tillgänglig. Uppdatera nu för de senaste korrigeringarna och förbättringarna.',
   'hudChrome.nativeUpdate.notNow': 'Inte nu',
   'hudChrome.nativeUpdate.title': 'Uppdatering tillgänglig',
   'hudChrome.nativeUpdate.update': 'Uppdatera',

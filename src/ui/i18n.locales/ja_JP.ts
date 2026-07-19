@@ -621,9 +621,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.unitFrame.playerLabel': 'あなたのキャラクター',
   'hudChrome.unitFrame.targetAnnounce': 'ターゲット：{name}',
   'hudChrome.unitFrame.targetLabel': 'あなたのターゲット',
-  'seo.officialLabel': 'World of ClaudeCraft 公式サイト',
+  'seo.officialLabel': 'Endless Glory 公式サイト',
   'seo.officialBody':
-    'worldofclaudecraft.com は Claudemoon ワールドの公式無料ブラウザMMOです。永続キャラクターでオンラインプレイし、オフラインでソロ探索し、wikiを読み、このサイトから確認済みのコミュニティリンクをたどれます。',
+    'endlessglory.vercel.app は Claudemoon ワールドの公式無料ブラウザMMOです。永続キャラクターでオンラインプレイし、オフラインでソロ探索し、wikiを読み、このサイトから確認済みのコミュニティリンクをたどれます。',
   'hudChrome.questShare.notShareable': 'このクエストは共有できません。',
   'hudChrome.questShare.notInSharerParty':
     '{name} のパーティに参加していないと、このクエストを受諾できません。',
@@ -1123,7 +1123,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'stats.accountsCreated': 'プレイヤー',
   'stats.playersOnline': 'オンラインプレイヤー数',
   'stats.realmName': 'ワールド名',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
   'footer.githubLabel': 'オープンソースプロジェクト',
   'footer.whitepaper': 'ホワイトペーパー',
@@ -1261,7 +1261,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'wallet.mobileAppHelp':
     'Phantom または Solflare を選択してください。ウォレットアプリで承認を求められます。ゲームを開いたままにし、完了後に戻ってください。',
   'wallet.standaloneAppHelp':
-    'ホーム画面アプリでは、まだウォレットに接続できません。Phantom または Solflare を使用するには、Safari か Chrome で World of ClaudeCraft を開いてください。',
+    'ホーム画面アプリでは、まだウォレットに接続できません。Phantom または Solflare を使用するには、Safari か Chrome で Endless Glory を開いてください。',
   'wallet.openAppTitle': '{wallet} で続行',
   'wallet.openAppHelp':
     '{wallet} を開いてこのリクエストを確認してください。ウォレットアプリの使用中も、このゲームタブを開いたままにしてください。',
@@ -1269,7 +1269,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'wallet.manualReturnBrowserHelp':
     '承認後、このゲームタブに戻ってください。iOS で別のブラウザが開いた場合は閉じ、元のブラウザに手動で戻ってください。',
   'wallet.manualReturnStandaloneHelp':
-    '承認後、ホーム画面から World of ClaudeCraft に戻ってください。iOS でブラウザが開いた場合は閉じ、ホーム画面のアプリをもう一度開いてください。',
+    '承認後、ホーム画面から Endless Glory に戻ってください。iOS でブラウザが開いた場合は閉じ、ホーム画面のアプリをもう一度開いてください。',
   'wallet.preparingAppButton': '{wallet} を準備中...',
   'wallet.walletAppUnavailable':
     '{wallet} を準備できませんでした。このウィンドウを閉じて、もう一度お試しください。',
@@ -1288,13 +1288,13 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'wallet.browser.extensionHelp':
     '対応するウォレット拡張機能が見つかりません。Phantom、Solflare、または別のSolanaブラウザウォレットをインストールまたはロック解除して、再試行してください。',
   'wallet.browser.safety':
-    'World of ClaudeCraftがリカバリーフレーズや秘密鍵を求めることはありません。',
+    'Endless Gloryがリカバリーフレーズや秘密鍵を求めることはありません。',
   'wallet.browser.continueWith': '{wallet}で続行',
   'wallet.browser.reviewTitle': 'ウォレットで確認',
   'wallet.browser.reviewBody':
     '{wallet}の指示に従ってください。このブラウザページは開いたままにしてください。',
   'wallet.browser.completeTitle': 'ウォレット認証が完了しました',
-  'wallet.browser.completeBody': 'World of ClaudeCraftデスクトップアプリに戻れます。',
+  'wallet.browser.completeBody': 'Endless Gloryデスクトップアプリに戻れます。',
   'wallet.browser.returnButton': 'デスクトップアプリに戻る',
   'wallet.browser.failed':
     'ウォレット認証に失敗したか期限切れです。デスクトップアプリに戻って再試行してください。',
@@ -1354,7 +1354,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'playerCard.levelClass': 'レベル{level} - {className}',
   'playerCard.topPercent': '上位 {percent}%',
   'playerCard.realmSubtitle': '{realm} ワールド',
-  'playerCard.defaultRealm': 'ClaudeCraftの世界',
+  'playerCard.defaultRealm': 'EndlessGloryの世界',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.recruited': '招待 {count}人',
   'playerCard.footerHandle': '@{handle}',
@@ -1363,8 +1363,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'アリーナ',
   'playerCard.shareTierBit': ', {tier}ランクの$WOCホルダー',
   'playerCard.shareText':
-    'World of ClaudeCraftで伝説を鍛えています: レベル{level} {className}{tierBit}。私のワールドに参加してください:',
-  'playerCard.nativeShareTitle': 'ClaudeCraftの世界',
+    'Endless Gloryで伝説を鍛えています: レベル{level} {className}{tierBit}。私のワールドに参加してください:',
+  'playerCard.nativeShareTitle': 'EndlessGloryの世界',
   'playerCard.fileNameFallback': 'プレイヤー',
   'playerCard.actionShareX': 'Xで共有',
   'playerCard.actionCopyReferral': '紹介リンクをコピー',
@@ -1425,9 +1425,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'controls.emoteWheel': 'エモートホイールを長押し',
   'controls.friends': 'フレンド & ギルド',
   'controls.chat': 'チャットを開く',
-  'seo.title': 'World of ClaudeCraft: クラシック風Web MMO',
+  'seo.title': 'Endless Glory: クラシック風Web MMO',
   'seo.description':
-    'ブラウザで直接遊べるクラシック風マイクロMMO、World of ClaudeCraft で壮大な冒険に出ましょう。永続的な共有ワールドに参加し、クラスを育て、敵を倒してください。',
+    'ブラウザで直接遊べるクラシック風マイクロMMO、Endless Glory で壮大な冒険に出ましょう。永続的な共有ワールドに参加し、クラスを育て、敵を倒してください。',
   'seo.genre': 'MMORPG',
   'seo.playMode': 'マルチプレイヤー',
   'seo.applicationCategory': 'ゲーム',
@@ -1437,9 +1437,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'a11y.mainNavigation': 'メインナビゲーション',
   'a11y.languageSelection': '言語選択',
   'a11y.characterActions': 'キャラクター操作',
-  'a11y.githubProject': 'GitHubでWorld of ClaudeCraftプロジェクトを開く',
-  'a11y.discordCommunity': 'World of ClaudeCraftのDiscordコミュニティに参加',
-  'a11y.donateProject': 'World of ClaudeCraftを支援するために寄付',
+  'a11y.githubProject': 'GitHubでEndless Gloryプロジェクトを開く',
+  'a11y.discordCommunity': 'Endless GloryのDiscordコミュニティに参加',
+  'a11y.donateProject': 'Endless Gloryを支援するために寄付',
   'entryGuard.body':
     'ワールドへの入場中にゲームが予期せず終了したため、グラフィックは{preset}に設定されました。下のグラフィック選択またはゲーム内のオプションから変更できます。',
   'entryGuard.dismiss': '閉じる',
@@ -1602,19 +1602,19 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.iosInstallDetail':
     'iPhoneまたはiPadで本当の全画面を使うには、先にこのページをホーム画面に追加してください。',
   'mobilePreflight.iosShareStep': 'Safariで共有をタップし、ホーム画面に追加を選びます。',
-  'mobilePreflight.iosOpenStep': '新しいホーム画面アイコンからWorld of ClaudeCraftを開きます。',
+  'mobilePreflight.iosOpenStep': '新しいホーム画面アイコンからEndless Gloryを開きます。',
   'mobilePreflight.androidStandaloneDetail':
     '全画面アプリモードです。端末を横向きに保ってください。',
   'mobilePreflight.androidInstallDetail':
     'Androidで全画面にするには、このページをインストールするかホーム画面に追加してください。',
   'mobilePreflight.androidInstallStep':
     'Chromeでメニューを開き、アプリをインストールまたはホーム画面に追加を選びます。',
-  'mobilePreflight.androidOpenStep': '新しいアイコンからWorld of ClaudeCraftを開きます。',
+  'mobilePreflight.androidOpenStep': '新しいアイコンからEndless Gloryを開きます。',
   'mobilePreflight.otherStandaloneDetail': '端末を横向き全画面に保ってください。',
   'mobilePreflight.otherInstallDetail':
     '最高のモバイル全画面体験のため、このページをインストールするかホーム画面に追加してください。',
-  'serverUnavailable.title': 'World of ClaudeCraft - ワールド利用不可',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.title': 'Endless Glory - ワールド利用不可',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.eyebrow': 'ワールドメンテナンス',
   'serverUnavailable.heading': 'ワールドは一時的に利用できません。',
   'serverUnavailable.body':
@@ -4055,7 +4055,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'mode.caNote':
     'WOCはコミュニティトークンです。プレイには必要ありません。Discordに参加して、WOCのユーティリティとフライホイールについて語り合いましょう。',
   'mode.play': 'プレイ',
-  'mode.playAria': 'World of ClaudeCraftをプレイ',
+  'mode.playAria': 'Endless Gloryをプレイ',
   'mode.serverAria': 'ワールドを選択：オンラインまたはオフライン',
   'mode.serverLabel': 'ワールドを選択',
   'mode.serverOffline': 'オフライン',
@@ -4588,8 +4588,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bags.backpack': 'バックパック',
   'hudChrome.bags.socketEmpty': '空のバッグスロット',
   'hudChrome.bags.unequipHint': 'クリックしてこのバッグを外す',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.tagline': 'ブラウザで無料で遊べる、クラシックスタイルのMMO。',
   'guide.skipToContent': 'メインコンテンツへスキップ',
   'guide.loading': '読み込み中...',
@@ -4696,11 +4696,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.footer.github': 'GitHubのソース',
   'guide.footer.discord': 'Discordに参加',
   'guide.footer.communityWiki': 'コミュニティWiki',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.language.label': '言語',
   'guide.language.select': '言語を選択',
   'guide.home.eyebrow': 'クラシックスタイルのブラウザMMO',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.subtitle':
     'クエストをこなし、仲間と組み、手作りのワールドを冒険しよう。ブラウザで無料。',
   'guide.home.ctaPlay': '今すぐプレイ',
@@ -5061,7 +5061,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '独特の威嚇音と鋭い一撃を持つ、冷血のハンターたち。温血の獣たちとは一線を画します。',
   'guide.worldPage.heading': '世界',
   'guide.worldPage.intro':
-    'World of ClaudeCraftは、自らの足で歩いて渡る一続きの大地です。南から北へと3つのゾーンが連なっています。ファストトラベルはなく、その旅路こそが冒険の一部です。',
+    'Endless Gloryは、自らの足で歩いて渡る一続きの大地です。南から北へと3つのゾーンが連なっています。ファストトラベルはなく、その旅路こそが冒険の一部です。',
   'guide.worldPage.hub': '拠点',
   'guide.worldPage.valeBlurb':
     '緑あふれる始まりの谷。新たな英雄たちが、イーストブルックの町の周りでオオカミや盗賊を相手に腕を磨く場所です。',
@@ -6257,7 +6257,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.discord.relay.event.hint': 'レイドや集会、イベントを告知する',
   'hudChrome.discord.relay.help.hint': 'コミュニティに助けを求める',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.viewCharacter': '{name}を表示',
   'hudChrome.discord.rank': 'ランク',
@@ -6348,9 +6348,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.devBadge.unlink': 'GitHub の連携を解除',
   'hudChrome.nativeUpdate.title': 'アップデートがあります',
   'hudChrome.nativeUpdate.body':
-    'World of ClaudeCraft の新しいバージョンが利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。',
+    'Endless Glory の新しいバージョンが利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'World of ClaudeCraft のバージョン {version} が利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。',
+    'Endless Glory のバージョン {version} が利用可能です。今すぐアップデートして最新の修正と改善を入手しましょう。',
   'hudChrome.nativeUpdate.notNow': '後で',
   'hudChrome.nativeUpdate.update': '更新',
   'hudChrome.cameraPrompt.title': 'カメラを選択',
@@ -6365,18 +6365,18 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'アップデート {version} の準備ができました。ゲーム終了時に自動でインストールされます。今すぐ再起動もできます。',
   'desktop.update.restart': '今すぐ再起動',
   'desktop.update.later': '後で',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.crash.body': 'ゲーム画面が停止しました。再読み込みしますか？',
   'desktop.crash.reload': '再読み込み',
   'desktop.crash.quit': '終了',
-  'desktop.crash.fatalBody': 'World of ClaudeCraft で予期しないエラーが発生したため、終了します。',
+  'desktop.crash.fatalBody': 'Endless Glory で予期しないエラーが発生したため、終了します。',
   'gpuNotice.bodyDesktop':
     'ゲームがGPUアクセラレーションなしで動作しているため、非常に重くなります。グラフィックドライバーを更新してから、ゲームを再起動してください。Windowsでは、設定 > システム > ディスプレイ > グラフィック でこのゲームを「高パフォーマンス」に設定してください。',
   'gpuNotice.bodyWeb':
     'ゲームがGPUアクセラレーションなしで動作しているため、非常に重くなります。ブラウザーの設定でハードウェアアクセラレーションを有効にし、グラフィックドライバーを更新してから、ブラウザーを再起動してください。',
   'gpuNotice.dismiss': '閉じる',
   'editor.appTitle': 'マップエディター',
-  'editor.docTitle': 'マップエディター - World of ClaudeCraft',
+  'editor.docTitle': 'マップエディター - Endless Glory',
   'editor.untitledMap': '無題のマップ',
   'editor.playtestPlayerName': 'マップ職人',
   'editor.topbar.label': 'エディター操作',

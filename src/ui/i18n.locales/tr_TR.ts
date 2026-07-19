@@ -246,7 +246,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Cüzdanı bağla',
   'wallet.bagLink': 'Cüzdanı doğrula',
   'wallet.bagReconnect': 'Cüzdanı yeniden bağla',
-  'wallet.browser.completeBody': 'World of ClaudeCraft masaüstü uygulamasına dönebilirsin.',
+  'wallet.browser.completeBody': 'Endless Glory masaüstü uygulamasına dönebilirsin.',
   'wallet.browser.completeTitle': 'Cüzdan yetkilendirmesi tamamlandı',
   'wallet.browser.continueWith': '{wallet} ile devam et',
   'wallet.browser.extensionHelp':
@@ -263,12 +263,12 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     "{wallet}'dan gelen istemi takip et. Bu tarayıcı sayfasını açık bırak.",
   'wallet.browser.reviewTitle': 'Cüzdanında incele',
   'wallet.browser.safety':
-    'World of ClaudeCraft hiçbir zaman kurtarma ifadeni veya özel anahtarını istemez.',
+    'Endless Glory hiçbir zaman kurtarma ifadeni veya özel anahtarını istemez.',
   'wallet.browser.title': 'Solana Cüzdanı Bağla',
   'wallet.manualReturnBrowserHelp':
     'Onayladıktan sonra bu oyun sekmesine dön. iOS başka bir tarayıcı açarsa, kapat ve orijinal tarayıcıya manuel olarak dön.',
   'wallet.manualReturnStandaloneHelp':
-    "Onayladıktan sonra Ana Ekranından World of ClaudeCraft'a dön. iOS bir tarayıcı açarsa, kapat ve Ana Ekran uygulamasını manuel olarak yeniden aç.",
+    "Onayladıktan sonra Ana Ekranından Endless Glory'a dön. iOS bir tarayıcı açarsa, kapat ve Ana Ekran uygulamasını manuel olarak yeniden aç.",
   'wallet.mobileAppHelp':
     "Phantom veya Solflare'i seç. Cüzdan uygulan onay isteyecek. Bu oyunu açık bırak ve bittiğinde geri dön.",
   'wallet.openAppButton': "{wallet}'u aç",
@@ -277,7 +277,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'wallet.openAppTitle': "{wallet}'da devam et",
   'wallet.preparingAppButton': '{wallet} hazırlanıyor...',
   'wallet.standaloneAppHelp':
-    "Ana Ekran uygulamasında cüzdan bağlantıları henüz mevcut değil. Phantom veya Solflare kullanmak için World of ClaudeCraft'ı Safari veya Chrome'da aç.",
+    "Ana Ekran uygulamasında cüzdan bağlantıları henüz mevcut değil. Phantom veya Solflare kullanmak için Endless Glory'ı Safari veya Chrome'da aç.",
   'wallet.walletAppUnavailable': '{wallet} hazırlanamadı. Bu pencereyi kapat ve tekrar dene.',
   'entities.abilities.primal_reflexes.description':
     'İçgüdülerin keskinleşerek 6 sn boyunca savurma şansını %50 artırır.',
@@ -1158,7 +1158,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'editor.confirm.discardBody': '"{name}" üzerinde kaydedilmemiş değişikliklerin var. Atılsın mı?',
   'editor.confirm.discardTitle': 'Değişiklikler atılsın mı?',
   'editor.confirm.ok': 'Tamam',
-  'editor.docTitle': 'Harita Editörü - World of ClaudeCraft',
+  'editor.docTitle': 'Harita Editörü - Endless Glory',
   'editor.eraseTool.blockerHint':
     'Bir engel duvarının yakınına tıklamak, bunun yerine o duvarı kaldırır.',
   'editor.eraseTool.hint':
@@ -1826,9 +1826,9 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.sources.header': 'Şunlardan oluşur:',
   'hudChrome.statInfo.sources.talents': 'Yetenekler ve etkiler: {value}',
   'a11y.characterActions': 'Karakter eylemleri',
-  'a11y.discordCommunity': 'World of ClaudeCraft Discord topluluğuna katıl',
-  'a11y.donateProject': "World of ClaudeCraft'a destek olmak için bağış yap",
-  'a11y.githubProject': 'World of ClaudeCraft GitHub projesini aç',
+  'a11y.discordCommunity': 'Endless Glory Discord topluluğuna katıl',
+  'a11y.donateProject': "Endless Glory'a destek olmak için bağış yap",
+  'a11y.githubProject': 'Endless Glory GitHub projesini aç',
   'a11y.goHome': 'Ana sayfaya git',
   'a11y.languageSelection': 'Dil seçimi',
   'a11y.mainNavigation': 'Ana gezinme',
@@ -3899,7 +3899,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'fiesta.word.shutdown': 'DURDURULDU!',
   'fiesta.word.spree': '{n}× SERİ!',
   'fiesta.word.wave': 'GÜÇLENDİRMELER!',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.discordLabel': "Discord'a Katıl",
   'footer.githubLabel': 'Açık Kaynak Proje',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
@@ -4157,8 +4157,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'guide.bestiary.levelsSame': 'Seviye {min}',
   'guide.bestiary.notedLabel': 'Dikkate değer',
   'guide.bestiary.rare': 'Nadir',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.breadcrumb.home': 'Rehber',
   'guide.breadcrumb.label': 'Gezinti İzi',
   'guide.chooser.clear': 'Temizle',
@@ -4420,7 +4420,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'guide.footer.discord': "Discord'a Katıl",
   'guide.footer.github': "GitHub'daki Kaynak",
   'guide.footer.playNow': 'Şimdi Oyna',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.gear.consumablesElixirs':
     'İksirler, macera sırasında geçici bir takviye sağlar; biraz daha ileri gitmek istediğinizde işe yarayan küçük bir avantaj.',
   'guide.gear.consumablesFood':
@@ -4585,7 +4585,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Dünya tek başına aşılabilir, ama en iyi ganimet iyi bir grubun ardında bekler.',
   'guide.home.subtitle':
     'Görev yap, grup kur ve elle kurulmuş bir dünyayı keşfet; tarayıcında ücretsiz.',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.what.heading': 'Klasik bir MMO, hemen başlanacak biçimde',
   'guide.home.what.pillarClassesBody':
     'Tankla, iyileştir ya da hasarı sen ver. Her sınıf, arketipine yakışan biçimde oynanır ve onu kendine özgü kılacak yetenekler sunar.',
@@ -5000,7 +5000,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'guide.worldPage.heading': 'Dünya',
   'guide.worldPage.hub': 'Ana üs',
   'guide.worldPage.intro':
-    'World of ClaudeCraft, yürüyerek aştığınız tek ve kesintisiz bir diyardır; güneyden kuzeye dizilmiş üç bölge. Hızlı seyahat yoktur, bu yüzden yolculuğun kendisi maceranın bir parçasıdır.',
+    'Endless Glory, yürüyerek aştığınız tek ve kesintisiz bir diyardır; güneyden kuzeye dizilmiş üç bölge. Hızlı seyahat yoktur, bu yüzden yolculuğun kendisi maceranın bir parçasıdır.',
   'guide.worldPage.mapHeading': 'Kuzeye giden yol',
   'guide.worldPage.mapSub':
     'Güneyden kuzeye üç bölge, her biri seviye olarak bir basamak daha yüksek. Görev izini takip edin, diyar sizi vadiden zirvelere taşır.',
@@ -6217,7 +6217,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     "Android'de tam ekran için önce bu sayfayı yükleyin veya Ana ekranınıza ekleyin.",
   'mobilePreflight.androidInstallStep':
     "Chrome'da menüye dokunun, ardından Uygulamayı yükle veya Ana ekrana ekle seçeneğini seçin.",
-  'mobilePreflight.androidOpenStep': "World of ClaudeCraft'ı yeni simgeden açın.",
+  'mobilePreflight.androidOpenStep': "Endless Glory'ı yeni simgeden açın.",
   'mobilePreflight.androidStandaloneDetail':
     'Tam ekran uygulama modundasınız. Cihazı yatay konumda tutun.',
   'mobilePreflight.baseLandscape': 'Dünyaya girmeden önce cihazınızı yatay konuma çevirin.',
@@ -6226,7 +6226,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.continue': 'Oyuna Devam Et',
   'mobilePreflight.iosInstallDetail':
     "iPhone veya iPad'de gerçek tam ekran için önce bu sayfayı Ana Ekranınıza yükleyin.",
-  'mobilePreflight.iosOpenStep': "World of ClaudeCraft'ı yeni Ana Ekran simgesinden açın.",
+  'mobilePreflight.iosOpenStep': "Endless Glory'ı yeni Ana Ekran simgesinden açın.",
   'mobilePreflight.iosShareStep': "Safari'de Paylaş'a, ardından Ana Ekrana Ekle'ye dokunun.",
   'mobilePreflight.iosStandaloneDetail':
     'Ana ekran tam ekran modundasınız. Cihazı yatay konumda tutun.',
@@ -6249,7 +6249,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Dünyaya giriş yap. Karakterlerin sunucuda yaşar ve dünyayı çevrimiçi olan herkesle paylaşırsın.',
   'mode.onlineTitle': 'Çevrimiçi Oyna',
   'mode.play': 'Oyna',
-  'mode.playAria': 'World of ClaudeCraft oyna',
+  'mode.playAria': 'Endless Glory oyna',
   'mode.serverAria': 'Dünya seç: Çevrimiçi veya Çevrimdışı',
   'mode.serverLabel': 'Dünyanı seç',
   'mode.serverOffline': 'Çevrimdışı',
@@ -6284,14 +6284,14 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Arena',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.close': 'Oyuncu kartını kapat',
-  'playerCard.defaultRealm': 'World of ClaudeCraft',
+  'playerCard.defaultRealm': 'Endless Glory',
   'playerCard.fileNameFallback': 'oyuncu',
   'playerCard.footerCta': 'Efsaneni yarat: {siteUrl}',
   'playerCard.footerHandle': '@{handle}',
   'playerCard.footerHandleWithRecruits': '@{handle} - {recruited}',
   'playerCard.levelClass': 'Seviye {level} - {className}',
   'playerCard.loading': 'Kartın hazırlanıyor...',
-  'playerCard.nativeShareTitle': 'World of ClaudeCraft',
+  'playerCard.nativeShareTitle': 'Endless Glory',
   'playerCard.poseBattle': 'Savaş',
   'playerCard.poseGroup': 'Poz',
   'playerCard.poseHero': 'Kahraman',
@@ -6304,7 +6304,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'playerCard.renderFailedStatus': 'Kart oluşturma başarısız oldu.',
   'playerCard.shareButton': 'Oyuncu Kartını Paylaş',
   'playerCard.shareText':
-    "World of ClaudeCraft'ta efsanemi yaratıyorum: Seviye {level} {className}{tierBit}. Dünyama katıl:",
+    "Endless Glory'ta efsanemi yaratıyorum: Seviye {level} {className}{tierBit}. Dünyama katıl:",
   'playerCard.shareTierBit': ', {tier}-derece $WOC sahibi',
   'playerCard.statusDownloaded': 'Kart indirildi.',
   'playerCard.statusGenericError': 'Bir şeyler ters gitti.',
@@ -6406,21 +6406,21 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'realmTypes.rpPvp': 'RP-PvP',
   'seo.applicationCategory': 'Oyun',
   'seo.description':
-    "Doğrudan tarayıcında oynanabilen klasik tarzı bir mikro MMO olan World of ClaudeCraft'ta destansı bir maceraya atıl. Kalıcı bir ortak dünyaya katıl, sınıfları geliştir ve düşmanları alt et!",
+    "Doğrudan tarayıcında oynanabilen klasik tarzı bir mikro MMO olan Endless Glory'ta destansı bir maceraya atıl. Kalıcı bir ortak dünyaya katıl, sınıfları geliştir ve düşmanları alt et!",
   'seo.genre': 'MMORPG',
   'seo.officialBody':
-    "worldofclaudecraft.com, Claudemoon dünyasının resmi ücretsiz tarayıcı MMO'sudur. Kalıcı bir karakterle çevrimiçi oyna, çevrimdışı tek başına keşfet, wiki'yi oku ve bu siteden doğrulanmış topluluk bağlantılarını takip et.",
-  'seo.officialLabel': 'Resmi World of ClaudeCraft web sitesi',
+    "endlessglory.vercel.app, Claudemoon dünyasının resmi ücretsiz tarayıcı MMO'sudur. Kalıcı bir karakterle çevrimiçi oyna, çevrimdışı tek başına keşfet, wiki'yi oku ve bu siteden doğrulanmış topluluk bağlantılarını takip et.",
+  'seo.officialLabel': 'Resmi Endless Glory web sitesi',
   'seo.operatingSystem': 'Web tarayıcısı',
   'seo.playMode': 'Çok Oyunculu',
-  'seo.title': "World of ClaudeCraft: Klasik Tarzı Web MMO'su",
+  'seo.title': "Endless Glory: Klasik Tarzı Web MMO'su",
   'serverUnavailable.body':
     "Oyun hizmetini yeniden başlatıyoruz ve Claudemoon'un kısa süre içinde geri döneceğini umuyoruz. Bu sayfa otomatik olarak denetlemeye devam edecek.",
   'serverUnavailable.eyebrow': 'Dünya bakımı',
   'serverUnavailable.heading': 'Dünya geçici olarak kullanılamıyor.',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.status': 'Birazdan döneriz',
-  'serverUnavailable.title': 'World of ClaudeCraft - Dünya Kullanılamıyor',
+  'serverUnavailable.title': 'Endless Glory - Dünya Kullanılamıyor',
   'settings.languageLoadFailed': 'Bu dil yüklenemedi. Mevcut dilin korunuyor.',
   'settings.languageLoadUnavailable': 'Bu dil mevcut değil.',
   'settings.languageLoading': 'Dil yükleniyor...',
@@ -6777,7 +6777,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.guildXp': 'Toplam XP',
   'hudChrome.leaderboard.guildEmpty': 'Henüz sıralamada lonca yok.',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.close': 'Kapat',
   'hudChrome.discord.keybind': 'Discord Paneli',
@@ -6899,10 +6899,10 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Masaüstü giriş kodu geçersiz veya süresi dolmuş. Lütfen tekrar deneyin.',
   'desktop.crash.body': 'Oyun görünümü çalışmayı durdurdu. Yeniden yüklensin mi?',
   'desktop.crash.fatalBody':
-    'World of ClaudeCraft beklenmeyen bir hatayla karşılaştı ve kapatılması gerekiyor.',
+    'Endless Glory beklenmeyen bir hatayla karşılaştı ve kapatılması gerekiyor.',
   'desktop.crash.quit': 'Çık',
   'desktop.crash.reload': 'Yeniden Yükle',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.update.downloading': '{version} güncellemesi indiriliyor...',
   'desktop.update.later': 'Daha Sonra',
   'desktop.update.ready':
@@ -6955,9 +6955,9 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'WOC fiyatı şu anda alınamıyor. Kısa süre sonra tekrar bak.',
   'hudChrome.dailyRewards.walletValue': 'Cüzdan Değeri (WOC)',
   'hudChrome.nativeUpdate.body':
-    "World of ClaudeCraft'ın yeni bir sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
+    "Endless Glory'ın yeni bir sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
   'hudChrome.nativeUpdate.bodyWithVersion':
-    "World of ClaudeCraft'ın {version} sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
+    "Endless Glory'ın {version} sürümü mevcut. En son düzeltmeler ve iyileştirmeler için şimdi güncelle.",
   'hudChrome.nativeUpdate.notNow': 'Şimdi Değil',
   'hudChrome.nativeUpdate.title': 'Güncelleme Mevcut',
   'hudChrome.nativeUpdate.update': 'Güncelle',

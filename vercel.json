@@ -1,0 +1,20 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/links", "destination": "/links.html" },
+    { "source": "/social", "destination": "/links.html" },
+    { "source": "/wallet-handoff", "destination": "/wallet-handoff.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/merch", "destination": "/merch.html" },
+    { "source": "/press", "destination": "/press.html" },
+    { "source": "/support", "destination": "/support.html" },
+    { "source": "/data-deletion", "destination": "/data-deletion.html" },
+    { "source": "/wiki", "destination": "/guide.html" },
+    { "source": "/wiki/:path*", "destination": "/guide.html" },
+    { "source": "/editor", "destination": "/editor.html" }
+  ]
+}

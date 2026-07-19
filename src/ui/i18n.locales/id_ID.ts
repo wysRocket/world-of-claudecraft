@@ -250,7 +250,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Tautkan dompet',
   'wallet.bagLink': 'Verifikasi dompet',
   'wallet.bagReconnect': 'Hubungkan ulang dompet',
-  'wallet.browser.completeBody': 'Kamu dapat kembali ke aplikasi desktop World of ClaudeCraft.',
+  'wallet.browser.completeBody': 'Kamu dapat kembali ke aplikasi desktop Endless Glory.',
   'wallet.browser.completeTitle': 'Otorisasi dompet selesai',
   'wallet.browser.continueWith': 'Lanjutkan dengan {wallet}',
   'wallet.browser.extensionHelp':
@@ -268,12 +268,12 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Ikuti perintah dari {wallet}. Jaga halaman browser ini tetap terbuka.',
   'wallet.browser.reviewTitle': 'Tinjau di dompetmu',
   'wallet.browser.safety':
-    'World of ClaudeCraft tidak pernah meminta frasa pemulihan atau kunci privatmu.',
+    'Endless Glory tidak pernah meminta frasa pemulihan atau kunci privatmu.',
   'wallet.browser.title': 'Hubungkan Dompet Solana',
   'wallet.manualReturnBrowserHelp':
     'Setelah persetujuan, kembali ke tab permainan ini. Jika iOS membuka browser lain, tutup dan kembali ke browser asli secara manual.',
   'wallet.manualReturnStandaloneHelp':
-    'Setelah persetujuan, kembali ke World of ClaudeCraft dari Layar Utamamu. Jika iOS membuka browser, tutup dan buka kembali aplikasi Layar Utama secara manual.',
+    'Setelah persetujuan, kembali ke Endless Glory dari Layar Utamamu. Jika iOS membuka browser, tutup dan buka kembali aplikasi Layar Utama secara manual.',
   'wallet.mobileAppHelp':
     'Pilih Phantom atau Solflare. Aplikasi dompetmu akan meminta persetujuan. Jaga permainan ini tetap terbuka dan kembali ke sana saat selesai.',
   'wallet.openAppButton': 'Buka {wallet}',
@@ -282,7 +282,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'wallet.openAppTitle': 'Lanjutkan di {wallet}',
   'wallet.preparingAppButton': 'Mempersiapkan {wallet}...',
   'wallet.standaloneAppHelp':
-    'Koneksi dompet belum tersedia di aplikasi Layar Utama. Buka World of ClaudeCraft di Safari atau Chrome untuk menggunakan Phantom atau Solflare.',
+    'Koneksi dompet belum tersedia di aplikasi Layar Utama. Buka Endless Glory di Safari atau Chrome untuk menggunakan Phantom atau Solflare.',
   'wallet.walletAppUnavailable':
     '{wallet} tidak dapat dipersiapkan. Tutup jendela ini dan coba lagi.',
   'entities.abilities.primal_reflexes.description':
@@ -1174,7 +1174,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Kamu punya perubahan belum tersimpan pada "{name}". Buang perubahan itu?',
   'editor.confirm.discardTitle': 'Buang perubahan?',
   'editor.confirm.ok': 'OK',
-  'editor.docTitle': 'Editor Peta - World of ClaudeCraft',
+  'editor.docTitle': 'Editor Peta - Endless Glory',
   'editor.eraseTool.blockerHint':
     'Mengeklik di dekat dinding penghalang akan menghapus dinding itu.',
   'editor.eraseTool.hint':
@@ -1850,9 +1850,9 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.sources.header': 'Terdiri dari:',
   'hudChrome.statInfo.sources.talents': 'Talenta dan efek: {value}',
   'a11y.characterActions': 'Aksi karakter',
-  'a11y.discordCommunity': 'Gabung komunitas Discord World of ClaudeCraft',
-  'a11y.donateProject': 'Berdonasi untuk mendukung World of ClaudeCraft',
-  'a11y.githubProject': 'Buka proyek GitHub World of ClaudeCraft',
+  'a11y.discordCommunity': 'Gabung komunitas Discord Endless Glory',
+  'a11y.donateProject': 'Berdonasi untuk mendukung Endless Glory',
+  'a11y.githubProject': 'Buka proyek GitHub Endless Glory',
   'a11y.goHome': 'Ke halaman utama',
   'a11y.languageSelection': 'Pemilihan bahasa',
   'a11y.mainNavigation': 'Navigasi utama',
@@ -3952,7 +3952,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'fiesta.word.shutdown': 'DIBUNGKAM!',
   'fiesta.word.spree': '{n}× BERUNTUN!',
   'fiesta.word.wave': 'AUGMEN!',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.discordLabel': 'Gabung Discord',
   'footer.githubLabel': 'Proyek Sumber Terbuka',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
@@ -4226,8 +4226,8 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'guide.bestiary.levelsSame': 'Level {min}',
   'guide.bestiary.notedLabel': 'Catatan penting',
   'guide.bestiary.rare': 'Langka',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.breadcrumb.home': 'Panduan',
   'guide.breadcrumb.label': 'Remah jejak',
   'guide.chooser.clear': 'Bersihkan',
@@ -4491,7 +4491,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'guide.footer.discord': 'Gabung Discord',
   'guide.footer.github': 'Sumber di GitHub',
   'guide.footer.playNow': 'Main Sekarang',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.gear.consumablesElixirs':
     'Eliksir memberikan buff sementara selama kamu berpetualang, sedikit keunggulan yang membantu saat kamu ingin mendorong sedikit lebih jauh.',
   'guide.gear.consumablesFood':
@@ -4658,7 +4658,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Dunia ini bisa ditempuh sendiri, tetapi jarahan terbaik menanti di balik party yang baik.',
   'guide.home.subtitle':
     'Berpetualang, bersatu, dan jelajahi dunia rakitan tangan, gratis di browser-mu.',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.what.heading': 'MMO klasik, dibuat agar mudah dimainkan',
   'guide.home.what.pillarClassesBody':
     'Jadi tank, sembuhkan, atau lancarkan damage. Setiap kelas dimainkan sesuai arketipenya, dengan talent untuk menjadikannya milikmu.',
@@ -5073,7 +5073,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'guide.worldPage.heading': 'Dunia',
   'guide.worldPage.hub': 'Markas utama',
   'guide.worldPage.intro':
-    'World of ClaudeCraft adalah satu daratan menyambung yang kamu lintasi dengan berjalan kaki, tiga zona terbentang dari selatan ke utara. Tidak ada perjalanan kilat, jadi pengembaraan itu sendiri bagian dari petualangan.',
+    'Endless Glory adalah satu daratan menyambung yang kamu lintasi dengan berjalan kaki, tiga zona terbentang dari selatan ke utara. Tidak ada perjalanan kilat, jadi pengembaraan itu sendiri bagian dari petualangan.',
   'guide.worldPage.mapHeading': 'Jalan ke utara',
   'guide.worldPage.mapSub':
     'Tiga zona, dari selatan ke utara, masing-masing setingkat lebih tinggi dalam level. Ikuti jejak misi dan daratan akan membawamu dari lembah ke puncak.',
@@ -6296,7 +6296,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Untuk layar penuh di Android, pasang halaman ini atau tambahkan ke layar Beranda terlebih dahulu.',
   'mobilePreflight.androidInstallStep':
     'Di Chrome, ketuk menu, lalu Pasang aplikasi atau Tambahkan ke layar Beranda.',
-  'mobilePreflight.androidOpenStep': 'Buka World of ClaudeCraft dari ikon baru.',
+  'mobilePreflight.androidOpenStep': 'Buka Endless Glory dari ikon baru.',
   'mobilePreflight.androidStandaloneDetail':
     'Kamu berada dalam mode aplikasi layar penuh. Pertahankan perangkat dalam posisi lanskap.',
   'mobilePreflight.baseLandscape': 'Putar perangkatmu ke posisi lanskap sebelum memasuki dunia.',
@@ -6305,7 +6305,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.continue': 'Lanjut ke Gim',
   'mobilePreflight.iosInstallDetail':
     'Untuk layar penuh sejati di iPhone atau iPad, pasang halaman ini ke Layar Beranda terlebih dahulu.',
-  'mobilePreflight.iosOpenStep': 'Buka World of ClaudeCraft dari ikon Layar Beranda yang baru.',
+  'mobilePreflight.iosOpenStep': 'Buka Endless Glory dari ikon Layar Beranda yang baru.',
   'mobilePreflight.iosShareStep': 'Di Safari, ketuk Bagikan, lalu Tambahkan ke Layar Beranda.',
   'mobilePreflight.iosStandaloneDetail':
     'Kamu berada dalam mode layar penuh layar-beranda. Pertahankan perangkat dalam posisi lanskap.',
@@ -6330,7 +6330,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Masuk ke dunia. Karaktermu hidup di server dan kamu berbagi dunia dengan semua orang yang sedang daring.',
   'mode.onlineTitle': 'Main Daring',
   'mode.play': 'Main',
-  'mode.playAria': 'Mainkan World of ClaudeCraft',
+  'mode.playAria': 'Mainkan Endless Glory',
   'mode.serverAria': 'Pilih dunia: Online atau Offline',
   'mode.serverLabel': 'Pilih dunia Anda',
   'mode.serverOffline': 'Offline',
@@ -6365,14 +6365,14 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Arena',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.close': 'Tutup kartu pemain',
-  'playerCard.defaultRealm': 'World of ClaudeCraft',
+  'playerCard.defaultRealm': 'Endless Glory',
   'playerCard.fileNameFallback': 'pemain',
   'playerCard.footerCta': 'Tempa legendamu: {siteUrl}',
   'playerCard.footerHandle': '@{handle}',
   'playerCard.footerHandleWithRecruits': '@{handle} - {recruited}',
   'playerCard.levelClass': 'Level {level} - {className}',
   'playerCard.loading': 'Menempa kartumu...',
-  'playerCard.nativeShareTitle': 'World of ClaudeCraft',
+  'playerCard.nativeShareTitle': 'Endless Glory',
   'playerCard.poseBattle': 'Pertempuran',
   'playerCard.poseGroup': 'Pose',
   'playerCard.poseHero': 'Pahlawan',
@@ -6386,7 +6386,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'playerCard.renderFailedStatus': 'Render kartu gagal.',
   'playerCard.shareButton': 'Bagikan Kartu Pemain',
   'playerCard.shareText':
-    'Aku sedang menempa legendaku di World of ClaudeCraft: Level {level} {className}{tierBit}. Bergabunglah dengan duniaku:',
+    'Aku sedang menempa legendaku di Endless Glory: Level {level} {className}{tierBit}. Bergabunglah dengan duniaku:',
   'playerCard.shareTierBit': ', pemegang $WOC peringkat {tier}',
   'playerCard.statusDownloaded': 'Kartu terunduh.',
   'playerCard.statusGenericError': 'Ada yang tidak beres.',
@@ -6489,21 +6489,21 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'realmTypes.rpPvp': 'RP-PvP',
   'seo.applicationCategory': 'Permainan',
   'seo.description':
-    'Mulailah petualangan epik di World of ClaudeCraft, micro-MMO bergaya klasik yang dapat dimainkan langsung di peramban. Bergabunglah dengan dunia bersama yang persisten, naikkan level kelas, dan kalahkan musuh!',
+    'Mulailah petualangan epik di Endless Glory, micro-MMO bergaya klasik yang dapat dimainkan langsung di peramban. Bergabunglah dengan dunia bersama yang persisten, naikkan level kelas, dan kalahkan musuh!',
   'seo.genre': 'MMORPG',
   'seo.officialBody':
-    'worldofclaudecraft.com adalah MMO peramban gratis resmi untuk dunia Claudemoon. Bermain daring dengan karakter yang persisten, jelajahi solo secara luring, baca wiki, dan ikuti tautan komunitas terverifikasi dari situs ini.',
-  'seo.officialLabel': 'Situs resmi World of ClaudeCraft',
+    'endlessglory.vercel.app adalah MMO peramban gratis resmi untuk dunia Claudemoon. Bermain daring dengan karakter yang persisten, jelajahi solo secara luring, baca wiki, dan ikuti tautan komunitas terverifikasi dari situs ini.',
+  'seo.officialLabel': 'Situs resmi Endless Glory',
   'seo.operatingSystem': 'Peramban web',
   'seo.playMode': 'Multipemain',
-  'seo.title': 'World of ClaudeCraft: MMO Web Bergaya Klasik',
+  'seo.title': 'Endless Glory: MMO Web Bergaya Klasik',
   'serverUnavailable.body':
     'Kami sedang memulai ulang layanan game dan memperkirakan Claudemoon akan kembali sebentar lagi. Halaman ini akan terus memeriksa secara otomatis.',
   'serverUnavailable.eyebrow': 'Pemeliharaan dunia',
   'serverUnavailable.heading': 'Dunia sementara tidak tersedia.',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.status': 'Segera kembali',
-  'serverUnavailable.title': 'World of ClaudeCraft - Dunia Tidak Tersedia',
+  'serverUnavailable.title': 'Endless Glory - Dunia Tidak Tersedia',
   'settings.languageLoadFailed':
     'Tidak dapat memuat bahasa itu. Tetap menggunakan bahasamu saat ini.',
   'settings.languageLoadUnavailable': 'Bahasa itu tidak tersedia.',
@@ -6868,7 +6868,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.guildXp': 'Total XP',
   'hudChrome.leaderboard.guildEmpty': 'Belum ada guild berperingkat.',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.close': 'Tutup',
   'hudChrome.discord.keybind': 'Panel Discord',
@@ -6989,10 +6989,10 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Kode masuk desktop tidak valid atau kedaluwarsa. Silakan coba lagi.',
   'desktop.crash.body': 'Tampilan gim berhenti bekerja. Muat ulang?',
   'desktop.crash.fatalBody':
-    'World of ClaudeCraft mengalami kesalahan tak terduga dan perlu ditutup.',
+    'Endless Glory mengalami kesalahan tak terduga dan perlu ditutup.',
   'desktop.crash.quit': 'Keluar',
   'desktop.crash.reload': 'Muat Ulang',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.update.downloading': 'Mengunduh pembaruan {version}...',
   'desktop.update.later': 'Nanti',
   'desktop.update.ready':
@@ -7045,9 +7045,9 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Harga WOC tidak tersedia saat ini. Silakan cek kembali sebentar lagi.',
   'hudChrome.dailyRewards.walletValue': 'Nilai Dompet (WOC)',
   'hudChrome.nativeUpdate.body':
-    'Versi baru World of ClaudeCraft tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
+    'Versi baru Endless Glory tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'Versi {version} World of ClaudeCraft tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
+    'Versi {version} Endless Glory tersedia. Perbarui sekarang untuk perbaikan dan peningkatan terbaru.',
   'hudChrome.nativeUpdate.notNow': 'Jangan sekarang',
   'hudChrome.nativeUpdate.title': 'Pembaruan Tersedia',
   'hudChrome.nativeUpdate.update': 'Perbarui',

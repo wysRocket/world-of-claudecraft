@@ -248,7 +248,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Powiąż portfel',
   'wallet.bagLink': 'Zweryfikuj portfel',
   'wallet.bagReconnect': 'Podłącz ponownie portfel',
-  'wallet.browser.completeBody': 'Możesz wrócić do aplikacji desktopowej World of ClaudeCraft.',
+  'wallet.browser.completeBody': 'Możesz wrócić do aplikacji desktopowej Endless Glory.',
   'wallet.browser.completeTitle': 'Autoryzacja portfela zakończona',
   'wallet.browser.continueWith': 'Kontynuuj z {wallet}',
   'wallet.browser.extensionHelp':
@@ -266,12 +266,12 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Postępuj zgodnie z monitem od {wallet}. Pozostaw tę stronę przeglądarki otwartą.',
   'wallet.browser.reviewTitle': 'Sprawdź w swoim portfelu',
   'wallet.browser.safety':
-    'World of ClaudeCraft nigdy nie prosi o frazę odzyskiwania ani klucz prywatny.',
+    'Endless Glory nigdy nie prosi o frazę odzyskiwania ani klucz prywatny.',
   'wallet.browser.title': 'Podłącz portfel Solana',
   'wallet.manualReturnBrowserHelp':
     'Po zatwierdzeniu wróć do tej karty gry. Jeśli iOS otworzy inną przeglądarkę, zamknij ją i wróć ręcznie do oryginalnej przeglądarki.',
   'wallet.manualReturnStandaloneHelp':
-    'Po zatwierdzeniu wróć do World of ClaudeCraft z ekranu głównego. Jeśli iOS otworzy przeglądarkę, zamknij ją i ręcznie otwórz ponownie aplikację z ekranu głównego.',
+    'Po zatwierdzeniu wróć do Endless Glory z ekranu głównego. Jeśli iOS otworzy przeglądarkę, zamknij ją i ręcznie otwórz ponownie aplikację z ekranu głównego.',
   'wallet.mobileAppHelp':
     'Wybierz Phantom lub Solflare. Aplikacja portfela poprosi o zatwierdzenie. Pozostaw tę grę otwartą i wróć do niej po zakończeniu.',
   'wallet.openAppButton': 'Otwórz {wallet}',
@@ -280,7 +280,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'wallet.openAppTitle': 'Kontynuuj w {wallet}',
   'wallet.preparingAppButton': 'Przygotowywanie {wallet}...',
   'wallet.standaloneAppHelp':
-    'Połączenia z portfelami nie są jeszcze dostępne w aplikacji z ekranu głównego. Otwórz World of ClaudeCraft w Safari lub Chrome, aby używać Phantom lub Solflare.',
+    'Połączenia z portfelami nie są jeszcze dostępne w aplikacji z ekranu głównego. Otwórz Endless Glory w Safari lub Chrome, aby używać Phantom lub Solflare.',
   'wallet.walletAppUnavailable':
     'Nie udało się przygotować {wallet}. Zamknij to okno i spróbuj ponownie.',
   'entities.abilities.primal_reflexes.description':
@@ -1129,7 +1129,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'editor.confirm.discardBody': 'Masz niezapisane zmiany w "{name}". Odrzucić je?',
   'editor.confirm.discardTitle': 'Odrzucić zmiany?',
   'editor.confirm.ok': 'OK',
-  'editor.docTitle': 'Edytor map - World of ClaudeCraft',
+  'editor.docTitle': 'Edytor map - Endless Glory',
   'editor.eraseTool.blockerHint':
     'Kliknięcie w pobliżu ściany blokującej usuwa zamiast tego tę ścianę.',
   'editor.eraseTool.hint':
@@ -1778,9 +1778,9 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.sources.header': 'Składa się z:',
   'hudChrome.statInfo.sources.talents': 'Talenty i efekty: {value}',
   'a11y.characterActions': 'Akcje postaci',
-  'a11y.discordCommunity': 'Dołącz do społeczności Discord World of ClaudeCraft',
-  'a11y.donateProject': 'Wesprzyj World of ClaudeCraft datkiem',
-  'a11y.githubProject': 'Otwórz projekt World of ClaudeCraft na GitHubie',
+  'a11y.discordCommunity': 'Dołącz do społeczności Discord Endless Glory',
+  'a11y.donateProject': 'Wesprzyj Endless Glory datkiem',
+  'a11y.githubProject': 'Otwórz projekt Endless Glory na GitHubie',
   'a11y.goHome': 'Przejdź do strony głównej',
   'a11y.languageSelection': 'Wybór języka',
   'a11y.mainNavigation': 'Nawigacja główna',
@@ -3866,7 +3866,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'fiesta.word.shutdown': 'POWSTRZYMANY!',
   'fiesta.word.spree': '{n}× SERIA!',
   'fiesta.word.wave': 'ULEPSZENIA!',
-  'footer.copyright': '2026 World of ClaudeCraft',
+  'footer.copyright': '2026 Endless Glory',
   'footer.discordLabel': 'Dołącz do Discorda',
   'footer.githubLabel': 'Projekt open source',
   'footer.githubLink': 'https://github.com/levy-street/world-of-claudecraft',
@@ -4129,8 +4129,8 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'guide.bestiary.levelsSame': 'Poziom {min}',
   'guide.bestiary.notedLabel': 'Warte uwagi',
   'guide.bestiary.rare': 'Rzadki',
-  'guide.brand': 'World of ClaudeCraft',
-  'guide.brandShort': 'ClaudeCraft',
+  'guide.brand': 'Endless Glory',
+  'guide.brandShort': 'EndlessGlory',
   'guide.breadcrumb.home': 'Przewodnik',
   'guide.breadcrumb.label': 'Ścieżka nawigacji',
   'guide.chooser.clear': 'Wyczyść',
@@ -4393,7 +4393,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'guide.footer.discord': 'Dołącz do Discorda',
   'guide.footer.github': 'Źródło na GitHubie',
   'guide.footer.playNow': 'Zagraj teraz',
-  'guide.footer.rights': 'World of ClaudeCraft',
+  'guide.footer.rights': 'Endless Glory',
   'guide.gear.consumablesElixirs':
     'Eliksiry dają tymczasowe wzmocnienie podczas wędrówki, niewielką przewagę, która pomaga, gdy chcesz pójść nieco dalej.',
   'guide.gear.consumablesFood':
@@ -4560,7 +4560,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Świat da się przejść w pojedynkę, ale najlepszy łup czeka na dobrą drużynę.',
   'guide.home.subtitle':
     'Wykonuj zadania, zbieraj drużynę i odkrywaj ręcznie tworzony świat, za darmo w przeglądarce.',
-  'guide.home.title': 'World of ClaudeCraft',
+  'guide.home.title': 'Endless Glory',
   'guide.home.what.heading': 'Klasyczne MMO, stworzone, by od razu w nie zagrać',
   'guide.home.what.pillarClassesBody':
     'Tankuj, lecz albo zadawaj obrażenia. Każda klasa gra się tak, jak powinien jej archetyp, a talenty czynią ją twoją.',
@@ -4978,7 +4978,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'guide.worldPage.heading': 'Świat',
   'guide.worldPage.hub': 'Baza wypadowa',
   'guide.worldPage.intro':
-    'World of ClaudeCraft to jedna ciągła kraina, którą przemierzasz pieszo, trzy strefy ułożone z południa na północ. Nie ma szybkiej podróży, więc droga jest częścią przygody.',
+    'Endless Glory to jedna ciągła kraina, którą przemierzasz pieszo, trzy strefy ułożone z południa na północ. Nie ma szybkiej podróży, więc droga jest częścią przygody.',
   'guide.worldPage.mapHeading': 'Droga na północ',
   'guide.worldPage.mapSub':
     'Trzy strefy, z południa na północ, każda o krok wyższa poziomem. Podążaj śladem zadań, a kraina poniesie cię od doliny aż po szczyty.',
@@ -6212,7 +6212,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Aby uzyskać tryb pełnoekranowy na Androidzie, najpierw zainstaluj tę stronę lub dodaj ją do ekranu głównego.',
   'mobilePreflight.androidInstallStep':
     'W Chrome dotknij menu, a następnie Zainstaluj aplikację lub Dodaj do ekranu głównego.',
-  'mobilePreflight.androidOpenStep': 'Otwórz World of ClaudeCraft z nowej ikony.',
+  'mobilePreflight.androidOpenStep': 'Otwórz Endless Glory z nowej ikony.',
   'mobilePreflight.androidStandaloneDetail':
     'Jesteś w trybie pełnoekranowej aplikacji. Trzymaj urządzenie w orientacji poziomej.',
   'mobilePreflight.baseLandscape':
@@ -6222,7 +6222,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.continue': 'Przejdź do gry',
   'mobilePreflight.iosInstallDetail':
     'Aby uzyskać prawdziwy tryb pełnoekranowy na iPhonie lub iPadzie, najpierw zainstaluj tę stronę na ekranie głównym.',
-  'mobilePreflight.iosOpenStep': 'Otwórz World of ClaudeCraft z nowej ikony na ekranie głównym.',
+  'mobilePreflight.iosOpenStep': 'Otwórz Endless Glory z nowej ikony na ekranie głównym.',
   'mobilePreflight.iosShareStep':
     'W Safari dotknij Udostępnij, a następnie Dodaj do ekranu głównego.',
   'mobilePreflight.iosStandaloneDetail':
@@ -6247,7 +6247,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Zaloguj się do świata. Twoje postacie żyją na serwerze, a świat dzielisz ze wszystkimi innymi, którzy są online.',
   'mode.onlineTitle': 'Graj online',
   'mode.play': 'Graj',
-  'mode.playAria': 'Zagraj w World of ClaudeCraft',
+  'mode.playAria': 'Zagraj w Endless Glory',
   'mode.serverAria': 'Wybierz świat: online lub offline',
   'mode.serverLabel': 'Wybierz swój świat',
   'mode.serverOffline': 'Offline',
@@ -6282,14 +6282,14 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'playerCard.arenaStat': 'Arena',
   'playerCard.brandWordmark': 'WORLD OF CLAUDECRAFT',
   'playerCard.close': 'Zamknij kartę gracza',
-  'playerCard.defaultRealm': 'World of ClaudeCraft',
+  'playerCard.defaultRealm': 'Endless Glory',
   'playerCard.fileNameFallback': 'gracz',
   'playerCard.footerCta': 'Wykuj swą legendę: {siteUrl}',
   'playerCard.footerHandle': '@{handle}',
   'playerCard.footerHandleWithRecruits': '@{handle} - {recruited}',
   'playerCard.levelClass': 'Poziom {level} - {className}',
   'playerCard.loading': 'Wykuwanie twojej karty...',
-  'playerCard.nativeShareTitle': 'World of ClaudeCraft',
+  'playerCard.nativeShareTitle': 'Endless Glory',
   'playerCard.poseBattle': 'Bitwa',
   'playerCard.poseGroup': 'Poza',
   'playerCard.poseHero': 'Bohater',
@@ -6303,7 +6303,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'playerCard.renderFailedStatus': 'Renderowanie karty nie powiodło się.',
   'playerCard.shareButton': 'Udostępnij kartę gracza',
   'playerCard.shareText':
-    'Wykuwam swą legendę w World of ClaudeCraft: {className} na poziomie {level}{tierBit}. Dołącz do mojego świata:',
+    'Wykuwam swą legendę w Endless Glory: {className} na poziomie {level}{tierBit}. Dołącz do mojego świata:',
   'playerCard.shareTierBit': ', posiadacz $WOC rangi {tier}',
   'playerCard.statusDownloaded': 'Karta pobrana.',
   'playerCard.statusGenericError': 'Coś poszło nie tak.',
@@ -6406,21 +6406,21 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'realmTypes.rpPvp': 'RP-PvP',
   'seo.applicationCategory': 'Gra',
   'seo.description':
-    'Wyrusz na epicką przygodę w World of ClaudeCraft, klasycznym mikro-MMO grywalnym bezpośrednio w przeglądarce. Dołącz do trwałego wspólnego świata, rozwijaj klasy postaci i pokonuj wrogów!',
+    'Wyrusz na epicką przygodę w Endless Glory, klasycznym mikro-MMO grywalnym bezpośrednio w przeglądarce. Dołącz do trwałego wspólnego świata, rozwijaj klasy postaci i pokonuj wrogów!',
   'seo.genre': 'MMORPG',
   'seo.officialBody':
-    'worldofclaudecraft.com to oficjalne, darmowe przeglądarkowe MMO dla świata Claudemoon. Graj online z trwałą postacią, eksploruj solo w trybie offline, czytaj wiki i śledź zweryfikowane linki społeczności z tej strony.',
-  'seo.officialLabel': 'Oficjalna strona World of ClaudeCraft',
+    'endlessglory.vercel.app to oficjalne, darmowe przeglądarkowe MMO dla świata Claudemoon. Graj online z trwałą postacią, eksploruj solo w trybie offline, czytaj wiki i śledź zweryfikowane linki społeczności z tej strony.',
+  'seo.officialLabel': 'Oficjalna strona Endless Glory',
   'seo.operatingSystem': 'Przeglądarka internetowa',
   'seo.playMode': 'Wieloosobowy',
-  'seo.title': 'World of ClaudeCraft: klasyczne przeglądarkowe MMO',
+  'seo.title': 'Endless Glory: klasyczne przeglądarkowe MMO',
   'serverUnavailable.body':
     'Ponownie uruchamiamy usługę gry i spodziewamy się, że Claudemoon wkrótce wróci. Ta strona będzie automatycznie sprawdzać stan.',
   'serverUnavailable.eyebrow': 'Konserwacja świata',
   'serverUnavailable.heading': 'Świat jest tymczasowo niedostępny.',
-  'serverUnavailable.logoAlt': 'World of ClaudeCraft',
+  'serverUnavailable.logoAlt': 'Endless Glory',
   'serverUnavailable.status': 'Niedługo wracamy',
-  'serverUnavailable.title': 'World of ClaudeCraft - Świat niedostępny',
+  'serverUnavailable.title': 'Endless Glory - Świat niedostępny',
   'settings.languageLoadFailed': 'Nie udało się wczytać tego języka. Zachowano obecny język.',
   'settings.languageLoadUnavailable': 'Ten język jest niedostępny.',
   'settings.languageLoading': 'Wczytywanie języka...',
@@ -6782,7 +6782,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.leaderboard.guildXp': 'Łączne XP',
   'hudChrome.leaderboard.guildEmpty': 'Brak sklasyfikowanych gildii.',
   'hudChrome.discord.title': 'Discord',
-  'hudChrome.discord.panelTitle': 'World of ClaudeCraft',
+  'hudChrome.discord.panelTitle': 'Endless Glory',
   'hudChrome.discord.open': 'Discord',
   'hudChrome.discord.close': 'Zamknij',
   'hudChrome.discord.keybind': 'Panel Discorda',
@@ -6902,10 +6902,10 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'errors.api.desktopCodeInvalid':
     'Kod logowania do aplikacji jest nieprawidłowy lub wygasł. Spróbuj ponownie.',
   'desktop.crash.body': 'Widok gry przestał działać. Załadować ponownie?',
-  'desktop.crash.fatalBody': 'World of ClaudeCraft napotkał nieoczekiwany błąd i musi się zamknąć.',
+  'desktop.crash.fatalBody': 'Endless Glory napotkał nieoczekiwany błąd i musi się zamknąć.',
   'desktop.crash.quit': 'Zakończ',
   'desktop.crash.reload': 'Załaduj ponownie',
-  'desktop.crash.title': 'World of ClaudeCraft',
+  'desktop.crash.title': 'Endless Glory',
   'desktop.update.downloading': 'Pobieranie aktualizacji {version}...',
   'desktop.update.later': 'Później',
   'desktop.update.ready':
@@ -6957,9 +6957,9 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Wycena WOC jest obecnie niedostępna. Sprawdź ponownie za chwilę.',
   'hudChrome.dailyRewards.walletValue': 'Wartość portfela (WOC)',
   'hudChrome.nativeUpdate.body':
-    'Dostępna jest nowa wersja World of ClaudeCraft. Zaktualizuj teraz, aby uzyskać najnowsze poprawki i ulepszenia.',
+    'Dostępna jest nowa wersja Endless Glory. Zaktualizuj teraz, aby uzyskać najnowsze poprawki i ulepszenia.',
   'hudChrome.nativeUpdate.bodyWithVersion':
-    'Dostępna jest wersja {version} World of ClaudeCraft. Zaktualizuj teraz, aby uzyskać najnowsze poprawki i ulepszenia.',
+    'Dostępna jest wersja {version} Endless Glory. Zaktualizuj teraz, aby uzyskać najnowsze poprawki i ulepszenia.',
   'hudChrome.nativeUpdate.notNow': 'Nie teraz',
   'hudChrome.nativeUpdate.title': 'Dostępna aktualizacja',
   'hudChrome.nativeUpdate.update': 'Aktualizuj',

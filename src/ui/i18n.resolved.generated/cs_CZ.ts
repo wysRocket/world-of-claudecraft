@@ -786,8 +786,8 @@ export const cs_CZ: EnTranslations = {
     },
     "nativeUpdate": {
       "title": "Aktualizace dostupná",
-      "body": "Je dostupná nová verze World of ClaudeCraft. Aktualizuj teď pro nejnovější opravy a vylepšení.",
-      "bodyWithVersion": "Je dostupná verze {version} World of ClaudeCraft. Aktualizuj teď pro nejnovější opravy a vylepšení.",
+      "body": "Je dostupná nová verze Endless Glory. Aktualizuj teď pro nejnovější opravy a vylepšení.",
+      "bodyWithVersion": "Je dostupná verze {version} Endless Glory. Aktualizuj teď pro nejnovější opravy a vylepšení.",
       "notNow": "Teď ne",
       "update": "Aktualizovat"
     },
@@ -1728,7 +1728,7 @@ export const cs_CZ: EnTranslations = {
     },
     "discord": {
       "title": "Discord",
-      "panelTitle": "World of ClaudeCraft",
+      "panelTitle": "Endless Glory",
       "open": "Discord",
       "close": "Zavřít",
       "keybind": "Panel Discordu",
@@ -2439,8 +2439,8 @@ export const cs_CZ: EnTranslations = {
     }
   },
   "guide": {
-    "brand": "World of ClaudeCraft",
-    "brandShort": "ClaudeCraft",
+    "brand": "Endless Glory",
+    "brandShort": "EndlessGlory",
     "tagline": "MMO v klasickém stylu, které hraješ zdarma v prohlížeči.",
     "skipToContent": "Přejít na hlavní obsah",
     "loading": "Načítá se...",
@@ -2505,7 +2505,7 @@ export const cs_CZ: EnTranslations = {
       "github": "Zdrojový kód na GitHubu",
       "discord": "Připojit se na Discord",
       "communityWiki": "Komunitní wiki",
-      "rights": "World of ClaudeCraft",
+      "rights": "Endless Glory",
       "linksLabel": "Odkazy na hru a komunitu"
     },
     "language": {
@@ -2528,7 +2528,7 @@ export const cs_CZ: EnTranslations = {
     },
     "home": {
       "eyebrow": "Prohlížečové MMO v klasickém stylu",
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "subtitle": "Plň úkoly, hraj ve skupině a objevuj ručně vystavěný svět zdarma v prohlížeči.",
       "ctaPlay": "Hrát teď",
       "ctaLearn": "Jak hrát",
@@ -3029,7 +3029,7 @@ export const cs_CZ: EnTranslations = {
     },
     "worldPage": {
       "heading": "Svět",
-      "intro": "World of ClaudeCraft je jedna souvislá země, kterou přecházíš pěšky, tři zóny položené od jihu k severu. Není tu rychlé cestování, takže cesta je součástí dobrodružství.",
+      "intro": "Endless Glory je jedna souvislá země, kterou přecházíš pěšky, tři zóny položené od jihu k severu. Není tu rychlé cestování, takže cesta je součástí dobrodružství.",
       "hub": "Domovská základna",
       "mapHeading": "Cesta na sever",
       "mapSub": "Tři zóny od jihu k severu, každá o krok výš v úrovních. Sleduj stopu úkolů a země tě ponese z údolí až na štíty.",
@@ -3538,7 +3538,7 @@ export const cs_CZ: EnTranslations = {
   },
   "editor": {
     "appTitle": "Editor map",
-    "docTitle": "Editor map - World of ClaudeCraft",
+    "docTitle": "Editor map - Endless Glory",
     "untitledMap": "Nepojmenovaná mapa",
     "playtestPlayerName": "Tvůrce map",
     "topbar": {
@@ -4013,7 +4013,7 @@ export const cs_CZ: EnTranslations = {
     "realmName": "Název světa"
   },
   "footer": {
-    "copyright": "2026 World of ClaudeCraft",
+    "copyright": "2026 Endless Glory",
     "githubLink": "https://github.com/levy-street/world-of-claudecraft",
     "githubLabel": "Open-source projekt",
     "whitepaper": "Whitepaper",
@@ -4069,7 +4069,7 @@ export const cs_CZ: EnTranslations = {
     "serverOnline": "Online",
     "serverOffline": "Offline",
     "play": "Hrát",
-    "playAria": "Hrát World of ClaudeCraft",
+    "playAria": "Hrát Endless Glory",
     "serverLabel": "Vyber si svět",
     "serverAria": "Vybrat svět: online nebo offline",
     "serverOfflineSub": "Okamžitý lokální svět",
@@ -4180,12 +4180,12 @@ export const cs_CZ: EnTranslations = {
     "helpLinkedDisconnectedWithBalance": "Výhody držitele jsou aktivní. Připoj aplikaci, až budeš potřebovat podepisovat nebo utrácet.",
     "extensionHelp": "Aby se tu peněženka zobrazila, nech aktivní rozšíření prohlížeče, například Solflare Wallet.",
     "mobileAppHelp": "Zvol Phantom nebo Solflare. Tvoje aplikace peněženky požádá o schválení. Nechej tuto hru otevřenou a po dokončení se do ní vrať.",
-    "standaloneAppHelp": "Připojení peněženky není zatím v aplikaci z domovské obrazovky dostupné. Otevři World of ClaudeCraft v Safari nebo Chrome pro použití Phantom nebo Solflare.",
+    "standaloneAppHelp": "Připojení peněženky není zatím v aplikaci z domovské obrazovky dostupné. Otevři Endless Glory v Safari nebo Chrome pro použití Phantom nebo Solflare.",
     "openAppTitle": "Pokračovat v {wallet}",
     "openAppHelp": "Otevři {wallet} pro kontrolu tohoto požadavku. Nechej tuto záložku hry otevřenou, zatímco je aplikace peněženky aktivní.",
     "openAppButton": "Otevřít {wallet}",
     "manualReturnBrowserHelp": "Po schválení se vrať na tuto záložku hry. Pokud iOS otevře jiný prohlížeč, zavři ho a ručně se vrať do původního prohlížeče.",
-    "manualReturnStandaloneHelp": "Po schválení se vrať do World of ClaudeCraft z domovské obrazovky. Pokud iOS otevře prohlížeč, zavři ho a ručně znovu otevři aplikaci z domovské obrazovky.",
+    "manualReturnStandaloneHelp": "Po schválení se vrať do Endless Glory z domovské obrazovky. Pokud iOS otevře prohlížeč, zavři ho a ručně znovu otevři aplikaci z domovské obrazovky.",
     "preparingAppButton": "Připravuji {wallet}...",
     "walletAppUnavailable": "{wallet} nelze připravit. Zavři toto okno a zkus to znovu.",
     "flowConnect": "Vyber peněženku. Ověření bude automaticky pokračovat.",
@@ -4200,12 +4200,12 @@ export const cs_CZ: EnTranslations = {
       "linkBody": "Zvol rozšíření peněženky v tomto prohlížeči. Podepíšeš ověřovací zprávu a vrátíš se do desktopové aplikace.",
       "paymentBody": "Zvol peněženku propojenou s tvým účtem a schval transakci v tomto prohlížeči.",
       "extensionHelp": "Nebyla nalezena žádná kompatibilní rozšíření peněženky. Nainstaluj nebo odemkni Phantom, Solflare nebo jiný Solana prohlížečový wallet a zkus to znovu.",
-      "safety": "World of ClaudeCraft nikdy nepožaduje tvoji obnovovací frázi ani soukromý klíč.",
+      "safety": "Endless Glory nikdy nepožaduje tvoji obnovovací frázi ani soukromý klíč.",
       "continueWith": "Pokračovat s {wallet}",
       "reviewTitle": "Zkontroluj ve své peněžence",
       "reviewBody": "Postupuj podle výzvy od {wallet}. Nechej tuto stránku prohlížeče otevřenou.",
       "completeTitle": "Autorizace peněženky dokončena",
-      "completeBody": "Můžeš se vrátit do desktopové aplikace World of ClaudeCraft.",
+      "completeBody": "Můžeš se vrátit do desktopové aplikace Endless Glory.",
       "returnButton": "Vrátit se do desktopové aplikace",
       "failed": "Autorizace peněženky selhala nebo vypršela. Vrať se do desktopové aplikace a zkus to znovu.",
       "retry": "Zkusit znovu"
@@ -4303,7 +4303,7 @@ export const cs_CZ: EnTranslations = {
     "levelClass": "Úroveň {level} - {className}",
     "topPercent": "TOP {percent} %",
     "realmSubtitle": "Svět {realm}",
-    "defaultRealm": "World of ClaudeCraft",
+    "defaultRealm": "Endless Glory",
     "brandWordmark": "WORLD OF CLAUDECRAFT",
     "recruited": "přivedeno {count}",
     "footerHandle": "@{handle}",
@@ -4311,8 +4311,8 @@ export const cs_CZ: EnTranslations = {
     "footerCta": "Kuj svou legendu: {siteUrl}",
     "arenaStat": "Aréna",
     "shareTierBit": ", držitel $WOC stupně {tier}",
-    "shareText": "Kuji svou legendu ve World of ClaudeCraft: úroveň {level} {className}{tierBit}. Přidej se do mého světa:",
-    "nativeShareTitle": "World of ClaudeCraft",
+    "shareText": "Kuji svou legendu ve Endless Glory: úroveň {level} {className}{tierBit}. Přidej se do mého světa:",
+    "nativeShareTitle": "Endless Glory",
     "fileNameFallback": "hrac",
     "actionShareX": "Sdílet na X",
     "actionCopyReferral": "Kopírovat doporučovací odkaz",
@@ -4952,14 +4952,14 @@ export const cs_CZ: EnTranslations = {
     }
   },
   "seo": {
-    "title": "World of ClaudeCraft: webové MMO v klasickém stylu",
-    "description": "Vydej se na epické dobrodružství ve World of ClaudeCraft, klasicky laděném micro-MMO hratelném přímo v prohlížeči. Připoj se k trvalému sdílenému světu, zvyšuj úrovně tříd a porážej nepřátele!",
+    "title": "Endless Glory: webové MMO v klasickém stylu",
+    "description": "Vydej se na epické dobrodružství ve Endless Glory, klasicky laděném micro-MMO hratelném přímo v prohlížeči. Připoj se k trvalému sdílenému světu, zvyšuj úrovně tříd a porážej nepřátele!",
     "genre": "MMORPG",
     "playMode": "Multiplayer",
     "applicationCategory": "Hra",
     "operatingSystem": "Webový prohlížeč",
-    "officialLabel": "Oficiální web World of ClaudeCraft",
-    "officialBody": "worldofclaudecraft.com je oficiální bezplatné prohlížečové MMO pro svět Claudemoon. Hraj online s trvalou postavou, prozkoumávej sólo offline, čti wiki a používej ověřené komunitní odkazy z tohoto webu."
+    "officialLabel": "Oficiální web Endless Glory",
+    "officialBody": "endlessglory.vercel.app je oficiální bezplatné prohlížečové MMO pro svět Claudemoon. Hraj online s trvalou postavou, prozkoumávej sólo offline, čti wiki a používej ověřené komunitní odkazy z tohoto webu."
   },
   "a11y": {
     "goHome": "Přejít na domovskou stránku",
@@ -4967,9 +4967,9 @@ export const cs_CZ: EnTranslations = {
     "mainNavigation": "Hlavní navigace",
     "languageSelection": "Výběr jazyka",
     "characterActions": "Akce postavy",
-    "githubProject": "Otevřít projekt World of ClaudeCraft na GitHubu",
-    "discordCommunity": "Připojit se ke komunitě World of ClaudeCraft na Discordu",
-    "donateProject": "Přispět na podporu World of ClaudeCraft"
+    "githubProject": "Otevřít projekt Endless Glory na GitHubu",
+    "discordCommunity": "Připojit se ke komunitě Endless Glory na Discordu",
+    "donateProject": "Přispět na podporu Endless Glory"
   },
   "entryGuard": {
     "title": "Grafika snížena",
@@ -5046,11 +5046,11 @@ export const cs_CZ: EnTranslations = {
       "later": "Později"
     },
     "crash": {
-      "title": "World of ClaudeCraft",
+      "title": "Endless Glory",
       "body": "Herní zobrazení přestalo fungovat. Načíst ho znovu?",
       "reload": "Načíst znovu",
       "quit": "Ukončit",
-      "fatalBody": "World of ClaudeCraft narazil na neočekávanou chybu a musí se zavřít."
+      "fatalBody": "Endless Glory narazil na neočekávanou chybu a musí se zavřít."
     }
   },
   "gpuNotice": {
@@ -5183,17 +5183,17 @@ export const cs_CZ: EnTranslations = {
     "iosStandaloneDetail": "Jsi v režimu celé obrazovky z plochy. Drž zařízení na šířku.",
     "iosInstallDetail": "Pro skutečnou celou obrazovku na iPhonu nebo iPadu si tuto stránku nejdřív přidej na plochu.",
     "iosShareStep": "V Safari klepni na Sdílet a potom na Přidat na plochu.",
-    "iosOpenStep": "Otevři World of ClaudeCraft z nové ikony na ploše.",
+    "iosOpenStep": "Otevři Endless Glory z nové ikony na ploše.",
     "androidStandaloneDetail": "Jsi v režimu aplikace na celou obrazovku. Drž zařízení na šířku.",
     "androidInstallDetail": "Pro celou obrazovku na Androidu si tuto stránku nejdřív nainstaluj nebo přidej na plochu.",
     "androidInstallStep": "V Chromu klepni na menu a potom na Instalovat aplikaci nebo Přidat na plochu.",
-    "androidOpenStep": "Otevři World of ClaudeCraft z nové ikony.",
+    "androidOpenStep": "Otevři Endless Glory z nové ikony.",
     "otherStandaloneDetail": "Drž zařízení na šířku a na celou obrazovku.",
     "otherInstallDetail": "Pro nejlepší mobilní zážitek na celou obrazovku si tuto stránku nainstaluj nebo přidej na plochu."
   },
   "serverUnavailable": {
-    "title": "World of ClaudeCraft - Svět nedostupný",
-    "logoAlt": "World of ClaudeCraft",
+    "title": "Endless Glory - Svět nedostupný",
+    "logoAlt": "Endless Glory",
     "eyebrow": "Údržba světa",
     "heading": "Svět je dočasně nedostupný.",
     "body": "Restartujeme herní službu a očekáváme, že se Claudemoon brzy vrátí. Tato stránka bude stav automaticky kontrolovat.",

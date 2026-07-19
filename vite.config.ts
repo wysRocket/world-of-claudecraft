@@ -84,8 +84,6 @@ const STATIC_PAGE_ALIASES = new Map([
   ['/social/', '/links.html'],
   ['/social-media-links', '/links.html'],
   ['/social-media-links/', '/links.html'],
-  ['/play', '/play.html'],
-  ['/play/', '/play.html'],
   ['/wallet-handoff', '/wallet-handoff.html'],
   ['/wallet-handoff/', '/wallet-handoff.html'],
   ['/privacy', '/privacy.html'],
@@ -345,7 +343,6 @@ export default defineConfig({
       input: {
         main: fileURLToPath(new URL('index.html', import.meta.url)),
         admin: fileURLToPath(new URL('admin.html', import.meta.url)),
-        play: fileURLToPath(new URL('play.html', import.meta.url)),
         guide: fileURLToPath(new URL('guide.html', import.meta.url)),
         editor: fileURLToPath(new URL('editor.html', import.meta.url)),
         walletHandoff: fileURLToPath(new URL('wallet-handoff.html', import.meta.url)),
