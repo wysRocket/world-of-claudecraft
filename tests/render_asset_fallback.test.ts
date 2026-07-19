@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { describe, expect, it, vi } from 'vitest';
+import { resolveMediaLogicalPath } from '../src/render/assets/media';
 
 function mockEmptyAssetLoads(): void {
   vi.doMock('../src/render/assets/loader', () => ({
@@ -32,6 +33,12 @@ function mockEmptyAssetLoads(): void {
 }
 
 describe('render asset preload fallbacks', () => {
+  it('resolves classic media paths without a leading slash', () => {
+    expect(resolveMediaLogicalPath('/models/props/house_1.glb', 'classic')).toBe(
+      'models/props/house_1.glb',
+    );
+  });
+
   it('keeps sky construction non-fatal when HDRI assets were not preloaded', async () => {
     vi.resetModules();
     mockEmptyAssetLoads();
