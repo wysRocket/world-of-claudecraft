@@ -69,6 +69,7 @@ const appBuildId =
   gitSha() ??
   appBuildDate.replace(/[-:TZ.]/g, '').slice(0, 12);
 const desktopApiOrigin = env(['VITE_DESKTOP_API_ORIGIN']);
+const visualThemeBuildDefault = env(['VITE_VISUAL_THEME']) ?? 'classic';
 const isDesktopDevBuild = env(['VITE_DESKTOP_APP']) === '1';
 const apiProxyTarget =
   env(['WOC_DEV_API_TARGET']) ??
@@ -131,6 +132,18 @@ function staticPageAliasPlugin() {
     });
   };
   return { name: 'woc-static-page-alias', configureServer: attach, configurePreviewServer: attach };
+}
+
+function visualThemeHtmlPlugin() {
+  return {
+    name: 'woc-visual-theme-bootstrap',
+    transformIndexHtml(html: string): string {
+      return html.replaceAll(
+        '__VISUAL_THEME_BUILD_DEFAULT__',
+        JSON.stringify(visualThemeBuildDefault),
+      );
+    },
+  };
 }
 
 // Phase 4 (i18n Lazy Locales): after the production build, resolve each lazy locale
@@ -302,6 +315,7 @@ export default defineConfig({
     svelte(),
     ...(process.env.VITEST ? [svelteTesting()] : []),
     staticPageAliasPlugin(),
+    visualThemeHtmlPlugin(),
     i18nModulepreloadPlugin(),
     musicEditorSavePlugin(),
   ],

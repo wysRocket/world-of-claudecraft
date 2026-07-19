@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   resolveVisualTheme,
   themedAssetPath,
@@ -44,5 +44,23 @@ describe('visual theme core', () => {
 
   it('does not treat inherited catalog keys as replacements', () => {
     expect(themedAssetPath('constructor', 'emberwood', { emberwood: {} })).toBe('constructor');
+  });
+});
+
+describe('visual theme browser bridge', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.resetModules();
+  });
+
+  it('uses the validated parser-time stamp as the shared runtime default', async () => {
+    vi.stubGlobal('location', { search: '' });
+    vi.stubGlobal('document', {
+      documentElement: { dataset: { visualTheme: 'emberwood' } },
+    });
+
+    const { ACTIVE_VISUAL_THEME, visualAssetPath } = await import('../src/visual_theme');
+    expect(ACTIVE_VISUAL_THEME).toBe('emberwood');
+    expect(visualAssetPath('/models/props/house_1.glb')).toBe('/models/props/house_1.glb');
   });
 });

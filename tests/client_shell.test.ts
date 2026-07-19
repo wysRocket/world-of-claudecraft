@@ -1115,6 +1115,18 @@ describe('client HTML shell', () => {
     expect(hudMobileCss).not.toContain('body.mobile-touch .donate-cta {\n    display: none;');
   });
 
+  it('omits the repository link from the homepage footer without removing GitHub integrations', () => {
+    const footerStart = html.indexOf('<footer class="homepage-footer">');
+    const footerEnd = html.indexOf('</footer>', footerStart);
+    expect(footerStart).toBeGreaterThan(-1);
+    expect(footerEnd).toBeGreaterThan(footerStart);
+
+    const footer = html.slice(footerStart, footerEnd);
+    expect(footer).not.toContain('https://github.com/levy-street/world-of-claudecraft');
+    expect(html.slice(0, footerStart)).toContain('<a class="community-link github"');
+    expect(html).toContain('id="btn-github"');
+  });
+
   it('closes mobile community and More trays when tapping outside', () => {
     expect(hudTs).toContain(
       "const communityMenu = document.getElementById('community-menu') as HTMLDetailsElement | null;",
