@@ -298,6 +298,11 @@
     { "from": "ui/items/backpack.webp", "to": "ui/emberwood/items/backpack.webp" },
     { "from": "ui/items/minor_healing_potion.webp", "to": "ui/emberwood/items/minor_healing_potion.webp" },
     { "from": "ui/items/lesser_mana_potion.webp", "to": "ui/emberwood/items/lesser_mana_potion.webp" },
-    { "from": "ui/items/eastbrook_chain_vest.webp", "to": "ui/emberwood/items/eastbrook_chain_vest.webp" }
+    { "from": "ui/items/eastbrook_chain_vest.webp", "to": "ui/emberwood/items/eastbrook_chain_vest.webp" },
+    { "from": "models/chars/players/barbarian.glb", "to": "models/emberwood/chars/warrior.glb" },
+    { "from": "models/chars/players/paladin.glb", "to": "models/emberwood/chars/warrior.glb" },
+    { "from": "models/chars/players/druid.glb", "to": "models/emberwood/chars/mage.glb" },
+    { "from": "models/chars/players/mage_classic.glb", "to": "models/emberwood/chars/mage.glb" },
+    { "from": "models/chars/players/rogue.glb", "to": "models/emberwood/chars/bandit.glb" }
   ]
 }
