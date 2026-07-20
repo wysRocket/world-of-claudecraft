@@ -79,7 +79,7 @@ describe('Emberwood preload path consistency (pre-boot crash guard)', () => {
     for (const classicUrl of allClassicUrls) {
       const logical = classicUrl.replace(/^\//, '');
       if (Object.hasOwn(emberwood, logical)) {
-        const themed = emberwood[logical];
+        const themed = (emberwood as Record<string, string>)[logical];
         expect(themed).toBeDefined();
         expect(themed.length).toBeGreaterThan(0);
       }
