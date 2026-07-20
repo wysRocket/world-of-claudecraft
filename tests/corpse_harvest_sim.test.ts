@@ -368,6 +368,64 @@ describe('signed Pristine specimens (#1145, Phase 10)', () => {
   });
 });
 
+// Phase 10 QA: a mob carrying TWO specimen families (wild_boar: hide -> and
+// meat -> are both in HARVEST_COMPONENT_SPECIMENS, tusk maps to nothing) is
+// where the grant ORDER matters: the pre-gate reserves room for the plain
+// component stacks only, so a signed jackpot granted mid-loop could consume
+// the slot reserved for a LATER family's plain stack and push the uncapped
+// plain grant past capacity. Plain yields must all land before any signed
+// instance; the jackpot is the extra that truncates, never the plain yield.
+describe('two-specimen-family harvest capacity contract (Phase 10 QA)', () => {
+  function addBoarCorpse(internals: SimInternals, id = 8888) {
+    const template = MOBS.wild_boar;
+    expect(template.componentTags).toEqual(['hide', 'tusk', 'meat']);
+    const boar = createMob(id, template, template.maxLevel, { x: 0, y: 0, z: 0 });
+    boar.dead = true;
+    boar.aiState = 'dead';
+    boar.corpseTimer = 9999;
+    boar.respawnTimer = 9999;
+    internals.entities.set(boar.id, boar);
+    return boar;
+  }
+
+  it('with a genuinely spare slot the jackpot still lands beside both plain yields (seed 1)', () => {
+    // Seed 1 pre-verified: the hide rarity roll clears the signable floor with
+    // this exact draw sequence (the rolls are inventory-independent, so this
+    // arm also proves the two-free-slot arm below EARNED its jackpot).
+    const { sim, internals, a } = setup(1);
+    const boar = addBoarCorpse(internals);
+    fillBags(sim, internals, a);
+    const m = internals.players.get(a)!;
+    const cap = bagCapacity(m.bags);
+    m.inventory.length = cap - 3; // three free slots, no hide/meat stacks
+    sim.harvestCorpse(boar.id, undefined, a);
+    expect(boar.harvestClaimedBy).toBe(a);
+    expect(m.inventory.length).toBeLessThanOrEqual(cap);
+    expect(sim.countItem('rough_hide', a)).toBeGreaterThanOrEqual(1);
+    expect(sim.countItem('game_meat', a)).toBeGreaterThanOrEqual(1);
+    const specimen = m.inventory.find((s) => s.itemId === 'pristine_hide');
+    expect(specimen?.instance?.signer).toBe('Alpha');
+  });
+
+  it('with exactly the reserved free slots the jackpot truncates, never the plain yield (seed 1)', () => {
+    // Two free slots = exactly the pre-gate's reservation for the two plain
+    // stacks. The unfixed code granted pristine_hide into the slot reserved
+    // for game_meat and spilled the meat stack past capacity (17 of 16).
+    const { sim, internals, a } = setup(1);
+    const boar = addBoarCorpse(internals);
+    fillBags(sim, internals, a);
+    const m = internals.players.get(a)!;
+    const cap = bagCapacity(m.bags);
+    m.inventory.length = cap - 2; // exactly the two reserved plain-stack slots
+    sim.harvestCorpse(boar.id, undefined, a);
+    expect(boar.harvestClaimedBy).toBe(a);
+    expect(m.inventory.length).toBeLessThanOrEqual(cap);
+    expect(sim.countItem('rough_hide', a)).toBeGreaterThanOrEqual(1);
+    expect(sim.countItem('game_meat', a)).toBeGreaterThanOrEqual(1);
+    expect(m.inventory.some((s) => s.itemId === 'pristine_hide')).toBe(false);
+  });
+});
+
 // A ClientWorld without the WebSocket plumbing, to drive applySnapshot directly
 // (the established bare-client idiom; see bareClient in tests/snapshots.test.ts
 // and tests/CLAUDE.md).
