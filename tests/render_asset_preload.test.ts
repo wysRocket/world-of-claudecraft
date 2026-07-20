@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { characterPreloadUrls, manifestUrlsForGraphics } from '../src/render/characters/manifest';
 import { propPreloadInternalsForTest } from '../src/render/props';
+import { VISUAL_THEME_CATALOG } from '../src/visual_theme_catalog.generated';
 
 // Guard against the v0.16.0 "Could not start the renderer" P0. Both props (props.ts)
 // and characters (characters/assets.ts) freeze their GLB PRELOAD set at module-import
@@ -62,6 +63,25 @@ describe('character preload set covers placement at every graphics tier (v0.16.0
           preload.has(url),
           `import tier sm=${importTierStandardMaterials} must preload ${url}`,
         ).toBe(true);
+      }
+    }
+  });
+});
+
+describe('Emberwood preload path consistency (pre-boot crash guard)', () => {
+  it('every catalog target for a preloaded classic URL is valid and resolved', () => {
+    const emberwood = VISUAL_THEME_CATALOG.emberwood;
+    if (!emberwood || Object.keys(emberwood).length === 0) return; // no catalog yet
+    const allClassicUrls = new Set([
+      ...characterPreloadUrls(true),
+      ...characterPreloadUrls(false),
+    ]);
+    for (const classicUrl of allClassicUrls) {
+      const logical = classicUrl.replace(/^\//, '');
+      if (Object.hasOwn(emberwood, logical)) {
+        const themed = emberwood[logical];
+        expect(themed).toBeDefined();
+        expect(themed.length).toBeGreaterThan(0);
       }
     }
   });
