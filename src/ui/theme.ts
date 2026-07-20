@@ -25,7 +25,7 @@ export type ThemeKnob =
 
 export type ThemeKnobs = Record<ThemeKnob, string>;
 
-export type PresetId = 'classic' | 'midnight' | 'parchment' | 'highContrast';
+export type PresetId = 'classic' | 'midnight' | 'parchment' | 'highContrast' | 'emberwood';
 
 export interface ThemeState {
   preset: PresetId;
@@ -59,7 +59,7 @@ export const THEME_KNOB_LABEL_KEY: Record<ThemeKnob, string> = {
   energy: 'energy',
 };
 
-export const PRESET_ORDER: PresetId[] = ['classic', 'midnight', 'parchment', 'highContrast'];
+export const PRESET_ORDER: PresetId[] = ['classic', 'midnight', 'parchment', 'highContrast', 'emberwood'];
 
 // `classic` reproduces the shipped gold/dark palette; the others are alternates.
 export const THEME_PRESETS: Record<PresetId, ThemeKnobs> = {
@@ -106,6 +106,17 @@ export const THEME_PRESETS: Record<PresetId, ThemeKnobs> = {
     mana: '#00b0ff',
     rage: '#ff3030',
     energy: '#ffe000',
+  },
+  emberwood: {
+    accent: '#c99a4a',
+    border: '#6f4b32',
+    panel: '#171b18',
+    text: '#e7d7b8',
+    textMuted: '#a09070',
+    hp: '#4a8a4a',
+    mana: '#607487',
+    rage: '#743b36',
+    energy: '#d1713a',
   },
 };
 
@@ -277,12 +288,12 @@ export function themeCssVars(knobs: ThemeKnobs): Record<string, string> {
 }
 
 /** Parse an untrusted persisted blob into a valid ThemeState. Never throws. */
-export function parseTheme(raw: unknown): ThemeState {
-  if (!raw || typeof raw !== 'object') return { ...DEFAULT_THEME, custom: {} };
+export function parseTheme(raw: unknown, defaultPreset: PresetId = DEFAULT_PRESET): ThemeState {
+  if (!raw || typeof raw !== 'object') return { preset: defaultPreset, custom: {} };
   const obj = raw as Record<string, unknown>;
   const preset = PRESET_ORDER.includes(obj.preset as PresetId)
     ? (obj.preset as PresetId)
-    : DEFAULT_PRESET;
+    : defaultPreset;
   const custom: Partial<ThemeKnobs> = {};
   const rawCustom = obj.custom;
   if (rawCustom && typeof rawCustom === 'object') {
@@ -308,14 +319,14 @@ const THEME_STORE_KEY = 'woc_theme';
 export class ThemeStore {
   private state: ThemeState;
 
-  constructor() {
+  constructor(defaultPreset?: PresetId) {
     let raw: unknown = null;
     try {
       raw = JSON.parse(localStorage.getItem(THEME_STORE_KEY) ?? 'null');
     } catch {
       /* corrupt */
     }
-    this.state = parseTheme(raw);
+    this.state = parseTheme(raw, defaultPreset ?? 'classic');
   }
 
   get(): ThemeState {

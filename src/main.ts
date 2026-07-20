@@ -280,7 +280,7 @@ import {
   type WelcomeScreenController,
 } from './ui/welcome_screen_window';
 import { formatXp } from './ui/xp_bar';
-import { applyVisualTheme } from './visual_theme';
+import { applyVisualTheme, ACTIVE_VISUAL_THEME } from './visual_theme';
 import type { IWorld, LeaderboardEntry } from './world_api';
 
 const WORLD_SEED = 20061; // fixed: Endless Glory is a persistent place
@@ -9070,7 +9070,17 @@ function fadeOutHomepageMusic(durationMs = 1600): void {
 (() => {
   try {
     applyVisualTheme(document.documentElement);
-    const vars = new ThemeStore().cssVars();
+    const [store, initRaw] = (() => {
+      let raw: unknown = null;
+      try { raw = JSON.parse(localStorage.getItem('eg-theme') ?? 'null'); } catch { /* corrupt */ }
+      return [new ThemeStore(), raw];
+    })();
+    // When Emberwood visual theme is active, default the UI theme to emberwood
+    // unless the player has explicitly stored a different preference.
+    if (ACTIVE_VISUAL_THEME === 'emberwood' && initRaw === null) {
+      store.setPreset('emberwood');
+    }
+    const vars = store.cssVars();
     for (const name of Object.keys(vars))
       document.documentElement.style.setProperty(name, vars[name]);
   } catch {
