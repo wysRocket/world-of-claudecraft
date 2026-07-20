@@ -67,16 +67,20 @@ interface PropAssetDef {
   yaw?: number;
   /** drop parts whose material name matches (e.g. the market cart's awning) */
   strip?: RegExp;
+  /** explicit base color (hex) — overrides MAT_OVERRIDES + GLB color. Used to
+   *  tint single-material CAD props (one mesh, material name 'o1') with a
+   *  delightful per-building palette the geometry can't express on its own. */
+  color?: number;
 }
 
 const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
-  house1: { url: '/models/props/house_1.glb', kit: 'village' },
-  house2: { url: '/models/props/house_2.glb', kit: 'village', yaw: -Math.PI / 2 },
-  house3: { url: '/models/props/house_3.glb', kit: 'village' },
+  house1: { url: '/models/props/house_1.glb', kit: 'village', color: 0xe85745 }, // coral red
+  house2: { url: '/models/props/house_2.glb', kit: 'village', yaw: -Math.PI / 2, color: 0x45a08c }, // teal
+  house3: { url: '/models/props/house_3.glb', kit: 'village', color: 0xf2a838 }, // marigold
   blacksmith: { url: '/models/props/blacksmith.glb', kit: 'village' },
-  inn: { url: '/models/props/inn.glb', kit: 'village' },
+  inn: { url: '/models/props/inn.glb', kit: 'village', color: 0x7655bd }, // plum
   bellTower: { url: '/models/props/bell_tower.glb', kit: 'village' },
-  well: { url: '/models/props/well.glb', kit: 'village' },
+  well: { url: '/models/props/well.glb', kit: 'village', color: 0x3b8cc7 }, // sky blue
   stand1: { url: '/models/props/market_stand_1.glb', kit: 'village', yaw: -Math.PI / 2 },
   stand2: { url: '/models/props/market_stand_2.glb', kit: 'village', yaw: -Math.PI / 2 },
   cart: { url: '/models/props/cart.glb', kit: 'village', strip: /^(Red|Beige)$/ },
@@ -104,10 +108,10 @@ const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
   timberPillar: { url: '/models/props/timber_pillar.glb', kit: 'town' },
   crateWooden: { url: '/models/props/crate_wooden.glb', kit: 'qprops' },
   farmCrate: { url: '/models/props/farmcrate_apple.glb', kit: 'qprops' },
-  barrel: { url: '/models/props/barrel.glb', kit: 'qprops' },
-  anvil: { url: '/models/props/anvil.glb', kit: 'qprops' },
+  barrel: { url: '/models/props/barrel.glb', kit: 'qprops', color: 0x9e73c7 }, // lavender
+  anvil: { url: '/models/props/anvil.glb', kit: 'qprops', color: 0xcc8c2e }, // amber
   weaponStand: { url: '/models/props/weapon_stand.glb', kit: 'qprops' },
-  lanternWall: { url: '/models/props/lantern_wall.glb', kit: 'qprops' },
+  lanternWall: { url: '/models/props/lantern_wall.glb', kit: 'qprops', color: 0xf5c745 }, // sunny yellow
   // Meshy-generated portal door used as the overworld Reliquary Hill marker;
   // has its own backing slab so the animated shader plane sits on the front face.
   // No yaw here: the geometry is CACHED and shared by every delve marker, so a
@@ -264,19 +268,22 @@ function convertMaterial(
   src: THREE.Material,
   kit: string,
   hasVertexColors: boolean,
+  explicitColor?: number,
 ): THREE.Material {
   const s = src as THREE.MeshStandardMaterial; // basic (unlit) shares the fields we read
   const ov = MAT_OVERRIDES[`${kit}:${s.name}`] ?? MAT_OVERRIDES[s.name];
   // hasVertexColors must key the cache: kits share material names between
   // COLOR_0 meshes (trim 'Vertex' props) and colorless ones — a shared
   // vertexColors:true material would render the colorless meshes black
-  const key = `${kit}|${s.name}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
+  const key = `${kit}|${s.name}|${explicitColor ?? ''}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
   const cached = matConvCache.get(key);
   if (cached) return cached;
   const color =
-    ov?.color !== undefined
-      ? new THREE.Color(ov.color)
-      : (s.color?.clone() ?? new THREE.Color(0xffffff));
+    explicitColor !== undefined
+      ? new THREE.Color(explicitColor)
+      : ov?.color !== undefined
+        ? new THREE.Color(ov.color)
+        : (s.color?.clone() ?? new THREE.Color(0xffffff));
   const map = s.map ?? null;
   let mat: THREE.Material;
   if (GFX.standardMaterials) {
@@ -346,7 +353,7 @@ function propAsset(key: PropKey): PropAsset {
     geo.applyMatrix4(mesh.matrixWorld);
     if (yawM) geo.applyMatrix4(yawM);
     if (!geo.getAttribute('normal')) geo.computeVertexNormals();
-    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col) });
+    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col, def.color) });
   });
   if (!parts.length) throw new Error(`prop asset has no meshes: ${key}`);
   // normalize origin: xz-center at 0, base at y=0

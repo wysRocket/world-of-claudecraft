@@ -294,6 +294,16 @@ const PLAYERS = 'models/chars/players';
 const ENEMIES = 'models/chars/enemies';
 const CREATURES = 'models/creatures';
 const WEAPONS = 'models/weapons';
+// Shared Emberwood pig-nose prop: a big snout with nostrils, attached to the
+// head bone of every character so they all read as cheerful pigs. Single mesh
+// (material name 'o1'); tinted pink at render time via PIG_NOSE_TINT.
+const PIG_NOSE = 'models/emberwood/props/pig_nose.glb';
+export const PIG_NOSE_ATTACH: AttachDef = {
+  url: PIG_NOSE,
+  bone: 'head',
+  position: [0, 0.13, 0.24],
+  rotationY: 0,
+};
 
 const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   eastbrook_buckler: 'shield_round',
@@ -517,6 +527,7 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [
       { url: `${WEAPONS}/sword_1handed.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/shield_round.glb`, bone: 'handslot.l' },
+      PIG_NOSE_ATTACH,
     ],
     weaponSlots: [0],
     offhandSlot: 1,
@@ -534,6 +545,7 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [
       { url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/shield_square.glb`, bone: 'handslot.l' },
+      PIG_NOSE_ATTACH,
     ],
     weaponSlots: [0],
     offhandSlot: 1,
@@ -548,7 +560,7 @@ export const VISUALS: Record<string, VisualDef> = {
     animUrls: [`${PLAYERS}/bow_anims.glb`],
     // dedicated ranger model — the quiver is a built-in mesh, so it's no longer
     // a separate chest attachment
-    attach: [{ url: `${WEAPONS}/crossbow_1handed.glb`, bone: 'handslot.r' }],
+    attach: [{ url: `${WEAPONS}/crossbow_1handed.glb`, bone: 'handslot.r' }, PIG_NOSE_ATTACH],
   },
   player_rogue: {
     url: `${PLAYERS}/rogue.glb`,
@@ -558,6 +570,7 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [
       { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.l' },
+      PIG_NOSE_ATTACH,
     ],
     weaponSlots: [0],
     offhandSlot: 1,
@@ -569,7 +582,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // The priest's Light: a warm golden halo ring above the crown.
     halo: 0xffd766,
     show: [],
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
+    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }, PIG_NOSE_ATTACH],
     weaponSlots: [0],
     tint: 0xf0e9d6,
     tintStrength: 0.5,
@@ -585,6 +598,7 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [
       { url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/shield_round.glb`, bone: 'handslot.l' },
+      PIG_NOSE_ATTACH,
     ],
     weaponSlots: [0],
     offhandSlot: 1,
@@ -598,7 +612,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // no Mage_Hat on players: the brim hides the whole body from the default
     // chase-camera pitch (NPC mages keep theirs — they're seen from the side)
     show: ['Mage_Cape'],
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
+    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }, PIG_NOSE_ATTACH],
     weaponSlots: [0],
   },
   player_warlock: {
@@ -609,6 +623,7 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [
       { url: `${WEAPONS}/wand.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/spellbook_open.glb`, bone: 'handslot.l', gripRef: 'Spellbook_open' },
+      PIG_NOSE_ATTACH,
     ],
     weaponSlots: [0], // mainhand (wand) swaps; spellbook offhand stays
     tint: 0x8d5fd3,
@@ -619,7 +634,7 @@ export const VISUALS: Record<string, VisualDef> = {
     height: HUMANOID_H,
     clips: kaykit(['2H_Melee_Attack_Chop']),
     // dedicated druid model (own texture, ships a Backpack mesh)
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
+    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }, PIG_NOSE_ATTACH],
     weaponSlots: [0],
   },
 
@@ -637,7 +652,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // mainhand: the shared handslot.r bone carries the grip (the mech reuses the
     // exact KayKit rig), so weaponSlots swaps attach[0] to the equipped weapon's
     // model just like every other class. The sword is only the no-weapon default.
-    attach: [{ url: `${WEAPONS}/sword_1handed.glb`, bone: 'handslot.r' }],
+    attach: [{ url: `${WEAPONS}/sword_1handed.glb`, bone: 'handslot.r' }, PIG_NOSE_ATTACH],
     weaponSlots: [0],
     lazyPreload: true,
   },

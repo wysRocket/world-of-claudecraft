@@ -617,6 +617,7 @@ export const MEDIA_ASSETS: Record<string, string> =
   "models/emberwood/foliage/pine_2.glb": "/media/models/emberwood/foliage/pine_2.0175f14ca627.glb",
   "models/emberwood/foliage/rock_1.glb": "/media/models/emberwood/foliage/rock_1.4f90e1dd9929.glb",
   "models/emberwood/foliage/rock_2.glb": "/media/models/emberwood/foliage/rock_2.653ce4687f9d.glb",
+  "models/emberwood/props/pig_nose.glb": "/media/models/emberwood/props/pig_nose.f1f4fc17c762.glb",
   "models/emberwood/weapons/shield.glb": "/media/models/emberwood/weapons/shield.1e5dbed1ee58.glb",
   "models/emberwood/weapons/staff.glb": "/media/models/emberwood/weapons/staff.2a8034db31d2.glb",
   "models/emberwood/weapons/sword.glb": "/media/models/emberwood/weapons/sword.52761db4236c.glb",
