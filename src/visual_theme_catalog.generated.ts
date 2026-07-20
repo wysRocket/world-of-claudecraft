@@ -47,6 +47,21 @@ export const VISUAL_THEME_CATALOG = {
     "textures/terrain/Ground048_Color.jpg": "textures/emberwood/terrain/dirt_color.jpg",
     "textures/terrain/Ground048_NormalGL.jpg": "textures/emberwood/terrain/dirt_normal.jpg",
     "textures/terrain/Rock051_Color.jpg": "textures/emberwood/terrain/rock_color.jpg",
-    "textures/terrain/Rock051_NormalGL.jpg": "textures/emberwood/terrain/rock_normal.jpg"
+    "textures/terrain/Rock051_NormalGL.jpg": "textures/emberwood/terrain/rock_normal.jpg",
+    "ui/items/backpack.webp": "ui/emberwood/items/backpack.webp",
+    "ui/items/eastbrook_chain_vest.webp": "ui/emberwood/items/eastbrook_chain_vest.webp",
+    "ui/items/lesser_mana_potion.webp": "ui/emberwood/items/lesser_mana_potion.webp",
+    "ui/items/minor_healing_potion.webp": "ui/emberwood/items/minor_healing_potion.webp",
+    "ui/skills/mage/arcane_intellect.webp": "ui/emberwood/skills/mage/arcane_intellect.webp",
+    "ui/skills/mage/blink.webp": "ui/emberwood/skills/mage/blink.webp",
+    "ui/skills/mage/fireball.webp": "ui/emberwood/skills/mage/fireball.webp",
+    "ui/skills/mage/frost_nova.webp": "ui/emberwood/skills/mage/frost_nova.webp",
+    "ui/skills/mage/frostbolt.webp": "ui/emberwood/skills/mage/frostbolt.webp",
+    "ui/skills/mage/polymorph.webp": "ui/emberwood/skills/mage/polymorph.webp",
+    "ui/skills/warrior/attack.webp": "ui/emberwood/skills/warrior/attack.webp",
+    "ui/skills/warrior/battle_shout.webp": "ui/emberwood/skills/warrior/battle_shout.webp",
+    "ui/skills/warrior/charge.webp": "ui/emberwood/skills/warrior/charge.webp",
+    "ui/skills/warrior/heroic_strike.webp": "ui/emberwood/skills/warrior/heroic_strike.webp",
+    "ui/skills/warrior/thunder_clap.webp": "ui/emberwood/skills/warrior/thunder_clap.webp"
   }
 } as const;

@@ -195,7 +195,22 @@
       "src": "tmp/asset_src/emberwood/env/vale_backdrop_4k.webp",
       "out": "env/emberwood/vale_backdrop_4k.webp",
       "type": "copy"
-    }
+    },
+    { "src": "public/ui/emberwood/skills/warrior/attack.webp", "out": "ui/emberwood/skills/warrior/attack.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/warrior/heroic_strike.webp", "out": "ui/emberwood/skills/warrior/heroic_strike.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/warrior/battle_shout.webp", "out": "ui/emberwood/skills/warrior/battle_shout.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/warrior/charge.webp", "out": "ui/emberwood/skills/warrior/charge.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/warrior/thunder_clap.webp", "out": "ui/emberwood/skills/warrior/thunder_clap.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/frostbolt.webp", "out": "ui/emberwood/skills/mage/frostbolt.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/fireball.webp", "out": "ui/emberwood/skills/mage/fireball.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/arcane_intellect.webp", "out": "ui/emberwood/skills/mage/arcane_intellect.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/frost_nova.webp", "out": "ui/emberwood/skills/mage/frost_nova.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/blink.webp", "out": "ui/emberwood/skills/mage/blink.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/skills/mage/polymorph.webp", "out": "ui/emberwood/skills/mage/polymorph.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/items/backpack.webp", "out": "ui/emberwood/items/backpack.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/items/minor_healing_potion.webp", "out": "ui/emberwood/items/minor_healing_potion.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/items/lesser_mana_potion.webp", "out": "ui/emberwood/items/lesser_mana_potion.webp", "type": "copy" },
+    { "src": "public/ui/emberwood/items/eastbrook_chain_vest.webp", "out": "ui/emberwood/items/eastbrook_chain_vest.webp", "type": "copy" }
   ],
   "replacements": [
     { "from": "models/props/house_1.glb", "to": "models/emberwood/eastbrook/house_a.glb" },
@@ -268,6 +283,21 @@
     { "from": "env/vale_day_1k.hdr", "to": "env/emberwood/vale_day_1k.hdr" },
     { "from": "env/vale_day_2k.hdr", "to": "env/emberwood/vale_day_2k.hdr" },
     { "from": "env/vale_backdrop.webp", "to": "env/emberwood/vale_backdrop.webp" },
-    { "from": "env/vale_backdrop_4k.webp", "to": "env/emberwood/vale_backdrop_4k.webp" }
+    { "from": "env/vale_backdrop_4k.webp", "to": "env/emberwood/vale_backdrop_4k.webp" },
+    { "from": "ui/skills/warrior/attack.webp", "to": "ui/emberwood/skills/warrior/attack.webp" },
+    { "from": "ui/skills/warrior/heroic_strike.webp", "to": "ui/emberwood/skills/warrior/heroic_strike.webp" },
+    { "from": "ui/skills/warrior/battle_shout.webp", "to": "ui/emberwood/skills/warrior/battle_shout.webp" },
+    { "from": "ui/skills/warrior/charge.webp", "to": "ui/emberwood/skills/warrior/charge.webp" },
+    { "from": "ui/skills/warrior/thunder_clap.webp", "to": "ui/emberwood/skills/warrior/thunder_clap.webp" },
+    { "from": "ui/skills/mage/frostbolt.webp", "to": "ui/emberwood/skills/mage/frostbolt.webp" },
+    { "from": "ui/skills/mage/fireball.webp", "to": "ui/emberwood/skills/mage/fireball.webp" },
+    { "from": "ui/skills/mage/arcane_intellect.webp", "to": "ui/emberwood/skills/mage/arcane_intellect.webp" },
+    { "from": "ui/skills/mage/frost_nova.webp", "to": "ui/emberwood/skills/mage/frost_nova.webp" },
+    { "from": "ui/skills/mage/blink.webp", "to": "ui/emberwood/skills/mage/blink.webp" },
+    { "from": "ui/skills/mage/polymorph.webp", "to": "ui/emberwood/skills/mage/polymorph.webp" },
+    { "from": "ui/items/backpack.webp", "to": "ui/emberwood/items/backpack.webp" },
+    { "from": "ui/items/minor_healing_potion.webp", "to": "ui/emberwood/items/minor_healing_potion.webp" },
+    { "from": "ui/items/lesser_mana_potion.webp", "to": "ui/emberwood/items/lesser_mana_potion.webp" },
+    { "from": "ui/items/eastbrook_chain_vest.webp", "to": "ui/emberwood/items/eastbrook_chain_vest.webp" }
   ]
 }
