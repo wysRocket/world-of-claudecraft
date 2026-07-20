@@ -24,6 +24,8 @@ import { loadGltf } from './assets/loader';
 import { registerPreload } from './assets/preload';
 import { configureMaskedDoubleSidedVegetationMaterial, GFX, sharedUniforms } from './gfx';
 import { grassTuftTexture } from './textures';
+import { ACTIVE_VISUAL_THEME } from '../visual_theme';
+import { foliagePaletteForTheme } from './emberwood/palette';
 
 // Vegetation: trees, rocks, ground dressing and the grass ring.
 //
@@ -112,61 +114,14 @@ for (const urls of Object.values(MODEL_URLS)) {
 // Desaturated biome tints riding instanceColor. The textured models carry
 // their own hue, so tints are lerped most of the way to white before use
 // (raw tints multiply into the albedo and read as grime).
-const PINE_TINT: Record<BiomeId, number> = {
-  vale: 0x9bb48d,
-  marsh: 0x87966b,
-  peaks: 0x6f8a7a,
-  beach: 0xa8b878,
-  desert: 0xa8a468,
-  volcano: 0x6a5f52,
-  cave: 0x77837a,
-};
-const OAK_TINT: Record<BiomeId, number> = {
-  vale: 0xa7b886,
-  marsh: 0x8d9865,
-  peaks: 0x92a37f,
-  beach: 0xb2bd7e,
-  desert: 0xb0a468,
-  volcano: 0x74624f,
-  cave: 0x84907f,
-};
-const ROCK_TINT: Record<BiomeId, number> = {
-  vale: 0x8d8d85,
-  marsh: 0x565c4e,
-  peaks: 0x878e99,
-  beach: 0xb0a894,
-  desert: 0xb08d6a,
-  volcano: 0x4a4038,
-  cave: 0x6a6a66,
-};
-const TRUNK_TINT: Record<BiomeId, number> = {
-  vale: 0xffffff,
-  marsh: 0xd2d8bc,
-  peaks: 0xd9dde4,
-  beach: 0xf2e4c8,
-  desert: 0xe6d2ac,
-  volcano: 0xb8a394,
-  cave: 0xc4c8c2,
-};
-const GRASS_TINT: Record<BiomeId, number> = {
-  vale: 0xdde4c0,
-  marsh: 0xbfc492,
-  peaks: 0xc2cec8,
-  beach: 0xe8e2b0,
-  desert: 0xdcc890,
-  volcano: 0x8a7a68,
-  cave: 0xa2a89c,
-};
+const foliagePalette = foliagePaletteForTheme(ACTIVE_VISUAL_THEME);
+const PINE_TINT: Record<BiomeId, number> = foliagePalette.pine;
+const OAK_TINT: Record<BiomeId, number> = foliagePalette.oak;
+const ROCK_TINT: Record<BiomeId, number> = foliagePalette.rock;
+const TRUNK_TINT: Record<BiomeId, number> = foliagePalette.trunk;
+const GRASS_TINT: Record<BiomeId, number> = foliagePalette.grass;
 const SWAMP_CANOPY_TINT = 0x7e8b58;
-const DRESS_TINT: Record<BiomeId, number> = {
-  vale: 0xaebf8e,
-  marsh: 0x8d9865,
-  peaks: 0x93a78f,
-  beach: 0xc2c188,
-  desert: 0xc0aa74,
-  volcano: 0x7a6a58,
-  cave: 0x8a948a,
-};
+const DRESS_TINT: Record<BiomeId, number> = foliagePalette.dress;
 // how far tints collapse toward white (1 = no tint at all)
 const LEAF_TINT_SOFTEN = 0.6;
 const BARK_TINT_SOFTEN = 0.85;
