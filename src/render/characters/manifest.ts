@@ -166,6 +166,17 @@ const skeletonLargeClips = (attack: string[]): ClipMap => ({
   death: 'Death_A',
 });
 
+// OpenMMO Mixamo rig (orc/goblin donor): maps generic states to Mixamo clips.
+const mixamoClips = (attack = 'Sword_Attack_Rig'): ClipMap => ({
+  idle: 'Idle_Loop_Rig',
+  walk: 'Walk_Loop_Rig',
+  run: 'Jog_Fwd_Loop_Rig',
+  attack: [attack],
+  hit: ['Hit_Chest_Rig', 'Hit_Head_Rig', 'Hit_Stomach_Rig'],
+  death: 'Death01_Rig',
+  jump: 'Jump_Loop_Rig',
+});
+
 // Quaternius 2021 animal rig (wolf/bull/alpaca/fox/stag)
 const animal = (attack: string[]): ClipMap => ({
   idle: 'Idle',
@@ -727,9 +738,9 @@ export const VISUALS: Record<string, VisualDef> = {
   amber_heart_golem: {
     url: 'models/emberwood/creatures/amber_heart_golem.glb',
     height: 3.0,
-    clips: GOLEM,
-    tint: 'entity',
-    tintStrength: 0.2,
+    clips: mixamoClips(),
+    // keep authored obsidian/amber materials — no faction tint
+    tintStrength: 0,
   },
   mob_boar: {
     url: `${CREATURES}/wild_boar.glb`,
