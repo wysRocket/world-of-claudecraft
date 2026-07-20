@@ -326,6 +326,46 @@ describe('signed Pristine specimens (#1145, Phase 10)', () => {
     expect(slot?.instance?.signer).toBe('Alpha');
     expect(sim.countItem('wolf_fang', a)).toBe(1);
   });
+
+  it('a slot-full signed-family harvest falls back to the plain stack, never over capacity (seed 5)', () => {
+    // The pre-gate reserves plain-stack room only, so a partial stack lets it
+    // pass while a signed instance would still need a fresh slot. The rare+
+    // arm must then fall back to the plain fungible top-up (the signature
+    // truncates, the yield does not), same free-slot contract as the
+    // specimen arm.
+    const { sim, internals, a, mob } = setup(5);
+    fillBags(sim, internals, a);
+    const m = internals.players.get(a)!;
+    const cap = bagCapacity(m.bags);
+    m.inventory[0] = { itemId: 'wolf_fang', count: 1 };
+    expect(m.inventory.length).toBe(cap);
+    sim.harvestCorpse(mob.id, ['fang'], a);
+    expect(mob.harvestClaimedBy).toBe(a);
+    expect(m.inventory.length).toBeLessThanOrEqual(cap);
+    const signed = m.inventory.find((s) => s.itemId === 'wolf_fang' && s.instance?.signer);
+    expect(signed).toBeUndefined();
+    // Seed 5's rarity roll clears the signable floor with this exact draw
+    // sequence (proven by the unfixed code overflowing here), so the count
+    // above the seeded 1 proves the plain fallback delivered the yield.
+    expect(sim.countItem('wolf_fang', a)).toBeGreaterThan(1);
+  });
+
+  it('a slot-full specimen harvest truncates the specimen and keeps the plain yield (seed 5)', () => {
+    // Plain grant tops up the partial stack without opening a slot, so the
+    // specimen guard sees a full bag: the jackpot truncates rather than
+    // overflowing, and the plain component still arrives.
+    const { sim, internals, a, mob } = setup(5);
+    fillBags(sim, internals, a);
+    const m = internals.players.get(a)!;
+    const cap = bagCapacity(m.bags);
+    m.inventory[0] = { itemId: 'rough_hide', count: 1 };
+    expect(m.inventory.length).toBe(cap);
+    sim.harvestCorpse(mob.id, ['hide'], a);
+    expect(mob.harvestClaimedBy).toBe(a);
+    expect(m.inventory.length).toBeLessThanOrEqual(cap);
+    expect(m.inventory.some((s) => s.itemId === 'pristine_hide')).toBe(false);
+    expect(sim.countItem('rough_hide', a)).toBeGreaterThan(1);
+  });
 });
 
 // A ClientWorld without the WebSocket plumbing, to drive applySnapshot directly

@@ -306,7 +306,19 @@ export function harvestCorpse(
         ctx.addItemInstance(specimenId, { signer: meta.name }, meta.entityId);
       }
     } else if (isSignableMaterialRarity(rarity)) {
-      ctx.addItemInstance(itemId, { signer: meta.name }, meta.entityId);
+      // Same free-slot contract as the specimen arm above: a signed instance
+      // never merges into a stack, and the pre-gate only reserves plain-stack
+      // room, so with no genuinely free slot the grant falls back to the
+      // plain fungible top-up (the signature truncates, the yield does not).
+      if (meta.inventory.length < bagCapacity(meta.bags)) {
+        ctx.addItemInstance(itemId, { signer: meta.name }, meta.entityId);
+      } else {
+        ctx.addItem(
+          itemId,
+          focusedHarvestQuantity(tier, y.component, meta.townFocus),
+          meta.entityId,
+        );
+      }
     } else {
       // #1143: as above, the focus yield bonus on top of the tier shift.
       ctx.addItem(itemId, focusedHarvestQuantity(tier, y.component, meta.townFocus), meta.entityId);
