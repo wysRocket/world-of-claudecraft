@@ -327,6 +327,60 @@ describe('signed Pristine specimens (#1145, Phase 10)', () => {
     expect(sim.countItem('wolf_fang', a)).toBe(1);
   });
 
+  it('every other specimen family grants its own jackpot beside the plain component (seed 5)', () => {
+    // The hide row is exercised above; this sweeps the remaining three
+    // specimen rows behaviorally (silk and venomSac via webwood_spider, meat
+    // via wild_boar), so a mistargeted HARVEST_COMPONENT_SPECIMENS row cannot
+    // hide behind hide-only coverage. Seed 5's rarity roll clears the
+    // signable floor for a single focused component regardless of family
+    // (the roll's draw position is identical).
+    const families: { templateId: string; focus: string; plain: string; specimen: string }[] = [
+      { templateId: 'webwood_spider', focus: 'silk', plain: 'spider_silk', specimen: 'pristine_silk' },
+      {
+        templateId: 'webwood_spider',
+        focus: 'venomSac',
+        plain: 'venom_gland',
+        specimen: 'pristine_venom_gland',
+      },
+      { templateId: 'wild_boar', focus: 'meat', plain: 'game_meat', specimen: 'prime_cut' },
+    ];
+    for (const f of families) {
+      const { sim, internals, a } = setup(5);
+      const template = MOBS[f.templateId];
+      const corpse = createMob(7776, template, template.maxLevel, { x: 0, y: 0, z: 0 });
+      corpse.dead = true;
+      corpse.aiState = 'dead';
+      corpse.corpseTimer = 9999;
+      corpse.respawnTimer = 9999;
+      internals.entities.set(corpse.id, corpse);
+      sim.harvestCorpse(corpse.id, [f.focus], a);
+      const meta = internals.players.get(a)!;
+      const plain = meta.inventory.find((s) => s.itemId === f.plain);
+      expect(plain, `${f.focus} plain`).toBeDefined();
+      expect(plain?.instance, `${f.focus} plain stays unsigned`).toBeUndefined();
+      const specimen = meta.inventory.find((s) => s.itemId === f.specimen);
+      expect(specimen?.instance?.signer, `${f.focus} jackpot`).toBe('Alpha');
+      expect(sim.countItem(f.specimen, a)).toBe(1);
+    }
+  });
+
+  it('the cloth family (no specimen) grants the signed component at rare-or-better (seed 5)', () => {
+    const { sim, internals, a } = setup(5);
+    const template = MOBS.vale_bandit;
+    const corpse = createMob(7775, template, template.maxLevel, { x: 0, y: 0, z: 0 });
+    corpse.dead = true;
+    corpse.aiState = 'dead';
+    corpse.corpseTimer = 9999;
+    corpse.respawnTimer = 9999;
+    internals.entities.set(corpse.id, corpse);
+    sim.harvestCorpse(corpse.id, ['cloth'], a);
+    const meta = internals.players.get(a)!;
+    const slot = meta.inventory.find((s) => s.itemId === 'homespun_cloth');
+    expect(slot).toBeDefined();
+    expect(slot?.instance?.signer).toBe('Alpha');
+    expect(sim.countItem('homespun_cloth', a)).toBe(1);
+  });
+
   it('a slot-full signed-family harvest falls back to the plain stack, never over capacity (seed 5)', () => {
     // The pre-gate reserves plain-stack room only, so a partial stack lets it
     // pass while a signed instance would still need a fresh slot. The rare+
