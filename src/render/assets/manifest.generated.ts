@@ -592,6 +592,7 @@ export const MEDIA_ASSETS: Record<string, string> =
   "models/emberwood/chars/bandit.glb": "/media/models/emberwood/chars/bandit.01c440d5c6a7.glb",
   "models/emberwood/chars/mage.glb": "/media/models/emberwood/chars/mage.59f949165d02.glb",
   "models/emberwood/chars/warrior.glb": "/media/models/emberwood/chars/warrior.e275831c85ef.glb",
+  "models/emberwood/creatures/amber_heart_golem.glb": "/media/models/emberwood/creatures/amber_heart_golem.97fd5fd708dc.glb",
   "models/emberwood/creatures/wolf.glb": "/media/models/emberwood/creatures/wolf.510adbd3c787.glb",
   "models/emberwood/eastbrook/anvil.glb": "/media/models/emberwood/eastbrook/anvil.85017537afae.glb",
   "models/emberwood/eastbrook/barrel.glb": "/media/models/emberwood/eastbrook/barrel.798dc74bc373.glb",
