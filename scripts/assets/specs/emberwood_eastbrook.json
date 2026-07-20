@@ -142,6 +142,11 @@
       "maxTex": 256
     },
     {
+      "src": "tmp/asset_src/emberwood/props/pig_nose.glb",
+      "out": "models/emberwood/props/pig_nose.glb",
+      "type": "copy"
+    },
+    {
       "src": "tmp/asset_src/emberwood/terrain/grass_color.jpg",
       "out": "textures/emberwood/terrain/grass_color.jpg",
       "type": "copy"
