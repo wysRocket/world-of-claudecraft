@@ -200,6 +200,7 @@ describe('character visual manifest', () => {
     expect(visibleAttachmentsForGraphics(VISUALS.player_rogue).map((a) => a.url)).toEqual([
       'models/weapons/dagger.glb',
       'models/weapons/dagger.glb',
+      'models/emberwood/props/pig_nose.glb',
     ]);
   });
 
