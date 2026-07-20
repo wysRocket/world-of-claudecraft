@@ -292,6 +292,7 @@ export const MOB_UPDATE_BUCKETS = [
   'dragonkin',
   'demon',
   'reptile',
+  'golem',
   'other',
 ] as const satisfies readonly (MobFamily | 'other')[];
 // sim.tick() internal phase names (already `sim.`-prefixed): must match the

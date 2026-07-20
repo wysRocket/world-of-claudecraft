@@ -501,6 +501,30 @@ export const ZONE1_MOBS: Record<string, MobTemplate> = {
     scale: 1.25,
     color: 0x6c3483,
   },
+  amber_heart_golem: {
+    id: 'amber_heart_golem',
+    name: 'Amber-Heart Golem',
+    minLevel: 7,
+    maxLevel: 9,
+    family: 'golem',
+    hpBase: 320,
+    hpPerLevel: 60,
+    dmgBase: 14,
+    dmgPerLevel: 4.5,
+    attackSpeed: 2.4,
+    armorPerLevel: 28,
+    moveSpeed: 5.5,
+    aggroRadius: 14,
+    loot: [
+      { copper: 120, chance: 1 },
+      { itemId: 'arcane_shard', chance: 0.8 },
+      { itemId: 'eastbrook_greatsword', chance: 0.05 },
+    ],
+    scale: 1.0,
+    color: 0xff8c1f,
+    componentTags: ['stone', 'amber'],
+    elite: true,
+  },
 };
 
 // ---------------------------------------------------------------------------

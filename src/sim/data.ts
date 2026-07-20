@@ -248,6 +248,12 @@ export const CAMPS: CampDef[] = [
   ...TEMPLE_CAMPS,
   ...ZONE1_CHAPEL_CAMPS,
   { mobId: 'grix_the_tunnelking', center: { x: -95, z: -78 }, radius: 4, count: 1 },
+  // Emberwood Amber-Heart Golem: a showcase specimen standing at the edge of
+  // Eastbrook (the initial village) so players meet it the moment they leave the
+  // square. Placed just outside the TOWN_RADIUS(26) hub so it doesn't overlap
+  // NPCs, but close enough to read as "in the village". Appended LAST to preserve
+  // existing camp draw order (determinism).
+  { mobId: 'amber_heart_golem', center: { x: 22, z: 16 }, radius: 6, count: 2 },
 ];
 
 export const GROUND_OBJECTS: GroundObjectDef[] = [
