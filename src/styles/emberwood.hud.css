@@ -1,0 +1,123 @@
+/* emberwood.hud.css — Emberwood Chronicle HUD chrome.
+   Loaded under @layer components, scoped to [data-visual-theme="emberwood"].
+   The warm palette already comes from emberwood.tokens.css (--panel-bg, --border,
+   --gold etc. are remapped there). This layer only ADDS crafted detail on top of
+   the existing frame geometry: blackened-iron borders, restrained brass corner
+   notches, a warm inner edge, and an ember focus glow. It does NOT move HUD
+   regions, resize anything, or change hit targets (per plan Task 10 Step 3).
+
+   Shape language (design spec §5.2): tapered arches, split rings, carved notches,
+   stable asymmetry. Material language (§5.3): dark oak, hammered brass, blackened
+   iron, soot framing. */
+
+@layer components {
+  /* ---- Window / panel frames: blackened iron + brass hairline ---- */
+  :root[data-visual-theme="emberwood"] .window,
+  :root[data-visual-theme="emberwood"] .panel,
+  :root[data-visual-theme="emberwood"] .hud-panel,
+  :root[data-visual-theme="emberwood"] .unitframe,
+  :root[data-visual-theme="emberwood"] .tooltip,
+  :root[data-visual-theme="emberwood"] .context-menu,
+  :root[data-visual-theme="emberwood"] .dropdown,
+  :root[data-visual-theme="emberwood"] .modal {
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px 6px 4px 4px; /* slight tapered-arch feel, not a perfect round */
+    box-shadow:
+      inset 0 0 0 1px rgba(201, 154, 74, 0.12), /* brass hairline */
+      inset 0 1px 0 0 rgba(231, 215, 184, 0.06), /* top light catch */
+      0 2px 10px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Brass corner notches — drawn as ::before so geometry is untouched. */
+  :root[data-visual-theme="emberwood"] .window::before,
+  :root[data-visual-theme="emberwood"] .modal::before,
+  :root[data-visual-theme="emberwood"] .tooltip::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(135deg, var(--gold) 0 2px, transparent 2px) top left / 10px 10px no-repeat,
+      linear-gradient(225deg, var(--gold) 0 2px, transparent 2px) top right / 10px 10px no-repeat,
+      linear-gradient(45deg, var(--gold) 0 2px, transparent 2px) bottom left / 10px 10px no-repeat,
+      linear-gradient(315deg, var(--gold) 0 2px, transparent 2px) bottom right / 10px 10px no-repeat;
+    opacity: 0.5;
+  }
+
+  /* ---- Unit frames: warm inner edge + ember presence ---- */
+  :root[data-visual-theme="emberwood"] .unitframe {
+    background: var(--panel-bg);
+    border-radius: 5px;
+    box-shadow:
+      inset 0 0 0 1px rgba(201, 154, 74, 0.18),
+      0 1px 6px rgba(0, 0, 0, 0.5);
+  }
+  :root[data-visual-theme="emberwood"] .unitframe .uf-name,
+  :root[data-visual-theme="emberwood"] .unitframe .uf-bars {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+  }
+
+  /* ---- Resource bars: keep semantic colour, add warm gutter ---- */
+  :root[data-visual-theme="emberwood"] .bar,
+  :root[data-visual-theme="emberwood"] .uf-bar {
+    border: 1px solid rgba(13, 15, 12, 0.8);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+  }
+
+  /* ---- Buttons (action bar, dialogs): oak/iron with brass on hover/focus ---- */
+  :root[data-visual-theme="emberwood"] button,
+  :root[data-visual-theme="emberwood"] .btn,
+  :root[data-visual-theme="emberwood"] .ability-slot {
+    border: 1px solid var(--color-border-default);
+    border-radius: 4px;
+    background-image: linear-gradient(180deg, rgba(111, 75, 50, 0.28), rgba(13, 15, 12, 0.35));
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  :root[data-visual-theme="emberwood"] button:hover,
+  :root[data-visual-theme="emberwood"] .btn:hover,
+  :root[data-visual-theme="emberwood"] .ability-slot:hover,
+  :root[data-visual-theme="emberwood"] button:focus-visible,
+  :root[data-visual-theme="emberwood"] .btn:focus-visible {
+    border-color: var(--gold);
+    box-shadow:
+      inset 0 0 0 1px rgba(201, 154, 74, 0.3),
+      0 0 8px rgba(209, 113, 58, 0.25); /* ember glow */
+  }
+
+  /* ---- Focus ring: ember, not the classic gold-wide ring ---- */
+  :root[data-visual-theme="emberwood"] :focus-visible {
+    outline: 2px solid var(--gold-dim);
+    outline-offset: 1px;
+  }
+
+  /* ---- Chat / log frames: cool ink on parchment-free soot ---- */
+  :root[data-visual-theme="emberwood"] .chat-frame,
+  :root[data-visual-theme="emberwood"] .log-frame {
+    border-color: var(--color-border-default);
+    box-shadow: inset 0 0 0 1px rgba(201, 154, 74, 0.08);
+  }
+
+  /* ---- Quest tracker / world-overlay text stays light, warm halo ---- */
+  :root[data-visual-theme="emberwood"] .quest-tracker,
+  :root[data-visual-theme="emberwood"] .world-objective {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  }
+
+  /* ---- Headers / titles: parchment text on soot, brass underline tick ---- */
+  :root[data-visual-theme="emberwood"] .window-title,
+  :root[data-visual-theme="emberwood"] .panel-title {
+    color: var(--color-text-light);
+    border-bottom: 1px solid var(--color-border-default);
+    box-shadow: 0 1px 0 0 rgba(201, 154, 74, 0.18);
+  }
+
+  /* ---- Tooltip: tighter brass edge, no layout shift ---- */
+  :root[data-visual-theme="emberwood"] .tooltip {
+    border-radius: 4px;
+    box-shadow:
+      inset 0 0 0 1px rgba(201, 154, 74, 0.22),
+      0 4px 14px rgba(0, 0, 0, 0.55);
+  }
+}

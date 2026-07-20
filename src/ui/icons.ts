@@ -11,6 +11,7 @@
 import { ABILITIES, ITEMS } from '../sim/data';
 import { DEED_IMAGE_IDS } from './deed_image_ids';
 import { ITEM_WEAPON_VARIANTS } from './weapon_variants';
+import { visualAssetPath } from '../visual_theme';
 
 export type IconKind = 'ability' | 'item' | 'aura' | 'crest';
 
@@ -3808,7 +3809,7 @@ export function abilityImageUrl(id: string): string | null {
           id === 'overflowing_power'
         ? 'mage'
         : null);
-  return cls ? `${SKILL_ICON_DIR}/${cls}/${id}.webp` : null;
+  return cls ? visualAssetPath(`${SKILL_ICON_DIR}/${cls}/${id}.webp`) : null;
 }
 
 // Item ids with committed painted art under /ui/items/<id>.webp (curated from the CraftPix
@@ -4113,7 +4114,9 @@ export const UI_ITEM_IMAGE_IDS = new Set<string>(['backpack']);
 
 /** Static URL of an item's (or a UI pseudo-item's) image icon, or null if it uses a recipe. */
 export function itemImageUrl(id: string): string | null {
-  return ITEM_IMAGE_IDS.has(id) || UI_ITEM_IMAGE_IDS.has(id) ? `${ITEM_ICON_DIR}/${id}.webp` : null;
+  return ITEM_IMAGE_IDS.has(id) || UI_ITEM_IMAGE_IDS.has(id)
+    ? visualAssetPath(`${ITEM_ICON_DIR}/${id}.webp`)
+    : null;
 }
 
 // Book of Deeds crest ids are shaped `deed_<deedId>` (deeds_view.ts deedCrestId). Those whose
@@ -4128,7 +4131,7 @@ const DEED_CREST_PREFIX = 'deed_';
 export function deedImageUrl(crestId: string): string | null {
   if (!crestId.startsWith(DEED_CREST_PREFIX)) return null;
   const deedId = crestId.slice(DEED_CREST_PREFIX.length);
-  return DEED_IMAGE_IDS.has(deedId) ? `${DEED_ICON_DIR}/${deedId}.webp` : null;
+  return DEED_IMAGE_IDS.has(deedId) ? visualAssetPath(`${DEED_ICON_DIR}/${deedId}.webp`) : null;
 }
 
 /** True when `id` has a real crest recipe, as opposed to falling through to the

@@ -1,0 +1,79 @@
+/* emberwood.tokens.css — Emberwood Chronicle semantic palette overrides.
+   Loaded under @layer tokens, scoped to [data-visual-theme="emberwood"] so it
+   only remaps tokens when the active visual theme is Emberwood. The classic
+   tokens remain the default and the runtime theme system (src/ui/theme.ts)
+   still writes the live --color-* accents on top, so this file only fixes the
+   structural palette that the theme presets do not touch.
+
+   Palette (design spec §5.4):
+     soot      #171B18   deep surfaces / framing
+     moss      #2F4533   wilderness structure
+     oak       #6F4B32   timber / leather / warmth
+     ember     #D1713A   active warmth / interaction
+     brass     #C99A4A   premium trim / achievement
+     parchment #E7D7B8   readable light surfaces / warm text
+     smoke     #607487   distance / shadow / water
+     oxblood   #743B36   hostile cloth / elite accent
+
+   Accessibility: semantic state colours (hostile, friendly, debuff schools,
+   team flags, resource bars) are left at their classic values where they are
+   not part of the warm/cool identity, so colourblind and state reads are
+   unchanged. Only the warm structural frame palette is re-tuned. */
+
+@layer tokens {
+  :root[data-visual-theme="emberwood"] {
+    /* Frame + surface palette */
+    --panel-base: #171b18;
+    --panel-bg: linear-gradient(
+      170deg,
+      rgba(23, 27, 24, 0.96) 0%,
+      rgba(15, 18, 15, 0.97) 55%,
+      rgba(10, 12, 10, 0.98) 100%
+    );
+    --panel-edge: #0d0f0c;
+    --color-bg-dark: #0d0f0c;
+    --color-bg-input: #11140f;
+    --border: #6f4b32; /* oak */
+    --color-border-default: #4a3320;
+    --color-border-focus: #c99a4a; /* brass */
+    --color-border-invalid: #b06a5e;
+    --color-border-valid: #6f9a5a;
+
+    /* Warm accents (also recomputed by the emberwood preset in theme.ts, but
+       pinned here so non-preset consumers stay coherent). */
+    --gold: #c99a4a;
+    --gold-dim: #9a7536;
+    --color-primary: var(--gold);
+    --color-primary-dim: var(--gold-dim);
+    --color-primary-glow: rgba(201, 154, 74, 0.22);
+    --color-primary-glow-heavy: rgba(201, 154, 74, 0.42);
+    --color-gold: var(--gold);
+    --color-accent: var(--gold);
+    --color-text-light: #e7d7b8; /* parchment */
+    --color-text-muted: #a09070;
+    --color-text-overlay: #f4eede;
+    --text-outline-color: #000000;
+
+    /* Resource / state bars keep their readable hues, but the ember preset in
+       theme.ts already swaps hp/mana/rage/energy to the warm-safe set; these
+       here are the fallbacks for any direct token reader. */
+    --color-hp: #4a8a4a;
+    --color-mana: #607487; /* smoke blue */
+    --color-rage: #743b36; /* oxblood */
+    --color-energy: #d1713a; /* ember */
+
+    /* Emberwood scrollbar: blackened-iron track, brass thumb. */
+    --scrollbar-thumb: #6f4b32;
+    --scrollbar-track: rgba(13, 15, 12, 0.7);
+    --scrollbar-thumb-hover: #c99a4a;
+    --scrollbar-border: #c99a4a;
+
+    /* Quest / objective warm accent (was classic gold #ffd100 — keep the
+       brass-embered tone so map + minimap POIs read as part of the world). */
+    --color-map-quest-area-fill: rgba(209, 113, 58, 0.18);
+    --color-map-quest-area-stroke: rgba(201, 154, 74, 0.5);
+    --color-map-quest-badge-fill: #c99a4a;
+    --color-map-quest-badge-text: #1a140a;
+    --color-minimap-npc-quest: #c99a4a;
+  }
+}
