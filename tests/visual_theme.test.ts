@@ -61,6 +61,11 @@ describe('visual theme browser bridge', () => {
 
     const { ACTIVE_VISUAL_THEME, visualAssetPath } = await import('../src/visual_theme');
     expect(ACTIVE_VISUAL_THEME).toBe('emberwood');
-    expect(visualAssetPath('/models/props/house_1.glb')).toBe('/models/props/house_1.glb');
+    expect(visualAssetPath('/models/props/house_1.glb')).toBe(
+      '/models/emberwood/eastbrook/house_a.glb',
+    );
+    expect(visualAssetPath('/models/props/unknown.glb')).toBe(
+      '/models/props/unknown.glb',
+    );
   });
 });
