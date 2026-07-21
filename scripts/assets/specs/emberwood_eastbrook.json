@@ -311,6 +311,90 @@
       "src": "public/models/emberwood/creatures/amber_heart_golem.glb",
       "out": "models/emberwood/creatures/amber_heart_golem.glb",
       "noCopy": true
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_provisioner.glb",
+      "out": "models/emberwood/npcs/emberwood_provisioner.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_fisherman.glb",
+      "out": "models/emberwood/npcs/emberwood_fisherman.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_groundskeeper.glb",
+      "out": "models/emberwood/npcs/emberwood_groundskeeper.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_herbalist.glb",
+      "out": "models/emberwood/npcs/emberwood_herbalist.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_dealer.glb",
+      "out": "models/emberwood/npcs/emberwood_dealer.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_armorer.glb",
+      "out": "models/emberwood/npcs/emberwood_armorer.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_foreman.glb",
+      "out": "models/emberwood/npcs/emberwood_foreman.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
     }
   ],
   "replacements": [

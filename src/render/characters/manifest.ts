@@ -177,6 +177,20 @@ const mixamoClips = (attack = 'Sword_Attack_Rig'): ClipMap => ({
   jump: 'Jump_Loop_Rig',
 });
 
+// OpenMMO character rig (valkyrie/caveman/cavewoman/female_* donors): the mesh
+// ships with no baked clips of its own, so the build spec grafts on OpenMMO's
+// separate locomotion/combat_melee/offhand/social animation libraries via
+// addClipsFrom (same bone names, verified by direct GLB inspection). No
+// dedicated hit-react clip in that set, so hit stays unset.
+const openmmoClips = (): ClipMap => ({
+  idle: 'idle1',
+  walk: 'walk',
+  run: 'run',
+  attack: ['slash1', 'slash2', 'slash3', 'slash4'],
+  death: 'dying',
+  jump: 'jump',
+});
+
 // Quaternius 2021 animal rig (wolf/bull/alpaca/fox/stag)
 const animal = (attack: string[]): ClipMap => ({
   idle: 'Idle',
@@ -1145,6 +1159,47 @@ export const VISUALS: Record<string, VisualDef> = {
     tint: 'entity',
     tintStrength: 0.35,
   },
+  // Eastbrook variety pass: the_merchant/trader_wilkes/fisherman_brandt/
+  // groundskeeper_bram all fell back to the same plain npc_villager look, and
+  // apothecary_lin/card_master and smith_haldren/foreman_odell each shared one
+  // visual with another distinct role. These 7 give each a distinct,
+  // Emberwood-original body (OpenMMO donor meshes, Blender-retextured, no
+  // classic-theme equivalent, so no faction tint over the authored materials).
+  npc_provisioner: {
+    url: 'models/emberwood/npcs/emberwood_provisioner.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_fisherman: {
+    url: 'models/emberwood/npcs/emberwood_fisherman.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_groundskeeper: {
+    url: 'models/emberwood/npcs/emberwood_groundskeeper.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_herbalist: {
+    url: 'models/emberwood/npcs/emberwood_herbalist.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_dealer: {
+    url: 'models/emberwood/npcs/emberwood_dealer.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_armorer: {
+    url: 'models/emberwood/npcs/emberwood_armorer.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
+  npc_foreman: {
+    url: 'models/emberwood/npcs/emberwood_foreman.glb',
+    height: HUMANOID_H,
+    clips: openmmoClips(),
+  },
   // Bursar Fernando: the villager body with the likeness atlas (SKINS above)
   // carrying black shoulder-length hair and light brown skin. No entity tint:
   // the gold NpcDef color would wash the repaint back toward the villager look.
@@ -1160,6 +1215,16 @@ export const VISUALS: Record<string, VisualDef> = {
   // rogue. Ships its accessories (helm/cape/shield) by default (no show filter).
   npc_reliquary_keeper: {
     url: `${PLAYERS}/guard.glb`,
+    height: HUMANOID_H,
+    clips: kaykit(['1H_Melee_Attack_Chop']),
+  },
+  // Marshal Redbrook: the Emberwood-rethemed paladin (scripts/retheme_openmmo_npc.py
+  // output, unused elsewhere), a distinct helmet/medallion/weapon silhouette from
+  // the plain npc_knight and from npc_reliquary_keeper's guard look. Referenced
+  // directly (no themed-asset indirection): there is no non-Emberwood counterpart,
+  // same pattern as amber_heart_golem below.
+  npc_paladin: {
+    url: 'models/emberwood/npcs/emberwood_paladin.glb',
     height: HUMANOID_H,
     clips: kaykit(['1H_Melee_Attack_Chop']),
   },
@@ -1338,22 +1403,23 @@ const FAMILY_KEYS: Record<string, string> = {
 
 const NPC_KEYS: Record<string, string> = {
   bursar_fernando: 'npc_fernando',
-  card_master: 'npc_villager_robed',
-  marshal_redbrook: 'npc_knight',
+  card_master: 'npc_dealer',
+  marshal_redbrook: 'npc_paladin',
   warden_fenwick: 'npc_knight',
   captain_thessaly: 'npc_knight',
   loremaster_caddis: 'npc_mage',
-  smith_haldren: 'npc_smith',
+  smith_haldren: 'npc_armorer',
   armorer_hode: 'npc_smith',
-  foreman_odell: 'npc_smith',
+  foreman_odell: 'npc_foreman',
   scout_maren: 'npc_scout',
   scout_maren_highwatch: 'npc_scout',
-  apothecary_lin: 'npc_villager_robed',
+  apothecary_lin: 'npc_herbalist',
   herbalist_yara: 'npc_villager_robed',
-  trader_wilkes: 'npc_villager',
-  fisherman_brandt: 'npc_villager',
+  trader_wilkes: 'npc_provisioner',
+  fisherman_brandt: 'npc_fisherman',
   provisioner_hale: 'npc_villager',
   quartermaster_bree: 'npc_villager',
+  groundskeeper_bram: 'npc_groundskeeper',
   brother_halven: 'npc_reliquary_keeper',
   brother_halven_marsh: 'npc_reliquary_keeper',
   chronicler_saul: 'npc_chronicler',
