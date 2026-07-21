@@ -153,40 +153,15 @@ function i18nModulepreloadPlugin() {
         : path.resolve(cfg.root, cfg.build.outDir);
     },
     closeBundle: {
-      // 'post' runs this after every default-ordered closeBundle (including Vite's own
-      // manifest writer), which is the correct ordering but was not, on its own, enough:
-      // see the retry in templateModulepreload for why (some build containers do not
-      // make the just-written manifest visible to a same-process read immediately).
+      // 'post' runs this after every default-ordered closeBundle, including Vite's own
+      // manifest writer, so the manifest is on disk before the read below.
       order: 'post',
       async handler() {
-        // Some build environments (observed reliably on a specific Vercel project's
-        // build containers, never locally) produce NO dist/.vite/manifest.json at all,
-        // for reasons that survived hook reordering, a bounded read retry, a forced
-        // cache-free rebuild, and a rolldown version bump - genuinely unresolved as of
-        // this writing. That specific failure (the file cannot be read/found at all)
-        // degrades to a warning: this optimization is a nice-to-have (a stored-locale
-        // visitor just gets one extra request-waterfall step without it), not worth
-        // failing an entire production deploy over. A DIFFERENT failure - the manifest
-        // read successfully but is missing an expected locale's chunk, a real content
-        // bug where a locale was added without being built - still throws hard; that
-        // one is exactly the "stored visitor silently gets no preload" case worth
-        // stopping the build for.
-        try {
-          const { map } = await templateModulepreload({ root, outDir, base });
-          // eslint-disable-next-line no-console
-          console.log(
-            `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
-          );
-        } catch (err) {
-          if ((err as NodeJS.ErrnoException)?.code === 'ENOENT') {
-            // eslint-disable-next-line no-console
-            console.warn(
-              `[i18n] modulepreload: could not read the build manifest, skipping the stored-locale preload optimization for this deploy: ${err}`,
-            );
-            return;
-          }
-          throw err;
-        }
+        const { map } = await templateModulepreload({ root, outDir, base });
+        // eslint-disable-next-line no-console
+        console.log(
+          `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
+        );
       },
     },
   };
