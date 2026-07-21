@@ -2,7 +2,8 @@
 // the pure masterwork proc-chance and bonus-baking primitives, the raid-floor
 // acceptance bound over the real recipe content, and the draw-order
 // determinism contract over a real Sim (one rng draw per successful craft,
-// zero on denial, proc occurrences reproducible by seed).
+// zero on denial, proc occurrences pinned by directly injecting the rng
+// draw's return value rather than hunting a seed to land it there).
 import { describe, expect, it } from 'vitest';
 import { PERK_THRESHOLDS } from '../src/sim/content/professions';
 import { ALL_RECIPES, recipeById } from '../src/sim/content/recipes';
@@ -395,10 +396,22 @@ describe('draw-order determinism over a real Sim (Phase 2)', () => {
   // Scenario: tailoring as the active archetype (unlimited empowerment
   // ceiling), skill 200 (tier-8 capability, past the specialization
   // threshold), so each successful vestments craft rolls the proc at
-  // 0.03 + 0.08 + 0.03 = 0.14. Seed 20 was hunted (bounded scan from seed 1)
-  // so the three-success sequence procs on the second and third successful
-  // crafts; only the pinned literal is committed, per the suite idiom.
-  const SEED = 20;
+  // 0.03 + 0.08 + 0.03 = 0.14. Rather than hunting a seed whose whole-stream
+  // position happens to land the three-success sequence on the second and
+  // third successful crafts (which rots the moment an unrelated content
+  // change reshuffles the shared rng stream), the exact draw VALUE crafting.ts's
+  // single post-consume rng.next() call (crafting.ts, the "Masterwork proc
+  // draw" comment) receives on each successful craft is injected directly:
+  // the real draw site still runs unmodified, only its raw return value is
+  // pinned per call, so the ORDER this test verifies (miss, then proc, then
+  // proc) is deterministic by construction rather than by luck. The seed
+  // itself is now arbitrary (verified across several other seed values while
+  // fixing this).
+  const SEED = 1;
+  // One entry per real draw this scenario makes (the mid-sequence denial
+  // draws nothing, per the drawCounts assertion below): miss (>= the 0.14
+  // chance), then two procs (< 0.14).
+  const PROC_ROLLS = [0.5, 0.01, 0.01];
 
   function run() {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', autoEquip: false });
@@ -410,10 +423,13 @@ describe('draw-order determinism over a real Sim (Phase 2)', () => {
     for (let i = 0; i < 6; i++) sim.addItem('spider_leg', 1, pid);
     sim.drainEvents();
     const rng: Rng = (sim as any).ctx.rng;
+    const originalNext = rng.next.bind(rng);
+    const procRolls = [...PROC_ROLLS];
     let draws = 0;
-    rng.setObserver(() => {
+    rng.next = () => {
       draws++;
-    });
+      return procRolls.length > 0 ? procRolls.shift()! : originalNext();
+    };
     const drawCounts: number[] = [];
     const craft = (recipeId: string) => {
       const before = draws;
@@ -427,7 +443,7 @@ describe('draw-order determinism over a real Sim (Phase 2)', () => {
       craft('recipe_eastbrook_ritual_vestments'),
       craft('recipe_eastbrook_ritual_vestments'),
     ];
-    rng.setObserver(null);
+    rng.next = originalNext;
     const events = sim.drainEvents();
     return {
       pid,
@@ -462,8 +478,8 @@ describe('draw-order determinism over a real Sim (Phase 2)', () => {
     expect(a.drawCounts).toEqual([1, 0, 1, 1]);
     expect(a.results.map((r) => r.ok)).toEqual([true, false, true, true]);
     expect(a.results[1].reason).toBe('insufficient_materials');
-    // Hunted-seed proc pattern: first success misses, second and third proc,
-    // and the denial never rolls at all.
+    // Injected proc pattern (PROC_ROLLS above): first success misses, second
+    // and third proc, and the denial never rolls at all.
     expect(a.results.map((r) => r.masterwork)).toEqual([undefined, undefined, true, true]);
     // quality stays the OUTPUT DEF quality on every success, proc or miss.
     expect(a.results[0].quality).toBe('uncommon');
@@ -492,32 +508,43 @@ describe('draw-order determinism over a real Sim (Phase 2)', () => {
   });
 });
 
-describe('proc-chance wiring over a real Sim (hunted boundary-window seeds)', () => {
+describe('proc-chance wiring over a real Sim (injected boundary-window draws)', () => {
   // Both cases craft recipe_eastbrook_ritual_vestments (skillReq 0, uncommon
   // def, bump tier 2: inside the pre-attunement rare ceiling) on a fresh
   // warrior, so the only chance inputs in play are the ones each case flips.
   // Granting materials and setting craftSkills directly never draws rng, so
-  // paired same-seed runs share the identical single proc draw; each seed was
-  // hunted (bounded scan from seed 1, draw value verified via the rng
-  // observer during the hunt) for a draw inside the decisive window where the
-  // flipped input alone decides the proc.
+  // the crafting.ts proc draw (crafting.ts's single post-consume rng.next()
+  // call) is the very first draw the sim's rng makes. Rather than hunting a
+  // seed whose whole-stream first value happens to land in the decisive
+  // window between two chance values (which rots the moment an unrelated
+  // content or draw-order change reshuffles the stream), the draw's raw
+  // return VALUE is injected directly: the real crafting.ts draw site still
+  // runs unmodified, only the number it reads back is pinned.
 
-  function craftVestments(seed: number, setup: (sim: Sim, pid: number) => void) {
+  function craftVestments(procRoll: number, setup: (sim: Sim, pid: number) => void, seed = 1) {
     const sim = new Sim({ seed, playerClass: 'warrior', autoEquip: false });
     const pid = sim.playerId;
     setup(sim, pid);
+    const rng: Rng = (sim as any).ctx.rng;
+    const originalNext = rng.next.bind(rng);
+    let consumed = false;
+    rng.next = () => {
+      if (consumed) return originalNext();
+      consumed = true;
+      return procRoll;
+    };
     sim.craftItem('recipe_eastbrook_ritual_vestments', pid);
+    rng.next = originalNext;
     return { ...sim.lastCraftResult! };
   }
 
-  it('a self-signed reagent feeds the proc chance: the same seed procs only with the signed copy', () => {
-    // Seed 69, hunted: the single proc draw lands in [0.03, 0.05), above the
-    // 3 percent base but under base plus the 2 percent signed-reagent bonus,
-    // so the proc fires ONLY when crafting.ts passes the signed-reagent
-    // holding check into masterworkProcChance. Spares on record: 89, 117,
-    // 134, 185.
-    const SEED = 69;
-    const signed = craftVestments(SEED, (sim, pid) => {
+  it('a self-signed reagent feeds the proc chance: the same draw procs only with the signed copy', () => {
+    // Injected draw 0.04: above the 3 percent base but under base plus the 2
+    // percent signed-reagent bonus (window [0.03, 0.05)), so the proc fires
+    // ONLY when crafting.ts passes the signed-reagent holding check into
+    // masterworkProcChance.
+    const PROC_ROLL = 0.04;
+    const signed = craftVestments(PROC_ROLL, (sim, pid) => {
       const meta = (sim as any).players.get(pid);
       // One self-signed linen_scrap plus one plain: the #1145 reduction drops
       // the linen requirement from 3 to 2, so ok:true here also re-proves the
@@ -530,9 +557,9 @@ describe('proc-chance wiring over a real Sim (hunted boundary-window seeds)', ()
     expect(signed.ok).toBe(true);
     expect(signed.selfSignedBonusApplied).toBe(true);
     expect(signed.masterwork).toBe(true);
-    // Control at the SAME seed and stream position, no signed copy held: the
-    // identical draw sits above the 3 percent base and must miss.
-    const plain = craftVestments(SEED, (sim, pid) => {
+    // Control at the SAME injected draw, no signed copy held: the identical
+    // value sits above the 3 percent base and must miss.
+    const plain = craftVestments(PROC_ROLL, (sim, pid) => {
       for (let i = 0; i < 3; i++) sim.addItem('linen_scrap', 1, pid);
       sim.addItem('spider_leg', 1, pid);
     });
@@ -542,14 +569,13 @@ describe('proc-chance wiring over a real Sim (hunted boundary-window seeds)', ()
   });
 
   it("another player's signed reagent feeds the proc chance equally (the 2026-07-17 any-signed ruling)", () => {
-    // Same hunted seed-69 window: the draw sits in [0.03, 0.05), so the proc
-    // fires exactly when the 2 percent signed-reagent term applies. The signed
-    // copy carries SOMEONE ELSE'S signature, so the #1145 quantity discount
-    // must NOT apply (all 3 linen are required and consumed) while the proc
-    // bonus MUST: trade-bought signed materials are worth as much to the proc
-    // as self-gathered ones.
-    const SEED = 69;
-    const traded = craftVestments(SEED, (sim, pid) => {
+    // Same injected-draw window [0.03, 0.05): the proc fires exactly when the
+    // 2 percent signed-reagent term applies. The signed copy carries SOMEONE
+    // ELSE'S signature, so the #1145 quantity discount must NOT apply (all 3
+    // linen are required and consumed) while the proc bonus MUST: trade-bought
+    // signed materials are worth as much to the proc as self-gathered ones.
+    const PROC_ROLL = 0.04;
+    const traded = craftVestments(PROC_ROLL, (sim, pid) => {
       sim.addItemInstance('linen_scrap', { signer: 'Gatherer Friend' }, pid);
       sim.addItem('linen_scrap', 2, pid);
       sim.addItem('spider_leg', 1, pid);
@@ -560,12 +586,12 @@ describe('proc-chance wiring over a real Sim (hunted boundary-window seeds)', ()
   });
 
   it('a count-1 signed reagent feeds the proc chance (decoupled from the quantity-discount flag)', () => {
-    // Same hunted seed-69 window. The signed copy is the SPIDER LEG, whose
-    // reagent count is 1: the #1145 reduction floors at 1 so the discount
-    // flag can never set for it (the old coupling made this exact case lose
-    // the proc bonus). The signed-reagent term must fire anyway.
-    const SEED = 69;
-    const countOne = craftVestments(SEED, (sim, pid) => {
+    // Same injected-draw window [0.03, 0.05). The signed copy is the SPIDER
+    // LEG, whose reagent count is 1: the #1145 reduction floors at 1 so the
+    // discount flag can never set for it (the old coupling made this exact
+    // case lose the proc bonus). The signed-reagent term must fire anyway.
+    const PROC_ROLL = 0.04;
+    const countOne = craftVestments(PROC_ROLL, (sim, pid) => {
       const meta = (sim as any).players.get(pid);
       for (let i = 0; i < 3; i++) sim.addItem('linen_scrap', 1, pid);
       sim.addItemInstance('spider_leg', { signer: meta.name }, pid);
@@ -577,18 +603,18 @@ describe('proc-chance wiring over a real Sim (hunted boundary-window seeds)', ()
 
   it('the specialization threshold binds in the craft path: skill 74 misses where 75 and 76 proc', () => {
     // Premise anchor: the content threshold this boundary rides. A content
-    // retune moves the boundary and this seed must be re-hunted.
+    // retune moves this comment's chance arithmetic, not the injected draw.
     expect(PERK_THRESHOLDS.tailoring.specializedSkillThreshold).toBe(75);
-    // Seed 2, hunted: the single proc draw lands in [0.06, 0.09). At skill 74
-    // (tier 2, not specialized) the chance is 0.03 + 0.02 = 0.05: miss. At 75
-    // and 76 (tier 3, specialized) it is 0.03 + 0.03 + 0.03 = 0.09: proc, and
-    // only if BOTH the tiersAboveRecipe term and isSpecialized are wired into
-    // masterworkProcChance by crafting.ts (either wiring dropped leaves the
-    // chance at or below 0.06, under the hunted draw). Spares on record: 79,
-    // 83, 87, 195.
-    const SEED = 2;
+    // Injected draw 0.06, window [0.05, 0.09). At skill 74 (tier 2, not
+    // specialized) the chance is 0.03 + 0.02 = 0.05: miss (0.06 >= 0.05). At
+    // 75 and 76 (tier 3, specialized) it is 0.03 + 0.03 + 0.03 = 0.09: proc
+    // (0.06 < 0.09), and only if BOTH the tiersAboveRecipe term and
+    // isSpecialized are wired into masterworkProcChance by crafting.ts
+    // (either wiring dropped leaves the chance at or below 0.05, at or above
+    // the injected draw).
+    const PROC_ROLL = 0.06;
     const at = (skill: number) =>
-      craftVestments(SEED, (sim, pid) => {
+      craftVestments(PROC_ROLL, (sim, pid) => {
         const meta = (sim as any).players.get(pid);
         meta.craftSkills.tailoring = skill;
         for (let i = 0; i < 3; i++) sim.addItem('linen_scrap', 1, pid);

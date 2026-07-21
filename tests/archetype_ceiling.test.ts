@@ -423,14 +423,47 @@ describe('archetype ceilings gate the masterwork effect (Phase 2: ceilings bind 
   // gating the masterwork EFFECT, never the proc draw itself: every successful
   // craft below still draws exactly once.
   //
-  // PROC_SEED was HUNTED (loop seeds, build the scenario, craft once, keep the
-  // first seed whose proc roll lands under MASTERWORK_BASE_CHANCE) and is
-  // pinned as a literal; the hunt loop is not committed. At this seed the
-  // craft's proc roll is the FIRST rng draw after Sim construction in every
-  // arm below (nothing else here draws), so the identical roll value reaches
-  // the proc comparison each time: only the archetype ceiling changes the
-  // outcome, which is exactly what these cases pin.
-  const PROC_SEED = 18;
+  // PROC_SEED is COMPUTED, not hand-hunted-and-pinned: findMasterworkProcSeed
+  // replays the exact major-arm setup (Sim construction, acceptArchetypeQuest
+  // ('tailoring'), the recipe's reagent grants, one craftItem call) over
+  // increasing seeds and keeps the first one whose lone rng draw lands under
+  // MASTERWORK_BASE_CHANCE. crafting.ts draws rng exactly once in this whole
+  // setup (the masterwork proc roll at its one draw site; acceptArchetypeQuest,
+  // addItem/removeItem, and the pre-draw skill-gain reads draw nothing), so
+  // the identical roll value reaches the proc comparison in every arm below:
+  // only the archetype ceiling changes the outcome, which is exactly what
+  // these cases pin. Computing this at test-load time (instead of pinning a
+  // literal found by a throwaway, uncommitted hunt loop) means a future change
+  // to draw order upstream of the proc roll re-finds a valid seed automatically
+  // instead of silently reddening on a stale literal, which is exactly what
+  // happened to the seed this replaced (see git history: PROC_SEED was 18).
+  const PROC_SEED_SEARCH_BOUND = 5000;
+
+  function findMasterworkProcSeed(): number {
+    const recipe = recipeById('recipe_eastbrook_ritual_vestments')!;
+    for (let seed = 1; seed <= PROC_SEED_SEARCH_BOUND; seed++) {
+      const sim = new Sim({ seed, playerClass: 'warrior', autoEquip: false });
+      const pid = sim.playerId;
+      sim.acceptArchetypeQuest('tailoring');
+      for (const r of recipe.reagents) sim.addItem(r.itemId, r.count, pid);
+      const rng = (sim as unknown as { ctx: { rng: import('../src/sim/rng').Rng } }).ctx.rng;
+      let draws = 0;
+      let roll = -1;
+      rng.setObserver((value) => {
+        draws += 1;
+        roll = value;
+      });
+      sim.craftItem(recipe.id, pid);
+      rng.setObserver(null);
+      if (draws === 1 && roll >= 0 && roll < MASTERWORK_BASE_CHANCE) return seed;
+    }
+    throw new Error(
+      `findMasterworkProcSeed: no seed in [1, ${PROC_SEED_SEARCH_BOUND}] lands the masterwork ` +
+        'proc roll under MASTERWORK_BASE_CHANCE; the draw-order premise this suite pins may have changed',
+    );
+  }
+
+  const PROC_SEED = findMasterworkProcSeed();
 
   function makeSim() {
     return new Sim({ seed: PROC_SEED, playerClass: 'warrior', autoEquip: false });

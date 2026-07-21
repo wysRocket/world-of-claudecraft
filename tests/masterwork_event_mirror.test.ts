@@ -9,24 +9,54 @@ import { ClientWorld } from '../src/net/online';
 import { Sim } from '../src/sim/sim';
 import type { SimEvent } from '../src/sim/types';
 
-// Hunted proc seed, pinned: with a fresh warrior (tailoring 0, no archetype,
-// no self-signed reagent, not specialized) the first craft of
-// recipe_eastbrook_ritual_vestments draws under the 3 percent base masterwork
-// chance at this seed. Pre-verified against this exact grant order (3x
-// linen_scrap then 1x spider_leg, then the craft); seeds 41, 46, 81, and 109
-// also land, kept on record here as spares.
+// NOT a hunted seed: any seed works, because the proc itself is no longer a
+// single hunted draw (see craftMasterwork below). This file used to pin a
+// specific seed hoping a fresh warrior's first craft rolled under the 3
+// percent base masterwork chance; that seed (18), and every listed "spare"
+// (23, 41, 46, 81, 109) tried across the life of this file, eventually
+// stopped landing once an unrelated content change anywhere reshuffled the
+// shared rng stream. Seed-hunting a probabilistic proc is the anti-pattern;
+// the fix is a bounded retry (mirrors tests/parity/scenarios.ts
+// professionsCraft's fix for the identical class of bug).
 const PROC_SEED = 18;
 const RECIPE_ID = 'recipe_eastbrook_ritual_vestments';
 const ITEM_ID = 'eastbrook_ritual_vestments';
 
-// One craft at the pinned seed: returns the sim, its player id, and every
-// masterwork event that craft emitted.
+// Bounded retry until the masterwork proc fires, exactly like
+// tests/parity/scenarios.ts professionsCraft. Archetype acceptance
+// (tailoring, tier-8 skill) plus a signed reagent push the proc chance to
+// the capped 0.15 (masterworkProcChance, src/sim/professions/masterwork.ts:
+// 0.03 base + 0.01/tier * 8 tiers above + 0.03 specialized + 0.02 signed =
+// 0.16, capped at 0.15), so the odds of zero procs across
+// MAX_MASTERWORK_ATTEMPTS real crafts are astronomically small (0.85^100 =
+// ~1.4e-8): the cap is a runaway guard, never a coin flip. The #1301 output
+// throttle (CRAFT_THROTTLE_MAX_PER_WINDOW = 10 per
+// CRAFT_THROTTLE_WINDOW_SECONDS = 60, src/sim/content/professions.ts) caps
+// REAL crafting attempts at 10 per rolling window, so every 10 attempts the
+// clock is ticked past the window first, or later "attempts" would silently
+// return `reason: 'throttled'` with no proc draw at all. A non-proc copy is
+// discarded each time (the vestments are equippable, one bag slot) so only
+// the winning copy survives for the assertions below.
 function craftMasterwork() {
   const sim = new Sim({ seed: PROC_SEED, playerClass: 'warrior', autoEquip: false });
   const pid = sim.playerId;
-  for (let i = 0; i < 3; i++) sim.addItem('linen_scrap', 1, pid);
-  sim.addItem('spider_leg', 1, pid);
-  sim.craftItem(RECIPE_ID, pid);
+  const meta = sim.players.get(pid);
+  if (!meta) throw new Error('expected a primary player');
+  sim.acceptArchetypeQuest('tailoring');
+  meta.craftSkills.tailoring = 200;
+  const MAX_MASTERWORK_ATTEMPTS = 100;
+  const CRAFTS_PER_THROTTLE_WINDOW = 10;
+  let attempts = 0;
+  while (attempts < MAX_MASTERWORK_ATTEMPTS && !sim.lastMasterwork) {
+    if (attempts > 0 && attempts % CRAFTS_PER_THROTTLE_WINDOW === 0) {
+      for (let i = 0; i < 20 * 61; i++) sim.tick();
+    }
+    sim.addItemInstance('linen_scrap', { signer: meta.name }, pid);
+    sim.addItem('spider_leg', 1, pid);
+    sim.craftItem(RECIPE_ID, pid);
+    attempts++;
+    if (!sim.lastMasterwork) sim.removeItem(ITEM_ID, 1, pid);
+  }
   const events = sim.drainEvents().filter((ev) => ev.type === 'masterwork');
   return { sim, pid, events };
 }

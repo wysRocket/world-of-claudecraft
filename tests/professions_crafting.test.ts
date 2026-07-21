@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { STATION_TYPE_BY_CRAFT } from '../src/sim/content/professions';
 import {
+  CRAFT_THROTTLE_MAX_PER_WINDOW,
+  CRAFT_THROTTLE_WINDOW_SECONDS,
+} from '../src/sim/content/professions';
+import {
   CASTER_HUB_RECIPES,
   COMBO_RECIPES,
   COMMON_RECIPES,
@@ -819,22 +823,60 @@ describe('masterwork proc (Professions 2.0 Phase 2)', () => {
     return { sim, pid, meta };
   }
 
-  it('a proc mints a signed masterwork instance and surfaces it on every seam (hunted seed)', () => {
-    // Seed 2 was hunted (bounded scan from seed 1 upward) so the single proc
-    // draw lands under the capped 15 percent chance; only the pinned literal
-    // is committed, per the suite's seed-pinning idiom.
-    const { sim, pid, meta } = vestmentsScenario(2);
+  it('a proc mints a signed masterwork instance and surfaces it on every seam (bounded retry)', () => {
+    // A single hunted seed (formerly seed 2, scanned so its one proc draw
+    // landed under the capped 15 percent chance) rots the instant anything
+    // upstream reshuffles the shared rng stream: this exact scenario already
+    // rotted twice in tests/parity/scenarios.ts (seed 21, then 23) before that
+    // suite switched to a bounded retry. Do the same here: retry real craft
+    // attempts until the proc fires, instead of pinning one lucky draw. At the
+    // capped 0.15 chance the odds of zero procs in MAX_ATTEMPTS real attempts
+    // are astronomically small, so the cap is a runaway guard, not a coin
+    // flip. #1301 throttles real craft attempts to CRAFT_THROTTLE_MAX_PER_WINDOW
+    // per CRAFT_THROTTLE_WINDOW_SECONDS, so the clock is advanced past the
+    // window every CRAFT_THROTTLE_MAX_PER_WINDOW attempts: without that, most
+    // "attempts" past the first window would silently come back
+    // reason:'throttled' (denied, zero rng draw) instead of a real proc roll,
+    // which would make the draws-per-attempt invariant below false.
+    const { sim, pid, meta } = vestmentsScenario(11);
     sim.drainEvents();
     let draws = 0;
     const rng: Rng = (sim as any).ctx.rng;
-    rng.setObserver(() => {
-      draws++;
-    });
-    sim.craftItem('recipe_eastbrook_ritual_vestments', pid);
-    rng.setObserver(null);
 
-    // Still exactly one draw across the whole command path: the proc roll.
-    expect(draws).toBe(1);
+    const MAX_ATTEMPTS = 100;
+    let attempts = 0;
+    let events: ReturnType<typeof sim.drainEvents> = [];
+    while (attempts < MAX_ATTEMPTS && !meta.lastMasterwork) {
+      // The clock-advance ticks below run full sim systems (ambient mob AI,
+      // respawns, ...), which draw the SAME shared rng for reasons unrelated
+      // to crafting. The observer must be scoped to the craftItem call only,
+      // never left on across a tick advance, or the "one draw per craft"
+      // count below silently balloons into the thousands (caught by testing
+      // this fix against extra seeds, exactly the discipline that was missed
+      // the first time around on the tests/parity/scenarios.ts retry).
+      if (attempts > 0 && attempts % CRAFT_THROTTLE_MAX_PER_WINDOW === 0) {
+        for (let i = 0; i < 20 * (CRAFT_THROTTLE_WINDOW_SECONDS + 1); i++) sim.tick();
+      }
+      sim.addItemInstance('linen_scrap', { signer: meta.name }, pid);
+      sim.addItem('spider_leg', 1, pid);
+      rng.setObserver(() => {
+        draws++;
+      });
+      sim.craftItem('recipe_eastbrook_ritual_vestments', pid);
+      rng.setObserver(null);
+      attempts++;
+      events = sim.drainEvents();
+      // Discard every non-proc copy (the vestments are equippable, one bag
+      // slot each) so only the winning copy remains for the mint assertions.
+      if (!meta.lastMasterwork) sim.removeItem('eastbrook_ritual_vestments', 1, pid);
+    }
+
+    expect(attempts).toBeGreaterThan(0);
+    expect(attempts).toBeLessThan(MAX_ATTEMPTS);
+    // One rng draw per REAL craft attempt (the masterwork proc roll): with the
+    // throttle handled above, no attempt in the loop was denied, so the draw
+    // count tracks the attempt count exactly.
+    expect(draws).toBe(attempts);
 
     // CraftResult (via the lastCraftResult stash) carries the flag; quality
     // stays the OUTPUT DEF quality (uncommon), never the bumped tier.
@@ -842,7 +884,6 @@ describe('masterwork proc (Professions 2.0 Phase 2)', () => {
     expect(sim.lastCraftResult?.quality).toBe('uncommon');
     expect(sim.lastCraftResult?.masterwork).toBe(true);
 
-    const events = sim.drainEvents();
     const craft = events.find((e) => e.type === 'craftResult');
     if (craft?.type !== 'craftResult') throw new Error('expected a craftResult event');
     expect(craft.ok).toBe(true);
@@ -877,44 +918,68 @@ describe('masterwork proc (Professions 2.0 Phase 2)', () => {
     });
   });
 
-  it('a missed proc still draws exactly once and grants a plain common-def stack (hunted seed)', () => {
+  it('a missed proc still draws exactly once and grants a plain common-def stack (bounded retry)', () => {
     // The same maximum-chance shape on a common-def output (the chain vest,
-    // under armorcrafting as the MAJOR craft). Seed 1 was hunted so the single
-    // proc draw lands ABOVE the capped 15 percent chance: the roll itself
-    // misses, decisively. The observed-roll pin below keeps that premise
-    // load-bearing (this def is armor-only, so the effect gate would ALSO
-    // deny; without the pin, a re-seeded roll under the cap would pass
-    // silently through the gate instead of proving a roll miss).
-    const sim = makeSim(1);
+    // under armorcrafting as the MAJOR craft). This used to pin seed 1 (hunted
+    // so its single proc draw landed ABOVE the capped 15 percent chance): the
+    // same seed-pinning fragility as the proc test above, just not yet caught
+    // failing (any reshuffle of the shared rng stream could land seed 1's roll
+    // under the cap and silently rot this pin's premise, per the note below).
+    // Retry real craft attempts instead, stopping at the first observed roll
+    // that lands at/above the cap. This def is armor-only, so the effect gate
+    // would ALSO deny on every attempt regardless of the roll; the observed
+    // roll is what proves THIS attempt's miss is the roll's own doing, not
+    // merely the gate.
+    const sim = makeSim(3);
     const pid = sim.playerId;
     sim.acceptArchetypeQuest('armorcrafting');
     const meta = (sim as any).players.get(pid);
     meta.craftSkills.armorcrafting = 200;
-    // One self-signed bone fragment satisfies the whole requirement (3 -> 2 ->
-    // floor(2 * 0.8) = 1), mirroring the proc case's chance inputs.
-    sim.addItemInstance('bone_fragments', { signer: meta.name }, pid);
     sim.drainEvents();
     let draws = 0;
     let roll = -1;
     const rng: Rng = (sim as any).ctx.rng;
-    rng.setObserver((value) => {
-      draws++;
-      roll = value;
-    });
-    sim.craftItem('recipe_eastbrook_chain_vest', pid);
-    rng.setObserver(null);
 
+    const MAX_ATTEMPTS = 100;
+    let attempts = 0;
+    let events: ReturnType<typeof sim.drainEvents> = [];
+    while (attempts < MAX_ATTEMPTS && roll < MASTERWORK_CHANCE_CAP) {
+      // Scope the observer to the craftItem call only: the clock-advance
+      // ticks below run full sim systems that draw the SAME shared rng for
+      // reasons unrelated to crafting, and leaving the observer on across a
+      // tick advance corrupts both `draws` and (worse) `roll` with an
+      // unrelated draw's value.
+      if (attempts > 0 && attempts % CRAFT_THROTTLE_MAX_PER_WINDOW === 0) {
+        for (let i = 0; i < 20 * (CRAFT_THROTTLE_WINDOW_SECONDS + 1); i++) sim.tick();
+      }
+      // One self-signed bone fragment satisfies the whole requirement (3 -> 2
+      // -> floor(2 * 0.8) = 1), mirroring the proc case's chance inputs.
+      sim.addItemInstance('bone_fragments', { signer: meta.name }, pid);
+      rng.setObserver((value) => {
+        draws++;
+        roll = value;
+      });
+      sim.craftItem('recipe_eastbrook_chain_vest', pid);
+      rng.setObserver(null);
+      attempts++;
+      events = sim.drainEvents();
+      // Discard every copy so only the final (observed-miss) attempt's grant
+      // remains for the inventory assertions below.
+      if (roll < MASTERWORK_CHANCE_CAP) sim.removeItem('eastbrook_chain_vest', 1, pid);
+    }
+
+    expect(attempts).toBeGreaterThan(0);
+    expect(attempts).toBeLessThan(MAX_ATTEMPTS);
     // The proc draw is unconditional on the success path: exactly one draw
-    // even when it misses, and the seed-1 draw really does land at or above
-    // the capped chance, so the miss is the roll's doing.
-    expect(draws).toBe(1);
+    // per REAL attempt, and the final attempt's draw really does land at or
+    // above the capped chance, so THAT miss is the roll's doing.
+    expect(draws).toBe(attempts);
     expect(roll).toBeGreaterThanOrEqual(MASTERWORK_CHANCE_CAP);
     expect(sim.lastCraftResult?.ok).toBe(true);
     expect(sim.lastCraftResult?.quality).toBe('common');
     expect(sim.lastCraftResult?.masterwork).toBeUndefined();
 
     // No masterwork event fired.
-    const events = sim.drainEvents();
     expect(events.find((e) => e.type === 'masterwork')).toBeUndefined();
 
     // A common-def output stays a plain fungible stack: no instance minted,
