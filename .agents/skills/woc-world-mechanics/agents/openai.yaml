@@ -1,0 +1,6 @@
+interface:
+  display_name: "World of ClaudeCraft World Mechanics"
+  short_description: "Redesign zone/dungeon room layout and mechanics"
+  default_prompt: "Use $woc-world-mechanics to redesign a World of ClaudeCraft zone, dungeon, or delve's room layout, hazards, or boss mechanics."
+policy:
+  allow_implicit_invocation: false

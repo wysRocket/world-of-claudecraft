@@ -50,6 +50,11 @@ Repository skills live in `.agents/skills/` and are invoked as `$skill-name`:
 - `$woc-release-malware-audit`: scan and judge malicious-code risk.
 - `$woc-codex-audit`: compare the checked-in Codex architecture with current official
   guidance.
+- `$woc-world-structures`: add or redesign static world content (buildings, props,
+  terrain dressing, weapons).
+- `$woc-world-mechanics`: redesign a zone, dungeon, or delve's room layout, hazards,
+  or boss mechanics.
+- `$woc-world-creatures`: source or generate a distinct NPC or mob visual.
 
 Read-only specialist agents live in `.codex/agents/`. Use only the roles matching the
 changed surface: sim architecture, cross-platform parity, persistence, database

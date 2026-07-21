@@ -1,0 +1,6 @@
+interface:
+  display_name: "World of ClaudeCraft World Structures"
+  short_description: "Add or redesign static buildings, props, and dressing"
+  default_prompt: "Use $woc-world-structures to add or redesign static World of ClaudeCraft world content: a building, prop, or piece of terrain dressing."
+policy:
+  allow_implicit_invocation: false
