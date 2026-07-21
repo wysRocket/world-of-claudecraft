@@ -9,9 +9,10 @@ visuals), each with a Claude-facing entry and a Codex-parity companion.
 
 **Architecture:** Each skill is a short, pointer-heavy `SKILL.md` (matching the
 existing `woc-feature-plan` house style: reference canonical instructions instead of
-restating them) under `.claude/skills/woc-world-<name>/`, plus a matching
-`agents/openai.yaml` under `.agents/skills/woc-world-<name>/`, mirroring every other
-`woc-*` skill's dual registration. There is no application code and no traditional
+restating them), registered three ways: `.claude/skills/woc-world-<name>/SKILL.md`
+for Claude, and both `SKILL.md` and `agents/openai.yaml` under
+`.agents/skills/woc-world-<name>/` for Codex, mirroring how every other `woc-*` skill
+is laid out. There is no application code and no traditional
 unit test here; "verification" means confirming every file path, script, and function
 name the skill text references actually exists in the live repo, so the content is
 never hallucinated or stale by the time it ships.
@@ -41,9 +42,19 @@ are *for*, not part of building them.
 | `.claude/skills/woc-world-structures/SKILL.md` | Claude-facing entry: static buildings/props/dressing/weapons |
 | `.claude/skills/woc-world-mechanics/SKILL.md` | Claude-facing entry: zone/dungeon room layout and mechanics |
 | `.claude/skills/woc-world-creatures/SKILL.md` | Claude-facing entry: NPC/mob visual sourcing |
-| `.agents/skills/woc-world-structures/agents/openai.yaml` | Codex-parity companion |
-| `.agents/skills/woc-world-mechanics/agents/openai.yaml` | Codex-parity companion |
-| `.agents/skills/woc-world-creatures/agents/openai.yaml` | Codex-parity companion |
+| `.agents/skills/woc-world-structures/SKILL.md` | Codex-side body (copy of the Claude-facing one) |
+| `.agents/skills/woc-world-mechanics/SKILL.md` | Codex-side body (copy of the Claude-facing one) |
+| `.agents/skills/woc-world-creatures/SKILL.md` | Codex-side body (copy of the Claude-facing one) |
+| `.agents/skills/woc-world-structures/agents/openai.yaml` | Codex manifest |
+| `.agents/skills/woc-world-mechanics/agents/openai.yaml` | Codex manifest |
+| `.agents/skills/woc-world-creatures/agents/openai.yaml` | Codex manifest |
+
+**Nine files, three per skill, not six.** Every one of the 8 pre-existing `woc-*`
+skills registers as `.agents/skills/<name>/SKILL.md` (the body Codex actually reads)
+PLUS `agents/openai.yaml` (the manifest). An openai.yaml alone gives Codex a display
+name and a `default_prompt` pointing at a skill with no instructions behind it. The
+`.claude/skills/<name>/SKILL.md` entry is new with these three skills; the existing
+eight are Codex-only.
 
 Each skill's `SKILL.md` and `openai.yaml` are written and verified together as one
 task, then committed, so the working tree is never left with a Claude-only or
@@ -354,6 +365,8 @@ EOF
 
 **Files:**
 - Create: `.claude/skills/woc-world-creatures/SKILL.md`
+- Create: `.agents/skills/woc-world-creatures/SKILL.md` (a byte-identical copy of the
+  `.claude` one; see the File structure note on why all three files are needed)
 - Create: `.agents/skills/woc-world-creatures/agents/openai.yaml`
 
 - [ ] **Step 1: Write the SKILL.md**
@@ -559,7 +572,7 @@ EOF
 **Files:**
 - None created; this task only verifies Tasks 1 to 3 together.
 
-- [ ] **Step 1: Confirm all six files exist and are non-empty**
+- [ ] **Step 1: Confirm all nine files exist and are non-empty**
 
 Run:
 ```bash
@@ -590,7 +603,7 @@ Expected: each command lists both files passed to it (each skill names both of i
 siblings at least once, so a session reading only one of the three still finds the
 other two).
 
-- [ ] **Step 3: Confirm no em dashes, en dashes, or emoji crept into any of the six files**
+- [ ] **Step 3: Confirm no em dashes, en dashes, or emoji crept into any of the nine files**
 
 Run:
 ```bash
@@ -625,11 +638,11 @@ there is nothing to commit and this step is a no-op check.
 
 This plan is complete when:
 
-- All six files exist, matching the content in Tasks 1 to 3 exactly.
+- All nine files exist, matching the content in Tasks 1 to 3 exactly.
 - Every verification command in Steps 2/4 of Tasks 1 to 3 and every command in Task 4
   printed its expected `OK`/`CLEAN` output with nothing missing.
 - Three commits exist (one per skill), each containing exactly that skill's two files.
-- No em dash, en dash, or emoji appears in any of the six files.
+- No em dash, en dash, or emoji appears in any of the nine files.
 
 ## Follow-on work (not part of this plan)
 
