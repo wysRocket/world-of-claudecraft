@@ -13,7 +13,6 @@ import { terrainHeight, waterLevel } from '../sim/world';
 import { loadGltf } from './assets/loader';
 import { registerPreload } from './assets/preload';
 import { GFX, sharedUniforms, surfaceMat } from './gfx';
-import { plasterTexture } from './textures';
 
 // Static world props: buildings, tents, campfires, mines, ruins, docks,
 // fences, graveyards — all real CC0 glTF assets (Quaternius medieval village +
@@ -80,29 +79,21 @@ interface PropAssetDef {
 }
 
 const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
-  house1: {
-    url: '/models/props/house_1.glb',
-    kit: 'village',
-    color: 0xa8583f, // weathered terracotta plaster
-    texture: plasterTexture,
-  },
-  house2: {
-    url: '/models/props/house_2.glb',
-    kit: 'village',
-    yaw: -Math.PI / 2,
-    color: 0xc4a876, // warm parchment-cream plaster
-    texture: plasterTexture,
-  },
-  house3: {
-    url: '/models/props/house_3.glb',
-    kit: 'village',
-    color: 0xb8935a, // warm ochre plaster
-    texture: plasterTexture,
-  },
+  // The village kit's buildings carry their detail in NINE named materials
+  // (Wood, Wood_Side, Plaster, Wood_Light, Windows, RoofTiles, Stone_Light,
+  // Stone_Dark, Stone), not in a texture map: these GLBs ship zero images. An
+  // explicit `color:` here would override ALL of them at once (see
+  // convertMaterial: explicitColor wins over both MAT_OVERRIDES and the GLB's
+  // own material colors), collapsing beams, glass, roof tiles, and stone into
+  // one flat mass. Restyle these through the `village:*` MAT_OVERRIDES entries
+  // below instead, which recolor per material and keep the parts readable.
+  house1: { url: '/models/props/house_1.glb', kit: 'village' },
+  house2: { url: '/models/props/house_2.glb', kit: 'village', yaw: -Math.PI / 2 },
+  house3: { url: '/models/props/house_3.glb', kit: 'village' },
   blacksmith: { url: '/models/props/blacksmith.glb', kit: 'village' },
-  inn: { url: '/models/props/inn.glb', kit: 'village', color: 0x6b4a35 }, // dark weathered timber
+  inn: { url: '/models/props/inn.glb', kit: 'village' },
   bellTower: { url: '/models/props/bell_tower.glb', kit: 'village' },
-  well: { url: '/models/props/well.glb', kit: 'village', color: 0x8a8478 }, // weathered stone grey
+  well: { url: '/models/props/well.glb', kit: 'village' },
   stand1: { url: '/models/props/market_stand_1.glb', kit: 'village', yaw: -Math.PI / 2 },
   stand2: { url: '/models/props/market_stand_2.glb', kit: 'village', yaw: -Math.PI / 2 },
   cart: { url: '/models/props/cart.glb', kit: 'village', strip: /^(Red|Beige)$/ },
@@ -238,6 +229,17 @@ const MAT_OVERRIDES: Record<
 > = {
   'village:Windows': { emissive: 0x2a3c55, emissiveIntensity: 1.1, roughness: 0.4 },
   'village:Bell': { metalness: 0.6, roughness: 0.35 },
+  // Emberwood village palette, applied per material so a building still reads
+  // as beams + plaster + tile + stone rather than one flat wash. Warm, muted,
+  // and desaturated to match the Emberwood direction (soot, oak, ember, brass).
+  'village:Wood': { color: 0x6b4a32, roughness: 0.85 },
+  'village:Wood_Side': { color: 0x5c4229, roughness: 0.85 },
+  'village:Wood_Light': { color: 0x9a7a4e, roughness: 0.8 },
+  'village:Plaster': { color: 0xcbb790, roughness: 0.95 },
+  'village:RoofTiles': { color: 0x8c4a33, roughness: 0.8 },
+  'village:Stone': { color: 0x8a8378, roughness: 0.9 },
+  'village:Stone_Light': { color: 0x9c958a, roughness: 0.9 },
+  'village:Stone_Dark': { color: 0x6e675e, roughness: 0.9 },
   'ore:Stone_Dark': { color: 0xb87333, metalness: 0.45, roughness: 0.5 },
   // bandit/cult tents: weathered canvas instead of Kenney's toy red
   'tent:colorRed': { color: 0x9c8662 },

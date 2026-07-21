@@ -542,30 +542,6 @@
       "to": "models/emberwood/weapons/staff.glb"
     },
     {
-      "from": "textures/terrain/Grass001_Color.jpg",
-      "to": "textures/emberwood/terrain/grass_color.jpg"
-    },
-    {
-      "from": "textures/terrain/Grass001_NormalGL.jpg",
-      "to": "textures/emberwood/terrain/grass_normal.jpg"
-    },
-    {
-      "from": "textures/terrain/Ground048_Color.jpg",
-      "to": "textures/emberwood/terrain/dirt_color.jpg"
-    },
-    {
-      "from": "textures/terrain/Ground048_NormalGL.jpg",
-      "to": "textures/emberwood/terrain/dirt_normal.jpg"
-    },
-    {
-      "from": "textures/terrain/Rock051_Color.jpg",
-      "to": "textures/emberwood/terrain/rock_color.jpg"
-    },
-    {
-      "from": "textures/terrain/Rock051_NormalGL.jpg",
-      "to": "textures/emberwood/terrain/rock_normal.jpg"
-    },
-    {
       "from": "env/vale_day_1k.hdr",
       "to": "env/emberwood/vale_day_1k.hdr"
     },
