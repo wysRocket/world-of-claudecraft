@@ -103,20 +103,56 @@
       "out": "models/emberwood/foliage/fern.glb"
     },
     {
-      "src": "tmp/asset_src/emberwood/chars/warrior.glb",
-      "out": "models/emberwood/chars/warrior.glb",
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_knight.glb",
+      "out": "models/emberwood/npcs/emberwood_knight.glb",
       "type": "character",
       "maxTex": 1024
     },
     {
-      "src": "tmp/asset_src/emberwood/chars/mage.glb",
-      "out": "models/emberwood/chars/mage.glb",
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_paladin.glb",
+      "out": "models/emberwood/npcs/emberwood_paladin.glb",
       "type": "character",
       "maxTex": 1024
     },
     {
-      "src": "tmp/asset_src/emberwood/chars/bandit.glb",
-      "out": "models/emberwood/chars/bandit.glb",
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_priest.glb",
+      "out": "models/emberwood/npcs/emberwood_priest.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_barbarian.glb",
+      "out": "models/emberwood/npcs/emberwood_barbarian.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_rogue.glb",
+      "out": "models/emberwood/npcs/emberwood_rogue.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_ranger.glb",
+      "out": "models/emberwood/npcs/emberwood_ranger.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_guard.glb",
+      "out": "models/emberwood/npcs/emberwood_guard.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_mage.glb",
+      "out": "models/emberwood/npcs/emberwood_mage.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_npc_woman.glb",
+      "out": "models/emberwood/npcs/emberwood_npc_woman.glb",
       "type": "character",
       "maxTex": 1024
     },
@@ -400,15 +436,15 @@
     },
     {
       "from": "models/chars/players/knight.glb",
-      "to": "models/emberwood/chars/warrior.glb"
+      "to": "models/emberwood/npcs/emberwood_knight.glb"
     },
     {
       "from": "models/chars/players/mage.glb",
-      "to": "models/emberwood/chars/mage.glb"
+      "to": "models/emberwood/npcs/emberwood_priest.glb"
     },
     {
       "from": "models/chars/players/rogue_hooded.glb",
-      "to": "models/emberwood/chars/bandit.glb"
+      "to": "models/emberwood/npcs/emberwood_npc_woman.glb"
     },
     {
       "from": "models/creatures/wolf_basic.glb",
@@ -528,23 +564,35 @@
     },
     {
       "from": "models/chars/players/barbarian.glb",
-      "to": "models/emberwood/chars/warrior.glb"
+      "to": "models/emberwood/npcs/emberwood_barbarian.glb"
     },
     {
       "from": "models/chars/players/paladin.glb",
-      "to": "models/emberwood/chars/warrior.glb"
+      "to": "models/emberwood/npcs/emberwood_guard.glb"
     },
     {
       "from": "models/chars/players/druid.glb",
-      "to": "models/emberwood/chars/mage.glb"
+      "to": "models/emberwood/npcs/emberwood_mage.glb"
     },
     {
       "from": "models/chars/players/mage_classic.glb",
-      "to": "models/emberwood/chars/mage.glb"
+      "to": "models/emberwood/npcs/emberwood_priest.glb"
     },
     {
       "from": "models/chars/players/rogue.glb",
-      "to": "models/emberwood/chars/bandit.glb"
+      "to": "models/emberwood/npcs/emberwood_rogue.glb"
+    },
+    {
+      "from": "models/chars/players/scout.glb",
+      "to": "models/emberwood/npcs/emberwood_ranger.glb"
+    },
+    {
+      "from": "models/chars/players/villager.glb",
+      "to": "models/emberwood/npcs/emberwood_npc_woman.glb"
+    },
+    {
+      "from": "models/chars/players/guard.glb",
+      "to": "models/emberwood/npcs/emberwood_guard.glb"
     },
     {
       "from": "models/creatures/amber_heart_golem.glb",

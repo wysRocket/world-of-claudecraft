@@ -1123,14 +1123,14 @@ export const VISUALS: Record<string, VisualDef> = {
     attach: [{ url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' }],
   },
   npc_scout: {
-    url: `${PLAYERS}/rogue.glb`,
+    url: `${PLAYERS}/scout.glb`,
     height: HUMANOID_H,
     clips: kaykit(['2H_Ranged_Shoot']),
     show: ['Rogue_Cape'],
     attach: [{ url: `${WEAPONS}/crossbow_1handed.glb`, bone: 'handslot.r' }],
   },
   npc_villager: {
-    url: `${PLAYERS}/rogue.glb`,
+    url: `${PLAYERS}/villager.glb`,
     height: HUMANOID_H,
     clips: kaykit(['1H_Melee_Attack_Chop']),
     show: [],
@@ -1159,7 +1159,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // (unused elsewhere), for a sturdier, holier silhouette than the old hooded
   // rogue. Ships its accessories (helm/cape/shield) by default (no show filter).
   npc_reliquary_keeper: {
-    url: `${PLAYERS}/paladin.glb`,
+    url: `${PLAYERS}/guard.glb`,
     height: HUMANOID_H,
     clips: kaykit(['1H_Melee_Attack_Chop']),
   },
