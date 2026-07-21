@@ -46,9 +46,8 @@ how to build and wire them.
 - **The asset entry:** `src/render/props.ts`'s `PROP_ASSET_DEFS` record. Each entry
   needs a `url` (under `public/models/...`), a `kit` (a material-dedup namespace
   shared across files in the same pack), and optionally `yaw` (pre-rotation baked into
-  geometry), `strip` (a regex to drop unwanted material parts), and `color` (a hex
-  tint). See the flat-fill trap below for a `texture` field the interface does not
-  have yet and when to add it.
+  geometry), `strip` (a regex to drop unwanted material parts), `color` (a hex
+  tint), and `texture` (see the flat-fill trap below for when to set it).
 - **Placement:** `src/sim/content/zone*.ts`'s `buildings:` array (`{ kind, x, z, w,
   d, rot }`, a footprint) or `stalls:` array for market stalls (`{ x, z, rot, r }`,
   a radius instead of a footprint). Position (`x`/`z`) and rotation (`rot`, radians)
@@ -64,16 +63,15 @@ A single-material CAD prop (a `PROP_ASSET_DEFS` entry build123d generates: one m
 one material named `o1`) has exactly one color slot. A `color:` tint alone always
 renders as a flat, single-hue wash, no matter how much geometric detail the mesh has.
 
-Fix it by extending `PropAssetDef` with an optional `texture?: () => THREE.Texture`
-field (it does not exist yet as of this writing; add it alongside `color` in the
-interface, then thread it through `convertMaterial()`'s material construction,
-defaulting to the GLB's own map when the field is absent) and pointing it at one of
-the existing procedural textures in `src/render/textures.ts`: `plasterTexture()` for
-a weathered/patchy wall, `wallTexture()` for a timber-framed wall, `plankTexture()`
-for wood siding, or `thatchTexture()` for a roof. `color` should still multiply over
-the texture as a hue, so each building keeps its own distinct color while reading as
-a real painted or plastered surface. Default to adding and using this pairing for any
-new or retextured static structure; a bare `color:` tint alone is the mistake to avoid.
+Fix it by ALSO setting the `PropAssetDef.texture?: () => THREE.Texture` field
+(already wired through `convertMaterial()`'s material construction, defaulting to the
+GLB's own map when absent) to one of the existing procedural textures in
+`src/render/textures.ts`: `plasterTexture()` for a weathered/patchy wall,
+`wallTexture()` for a timber-framed wall, `plankTexture()` for wood siding, or
+`thatchTexture()` for a roof. `color` still multiplies over the texture as a hue, so
+each building keeps its own distinct color while reading as a real painted or
+plastered surface. Default to this pairing for any new or retextured static
+structure; a bare `color:` tint alone is the mistake to avoid.
 
 ## Verification
 

@@ -93,9 +93,9 @@ how to build and wire them.
 ## Two pipelines, use the one that fits
 
 1. **New geometry from scratch:** the `$cad` skill (build123d Python to STEP to raw
-   GLB export). This generated the Eastbrook house/inn/sword/shield/anvil source
-   models under `.agents/skills/cad/scripts/generators/`. Use `$dxf` for a 2D profile
-   input and `$cad-viewer` to review the result before committing to it.
+   GLB export). This is how the Eastbrook house/inn/sword/shield/anvil source
+   models were built. Use `$dxf` for a 2D profile input and `$cad-viewer` to review
+   the result before committing to it.
 2. **Optimizing an existing raw export:** `node scripts/assets/build_assets.mjs
    scripts/assets/specs/<spec>.json`. This resamples, prunes, dedups, and
    texture-compresses a raw DCC/CAD export from `tmp/asset_src/` (gitignored) into the
@@ -149,7 +149,6 @@ structure; a bare `color:` with no `texture:` is the mistake to avoid.
 
 Run:
 ```bash
-test -d .agents/skills/cad/scripts/generators && echo OK-cad-generators
 test -f scripts/assets/build_assets.mjs && echo OK-build-assets
 test -d scripts/assets/specs && echo OK-specs-dir
 test -f scripts/assets/CLAUDE.md && echo OK-assets-claude
@@ -166,9 +165,16 @@ test -f docs/superpowers/specs/2026-07-19-endlessglory-asset-redesign-design.md 
 test -f src/sim/content/CLAUDE.md && echo OK-sim-content-claude
 ```
 
-Expected: 15 `OK-*` lines, one per check, no missing ones. If any line is missing,
+Expected: 14 `OK-*` lines, one per check, no missing ones. If any line is missing,
 fix the corresponding claim in the SKILL.md before continuing (the referenced file
 moved, was renamed, or never existed, and the skill must not ship a stale pointer).
+
+Note (found during the final full-branch review): this step originally also checked
+`.agents/skills/cad/scripts/generators`, a path that never existed in this repo.
+`$cad`/`$dxf`/`$cad-viewer` are user-level global skills (`~/.agents/skills/cad/...`,
+outside this repo entirely), and even there no `generators` subdirectory exists; the
+shipped SKILL.md text was already corrected to drop the specific path claim
+(`608fefece`), this verification snippet just hadn't caught up.
 
 - [ ] **Step 3: Write the openai.yaml companion**
 

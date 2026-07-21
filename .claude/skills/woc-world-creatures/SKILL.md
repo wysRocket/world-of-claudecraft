@@ -102,15 +102,16 @@ one shipped, not the first.
 ## Wiring
 
 - A `VisualDef` entry in `src/render/characters/manifest.ts`'s `VISUALS` record:
-  `url`, `height`, `clips` (a `ClipMap` factory: `kaykit([...])` and `mixamoClips()`
-  are the ones that exist today; a donor rig whose clip names match neither needs a
-  new `ClipMap` factory, and if its clips were grafted on via `addClipsFrom`, that
-  factory names the clips in the grafted library, not the ones in the donor mesh),
-  optionally `show` (an allowlist of non-skinned node names to keep; KayKit ships
-  every accessory visible by default), `attach` (a separate weapon/prop model plus a
-  bone name), and `tint`/`tintStrength` (`tint: 'entity'` reads the mob/NPC's own
-  `color:` field from its content record, for a family-shared model where each
-  instance keeps its own hue).
+  `url`, `height`, `clips` (a `ClipMap` factory: `kaykit([...])`, `mixamoClips()`, and
+  `openmmoClips()` already exist; a donor rig whose clip names match none of them
+  needs a new `ClipMap` factory, and if its clips were grafted on via `addClipsFrom`,
+  that factory names the clips in the grafted library, not the ones in the donor
+  mesh, per `openmmoClips()`'s own header comment), optionally `show` (an allowlist
+  of non-skinned node names to keep; KayKit ships every accessory visible by
+  default), `attach` (a separate weapon/prop model plus a bone name), and
+  `tint`/`tintStrength` (`tint: 'entity'` reads the mob/NPC's own `color:` field
+  from its content record, for a family-shared model where each instance keeps its
+  own hue).
 - A `MOB_KEYS[templateId]` or `NPC_KEYS[templateId]` line pointing at that key.
   Dispatch precedence (`visualKeyFor` in `manifest.ts`): players to `player_<class>`;
   mobs to `MOB_KEYS[templateId]`, then `FAMILY_KEYS[family]`, then `mob_bandit`; NPCs
