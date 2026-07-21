@@ -10,7 +10,7 @@ async function waitForServer(url, timeoutMs = 15000) {
     try {
       const res = await fetch(url);
       if (res.ok) return;
-    } catch (e) {
+    } catch {
       // ignore connection errors
     }
     await new Promise((r) => setTimeout(r, 500));
@@ -19,11 +19,10 @@ async function waitForServer(url, timeoutMs = 15000) {
 }
 
 async function main() {
-  console.log('Waiting for dev server and game server to be ready...');
+  console.log(`Waiting for homepage at ${URL}...`);
   try {
-    await waitForServer('http://localhost:5173');
-    await waitForServer('http://127.0.0.1:8787/api/project-stats');
-    console.log('Servers are ready.');
+    await waitForServer(URL);
+    console.log('Homepage is ready.');
   } catch (err) {
     console.error(err.message);
   }
@@ -45,8 +44,12 @@ async function main() {
   page.on('console', (msg) => {
     if (msg.type() === 'error') {
       const text = msg.text();
-      if (text.includes('502') || text.includes('Bad Gateway') || text.includes('project-stats')) {
-        console.log(`Ignoring transient browser startup network error: ${text}`);
+      const sourceUrl = msg.location().url ?? '';
+      if (
+        sourceUrl.includes('/api/') &&
+        (text.includes('401') || text.includes('502') || text.includes('Bad Gateway'))
+      ) {
+        console.log(`Ignoring unavailable optional API in offline preview: ${sourceUrl}`);
         return;
       }
       console.error(`Browser Console Error: ${text}`);
@@ -56,12 +59,12 @@ async function main() {
 
   try {
     console.log(`Navigating to ${URL}...`);
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 15000 });
+    await page.goto(URL, { waitUntil: 'load', timeout: 15000 });
 
     // Verify Title and Meta Description
     const pageTitle = await page.title();
     console.log(`Page Title: "${pageTitle}"`);
-    if (pageTitle !== 'World of ClaudeCraft: Classic-Style Web MMO') {
+    if (pageTitle !== 'Endless Glory: Classic-Style Web MMO') {
       throw new Error(`Unexpected page title: "${pageTitle}"`);
     }
 
@@ -70,7 +73,7 @@ async function main() {
       return meta ? meta.getAttribute('content') : null;
     });
     console.log(`Meta Description: "${metaDescription}"`);
-    if (!metaDescription || !metaDescription.includes('World of ClaudeCraft')) {
+    if (!metaDescription?.includes('Endless Glory')) {
       throw new Error(`Unexpected or missing meta description: "${metaDescription}"`);
     }
 
@@ -79,7 +82,7 @@ async function main() {
       { id: '#hero-view', btn: '#nav-btn-play' },
       { id: '#highscores-view', btn: '#nav-btn-highscores' },
       { id: '#news-view', btn: '#nav-btn-news' },
-      { id: '#download-view', btn: '#nav-btn-download' }
+      { id: '#download-view', btn: '#nav-btn-download' },
     ];
 
     // Helper to assert view visibility
@@ -102,14 +105,18 @@ async function main() {
             throw new Error(`Expected active view ${view.id} to be visible, but it is hidden.`);
           }
           if (ariaHidden !== 'false') {
-            throw new Error(`Expected active view ${view.id} to have aria-hidden="false", got "${ariaHidden}".`);
+            throw new Error(
+              `Expected active view ${view.id} to have aria-hidden="false", got "${ariaHidden}".`,
+            );
           }
         } else {
           if (!isHidden) {
             throw new Error(`Expected inactive view ${view.id} to be hidden, but it is visible.`);
           }
           if (ariaHidden !== 'true') {
-            throw new Error(`Expected inactive view ${view.id} to have aria-hidden="true", got "${ariaHidden}".`);
+            throw new Error(
+              `Expected inactive view ${view.id} to have aria-hidden="true", got "${ariaHidden}".`,
+            );
           }
         }
       }
@@ -137,15 +144,15 @@ async function main() {
 
     // 3. Verify Dynamic Translation (English -> Spanish)
     console.log('Verifying dynamic localization switcher...');
-    
+
     // Check initial English texts
-    const engRealmStatusText = await page.evaluate(() => {
-      const el = document.querySelector('#project-stats-panel h2');
+    const englishPlayText = await page.evaluate(() => {
+      const el = document.querySelector('#nav-btn-play');
       return el ? el.textContent.trim() : '';
     });
-    console.log(`English Status Title: "${engRealmStatusText}"`);
-    if (engRealmStatusText !== 'Realm Status') {
-      throw new Error(`Expected English stats title to be "Realm Status", got "${engRealmStatusText}"`);
+    console.log(`English Play label: "${englishPlayText}"`);
+    if (englishPlayText !== 'Play') {
+      throw new Error(`Expected English Play label to be "Play", got "${englishPlayText}"`);
     }
 
     // Change language to Spanish (es)
@@ -175,15 +182,14 @@ async function main() {
     }
 
     // Check Spanish translations
-    const espRealmStatusText = await page.evaluate(() => {
-      const el = document.querySelector('#project-stats-panel h2');
+    const spanishPlayText = await page.evaluate(() => {
+      const el = document.querySelector('#nav-btn-play');
       return el ? el.textContent.trim() : '';
     });
-    console.log(`Spanish Status Title: "${espRealmStatusText}"`);
-    if (espRealmStatusText !== 'Estado del Reino') {
-      throw new Error(`Expected Spanish stats title to be "Estado del Reino", got "${espRealmStatusText}"`);
+    console.log(`Spanish Play label: "${spanishPlayText}"`);
+    if (spanishPlayText !== 'Jugar') {
+      throw new Error(`Expected Spanish Play label to be "Jugar", got "${spanishPlayText}"`);
     }
-
 
     // Switch back to English (en)
     console.log('Switching back to English (en)...');
@@ -204,13 +210,15 @@ async function main() {
     }
 
     // Verify back in English
-    const engStatusTitle = await page.evaluate(() => {
-      const el = document.querySelector('#project-stats-panel h2');
+    const restoredEnglishPlayText = await page.evaluate(() => {
+      const el = document.querySelector('#nav-btn-play');
       return el ? el.textContent.trim() : '';
     });
-    console.log(`English Status Title restored: "${engStatusTitle}"`);
-    if (engStatusTitle !== 'Realm Status') {
-      throw new Error(`Expected English stats title to be "Realm Status", got "${engStatusTitle}"`);
+    console.log(`English Play label restored: "${restoredEnglishPlayText}"`);
+    if (restoredEnglishPlayText !== 'Play') {
+      throw new Error(
+        `Expected restored English Play label to be "Play", got "${restoredEnglishPlayText}"`,
+      );
     }
 
     // 4. Verify all new target languages from i18n via URL query parameters
@@ -227,14 +235,14 @@ async function main() {
       { code: 'ko_KR', expectedPlay: '플레이' },
       { code: 'ja_JP', expectedPlay: 'プレイ' },
       { code: 'pt_BR', expectedPlay: 'Jogar' },
-      { code: 'ru_RU', expectedPlay: 'Играть' }
+      { code: 'ru_RU', expectedPlay: 'Играть' },
     ];
 
     for (const langCheck of langChecks) {
       console.log(`Checking language "${langCheck.code}"...`);
       const langUrl = `${URL}/?lang=${langCheck.code}`;
-      await page.goto(langUrl, { waitUntil: 'networkidle0', timeout: 15000 });
-      
+      await page.goto(langUrl, { waitUntil: 'load', timeout: 15000 });
+
       const currentHtmlLang = await page.evaluate(() => document.documentElement.lang);
       const expectedHtmlLang = langCheck.code.replace('_', '-');
       if (currentHtmlLang !== expectedHtmlLang) {
@@ -247,7 +255,9 @@ async function main() {
       });
       console.log(`  [${langCheck.code}] Play nav link text: "${playText}"`);
       if (playText !== langCheck.expectedPlay) {
-        throw new Error(`Expected play nav link text for "${langCheck.code}" to be "${langCheck.expectedPlay}", got "${playText}"`);
+        throw new Error(
+          `Expected play nav link text for "${langCheck.code}" to be "${langCheck.expectedPlay}", got "${playText}"`,
+        );
       }
     }
 

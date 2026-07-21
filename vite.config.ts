@@ -10,6 +10,7 @@ import { loadBrowserslistFloors } from './scripts/browserslist_targets.mjs';
 // Untyped zero-dep build helper (same convention as the other scripts/*.mjs tools).
 // vite.config.ts is outside tsconfig `include`, so this import is never type-checked.
 import { templateModulepreload } from './scripts/i18n_modulepreload.mjs';
+import { visualThemeHtmlPlugin } from './scripts/lib/visual_theme_html';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 
@@ -151,12 +152,17 @@ function i18nModulepreloadPlugin() {
         ? cfg.build.outDir
         : path.resolve(cfg.root, cfg.build.outDir);
     },
-    closeBundle() {
-      const { map } = templateModulepreload({ root, outDir, base });
-      // eslint-disable-next-line no-console
-      console.log(
-        `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
-      );
+    closeBundle: {
+      // 'post' runs this after every default-ordered closeBundle, including Vite's own
+      // manifest writer, so the manifest is on disk before the read below.
+      order: 'post',
+      async handler() {
+        const { map } = await templateModulepreload({ root, outDir, base });
+        // eslint-disable-next-line no-console
+        console.log(
+          `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
+        );
+      },
     },
   };
 }
@@ -302,6 +308,7 @@ export default defineConfig({
     svelte(),
     ...(process.env.VITEST ? [svelteTesting()] : []),
     staticPageAliasPlugin(),
+    visualThemeHtmlPlugin(),
     i18nModulepreloadPlugin(),
     musicEditorSavePlugin(),
   ],

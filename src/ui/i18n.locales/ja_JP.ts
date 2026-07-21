@@ -1289,8 +1289,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'アカウントにリンクされたウォレットを選択し、このブラウザで取引を承認してください。',
   'wallet.browser.extensionHelp':
     '対応するウォレット拡張機能が見つかりません。Phantom、Solflare、または別のSolanaブラウザウォレットをインストールまたはロック解除して、再試行してください。',
-  'wallet.browser.safety':
-    'Endless Gloryがリカバリーフレーズや秘密鍵を求めることはありません。',
+  'wallet.browser.safety': 'Endless Gloryがリカバリーフレーズや秘密鍵を求めることはありません。',
   'wallet.browser.continueWith': '{wallet}で続行',
   'wallet.browser.reviewTitle': 'ウォレットで確認',
   'wallet.browser.reviewBody':

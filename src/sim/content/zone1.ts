@@ -110,7 +110,7 @@ export const ZONE1_MOBS: Record<string, MobTemplate> = {
       { itemId: 'wolfhide_satchel', chance: 0.02 },
     ],
     scale: 0.9,
-    color: 0x7f8c8d,
+    color: 0x445c3a,
     packFrenzy: { radius: 12, hasteMult: 1.3, duration: 8 },
     componentTags: ['hide', 'fang'],
   },
@@ -500,6 +500,30 @@ export const ZONE1_MOBS: Record<string, MobTemplate> = {
     ],
     scale: 1.25,
     color: 0x6c3483,
+  },
+  amber_heart_golem: {
+    id: 'amber_heart_golem',
+    name: 'Amber-Heart Golem',
+    minLevel: 7,
+    maxLevel: 9,
+    family: 'golem',
+    hpBase: 320,
+    hpPerLevel: 60,
+    dmgBase: 14,
+    dmgPerLevel: 4.5,
+    attackSpeed: 2.4,
+    armorPerLevel: 28,
+    moveSpeed: 5.5,
+    aggroRadius: 14,
+    loot: [
+      { copper: 120, chance: 1 },
+      { itemId: 'arcane_shard', chance: 0.8 },
+      { itemId: 'eastbrook_greatsword', chance: 0.05 },
+    ],
+    scale: 1.0,
+    color: 0xff8c1f,
+    componentTags: ['stone', 'amber'],
+    elite: true,
   },
 };
 
@@ -1332,7 +1356,7 @@ export const ZONE1_ROADS: { x: number; z: number }[][] = [
 
 export const ZONE1_PROPS: ZonePropsDef = {
   buildings: [
-    { kind: 'house', x: 10, z: 12, w: 7, d: 6, rot: -0.4 },
+    { kind: 'house', x: 11, z: 14, w: 7, d: 6, rot: -0.9 },
     { kind: 'house', x: -10, z: 10, w: 6, d: 5, rot: 0.5 },
     { kind: 'inn', x: 12, z: -6, w: 6, d: 7, rot: 2.4 },
     { kind: 'chapel', x: -16, z: -8, w: 5, d: 7, rot: 0.9 },

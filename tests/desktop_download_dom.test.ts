@@ -73,7 +73,8 @@ describe('initDesktopDownload', () => {
 });
 
 describe('desktop download entry markup', () => {
-  it.each(['index.html', 'play.html'])('%s ships an enabled Windows fallback link', (path) => {
+  it('index.html ships an enabled Windows fallback link', () => {
+    const path = 'index.html';
     const html = readFileSync(path, 'utf8');
     const entry = new DOMParser().parseFromString(html, 'text/html');
     const links = entry.querySelectorAll<HTMLAnchorElement>(

@@ -237,8 +237,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Tilknyt pung',
   'wallet.bagLink': 'Bekræft pung',
   'wallet.bagReconnect': 'Gentilslut pung',
-  'wallet.browser.completeBody':
-    'Du kan nu vende tilbage til Endless Glory-skrivebordsappen.',
+  'wallet.browser.completeBody': 'Du kan nu vende tilbage til Endless Glory-skrivebordsappen.',
   'wallet.browser.completeTitle': 'Pung-godkendelse fuldført',
   'wallet.browser.continueWith': 'Fortsæt med {wallet}',
   'wallet.browser.extensionHelp':

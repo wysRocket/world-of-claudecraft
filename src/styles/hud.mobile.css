@@ -436,7 +436,7 @@
 
   /* ---------- mobile window backdrop ---------- */
   /* Phase 4 of the mobile combat HUD rework: a static full-screen dim layer
-     (#mobile-window-backdrop, in both index.html and play.html) shown whenever a
+     (#mobile-window-backdrop in index.html) shown whenever a
      window is open on touch, so a menu explicitly blocks touches to whatever is
      behind it instead of relying on DOM occlusion order (several windows are
      translucent / don't fully cover the viewport). Hidden by default and on
@@ -1373,14 +1373,6 @@
      All bars stay display:none, so no layout/sizing/drag/hover/state rule for
      their contents is reachable here; that styling lives only in hud.css. */
   body.mobile-touch #actionbar {
-    display: none;
-  }
-  /* The community-links rail (Discord/GitHub/Donate) is hidden in-game on
-     touch: its two-person toggle icon under the minimap read as a Friends
-     button next to the real Social button in the top-left trio. The links
-     stay reachable on desktop and from the homepage; the More tray's Discord
-     button covers the in-game path where configured. */
-  body.mobile-touch #community-hud {
     display: none;
   }
   /* Issue uiux-overlap: the chatbox's .panel border reads as clutter on the
@@ -4528,13 +4520,9 @@
     }
   }
   /* Re-homed from the char-select responsive block in shell.css: narrow-width
-     repositioning of the in-game community HUD + quest
-     tracker. Layer hud.mobile sits after components, so these still beat the HUD
-     base; nothing in shell competes once removed there. */
+     repositioning of the quest tracker. Layer hud.mobile sits after components,
+     so this still beats the HUD base; nothing in shell competes once removed there. */
   @media (max-width: 860px) {
-    #community-hud {
-      top: auto;
-    }
     #right-tracker-stack {
       top: 260px;
       right: 12px;

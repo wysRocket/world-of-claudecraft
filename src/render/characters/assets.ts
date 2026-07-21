@@ -30,6 +30,9 @@ import {
   visualAssetUrlForGraphics,
   weaponSkinModelUrl,
 } from './manifest';
+import { ACTIVE_VISUAL_THEME } from '../../visual_theme';
+import { VISUAL_THEME_CATALOG } from '../../visual_theme_catalog.generated';
+import { themedAssetPath } from '../../visual_theme_core';
 import { mergeSkinnedParts } from './rig_merge';
 import { weaponSkinAttachBone, weaponSkinHandling } from './skin_attack';
 import { variantGripTransform, WEAPON_GRIP_OVERRIDES } from './weapon_grip';
@@ -429,7 +432,8 @@ function resolveBone(root: THREE.Object3D, name: string): THREE.Object3D | null 
 const gltfByUrl = new Map<string, GLTF>();
 
 function assetUrl(url: string): string {
-  return visualAssetUrlForGraphics(url, GFX.standardMaterials);
+  const gfxUrl = visualAssetUrlForGraphics(url, GFX.standardMaterials);
+  return themedAssetPath(gfxUrl, ACTIVE_VISUAL_THEME, VISUAL_THEME_CATALOG);
 }
 
 // Preload the character/weapon GLBs. characterPreloadUrls() is tier-INDEPENDENT (see
@@ -445,6 +449,16 @@ for (const url of preloadUrls) {
       gltfByUrl.set(url, g);
     }),
   );
+  // Also preload the visual-theme replacement (if different) so the
+  // themedAssetPath() call inside assetUrl() finds a cached GLTF.
+  const themedUrl = themedAssetPath(url, ACTIVE_VISUAL_THEME, VISUAL_THEME_CATALOG);
+  if (themedUrl !== url) {
+    registerPreload(
+      loadGltf(themedUrl).then((g) => {
+        gltfByUrl.set(themedUrl, g);
+      }),
+    );
+  }
 }
 
 // Skin textures: player alternate body atlases, loaded sRGB + flipY=false so

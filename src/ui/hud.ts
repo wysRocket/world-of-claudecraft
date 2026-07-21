@@ -629,9 +629,8 @@ const VCUP_THEATRE_RADIUS = 200;
 const COMBO_PIP_COUNT = 5;
 // The mob-hover tooltip's fixed desktop bottom-right slot (the WoW default
 // GameTooltip corner), in author-space px: the right margin clears the sidebar
-// icon rail, the bottom margin the community-links row, both fixed right-edge
-// chrome. Touch uses the slot immediately left of the minimap instead so it does
-// not cover the bottom action controls.
+// icon rail, both fixed right-edge chrome. Touch uses the slot immediately left
+// of the minimap instead so it does not cover the bottom action controls.
 const MOB_TOOLTIP_MARGIN_RIGHT = 56;
 const MOB_TOOLTIP_MARGIN_BOTTOM = 60;
 const MOB_TOOLTIP_MOBILE_MINIMAP_GAP = 8;
@@ -1711,14 +1710,6 @@ export class Hud {
     document.addEventListener('pointerdown', (ev) => {
       const target = ev.target as Node | null;
       if (!target) return;
-      const communityMenu = document.getElementById('community-menu') as HTMLDetailsElement | null;
-      if (
-        document.body.classList.contains('mobile-touch') &&
-        communityMenu?.open &&
-        !communityMenu.contains(target)
-      ) {
-        communityMenu.open = false;
-      }
       if (document.body.classList.contains('mobile-more-open')) {
         const more = document.getElementById('mobile-more');
         const extra = document.getElementById('mobile-extra-controls');
@@ -5718,7 +5709,7 @@ export class Hud {
   // Build the mobile action ring: a SECOND createActionBarView instance over a
   // 6-slot descriptor (slot 0 the fixed attack toggle, slots 1-5 the paged action
   // buttons) plus a MobileActionRingPainter reusing ActionBarPainter for the
-  // per-slot writes. The static container/buttons live in index.html/play.html
+  // per-slot writes. The static container/buttons live in index.html
   // (#mobile-action-ring); on a build that omits them (neither game entry does,
   // but this stays defensive like an optional-row-less template case above) the
   // ring silently stays unbuilt and update() skips painting it.

@@ -34,7 +34,6 @@ describe('targetRankView', () => {
     );
     const css = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
     const index = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-    const play = readFileSync(new URL('../play.html', import.meta.url), 'utf8');
     const emblemUrl = new URL('../public/ui/ranks/elite-dragon-frame.webp', import.meta.url);
     const emblem = readFileSync(emblemUrl);
     const metadata = await sharp(emblem).metadata();
@@ -47,7 +46,7 @@ describe('targetRankView', () => {
       const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       return css.match(new RegExp(`${escaped}\\s*\\{([^}]+)\\}`))?.[1] ?? '';
     };
-    expect(hud + rankView + css + index + play).not.toMatch(/[\u2620\u{1F480}]/u);
+    expect(hud + rankView + css + index).not.toMatch(/[\u2620\u{1F480}]/u);
     expect(emblem.subarray(0, 4).toString('ascii')).toBe('RIFF');
     expect(emblem.subarray(8, 12).toString('ascii')).toBe('WEBP');
     expect(metadata).toMatchObject({ width: 256, height: 256, hasAlpha: true });

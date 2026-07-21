@@ -57,8 +57,7 @@ const INDEX_HTML = `<a href="https://updates.worldofclaudecraft.com/desktop/worl
 <a href="https://updates.worldofclaudecraft.com/desktop/world-of-claudecraft-0.20.0-win.exe">Download</a>
 <div id="game-version">v0.10</div>`;
 
-// play.html omits Linux but carries the macOS and Windows links.
-const PLAY_HTML = `<a href="https://updates.worldofclaudecraft.com/desktop/world-of-claudecraft-0.20.0-mac-universal.dmg">Download</a>
+const MAC_ONLY_HTML = `<a href="https://updates.worldofclaudecraft.com/desktop/world-of-claudecraft-0.20.0-mac-universal.dmg">Download</a>
 <a href="https://updates.worldofclaudecraft.com/desktop/world-of-claudecraft-0.20.0-win.exe">Download</a>
 <div id="game-version">v0.10</div>`;
 
@@ -144,8 +143,8 @@ describe('release version transforms', () => {
     expect(out).not.toContain('world-of-claudecraft-0.20.0-win.exe');
   });
 
-  it('tolerates pages without a Linux link (play.html)', () => {
-    const out = setDesktopDownloadVersion(PLAY_HTML, '0.21.0', 'play.html');
+  it('tolerates release surfaces without a Linux link', () => {
+    const out = setDesktopDownloadVersion(MAC_ONLY_HTML, '0.21.0', 'minimal.html');
     expect(out).toContain('world-of-claudecraft-0.21.0-mac-universal.dmg');
     expect(out).not.toContain('AppImage');
   });
@@ -191,7 +190,6 @@ describe('planReleaseVersion', () => {
       desktopModule: DESKTOP_TS,
       htmlFiles: {
         'index.html': INDEX_HTML,
-        'play.html': PLAY_HTML,
       },
       readmeFiles: {
         'README.md': README_MD,
@@ -207,8 +205,6 @@ describe('planReleaseVersion', () => {
       'world-of-claudecraft-0.21.0-linux-x86_64.AppImage',
     );
     expect(plan.htmlFiles['index.html']).toContain('world-of-claudecraft-0.21.0-win.exe');
-    expect(plan.htmlFiles['play.html']).toContain('world-of-claudecraft-0.21.0-win.exe');
-    expect(plan.htmlFiles['play.html']).toContain('<div id="game-version">v0.21.0</div>');
     expect(plan.desktopModule).toContain("export const DESKTOP_VERSION = '0.21.0';");
     expect(plan.readmeFiles['README.md']).toContain('version-0.21.0-blue');
   });
@@ -224,8 +220,7 @@ describe('collectReleaseVersionFailures', () => {
       pbxproj: PBXPROJ,
       desktopModule: DESKTOP_TS,
       htmlFiles: {
-        'index.html': INDEX_HTML,
-        'play.html': '<div class="coming-soon-badge">Coming Soon...</div>',
+        'index.html': `${INDEX_HTML}\n<div class="coming-soon-badge">Coming Soon...</div>`,
       },
       readmeFiles: {
         'README.md': README_MD,
@@ -242,8 +237,7 @@ describe('collectReleaseVersionFailures', () => {
         'index.html has a stale Linux desktop download URL, expected 0.21.0',
         'index.html has a stale Windows desktop download URL, expected 0.21.0',
         'src/game/desktop_download.ts DESKTOP_VERSION is 0.20.0, expected 0.21.0',
-        'play.html is missing the macOS desktop download URL for 0.21.0',
-        'play.html still contains Coming Soon in the download panel',
+        'index.html still contains Coming Soon in the download panel',
         'README.md version badge includes 0.20.0, expected all 0.21.0',
       ]),
     );
@@ -258,7 +252,7 @@ describe('collectReleaseVersionFailures', () => {
       pbxproj: PBXPROJ,
       desktopModule: DESKTOP_TS,
       htmlFiles: {
-        'play.html': PLAY_HTML,
+        'minimal.html': MAC_ONLY_HTML,
       },
       readmeFiles: {
         'README.md': README_MD,

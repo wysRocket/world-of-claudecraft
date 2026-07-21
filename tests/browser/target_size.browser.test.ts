@@ -53,7 +53,7 @@ describe('mobile target-size: in-game touch controls are >=40x40 in landscape', 
     // The paged action ring replaced the desktop #actionbar on touch (which is
     // display:none under body.mobile-touch); its sizes resolve from the
     // --mobile-ring-* variables on the ring container, so the buttons must be
-    // measured inside it, mirroring the real index.html/play.html markup (the
+    // measured inside it, mirroring the real index.html markup (the
     // Target swap and Use helpers live in the ring's crescent hollow, not the
     // left utility cluster).
     const ring = el('div', { id: 'mobile-action-ring' });

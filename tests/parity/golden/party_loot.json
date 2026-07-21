@@ -8,12 +8,12 @@
     "multi-player party"
   ],
   "draws": 2,
-  "drawDigest": "c05535b8",
+  "drawDigest": "4bdf7dc7",
   "frames": [
     {
       "tick": 0,
       "time": 0,
-      "nextId": 415,
+      "nextId": 411,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -27,12 +27,12 @@
     {
       "tick": 3,
       "time": 0.15,
-      "nextId": 418,
-      "state": "af0ee286",
-      "events": "10c8d55b",
+      "nextId": 414,
+      "state": "282f218f",
+      "events": "582d6d2a",
       "rng": {
         "draws": 2,
-        "digest": "c05535b8"
+        "digest": "4bdf7dc7"
       },
       "label": "final",
       "players": [
@@ -61,7 +61,6 @@
             "itemsDiscovered": [
               "baked_bread",
               "eastbrook_buckler",
-              "greyjaw_hide_boots",
               "recruit_tunic",
               "worn_sword"
             ]
@@ -74,7 +73,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 411,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -87,15 +86,10 @@
             {
               "count": 5,
               "itemId": "baked_bread"
-            },
-            {
-              "count": 1,
-              "itemId": "greyjaw_hide_boots"
             }
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
-          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -128,6 +122,7 @@
               "apprentice_robe",
               "baked_bread",
               "gnarled_staff",
+              "greyjaw_hide_boots",
               "spring_water"
             ]
           },
@@ -139,7 +134,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 416,
+          "entityId": 412,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -155,11 +150,14 @@
             {
               "count": 5,
               "itemId": "spring_water"
+            },
+            {
+              "count": 1,
+              "itemId": "greyjaw_hide_boots"
             }
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
-          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -179,7 +177,7 @@
               "name": "Battle Stance",
               "remaining": 3599.85,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 411
             }
           ],
           "blockChance": 0.05,
@@ -192,7 +190,7 @@
           "fallStartY": 0.860353,
           "fiveSecondRule": 99.15,
           "hp": 100,
-          "id": 415,
+          "id": 411,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -242,7 +240,8 @@
           "fallStartY": 0.639595,
           "fiveSecondRule": 99.15,
           "hp": 54,
-          "id": 416,
+          "id": 412,
+          "inCombat": true,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -294,7 +293,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 417,
+          "id": 413,
           "kind": "mob",
           "level": 2,
           "lootFfaTimer": "Infinity",
@@ -319,7 +318,7 @@
           "stats": {
             "armor": 10
           },
-          "tappedById": 415,
+          "tappedById": 411,
           "templateId": "forest_wolf",
           "weapon": {
             "max": 6,

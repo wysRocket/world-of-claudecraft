@@ -83,7 +83,7 @@ describe('CSS extraction: base.css', () => {
 
 describe('CSS extraction: barrel + seam wiring', () => {
   it('declares the single @layer order once, with hud-mobile after shell and the per-entry extras last', () => {
-    // Flat (hyphenated) layer names: a DOT would make hud-mobile/index-extra/play-extra
+    // Flat (hyphenated) layer names: a DOT would make hud-mobile/index-extra
     // SUBLAYERS, not top-level layers. hud-mobile is ordered AFTER shell so the
     // in-game mobile overrides of pre-game shell elements win as they did when inline.
     expect(barrel).toContain(
@@ -133,7 +133,7 @@ describe('CSS extraction: barrel + seam wiring', () => {
     }
   });
 
-  it('imports the barrel once from the shared game bootstrap (covers index.html + play.html)', () => {
+  it('imports the barrel once from the game bootstrap', () => {
     expect(mainTs).toContain("import './styles/index.css'");
   });
 

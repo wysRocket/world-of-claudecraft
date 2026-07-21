@@ -187,6 +187,8 @@ import { Weather } from './weather';
 import { buildWorldAmbientSources, crowdAmbienceAt, footstepSurfaceAt } from './world_audio';
 import { buildYumiMaze, type YumiMazeView } from './yumi_maze';
 import { YumiTeamMarkers } from './yumi_team_markers';
+import { ACTIVE_VISUAL_THEME } from '../visual_theme';
+import { lightingForTheme } from './emberwood/lighting';
 
 // Festival gold/white celebration palette, shared by the Vale Cup full-time
 // draw show and the Book of Deeds unlock burst (one palette, two sites).
@@ -1235,8 +1237,9 @@ export class Renderer {
       isHostilePlayer: (e) => this.isHostilePlayer(e),
     });
 
+    const themeLight = lightingForTheme(ACTIVE_VISUAL_THEME);
     this.scene.fog = new THREE.Fog(
-      LOW_GFX ? 0xb6cddd : 0xa6c6e0,
+      LOW_GFX ? 0xb6cddd : themeLight.fogColor,
       LOW_GFX ? 150 : 130,
       LOW_GFX ? 520 : 470,
     );
@@ -1324,12 +1327,12 @@ export class Renderer {
       pmrem.dispose(); // prefiltered envRTs stay alive for the session
     }
 
-    const hemi = new THREE.HemisphereLight(0xdcefff, 0x465f39, LOW_GFX ? 0.98 : HEMI_INTENSITY);
+    const hemi = new THREE.HemisphereLight(themeLight.hemiColor, themeLight.hemiGround, LOW_GFX ? 0.98 : themeLight.hemiIntensity);
     this.scene.add(hemi);
     this.hemi = hemi;
     const sun = new THREE.DirectionalLight(
-      LOW_GFX ? 0xfff0d0 : 0xffedd0,
-      LOW_GFX ? 2.65 : SUN_INTENSITY,
+      LOW_GFX ? 0xfff0d0 : themeLight.sunColor,
+      LOW_GFX ? 2.65 : themeLight.sunIntensity,
     );
     sun.position.copy(SUN_ANCHOR);
     sun.castShadow = !LOW_GFX;
@@ -4354,7 +4357,12 @@ export class Renderer {
 
   private outdoorFogPreset(): { color: number; near: number; far: number } {
     if (this.lowGfx) return Renderer.LOW_FOG;
-    return Renderer.BIOME_FOG[zoneBiomeAt(this.sim.player.pos.z)];
+    const biome = zoneBiomeAt(this.sim.player.pos.z);
+    const preset = Renderer.BIOME_FOG[biome];
+    if (ACTIVE_VISUAL_THEME === 'emberwood' && biome === 'vale') {
+      return { ...preset, color: 0x607487 };
+    }
+    return preset;
   }
 
   private scheduleDelveModuleBuild(

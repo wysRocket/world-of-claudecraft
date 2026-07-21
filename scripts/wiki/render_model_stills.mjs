@@ -32,17 +32,26 @@ const OUT_PX = Number(process.env.STILL_PX || 320); // shipped size; entry super
 mkdirSync(outDir, { recursive: true });
 
 // 1) Bundle the browser entry. loadGltf -> assetUrl reads import.meta.env.DEV (DEV gates the
-//    root-relative /<logical> paths our static server maps into public/), which esbuild leaves
-//    intact for a classic IIFE <script src> and would be a SyntaxError. esbuild matches each
-//    FULL member path exactly (a bare `import.meta.env` define does NOT fold `.DEV`), so define
-//    both Vite flags media.ts / i18n.ts read; the assert below fails loudly if a transitive
-//    module ever reads another import.meta field this define misses.
+//    root-relative /<logical> paths our static server maps into public/) and visual_theme.ts
+//    reads import.meta.env.VITE_VISUAL_THEME (this harness's <script src> page never stamps
+//    document.documentElement.dataset.visualTheme, so that module falls through to the env
+//    read), which esbuild leaves intact for a classic IIFE and would be a SyntaxError. esbuild
+//    matches each FULL member path exactly (a bare `import.meta.env` define does NOT fold
+//    `.DEV`), so define every Vite flag a transitively bundled module reads; VITE_VISUAL_THEME
+//    is `undefined`, matching the real build's value since no committed .env sets it. NOTE: an
+//    import.meta.* field this define map misses does NOT survive as literal text for the assert
+//    below to catch (esbuild silently folds the unmatched read to `undefined` for this iife
+//    target), so a future missed flag surfaces as a runtime page error instead, not this assert.
 const bundled = await esbuild.build({
   entryPoints: [path.join(root, 'scripts', 'wiki', 'stills_render_entry.js')],
   bundle: true,
   format: 'iife',
   platform: 'browser',
-  define: { 'import.meta.env.DEV': 'true', 'import.meta.env.PROD': 'false' },
+  define: {
+    'import.meta.env.DEV': 'true',
+    'import.meta.env.PROD': 'false',
+    'import.meta.env.VITE_VISUAL_THEME': 'undefined',
+  },
   write: false,
   logLevel: 'silent',
 });

@@ -1,0 +1,661 @@
+{
+  "visualTheme": "emberwood",
+  "note": "Project-owned Emberwood Chronicle Eastbrook identity proof. Raw DCC exports live under tmp/asset_src/emberwood and are not shipped.",
+  "defaults": {
+    "type": "static",
+    "maxTex": 512
+  },
+  "items": [
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/house_a.glb",
+      "out": "models/emberwood/eastbrook/house_a.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/house_b.glb",
+      "out": "models/emberwood/eastbrook/house_b.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/house_c.glb",
+      "out": "models/emberwood/eastbrook/house_c.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/forge.glb",
+      "out": "models/emberwood/eastbrook/forge.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/inn.glb",
+      "out": "models/emberwood/eastbrook/inn.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/well.glb",
+      "out": "models/emberwood/eastbrook/well.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/market_stall_a.glb",
+      "out": "models/emberwood/eastbrook/market_stall_a.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/market_stall_b.glb",
+      "out": "models/emberwood/eastbrook/market_stall_b.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/market_cart.glb",
+      "out": "models/emberwood/eastbrook/market_cart.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/fence.glb",
+      "out": "models/emberwood/eastbrook/fence.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/bonfire.glb",
+      "out": "models/emberwood/eastbrook/bonfire.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/crate.glb",
+      "out": "models/emberwood/eastbrook/crate.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/barrel.glb",
+      "out": "models/emberwood/eastbrook/barrel.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/anvil.glb",
+      "out": "models/emberwood/eastbrook/anvil.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/eastbrook/lantern.glb",
+      "out": "models/emberwood/eastbrook/lantern.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/oak_1.glb",
+      "out": "models/emberwood/foliage/oak_1.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/oak_2.glb",
+      "out": "models/emberwood/foliage/oak_2.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/oak_3.glb",
+      "out": "models/emberwood/foliage/oak_3.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/pine_1.glb",
+      "out": "models/emberwood/foliage/pine_1.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/pine_2.glb",
+      "out": "models/emberwood/foliage/pine_2.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/rock_1.glb",
+      "out": "models/emberwood/foliage/rock_1.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/rock_2.glb",
+      "out": "models/emberwood/foliage/rock_2.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/bush.glb",
+      "out": "models/emberwood/foliage/bush.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/foliage/fern.glb",
+      "out": "models/emberwood/foliage/fern.glb"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_knight.glb",
+      "out": "models/emberwood/npcs/emberwood_knight.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_paladin.glb",
+      "out": "models/emberwood/npcs/emberwood_paladin.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_priest.glb",
+      "out": "models/emberwood/npcs/emberwood_priest.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_barbarian.glb",
+      "out": "models/emberwood/npcs/emberwood_barbarian.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_rogue.glb",
+      "out": "models/emberwood/npcs/emberwood_rogue.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_ranger.glb",
+      "out": "models/emberwood/npcs/emberwood_ranger.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_guard.glb",
+      "out": "models/emberwood/npcs/emberwood_guard.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_mage.glb",
+      "out": "models/emberwood/npcs/emberwood_mage.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_npc_woman.glb",
+      "out": "models/emberwood/npcs/emberwood_npc_woman.glb",
+      "type": "character",
+      "maxTex": 1024
+    },
+    {
+      "src": "tmp/asset_src/emberwood/creatures/wolf.glb",
+      "out": "models/emberwood/creatures/wolf.glb",
+      "type": "character",
+      "maxTex": 512
+    },
+    {
+      "src": "tmp/asset_src/emberwood/weapons/sword.glb",
+      "out": "models/emberwood/weapons/sword.glb",
+      "maxTex": 256
+    },
+    {
+      "src": "tmp/asset_src/emberwood/weapons/shield.glb",
+      "out": "models/emberwood/weapons/shield.glb",
+      "maxTex": 256
+    },
+    {
+      "src": "tmp/asset_src/emberwood/weapons/staff.glb",
+      "out": "models/emberwood/weapons/staff.glb",
+      "maxTex": 256
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/grass_color.jpg",
+      "out": "textures/emberwood/terrain/grass_color.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/grass_normal.jpg",
+      "out": "textures/emberwood/terrain/grass_normal.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/dirt_color.jpg",
+      "out": "textures/emberwood/terrain/dirt_color.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/dirt_normal.jpg",
+      "out": "textures/emberwood/terrain/dirt_normal.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/rock_color.jpg",
+      "out": "textures/emberwood/terrain/rock_color.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/terrain/rock_normal.jpg",
+      "out": "textures/emberwood/terrain/rock_normal.jpg",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/env/vale_day_1k.hdr",
+      "out": "env/emberwood/vale_day_1k.hdr",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/env/vale_day_2k.hdr",
+      "out": "env/emberwood/vale_day_2k.hdr",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/env/vale_backdrop.webp",
+      "out": "env/emberwood/vale_backdrop.webp",
+      "type": "copy"
+    },
+    {
+      "src": "tmp/asset_src/emberwood/env/vale_backdrop_4k.webp",
+      "out": "env/emberwood/vale_backdrop_4k.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/warrior/attack.webp",
+      "out": "ui/emberwood/skills/warrior/attack.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/warrior/heroic_strike.webp",
+      "out": "ui/emberwood/skills/warrior/heroic_strike.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/warrior/battle_shout.webp",
+      "out": "ui/emberwood/skills/warrior/battle_shout.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/warrior/charge.webp",
+      "out": "ui/emberwood/skills/warrior/charge.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/warrior/thunder_clap.webp",
+      "out": "ui/emberwood/skills/warrior/thunder_clap.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/frostbolt.webp",
+      "out": "ui/emberwood/skills/mage/frostbolt.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/fireball.webp",
+      "out": "ui/emberwood/skills/mage/fireball.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/arcane_intellect.webp",
+      "out": "ui/emberwood/skills/mage/arcane_intellect.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/frost_nova.webp",
+      "out": "ui/emberwood/skills/mage/frost_nova.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/blink.webp",
+      "out": "ui/emberwood/skills/mage/blink.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/skills/mage/polymorph.webp",
+      "out": "ui/emberwood/skills/mage/polymorph.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/items/backpack.webp",
+      "out": "ui/emberwood/items/backpack.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/items/minor_healing_potion.webp",
+      "out": "ui/emberwood/items/minor_healing_potion.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/items/lesser_mana_potion.webp",
+      "out": "ui/emberwood/items/lesser_mana_potion.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/ui/emberwood/items/eastbrook_chain_vest.webp",
+      "out": "ui/emberwood/items/eastbrook_chain_vest.webp",
+      "type": "copy"
+    },
+    {
+      "src": "public/models/emberwood/creatures/amber_heart_golem.glb",
+      "out": "models/emberwood/creatures/amber_heart_golem.glb",
+      "noCopy": true
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_provisioner.glb",
+      "out": "models/emberwood/npcs/emberwood_provisioner.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_fisherman.glb",
+      "out": "models/emberwood/npcs/emberwood_fisherman.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_groundskeeper.glb",
+      "out": "models/emberwood/npcs/emberwood_groundskeeper.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_herbalist.glb",
+      "out": "models/emberwood/npcs/emberwood_herbalist.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_dealer.glb",
+      "out": "models/emberwood/npcs/emberwood_dealer.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_armorer.glb",
+      "out": "models/emberwood/npcs/emberwood_armorer.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    },
+    {
+      "src": "tmp/asset_src/emberwood/npcs/emberwood_foreman.glb",
+      "out": "models/emberwood/npcs/emberwood_foreman.glb",
+      "type": "character",
+      "maxTex": 1024,
+      "addClipsFrom": [
+        "tmp/asset_src/openmmo_src/animations/locomotion.glb",
+        "tmp/asset_src/openmmo_src/animations/combat_melee.glb",
+        "tmp/asset_src/openmmo_src/animations/offhand.glb",
+        "tmp/asset_src/openmmo_src/animations/social.glb"
+      ]
+    }
+  ],
+  "replacements": [
+    {
+      "from": "models/props/house_1.glb",
+      "to": "models/emberwood/eastbrook/house_a.glb"
+    },
+    {
+      "from": "models/props/house_2.glb",
+      "to": "models/emberwood/eastbrook/house_b.glb"
+    },
+    {
+      "from": "models/props/house_3.glb",
+      "to": "models/emberwood/eastbrook/house_c.glb"
+    },
+    {
+      "from": "models/props/blacksmith.glb",
+      "to": "models/emberwood/eastbrook/forge.glb"
+    },
+    {
+      "from": "models/props/inn.glb",
+      "to": "models/emberwood/eastbrook/inn.glb"
+    },
+    {
+      "from": "models/props/well.glb",
+      "to": "models/emberwood/eastbrook/well.glb"
+    },
+    {
+      "from": "models/props/market_stand_1.glb",
+      "to": "models/emberwood/eastbrook/market_stall_a.glb"
+    },
+    {
+      "from": "models/props/market_stand_2.glb",
+      "to": "models/emberwood/eastbrook/market_stall_b.glb"
+    },
+    {
+      "from": "models/props/cart.glb",
+      "to": "models/emberwood/eastbrook/market_cart.glb"
+    },
+    {
+      "from": "models/props/fence.glb",
+      "to": "models/emberwood/eastbrook/fence.glb"
+    },
+    {
+      "from": "models/props/bonfire.glb",
+      "to": "models/emberwood/eastbrook/bonfire.glb"
+    },
+    {
+      "from": "models/props/crate_wooden.glb",
+      "to": "models/emberwood/eastbrook/crate.glb"
+    },
+    {
+      "from": "models/props/barrel.glb",
+      "to": "models/emberwood/eastbrook/barrel.glb"
+    },
+    {
+      "from": "models/props/anvil.glb",
+      "to": "models/emberwood/eastbrook/anvil.glb"
+    },
+    {
+      "from": "models/props/lantern_wall.glb",
+      "to": "models/emberwood/eastbrook/lantern.glb"
+    },
+    {
+      "from": "models/foliage/oak_1.glb",
+      "to": "models/emberwood/foliage/oak_1.glb"
+    },
+    {
+      "from": "models/foliage/oak_2.glb",
+      "to": "models/emberwood/foliage/oak_2.glb"
+    },
+    {
+      "from": "models/foliage/oak_3.glb",
+      "to": "models/emberwood/foliage/oak_3.glb"
+    },
+    {
+      "from": "models/foliage/oak_4.glb",
+      "to": "models/emberwood/foliage/oak_1.glb"
+    },
+    {
+      "from": "models/foliage/oak_5.glb",
+      "to": "models/emberwood/foliage/oak_2.glb"
+    },
+    {
+      "from": "models/foliage/pine_1.glb",
+      "to": "models/emberwood/foliage/pine_1.glb"
+    },
+    {
+      "from": "models/foliage/pine_2.glb",
+      "to": "models/emberwood/foliage/pine_2.glb"
+    },
+    {
+      "from": "models/foliage/pine_4.glb",
+      "to": "models/emberwood/foliage/pine_1.glb"
+    },
+    {
+      "from": "models/foliage/pine_5.glb",
+      "to": "models/emberwood/foliage/pine_2.glb"
+    },
+    {
+      "from": "models/foliage/rock_1.glb",
+      "to": "models/emberwood/foliage/rock_1.glb"
+    },
+    {
+      "from": "models/foliage/rock_2.glb",
+      "to": "models/emberwood/foliage/rock_2.glb"
+    },
+    {
+      "from": "models/foliage/rock_3.glb",
+      "to": "models/emberwood/foliage/rock_1.glb"
+    },
+    {
+      "from": "models/foliage/bush.glb",
+      "to": "models/emberwood/foliage/bush.glb"
+    },
+    {
+      "from": "models/foliage/bush_flowers.glb",
+      "to": "models/emberwood/foliage/bush.glb"
+    },
+    {
+      "from": "models/foliage/fern.glb",
+      "to": "models/emberwood/foliage/fern.glb"
+    },
+    {
+      "from": "models/chars/players/knight.glb",
+      "to": "models/emberwood/npcs/emberwood_knight.glb"
+    },
+    {
+      "from": "models/chars/players/mage.glb",
+      "to": "models/emberwood/npcs/emberwood_priest.glb"
+    },
+    {
+      "from": "models/chars/players/rogue_hooded.glb",
+      "to": "models/emberwood/npcs/emberwood_npc_woman.glb"
+    },
+    {
+      "from": "models/creatures/wolf_basic.glb",
+      "to": "models/emberwood/creatures/wolf.glb"
+    },
+    {
+      "from": "models/weapons/sword_1handed.glb",
+      "to": "models/emberwood/weapons/sword.glb"
+    },
+    {
+      "from": "models/weapons/shield_round.glb",
+      "to": "models/emberwood/weapons/shield.glb"
+    },
+    {
+      "from": "models/weapons/staff.glb",
+      "to": "models/emberwood/weapons/staff.glb"
+    },
+    {
+      "from": "env/vale_day_1k.hdr",
+      "to": "env/emberwood/vale_day_1k.hdr"
+    },
+    {
+      "from": "env/vale_day_2k.hdr",
+      "to": "env/emberwood/vale_day_2k.hdr"
+    },
+    {
+      "from": "env/vale_backdrop.webp",
+      "to": "env/emberwood/vale_backdrop.webp"
+    },
+    {
+      "from": "env/vale_backdrop_4k.webp",
+      "to": "env/emberwood/vale_backdrop_4k.webp"
+    },
+    {
+      "from": "ui/skills/warrior/attack.webp",
+      "to": "ui/emberwood/skills/warrior/attack.webp"
+    },
+    {
+      "from": "ui/skills/warrior/heroic_strike.webp",
+      "to": "ui/emberwood/skills/warrior/heroic_strike.webp"
+    },
+    {
+      "from": "ui/skills/warrior/battle_shout.webp",
+      "to": "ui/emberwood/skills/warrior/battle_shout.webp"
+    },
+    {
+      "from": "ui/skills/warrior/charge.webp",
+      "to": "ui/emberwood/skills/warrior/charge.webp"
+    },
+    {
+      "from": "ui/skills/warrior/thunder_clap.webp",
+      "to": "ui/emberwood/skills/warrior/thunder_clap.webp"
+    },
+    {
+      "from": "ui/skills/mage/frostbolt.webp",
+      "to": "ui/emberwood/skills/mage/frostbolt.webp"
+    },
+    {
+      "from": "ui/skills/mage/fireball.webp",
+      "to": "ui/emberwood/skills/mage/fireball.webp"
+    },
+    {
+      "from": "ui/skills/mage/arcane_intellect.webp",
+      "to": "ui/emberwood/skills/mage/arcane_intellect.webp"
+    },
+    {
+      "from": "ui/skills/mage/frost_nova.webp",
+      "to": "ui/emberwood/skills/mage/frost_nova.webp"
+    },
+    {
+      "from": "ui/skills/mage/blink.webp",
+      "to": "ui/emberwood/skills/mage/blink.webp"
+    },
+    {
+      "from": "ui/skills/mage/polymorph.webp",
+      "to": "ui/emberwood/skills/mage/polymorph.webp"
+    },
+    {
+      "from": "ui/items/backpack.webp",
+      "to": "ui/emberwood/items/backpack.webp"
+    },
+    {
+      "from": "ui/items/minor_healing_potion.webp",
+      "to": "ui/emberwood/items/minor_healing_potion.webp"
+    },
+    {
+      "from": "ui/items/lesser_mana_potion.webp",
+      "to": "ui/emberwood/items/lesser_mana_potion.webp"
+    },
+    {
+      "from": "ui/items/eastbrook_chain_vest.webp",
+      "to": "ui/emberwood/items/eastbrook_chain_vest.webp"
+    },
+    {
+      "from": "models/chars/players/barbarian.glb",
+      "to": "models/emberwood/npcs/emberwood_barbarian.glb"
+    },
+    {
+      "from": "models/chars/players/paladin.glb",
+      "to": "models/emberwood/npcs/emberwood_guard.glb"
+    },
+    {
+      "from": "models/chars/players/druid.glb",
+      "to": "models/emberwood/npcs/emberwood_mage.glb"
+    },
+    {
+      "from": "models/chars/players/mage_classic.glb",
+      "to": "models/emberwood/npcs/emberwood_priest.glb"
+    },
+    {
+      "from": "models/chars/players/rogue.glb",
+      "to": "models/emberwood/npcs/emberwood_rogue.glb"
+    },
+    {
+      "from": "models/chars/players/scout.glb",
+      "to": "models/emberwood/npcs/emberwood_ranger.glb"
+    },
+    {
+      "from": "models/chars/players/villager.glb",
+      "to": "models/emberwood/npcs/emberwood_npc_woman.glb"
+    },
+    {
+      "from": "models/chars/players/guard.glb",
+      "to": "models/emberwood/npcs/emberwood_guard.glb"
+    },
+    {
+      "from": "models/creatures/amber_heart_golem.glb",
+      "to": "models/emberwood/creatures/amber_heart_golem.glb"
+    },
+    {
+      "from": "models/chars/enemies/skeleton_golem.glb",
+      "to": "models/emberwood/creatures/amber_heart_golem.glb"
+    }
+  ]
+}

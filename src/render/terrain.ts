@@ -10,6 +10,8 @@ import { runIdleQueue } from './idle_queue';
 import { impactCraterTerrainBlend } from './impact_terrain';
 import { chunkIntersectsRegion, normalTexelBounds } from './terrain_region_core';
 import { groundDetailTexture, groundSplatMaps, macroNoiseTexture } from './textures';
+import { ACTIVE_VISUAL_THEME } from '../visual_theme';
+import { terrainPaletteForTheme } from './emberwood/palette';
 
 // Chunked terrain across the whole 360x1080 zone strip.
 //
@@ -127,71 +129,7 @@ const NORMAL_TEX_STRENGTH = 1.35;
 const BIOME_PALETTE: Record<
   BiomeId,
   { grass: number; grassDark: number; grassYellow: number; dirt: number; sand: number }
-> = {
-  vale: {
-    grass: 0x548545,
-    grassDark: 0x3e6635,
-    grassYellow: 0x768c44,
-    dirt: 0x8a6f47,
-    sand: 0xc2b283,
-  },
-  // Darker, murkier and more desaturated than the vale so the swamp reads as
-  // gloomy lowland rather than "vale but slightly duller". Pushed further
-  // toward drab olive/brown than a first pass so it reads at a glance.
-  marsh: {
-    grass: 0x3f4d28,
-    grassDark: 0x2c3a1e,
-    grassYellow: 0x505c34,
-    dirt: 0x4f4028,
-    sand: 0x655741,
-  },
-  // Cooler and greyer than the vale/marsh's warm greens, pushing toward sage
-  // and stone since altitude thins out the lush growth. Pushed further blue-
-  // grey than a first pass so peaks are unmistakably a different biome.
-  peaks: {
-    grass: 0x7a8878,
-    grassDark: 0x5c6862,
-    grassYellow: 0x9aa192,
-    dirt: 0x8a7d6a,
-    sand: 0xbdb49c,
-  },
-  // Paint-only biomes (editor brush): flat palettes, no zone-band blend.
-  // Coastal green-blue, brighter sand than the desert's.
-  beach: {
-    grass: 0x9ab86a,
-    grassDark: 0x7d9a5a,
-    grassYellow: 0xb8c278,
-    dirt: 0xc2a575,
-    sand: 0xf0e4bc,
-  },
-  // Warmer and browner than the beach, less green. Pushed further orange
-  // than a first pass to separate it clearly from the beach at a glance.
-  desert: {
-    grass: 0xcbaa5e,
-    grassDark: 0xa88d48,
-    grassYellow: 0xe0c070,
-    dirt: 0xc08f4a,
-    sand: 0xecc890,
-  },
-  // Dark, red-tinted ash rather than the cave's neutral grey. Pushed darker
-  // still so it reads as scorched ground, not just "dirty".
-  volcano: {
-    grass: 0x3c2c28,
-    grassDark: 0x281c18,
-    grassYellow: 0x503830,
-    dirt: 0x2c2018,
-    sand: 0x4c342c,
-  },
-  // Neutral blue-grey stone, distinct from volcano's warm ash. Pushed cooler
-  // and darker so it reads as underground rock, not daylight dirt.
-  cave: {
-    grass: 0x585e66,
-    grassDark: 0x3e444c,
-    grassYellow: 0x6a7078,
-    dirt: 0x484e56,
-    sand: 0x767c86,
-  },
-};
+> = terrainPaletteForTheme(ACTIVE_VISUAL_THEME);
 
 // rock starts creeping in at lower slopes in the peaks, later in the marsh
 const ROCK_SLOPE_START: Record<BiomeId, number> = {

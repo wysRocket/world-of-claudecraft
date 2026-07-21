@@ -251,8 +251,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'wallet.bagConnect': 'Vincular carteira',
   'wallet.bagLink': 'Verificar carteira',
   'wallet.bagReconnect': 'Reconectar carteira',
-  'wallet.browser.completeBody':
-    'Você pode retornar ao aplicativo para desktop do Endless Glory.',
+  'wallet.browser.completeBody': 'Você pode retornar ao aplicativo para desktop do Endless Glory.',
   'wallet.browser.completeTitle': 'Autorização de carteira concluída',
   'wallet.browser.continueWith': 'Continuar com {wallet}',
   'wallet.browser.extensionHelp':
@@ -6975,8 +6974,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'errors.api.desktopCodeInvalid':
     'O código de login do desktop é inválido ou expirou. Tente novamente.',
   'desktop.crash.body': 'A visualização do jogo parou de funcionar. Recarregar?',
-  'desktop.crash.fatalBody':
-    'O Endless Glory encontrou um erro inesperado e precisa fechar.',
+  'desktop.crash.fatalBody': 'O Endless Glory encontrou um erro inesperado e precisa fechar.',
   'desktop.crash.quit': 'Sair',
   'desktop.crash.reload': 'Recarregar',
   'desktop.crash.title': 'Endless Glory',

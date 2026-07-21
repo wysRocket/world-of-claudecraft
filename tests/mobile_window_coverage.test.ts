@@ -14,12 +14,11 @@ import { describe, expect, it } from 'vitest';
 // without a mobile rule and without an exception entry FAILS this test, so it can
 // never silently ship as an unstyled desktop-only box on touch.
 //
-// The window ids come from BOTH build entries (index.html at `/`, play.html at
-// `/play`; vite.config.ts) since the HUD chrome ships in both, PLUS any window
+// The window ids come from the offline game entry (index.html at `/`) plus any window
 // created dynamically in src/ui (scraped below). The mobile-touch rules are read
 // from every src/styles/*.css module (the flattened cascade an entry loads via the
 // src/styles/index.css barrel).
-const HTML_ENTRIES = ['../index.html', '../play.html'];
+const HTML_ENTRIES = ['../index.html'];
 const STYLES_DIR = '../src/styles';
 const UI_DIR = '../src/ui';
 

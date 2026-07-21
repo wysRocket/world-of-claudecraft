@@ -9,6 +9,7 @@ provided as a courtesy.
 
 | Assets | Author | Source | License |
 |---|---|---|---|
+| EndlessGlory Emberwood Chronicle Eastbrook art | EndlessGlory | Project-owned original work | Project asset |
 | Character models + animations (knight, mage, rogue, barbarian, hooded rogue), weapons/shields | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Adventures-1.0 | CC0 1.0 |
 | Skeleton character models + animations, bone weapons | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Character-Pack-Skeletons-1.0 | CC0 1.0 |
 | Dungeon modular kit (walls, floors, pillars, torches, banners, chests, furniture) | Kay Lousberg (KayKit) | https://github.com/KayKit-Game-Assets/KayKit-Dungeon-Remastered-1.0 | CC0 1.0 |
@@ -49,6 +50,8 @@ provided as a courtesy.
 | Guide webfonts (`public/fonts/*.woff2`: Cinzel by Natanael Gama; Alegreya and Alegreya Sans by Juan Pablo del Peral, Huerta Tipografica; woff2 subsets latin/latin-ext/cyrillic/vietnamese as served by Google Fonts, self-hosted for the /wiki guide) | Natanael Gama; Huerta Tipografica | https://fonts.google.com/specimen/Cinzel , https://fonts.google.com/specimen/Alegreya , https://fonts.google.com/specimen/Alegreya+Sans | SIL OFL 1.1 |
 | Owner-provided Mage artwork (`fireball_form.webp`, `counterspell.webp`) | Levy Street account | Owner-provided artwork | Used with permission |
 | Temporal clock sound effect (`public/audio/sfx/temporal_clock.mp3`) | World of ClaudeCraft | User-provided source recording | Project asset |
+| KayKit Adventurers 2.0 + Character Animations 1.1 (player base models `public/models/chars/players/{knight,paladin,mage,druid,barbarian,rogue,rogue_hooded,ranger,mage_classic}.glb` and the merged animation library; source for the 9 Emberwood NPC visuals `public/models/emberwood/npcs/emberwood_{barbarian,guard,knight,mage,npc_woman,paladin,priest,ranger,rogue}.glb` via `scripts/retheme_openmmo_npc.py`) | Kay Lousberg (KayKit) | Paid pack, purchase account/date not recorded in the commit that added it (`2133845ed`) | KayKit premium license (purchased; terms not re-confirmed here, TODO owner to fill in) |
+| Amber-Heart Golem base rig/mesh (`public/models/emberwood/creatures/amber_heart_golem.glb`, retextured to obsidian/amber in Blender) | Unverified | Provenance unclear: the commit that added it (`d42b5a05d`) claims an "OpenMMO orc base" but this could not be confirmed or ruled out from the repo alone (distinct Mixamo-style rig from the already-credited Quaternius `orc.glb` mob, but no direct evidence of the claimed source) | TODO owner to confirm actual source and license before relying on this credit |
 
 ## Brand marks
 

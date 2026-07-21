@@ -16,7 +16,7 @@
     "release:prepare": "node scripts/release_version.mjs prepare",
     "version:sync": "node scripts/version_sync.mjs",
     "version": "node scripts/version_sync.mjs && git add android/app/build.gradle ios/App/App.xcodeproj/project.pbxproj",
-    "build": "npm run i18n:build && npm run i18n:admin && npm run i18n:scan && npm run wiki:content && npm run sitemap:build && npm run sfx:manifest && node scripts/build_media_manifest.mjs generate && vite build && node scripts/check_backdrop_survival.mjs && node scripts/build_media_manifest.mjs emit",
+    "build": "npm run assets:theme-manifest && npm run i18n:build && npm run i18n:admin && npm run i18n:scan && npm run wiki:content && npm run sitemap:build && npm run sfx:manifest && node scripts/build_media_manifest.mjs generate && vite build && node scripts/check_backdrop_survival.mjs && node scripts/build_media_manifest.mjs emit",
     "wiki:content": "node scripts/wiki/build_content.mjs",
     "wiki:stills": "node scripts/wiki/render_model_stills.mjs",
     "sitemap:build": "node scripts/build_sitemap.mjs",
@@ -29,6 +29,7 @@
     "electron:pack:steam": "node scripts/electron-build.mjs pack steam",
     "electron:build": "node scripts/electron-build.mjs build",
     "electron:build:steam": "node scripts/electron-build.mjs build steam",
+    "icons:build": "node scripts/build_native_icons.mjs",
     "preview": "vite preview",
     "format": "biome format --write .",
     "format:check": "biome format .",
@@ -38,9 +39,9 @@
     "check:fix": "biome check --write .",
     "ci:changed": "biome ci --changed --no-errors-on-unmatched",
     "check:admin": "svelte-check --tsconfig ./tsconfig.admin.json",
-    "check:ts": "tsc --noEmit",
+    "check:ts": "npm run assets:theme-manifest:check && tsc --noEmit",
     "check:types": "npm run check:ts && npm run check:admin",
-    "pretest": "npm run i18n:build && npm run i18n:admin && npm run i18n:scan && npm run wiki:content",
+    "pretest": "npm run assets:theme-manifest:check && npm run assets:theme-manifest && npm run i18n:build && npm run i18n:admin && npm run i18n:scan && npm run wiki:content",
     "test": "vitest run",
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "gate": "node scripts/gate.mjs",
@@ -62,6 +63,8 @@
     "assets:skills": "node scripts/convert_skill_icons_webp.mjs",
     "assets:deeds": "node scripts/convert_deed_icons_webp.mjs",
     "assets:professions": "node scripts/convert_profession_icons_webp.mjs",
+    "assets:theme-manifest": "node scripts/build_visual_theme_manifest.mjs",
+    "assets:theme-manifest:check": "node scripts/build_visual_theme_manifest.mjs --check",
     "build:env": "esbuild headless/env_server.ts --bundle --platform=node --format=cjs --outfile=dist-env/env_server.cjs",
     "env": "npm run build:env && node dist-env/env_server.cjs",
     "bench": "npm run build:env && node dist-env/env_server.cjs --bench",
@@ -146,15 +149,18 @@
     "svelte-check": "^4.6.0",
     "tsx": "^4.22.4",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
-    "vite": "^8.0.16",
+    "vite": "^8.1.5",
     "vitest": "4.1.10"
   },
   "optionalDependencies": {
     "steamworks.js": "^0.4.0"
   },
+  "overrides": {
+    "rolldown": "1.2.0"
+  },
   "build": {
     "appId": "com.worldofclaudecraft.desktop",
-    "productName": "World of ClaudeCraft",
+    "productName": "Endless Glory",
     "icon": "build/icon.png",
     "files": [
       "dist/**",
@@ -180,7 +186,7 @@
     },
     "protocols": [
       {
-        "name": "World of ClaudeCraft Login",
+        "name": "Endless Glory Login",
         "schemes": [
           "worldofclaudecraft"
         ]

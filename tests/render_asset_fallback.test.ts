@@ -1,5 +1,18 @@
+import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { describe, expect, it, vi } from 'vitest';
+import {
+  assetUrl,
+  resolveMediaAssetUrl,
+  resolveMediaLogicalPath,
+} from '../src/render/assets/media';
+import type { VisualThemeCatalog } from '../src/visual_theme_core';
+
+const THEMED_CATALOG = {
+  emberwood: {
+    'models/props/house_1.glb': 'models/emberwood/eastbrook/house_a.glb',
+  },
+} satisfies VisualThemeCatalog;
 
 function mockEmptyAssetLoads(): void {
   vi.doMock('../src/render/assets/loader', () => ({
@@ -32,6 +45,66 @@ function mockEmptyAssetLoads(): void {
 }
 
 describe('render asset preload fallbacks', () => {
+  it('resolves themed mapped and unmapped media paths', () => {
+    expect(resolveMediaLogicalPath('/models/props/house_1.glb', 'emberwood', THEMED_CATALOG)).toBe(
+      'models/emberwood/eastbrook/house_a.glb',
+    );
+    expect(resolveMediaLogicalPath('/models/props/well.glb', 'emberwood', THEMED_CATALOG)).toBe(
+      'models/props/well.glb',
+    );
+  });
+
+  it('normalizes classic media paths without a leading slash', () => {
+    expect(resolveMediaLogicalPath('/models/props/house_1.glb', 'classic')).toBe(
+      'models/props/house_1.glb',
+    );
+  });
+
+  it('resolves development and production media URLs after theming', () => {
+    const themed = resolveMediaLogicalPath(
+      '/models/props/house_1.glb',
+      'emberwood',
+      THEMED_CATALOG,
+    );
+    const manifest = { [themed]: '/media/models/emberwood/eastbrook/house_a.abc123.glb' };
+
+    expect(resolveMediaAssetUrl(themed, true, manifest)).toBe(
+      '/models/emberwood/eastbrook/house_a.glb',
+    );
+    expect(resolveMediaAssetUrl(themed, false, manifest)).toBe(
+      '/media/models/emberwood/eastbrook/house_a.abc123.glb',
+    );
+    expect(resolveMediaAssetUrl('models/props/well.glb', false, manifest)).toBe(
+      '/models/props/well.glb',
+    );
+  });
+
+  it('routes the runtime asset helper through the shared logical-path resolver', async () => {
+    expect(assetUrl('/models/props/house_1.glb')).toBe('/models/props/house_1.glb');
+
+    const source = readFileSync(new URL('../src/render/assets/media.ts', import.meta.url), 'utf8');
+    expect(source).toContain('const logical = resolveMediaLogicalPath(url, ACTIVE_VISUAL_THEME);');
+
+    vi.resetModules();
+    vi.doMock('../src/visual_theme_catalog.generated', () => ({
+      VISUAL_THEME_CATALOG: THEMED_CATALOG,
+    }));
+    vi.stubGlobal('location', { search: '' });
+    vi.stubGlobal('document', {
+      documentElement: { dataset: { visualTheme: 'emberwood' } },
+    });
+    try {
+      const runtimeMedia = await import('../src/render/assets/media');
+      expect(runtimeMedia.assetUrl('/models/props/house_1.glb')).toBe(
+        '/models/emberwood/eastbrook/house_a.glb',
+      );
+    } finally {
+      vi.doUnmock('../src/visual_theme_catalog.generated');
+      vi.unstubAllGlobals();
+      vi.resetModules();
+    }
+  });
+
   it('keeps sky construction non-fatal when HDRI assets were not preloaded', async () => {
     vi.resetModules();
     mockEmptyAssetLoads();

@@ -67,9 +67,26 @@ interface PropAssetDef {
   yaw?: number;
   /** drop parts whose material name matches (e.g. the market cart's awning) */
   strip?: RegExp;
+  /** explicit base color (hex) — overrides MAT_OVERRIDES + GLB color. Used to
+   *  tint single-material CAD props (one mesh, material name 'o1') with a
+   *  delightful per-building palette the geometry can't express on its own. */
+  color?: number;
+  /** explicit base map: overrides the GLB's own material map (usually absent
+   *  on a single-material CAD prop). `color` still multiplies over it, so each
+   *  building keeps its own hue while reading as a real painted/plastered
+   *  surface instead of one flat fill. */
+  texture?: () => THREE.Texture;
 }
 
 const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
+  // The village kit's buildings carry their detail in NINE named materials
+  // (Wood, Wood_Side, Plaster, Wood_Light, Windows, RoofTiles, Stone_Light,
+  // Stone_Dark, Stone), not in a texture map: these GLBs ship zero images. An
+  // explicit `color:` here would override ALL of them at once (see
+  // convertMaterial: explicitColor wins over both MAT_OVERRIDES and the GLB's
+  // own material colors), collapsing beams, glass, roof tiles, and stone into
+  // one flat mass. Restyle these through the `village:*` MAT_OVERRIDES entries
+  // below instead, which recolor per material and keep the parts readable.
   house1: { url: '/models/props/house_1.glb', kit: 'village' },
   house2: { url: '/models/props/house_2.glb', kit: 'village', yaw: -Math.PI / 2 },
   house3: { url: '/models/props/house_3.glb', kit: 'village' },
@@ -104,10 +121,10 @@ const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
   timberPillar: { url: '/models/props/timber_pillar.glb', kit: 'town' },
   crateWooden: { url: '/models/props/crate_wooden.glb', kit: 'qprops' },
   farmCrate: { url: '/models/props/farmcrate_apple.glb', kit: 'qprops' },
-  barrel: { url: '/models/props/barrel.glb', kit: 'qprops' },
-  anvil: { url: '/models/props/anvil.glb', kit: 'qprops' },
+  barrel: { url: '/models/props/barrel.glb', kit: 'qprops', color: 0x9e73c7 }, // lavender
+  anvil: { url: '/models/props/anvil.glb', kit: 'qprops', color: 0xcc8c2e }, // amber
   weaponStand: { url: '/models/props/weapon_stand.glb', kit: 'qprops' },
-  lanternWall: { url: '/models/props/lantern_wall.glb', kit: 'qprops' },
+  lanternWall: { url: '/models/props/lantern_wall.glb', kit: 'qprops', color: 0xf5c745 }, // sunny yellow
   // Meshy-generated portal door used as the overworld Reliquary Hill marker;
   // has its own backing slab so the animated shader plane sits on the front face.
   // No yaw here: the geometry is CACHED and shared by every delve marker, so a
@@ -212,6 +229,17 @@ const MAT_OVERRIDES: Record<
 > = {
   'village:Windows': { emissive: 0x2a3c55, emissiveIntensity: 1.1, roughness: 0.4 },
   'village:Bell': { metalness: 0.6, roughness: 0.35 },
+  // Emberwood village palette, applied per material so a building still reads
+  // as beams + plaster + tile + stone rather than one flat wash. Warm, muted,
+  // and desaturated to match the Emberwood direction (soot, oak, ember, brass).
+  'village:Wood': { color: 0x6b4a32, roughness: 0.85 },
+  'village:Wood_Side': { color: 0x5c4229, roughness: 0.85 },
+  'village:Wood_Light': { color: 0x9a7a4e, roughness: 0.8 },
+  'village:Plaster': { color: 0xcbb790, roughness: 0.95 },
+  'village:RoofTiles': { color: 0x8c4a33, roughness: 0.8 },
+  'village:Stone': { color: 0x8a8378, roughness: 0.9 },
+  'village:Stone_Light': { color: 0x9c958a, roughness: 0.9 },
+  'village:Stone_Dark': { color: 0x6e675e, roughness: 0.9 },
   'ore:Stone_Dark': { color: 0xb87333, metalness: 0.45, roughness: 0.5 },
   // bandit/cult tents: weathered canvas instead of Kenney's toy red
   'tent:colorRed': { color: 0x9c8662 },
@@ -264,20 +292,25 @@ function convertMaterial(
   src: THREE.Material,
   kit: string,
   hasVertexColors: boolean,
+  explicitColor?: number,
+  explicitTexture?: () => THREE.Texture,
 ): THREE.Material {
   const s = src as THREE.MeshStandardMaterial; // basic (unlit) shares the fields we read
   const ov = MAT_OVERRIDES[`${kit}:${s.name}`] ?? MAT_OVERRIDES[s.name];
   // hasVertexColors must key the cache: kits share material names between
   // COLOR_0 meshes (trim 'Vertex' props) and colorless ones — a shared
   // vertexColors:true material would render the colorless meshes black
-  const key = `${kit}|${s.name}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
+  const key = `${kit}|${s.name}|${explicitColor ?? ''}|${explicitTexture ? 't' : ''}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
   const cached = matConvCache.get(key);
   if (cached) return cached;
   const color =
-    ov?.color !== undefined
-      ? new THREE.Color(ov.color)
-      : (s.color?.clone() ?? new THREE.Color(0xffffff));
-  const map = s.map ?? null;
+    explicitColor !== undefined
+      ? new THREE.Color(explicitColor)
+      : ov?.color !== undefined
+        ? new THREE.Color(ov.color)
+        : (s.color?.clone() ?? new THREE.Color(0xffffff));
+  const map = explicitTexture ? explicitTexture() : (s.map ?? null);
+  if (map && explicitTexture) map.repeat.set(4, 4);
   let mat: THREE.Material;
   if (GFX.standardMaterials) {
     mat = new THREE.MeshStandardMaterial({
@@ -346,7 +379,7 @@ function propAsset(key: PropKey): PropAsset {
     geo.applyMatrix4(mesh.matrixWorld);
     if (yawM) geo.applyMatrix4(yawM);
     if (!geo.getAttribute('normal')) geo.computeVertexNormals();
-    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col) });
+    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col, def.color, def.texture) });
   });
   if (!parts.length) throw new Error(`prop asset has no meshes: ${key}`);
   // normalize origin: xz-center at 0, base at y=0

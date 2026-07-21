@@ -1708,8 +1708,8 @@ export const GUIDE_FAMILIES: GuideFamily[] = [
         "rare": false,
         "templateId": "forest_wolf",
         "model": "mob_wolf",
-        "tint": "#7f8c8d",
-        "still": "/guide-stills/mob_wolf__7f8c8d.webp"
+        "tint": "#445c3a",
+        "still": "/guide-stills/mob_wolf__445c3a.webp"
       },
       {
         "name": "Wild Boar",

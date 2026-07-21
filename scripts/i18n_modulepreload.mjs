@@ -11,6 +11,7 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 
 // The build templates the real map over this sentinel in index.html. It is a bare
 // identifier reference, so a dev load (no build hook) throws a ReferenceError that the
@@ -83,12 +84,30 @@ export function injectLocaleChunkMap(html, map, placeholder = PLACEHOLDER) {
   return html.split(placeholder).join(json);
 }
 
+// Vite/Rolldown's own manifest-writing closeBundle hook and this plugin's read are both
+// default-ordered hooks, and some build environments (observed on Vercel's containers,
+// not local) do not make the just-written dist/.vite/manifest.json visible to a fresh
+// readFileSync from this same process by the time this hook runs, even with this plugin
+// ordered last ('post'). Bounded retry over a short async backoff, rather than a
+// synchronous busy-wait, so a real ENOENT (a genuinely broken build) still fails fast
+// once the budget is exhausted.
+export async function readManifestWithRetry(manifestPath, { attempts = 20, delayMs = 100 } = {}) {
+  for (let i = 0; ; i++) {
+    try {
+      return JSON.parse(readFileSync(manifestPath, 'utf8'));
+    } catch (err) {
+      if (err.code !== 'ENOENT' || i === attempts - 1) throw err;
+      await delay(delayMs);
+    }
+  }
+}
+
 // FS orchestrator the Vite closeBundle plugin calls: read the post-build manifest +
 // loaders source, resolve the hashed locale chunks, and template the lookup into the
 // emitted dist/index.html. Returns the resolved map for logging/tests.
-export function templateModulepreload({ root, outDir, base = '/' }) {
+export async function templateModulepreload({ root, outDir, base = '/' }) {
   const manifestPath = path.join(outDir, '.vite', 'manifest.json');
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+  const manifest = await readManifestWithRetry(manifestPath);
   const loadersSource = readFileSync(path.join(root, GENERATED_DIR, 'loaders.ts'), 'utf8');
   const locales = parseSupportedLocales(loadersSource);
   const map = localeChunkMap(manifest, locales, base);
