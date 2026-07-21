@@ -12,8 +12,8 @@
     "lastCraftResult mirror fields (quality + masterwork?) on a proc",
     "post-proc plain craft: the draw stream continues (one draw per successful craft)"
   ],
-  "draws": 3,
-  "drawDigest": "73c1f73e",
+  "draws": 9,
+  "drawDigest": "b6a844e7",
   "frames": [
     {
       "tick": 0,
@@ -437,11 +437,11 @@
       "tick": 0,
       "time": 0,
       "nextId": 412,
-      "state": "95fee16d",
-      "events": "5a0096cc",
+      "state": "e60f4963",
+      "events": "1fdbe458",
       "rng": {
-        "draws": 2,
-        "digest": "d926d2bc"
+        "draws": 8,
+        "digest": "54744b79"
       },
       "label": "craft-masterwork",
       "players": [
@@ -467,18 +467,19 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "xpGained": 91
+            "levelUps": 1,
+            "xpGained": 493
           },
           "craftSkills": {
             "alchemy": 1,
-            "tailoring": 201
+            "tailoring": 207
           },
           "craftThrottle": {
-            "count": 2
+            "count": 8
           },
           "deedStats": {
             "counters": {
-              "craftsPerformed": 2
+              "craftsPerformed": 8
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -514,31 +515,47 @@
             },
             {
               "count": 1,
+              "instance": {
+                "rolled": {
+                  "masterwork": true,
+                  "stats": {
+                    "int": 1,
+                    "spi": 1
+                  }
+                },
+                "signer": "Adventurer"
+              },
               "itemId": "eastbrook_ritual_vestments"
             }
           ],
           "lastCraftResult": {
             "count": 1,
             "itemId": "eastbrook_ritual_vestments",
+            "masterwork": true,
             "ok": true,
             "quality": "uncommon",
             "recipeId": "recipe_eastbrook_ritual_vestments",
             "selfSignedBonusApplied": true
           },
-          "lifetimeXp": 91,
+          "lastMasterwork": {
+            "crafter": 411,
+            "itemId": "eastbrook_ritual_vestments",
+            "recipeId": "recipe_eastbrook_ritual_vestments"
+          },
+          "lifetimeXp": 493,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "rows": {}
           },
           "townFocus": {},
-          "xp": 91
+          "xp": 93
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 46,
+          "attackPower": 50,
           "auras": [
             {
               "duration": 3600,
@@ -554,17 +571,17 @@
           "blockValue": 6,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.06,
+          "critChance": 0.0605,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.06,
+          "dodgeChance": 0.0605,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 100,
+          "hp": 138,
           "id": 411,
           "kind": "player",
-          "level": 1,
+          "level": 2,
           "lootFfaTimer": "Infinity",
-          "maxHp": 100,
+          "maxHp": 138,
           "maxResource": 100,
           "moveSpeed": 7,
           "offhandItemId": "eastbrook_buckler",
@@ -585,12 +602,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 20,
-            "armor": 144,
+            "agi": 21,
+            "armor": 158,
             "int": 10,
             "spi": 11,
-            "sta": 23,
-            "str": 23
+            "sta": 25,
+            "str": 25
           },
           "templateId": "warrior",
           "weapon": {
@@ -605,11 +622,11 @@
       "tick": 0,
       "time": 0,
       "nextId": 412,
-      "state": "b4e5c94f",
-      "events": "c260aca0",
+      "state": "a80e8e99",
+      "events": "506cf734",
       "rng": {
-        "draws": 3,
-        "digest": "73c1f73e"
+        "draws": 9,
+        "digest": "b6a844e7"
       },
       "label": "craft-plain-2",
       "players": [
@@ -635,18 +652,19 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "xpGained": 115
+            "levelUps": 1,
+            "xpGained": 512
           },
           "craftSkills": {
             "alchemy": 2,
-            "tailoring": 201
+            "tailoring": 207
           },
           "craftThrottle": {
-            "count": 3
+            "count": 9
           },
           "deedStats": {
             "counters": {
-              "craftsPerformed": 3
+              "craftsPerformed": 9
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -682,6 +700,16 @@
             },
             {
               "count": 1,
+              "instance": {
+                "rolled": {
+                  "masterwork": true,
+                  "stats": {
+                    "int": 1,
+                    "spi": 1
+                  }
+                },
+                "signer": "Adventurer"
+              },
               "itemId": "eastbrook_ritual_vestments"
             }
           ],
@@ -692,20 +720,25 @@
             "quality": "common",
             "recipeId": "recipe_minor_healing_potion"
           },
-          "lifetimeXp": 115,
+          "lastMasterwork": {
+            "crafter": 411,
+            "itemId": "eastbrook_ritual_vestments",
+            "recipeId": "recipe_eastbrook_ritual_vestments"
+          },
+          "lifetimeXp": 512,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "rows": {}
           },
           "townFocus": {},
-          "xp": 115
+          "xp": 112
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 46,
+          "attackPower": 50,
           "auras": [
             {
               "duration": 3600,
@@ -721,17 +754,17 @@
           "blockValue": 6,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.06,
+          "critChance": 0.0605,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.06,
+          "dodgeChance": 0.0605,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 100,
+          "hp": 138,
           "id": 411,
           "kind": "player",
-          "level": 1,
+          "level": 2,
           "lootFfaTimer": "Infinity",
-          "maxHp": 100,
+          "maxHp": 138,
           "maxResource": 100,
           "moveSpeed": 7,
           "offhandItemId": "eastbrook_buckler",
@@ -752,12 +785,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 20,
-            "armor": 144,
+            "agi": 21,
+            "armor": 158,
             "int": 10,
             "spi": 11,
-            "sta": 23,
-            "str": 23
+            "sta": 25,
+            "str": 25
           },
           "templateId": "warrior",
           "weapon": {
@@ -772,11 +805,11 @@
       "tick": 0,
       "time": 0,
       "nextId": 412,
-      "state": "b4e5c94f",
+      "state": "a80e8e99",
       "events": "741638a5",
       "rng": {
-        "draws": 3,
-        "digest": "73c1f73e"
+        "draws": 9,
+        "digest": "b6a844e7"
       },
       "label": "final",
       "players": [
@@ -802,18 +835,19 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "xpGained": 115
+            "levelUps": 1,
+            "xpGained": 512
           },
           "craftSkills": {
             "alchemy": 2,
-            "tailoring": 201
+            "tailoring": 207
           },
           "craftThrottle": {
-            "count": 3
+            "count": 9
           },
           "deedStats": {
             "counters": {
-              "craftsPerformed": 3
+              "craftsPerformed": 9
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -849,6 +883,16 @@
             },
             {
               "count": 1,
+              "instance": {
+                "rolled": {
+                  "masterwork": true,
+                  "stats": {
+                    "int": 1,
+                    "spi": 1
+                  }
+                },
+                "signer": "Adventurer"
+              },
               "itemId": "eastbrook_ritual_vestments"
             }
           ],
@@ -859,20 +903,25 @@
             "quality": "common",
             "recipeId": "recipe_minor_healing_potion"
           },
-          "lifetimeXp": 115,
+          "lastMasterwork": {
+            "crafter": 411,
+            "itemId": "eastbrook_ritual_vestments",
+            "recipeId": "recipe_eastbrook_ritual_vestments"
+          },
+          "lifetimeXp": 512,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "talents": {
             "rows": {}
           },
           "townFocus": {},
-          "xp": 115
+          "xp": 112
         }
       ],
       "entities": [
         {
           "aiState": "idle",
-          "attackPower": 46,
+          "attackPower": 50,
           "auras": [
             {
               "duration": 3600,
@@ -888,17 +937,17 @@
           "blockValue": 6,
           "combatTimer": 99,
           "comboUntil": -1,
-          "critChance": 0.06,
+          "critChance": 0.0605,
           "detonateTimer": "Infinity",
-          "dodgeChance": 0.06,
+          "dodgeChance": 0.0605,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "hp": 100,
+          "hp": 138,
           "id": 411,
           "kind": "player",
-          "level": 1,
+          "level": 2,
           "lootFfaTimer": "Infinity",
-          "maxHp": 100,
+          "maxHp": 138,
           "maxResource": 100,
           "moveSpeed": 7,
           "offhandItemId": "eastbrook_buckler",
@@ -919,12 +968,12 @@
           },
           "spellPower": 5,
           "stats": {
-            "agi": 20,
-            "armor": 144,
+            "agi": 21,
+            "armor": 158,
             "int": 10,
             "spi": 11,
-            "sta": 23,
-            "str": 23
+            "sta": 25,
+            "str": 25
           },
           "templateId": "warrior",
           "weapon": {
