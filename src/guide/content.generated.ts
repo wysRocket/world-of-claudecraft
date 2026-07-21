@@ -3605,6 +3605,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/shield_round.glb",
         "bone": "handslot.l"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
@@ -3620,6 +3629,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/shield_square.glb",
         "bone": "handslot.l"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
@@ -3631,6 +3649,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/crossbow_1handed.glb",
         "bone": "handslot.r"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
@@ -3649,6 +3676,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/dagger.glb",
         "bone": "handslot.l"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
@@ -3661,6 +3697,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/staff.glb",
         "bone": "handslot.r"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ],
     "tintStrength": 0.5
@@ -3680,6 +3725,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/shield_round.glb",
         "bone": "handslot.l"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ],
     "tintStrength": 0.4
@@ -3695,6 +3749,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/staff.glb",
         "bone": "handslot.r"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
@@ -3712,6 +3775,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
         "url": "models/weapons/spellbook_open.glb",
         "bone": "handslot.l",
         "gripRef": "Spellbook_open"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ],
     "tintStrength": 0.45
@@ -3724,6 +3796,15 @@ export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
       {
         "url": "models/weapons/staff.glb",
         "bone": "handslot.r"
+      },
+      {
+        "url": "models/emberwood/props/pig_nose.glb",
+        "bone": "head",
+        "position": [
+          0,
+          0.13,
+          0.24
+        ]
       }
     ]
   },
