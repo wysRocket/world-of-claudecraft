@@ -53,13 +53,16 @@ A single-material CAD prop (a `PROP_ASSET_DEFS` entry build123d generates: one m
 one material named `o1`) has exactly one color slot. A `color:` tint alone always
 renders as a flat, single-hue wash, no matter how much geometric detail the mesh has.
 
-Fix it by ALSO setting `texture:` on the `PropAssetDef` to one of the existing
-procedural textures in `src/render/textures.ts`: `plasterTexture()` for a
-weathered/patchy wall, `wallTexture()`, `plankTexture()` for wood siding, or
-`thatchTexture()` for a roof. `color` still multiplies over the texture as a hue, so
-each building keeps its own distinct color while reading as a real painted or
-plastered surface. Default to this pairing for any new or retextured static
-structure; a bare `color:` with no `texture:` is the mistake to avoid.
+Fix it by extending `PropAssetDef` with an optional `texture?: () => THREE.Texture`
+field (it does not exist yet as of this writing; add it alongside `color` in the
+interface, then thread it through `convertMaterial()`'s material construction,
+defaulting to the GLB's own map when the field is absent) and pointing it at one of
+the existing procedural textures in `src/render/textures.ts`: `plasterTexture()` for
+a weathered/patchy wall, `wallTexture()`, `plankTexture()` for wood siding, or
+`thatchTexture()` for a roof. `color` should still multiply over the texture as a
+hue, so each building keeps its own distinct color while reading as a real painted or
+plastered surface. Default to adding and using this pairing for any new or retextured
+static structure; a bare `color:` tint alone is the mistake to avoid.
 
 ## Verification
 
