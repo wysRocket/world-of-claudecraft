@@ -229,13 +229,18 @@
       url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8a838' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
       no-repeat right 14px center / 12px;
     color: var(--color-primary-dim);
-    border: 2px solid var(--color-border-default);
+    border: 1px solid var(--color-border-default);
     border-radius: var(--radius-sm);
     padding: 6px 36px 6px 16px; /* Custom chevron layout with padding */
     font-family: var(--font-heading);
     font-size: 13px;
     cursor: var(--cursor-point);
     outline: none;
+    min-height: 40px; /* Matches .landing-graphics-control / .landing-contrast-toggle */
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     transition:
       border-color var(--transition-speed),
       color var(--transition-speed),
@@ -1032,11 +1037,55 @@
     min-height: min-content;
   }
 
-  /* Larger screens: pull the whole hero (logo + console) toward the top. */
+  /* Larger screens: side-by-side layout so the video backdrop is visible behind. */
   @media (min-width: 1024px) {
     #hero-view {
-      justify-content: flex-start;
-      padding-top: clamp(16px, 4vh, 64px);
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: clamp(16px, 4vh, 64px) 48px 24px;
+      gap: 24px 60px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Logo on the left */
+    #title-logo {
+      width: min(260px, 20vw);
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    /* Official copy alongside the logo */
+    .official-site-copy {
+      width: min(380px, 28vw);
+      margin: 0;
+      text-align: left;
+      align-self: flex-start;
+      padding-top: 8px;
+    }
+
+    /* Mode-select / login panel on the right side. The base rule sets
+       margin-inline: auto to self-center the panel in the pre-game single-column
+       layout; that auto margin also applies inside a flex row and absorbs the
+       justify-content: space-between free space, re-centering the panel instead
+       of letting it sit flush at the right edge. Zero it out here. */
+    #mode-select,
+    #login-panel {
+      width: 100%;
+      max-width: 420px;
+      margin: 0 !important;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    /* Also move the auth panels to the right column */
+    #hero-view #charselect-panel,
+    #hero-view #offline-select,
+    #hero-view #realm-panel {
+      margin-top: 0;
     }
   }
 
@@ -6653,13 +6702,23 @@
     width: 100%;
     flex-direction: column;
     align-items: center;
+    gap: 8px;
   }
-  body.mobile-touch .language-selector {
+  /* Stacked layout: language selector, graphics selector, and the contrast
+     toggle share one width so they read as a single settings column instead
+     of three differently-sized blocks. */
+  body.mobile-touch .language-selector,
+  body.mobile-touch .landing-graphics-control,
+  body.mobile-touch .landing-contrast-toggle {
     width: 100%;
-    max-width: 240px;
+    max-width: 200px;
   }
   body.mobile-touch .lang-select-dropdown {
     width: 100%;
+  }
+  body.mobile-touch .landing-graphics-select {
+    flex: 1;
+    min-width: 0;
   }
 
   @media (max-width: 860px) {
@@ -6742,15 +6801,25 @@
       width: 100%;
       flex-direction: column;
       align-items: center;
+      gap: 8px;
     }
-    .language-selector {
+    /* Stacked layout: language selector, graphics selector, and the contrast
+       toggle share one width so they read as a single settings column instead
+       of three differently-sized blocks. */
+    .language-selector,
+    .landing-graphics-control,
+    .landing-contrast-toggle {
       width: 100%;
-      max-width: 240px;
+      max-width: 200px;
     }
     .lang-select-dropdown {
       width: 100%;
       font-size: 16px; /* Prevents mobile Safari auto-zoom */
       padding: 10px 36px 10px 16px; /* Increases height for a better touch target */
+    }
+    .landing-graphics-select {
+      flex: 1;
+      min-width: 0;
     }
 
     /* Mobile First Responsive Footer */

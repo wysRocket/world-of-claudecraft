@@ -13,6 +13,7 @@ import { terrainHeight, waterLevel } from '../sim/world';
 import { loadGltf } from './assets/loader';
 import { registerPreload } from './assets/preload';
 import { GFX, sharedUniforms, surfaceMat } from './gfx';
+import { plasterTexture } from './textures';
 
 // Static world props: buildings, tents, campfires, mines, ruins, docks,
 // fences, graveyards — all real CC0 glTF assets (Quaternius medieval village +
@@ -71,12 +72,33 @@ interface PropAssetDef {
    *  tint single-material CAD props (one mesh, material name 'o1') with a
    *  delightful per-building palette the geometry can't express on its own. */
   color?: number;
+  /** explicit base map: overrides the GLB's own material map (usually absent
+   *  on a single-material CAD prop). `color` still multiplies over it, so each
+   *  building keeps its own hue while reading as a real painted/plastered
+   *  surface instead of one flat fill. */
+  texture?: () => THREE.Texture;
 }
 
 const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
-  house1: { url: '/models/props/house_1.glb', kit: 'village', color: 0xe85745 }, // coral red
-  house2: { url: '/models/props/house_2.glb', kit: 'village', yaw: -Math.PI / 2, color: 0x45a08c }, // teal
-  house3: { url: '/models/props/house_3.glb', kit: 'village', color: 0xf2a838 }, // marigold
+  house1: {
+    url: '/models/props/house_1.glb',
+    kit: 'village',
+    color: 0xe85745, // coral red
+    texture: plasterTexture,
+  },
+  house2: {
+    url: '/models/props/house_2.glb',
+    kit: 'village',
+    yaw: -Math.PI / 2,
+    color: 0x45a08c, // teal
+    texture: plasterTexture,
+  },
+  house3: {
+    url: '/models/props/house_3.glb',
+    kit: 'village',
+    color: 0xf2a838, // marigold
+    texture: plasterTexture,
+  },
   blacksmith: { url: '/models/props/blacksmith.glb', kit: 'village' },
   inn: { url: '/models/props/inn.glb', kit: 'village', color: 0x7655bd }, // plum
   bellTower: { url: '/models/props/bell_tower.glb', kit: 'village' },
@@ -269,13 +291,14 @@ function convertMaterial(
   kit: string,
   hasVertexColors: boolean,
   explicitColor?: number,
+  explicitTexture?: () => THREE.Texture,
 ): THREE.Material {
   const s = src as THREE.MeshStandardMaterial; // basic (unlit) shares the fields we read
   const ov = MAT_OVERRIDES[`${kit}:${s.name}`] ?? MAT_OVERRIDES[s.name];
   // hasVertexColors must key the cache: kits share material names between
   // COLOR_0 meshes (trim 'Vertex' props) and colorless ones — a shared
   // vertexColors:true material would render the colorless meshes black
-  const key = `${kit}|${s.name}|${explicitColor ?? ''}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
+  const key = `${kit}|${s.name}|${explicitColor ?? ''}|${explicitTexture ? 't' : ''}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
   const cached = matConvCache.get(key);
   if (cached) return cached;
   const color =
@@ -284,7 +307,8 @@ function convertMaterial(
       : ov?.color !== undefined
         ? new THREE.Color(ov.color)
         : (s.color?.clone() ?? new THREE.Color(0xffffff));
-  const map = s.map ?? null;
+  const map = explicitTexture ? explicitTexture() : (s.map ?? null);
+  if (map && explicitTexture) map.repeat.set(4, 4);
   let mat: THREE.Material;
   if (GFX.standardMaterials) {
     mat = new THREE.MeshStandardMaterial({
@@ -353,7 +377,7 @@ function propAsset(key: PropKey): PropAsset {
     geo.applyMatrix4(mesh.matrixWorld);
     if (yawM) geo.applyMatrix4(yawM);
     if (!geo.getAttribute('normal')) geo.computeVertexNormals();
-    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col, def.color) });
+    parts.push({ geo, mat: convertMaterial(srcMat, def.kit, !!col, def.color, def.texture) });
   });
   if (!parts.length) throw new Error(`prop asset has no meshes: ${key}`);
   // normalize origin: xz-center at 0, base at y=0

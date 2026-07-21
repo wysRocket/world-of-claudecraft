@@ -286,7 +286,7 @@ import {
   type WelcomeScreenController,
 } from './ui/welcome_screen_window';
 import { formatXp } from './ui/xp_bar';
-import { applyVisualTheme, ACTIVE_VISUAL_THEME } from './visual_theme';
+import { ACTIVE_VISUAL_THEME, applyVisualTheme } from './visual_theme';
 import type { IWorld, LeaderboardEntry } from './world_api';
 
 const WORLD_SEED = 20061; // fixed: Endless Glory is a persistent place
@@ -561,13 +561,6 @@ function preventMobileZoom(): void {
 
 function syncPhoneTouchClass(): void {
   document.body.classList.toggle('mobile-touch', NATIVE_APP || useTouchInterface());
-  syncCommunityMenuMode();
-}
-
-function syncCommunityMenuMode(): void {
-  const communityMenu = document.getElementById('community-menu') as HTMLDetailsElement | null;
-  if (!communityMenu) return;
-  communityMenu.open = !(NATIVE_APP || useTouchInterface());
 }
 
 // Honor a persisted Interface Mode override before the first layout paint, so a
@@ -906,7 +899,6 @@ function mountGameUi(): void {
   if (!template || !startScreen) throw new Error('Game UI shell is missing.');
   document.body.insertBefore(template.content.cloneNode(true), startScreen);
   translatePage();
-  syncCommunityMenuMode();
   // #mm-discord lives inside this template, so it does not exist in the live DOM
   // until the clone above runs; the boot-time syncDiscordEntries() call (way
   // earlier, before any world entry) silently no-ops on it. Re-sync now so the
@@ -7389,6 +7381,16 @@ function applyLandingBackdrop(highContrast: boolean): void {
       video.addEventListener('error', () => {
         backdrop.classList.add('trailer-ready');
       });
+      // Loop fallback: the `loop` attribute should make `ended` unreachable, but
+      // some WebKit builds fail to loop certain sources natively and pause on the
+      // last frame instead, freezing the backdrop. Restart explicitly so a native
+      // loop failure never strands the trailer on its final frame.
+      video.addEventListener('ended', () => {
+        video.currentTime = 0;
+        void video.play().catch(() => {
+          backdrop.classList.add('trailer-ready');
+        });
+      });
     }
     video.load();
   }
@@ -9102,7 +9104,11 @@ function fadeOutHomepageMusic(durationMs = 1600): void {
     applyVisualTheme(document.documentElement);
     const [store, initRaw] = (() => {
       let raw: unknown = null;
-      try { raw = JSON.parse(localStorage.getItem('eg-theme') ?? 'null'); } catch { /* corrupt */ }
+      try {
+        raw = JSON.parse(localStorage.getItem('eg-theme') ?? 'null');
+      } catch {
+        /* corrupt */
+      }
       return [new ThemeStore(), raw];
     })();
     // When Emberwood visual theme is active, default the UI theme to emberwood
