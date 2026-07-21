@@ -21,10 +21,25 @@ const args = Object.fromEntries(
 );
 
 const PROVIDER = (args.provider || 'meshy').toLowerCase();
-const KEY = args.key;
+// Prefer the provider's env var (a local .env is gitignored and loaded here, per the
+// DATABASE_URL precedent in scripts/CLAUDE.md) over --key: a key passed on the command
+// line leaks into shell history, the process list, and any agent transcript that ran it.
+// --key still works for a one-off, but is no longer the documented path.
+try {
+  process.loadEnvFile();
+} catch {
+  // no local .env: fall through to a real environment variable or --key
+}
+const ENV_KEYS = { meshy: 'MESHY_API_KEY', tripo: 'TRIPO_API_KEY', rodin: 'RODIN_API_KEY' };
+const KEY = args.key || process.env[ENV_KEYS[PROVIDER] ?? ''];
 const IMAGE = args.image || '/tmp/sculpt-work/concepts/golem.png';
 const OUT = args.out || 'public/models/emberwood/creatures/amber_heart_golem.glb';
-if (!KEY) { console.error('NO KEY — pass --key'); process.exit(2); }
+if (!KEY) {
+  console.error(
+    `NO KEY: set ${ENV_KEYS[PROVIDER] ?? 'the provider API key'} in .env (preferred) or pass --key`,
+  );
+  process.exit(2);
+}
 if (!fs.existsSync(IMAGE)) { console.error('NO IMAGE', IMAGE); process.exit(2); }
 
 const post = (url, opts) => fetch(url, opts).then(async (r) => {
