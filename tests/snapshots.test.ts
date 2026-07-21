@@ -2551,6 +2551,105 @@ describe('weapon skin wire (weaponSkinId)', () => {
   });
 });
 
+// Worn per-slot instance payloads ride the identity wire (terse key `eqi`,
+// Professions 2.0 Phase 6) so the inspect window shows another player's
+// masterwork/enchant rolls. Sparse exactly like `eq`: players only, present
+// only while at least one worn piece carries a payload, absent otherwise (the
+// no-bloat tooth: an instance-less player's identity record is byte-unchanged).
+// `eqi` is an IDENTITY key, not a maybe() delta key, so it stays out of
+// ALL_DELTA_KEYS; and like `eq` it is outside TERSE_TO_IWORLD scope (that map
+// pins delta keys + self scalars only). End-to-end GameServer liveness plus
+// clone-not-alias live in tests/inspect_instances.test.ts.
+describe('equipped instance wire (eqi)', () => {
+  const inst = { rolled: { masterwork: true, stats: { int: 3, spi: 1 } }, signer: 'Aldric' };
+
+  it('carries eqi through wireEntity only while an instanced piece is worn', () => {
+    const sim = new Sim({ seed: 1, playerClass: 'warrior', noPlayer: true });
+    const pid = sim.addPlayer('warrior', 'Thaldrin');
+    const e = sim.entities.get(pid)!;
+    // The fresh auto-equipped worn set is all plain pieces: eq rides, eqi
+    // stays off the wire entirely.
+    expect(wireEntity(e).eq).toBeDefined();
+    expect(wireEntity(e).eqi).toBeUndefined();
+
+    sim.addItemInstance('eastbrook_ritual_vestments', structuredClone(inst), pid);
+    sim.equipItem('eastbrook_ritual_vestments', pid);
+    expect((wireEntity(e).eq as any).chest).toBe('eastbrook_ritual_vestments');
+    expect(wireEntity(e).eqi).toEqual({ chest: inst });
+
+    // Unequipping the one instanced piece drops the key again (sparse, like wsk).
+    sim.unequipItem('chest', pid);
+    expect(wireEntity(e).eqi).toBeUndefined();
+  });
+
+  it('strips non-cosmetic instance fields from the wire payload (data minimization)', () => {
+    const sim = new Sim({ seed: 1, playerClass: 'warrior', noPlayer: true });
+    const pid = sim.addPlayer('warrior', 'Yrsa');
+    const e = sim.entities.get(pid)!;
+    sim.addItemInstance(
+      'eastbrook_ritual_vestments',
+      {
+        signer: 'Aldric',
+        rolled: { masterwork: true, stats: { int: 3 } },
+        boundTo: pid,
+        charges: { mend: 2 },
+      },
+      pid,
+    );
+    sim.equipItem('eastbrook_ritual_vestments', pid);
+    const wired = wireEntity(e).eqi as Record<string, Record<string, unknown>>;
+    // Only the cosmetic inspect fields (signer, enchant, rolled) leave the
+    // server; boundTo and charges are gameplay state no inspecting client
+    // needs and must never ride the identity wire.
+    expect(wired.chest.signer).toBe('Aldric');
+    expect(wired.chest.rolled).toEqual({ masterwork: true, stats: { int: 3 } });
+    expect(wired.chest.boundTo).toBeUndefined();
+    expect(wired.chest.charges).toBeUndefined();
+    expect(Object.keys(wired.chest).sort()).toEqual(['rolled', 'signer']);
+  });
+
+  it('restores equippedInstances from a full record, deep-cloned; an eqi-less full record resets', () => {
+    const client = bareClient(99);
+    const base = {
+      id: 7,
+      k: 'player',
+      tid: 'warrior',
+      nm: 'Brae',
+      lv: 5,
+      x: 0,
+      y: 0,
+      z: 0,
+      f: 0,
+      hp: 100,
+      mhp: 100,
+    };
+    const wireInst = structuredClone(inst);
+    (client as any).applySnapshot({
+      t: 'snap',
+      ents: [{ ...base, eq: { chest: 'eastbrook_ritual_vestments' }, eqi: { chest: wireInst } }],
+    });
+    const e = client.entities.get(7)!;
+    expect(e.equippedInstances).toEqual({ chest: inst });
+    // Deep-cloned, never aliased: mutating the wire-parsed payload (a later
+    // message could) must not reach the mirror, rolled.stats included.
+    expect(e.equippedInstances.chest).not.toBe(wireInst);
+    wireInst.rolled.stats.int = 99;
+    expect(e.equippedInstances.chest?.rolled?.stats?.int).toBe(3);
+
+    // A lite record (no identity fields) leaves the mirror in place.
+    (client as any).applySnapshot({
+      t: 'snap',
+      ents: [{ id: 7, x: 1, y: 0, z: 1, f: 0, hp: 100, mhp: 100 }],
+    });
+    expect(client.entities.get(7)?.equippedInstances).toEqual({ chest: inst });
+
+    // A later full record WITHOUT eqi means no worn piece carries a payload
+    // anymore: the mirror resets to empty (the `eq` absent-key semantics).
+    (client as any).applySnapshot({ t: 'snap', ents: [base] });
+    expect(client.entities.get(7)?.equippedInstances).toEqual({});
+  });
+});
+
 describe('delve self-state mirrors over the wire', () => {
   let server: GameServer;
   let fc: FakeClient;
@@ -2778,7 +2877,7 @@ describe('lockpick view rebuilds from events on the online client', () => {
 // while the prior decoded value is preserved.
 // ---------------------------------------------------------------------------
 
-// The pinned set of the 48 `maybe(...)` delta keys, sorted. Cross-checked below
+// The pinned set of the 49 `maybe(...)` delta keys, sorted. Cross-checked below
 // against the live `maybe(...)` calls scraped from server/game.ts source, so a
 // 49th unregistered delta key reddens this gate.
 const ALL_DELTA_KEYS = [
@@ -2817,6 +2916,7 @@ const ALL_DELTA_KEYS = [
   'market',
   'marks',
   'milestones',
+  'mst',
   'ncd',
   'party',
   'prof',
@@ -2873,6 +2973,7 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   marks: 'markers',
   milestones: 'unlockedMilestones',
   mres: 'maxResource',
+  mst: 'activeMobileStationCraft',
   party: 'partyInfo',
   prk: 'prestigeRank',
   prof: 'professionsState',
@@ -2977,6 +3078,17 @@ function dirtyEveryDeltaField(): {
     switchCount: 2,
     amendsProgress: 4,
   };
+  // An ACTIVE mobile crafting station (Phase 8, `mst`): set directly on the
+  // meta slot (the placement command's specialization gate is pinned in
+  // tests/professions_crafting_hub.test.ts; this suite pins the WIRE mirror),
+  // far from expiry so the server-side liveness check reads it active.
+  meta.mobileStation = {
+    playerId: 'Alld',
+    craftId: 'armorcrafting',
+    pos: { x: 1, z: 2 },
+    placedAtTick: sim.tickCount,
+    expiresAtTick: sim.tickCount + 12000,
+  };
   // Per-player gather-node respawn cooldown (#1866): one node still cooling
   // down (readyAt 30s in the sim future), so `ncd` mirrors it as ~30 remaining
   // seconds and nodeHarvestableByMe reports it not ready.
@@ -3066,6 +3178,9 @@ describe('full self-state snapshot delta fixture', () => {
       { itemId: 'bone_fragments', count: 4 },
       { itemId: 'linen_scrap', count: 2 },
     ];
+    // Phase 9 acquisition switch: combo recipes are trainer-taught now, so a
+    // fresh test player must learn this one explicitly before crafting it.
+    meta.knownRecipes.add('recipe_ironbound_warplate_helm');
 
     broadcast(server);
     const client = bareClient(session.pid);
@@ -3086,6 +3201,54 @@ describe('full self-state snapshot delta fixture', () => {
       JSON.stringify({ t: 'cmd', cmd: 'craft_item', recipe: recipe.id }),
     );
     expect(server.sim.countItem(recipe.resultItemId, session.pid)).toBe(1);
+  });
+
+  it('train_recipe online: fee hits the self copper and the SORTED knownRecipes rides the cprof delta', () => {
+    const server = new GameServer();
+    const fc = fakeWs();
+    const session = joinServer(server, fc, 72, 'Trainee');
+    const meta = server.sim.meta(session.pid)!;
+    meta.craftSkills.armorcrafting = 25; // ironbound is armorcrafting
+    meta.craftSkills.weaponcrafting = 25; // forgeguard is weaponcrafting
+    meta.copper = 10000;
+    // Stand at the Eastbrook forge: training is gated on the STATIC station.
+    const player = server.sim.entities.get(session.pid)!;
+    player.pos = { ...player.pos, x: 7, z: 16.5 };
+    player.prevPos = { ...player.pos };
+
+    broadcast(server);
+    const client = bareClient(session.pid);
+    (client as any).applySnapshot(lastSnap(fc.sent));
+    expect(client.craftingIdentity.knownRecipes).toEqual([]);
+
+    // Learn the two forge combos in REVERSE alphabetical order: the mirror
+    // must come back SORTED (the stable-signature contract), never insertion
+    // ordered, and each train charges its 2500 fee exactly once.
+    server.handleMessage(
+      session,
+      JSON.stringify({ t: 'cmd', cmd: 'train_recipe', recipe: 'recipe_ironbound_warplate_helm' }),
+    );
+    server.handleMessage(
+      session,
+      JSON.stringify({
+        t: 'cmd',
+        cmd: 'train_recipe',
+        recipe: 'recipe_forgeguard_bulwark_gauntlets',
+      }),
+    );
+    expect(server.sim.meta(session.pid)?.copper).toBe(5000);
+
+    fc.sent.length = 0;
+    broadcast(server);
+    (client as any).applySnapshot(lastSnap(fc.sent));
+    // Liveness: the ClientWorld read surface reflects the grant with NO
+    // explicit dirty-marking anywhere in the dispatch case (knownRecipes is
+    // part of craftingIdentityFor's JSON, so the cprof maybe() diff fires).
+    expect(client.craftingIdentity.knownRecipes).toEqual([
+      'recipe_forgeguard_bulwark_gauntlets',
+      'recipe_ironbound_warplate_helm',
+    ]);
+    expect(client.copper).toBe(5000);
   });
 
   it('carries every one of the dirtied delta keys on the first snapshot', () => {
@@ -3198,6 +3361,9 @@ describe('full self-state snapshot delta fixture', () => {
     // craft id, and it must reflect the cprof delta just applied.
     expect(client.archetypeTitle).toBe('weaponcrafting+armorcrafting');
     expect(client.craftSkills).toMatchObject({ armorcrafting: 31, weaponcrafting: 29 });
+    // mst -> activeMobileStationCraft: the server-computed ACTIVE craft id
+    // (expiry resolved server-side against the sim's own tickCount).
+    expect(client.activeMobileStationCraft).toBe('armorcrafting');
     expect(client.delveClears).toEqual({ 'collapsed_reliquary:heroic': 1 }); // dclears -> delveClears
     expect(client.delveDaily).toMatchObject({ markClears: 4 }); // delveDaily
     // deeds -> deedsEarned: the Map rebuilds from the plain wire object with
@@ -3218,6 +3384,26 @@ describe('full self-state snapshot delta fixture', () => {
     expect(client.talentSpec).toBe('arms');
     expect(client.loadouts).toEqual([{ name: 'PvP', alloc: { spec: 'arms', rows: {} }, bar: [] }]);
     expect(client.activeLoadout).toBe(0);
+  });
+
+  it('flips mst to null when the mobile station expires (server-side tick-domain check)', () => {
+    // The expiry arm of the mst self-delta: activeMobileStationCraftFor
+    // resolves active-vs-expired against the SERVER sim's own tickCount, so
+    // the lapse must reach the client as an explicit mst: null delta (a
+    // nullable scalar; omission would leave the stale craft id mirrored).
+    const { server, fc, leader } = dirtyEveryDeltaField();
+    broadcast(server);
+    const client = bareClient(leader.pid);
+    (client as any).applySnapshot(lastSnap(fc.sent));
+    expect(client.activeMobileStationCraft).toBe('armorcrafting');
+
+    const meta = server.sim.meta(leader.pid);
+    if (!meta?.mobileStation) throw new Error('mobile station missing from the harness');
+    meta.mobileStation.expiresAtTick = server.sim.tickCount; // isStationActive: now < expiry fails
+    server.sim.tick();
+    broadcast(server);
+    (client as any).applySnapshot(lastSnap(fc.sent));
+    expect(client.activeMobileStationCraft).toBeNull();
   });
 
   it('omits all delta keys on a no-op re-broadcast and preserves the prior mirror', () => {
@@ -3294,9 +3480,9 @@ describe('gather node cooldown wire round trip (ncd)', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 48 unique keys in sorted order', () => {
-    expect(ALL_DELTA_KEYS).toHaveLength(48);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(48);
+  it('ALL_DELTA_KEYS contains exactly 49 unique keys in sorted order', () => {
+    expect(ALL_DELTA_KEYS).toHaveLength(49);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(49);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -3308,7 +3494,7 @@ describe('delta-key contract pins (anti-drift)', () => {
     const scraped = new Set<string>();
     for (let m = re.exec(src); m !== null; m = re.exec(src)) scraped.add(m[1]);
     expect(scraped.has('lockouts')).toBe(true); // the multi-line call IS captured
-    expect(scraped.size).toBe(48);
+    expect(scraped.size).toBe(49);
     expect([...scraped].sort()).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -3505,6 +3691,24 @@ describe('aura magnitude over the wire (buff/debuff tooltip parity)', () => {
     expect(desc?.nums?.value).toBe(15);
     expect(desc?.nums?.interval).toBe(3);
     expect(desc?.school).toBe('shadow');
+  });
+
+  it('round-trips unbreakable control so the client never offers cancellation', () => {
+    const scriptedStasis: Aura = {
+      id: 'scripted_stasis',
+      name: 'Scripted Stasis',
+      kind: 'stasis',
+      remaining: 10,
+      duration: 10,
+      value: 0,
+      sourceId: 0,
+      school: 'arcane',
+      unbreakableControl: true,
+    };
+
+    const { wire, mirror } = roundTrip(scriptedStasis);
+    expect(wireAura(wire, 'scripted_stasis').ub).toBe(1);
+    expect(mirror.unbreakableControl).toBe(true);
   });
 
   it('round-trips the imbue judgement range (value2/value3), value omitted when 0', () => {

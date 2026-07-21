@@ -59,11 +59,11 @@ import {
 } from '../src/sim/talent_allocation_input';
 import { stealthDetectionRadius, threatEntries } from '../src/sim/threat';
 import {
+  ALL_EQUIP_SLOTS,
   type Aura,
   DT,
   dist2d,
   type Entity,
-  EQUIP_SLOTS,
   type EquipSlot,
   emptyMoveInput,
   isDungeonDifficulty,
@@ -827,6 +827,8 @@ interface WireAura {
   // per-viewer), so the per-entity dyn cache keeps eliding; an old client ignores it and
   // an old server's omission decodes to 0, which matches no player id.
   src?: number;
+  // Encounter-owned control marker. Omitted for ordinary auras.
+  ub?: 1;
 }
 
 interface WhoRosterRow {
@@ -860,6 +862,28 @@ function identityFields(e: Entity): Record<string, unknown> {
       out.eq = eq;
       break;
     }
+    // Per-slot ItemInstancePayloads of the worn set (masterwork/enchant rolls),
+    // for the inspect window (Professions 2.0 Phase 6). Same sparse rule as
+    // `eq` above: players only, only when at least one worn piece carries a
+    // payload, riding the identity record (wireCacheFor diffs the identity
+    // JSON, so an equip/unequip of an instanced piece re-emits automatically).
+    // Data minimization: only the cosmetic inspect fields (signer, enchant,
+    // rolled) leave the server; boundTo and charges are gameplay state no
+    // inspecting client needs and never ride this key.
+    let eqi: Record<string, unknown> | undefined;
+    for (const [slot, inst] of Object.entries(e.equippedInstances)) {
+      if (!inst) continue;
+      const pub: Record<string, unknown> = {};
+      if (inst.signer !== undefined) pub.signer = inst.signer;
+      if (inst.enchant !== undefined) pub.enchant = inst.enchant;
+      if (inst.rolled !== undefined) pub.rolled = inst.rolled;
+      for (const _ in pub) {
+        if (eqi === undefined) eqi = {};
+        eqi[slot] = pub;
+        break;
+      }
+    }
+    if (eqi) out.eqi = eqi;
   }
   if (e.holderTier) out.ht = e.holderTier; // $WOC holder-tier flair (cosmetic)
   if (e.holderBalance) out.hb = Math.round(e.holderBalance); // exact $WOC, for inspect
@@ -940,6 +964,7 @@ function wireAura(a: Aura): WireAura {
   // The caster's entity id, for the client's own-aura prominence on the target strip
   // (auras_view ownFirst). Omitted for the rare 0/absent source, which decodes to 0.
   if (a.sourceId) w.src = a.sourceId;
+  if (a.unbreakableControl) w.ub = 1;
   return w;
 }
 
@@ -1384,13 +1409,16 @@ export class GameServer {
   // -------------------------------------------------------------------------
 
   private actorFor(session: ClientSession): SocialActor {
-    // activeTitle rides from the LIVE sim meta so the guild/officer relay can
-    // stamp the sender's Book of Deeds title (a deed id) without SocialService
-    // ever touching the sim; a session with no live meta stays untitled.
+    // activeTitle and cls both ride from the LIVE sim meta so the guild/officer
+    // relay can stamp the sender's Book of Deeds title and class without
+    // SocialService ever touching the sim; a session with no live meta stays
+    // untitled and classless.
+    const meta = this.sim.meta(session.pid);
     return {
       characterId: session.characterId,
       name: session.name,
-      activeTitle: this.sim.meta(session.pid)?.activeTitle ?? null,
+      activeTitle: meta?.activeTitle ?? null,
+      cls: meta?.cls,
     };
   }
 
@@ -3988,7 +4016,8 @@ export class GameServer {
           // sim's own resolver rather than trusting the client. The sim then
           // re-validates the slot against the item itself.
           const aimed =
-            typeof msg.slot === 'string' && (EQUIP_SLOTS as readonly string[]).includes(msg.slot)
+            typeof msg.slot === 'string' &&
+            (ALL_EQUIP_SLOTS as readonly string[]).includes(msg.slot)
               ? (msg.slot as EquipSlot)
               : undefined;
           if (aimed) sim.equipItemToSlot(msg.item, aimed, pid);
@@ -4003,7 +4032,12 @@ export class GameServer {
         }
         break;
       case 'unequip_item':
-        if (typeof msg.slot === 'string' && (EQUIP_SLOTS as readonly string[]).includes(msg.slot)) {
+        // ALL_EQUIP_SLOTS, not the frozen EQUIP_SLOTS: the latter omits the
+        // additive 'offhand' slot, so any offhand unequip was silently dropped here.
+        if (
+          typeof msg.slot === 'string' &&
+          (ALL_EQUIP_SLOTS as readonly string[]).includes(msg.slot)
+        ) {
           sim.unequipItem(msg.slot as EquipSlot, pid);
         }
         break;
@@ -4039,6 +4073,17 @@ export class GameServer {
         break;
       case 'craft_item':
         if (typeof msg.recipe === 'string') sim.craftItem(msg.recipe, pid);
+        break;
+      case 'place_mobile_station':
+        if (typeof msg.craft === 'string') sim.placeMobileStation(msg.craft, pid);
+        break;
+      case 'train_recipe':
+        // Professions 2.0 Phase 9: fee + grant resolve inside the sim
+        // (Sim.trainRecipe -> professions/training.ts resolveTrain); the
+        // outcome reaches this client as the pid-scoped trainResult event and
+        // the learned set rides the per-tick cprof diff (knownRecipes is part
+        // of craftingIdentityFor's JSON), so no dirty-marking is needed here.
+        if (typeof msg.recipe === 'string') sim.trainRecipe(msg.recipe, pid);
         break;
       case 'sell_all_junk':
         sim.sellAllJunk(pid);
@@ -5445,6 +5490,12 @@ export class GameServer {
     // Craft skills and identity must arrive as one value so the client never
     // evaluates a recipe against a pair from one tick and skills from another.
     maybe('cprof', this.sim.craftingIdentityFor(anchorSession.pid));
+    // The viewer's own active mobile crafting station craft id (Professions
+    // 2.0 Phase 8), or null. Expiry resolves server-side (Sim.
+    // activeMobileStationCraftFor checks its own tickCount), so the delta
+    // naturally flips to null the tick a station lapses and the client never
+    // reasons about tick domains. Small scalar, diffed per tick like atitle.
+    maybe('mst', this.sim.activeMobileStationCraftFor(anchorSession.pid));
     maybe('tfocus', this.sim.townFocusFor(anchorSession.pid));
     // Raw gathering-profession proficiency map (IWorld `gatheringProficiency`,
     // #1119), a second small read alongside `prof` for the ORIGINAL flat-map

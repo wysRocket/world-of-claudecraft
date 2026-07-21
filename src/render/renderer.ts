@@ -39,6 +39,7 @@ import { tEntity } from '../ui/entity_i18n';
 import type { IWorld } from '../world_api';
 import { isVisuallyDead } from './anim_state';
 import { AOE_RING_LIFETIME, aoeRingAnim } from './aoe_ring';
+import { buildArtisanRowProps } from './artisan_row_props';
 import type { AmbientPointSource, SpatialAudioSink, Surface } from './audio_sink';
 import { type BirdsView, buildBirds } from './birds';
 import { type CameraOcclusionState, stepCameraOcclusion } from './camera_collision';
@@ -152,6 +153,7 @@ import { isSharedGeometry, isSharedMaterial } from './shared_resource';
 import { buildClouds, buildSky, type SkyView } from './sky';
 import { nearestSloppyPickId, type SloppyPickCandidate } from './sloppy_pick';
 import { freezeStaticMatrices } from './static_matrix';
+import { buildStationProps } from './stations';
 import { shouldRenderStealthGhost } from './stealth';
 import { buildFlaredConeFan, buildRingXZ, drapeConeWorld } from './target_cone_debug';
 import {
@@ -647,6 +649,10 @@ export interface EntityView {
   nameplateDisplay: string;
   nameplateTransform: string;
   nameplateSig: string;
+  /** Bitset of the last-applied combat-state classes, for per-frame write elision. */
+  nameplateStateMask: number;
+  /** Last-applied friendly-pet class, diffed separately from the combat-state bitset. */
+  nameplateFriendlyPet: boolean;
   nameplateHpWidth: string;
   titleSig: string; // cheap-diff for the deed-title subtitle (lang|deed id)
   comboSig: string; // cheap-diff for the combo pip row
@@ -1537,6 +1543,21 @@ export class Renderer {
     // Baked into world space at build with no per-frame update(), same as props.
     freezeStaticMatrices(gatherNodes.group);
     this.gatherNodeMeshes = gatherNodes.group.children;
+
+    const artisanRow = buildArtisanRowProps(this.sim.cfg.seed);
+    setRenderCategory(artisanRow.group, 'props');
+    this.scene.add(artisanRow.group);
+    freezeStaticMatrices(artisanRow.group);
+
+    // Crafting-station scenery (Professions 2.0): static, except the kitchens
+    // fire, whose flame + light join the campfire flicker/ember pass above.
+    const stationProps = buildStationProps(this.sim.cfg.seed);
+    setRenderCategory(stationProps.group, 'props');
+    this.scene.add(stationProps.group);
+    freezeStaticMatrices(stationProps.group);
+    for (const flame of stationProps.flames) flame.matrixAutoUpdate = true;
+    this.flames.push(...stationProps.flames);
+    this.fireLights.push(...stationProps.fireLights);
 
     // selection ring — a classic target reticle: a base ring plus four
     // inward-pointing ticks. The base ring is draped over the terrain each
@@ -4108,6 +4129,8 @@ export class Renderer {
       nameplateDisplay: 'none',
       nameplateTransform: '',
       nameplateSig: '',
+      nameplateStateMask: 0,
+      nameplateFriendlyPet: false,
       nameplateHpWidth: '',
       titleSig: '',
       comboSig: '',
