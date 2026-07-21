@@ -4276,11 +4276,17 @@ function cardDuel(): Scenario {
 // proc draw per successful craft lands in the draw-order digest and the denial adds
 // none. Total observed draws: 3 (one per successful craft; the denial draws zero).
 //
-// Seed HUNTED (bounded scan from seed 1 upward over this exact drive sequence, not
-// committed) so the vestments proc draw lands under the capped 15 percent
-// masterwork chance and the proc fires inside the recorded run; only the found
-// literal is pinned here. Spare seeds 23 and 34 were also verified to fire the proc
-// for this drive.
+// The seed is NOT hunted, and must never be again. The masterwork chance is capped
+// at 0.15 and phase 3 used to take a single draw, so about six sevenths of seeds
+// failed this scenario outright; it only passed on a seed scanned for a lucky roll,
+// and any world-content change anywhere reshuffles the shared rng stream and rots
+// the pin (this happened twice, on seeds 21 then 23). Phase 3 now crafts under a
+// bounded retry until the proc fires. The #1301 output throttle
+// (CRAFT_THROTTLE_MAX_PER_WINDOW = 10 per CRAFT_THROTTLE_WINDOW_SECONDS = 60,
+// src/sim/content/professions.ts) caps real attempts at 10 per window, so every 10
+// tries the drive advances the clock past the window before continuing. This is
+// still fully deterministic per seed; a stream shift only changes WHICH attempt
+// procs, never whether one does within the retry budget.
 function professionsCraft(seed = 21): Scenario {
   return {
     name: 'professions_craft',
@@ -4326,9 +4332,29 @@ function professionsCraft(seed = 21): Scenario {
       // 3 -> 2 -> floor(2 * 0.8) = 1) and feeds the signed-reagent proc-chance
       // input (any-signed since the 2026-07-17 ruling; a self-signed copy still
       // qualifies), mirroring the crafting suite's proc test.
-      sim.addItemInstance('linen_scrap', { signer: meta.name }, pid);
-      sim.addItem('spider_leg', 1, pid);
-      sim.craftItem('recipe_eastbrook_ritual_vestments', pid);
+      //
+      // Bounded retry, not a single hunted draw (see the header note). At the capped
+      // 0.15 chance the odds of zero procs in 100 real attempts are astronomically
+      // small, so the cap is a runaway guard, not a coin flip. Every
+      // CRAFT_THROTTLE_MAX_PER_WINDOW (10) attempts the #1301 output throttle would
+      // otherwise return `reason: 'throttled'` with no proc draw at all, so advance
+      // the clock past CRAFT_THROTTLE_WINDOW_SECONDS (60) first. A non-proc copy is
+      // discarded (vestments are equippable, one bag slot each) so only the winning
+      // copy remains for the mint assertions below.
+      const MAX_MASTERWORK_ATTEMPTS = 100;
+      const CRAFTS_PER_THROTTLE_WINDOW = 10;
+      let masterworkAttempts = 0;
+      while (masterworkAttempts < MAX_MASTERWORK_ATTEMPTS && !meta.lastMasterwork) {
+        if (masterworkAttempts > 0 && masterworkAttempts % CRAFTS_PER_THROTTLE_WINDOW === 0) {
+          for (let i = 0; i < 20 * 61; i++) rec.tick(1);
+        }
+        sim.addItemInstance('linen_scrap', { signer: meta.name }, pid);
+        sim.addItem('spider_leg', 1, pid);
+        sim.craftItem('recipe_eastbrook_ritual_vestments', pid);
+        masterworkAttempts++;
+        if (!meta.lastMasterwork) sim.removeItem('eastbrook_ritual_vestments', 1, pid);
+      }
+      rec.notes.masterworkAttempts = masterworkAttempts;
       rec.snapshot('craft-masterwork');
 
       // Phase 4: one more plain craft so the golden shows the draw stream continuing
