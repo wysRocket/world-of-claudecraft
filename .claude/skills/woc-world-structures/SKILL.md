@@ -1,6 +1,7 @@
 ---
 name: woc-world-structures
-description: "Add or redesign static, non-animated World of ClaudeCraft world content: buildings, props, terrain dressing, and weapons. Use when a change needs a new building, prop, or static decoration in the game world, or a texture/material fix for an existing one."
+description: Add or redesign static, non-animated World of ClaudeCraft world content: buildings, props, terrain dressing, and weapons. Use when a change needs a new building, prop, or static decoration in the game world, or a texture/material fix for an existing one.
+user-invocable: true
 ---
 
 # World Structures

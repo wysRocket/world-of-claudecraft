@@ -234,6 +234,8 @@ describe('Codex skills', () => {
       'woc-release-malware-audit',
       'woc-release-merge-audit',
       'woc-review-pr',
+      'woc-world-mechanics',
+      'woc-world-structures',
     ]);
 
     const descriptions = new Set<string>();
