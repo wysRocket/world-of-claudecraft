@@ -159,35 +159,34 @@ function i18nModulepreloadPlugin() {
       // make the just-written manifest visible to a same-process read immediately).
       order: 'post',
       async handler() {
-        // TEMPORARY diagnostic for the Vercel-only ENOENT investigation: dump exactly
-        // what is on disk in outDir right before the manifest read, since every
-        // hypothesis tested so far (hook order, read-timing retry, build cache,
-        // CI/VERCEL env vars, rolldown 1.1.5->1.2.0) failed to change the outcome.
-        // Remove once root-caused.
+        // Some build environments (observed reliably on a specific Vercel project's
+        // build containers, never locally) produce NO dist/.vite/manifest.json at all,
+        // for reasons that survived hook reordering, a bounded read retry, a forced
+        // cache-free rebuild, and a rolldown version bump - genuinely unresolved as of
+        // this writing. That specific failure (the file cannot be read/found at all)
+        // degrades to a warning: this optimization is a nice-to-have (a stored-locale
+        // visitor just gets one extra request-waterfall step without it), not worth
+        // failing an entire production deploy over. A DIFFERENT failure - the manifest
+        // read successfully but is missing an expected locale's chunk, a real content
+        // bug where a locale was added without being built - still throws hard; that
+        // one is exactly the "stored visitor silently gets no preload" case worth
+        // stopping the build for.
         try {
-          const fs = await import('node:fs');
+          const { map } = await templateModulepreload({ root, outDir, base });
           // eslint-disable-next-line no-console
-          console.log(`[i18n-diag] outDir=${outDir} exists=${fs.existsSync(outDir)}`);
-          if (fs.existsSync(outDir)) {
+          console.log(
+            `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
+          );
+        } catch (err) {
+          if ((err as NodeJS.ErrnoException)?.code === 'ENOENT') {
             // eslint-disable-next-line no-console
-            console.log(`[i18n-diag] outDir contents: ${fs.readdirSync(outDir).join(', ')}`);
+            console.warn(
+              `[i18n] modulepreload: could not read the build manifest, skipping the stored-locale preload optimization for this deploy: ${err}`,
+            );
+            return;
           }
-          const viteDir = path.join(outDir, '.vite');
-          // eslint-disable-next-line no-console
-          console.log(`[i18n-diag] viteDir=${viteDir} exists=${fs.existsSync(viteDir)}`);
-          if (fs.existsSync(viteDir)) {
-            // eslint-disable-next-line no-console
-            console.log(`[i18n-diag] viteDir contents: ${fs.readdirSync(viteDir).join(', ')}`);
-          }
-        } catch (diagErr) {
-          // eslint-disable-next-line no-console
-          console.log(`[i18n-diag] diagnostic itself threw: ${diagErr}`);
+          throw err;
         }
-        const { map } = await templateModulepreload({ root, outDir, base });
-        // eslint-disable-next-line no-console
-        console.log(
-          `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
-        );
       },
     },
   };
