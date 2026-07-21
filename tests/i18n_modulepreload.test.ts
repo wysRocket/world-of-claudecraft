@@ -8,7 +8,7 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 // @ts-ignore - shared zero-dep JS build tool (no .d.ts); same pattern as the registry test importing scripts/i18n_hash.mjs.
-import { PLACEHOLDER, GENERATED_DIR, parseSupportedLocales, localeChunkMap, injectLocaleChunkMap, templateModulepreload } from "../scripts/i18n_modulepreload.mjs";
+import { PLACEHOLDER, GENERATED_DIR, parseSupportedLocales, localeChunkMap, injectLocaleChunkMap, templateModulepreload, readManifestWithRetry } from "../scripts/i18n_modulepreload.mjs";
 import { LOCALE_LOADERS, SUPPORTED_LANGUAGES } from "../src/ui/i18n.resolved.generated/loaders";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -110,7 +110,7 @@ describe("i18n modulepreload build hook", () => {
   });
 
   describe("templateModulepreload (FS orchestrator the Vite closeBundle plugin calls)", () => {
-    it("resolves the manifest + loaders source and rewrites dist/index.html in place", () => {
+    it("resolves the manifest + loaders source and rewrites dist/index.html in place", async () => {
       const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-"));
       try {
         const outDir = path.join(tmp, "dist");
@@ -127,7 +127,7 @@ describe("i18n modulepreload build hook", () => {
         }));
         writeFileSync(path.join(outDir, "index.html"), `<head><script>var m = ${PLACEHOLDER};</script></head>`);
 
-        const { map, htmlPath, manifestPath } = templateModulepreload({ root: tmp, outDir, base: "/" });
+        const { map, htmlPath, manifestPath } = await templateModulepreload({ root: tmp, outDir, base: "/" });
 
         // Exactly the non-en locales, resolved to their hashed same-origin URLs (admin excluded).
         expect(map).toEqual({ es: "/assets/es-aaaa1111.js", de_DE: "/assets/de_DE-bbbb2222.js" });
@@ -143,7 +143,7 @@ describe("i18n modulepreload build hook", () => {
       }
     });
 
-    it("propagates the fail-closed throw when a locale has no manifest chunk", () => {
+    it("propagates the fail-closed throw when a locale has no manifest chunk", async () => {
       const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-"));
       try {
         const outDir = path.join(tmp, "dist");
@@ -156,7 +156,59 @@ describe("i18n modulepreload build hook", () => {
           "src/ui/i18n.resolved.generated/es.ts": { file: "assets/es-aaaa1111.js" },
         }));
         writeFileSync(path.join(outDir, "index.html"), `<head><script>var m = ${PLACEHOLDER};</script></head>`);
-        expect(() => templateModulepreload({ root: tmp, outDir, base: "/" })).toThrow(/fr_FR/);
+        await expect(templateModulepreload({ root: tmp, outDir, base: "/" })).rejects.toThrow(/fr_FR/);
+      } finally {
+        rmSync(tmp, { recursive: true, force: true });
+      }
+    });
+  });
+
+  describe("readManifestWithRetry (the Vercel-container ENOENT-race guard)", () => {
+    it("returns immediately when the manifest is already present", async () => {
+      const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-retry-"));
+      try {
+        const manifestPath = path.join(tmp, "manifest.json");
+        writeFileSync(manifestPath, JSON.stringify({ ok: true }));
+        await expect(readManifestWithRetry(manifestPath, { attempts: 3, delayMs: 5 })).resolves.toEqual({ ok: true });
+      } finally {
+        rmSync(tmp, { recursive: true, force: true });
+      }
+    });
+
+    it("retries past an initial ENOENT and succeeds once the file is written", async () => {
+      const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-retry-"));
+      try {
+        const manifestPath = path.join(tmp, "manifest.json");
+        // Simulates the observed Vercel-container race: the file does not exist yet on
+        // the first read(s) and appears a little later, from this same process's view.
+        setTimeout(() => writeFileSync(manifestPath, JSON.stringify({ delayed: true })), 25);
+        const result = await readManifestWithRetry(manifestPath, { attempts: 10, delayMs: 10 });
+        expect(result).toEqual({ delayed: true });
+      } finally {
+        rmSync(tmp, { recursive: true, force: true });
+      }
+    });
+
+    it("gives up and throws the original ENOENT once attempts are exhausted", async () => {
+      const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-retry-"));
+      try {
+        // Never written: a genuinely broken build (not a transient race) must still fail,
+        // not retry forever.
+        const manifestPath = path.join(tmp, "manifest.json");
+        await expect(readManifestWithRetry(manifestPath, { attempts: 3, delayMs: 5 })).rejects.toMatchObject({
+          code: "ENOENT",
+        });
+      } finally {
+        rmSync(tmp, { recursive: true, force: true });
+      }
+    });
+
+    it("does not swallow a non-ENOENT error (e.g. malformed JSON) by retrying it", async () => {
+      const tmp = mkdtempSync(path.join(os.tmpdir(), "i18n-mp-retry-"));
+      try {
+        const manifestPath = path.join(tmp, "manifest.json");
+        writeFileSync(manifestPath, "{ not valid json");
+        await expect(readManifestWithRetry(manifestPath, { attempts: 3, delayMs: 5 })).rejects.toThrow(SyntaxError);
       } finally {
         rmSync(tmp, { recursive: true, force: true });
       }

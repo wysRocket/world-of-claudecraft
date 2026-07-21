@@ -153,15 +153,13 @@ function i18nModulepreloadPlugin() {
         : path.resolve(cfg.root, cfg.build.outDir);
     },
     closeBundle: {
-      // Vite's own manifest.json write is a default-ordered closeBundle hook too, and
-      // Rollup does not guarantee same-order hooks run in plugin-registration sequence:
-      // this passed reliably on local (fast SSD, low contention) but failed on Vercel's
-      // build containers with an ENOENT on dist/.vite/manifest.json (the read below
-      // racing the write). 'post' forces this hook to run after every default-ordered
-      // closeBundle, including Vite's manifest writer, regardless of registration order.
+      // 'post' runs this after every default-ordered closeBundle (including Vite's own
+      // manifest writer), which is the correct ordering but was not, on its own, enough:
+      // see the retry in templateModulepreload for why (some build containers do not
+      // make the just-written manifest visible to a same-process read immediately).
       order: 'post',
-      handler() {
-        const { map } = templateModulepreload({ root, outDir, base });
+      async handler() {
+        const { map } = await templateModulepreload({ root, outDir, base });
         // eslint-disable-next-line no-console
         console.log(
           `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
