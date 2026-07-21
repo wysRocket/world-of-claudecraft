@@ -20,7 +20,6 @@ import { type HandGrip, KAYKIT_SHIELD_ACCESSORIES, KAYKIT_SHIELD_GRIPS } from '.
 import {
   type AttachDef,
   characterPreloadUrls,
-  PIG_NOSE_ATTACH,
   itemOffhandModelUrl,
   itemWeaponModelUrl,
   SKIN_EMISSIVE,
@@ -341,29 +340,6 @@ function attachProp(
   payload.traverse((o) => {
     if ((o as THREE.Mesh).isMesh) o.userData.weaponMesh = true;
   });
-  // Emberwood pig-nose: tint the attached snout a cheerful piggy pink AND scale it
-  // WAY up. The cadpy exporter emits the mesh ~1000x too small (mm→m) so it ships
-  // as an invisible speck; the head bone also sits at neck level, so the snout must
-  // be scaled to ~0.7u and offset up+forward ([0,0.13,0.24]) to land on the face
-  // instead of buried in the skull. Clone the shared cached GLTF material first so
-  // we never recolor the source asset. DoubleSide + frustumCulled=false guard
-  // against any winding/culling edge cases on the tiny source geometry.
-  if (att.url.endsWith('pig_nose.glb')) {
-    payload.scale.setScalar(3200);
-    payload.traverse((o) => {
-      const m = o as THREE.Mesh;
-      if (!m.isMesh) return;
-      m.frustumCulled = false;
-      const mat = (Array.isArray(m.material) ? m.material[0] : m.material).clone() as any;
-      if (mat.isMeshStandardMaterial || mat.isMeshLambertMaterial || mat.isMeshBasicMaterial) {
-        mat.color = new THREE.Color(0xff8fab);
-        mat.metalness = 0.0;
-        mat.roughness = 0.8;
-        mat.side = THREE.DoubleSide;
-      }
-      m.material = mat;
-    });
-  }
   if (swapKind === 'mainhand') {
     payload.userData[SWAP_WEAPON_TAG] = true;
     payload.userData.heldSlot = 0;
@@ -718,17 +694,6 @@ function attachAllProps(
     const swapKind = isOffhandSwap ? 'offhand' : isWeapon ? 'mainhand' : null;
     const payload = attachProp(root, bone, att, swapKind, stowed);
     if (isWeapon) payloads.push(payload);
-  }
-  // Emberwood: every humanoid character reads as a pig. The 10 player classes list
-  // PIG_NOSE_ATTACH in their def; here we also give it to every OTHER humanoid rig
-  // (NPCs, remote players, humanoid mobs) that has a 'head' bone but didn't already
-  // declare the nose — so the snout shows on ALL characters, not just the local
-  // player, without hand-editing every NPC def. Animal/monster rigs have no 'head'
-  // bone (or a differently-shaped one) and are skipped.
-  const alreadyHasNose = (def.attach ?? []).some((a) => a.url.endsWith('pig_nose.glb'));
-  if (!alreadyHasNose) {
-    const headBone = attachTargetBone(root, PIG_NOSE_ATTACH, stowed);
-    if (headBone) attachProp(root, headBone, PIG_NOSE_ATTACH, null, stowed);
   }
   return payloads;
 }

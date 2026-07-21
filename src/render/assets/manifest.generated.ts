@@ -631,7 +631,6 @@ export const MEDIA_ASSETS: Record<string, string> =
   "models/emberwood/npcs/emberwood_provisioner.glb": "/media/models/emberwood/npcs/emberwood_provisioner.a1bd1b3c6ef3.glb",
   "models/emberwood/npcs/emberwood_ranger.glb": "/media/models/emberwood/npcs/emberwood_ranger.de7bfa816fd4.glb",
   "models/emberwood/npcs/emberwood_rogue.glb": "/media/models/emberwood/npcs/emberwood_rogue.ff6e5a7915f5.glb",
-  "models/emberwood/props/pig_nose.glb": "/media/models/emberwood/props/pig_nose.f1f4fc17c762.glb",
   "models/emberwood/weapons/shield.glb": "/media/models/emberwood/weapons/shield.1e5dbed1ee58.glb",
   "models/emberwood/weapons/staff.glb": "/media/models/emberwood/weapons/staff.2a8034db31d2.glb",
   "models/emberwood/weapons/sword.glb": "/media/models/emberwood/weapons/sword.52761db4236c.glb",

@@ -83,26 +83,26 @@ const PROP_ASSET_DEFS: Record<string, PropAssetDef> = {
   house1: {
     url: '/models/props/house_1.glb',
     kit: 'village',
-    color: 0xe85745, // coral red
+    color: 0xa8583f, // weathered terracotta plaster
     texture: plasterTexture,
   },
   house2: {
     url: '/models/props/house_2.glb',
     kit: 'village',
     yaw: -Math.PI / 2,
-    color: 0x45a08c, // teal
+    color: 0xc4a876, // warm parchment-cream plaster
     texture: plasterTexture,
   },
   house3: {
     url: '/models/props/house_3.glb',
     kit: 'village',
-    color: 0xf2a838, // marigold
+    color: 0xb8935a, // warm ochre plaster
     texture: plasterTexture,
   },
   blacksmith: { url: '/models/props/blacksmith.glb', kit: 'village' },
-  inn: { url: '/models/props/inn.glb', kit: 'village', color: 0x7655bd }, // plum
+  inn: { url: '/models/props/inn.glb', kit: 'village', color: 0x6b4a35 }, // dark weathered timber
   bellTower: { url: '/models/props/bell_tower.glb', kit: 'village' },
-  well: { url: '/models/props/well.glb', kit: 'village', color: 0x3b8cc7 }, // sky blue
+  well: { url: '/models/props/well.glb', kit: 'village', color: 0x8a8478 }, // weathered stone grey
   stand1: { url: '/models/props/market_stand_1.glb', kit: 'village', yaw: -Math.PI / 2 },
   stand2: { url: '/models/props/market_stand_2.glb', kit: 'village', yaw: -Math.PI / 2 },
   cart: { url: '/models/props/cart.glb', kit: 'village', strip: /^(Red|Beige)$/ },
