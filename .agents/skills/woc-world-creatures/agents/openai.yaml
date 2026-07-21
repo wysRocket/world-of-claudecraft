@@ -1,0 +1,6 @@
+interface:
+  display_name: "World of ClaudeCraft World Creatures"
+  short_description: "Source or generate an NPC or mob visual"
+  default_prompt: "Use $woc-world-creatures to source or generate a distinct World of ClaudeCraft NPC or mob visual."
+policy:
+  allow_implicit_invocation: false

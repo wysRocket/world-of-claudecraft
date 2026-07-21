@@ -54,6 +54,7 @@ Repository skills live in `.agents/skills/` and are invoked as `$skill-name`:
   terrain dressing, weapons).
 - `$woc-world-mechanics`: redesign a zone, dungeon, or delve's room layout, hazards,
   or boss mechanics.
+- `$woc-world-creatures`: source or generate a distinct NPC or mob visual.
 
 Read-only specialist agents live in `.codex/agents/`. Use only the roles matching the
 changed surface: sim architecture, cross-platform parity, persistence, database
