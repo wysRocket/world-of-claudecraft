@@ -37,8 +37,9 @@ how to build and wire them.
 - **The asset entry:** `src/render/props.ts`'s `PROP_ASSET_DEFS` record. Each entry
   needs a `url` (under `public/models/...`), a `kit` (a material-dedup namespace
   shared across files in the same pack), and optionally `yaw` (pre-rotation baked into
-  geometry), `strip` (a regex to drop unwanted material parts), `color` (a hex tint),
-  and `texture` (see below).
+  geometry), `strip` (a regex to drop unwanted material parts), and `color` (a hex
+  tint). See the flat-fill trap below for a `texture` field the interface does not
+  have yet and when to add it.
 - **Placement:** `src/sim/content/zone*.ts`'s `buildings:` array
   (`{ kind, x, z, w, d, rot }`) or `stalls:` array for market stalls. Position (`x`/
   `z`), footprint (`w`/`d`), and rotation (`rot`, radians) all live here.
