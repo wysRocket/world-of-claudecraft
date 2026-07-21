@@ -159,6 +159,30 @@ function i18nModulepreloadPlugin() {
       // make the just-written manifest visible to a same-process read immediately).
       order: 'post',
       async handler() {
+        // TEMPORARY diagnostic for the Vercel-only ENOENT investigation: dump exactly
+        // what is on disk in outDir right before the manifest read, since every
+        // hypothesis tested so far (hook order, read-timing retry, build cache,
+        // CI/VERCEL env vars, rolldown 1.1.5->1.2.0) failed to change the outcome.
+        // Remove once root-caused.
+        try {
+          const fs = await import('node:fs');
+          // eslint-disable-next-line no-console
+          console.log(`[i18n-diag] outDir=${outDir} exists=${fs.existsSync(outDir)}`);
+          if (fs.existsSync(outDir)) {
+            // eslint-disable-next-line no-console
+            console.log(`[i18n-diag] outDir contents: ${fs.readdirSync(outDir).join(', ')}`);
+          }
+          const viteDir = path.join(outDir, '.vite');
+          // eslint-disable-next-line no-console
+          console.log(`[i18n-diag] viteDir=${viteDir} exists=${fs.existsSync(viteDir)}`);
+          if (fs.existsSync(viteDir)) {
+            // eslint-disable-next-line no-console
+            console.log(`[i18n-diag] viteDir contents: ${fs.readdirSync(viteDir).join(', ')}`);
+          }
+        } catch (diagErr) {
+          // eslint-disable-next-line no-console
+          console.log(`[i18n-diag] diagnostic itself threw: ${diagErr}`);
+        }
         const { map } = await templateModulepreload({ root, outDir, base });
         // eslint-disable-next-line no-console
         console.log(
