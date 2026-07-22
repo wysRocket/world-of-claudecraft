@@ -1375,6 +1375,14 @@
   body.mobile-touch #actionbar {
     display: none;
   }
+  /* The community-links rail (Discord/GitHub/Donate) is hidden in-game on
+     touch: its two-person toggle icon under the minimap read as a Friends
+     button next to the real Social button in the top-left trio. The links
+     stay reachable on desktop and from the homepage; the More tray's Discord
+     button covers the in-game path where configured. */
+  body.mobile-touch #community-hud {
+    display: none;
+  }
   /* Issue uiux-overlap: the chatbox's .panel border reads as clutter on the
      small touch viewport, so mobile drops the hard line while keeping the
      desktop rule (base.css .panel) untouched. Mobile border restyle adds a soft
@@ -4520,9 +4528,13 @@
     }
   }
   /* Re-homed from the char-select responsive block in shell.css: narrow-width
-     repositioning of the quest tracker. Layer hud.mobile sits after components,
-     so this still beats the HUD base; nothing in shell competes once removed there. */
+     repositioning of the in-game community HUD + quest
+     tracker. Layer hud.mobile sits after components, so these still beat the HUD
+     base; nothing in shell competes once removed there. */
   @media (max-width: 860px) {
+    #community-hud {
+      top: auto;
+    }
     #right-tracker-stack {
       top: 260px;
       right: 12px;

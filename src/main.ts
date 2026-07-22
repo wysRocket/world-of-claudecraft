@@ -561,6 +561,13 @@ function preventMobileZoom(): void {
 
 function syncPhoneTouchClass(): void {
   document.body.classList.toggle('mobile-touch', NATIVE_APP || useTouchInterface());
+  syncCommunityMenuMode();
+}
+
+function syncCommunityMenuMode(): void {
+  const communityMenu = document.getElementById('community-menu') as HTMLDetailsElement | null;
+  if (!communityMenu) return;
+  communityMenu.open = !(NATIVE_APP || useTouchInterface());
 }
 
 // Honor a persisted Interface Mode override before the first layout paint, so a
@@ -899,6 +906,7 @@ function mountGameUi(): void {
   if (!template || !startScreen) throw new Error('Game UI shell is missing.');
   document.body.insertBefore(template.content.cloneNode(true), startScreen);
   translatePage();
+  syncCommunityMenuMode();
   // #mm-discord lives inside this template, so it does not exist in the live DOM
   // until the clone above runs; the boot-time syncDiscordEntries() call (way
   // earlier, before any world entry) silently no-ops on it. Re-sync now so the
