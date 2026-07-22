@@ -47,7 +47,7 @@ import type { Recorder, Scenario } from './record';
 type AnySim = Sim & Record<string, any>;
 type AnyEntity = Entity & Record<string, any>;
 
-// Move an entity to (x,z) on the terrain and keep the spatial grid consistent —
+// Move an entity to (x,z) on the terrain and keep the spatial grid consistent -
 // the same idiom every existing scenario test uses.
 function teleport(sim: AnySim, e: AnyEntity, x: number, z: number): void {
   e.pos.x = x;
@@ -3816,7 +3816,7 @@ function c5AutoAttack(): Scenario {
 // (escrow returns to bags), a third stack is forced past its expiry so the
 // once-a-second updateMarket sweep returns it to the collection, and finally the
 // seller collects (gold + the expired item move to bags). The market draws NO
-// rng — its behavior is pinned entirely through PlayerMeta (copper/inventory) and
+// rng - its behavior is pinned entirely through PlayerMeta (copper/inventory) and
 // the emitted event stream.
 function marketRoundTrip(): Scenario {
   return {
@@ -4215,7 +4215,7 @@ function chatSocial(): Scenario {
       sim.playEmote('salute', a);
       rec.snapshot('readout-emote');
 
-      // c: token-bucket throttle — the first 8 messages pass, later ones are throttled.
+      // c: token-bucket throttle - the first 8 messages pass, later ones are throttled.
       for (let i = 0; i < 10; i++) sim.chat(`/s spam ${i}`, c);
       rec.snapshot('throttled');
     },

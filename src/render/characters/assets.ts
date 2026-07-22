@@ -42,7 +42,7 @@ const DEFAULT_TINT_STRENGTH = 0.4;
 
 // KayKit adventurer standalone weapon glbs ship a left-hand mesh offset on a
 // lone child node. handslot.r/l children in the character glbs carry the
-// authored grip — copy those (or this fallback table) after flattening.
+// authored grip - copy those (or this fallback table) after flattening.
 const KAYKIT_WEAPON_ACCESSORY: Record<string, string> = {
   axe_1handed: '1H_Axe',
   axe_2handed: '2H_Axe',
@@ -494,12 +494,12 @@ export function skinTexture(key: string, skinIndex: number): THREE.Texture | nul
 
 /** Ensure the alternate atlas for (key, skinIndex) is loaded. Returns a promise
  *  that resolves once it is cached (so the caller can re-read `skinTexture` and
- *  re-apply), or null when there is nothing to wait for — the skin has no atlas
+ *  re-apply), or null when there is nothing to wait for - the skin has no atlas
  *  (embedded default) or it is already loaded. Hardens live skin swaps against a
  *  not-yet-loaded atlas (otherwise the body shows the default until a relog). */
 export function ensureSkinTexture(key: string, skinIndex: number): Promise<void> | null {
   // applySkinMaterials consumes BOTH the base atlas and (when the skin has one)
-  // the emissive atlas — warm whichever of the two is missing so a glow skin
+  // the emissive atlas - warm whichever of the two is missing so a glow skin
   // doesn't re-apply with a not-yet-loaded emissive map.
   const baseUrl = SKINS[key]?.[skinIndex] ?? null;
   const emisUrl = SKIN_EMISSIVE[key]?.[skinIndex] ?? null;
@@ -518,7 +518,7 @@ export function skinEmissiveTexture(key: string, skinIndex: number): THREE.Textu
   return url ? (skinEmisTexByUrl.get(url) ?? null) : null;
 }
 
-// Lazy fetch for cosmetic-only bodies (the Combat Mech) — the GLB plus every
+// Lazy fetch for cosmetic-only bodies (the Combat Mech) - the GLB plus every
 // chroma + emissive map. Memoized: opening the preview repeatedly is free. Kept
 // out of the boot sweep so the ~4 MB asset set never delays every client's load.
 let mechAssetsPromise: Promise<void> | null = null;
@@ -587,7 +587,7 @@ function resolvedGltf(url: string): GLTF {
 
 // ---------------------------------------------------------------------------
 // Per-url source optimization: KayKit characters ship several skinned body parts
-// sharing one skeleton and one material — merge them into a single SkinnedMesh
+// sharing one skeleton and one material - merge them into a single SkinnedMesh
 // once per asset so every instance costs ~1 body draw instead of ~9 (and one
 // Skeleton / bone texture instead of ~9). See rig_merge.ts for why the parts'
 // per-primitive bind data has to be rebaked first.
@@ -609,7 +609,7 @@ function optimizedScene(url: string): THREE.Object3D {
 // ---------------------------------------------------------------------------
 
 /** Fresh SkeletonUtils clone of a manifest entry with its kit applied.
- *  Pure model space — normalization (scale/yaw/feet offset) happens upstream. */
+ *  Pure model space - normalization (scale/yaw/feet offset) happens upstream. */
 export function assembleModel(
   def: VisualDef,
   weaponItemId?: string | null,
@@ -861,7 +861,7 @@ export function tintedMaterial(
     if ((src as THREE.MeshBasicMaterial).isMeshBasicMaterial) {
       mat = (src as THREE.MeshBasicMaterial).clone();
     } else {
-      // low tier: Lambert with the same texture map — no PBR, no rim
+      // low tier: Lambert with the same texture map - no PBR, no rim
       mat = new THREE.MeshLambertMaterial({
         map: s.map ?? null,
         color: s.color ? s.color.clone() : new THREE.Color(0xffffff),
@@ -872,7 +872,7 @@ export function tintedMaterial(
     }
   }
   if (tint !== null) {
-    // subtle pull toward the template color — hard multiplies turn the
+    // subtle pull toward the template color - hard multiplies turn the
     // hand-painted textures muddy
     mat.color.lerp(tintScratch.set(tint), strength);
   }
@@ -898,7 +898,7 @@ function tintFor(def: VisualDef, entityColor: number): number | null {
 }
 
 /** Swap every mesh material in an assembled clone for the shared tinted
- *  (and tier-appropriate) variant. Returns nothing — mutates the clone. */
+ *  (and tier-appropriate) variant. Returns nothing - mutates the clone. */
 export function applyMaterials(
   root: THREE.Object3D,
   def: VisualDef,
@@ -961,7 +961,7 @@ export interface PreparedVisual {
   idleGeo: THREE.BufferGeometry | null;
   /** source materials aligned with idleGeo groups */
   idleSrcMats: THREE.Material[];
-  /** click-capsule radius in world units (from measured XZ body extents —
+  /** click-capsule radius in world units (from measured XZ body extents -
    *  long/wide creatures like wolves need far more than a humanoid sliver) */
   clickRadius: number;
 }
@@ -1014,7 +1014,7 @@ export function prepareVisual(key: string): PreparedVisual {
     }
   });
   // Non-skinned models (procedural form GLBs animated by node transforms, with no
-  // skeleton — e.g. the chicken-cow Travel Form) contribute no skinned meshes, so
+  // skeleton - e.g. the chicken-cow Travel Form) contribute no skinned meshes, so
   // the pass above leaves bounds empty; rawHeight then collapses to 1e-3 and
   // normScale explodes (~1500x), rendering the form off-screen/invisible. Fall back
   // to the plain posed mesh geometry. Only triggers when there are zero skinned
@@ -1124,12 +1124,12 @@ function bakeStaticPose(
     if (srcGeo.index) out.setIndex(srcGeo.index.clone());
     out.computeVertexNormals();
     geos.push(out);
-    // GLTFLoader emits one Mesh per primitive — materials are never arrays here
+    // GLTFLoader emits one Mesh per primitive - materials are never arrays here
     mats.push(Array.isArray(mesh.material) ? mesh.material[0] : mesh.material);
   });
 
   if (geos.length === 0) return { geo: null, mats: [] };
-  // uv presence must agree for merging — drop uvs entirely if any geo lacks them
+  // uv presence must agree for merging - drop uvs entirely if any geo lacks them
   const allHaveUv = geos.every((g) => g.getAttribute('uv'));
   if (!allHaveUv) for (const g of geos) g.deleteAttribute('uv');
   const geo = geos.length === 1 ? geos[0] : mergeGeometries(geos, true);

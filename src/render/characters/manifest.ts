@@ -1,6 +1,6 @@
 // Visual manifest: maps every sim identity (player class, mob template/family,
 // NPC id, druid/polymorph form) onto a rigged glTF asset + clip names + kit.
-// Pure data + dispatch — no three.js imports, no loading.
+// Pure data + dispatch - no three.js imports, no loading.
 
 import { MECH_CHROMAS, type MechChroma } from '../../sim/content/skins';
 import { WEAPON_SKINS } from '../../sim/content/weapon_skins';
@@ -26,7 +26,7 @@ export interface ClipMap {
   /** Optional weapon-style override for plain auto attacks. */
   attackByHand?: { twohand?: string; dualwield?: string };
   death: string;
-  /** hit-react one-shots (optional — spider/raptor rigs have none) */
+  /** hit-react one-shots (optional - spider/raptor rigs have none) */
   hit?: string[];
   /** looping cast channel */
   cast?: string;
@@ -90,7 +90,7 @@ export interface VisualDef {
   attackTimeScale?: number;
   deathTimeScale?: number;
   /** Skip the boot preload sweep (manifestUrls); the asset is fetched on demand
-   *  instead — e.g. the cosmetic-only Combat Mech, loaded via preloadMechAssets()
+   *  instead - e.g. the cosmetic-only Combat Mech, loaded via preloadMechAssets()
    *  when the skin-select preview opens, so it never bloats every client's boot. */
   lazyPreload?: boolean;
   /** Post-load orientation fixups for weapon/prop nodes baked INTO a creature
@@ -242,7 +242,7 @@ const ENEMY7: ClipMap = {
   death: 'Death',
 };
 
-// floating/flying rigs (goleling/dragon) — hover instead of walking
+// floating/flying rigs (goleling/dragon) - hover instead of walking
 const FLOATING: ClipMap = {
   idle: 'Flying_Idle',
   walk: 'Fast_Flying',
@@ -274,7 +274,7 @@ const SPIDER: ClipMap = {
   death: 'Spider_Death', // no hit-react in asset
 };
 
-// Chicken-cow rig (chicken_cow.glb, procedurally authored — see
+// Chicken-cow rig (chicken_cow.glb, procedurally authored - see
 // scripts/gen_chicken_cow.mjs). Node-transform animations, no hit-react.
 const CHICKEN_COW: ClipMap = {
   idle: 'Idle',
@@ -286,7 +286,7 @@ const CHICKEN_COW: ClipMap = {
 };
 
 // Amber-Heart Golem (amber_heart_golem.glb): an articulated, node-hierarchy
-// rig (no skinning) with full clips — Idle/Walk/Run/Attack/Hit/Death — matching
+// rig (no skinning) with full clips - Idle/Walk/Run/Attack/Hit/Death - matching
 // the engine's node-transform animation path (see gen_chicken_cow.mjs).
 const GOLEM: ClipMap = {
   idle: 'Idle',
@@ -402,11 +402,11 @@ const HUMANOID_H = 2.6;
 const SKINS_DIR = 'textures/skins';
 
 // ---------------------------------------------------------------------------
-// Combat Mech — a class-agnostic cosmetic body. Unlike the per-class skins
+// Combat Mech - a class-agnostic cosmetic body. Unlike the per-class skins
 // below (which swap a body atlas onto an existing class rig), the mech is a
 // SEPARATE model with its own visual key (`player_mech`) and a set of chroma
 // textures grouped across the three skin-event rarity tiers. Epics additionally
-// ship an emissive glow map. Cosmetic preview only for now — lazy-loaded via
+// ship an emissive glow map. Cosmetic preview only for now - lazy-loaded via
 // preloadMechAssets() so it never bloats every client's boot.
 // ---------------------------------------------------------------------------
 const MECH_DIR = `${PLAYERS}/Mech/textures`;
@@ -423,7 +423,7 @@ function mechEmissiveUrl(c: MechChroma): string | null {
 // Per-class alternate body textures ("skins"). Index 0 = null = the model's
 // embedded default texture (no swap). Index >0 = a full-atlas alternate applied
 // to the body material's .map (same UVs). Classes sharing a model share its skin
-// set. Players only — mobs/npcs keep their default look. See public/textures/skins/.
+// set. Players only - mobs/npcs keep their default look. See public/textures/skins/.
 export const SKINS: Record<string, (string | null)[]> = {
   player_warrior: [
     null,
@@ -474,7 +474,7 @@ export const SKINS: Record<string, (string | null)[]> = {
     `${SKINS_DIR}/druid/alt_b.png`,
     `${SKINS_DIR}/druid/alt_c.png`,
   ],
-  // Combat Mech chromas — every index is a real full-model texture (no null
+  // Combat Mech chromas - every index is a real full-model texture (no null
   // default; the embedded base texture is not one of the rewards).
   player_mech: MECH_CHROMAS.map(mechChromaUrl),
   // Bursar Fernando (the Eastbrook banker easter egg): the rogue palette with
@@ -490,7 +490,7 @@ export const SKIN_EMISSIVE: Record<string, (string | null)[]> = {
   player_mech: MECH_CHROMAS.map(mechEmissiveUrl),
 };
 
-/** Number of skins (including the default) available for a visual key — min 1. */
+/** Number of skins (including the default) available for a visual key - min 1. */
 export function skinCount(key: string): number {
   return SKINS[key]?.length ?? 1;
 }
@@ -565,7 +565,7 @@ export const VISUALS: Record<string, VisualDef> = {
       ...kaykit(['1H_Melee_Attack_Chop', '1H_Melee_Attack_Slice_Diagonal']),
       attackByHand: { twohand: '2H_Melee_Attack_Chop' },
     },
-    // dedicated paladin model (helmeted variant) — ships its own Cape + Helmet
+    // dedicated paladin model (helmeted variant) - ships its own Cape + Helmet
     // meshes and texture, so no show-list/tint. Shield + paladin hammer arrive
     // in the weapons pass; the gripped axe holds the slot until then.
     attach: [
@@ -583,7 +583,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // with a bow displayed the shot plays a draw instead of the crossbow
     // shoulder-aim (visual.ts weaponSkinAttackClips).
     animUrls: [`${PLAYERS}/bow_anims.glb`],
-    // dedicated ranger model — the quiver is a built-in mesh, so it's no longer
+    // dedicated ranger model - the quiver is a built-in mesh, so it's no longer
     // a separate chest attachment
     attach: [{ url: `${WEAPONS}/crossbow_1handed.glb`, bone: 'handslot.r' }],
   },
@@ -633,7 +633,7 @@ export const VISUALS: Record<string, VisualDef> = {
     height: HUMANOID_H,
     clips: kaykit(['2H_Melee_Attack_Chop']),
     // no Mage_Hat on players: the brim hides the whole body from the default
-    // chase-camera pitch (NPC mages keep theirs — they're seen from the side)
+    // chase-camera pitch (NPC mages keep theirs - they're seen from the side)
     show: ['Mage_Cape'],
     attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
     weaponSlots: [0],
@@ -667,7 +667,7 @@ export const VISUALS: Record<string, VisualDef> = {
     height: HUMANOID_H,
     // The mech is rigged to the same KayKit Rig_Medium skeleton as every other
     // player class; its GLB shipped with no clips, so the full KayKit set is
-    // baked in from knight.glb (scripts/bake_mech_anims.mjs) — these names now
+    // baked in from knight.glb (scripts/bake_mech_anims.mjs) - these names now
     // resolve like any other class. Lazy-loaded; see preloadMechAssets().
     clips: kaykit(['1H_Melee_Attack_Chop']),
     // Class-agnostic cosmetic body, but it still holds the wearer's equipped
@@ -702,7 +702,7 @@ export const VISUALS: Record<string, VisualDef> = {
     tint: 0xd08b45,
     tintStrength: 0.35,
   },
-  // Druid Travel Form: a daft chicken-cow hybrid (custom GLB). No tint — its
+  // Druid Travel Form: a daft chicken-cow hybrid (custom GLB). No tint - its
   // authored cow-spots/comb/beak colours carry the look.
   form_travel: {
     url: `${CREATURES}/chicken_cow.glb`,
@@ -738,7 +738,7 @@ export const VISUALS: Record<string, VisualDef> = {
     url: 'models/emberwood/creatures/amber_heart_golem.glb',
     height: 3.0,
     clips: mixamoClips(),
-    // keep authored obsidian/amber materials — no faction tint
+    // keep authored obsidian/amber materials - no faction tint
     tintStrength: 0,
   },
   mob_boar: {
@@ -748,7 +748,7 @@ export const VISUALS: Record<string, VisualDef> = {
     tint: 'entity',
     tintStrength: 0.4,
   },
-  // Quaternius animal rig (shares clip names with wolf) — fox/deer/critters that
+  // Quaternius animal rig (shares clip names with wolf) - fox/deer/critters that
   // would otherwise fall back to mob_wolf via FAMILY_KEYS['beast'].
   mob_fox: {
     url: `${CREATURES}/fox.glb`,
@@ -857,7 +857,7 @@ export const VISUALS: Record<string, VisualDef> = {
   mob_troll: {
     url: `${CREATURES}/orc.glb`,
     height: 2.4,
-    // faint wash only — 0.35 flooded every material with the template green
+    // faint wash only - 0.35 flooded every material with the template green
     clips: BIPED14,
     tint: 'entity',
     tintStrength: 0.12,
@@ -888,7 +888,7 @@ export const VISUALS: Record<string, VisualDef> = {
     url: `${CREATURES}/dragonevolved.glb`,
     height: 2.4,
     hover: 0.25,
-    // light tint only — heavy washes crush the wyrm to black under the green
+    // light tint only - heavy washes crush the wyrm to black under the green
     // sanctum torchlight
     clips: FLOATING,
     tint: 'entity',
@@ -920,7 +920,7 @@ export const VISUALS: Record<string, VisualDef> = {
     tint: 'entity',
     tintStrength: 0.15,
   },
-  // warlock demon pets (emberkin/gloomshade) — one biped rig, the entity colour and
+  // warlock demon pets (emberkin/gloomshade) - one biped rig, the entity colour and
   // the mob template's scale tell the little orange emberkin from the bulky gloomshade
   mob_demon: {
     url: `${CREATURES}/demonalt.glb`,
@@ -1062,7 +1062,7 @@ export const VISUALS: Record<string, VisualDef> = {
       { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.r' },
       { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.l' },
     ],
-    // fixed outlaw leather — entity tints (faction greens) read as friendly
+    // fixed outlaw leather - entity tints (faction greens) read as friendly
     // villagers; the dark red-brown keeps the hooded silhouette hostile
     tint: 0x6b3a32,
     tintStrength: 0.3,
@@ -1104,7 +1104,7 @@ export const VISUALS: Record<string, VisualDef> = {
     tintStrength: 0.3, // brown-robed brothers of the chapel
   },
   // Brother Aldric keeps his pre-v0.7 model (the old chars/mage.glb, restored as
-  // mage_classic.glb with the staff built into the mesh). Aldric-only — every
+  // mage_classic.glb with the staff built into the mesh). Aldric-only - every
   // other npc_mage uses the new KayKit full-pack model from #396.
   npc_aldric: {
     url: `${PLAYERS}/mage_classic.glb`,
@@ -1436,7 +1436,7 @@ export function visualKeyFor(e: Entity): string {
     const family = MOBS[e.templateId]?.family;
     return (family && FAMILY_KEYS[family]) || 'mob_bandit';
   }
-  // npcs — Brother Aldric recurs in every hub under suffixed ids
+  // npcs - Brother Aldric recurs in every hub under suffixed ids
   if (e.templateId.startsWith('brother_aldric')) return 'npc_aldric';
   return NPC_KEYS[e.templateId] ?? 'npc_villager';
 }

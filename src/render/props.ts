@@ -15,11 +15,11 @@ import { registerPreload } from './assets/preload';
 import { GFX, sharedUniforms, surfaceMat } from './gfx';
 
 // Static world props: buildings, tents, campfires, mines, ruins, docks,
-// fences, graveyards — all real CC0 glTF assets (Quaternius medieval village +
+// fences, graveyards - all real CC0 glTF assets (Quaternius medieval village +
 // fantasy props, Kenney nature/pirate/graveyard/fantasy-town kits).
 //
 // Placement comes from the per-zone content modules (merged into PROPS by
-// sim/data.ts) — the collider grid uses the same defs, so positions/footprints
+// sim/data.ts) - the collider grid uses the same defs, so positions/footprints
 // must not move. Each asset is scaled so its VISUAL footprint matches the
 // analytic collider footprint (building w×d with the door on local +z, tent
 // r=1.5*scale, crate 0.65, campfire 0.85, mud hut 1.1, ruin column 0.6, ...).
@@ -54,7 +54,7 @@ export interface PropsResult {
 const MERGE_BAND_DEPTH = GFX.standardMaterials ? 180 : 90;
 
 // ---------------------------------------------------------------------------
-// Asset registry — loads kick off at module import; main.ts awaits
+// Asset registry - loads kick off at module import; main.ts awaits
 // assetsReady() before the Renderer is constructed, so buildProps() can read
 // the resolved GLTFs synchronously.
 // ---------------------------------------------------------------------------
@@ -67,7 +67,7 @@ interface PropAssetDef {
   yaw?: number;
   /** drop parts whose material name matches (e.g. the market cart's awning) */
   strip?: RegExp;
-  /** explicit base color (hex) — overrides MAT_OVERRIDES + GLB color. Used to
+  /** explicit base color (hex) - overrides MAT_OVERRIDES + GLB color. Used to
    *  tint single-material CAD props (one mesh, material name 'o1') with a
    *  delightful per-building palette the geometry can't express on its own. */
   color?: number;
@@ -247,7 +247,7 @@ const MAT_OVERRIDES: Record<
   // murloc huts: a giant mushroom recolored to read as a woven thatch dome
   'shroom:colorRed': { color: 0xb29459 },
   'shroom:_defaultMat': { color: 0xc9b896 },
-  // mine mound: Kenney nature rocks are beige dirt + teal grass — regrade to
+  // mine mound: Kenney nature rocks are beige dirt + teal grass - regrade to
   // granite with a dull moss cap so the pile reads as blasted rock
   'minerock:dirt': { color: 0x82868a },
   'minerock:grass': { color: 0x77846a },
@@ -258,7 +258,7 @@ const MAT_OVERRIDES: Record<
 
 // ---------------------------------------------------------------------------
 // Extraction: GLTF scene -> world-baked float-attribute geometry + converted
-// shared materials. Geometries are CLONES — the cached GLTF stays pristine
+// shared materials. Geometries are CLONES - the cached GLTF stays pristine
 // for any other consumer, and the static merge may freely dispose ours.
 // ---------------------------------------------------------------------------
 
@@ -274,7 +274,7 @@ interface PropAsset {
 const extractCache = new Map<string, PropAsset>();
 const matConvCache = new Map<string, THREE.Material>();
 
-/** denormalized float copy — meshopt/quantized attrs must not be transformed in place */
+/** denormalized float copy - meshopt/quantized attrs must not be transformed in place */
 function toFloatAttr(
   attr: THREE.BufferAttribute | THREE.InterleavedBufferAttribute,
   itemSize: number,
@@ -298,7 +298,7 @@ function convertMaterial(
   const s = src as THREE.MeshStandardMaterial; // basic (unlit) shares the fields we read
   const ov = MAT_OVERRIDES[`${kit}:${s.name}`] ?? MAT_OVERRIDES[s.name];
   // hasVertexColors must key the cache: kits share material names between
-  // COLOR_0 meshes (trim 'Vertex' props) and colorless ones — a shared
+  // COLOR_0 meshes (trim 'Vertex' props) and colorless ones - a shared
   // vertexColors:true material would render the colorless meshes black
   const key = `${kit}|${s.name}|${explicitColor ?? ''}|${explicitTexture ? 't' : ''}|${s.color?.getHexString() ?? ''}|${s.map ? 'm' : ''}|${hasVertexColors ? 'v' : ''}|${GFX.standardMaterials ? 's' : 'l'}`;
   const cached = matConvCache.get(key);
@@ -460,7 +460,7 @@ export function buildPropMaterialPrewarmGroup(): THREE.Group {
 }
 
 // ---------------------------------------------------------------------------
-// deterministic per-prop rand streams (no native random — placement is shared
+// deterministic per-prop rand streams (no native random - placement is shared
 // with colliders/tests via the world seed)
 // ---------------------------------------------------------------------------
 
@@ -740,7 +740,7 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
     hideables.push({ group: g, mats: [...matMap.values()], hidden: false, ...fp });
   }
 
-  // live small materials (decals / glow) — shared, never per-instance
+  // live small materials (decals / glow) - shared, never per-instance
   const usePbr = GFX.standardMaterials;
   const lowProps = !usePbr;
   const recessMat = surfaceMat({ color: 0x14100b, roughness: 1 });
@@ -1211,7 +1211,7 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
     g.position.set(m.x, ground(m.x, m.z), m.z);
     g.rotation.y = m.rot;
     group.add(shadowed(g));
-    // mound circle behind the portal — same offset/radius as the collider
+    // mound circle behind the portal - same offset/radius as the collider
     const mx = m.x - 3.4 * Math.sin(m.rot),
       mz = m.z - 3.4 * Math.cos(m.rot);
     registerHideable(g, circleFootprint(mx, mz, 5, ground(mx, mz) + 5.2));
@@ -1278,7 +1278,7 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
     g.position.set(d.x, y, d.z);
     g.rotation.y = d.rot;
     group.add(shadowed(g));
-    // stone hut OBB — same offset/extents/rotation as the collider
+    // stone hut OBB - same offset/extents/rotation as the collider
     const hc = Math.cos(d.rot),
       hs = Math.sin(d.rot);
     const hx = d.x + d.hutLocal.x * hc + d.hutLocal.z * hs;

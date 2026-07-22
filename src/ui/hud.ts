@@ -516,7 +516,7 @@ export interface OptionsHooks {
     set(enabled: boolean): Promise<boolean>;
   };
   perfOverlay: PerfOverlayHooks;
-  // UI theming seam — main.ts owns the ThemeStore + live CSS-variable apply.
+  // UI theming seam - main.ts owns the ThemeStore + live CSS-variable apply.
   theme: ThemeHooks;
   // Gamepad button-layout seam (the concrete GamepadBindings satisfies it
   // structurally), so the Controller options panel can read & rebind buttons
@@ -998,7 +998,7 @@ export class Hud {
   private emoteWheelPinned = false;
   private chatLogEl = $('#chatlog');
   private lastVoicedYell: VoicedYellState | null = null;
-  // Classic "Show Timestamps" interface option — off by default, persisted to
+  // Classic "Show Timestamps" interface option - off by default, persisted to
   // localStorage. New chat lines get a bracketed wall-clock prefix when on.
   private chatTimestamps = localStorage.getItem('chatTimestamps') === '1';
   private chatClock: ChatClock = clampChatClock(localStorage.getItem('chatClock'));
@@ -1747,7 +1747,7 @@ export class Hud {
     // classic-style minimap clock: real local time under the minimap; click it to
     // flip between 12-hour (AM/PM) and 24-hour display. Real-time clocks are a
     // UI-only concern, so `new Date()` here is fine (the sim-only time ban
-    // doesn't apply — cf. meters.ts using performance.now()).
+    // doesn't apply - cf. meters.ts using performance.now()).
     this.clockEl = $('#minimap-clock');
     // raid-lockout badge on the minimap rim: a lock icon whose hover/tap panel
     // lists the player's raid lockouts (the unlock countdown). Always visible;
@@ -2109,7 +2109,7 @@ export class Hud {
     });
     const musicBtn = $('#mm-music');
     const styleMusicBtn = () => {
-      // keep the note clearly readable when off (a plain tan, not gold) — the
+      // keep the note clearly readable when off (a plain tan, not gold) - the
       // slash, not dimming, signals "muted"
       musicBtn.style.color = music.enabled ? 'var(--gold)' : '#cdbd8e';
       musicBtn.classList.toggle('mm-muted', !music.enabled);
@@ -2873,7 +2873,7 @@ export class Hud {
     return t(`hudChrome.emotes.${id}` as TranslationKey);
   }
 
-  /** Tap-to-toggle the pinned emote wheel — used by the menu-bar and on-screen
+  /** Tap-to-toggle the pinned emote wheel - used by the menu-bar and on-screen
    *  touch Emote buttons (touch has no key to hold, so the wheel stays pinned
    *  until a slice or the outside is tapped). */
   toggleEmoteWheel(): void {
@@ -5432,7 +5432,7 @@ export class Hud {
       btn.append(label, countEl, kb, cdOverlay, cdText);
       const slot = i;
       btn.dataset.hotbarSlot = String(slot);
-      // slot 0 is Attack for every class (auto-attack toggle — players
+      // slot 0 is Attack for every class (auto-attack toggle - players
       // without right-click need a way in); the kit fills slots 1+
       this.bindEmpoweredActionHold(btn, () => slot);
       btn.addEventListener('click', () => {
@@ -5442,7 +5442,7 @@ export class Hud {
           return;
         }
         // On touch, the click that ends a long-press peek inspects the slot
-        // (tooltip already shown) instead of casting — release dismisses it.
+        // (tooltip already shown) instead of casting - release dismisses it.
         if (this.peekGuard.consume()) {
           this.hideTooltip();
           btn.blur();
@@ -8157,7 +8157,7 @@ export class Hud {
   // -------------------------------------------------------------------------
 
   // Prune spatial-audio state for entities that left interest without a clean
-  // death/castStop (online interest churn, leash, despawn) — stops orphaned cast
+  // death/castStop (online interest churn, leash, despawn) - stops orphaned cast
   // loops and frees the aggro Set. Throttled (~10 Hz) from update().
   private reconcileSfx(): void {
     const sim = this.sim;
@@ -8210,7 +8210,7 @@ export class Hud {
     }
   }
 
-  // Spatial sound for a sim event — positioned at the relevant entity so nearby
+  // Spatial sound for a sim event - positioned at the relevant entity so nearby
   // players' and creatures' combat attenuates with distance and pans correctly.
   // Personal/UI sounds stay on the sampled audio.* facade in handleEvents.
   // All combat/spell/creature SFX route through here so the whole layer can be
@@ -8266,7 +8266,7 @@ export class Hud {
         }
         if (ev.crit && shouldPlayCritSfxForTarget(tgt))
           this.combat('combat_crit', tp.x, tp.y, tp.z, 1.0);
-        // pain vocalization only on a crit — never on ordinary hits.
+        // pain vocalization only on a crit - never on ordinary hits.
         if (ev.crit && ev.targetId === sim.playerId) {
           this.combat('player_hurt', tp.x, tp.y, tp.z, 1.0, { cooldown: 0.3 });
         } else {
@@ -8363,7 +8363,7 @@ export class Hud {
   }
 
   // First contact with a mob (it hits you, or you hit it) plays its aggro alert
-  // once — the "engage" sound. Returns true if this call fired it. Cleared on
+  // once - the "engage" sound. Returns true if this call fired it. Cleared on
   // death / when the mob leaves interest (reconcileSfx).
   private ensureMobEngaged(mob: Entity): boolean {
     if (this.mobAggroed.has(mob.id)) return false;
@@ -8457,7 +8457,7 @@ export class Hud {
           if (dx * dx + dz * dz > VCUP_THEATRE_RADIUS * VCUP_THEATRE_RADIUS) continue;
         }
       }
-      // visual effects (swings, projectiles, glows) — for everyone nearby,
+      // visual effects (swings, projectiles, glows) - for everyone nearby,
       // not just events involving this player
       this.renderer.handleEvent(ev);
       this.playEventSfx(ev); // positional sound for nearby combat/creatures
@@ -8519,7 +8519,7 @@ export class Hud {
                 },
                 now,
               );
-            // Fiesta: a dodge is a moment — pop a big exaggerated word for it.
+            // Fiesta: a dodge is a moment - pop a big exaggerated word for it.
             if (ev.kind === 'dodge' && (isPlayerSource || isPlayerTarget) && this.inFiesta()) {
               this.fiestaWordPop(t('fiesta.word.dodge'), '#7fd4ff', 1);
               this.renderer.addShake(0.15);
@@ -8684,7 +8684,7 @@ export class Hud {
               characterId ? { eventID: `lvl5_${characterId}` } : undefined,
             );
           }
-          // First talent point (and spec) unlock — nudge the player to the panel.
+          // First talent point (and spec) unlock - nudge the player to the panel.
           if (ev.level === FIRST_TALENT_LEVEL && talentsFor(this.sim.cfg.playerClass)) {
             this.showBanner(t('game.talents.unlockBanner'));
             this.log(t('game.talents.unlockHint'), '#ffd100');
@@ -8692,7 +8692,7 @@ export class Hud {
           break;
         }
         case 'virtualLevelUp': {
-          // cosmetic post-cap "level up" — reuses the levelup banner + sound
+          // cosmetic post-cap "level up" - reuses the levelup banner + sound
           this.showBanner(
             `${t('game.progression.virtualLevelUp')} ${formatNumber(ev.level, { maximumFractionDigits: 0 })}!`,
           );
@@ -9148,7 +9148,7 @@ export class Hud {
             const bubble = ev.channel === 'emote' ? `${ev.from} ${masked}` : masked;
             this.renderer.showChatBubble(ev.entityId, bubble, ev.channel === 'yell');
           }
-          // Voiced encounter dialogue (boss/NPC yells) — no-op unless a clip was
+          // Voiced encounter dialogue (boss/NPC yells) - no-op unless a clip was
           // generated for this exact line (scripts/voices/extra_lines.mjs).
           if (ev.channel === 'yell') {
             const voiced = nextVoicedYell(
@@ -9959,7 +9959,7 @@ export class Hud {
   }
 
   // Prepend a dim bracketed wall-clock prefix to a chat line when the "Show
-  // Timestamps" option is on. No-op otherwise. Wall-clock time is fine here —
+  // Timestamps" option is on. No-op otherwise. Wall-clock time is fine here -
   // the determinism ban is sim-only.
   private prependTimestamp(div: HTMLElement): void {
     if (!this.chatTimestamps) return;
@@ -10639,7 +10639,7 @@ export class Hud {
   }
 
   // -------------------------------------------------------------------------
-  // 2v2 Fiesta HUD — live score, respawn timer, augment picks, word pops.
+  // 2v2 Fiesta HUD - live score, respawn timer, augment picks, word pops.
   // Everything here is driven by the per-frame snapshot (arenaInfo.match.fiesta)
   // so it self-heals on reconnect; one-shot juice (word pops, shake, audio)
   // rides the SimEvents handled in handleEvents().
@@ -11006,7 +11006,7 @@ export class Hud {
     this.hideTooltip();
   }
   // -------------------------------------------------------------------------
-  // The World Market — the Merchant's auction house
+  // The World Market - the Merchant's auction house
   // -------------------------------------------------------------------------
 
   openMarket(): void {
@@ -11179,7 +11179,7 @@ export class Hud {
   // Bags
   // -------------------------------------------------------------------------
 
-  // True when the player has at least one edible food stack — mirrors the
+  // True when the player has at least one edible food stack - mirrors the
   // food check in Sim.feedPet so the pet-feed flow never starts when it can't
   // possibly complete.
   private hasPetFood(): boolean {
@@ -11399,8 +11399,8 @@ export class Hud {
   }
 
   // The "Progression" group on the character sheet: total XP, virtual level,
-  // prestige rank (when prestiged), unlocked milestone badges, and — at the cap
-  // — the opt-in Prestige button.
+  // prestige rank (when prestiged), unlocked milestone badges, and - at the cap
+  // - the opt-in Prestige button.
   private progressionHtml(level: number): string {
     const sim = this.sim;
     const vlevel = virtualLevel(sim.lifetimeXp);
@@ -11435,7 +11435,7 @@ export class Hud {
     } <button type="button" class="btn cp-deeds-btn" data-act="open-deeds">${t('hudChrome.deeds.charOpenBook')}</button></div>`;
     if (level >= MAX_LEVEL) {
       // The button reflects the server's authoritative prestige gate (post-cap
-      // XP earned). It's disabled — and the requirement shown — until eligible;
+      // XP earned). It's disabled - and the requirement shown - until eligible;
       // the server re-checks regardless, so a forged click does nothing.
       const ready = canPrestige(level, sim.lifetimeXp, sim.prestigeRank);
       html += `<div class="cp-actions"><button class="btn" data-act="prestige"${ready ? '' : ' disabled'}>${t('game.prestige.action')}${sim.prestigeRank > 0 ? ` (★ ${sim.prestigeRank})` : ''}</button>`;
@@ -11556,7 +11556,7 @@ export class Hud {
     });
   }
 
-  // In-app text-input modal (reuses the confirm-dialog chrome) — replaces native
+  // In-app text-input modal (reuses the confirm-dialog chrome) - replaces native
   // window.prompt for build name / import / export. `readOnly` + `copy` powers
   // the export view (selectable string + Copy button).
   private inputDialog(opts: {
@@ -12320,7 +12320,7 @@ export class Hud {
   }
 
   /** Inspect another player: a profile window with their portrait, name, level
-   *  and class — rendered locally from their entity's class + skin. */
+   *  and class - rendered locally from their entity's class + skin. */
   /**
    * The out-of-range Player Info card: the same #inspect-window, painted from the
    * public character sheet. Deliberately thinner than openInspect: no worn gear,
@@ -12830,7 +12830,7 @@ export class Hud {
       'choose a report reason': 'hud.report.chooseReason',
       'invalid report target': 'hud.report.invalidTarget',
       // Server (server/report_target.ts) emits these lowercase and without a
-      // trailing period — keys MUST match those exact bytes or they fall through
+      // trailing period - keys MUST match those exact bytes or they fall through
       // to the generic hud.report.failed in every locale.
       'that player is no longer online': 'hud.report.targetOffline',
       'that player could not be found': 'hud.report.targetMissing',

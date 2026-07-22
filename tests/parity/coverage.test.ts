@@ -451,7 +451,7 @@ describe('coverage: each scenario fires its subsystem', () => {
     // checkQuestReady's promotion arm.
     expect(ev.some((e) => e.type === 'questReady' && e.questId === 'q_boars')).toBe(true);
     // The demotion arm fired at least once (a 'questProgress' below target after a
-    // 'questReady') — the dropped hide and the turn-in removal both demote ready -> active.
+    // 'questReady') - the dropped hide and the turn-in removal both demote ready -> active.
     const readyIdx = ev.findIndex((e) => e.type === 'questReady' && e.questId === 'q_boars');
     expect(
       ev.slice(readyIdx + 1).some((e) => e.type === 'questProgress' && e.questId === 'q_boars'),

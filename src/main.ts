@@ -5536,7 +5536,7 @@ async function loadProjectStats(): Promise<void> {
     if (cached) {
       setAll(accountEls, String(cached.accounts_created));
     } else {
-      setAll(accountEls, '–');
+      setAll(accountEls, '-');
     }
   }
 }

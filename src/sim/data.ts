@@ -1,5 +1,5 @@
-// Content merge layer. Actual game content lives in sim/content/* — one
-// module per zone plus classes (abilities), shared items, and dungeons —
+// Content merge layer. Actual game content lives in sim/content/* - one
+// module per zone plus classes (abilities), shared items, and dungeons -
 // so content can grow without everything colliding in one file. This module
 // merges those records into the flat tables the rest of the engine consumes,
 // and owns the world-layout constants.
@@ -318,7 +318,7 @@ export const REWARD_ARCHETYPE: Record<PlayerClass, PlayerClass> = {
 
 // Resolve the item a quest awards a given class: a class-specific reward if the
 // quest lists one, else the reward for the class's archetype (rewards are
-// authored per archetype — warrior/rogue/mage). The dialog preview and the
+// authored per archetype - warrior/rogue/mage). The dialog preview and the
 // turn-in grant MUST both call this so what the player is shown matches what
 // they receive. Returns undefined when the quest has no item reward.
 export function questRewardItem(quest: QuestDef, cls: PlayerClass): string | undefined {
@@ -403,13 +403,13 @@ export function zoneWelcomeText(
   return zone.welcome;
 }
 
-// Legacy single-zone exports (zone 1) — still referenced by tests and the
+// Legacy single-zone exports (zone 1) - still referenced by tests and the
 // starter-town logic.
 export { DEEPFEN_SHALLOWS_LAKE, GRAVEYARD_POS, LAKE, TOWN_RADIUS };
 export const ZONE_NAME = ZONE1_ZONE.name;
 
 // ---------------------------------------------------------------------------
-// Dungeons — private party instances at far-off flat origins (see
+// Dungeons - private party instances at far-off flat origins (see
 // world.groundHeight). Each dungeon gets its own x-band of instance origins;
 // slots stack along z.
 // ---------------------------------------------------------------------------
@@ -441,7 +441,7 @@ export function dungeonAt(x: number): DungeonDef | null {
 }
 
 // ---------------------------------------------------------------------------
-// The Ashen Coliseum — 1v1 ranked arena. Its match instances live in their own
+// The Ashen Coliseum - 1v1 ranked arena. Its match instances live in their own
 // far-off flat-ground x-band, well past the dungeon bands (index 0/1/2 sit at
 // x 900/1500/2100). Like dungeons, x beyond DUNGEON_X_THRESHOLD means flat
 // ground (world.groundHeight) and instance-local collision (sim/colliders.ts);
