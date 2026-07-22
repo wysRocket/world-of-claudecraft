@@ -1522,7 +1522,7 @@ describe('chat moderation', () => {
     );
   });
 
-  it('leaves soft (cosmetic) words untouched server-side — clients mask them', () => {
+  it('leaves soft (cosmetic) words untouched server-side - clients mask them', () => {
     const server = new GameServer();
     server.chatFilter.load({
       soft: ['darn'],
@@ -2038,7 +2038,7 @@ describe('despawn grace (anti-flicker)', () => {
     (c as any).applySnapshot(snap(self(), [])); // briefly missing
     clock += 50;
     (c as any).applySnapshot(snap(self(), [fullWire(2, 96, 0)])); // back
-    // Same entity object retained the whole time — the renderer never tore down
+    // Same entity object retained the whole time - the renderer never tore down
     // and rebuilt its view, so no visible flash.
     expect(ent2.get(2)).toBe(created);
 
@@ -2056,7 +2056,7 @@ describe('despawn grace (anti-flicker)', () => {
     (c as any).applySnapshot(snap(self(), [fullWire(2, 95, 0)]));
     expect(c.entities.has(2)).toBe(true);
 
-    // First a genuine omission so the grace timer is actually armed — without
+    // First a genuine omission so the grace timer is actually armed - without
     // this the `missingSince.has(2)` assertion below would be trivially false
     // and never exercise the keep-clears-timer path.
     clock += 50;
@@ -2065,7 +2065,7 @@ describe('despawn grace (anti-flicker)', () => {
     expect((c as any).missingSince.has(2)).toBe(true);
 
     // Now a distance-tier-throttled snapshot omits it from `ents` but lists it
-    // in `keep`, so it counts as seen — retained, and the armed grace timer is
+    // in `keep`, so it counts as seen - retained, and the armed grace timer is
     // cleared.
     clock += 50;
     (c as any).applySnapshot(snap(self(), [], [2]));
@@ -2087,7 +2087,7 @@ describe('despawn grace (anti-flicker)', () => {
     expect(c.entities.has(2)).toBe(true);
 
     // A nearby enemy going stealth stops being observable and is omitted. It
-    // must vanish at once — no grace for close-range disappearances.
+    // must vanish at once - no grace for close-range disappearances.
     clock += 50;
     (c as any).applySnapshot(snap(self(), []));
     expect(c.entities.has(2)).toBe(false);

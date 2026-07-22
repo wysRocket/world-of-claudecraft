@@ -95,7 +95,7 @@ try {
 
   await new Promise((r) => setTimeout(r, 120));
   await page.screenshot({ path: `${OUT}/warcry-scene.png` });
-  console.log('saved warcry-scene.png (full scene — the buffed murloc school)');
+  console.log('saved warcry-scene.png (full scene - the buffed murloc school)');
 
   await page.screenshot({ path: `${OUT}/warcry-actors.png`, clip: { x: 420, y: 90, width: 470, height: 360 } });
   console.log('saved warcry-actors.png (close-up on the school)');

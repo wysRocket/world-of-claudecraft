@@ -59,7 +59,7 @@ class FakeAudioContext {
   resume = vi.fn(async () => undefined);
 }
 
-describe('MusicDirector — combat / background mix', () => {
+describe('MusicDirector - combat / background mix', () => {
   let director: MusicDirector;
 
   beforeEach(() => {

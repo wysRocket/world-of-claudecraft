@@ -71,7 +71,7 @@ describe('mob soulrot (on-hit shadow DoT)', () => {
     // Park the mob far out of melee so only the DoT (not swings) chips the player.
     mob.pos = { x: player.pos.x + 500, y: player.pos.y, z: player.pos.z };
     const before = player.hp;
-    for (let i = 0; i < 20 * 7; i++) sim.tick(); // 7s — covers at least two 3s tick intervals
+    for (let i = 0; i < 20 * 7; i++) sim.tick(); // 7s - covers at least two 3s tick intervals
     expect(player.hp).toBeLessThan(before);
   });
 

@@ -80,7 +80,7 @@ describe('appearance skin selection', () => {
       'for (const url of SKINS.player_mech ?? []) if (url) jobs.push(loadSkinTexInto(url, skinTexByUrl));',
     );
     expect(characterAssetsSource).toContain('if (!GFX.standardMaterials) return skinsReady;');
-    expect(characterAssetsSource).not.toContain('Standard tier only — low tier aliases');
+    expect(characterAssetsSource).not.toContain('Standard tier only - low tier aliases');
     expect(characterAssetsSource).not.toContain(
       'if (GFX.standardMaterials) {\n  // Boot sweep skips lazyPreload keys',
     );

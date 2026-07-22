@@ -51,13 +51,13 @@ async function shot(name, { phone = false } = {}) {
   console.log(`✓ landing-highcontrast.png (aria-pressed=${pressed}, backdrop-static=${isStatic})`);
 }
 
-// 3. Phone (poster only — mp4 must NOT be fetched)
+// 3. Phone (poster only - mp4 must NOT be fetched)
 {
   const { page, mp4 } = await shot('phone', { phone: true });
   const isStatic = await page.$eval('#start-screen-backdrop', (b) => b.classList.contains('backdrop-static'));
   await page.screenshot({ path: `${OUT}/landing-phone.png` });
   await page.close();
-  console.log(`✓ landing-phone.png (backdrop-static=${isStatic}, mp4 requests=${mp4.length} — expect 0)`);
+  console.log(`✓ landing-phone.png (backdrop-static=${isStatic}, mp4 requests=${mp4.length} - expect 0)`);
 }
 
 await browser.close();

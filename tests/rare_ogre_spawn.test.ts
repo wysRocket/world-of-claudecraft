@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
 import { MOBS, ITEMS, CAMPS } from '../src/sim/data';
 
-// Brutok Skullsmasher — the ogre family's rare elite in Thornpeak Heights,
+// Brutok Skullsmasher - the ogre family's rare elite in Thornpeak Heights,
 // filling the ogre rare gap (ogres previously had only the Crusher elite and
 // the Drogmar boss). These tests pin the content contract (a tougher named
 // mob with a guaranteed quality drop and a mutually-exclusive rare chase

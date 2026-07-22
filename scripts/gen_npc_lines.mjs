@@ -22,7 +22,7 @@ import { voiceIdFor } from './voices/npc_voice_prompts.mjs';
 import { EXTRA_LINES } from './voices/extra_lines.mjs';
 
 const API = 'https://api.elevenlabs.io';
-const TTS_MODEL = 'eleven_multilingual_v2'; // quality model — generation is one-time
+const TTS_MODEL = 'eleven_multilingual_v2'; // quality model - generation is one-time
 const OUTPUT_FORMAT = 'mp3_44100_128';
 const root = process.cwd();
 const idsPath = path.join(root, 'scripts/voices/voice_ids.json');
@@ -36,7 +36,7 @@ const force = process.argv.includes('--force');
 const onlyIdx = process.argv.indexOf('--only');
 const only = onlyIdx >= 0 ? process.argv[onlyIdx + 1] : null;
 
-try { process.loadEnvFile(); } catch { /* no .env — rely on the ambient env */ }
+try { process.loadEnvFile(); } catch { /* no .env - rely on the ambient env */ }
 const KEY = process.env.ELEVENLABS_API_KEY;
 if (!KEY) {
   console.error('ELEVENLABS_API_KEY is not set (env or .env). Aborting.');
@@ -44,7 +44,7 @@ if (!KEY) {
 }
 
 if (!existsSync(idsPath)) {
-  console.error(`Missing ${path.relative(root, idsPath)} — run gen_npc_voices.mjs first.`);
+  console.error(`Missing ${path.relative(root, idsPath)} - run gen_npc_voices.mjs first.`);
   process.exit(1);
 }
 const ids = JSON.parse(readFileSync(idsPath, 'utf8'));
@@ -70,7 +70,7 @@ async function loadContent() {
   return import(dataUrl);
 }
 
-// Player-specific tokens can't be baked into a recording — neutralize them so the
+// Player-specific tokens can't be baked into a recording - neutralize them so the
 // voiced line reads naturally for everyone. ($N name, $C class, $d damage; mirrors
 // the runtime expansion in src/ui/entity_i18n.ts.)
 function spoken(text) {
@@ -131,7 +131,7 @@ for (const line of lines) {
   const voiceId = ids[line.voiceNpc];
   if (!voiceId) {
     missingVoice.add(line.voiceNpc);
-    console.warn(`no voice for ${line.voiceNpc} — skipping ${line.key}`);
+    console.warn(`no voice for ${line.voiceNpc} - skipping ${line.key}`);
     continue;
   }
   const dest = diskPathFor(line);

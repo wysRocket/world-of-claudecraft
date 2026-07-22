@@ -63,7 +63,7 @@ const result = await page.evaluate(async () => {
   mob.pos.x = p.pos.x + 3; mob.pos.z = p.pos.z; mob.pos.y = p.pos.y;
   const intBefore = p.stats.int, maxManaBefore = p.maxResource;
   // The data table chance is 0.3; swing repeatedly until the curse lands (most
-  // swings land — the L20 mage rarely misses being hit by a L17 mob).
+  // swings land - the L20 mage rarely misses being hit by a L17 mob).
   let cursed = false;
   for (let i = 0; i < 200 && !cursed; i++) {
     p.hp = p.maxHp; // never let the swing kill us
@@ -78,7 +78,7 @@ const result = await page.evaluate(async () => {
 });
 
 if (!result.ok) {
-  // The data table chance is 0.3 — swing many more times to guarantee a proc.
+  // The data table chance is 0.3 - swing many more times to guarantee a proc.
   await page.evaluate(() => {
     const sim = window.__game.sim, p = sim.player;
     let mob = null, best = 1e9;

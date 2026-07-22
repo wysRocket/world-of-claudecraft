@@ -2,7 +2,7 @@
 // An entity wandering across the server's interest-scope boundary (~95yd, the
 // server adds at 90 and drops at 100) repeatedly falls out of and back into the
 // snapshot. The OLD client deleted it the instant it was missing, so the
-// renderer tore down and rebuilt its rig a frame later — visible flicker. The
+// renderer tore down and rebuilt its rig a frame later - visible flicker. The
 // NEW client holds a briefly-missing far entity for a short grace window, so the
 // short gaps are bridged and the character stays put.
 //
@@ -22,7 +22,7 @@ const GRACE_MS = 600;          // client despawn grace window (the fix)
 
 // Distance of an entity moving briskly near the boundary (circling/strafing or
 // a charge), dipping out past the drop radius and back inside the add radius
-// within a second — the fast-crossing case the grace window is meant to bridge.
+// within a second - the fast-crossing case the grace window is meant to bridge.
 const dist = (i) => 95 + 17 * Math.sin(i * 0.55);
 
 // Server-side: with add/drop hysteresis, is the entity in this snapshot?
@@ -86,8 +86,8 @@ await page.evaluate((data) => {
     }
     ctx.strokeStyle = '#000'; ctx.strokeRect(x0, y, w, h);
   };
-  row(110, 'BEFORE', oldPresent, `${oldFlips} flips — flicker`);
-  row(220, 'AFTER',  newPresent, `${newFlips} flip — steady`);
+  row(110, 'BEFORE', oldPresent, `${oldFlips} flips - flicker`);
+  row(220, 'AFTER',  newPresent, `${newFlips} flip - steady`);
 
   ctx.fillStyle = '#7c828b'; ctx.font = '12px sans-serif';
   ctx.fillText('server snapshot →', x0, 300);

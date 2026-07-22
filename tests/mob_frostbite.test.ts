@@ -91,7 +91,7 @@ describe('mob frostbite (on-hit frost DoT)', () => {
     const sim = makeSim();
     const player = sim.entities.get(sim.playerId)!;
     // Shardlord Kazzix is a level-18 elite; god-mode the dummy so the barrage of forced
-    // swings can't kill it (death clears all auras). A raw maxHp bump won't do — the tick's
+    // swings can't kill it (death clears all auras). A raw maxHp bump won't do - the tick's
     // recalcPlayerStats re-derives maxHp from stamina and wipes it; gm survives + still takes auras.
     (player as any).gm = true;
     const mob = spawnShardlord(sim);

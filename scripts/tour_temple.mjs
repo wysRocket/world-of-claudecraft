@@ -131,7 +131,7 @@ const boss = await page.evaluate(() => {
 });
 console.log('Ysolei present:', JSON.stringify(boss), boss ? 'OK' : 'FAIL');
 
-// 7) the world map — the moongate + Glimmermere now sit on the Thornpeak map
+// 7) the world map - the moongate + Glimmermere now sit on the Thornpeak map
 await page.evaluate(() => window.__game.sim.leaveDungeon());
 await sleep(500);
 await tp(-70, 770, 0);

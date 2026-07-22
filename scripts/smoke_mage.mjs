@@ -72,7 +72,7 @@ for (let i = 0; i < 50; i++) {
 }
 console.log('mage killed wolf at range:', killed ? 'OK' : 'FAIL');
 
-// polymorph another wolf (retry until the cast actually starts — GCD-safe)
+// polymorph another wolf (retry until the cast actually starts - GCD-safe)
 const poly = await page.evaluate(() => {
   const g = window.__game;
   const sim = g.sim;

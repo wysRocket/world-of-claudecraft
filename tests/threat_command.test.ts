@@ -1,5 +1,5 @@
 // /threat (alias /aggro) is a self-only readout of the threat table on the
-// player's current target — highest first, as a percentage of the threat
+// player's current target - highest first, as a percentage of the threat
 // leader. It reads live state only, emits an `error`-typed line shown only to
 // the caller, and returns null so nothing is broadcast or logged.
 import { describe, expect, it } from 'vitest';

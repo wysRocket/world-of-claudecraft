@@ -86,7 +86,7 @@ describe('duel: non-lethal cleanup', () => {
     // Run a few seconds so the leftover bleed ticks several times.
     for (let i = 0; i < 20 * 3; i++) sim.tick();
 
-    // The duel was non-lethal — the opponent's leftover DoT must not have
+    // The duel was non-lethal - the opponent's leftover DoT must not have
     // killed Bet for real after the bout ended.
     expect(eb.dead).toBe(false);
     expect(eb.hp).toBeGreaterThanOrEqual(1);

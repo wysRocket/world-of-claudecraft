@@ -1,8 +1,8 @@
 // Visual capture for the MMO-themed native form controls.
 // Boots the game offline and screenshots:
-//   1. Options > Interface — themed range sliders + closed language dropdown
+//   1. Options > Interface - themed range sliders + closed language dropdown
 //   2. the language dropdown OPEN (gold listbox replacing the native <select> menu)
-//   3. the report dialog — themed textarea resize grip + custom reason dropdown
+//   3. the report dialog - themed textarea resize grip + custom reason dropdown
 // Saves to docs/pr-assets/mmo-controls/.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
@@ -24,7 +24,7 @@ page.on('pageerror', (e) => console.log('PAGEERROR:', e.message));
 page.on('console', (m) => { if (m.type() === 'error') console.log('CONSOLE.error:', m.text()); });
 
 await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
-// #btn-offline is a hidden (aria-hidden, off-screen) compat trigger — drive it via evaluate.
+// #btn-offline is a hidden (aria-hidden, off-screen) compat trigger - drive it via evaluate.
 await page.evaluate(() => document.querySelector('#btn-offline')?.click());
 await sleep(400);
 await page.type('#char-name', 'Tinkerer');
@@ -34,7 +34,7 @@ await page.evaluate(() => document.querySelector('#btn-start-offline')?.click())
 await page.waitForFunction(() => window.__game?.hud, { timeout: 30000 });
 await sleep(800);
 
-// 1. Interface panel — sliders (HUD opacity, UI scale, FOV, volumes) + language picker.
+// 1. Interface panel - sliders (HUD opacity, UI scale, FOV, volumes) + language picker.
 await page.evaluate(() => { const h = window.__game.hud; h.toggleOptionsMenu(); h.optionsView = 'interface'; h.renderOptions(); });
 await sleep(400);
 await (await page.$('#options-menu')).screenshot({ path: `${OUT}/01-interface-sliders.png` });
@@ -44,7 +44,7 @@ await page.evaluate(() => document.querySelector('.set-lang-select .ui-dd-btn')?
 await sleep(300);
 await (await page.$('#options-menu')).screenshot({ path: `${OUT}/02-language-dropdown-open.png` });
 
-// 3. Report dialog — textarea (themed resize grip) + reason dropdown.
+// 3. Report dialog - textarea (themed resize grip) + reason dropdown.
 // A multiline inputDialog renders the .cd-input textarea (themed resize grip),
 // reachable offline (it backs the talents build-name/export prompts).
 await page.evaluate(() => {
@@ -52,8 +52,8 @@ await page.evaluate(() => {
   if (h.optionsOpen) h.toggleOptionsMenu();
   h.inputDialog({
     title: 'Name This Build',
-    label: 'Drag the bottom-right grip to resize. Note the gold corner — no native handle.',
-    value: 'Frostfire Bastion — solo / open-world spec',
+    label: 'Drag the bottom-right grip to resize. Note the gold corner - no native handle.',
+    value: 'Frostfire Bastion - solo / open-world spec',
     multiline: true,
     onOk: () => {},
   });

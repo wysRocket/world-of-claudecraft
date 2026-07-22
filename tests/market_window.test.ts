@@ -28,8 +28,8 @@ describe('market_window: no magic values', () => {
   });
 
   it('uses no em or en dashes (ASCII separators only)', () => {
-    expect(painter.includes('—'), 'em dash found').toBe(false);
-    expect(painter.includes('–'), 'en dash found').toBe(false);
+    expect(painter.includes('-'), 'em dash found').toBe(false);
+    expect(painter.includes('-'), 'en dash found').toBe(false);
   });
 });
 

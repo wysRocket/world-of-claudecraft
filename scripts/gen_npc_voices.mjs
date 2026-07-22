@@ -25,7 +25,7 @@ const previewDir = path.join(root, 'tmp/voice_previews');
 
 const force = process.argv.includes('--force');
 
-try { process.loadEnvFile(); } catch { /* no .env — rely on the ambient env */ }
+try { process.loadEnvFile(); } catch { /* no .env - rely on the ambient env */ }
 const KEY = process.env.ELEVENLABS_API_KEY;
 if (!KEY) {
   console.error('ELEVENLABS_API_KEY is not set (env or .env). Aborting.');
@@ -41,12 +41,12 @@ function seedFor(id) {
   return (h >>> 1) % 2147483647;
 }
 
-// The design endpoint requires sample text 100–1000 chars. Pad short voice-test
+// The design endpoint requires sample text 100-1000 chars. Pad short voice-test
 // lines with a neutral continuation (the preview text only seeds the audition we
 // auto-accept, so its exact wording is immaterial).
 function previewText(sample) {
   let text = sample.trim();
-  const filler = ' Step closer, traveller, and hear me out — there is more to say, and the road is long, so let us speak plainly while there is time.';
+  const filler = ' Step closer, traveller, and hear me out - there is more to say, and the road is long, so let us speak plainly while there is time.';
   while (text.length < 100) text += filler;
   return text.slice(0, 1000);
 }

@@ -1,7 +1,7 @@
 // "Keening Wail" elite mechanic: a mob with a `terrify` template field
 // periodically shrieks while in melee combat, fearing every player inside its
-// radius into a panicked flee. It is the fear analogue of Shuddering Stomp — timed and
-// room-wide rather than on-hit like `dread` — and reuses the same `fear_incap`
+// radius into a panicked flee. It is the fear analogue of Shuddering Stomp - timed and
+// room-wide rather than on-hit like `dread` - and reuses the same `fear_incap`
 // aura the player-cast Fear applies. Telegraphed: the first wail only lands one
 // full interval after the fight begins, and the telegraph re-arms on evade.
 import { describe, expect, it } from 'vitest';

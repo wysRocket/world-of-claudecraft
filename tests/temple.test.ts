@@ -1,4 +1,4 @@
-// The Drowned Temple — the portal-reached side-wing on the Glimmermere.
+// The Drowned Temple - the portal-reached side-wing on the Glimmermere.
 // Verifies the moongate dungeon is registered, enterable with its full spawn
 // set, that Ysolei's boss mechanics fire, the new 'temple' interior collides,
 // and the lead-up quest chain + boss loot table hang together.
@@ -110,7 +110,7 @@ describe('The Drowned Temple', () => {
     expect(isBlocked(seed, o.x + 0, o.z + 8)).toBe(false);
     expect(isBlocked(seed, o.x + 23, o.z + 8)).toBe(true); // side wall at |x|=23
     expect(isBlocked(seed, o.x + 14, o.z + 10)).toBe(true); // colonnade pillar
-    // Ysolei's altar dais (z 116) is deliberately walkable — no collider
+    // Ysolei's altar dais (z 116) is deliberately walkable - no collider
     expect(isBlocked(seed, o.x + 0, o.z + 116)).toBe(false);
   });
 

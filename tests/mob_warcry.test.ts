@@ -62,7 +62,7 @@ describe('mob ally-haste (warcry)', () => {
     expect(HASTE(a)).toBeDefined();
     expect(HASTE(b)).toBeDefined();
     expect(HASTE(caller)).toBeDefined(); // the caller drums up itself too
-    // a second pulse only refreshes the single aura — never a second copy
+    // a second pulse only refreshes the single aura - never a second copy
     for (let i = 0; i < 20 * 10 + 1; i++) inner(sim).updateBossMechanics(caller);
     expect(a.auras.filter((x) => x.id === 'warcry_deepfen_murloc')).toHaveLength(1);
   });

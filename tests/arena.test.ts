@@ -263,7 +263,7 @@ describe('arena: a full bout', () => {
     // run the aftermath out so the slot is released
     for (let i = 0; i < 20 * 6 && sim.arenaMatchFor(a); i++) sim.tick();
     expect(sim.arenaMatchFor(a)).toBe(null);
-    // requeue both — a fresh match must seat without "all arenas busy"
+    // requeue both - a fresh match must seat without "all arenas busy"
     sim.arenaQueueJoin(a);
     sim.arenaQueueJoin(b);
     sim.tick();

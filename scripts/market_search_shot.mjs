@@ -68,7 +68,7 @@ const scene = await page.evaluate(() => {
 check(scene.merchant, 'the Merchant exists');
 check(scene.total > 120, `market is flooded past the 120 cap (${scene.total} listings)`);
 
-// 1) Browse tab — the new search field sits atop the (capped) list, with the
+// 1) Browse tab - the new search field sits atop the (capped) list, with the
 //    "showing 120 of N" truncation note telling the player there is more.
 await page.evaluate(() => window.__game.hud.openMarket());
 await sleep(500);
@@ -85,7 +85,7 @@ check(/showing/i.test(browse.note), `truncation note is shown: "${browse.note}"`
 check(browse.total > browse.shown, `server reports more matches (${browse.total}) than shipped (${browse.shown})`);
 await page.screenshot({ path: 'tmp/market_search_01_capped.png' });
 
-// 2) Type a name into the search — the server-side filter narrows the list so
+// 2) Type a name into the search - the server-side filter narrows the list so
 //    the matching goods become reachable even though they were past the cap.
 await page.evaluate(() => {
   const s = document.querySelector('#market-body .mkt-search');

@@ -101,7 +101,7 @@ function startedDuelHunter(): { sim: AnySim; a: number; b: number } {
   return { sim, a, b };
 }
 
-describe('pet_ai module (P1a) — direct unit tests', () => {
+describe('pet_ai module (P1a) - direct unit tests', () => {
   it('updatePet despawns a pet whose owner is no longer a tracked player', () => {
     const { sim, pid } = world();
     const pet = adopt(sim, pid);

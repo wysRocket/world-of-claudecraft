@@ -1,7 +1,7 @@
 // Before/after spectrograms for the footstep-sound-toggle PR. "Before" is a short
 // walk's worth of footfalls (the foot_grass clip retriggered at the run cadence,
 // the audio the renderer emits when footsteps are ON). "After" is the same window
-// with footsteps OFF — i.e. silence, since footstep() is now a no-op by default.
+// with footsteps OFF - i.e. silence, since footstep() is now a no-op by default.
 // Rendered as PNG spectrograms via ffmpeg showspectrumpic so the PR can show the
 // gate at a glance. Requires ffmpeg on PATH.
 import { execFileSync } from 'node:child_process';

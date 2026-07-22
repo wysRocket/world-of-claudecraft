@@ -187,7 +187,7 @@ try {
   );
   await pageA.close();
 
-  log('done — screenshots in', OUT);
+  log('done - screenshots in', OUT);
 } finally {
   try {
     await browser?.close();

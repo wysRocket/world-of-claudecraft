@@ -39,7 +39,7 @@ describe('detectBrowserEngine', () => {
   });
   it('treats every iOS browser as WebKit (Apple mandates the engine)', () => {
     expect(detectBrowserEngine(UA.safariIphone).engine).toBe('webkit');
-    // iOS Chrome (CriOS) must NOT read as Chromium — it is Safari under the hood.
+    // iOS Chrome (CriOS) must NOT read as Chromium - it is Safari under the hood.
     expect(detectBrowserEngine(UA.chromeIos).engine).toBe('webkit');
   });
   it('returns unknown for an unrecognized UA', () => {
@@ -48,7 +48,7 @@ describe('detectBrowserEngine', () => {
   });
 });
 
-describe('cssEffectsTier — manual override pins the tier', () => {
+describe('cssEffectsTier - manual override pins the tier', () => {
   const base = { engine: 'chromium' as const, version: 124, mobile: false, renderTier: 'high' as const };
   it('honors Full/Reduced/Minimal regardless of detection', () => {
     expect(cssEffectsTier({ ...base, mobile: true, override: BROWSER_EFFECTS_FULL })).toBe('full');
@@ -57,7 +57,7 @@ describe('cssEffectsTier — manual override pins the tier', () => {
   });
 });
 
-describe('cssEffectsTier — auto detection', () => {
+describe('cssEffectsTier - auto detection', () => {
   it('desktop Chromium on a healthy GPU keeps full effects', () => {
     expect(cssEffectsTier({ engine: 'chromium', version: 124, mobile: false, renderTier: 'high' })).toBe('full');
   });

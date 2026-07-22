@@ -1,4 +1,4 @@
-// Authoritative sound-effect catalog — consumed by scripts/gen_sfx.mjs.
+// Authoritative sound-effect catalog - consumed by scripts/gen_sfx.mjs.
 // Each entry: { key, prompt, duration (seconds 0.5 to 30), loop?, generator?,
 // custom?, stereo? }. Additional takes are discovered from <key>_1.mp3,
 // <key>_2.mp3, and so on. The runtime cycles those files in numeric order.

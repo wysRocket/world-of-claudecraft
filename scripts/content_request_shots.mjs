@@ -38,10 +38,10 @@ await wait(3000);
 await page.evaluate(() => { const p = window.__game.sim.player; p.maxHp = 99999; p.hp = 99999; });
 await wait(300);
 
-// 1) DAY/NIGHT: wide scene in the starter vale — lighting is fixed (no time-of-day).
+// 1) DAY/NIGHT: wide scene in the starter vale - lighting is fixed (no time-of-day).
 await page.screenshot({ path: 'tmp/cr_daynight_scene.png' });
 
-// 2) REPUTATION/FACTION: target a hostile mob at the starter camp — the target frame shows
+// 2) REPUTATION/FACTION: target a hostile mob at the starter camp - the target frame shows
 // name/level/HP only, no faction standing (hostility is a single boolean today).
 try {
   await page.evaluate(() => {
@@ -63,7 +63,7 @@ try {
 } catch {}
 await page.screenshot({ path: 'tmp/cr_faction_target.png' });
 
-// 3) ENCHANTING/GEMS: open the character paperdoll — equipped gear has no enchant lines
+// 3) ENCHANTING/GEMS: open the character paperdoll - equipped gear has no enchant lines
 // or gem sockets; this is where gear-enhancement would surface.
 try {
   await page.evaluate(() => window.__game.hud.toggleChar());
@@ -73,7 +73,7 @@ await page.screenshot({ path: 'tmp/cr_enchant_char.png' });
 try { await page.evaluate(() => window.__game.hud.toggleChar()); } catch {}
 await wait(300);
 
-// 4) WEATHER: move north into Mirefen Marsh — sky is clear everywhere, no weather state.
+// 4) WEATHER: move north into Mirefen Marsh - sky is clear everywhere, no weather state.
 await page.evaluate(() => { window.__game.sim.player.pos.z = 300; });
 await wait(1500);
 await page.screenshot({ path: 'tmp/cr_weather_scene.png' });

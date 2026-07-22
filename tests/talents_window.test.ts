@@ -69,8 +69,8 @@ describe('talents_window: no magic values', () => {
   });
 
   it('uses no em or en dashes (ASCII separators only)', () => {
-    expect(painter.includes('—'), 'em dash found').toBe(false);
-    expect(painter.includes('–'), 'en dash found').toBe(false);
+    expect(painter.includes('-'), 'em dash found').toBe(false);
+    expect(painter.includes('-'), 'en dash found').toBe(false);
   });
 
   it('un-zooms the fitBodyToWindow rect measurements by the live UI Scale before writing an author-space cap', () => {

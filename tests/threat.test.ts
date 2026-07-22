@@ -16,7 +16,7 @@ import { terrainHeight } from '../src/sim/world';
 function makeSim(cls: Parameters<typeof simClass>[0] = 'warrior', seed = 42) {
   return new Sim({ seed, playerClass: cls, autoEquip: true });
 }
-// type helper only — keeps makeSim's signature honest without importing PlayerClass
+// type helper only - keeps makeSim's signature honest without importing PlayerClass
 function simClass(
   cls:
     | 'warrior'
@@ -575,7 +575,7 @@ describe('rogue stealth', () => {
   it('a closer stealthed player does not shield a visible ally from aggro', () => {
     // Regression: the idle-mob check only evaluated the single NEAREST player.
     // A stealthed player standing closest shrank the detection radius and, being
-    // nearest, was the only candidate considered — so a visible groupmate well
+    // nearest, was the only candidate considered - so a visible groupmate well
     // inside the normal aggro radius was silently ignored.
     const sim = new Sim({ seed: 42, playerClass: 'rogue', noPlayer: true });
     const rogue = sim.entities.get(sim.addPlayer('rogue', 'Sneak'))!;

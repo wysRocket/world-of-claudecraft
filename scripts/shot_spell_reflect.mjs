@@ -1,7 +1,7 @@
 // Screenshot the Spectral Ward affix (mob spell reflect) in the offline client.
 // Boots the game as a mage, reskins a nearby mob as a Wyrmcult Necromancer,
 // stands it in front, and repeatedly lands spell hits on it so its ward lashes
-// flat shadow damage back at the caster — captured as the floating combat text
+// flat shadow damage back at the caster - captured as the floating combat text
 // over the player and the "Spectral Ward hits you" combat-log lines.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';

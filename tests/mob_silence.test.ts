@@ -65,7 +65,7 @@ describe('mob silence ("Silencing Shriek")', () => {
       id: 'silence_gravecaller_summoner', name: 'Silencing Shriek', kind: 'silence',
       remaining: 4, duration: 4, value: 0, sourceId: 999, school: 'shadow',
     });
-    // Fireball is a spell (school: fire) — must be rejected with "You are silenced!".
+    // Fireball is a spell (school: fire) - must be rejected with "You are silenced!".
     const errs: string[] = [];
     const orig = (sim as any).error.bind(sim);
     (sim as any).error = (pid: number, msg: string) => { errs.push(msg); orig(pid, msg); };
@@ -99,7 +99,7 @@ describe('mob silence ("Silencing Shriek")', () => {
     const errs: string[] = [];
     const orig = (sim as any).error.bind(sim);
     (sim as any).error = (pid: number, msg: string) => { errs.push(msg); orig(pid, msg); };
-    // Heroic Strike is physical — silence must NOT be the reason it's blocked.
+    // Heroic Strike is physical - silence must NOT be the reason it's blocked.
     sim.castAbility('heroic_strike', p.id);
     expect(errs).not.toContain('You are silenced!');
   });

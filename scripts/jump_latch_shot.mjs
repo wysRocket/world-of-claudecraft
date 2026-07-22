@@ -47,7 +47,7 @@ const preset = await page.evaluate(() => {
 console.log('graphicsPreset =', preset, '(5 = advanced / max)');
 
 // One fast Space tap (keydown+keyup, no gap) followed by `ticks` sim steps that
-// pull movement through the REAL input path (input.readMoveInput) — exactly what
+// pull movement through the REAL input path (input.readMoveInput) - exactly what
 // main.ts's offline loop does. Headless throttles requestAnimationFrame, so we
 // drive the ticks synchronously here instead of waiting on rAF; this keeps the
 // whole sequence inside the latch window and faithfully exercises input.ts.

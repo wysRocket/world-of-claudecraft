@@ -76,7 +76,7 @@ await page.evaluate(({ pool, out }) => {
 
   c.fillStyle = '#e8eef5';
   c.font = '34px sans-serif';
-  c.fillText('Ambient critter population — Eastbrook → causeway → Mirefen', L, 70);
+  c.fillText('Ambient critter population - Eastbrook → causeway → Mirefen', L, 70);
   c.font = '20px sans-serif';
 
   // axes
@@ -100,7 +100,7 @@ await page.evaluate(({ pool, out }) => {
   c.strokeStyle = '#6b7682'; c.lineWidth = 3; c.setLineDash([10, 8]);
   c.beginPath(); c.moveTo(sx(zMin), sy(pool)); c.lineTo(sx(zMax), sy(pool)); c.stroke();
   c.setLineDash([]);
-  c.fillStyle = '#6b7682'; c.fillText('before — flat ' + pool, R - 230, sy(pool) - 12);
+  c.fillStyle = '#6b7682'; c.fillText('before - flat ' + pool, R - 230, sy(pool) - 12);
 
   // AFTER: measured live visible counts
   c.strokeStyle = '#4ea36b'; c.lineWidth = 4;
@@ -109,7 +109,7 @@ await page.evaluate(({ pool, out }) => {
   c.stroke();
   c.fillStyle = '#4ea36b';
   for (const s of out) { c.beginPath(); c.arc(sx(s.z), sy(s.vis), 4, 0, 7); c.fill(); }
-  c.fillText('after — tapered (live render)', R - 320, sy(out[out.length - 1].vis) + 40);
+  c.fillText('after - tapered (live render)', R - 320, sy(out[out.length - 1].vis) + 40);
 }, samples);
 
 await new Promise((r) => setTimeout(r, 200));

@@ -1,6 +1,6 @@
 // Screenshot tour: Wraithbinder Maldrec, the rare elite undead at the Fallen
 // Chapel (Eastbrook Vale). Boots the offline client, teleports to the chapel,
-// god-modes the player, and captures the encounter — the Grave Chill nova, the
+// god-modes the player, and captures the encounter - the Grave Chill nova, the
 // raised Restless Bones adds, and the elite nameplate. Needs `npm run dev`.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
@@ -95,7 +95,7 @@ for (let i = 0; i < 80; i++) {
   if (low && adds >= 2) break;
   await new Promise((r) => setTimeout(r, 250));
 }
-console.log('phase reached — nearby restless bones:', adds);
+console.log('phase reached - nearby restless bones:', adds);
 await new Promise((r) => setTimeout(r, 400));
 await page.screenshot({ path: 'tmp/wb_02_summons.png' });
 

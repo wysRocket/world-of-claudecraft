@@ -2,7 +2,7 @@
 // Korgath at the threshold, Velkhar in the Ritual Vault, and Korzul on the
 // final dais. All three should be pickable BEFORE entering, so the party
 // clears the instance once. They must therefore gate on the same prerequisite
-// (q_sanctum_gate, "the way below stands open"), never on each other — gating
+// (q_sanctum_gate, "the way below stands open"), never on each other - gating
 // Korzul behind Velkhar's turn-in forces a second run of the same dungeon.
 import { describe, expect, it } from 'vitest';
 import { QUESTS } from '../src/sim/data';

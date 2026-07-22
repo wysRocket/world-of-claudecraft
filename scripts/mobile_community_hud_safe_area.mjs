@@ -15,7 +15,7 @@ import { enterOfflineGame } from './enter_offline_game.mjs';
 
 const URL = process.env.URL || 'http://localhost:5173/';
 const OUT = 'screenshots';
-const INSET = 44; // px — representative right notch (e.g. iPhone landscape)
+const INSET = 44; // px - representative right notch (e.g. iPhone landscape)
 fs.mkdirSync(OUT, { recursive: true });
 
 const showHud = () => {
@@ -90,7 +90,7 @@ try {
   await new Promise((r) => setTimeout(r, 2500));
 
   const real = await tryRealInset(page);
-  console.log(real ? 'using real CDP safe-area inset' : 'CDP inset unavailable — simulating');
+  console.log(real ? 'using real CDP safe-area inset' : 'CDP inset unavailable - simulating');
 
   // BEFORE: emulate the pre-fix rule (bare right:8px) under the notch.
   await shoot(page, 'community-hud-before', {

@@ -1,7 +1,7 @@
 // Necrotic mobs (e.g. the Gravecaller Summoner's "Grave Blight") can brand a
 // victim on a melee hit with a heal-absorb shield: the next chunk of incoming
 // healing is devoured before any of it lands. This is the sibling of Mortal
-// Strike — where Mortal Strike scales every heal down for its whole duration,
+// Strike - where Mortal Strike scales every heal down for its whole duration,
 // Grave Blight eats a FIXED pool of healing once, then fades.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';

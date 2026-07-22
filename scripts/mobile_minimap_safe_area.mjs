@@ -4,8 +4,8 @@
 // Headless Chromium can't synthesise real safe-area insets, so we simulate a
 // 44px right-edge notch (drawn as a translucent overlay) and compare the
 // minimap's right edge in two states:
-//   BEFORE  — bare `right: 6px` (the pre-fix rule): minimap sits UNDER the notch.
-//   AFTER   — `right: max(6px, <inset>)` (the fixed rule): minimap clears it.
+//   BEFORE  - bare `right: 6px` (the pre-fix rule): minimap sits UNDER the notch.
+//   AFTER   - `right: max(6px, <inset>)` (the fixed rule): minimap clears it.
 //
 // Needs `npm run dev` running. Writes before/after PNGs to /tmp.
 import puppeteer from 'puppeteer-core';

@@ -1,10 +1,10 @@
-// Chat timestamps — the pure formatting helper behind the classic-WoW "Show
+// Chat timestamps - the pure formatting helper behind the classic-WoW "Show
 // Timestamps" interface option. DOM-free, so it's snapshot-tested directly.
 import { describe, expect, it } from 'vitest';
 import { clampChatClock, formatChatTimestamp } from '../src/ui/hud/chat/chat_timestamp';
 
 // Build a Date at a fixed local wall-clock time (year/month/day are irrelevant
-// — only hours/minutes are formatted).
+// - only hours/minutes are formatted).
 const at = (h: number, m: number) => new Date(2020, 0, 1, h, m, 0);
 
 // Pin the locale to en so the snapshot asserts the English readout regardless

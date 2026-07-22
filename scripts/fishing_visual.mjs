@@ -90,4 +90,4 @@ const haul = await page.evaluate(() => {
 console.log('haul:', JSON.stringify(haul, null, 2));
 
 await browser.close();
-console.log('done — screenshots in tmp/fishing_*.png');
+console.log('done - screenshots in tmp/fishing_*.png');

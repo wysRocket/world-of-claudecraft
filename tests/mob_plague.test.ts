@@ -23,7 +23,7 @@ describe('Plague Stamina-drain affix (Bog Rot)', () => {
   it('a landed drowned_dead swing drains the victim Stamina and shrinks max HP', () => {
     const sim = makeSim();
     const p = sim.entities.get(sim.playerId)!;
-    // A disease-free twin in an identical sim — same seed/class/level, so its
+    // A disease-free twin in an identical sim - same seed/class/level, so its
     // recalculated maxHp is exactly what ours would be without the plague.
     const cleanMaxHp = makeSim().entities.get(sim.playerId)!.maxHp;
     const baseSta = p.stats.sta;

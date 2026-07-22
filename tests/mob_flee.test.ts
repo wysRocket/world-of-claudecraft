@@ -234,7 +234,7 @@ describe('cowardly mobs flee at low HP', () => {
     sim.tick();
     expect(mob.aiState).toBe('flee');
 
-    // force it back to fighting, then drop it low again — it must NOT flee a 2nd time
+    // force it back to fighting, then drop it low again - it must NOT flee a 2nd time
     mob.aiState = 'attack';
     mob.fleeTimer = 0;
     mob.hp = Math.round(mob.maxHp * 0.05);

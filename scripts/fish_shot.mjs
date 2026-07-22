@@ -1,6 +1,6 @@
 // Screenshot harness for the ambient leaping-fish system (src/render/fish.ts).
 // Boots the offline world, stands an angler on the shore of the Mirefen Marsh
-// lake (~ -128,300), and captures fish breaking the surface — both a forced
+// lake (~ -128,300), and captures fish breaking the surface - both a forced
 // "hero" pose (frozen at the arc apex over water) and natural in-game frames.
 //
 // Needs `npm run dev` on :5173 (override with GAME_URL). Writes to tmp/.

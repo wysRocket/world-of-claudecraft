@@ -259,7 +259,7 @@ export interface Frame {
   label?: string;
   time: JsonNum;
   nextId: number;
-  state: string; // digest of { players, entities } full samples — pinned every frame
+  state: string; // digest of { players, entities } full samples - pinned every frame
   events: string; // eventDigest of the window
   rng: { draws: number; digest: string }; // cumulative draw count + rolling digest
   players?: unknown[]; // full samplePlayerMeta per player (checkpoint frames only)

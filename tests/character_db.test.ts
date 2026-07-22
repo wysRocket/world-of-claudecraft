@@ -52,7 +52,7 @@ describe('deleteCharacter', () => {
     const [sql, params] = dbMock.query.mock.calls[0];
     expect(sql).toMatch(/realm/i);
     expect(params).toContain(REALM);
-    // id + account + realm — the same three predicates getCharacter/renameCharacter use
+    // id + account + realm - the same three predicates getCharacter/renameCharacter use
     expect(params).toEqual(expect.arrayContaining([42, 7, REALM]));
   });
 

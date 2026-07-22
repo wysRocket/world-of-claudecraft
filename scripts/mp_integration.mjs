@@ -231,7 +231,7 @@ async function main() {
   const bChat = b.events.find((e) => e.type === 'chat' && e.text === 'Hello from A!');
   check('B receives A chat', !!bChat && bChat.from.startsWith('Thorg'));
 
-  // --- combat: teleport-free version — A targets nearest mob and attacks via commands.
+  // --- combat: teleport-free version - A targets nearest mob and attacks via commands.
   // Find a mob near A in B's view? Use A's own entity list.
   a.cmd({ cmd: 'targetNearest' });
   await sleep(200);
@@ -247,7 +247,7 @@ async function main() {
   const armorAura = b.self?.auras?.some((x) => x.id === 'frost_armor');
   check('B buffs with Frost Armor (server-side cast)', !!armorAura, JSON.stringify(b.self?.auras));
 
-  // xp/copper persistence: grant via quest accept (q_wolves needs marshal proximity — spawn is near)
+  // xp/copper persistence: grant via quest accept (q_wolves needs marshal proximity - spawn is near)
   a.cmd({ cmd: 'interact' });
   await sleep(400);
   const qlog = a.self?.qlog ?? [];

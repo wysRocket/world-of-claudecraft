@@ -287,7 +287,7 @@ describe('cachedWocBalance', () => {
     expect(await cachedWocBalance('cacheFreshArg')).toBe(4_200);
     expect(second).toHaveBeenCalledTimes(1);
     // The fresh bypass of a still-in-TTL entry is a deliberate skip, NOT a stale
-    // refresh — it must not inflate the stale-refresh metric (only genuine TTL
+    // refresh - it must not inflate the stale-refresh metric (only genuine TTL
     // expiry does). Two hits, one initial miss, two stores (initial + fresh).
     expect(wocBalanceCacheStats()).toEqual(expect.objectContaining({
       hits: 2, misses: 1, stores: 2, staleRefreshes: 0,
@@ -320,7 +320,7 @@ describe('cachedWocBalance', () => {
     vi.stubGlobal('fetch', vi.fn(async () => { throw new Error('rpc down'); }));
     expect(await cachedWocBalance('cacheKeep')).toBe(777); // last known, not null
     // The TTL-expired entry triggered exactly one GENUINE stale refresh, which then
-    // failed — so the stale-refresh and failure metrics each count once.
+    // failed - so the stale-refresh and failure metrics each count once.
     expect(wocBalanceCacheStats()).toEqual(expect.objectContaining({
       staleRefreshes: 1, failures: 1,
     }));

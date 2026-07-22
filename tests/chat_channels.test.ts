@@ -19,7 +19,7 @@ import {
   WHISPER_TAB_LABEL_KEY,
 } from '../src/ui/hud/chat/chat_channels';
 
-describe('chat channel tabs — pure model', () => {
+describe('chat channel tabs - pure model', () => {
   it('exposes the bindable channels without whisper (which has no standing channel)', () => {
     expect(CHAT_TAB_CHANNELS).toContain('say');
     expect(CHAT_TAB_CHANNELS).toContain('world');
@@ -36,7 +36,7 @@ describe('chat channel tabs — pure model', () => {
     expect(channelSendPrefix('lfg')).toBe('/lfg ');
     expect(channelSendPrefix('guild')).toBe('/gu ');
     expect(channelSendPrefix('officer')).toBe('/o ');
-    // general must NOT be "/g " — the server routes /g to GUILD
+    // general must NOT be "/g " - the server routes /g to GUILD
     expect(channelSendPrefix('general')).toBe('/general ');
   });
 

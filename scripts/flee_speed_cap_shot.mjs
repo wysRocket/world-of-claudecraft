@@ -114,7 +114,7 @@ await page.evaluate(
     c.fillText('flee speed (yd/s)', 0, 0);
     c.restore();
 
-    // player base run speed line — the speed the chasing player travels at
+    // player base run speed line - the speed the chasing player travels at
     c.strokeStyle = '#d8c14a';
     c.setLineDash([10, 8]);
     c.lineWidth = 3;
@@ -124,7 +124,7 @@ await page.evaluate(
     c.stroke();
     c.fillStyle = '#d8c14a';
     c.fillText('player base run speed = ' + RUN_SPEED + ' yd/s', L + 10, sy(RUN_SPEED) - 14);
-    // flee speed ceiling line — 65% of player run speed, so the player always closes the gap
+    // flee speed ceiling line - 65% of player run speed, so the player always closes the gap
     c.strokeStyle = '#5aa0d8';
     c.beginPath();
     c.moveTo(sx(xMin), sy(FLEE_CAP));
@@ -158,8 +158,8 @@ await page.evaluate(
       c.fillText(label, R - 360, sy(fn(xMax)) + dy);
     };
     // BEFORE pokes above the ceiling for fast mobs; AFTER tracks it and clamps.
-    plot(before, '#d9534f', 'before — buff escapes the cap (bug)', -16);
-    plot(after, '#4ea36b', 'after — capped at 65% run speed', 28);
+    plot(before, '#d9534f', 'before - buff escapes the cap (bug)', -16);
+    plot(after, '#4ea36b', 'after - capped at 65% run speed', 28);
   },
   { RUN_SPEED },
 );

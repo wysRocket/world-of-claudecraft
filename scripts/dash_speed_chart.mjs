@@ -49,7 +49,7 @@ const series = await page.evaluate(() => {
 
   function run(value) {
     // Measure displacement from wherever the druid currently stands (each run
-    // resumes from the previous run's endpoint — fine, we record a fresh origin).
+    // resumes from the previous run's endpoint - fine, we record a fresh origin).
     p.facing = 0;
     p.auras = p.auras.filter((a) => a.kind !== 'buff_speed' && a.kind !== 'form_cat');
     // Cat ("Wolf") form so Dash's gate is satisfied for realism.
@@ -121,7 +121,7 @@ await page.evaluate((s) => {
 
   // title + legend
   ctx.fillStyle = '#e8edf4'; ctx.font = '600 24px system-ui, sans-serif';
-  ctx.fillText('Druid Dash — distance run over 15s (cat form, straight line)', PAD, 38);
+  ctx.fillText('Druid Dash - distance run over 15s (cat form, straight line)', PAD, 38);
   const legend = [
     ['#4ad07a', 'Dash AFTER fix (value 1.5)  → +50% distance'],
     ['#e8c34a', 'Dash BEFORE fix (value 0.5) → no effect (overlaps baseline)'],

@@ -167,7 +167,7 @@ check(
 );
 
 // Real two-character slug collision: two distinct names that slugify identically
-// (space vs hyphen) — the second must fall back to an id-suffixed slug.
+// (space vs hyphen) - the second must fall back to an id-suffixed slug.
 const cbase = 'Clash' + randomName().slice(1, 6); // letters only
 const expectClash = `${cbase}-zy`.toLowerCase();
 const cx = await api('/api/characters', {

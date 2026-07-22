@@ -8,8 +8,8 @@
 // so players cannot hand in "Scourge's End" at the raid Aldric.
 //
 // These tests pin both the regression surface (turn-in authority, dialogue,
-// movement, cleanup, determinism — must STAY green) and the target behavior
-// (Aldric is an NPC, registered-but-not-auto-placed, reconstructed on the wire —
+// movement, cleanup, determinism - must STAY green) and the target behavior
+// (Aldric is an NPC, registered-but-not-auto-placed, reconstructed on the wire -
 // RED until the feature lands). Sections tagged [SPEC] assert the post-change
 // contract; [GUARD] sections must remain green across the change.
 

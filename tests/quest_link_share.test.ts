@@ -108,7 +108,7 @@ describe('acceptLinkedQuest', () => {
     expect((sim as any).countItem('crypt_keystone', b)).toBeGreaterThan(0);
   });
 
-  it('is deterministic — same inputs, same result twice', () => {
+  it('is deterministic - same inputs, same result twice', () => {
     const run = () => {
       const { sim, a, b } = partyOfTwo();
       const q = simpleQuestId();

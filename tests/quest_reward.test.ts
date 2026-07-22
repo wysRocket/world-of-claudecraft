@@ -1,4 +1,4 @@
-// #98 — the quest reward shown in the dialog/preview must be exactly what the
+// #98 - the quest reward shown in the dialog/preview must be exactly what the
 // player receives at turn-in. The bug was the client previewing
 // itemRewards[class] (no archetype fallback) while the server granted
 // itemRewards[class] ?? itemRewards[archetype]; a priest saw nothing but got

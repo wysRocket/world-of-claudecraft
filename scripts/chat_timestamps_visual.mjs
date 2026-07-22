@@ -48,7 +48,7 @@ await sleep(300);
 const optsEl = await page.$('#options-menu');
 await optsEl.screenshot({ path: `${OUT}/01-interface-options.png` });
 
-// Capture the enabled state — toggle On, 24-hour active in the selector.
+// Capture the enabled state - toggle On, 24-hour active in the selector.
 await page.evaluate(() => {
   const h = window.__game.hud;
   h.chatTimestamps = true; h.chatClock = '24h'; h.renderOptions();

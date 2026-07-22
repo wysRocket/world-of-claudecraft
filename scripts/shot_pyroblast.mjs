@@ -40,7 +40,7 @@ const setup = await page.evaluate(() => {
   p.resource = p.maxResource;
 
   // Pick a mob out in open wilderness (a forest wolf) so line-of-sight is
-  // clear — the town hub is cluttered with buildings. Move the PLAYER to it
+  // clear - the town hub is cluttered with buildings. Move the PLAYER to it
   // rather than dragging the mob into terrain (mirrors the fireball sim test).
   let mob = null, d = 1e9;
   for (const e of sim.entities.values()) {

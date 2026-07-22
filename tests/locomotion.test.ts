@@ -40,7 +40,7 @@ describe('locomotion hysteresis', () => {
     for (let i = 0; i < 20; i++) walkStep(t);
     // interpolation stall / terrain bob: one frame with zero horizontal travel
     const stalled = updateLocomotion(t, 0, 0, 0, FPS);
-    expect(stalled.moving).toBe(true); // latched through the dip — no reset
+    expect(stalled.moving).toBe(true); // latched through the dip - no reset
   });
 
   it('several consecutive stalled frames within the grace window stay moving', () => {

@@ -48,7 +48,7 @@ try {
   console.log('saved mobile-nameplates-tray.png');
 
   // Tap the Names button to toggle nameplates OFF (button loses its gold glow),
-  // which also closes the tray — reopen to show the un-glowed state.
+  // which also closes the tray - reopen to show the un-glowed state.
   await page.evaluate(() => document.querySelector('#mobile-nameplates')?.click());
   await new Promise((r) => setTimeout(r, 300));
   await page.evaluate(() => document.querySelector('#mobile-more')?.click());

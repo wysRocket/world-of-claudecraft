@@ -111,7 +111,7 @@ if (PHASE === 'sell') {
   const buyerHasBoots = await buyer.evaluate(() => window.__game.world.inventory.some((s) => s.itemId === 'oiled_boots'));
   check(buyerHasBoots, 'buyer received the Oiled Leather Boots over the wire');
 
-  // the seller, still online, was credited — collect it
+  // the seller, still online, was credited - collect it
   await sleep(500);
   const owed = await seller.evaluate(() => window.__game.world.marketInfo?.collectionCopper ?? 0);
   check(owed === Math.floor(400 * 0.95), `seller is owed ${owed}c (400c sale less 5% cut)`);

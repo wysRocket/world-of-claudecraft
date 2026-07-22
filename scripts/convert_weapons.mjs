@@ -1,5 +1,5 @@
 // Batch-convert KayKit weapon .gltf (+.bin +external texture) into single,
-// self-contained .glb files with the texture embedded — the only model format
+// self-contained .glb files with the texture embedded - the only model format
 // the game's loader accepts. Uses @gltf-transform's NodeIO (reads the gltf,
 // resolves buffers/images, writes a binary glb). Not wired into npm; run with:
 //   node scripts/convert_weapons.mjs [destDir]
@@ -19,7 +19,7 @@ const SRC_DIRS = [
   { dir: `${IMPORTS}/KayKit Adventurers 2.0/Assets/gltf`, tag: 'adv_' },
 ];
 
-// Adventurers pack ships consumables/props alongside weapons — skip those.
+// Adventurers pack ships consumables/props alongside weapons - skip those.
 const SKIP = /potion|mug|crate|barrel|coin|bottle|bomb|ammo|turret|book|key|base/i;
 
 const dest = process.argv[2] || 'tmp/weapon_src';

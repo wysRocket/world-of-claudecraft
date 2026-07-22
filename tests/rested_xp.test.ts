@@ -1,7 +1,7 @@
 // Classic Rested XP (#308): inn-rested pool that doubles kill XP until spent.
 //
 // Covers accrual while resting in an inn (and only there, out of combat), the
-// 1.5-level cap, kill-XP consumption (2x, kills only — not quests), the xp-bar
+// 1.5-level cap, kill-XP consumption (2x, kills only - not quests), the xp-bar
 // rested overlay fraction, and CharacterState persistence round-trip.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
@@ -21,7 +21,7 @@ function teleport(sim: Sim, e: any, x: number, z: number) {
 
 const inn = PROPS.buildings.find((b) => b.kind === 'inn')!;
 
-describe('rested XP — accrual', () => {
+describe('rested XP - accrual', () => {
   it('accrues while resting inside an inn footprint', () => {
     const sim = makeSim();
     const meta = sim.meta(sim.playerId)!;
@@ -52,7 +52,7 @@ describe('rested XP — accrual', () => {
   });
 });
 
-describe('rested XP — consumption', () => {
+describe('rested XP - consumption', () => {
   it('doubles kill XP and draws the pool down', () => {
     const sim = makeSim();
     const meta = sim.meta(sim.playerId)!;
@@ -110,7 +110,7 @@ describe('rested XP — consumption', () => {
   });
 });
 
-describe('rested XP — xp-bar overlay', () => {
+describe('rested XP - xp-bar overlay', () => {
   it('reports a rested overlay fraction ahead of the fill', () => {
     const need = xpForLevel(1);
     const view = xpBarView({ level: 1, xp: need * 0.2, lifetimeXp: 0, restedXp: need * 0.3, showOverflow: false });
@@ -130,7 +130,7 @@ describe('rested XP — xp-bar overlay', () => {
   });
 });
 
-describe('rested XP — persistence', () => {
+describe('rested XP - persistence', () => {
   it('round-trips restedXp through CharacterState', () => {
     const sim = makeSim();
     const meta = sim.meta(sim.playerId)!;

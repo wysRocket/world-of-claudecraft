@@ -1,6 +1,6 @@
 // The Wyrmcult Zealot's "Wyrmward Sigil" is a school-specific counterspell: a
 // landed melee hit can lock the victim out of ONE spell school (fire) for a few
-// seconds. Unlike a full silence, every other school — and physical abilities —
+// seconds. Unlike a full silence, every other school - and physical abilities -
 // stays usable, and an in-progress cast only breaks if it matches the locked school.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
@@ -71,10 +71,10 @@ describe('mob school lockout ("Wyrmward Sigil")', () => {
     const errs: string[] = [];
     const orig = (sim as any).error.bind(sim);
     (sim as any).error = (pid: number, msg: string) => { errs.push(msg); orig(pid, msg); };
-    // Fireball is fire — locked out, rejected with the silence message.
+    // Fireball is fire - locked out, rejected with the silence message.
     sim.castAbility('fireball', p.id);
     expect(errs).toContain('You are silenced!');
-    // Frostbolt is frost — a fire lockout must NOT block it.
+    // Frostbolt is frost - a fire lockout must NOT block it.
     errs.length = 0;
     sim.castAbility('frostbolt', p.id);
     expect(errs).not.toContain('You are silenced!');
@@ -113,7 +113,7 @@ describe('mob school lockout ("Wyrmward Sigil")', () => {
     const errs: string[] = [];
     const orig = (sim as any).error.bind(sim);
     (sim as any).error = (pid: number, msg: string) => { errs.push(msg); orig(pid, msg); };
-    // Heroic Strike is physical — a lockout must never be the reason it's blocked.
+    // Heroic Strike is physical - a lockout must never be the reason it's blocked.
     sim.castAbility('heroic_strike', p.id);
     expect(errs).not.toContain('You are silenced!');
   });

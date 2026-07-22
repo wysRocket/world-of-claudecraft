@@ -23,7 +23,7 @@
 //   the segment after the last '|', then deduped.
 // - "character": resample + prune + dedup + meshopt(high). Never joins/flattens/
 //   simplifies (would corrupt rigs/hard edges on low-poly).
-// - "static": same pipeline (no clips expected) — geometry-safe, no simplify.
+// - "static": same pipeline (no clips expected) - geometry-safe, no simplify.
 // - "copy": byte-for-byte copy (HDRIs, plain textures).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -130,7 +130,7 @@ async function processModel(io, item) {
   // Bake standalone prop/weapon meshes onto a bone. KayKit ships weapons as
   // separate glbs authored to sit at the handslot bone; merge one in, reparent
   // its root node under the bone, and (for the common single-node weapon) zero
-  // the node's translation+rotation while keeping its scale — this mirrors the
+  // the node's translation+rotation while keeping its scale - this mirrors the
   // runtime flatten+attach in render/characters/assets.ts, so a baked-in weapon
   // lands exactly where the renderer would have attached it at runtime.
   if (item.attachMeshes) {
@@ -160,7 +160,7 @@ async function processModel(io, item) {
   }
 
   // mergeDocuments (clips or props) imports each source's own buffer; a GLB must
-  // have a single one — consolidate every accessor onto the first buffer.
+  // have a single one - consolidate every accessor onto the first buffer.
   if (item.addClipsFrom || item.attachMeshes) {
     const mainBuffer = root.listBuffers()[0];
     for (const acc of root.listAccessors()) acc.setBuffer(mainBuffer);
@@ -243,7 +243,7 @@ async function main() {
   let failures = 0;
   for (const specFile of specs) {
     const spec = JSON.parse(fs.readFileSync(specFile, 'utf8'));
-    // optional top-level `defaults` merged into every item (item keys win) —
+    // optional top-level `defaults` merged into every item (item keys win) -
     // lets a spec share addClipsFrom/renameClips/keepClips across many chars
     const defaults = spec.defaults ?? {};
     let items = expandItems(spec.items);

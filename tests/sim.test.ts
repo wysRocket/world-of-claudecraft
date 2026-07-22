@@ -201,7 +201,7 @@ describe('classic formulas', () => {
     const hs20 = w20.find((k) => k.def.id === 'heroic_strike')!;
     expect(hs20.rank).toBe(4);
     expect(hs20.effects).toEqual([{ type: 'weaponDamage', bonus: 44 }]);
-    // shaman: lightning bolt keeps pace — rank 2 at 10, rank 3 at 14, rank 4 at 20
+    // shaman: lightning bolt keeps pace - rank 2 at 10, rank 3 at 14, rank 4 at 20
     const lbAt = (lvl: number) =>
       abilitiesKnownAt('shaman', lvl).find((k) => k.def.id === 'lightning_bolt')!;
     expect(lbAt(10).rank).toBe(2);
@@ -309,7 +309,7 @@ describe('movement directions', () => {
     const seed = 42;
     // One run-tick covers ~0.35 yd horizontally (RUN_SPEED 7 * DT 1/20). Find a
     // dry spot whose forward terrain drops more than the old fixed 0.4 ledge
-    // threshold yet stays within the walkable MAX_CLIMB_SLOPE (1.5) — exactly the
+    // threshold yet stays within the walkable MAX_CLIMB_SLOPE (1.5) - exactly the
     // case that used to fling the player off a "ledge" mid-hill.
     const STEP = 0.35;
     // A dry forward step that drops more than the old 0.4 ledge threshold yet
@@ -485,7 +485,7 @@ describe('combat', () => {
 
     let minDist = Infinity;
     for (let i = 0; i < 60; i++) {
-      // 3s — reaches melee well before any disengage
+      // 3s - reaches melee well before any disengage
       sim.tick();
       minDist = Math.min(minDist, dist2d(mob.pos, sim.player.pos));
     }

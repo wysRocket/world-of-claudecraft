@@ -64,11 +64,11 @@ describe('pet heel pathfinding', () => {
     expect(dist(pet.pos, owner.pos)).toBeLessThan(4);
     // never tunneled through the collider
     expect(everBlocked).toBe(false);
-    // moved smoothly the whole way — no teleport snap (a warp would be many yards)
+    // moved smoothly the whole way - no teleport snap (a warp would be many yards)
     expect(maxStep).toBeLessThan(1.5);
   });
 
-  it('is deterministic — identical seed yields an identical heel path', () => {
+  it('is deterministic - identical seed yields an identical heel path', () => {
     const trace = () => {
       const { sim, pet } = setup(PET, OWNER);
       const path: Vec3[] = [];

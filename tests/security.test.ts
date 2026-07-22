@@ -292,7 +292,7 @@ describe('rate-limit client IP selection', () => {
     // A persistent attacker keeps hammering one endpoint while the IP map is
     // pushed past its backstop threshold by churning many one-off IPs. The
     // backstop must evict expired one-off entries, NOT wipe the attacker's
-    // live counter — otherwise flooding the map silently disables rate limiting.
+    // live counter - otherwise flooding the map silently disables rate limiting.
     const attacker = '203.0.113.250';
     let limited = false;
     for (let i = 0; i < 25; i++) {
@@ -316,7 +316,7 @@ describe('rate-limit client IP selection', () => {
     // 60s window), then goes idle. An attacker floods the map with >10k NEWER
     // distinct one-off IPs. A naive least-recently-active eviction would pick
     // the idle-but-still-in-window limited IP as "oldest" and evict it,
-    // resetting its limit before the window expires — the eviction-path version
+    // resetting its limit before the window expires - the eviction-path version
     // of the flood-reset bypass. The backstop must skip currently-limited IPs.
     const victim = '203.0.113.240';
     let limited = false;
@@ -341,7 +341,7 @@ describe('rate-limit client IP selection', () => {
     // login/register use the default 20, admin login uses 10. An IP that has
     // tripped the stricter admin limit (11 attempts > 10) is currently limited,
     // but has only 11 entries. A flood of default-limit (20) requests from newer
-    // IPs must NOT evict that bucket — eviction must judge "limited" by the
+    // IPs must NOT evict that bucket - eviction must judge "limited" by the
     // strictest policy sharing the map, not the flooding call's lenient limit.
     const adminLimit = 10;
     const victim = '203.0.113.230';
@@ -367,7 +367,7 @@ describe('rate-limit client IP selection', () => {
 
   it('keeps the IP map bounded under a flood of distinct in-window clients', () => {
     // A pure flood is all in-window, so expired-only eviction would delete
-    // nothing and the map would grow unbounded — and every subsequent call
+    // nothing and the map would grow unbounded - and every subsequent call
     // would re-scan a growing map (O(n^2)). The backstop must fall back to
     // evicting the least-recently-active IPs so the map stays near the cap.
     for (let i = 0; i < 12_000; i++) {
@@ -423,7 +423,7 @@ describe('per-account failed-login throttle (#93)', () => {
     // A credential-stuffing flood spreads guesses across thousands of accounts,
     // pushing the failure map past its backstop threshold. The backstop must
     // evict expired one-off entries, NOT wipe the live lockout counter for an
-    // account actively under attack — otherwise flooding silently disables the
+    // account actively under attack - otherwise flooding silently disables the
     // per-account throttle exactly when it is needed most.
     const victim = 'lockme_account';
     for (let i = 0; i < 10; i++) recordAuthFailure(victim);
@@ -442,7 +442,7 @@ describe('per-account failed-login throttle (#93)', () => {
     // victim's timestamps go stale and it is never re-touched. An attacker then
     // floods the map with >10k NEWER distinct one-off failures. A naive
     // least-recently-active eviction that ignored throttle state would pick the
-    // idle victim as "oldest" and evict it — resetting its throttle, the exact
+    // idle victim as "oldest" and evict it - resetting its throttle, the exact
     // bypass the backstop must prevent. The eviction must skip throttled accounts.
     const victim = 'idle_victim';
     for (let i = 0; i < 10; i++) recordAuthFailure(victim);
@@ -457,7 +457,7 @@ describe('per-account failed-login throttle (#93)', () => {
 
   it('keeps the failure map bounded under a flood of distinct in-window accounts', () => {
     // A pure flood is all in-window (#251), so expired-only eviction would
-    // delete nothing and the map would grow unbounded — and every subsequent
+    // delete nothing and the map would grow unbounded - and every subsequent
     // call would re-scan a growing map (O(n^2)). The backstop must fall back to
     // evicting the least-recently-active accounts so the map stays near the cap.
     for (let i = 0; i < 12_000; i++) recordAuthFailure(`floodbound_${i}`);

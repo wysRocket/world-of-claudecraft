@@ -195,7 +195,7 @@ describe('collision & terrain', () => {
     const eyeY = groundY + 2;
 
     // ray sweeps straight through the house at (10,12): buildings are camGhost,
-    // so the chase cam no longer pulls in for them — the renderer hides them.
+    // so the chase cam no longer pulls in for them - the renderer hides them.
     const through = cameraOcclusion(SEED, 10, eyeY, 4, 10, eyeY + 1.5, 20, 0.35);
     expect(through).toBe(1);
     // but movement still collides with that same house (camGhost is camera-only)
@@ -562,7 +562,7 @@ describe('the Hollow Crypt doors', () => {
     sim.tick();
     expect(p.pos.x).toBeGreaterThan(DUNGEON_X_THRESHOLD);
 
-    // the exit portal sits 6yd behind the entry point — walk into it
+    // the exit portal sits 6yd behind the entry point - walk into it
     const exit = [...sim.entities.values()].find((e) => e.templateId === 'dungeon_exit')!;
     p.pos.x = exit.pos.x;
     p.pos.z = exit.pos.z + 1.2;
@@ -1242,7 +1242,7 @@ describe('quest npc roles', () => {
     const aldric = [...sim.entities.values()].find((e) => e.templateId === 'brother_aldric')!;
     teleportTo(sim, aldric.pos.x + 2, aldric.pos.z);
     // talkToNpc accepts one available quest per interaction and aldric
-    // offers several — keep talking until the muster order is taken
+    // offers several - keep talking until the muster order is taken
     for (let i = 0; i < 10 && sim.questState('q_fenbridge_muster') !== 'active'; i++)
       sim.talkToNpc(aldric.id);
     expect(sim.questState('q_fenbridge_muster')).toBe('active');
@@ -1647,8 +1647,8 @@ describe('warrior charge', () => {
     )!;
     // A level-20 warrior one-shots a ~28hp wolf, and the swing that lands the
     // instant the charge arrives would clear autoAttack (target died). Whether
-    // that kill connects rides the shared RNG stream — which shifts as world
-    // content grows — so beef the wolf up to survive the engaging swing and
+    // that kill connects rides the shared RNG stream - which shifts as world
+    // content grows - so beef the wolf up to survive the engaging swing and
     // keep this test about charge -> melee -> auto-attack, not the kill roll.
     wolf.maxHp = 10000;
     wolf.hp = 10000;
@@ -1663,7 +1663,7 @@ describe('warrior charge', () => {
     const before = dist2d(p.pos, wolf.pos);
     sim.castAbility('charge');
     expect(wolf.auras.some((a) => a.kind === 'stun')).toBe(true);
-    // still roughly where we started — the run happens over the next ticks
+    // still roughly where we started - the run happens over the next ticks
     expect(dist2d(p.pos, wolf.pos)).toBeGreaterThan(before - 2);
     expect(p.chargeTargetId).toBe(wolf.id);
   });
@@ -1758,7 +1758,7 @@ describe('mob tap rights', () => {
   it('a fully absorbed (zero-damage) hit does not claim the mob', () => {
     const sim = makeSim('mage');
     const m = wolf(sim);
-    // a shield that soaks the whole hit — the mob takes no real damage
+    // a shield that soaks the whole hit - the mob takes no real damage
     m.auras.push({
       id: 'test_absorb',
       name: 'Test Shield',
@@ -1800,7 +1800,7 @@ describe('pet heel warp', () => {
     (sim as any).ctx.updatePet(pet);
     expect(dist2d(pet.pos, p.pos)).toBeLessThan(1);
 
-    // a same-tick radius query at the warp destination must see the pet — it
+    // a same-tick radius query at the warp destination must see the pet - it
     // would miss it if the grid still held the pet in its stale far-away cell
     const found: number[] = [];
     (sim as any).grid.forEachInRadius(p.pos.x, p.pos.z, 5, (e: Entity) => found.push(e.id));
@@ -1825,7 +1825,7 @@ describe('aoe damage vs armor', () => {
     )!;
     wolf.maxHp = 100000;
     wolf.hp = 100000;
-    // huge armor pins armorReduction at its 0.75 cap — a mitigated arcane hit
+    // huge armor pins armorReduction at its 0.75 cap - a mitigated arcane hit
     // would land at <=8, well under the unmitigated 26-31 band.
     wolf.stats.armor = 10_000_000;
     teleportTo(sim, wolf.pos.x, wolf.pos.z + 1);
@@ -1893,7 +1893,7 @@ describe('pet heel warp', () => {
     (sim as any).ctx.updatePet(pet);
     expect(dist2d(pet.pos, p.pos)).toBeLessThan(1);
 
-    // a same-tick radius query at the warp destination must see the pet — it
+    // a same-tick radius query at the warp destination must see the pet - it
     // would miss it if the grid still held the pet in its stale far-away cell
     const found: number[] = [];
     (sim as any).grid.forEachInRadius(p.pos.x, p.pos.z, 5, (e: Entity) => found.push(e.id));
@@ -1919,7 +1919,7 @@ describe('mob tap rights', () => {
   it('a fully absorbed (zero-damage) hit does not claim the mob', () => {
     const sim = makeSim('mage');
     const m = wolf(sim);
-    // a shield that soaks the whole hit — the mob takes no real damage
+    // a shield that soaks the whole hit - the mob takes no real damage
     m.auras.push({
       id: 'test_absorb',
       name: 'Test Shield',
@@ -2208,7 +2208,7 @@ describe('trade and duel invites validate availability at accept time', () => {
     sim.tradeRequest(b, a);
     sim.tradeRequest(c, a);
 
-    // Bert accepts first — Anna and Bert are now trading together.
+    // Bert accepts first - Anna and Bert are now trading together.
     sim.tradeAccept(b);
     const annaSession = sim.tradeFor(a);
     const bertSession = sim.tradeFor(b);

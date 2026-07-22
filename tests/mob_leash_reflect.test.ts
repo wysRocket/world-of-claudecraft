@@ -1,5 +1,5 @@
 // Regression: passive/reflected/periodic damage must NOT refresh a mob's leash
-// anchor — only a direct attack (auto-attack or direct spell) may walk the tether.
+// anchor - only a direct attack (auto-attack or direct spell) may walk the tether.
 //
 // Repro: a Shaman with Lightning Shield (modelled as a `thorns` aura) is meleed by
 // a mob. The reflect deals damage back to the mob via dealDamage(player, mob, ...).
@@ -91,7 +91,7 @@ describe('mob leash: only direct damage refreshes the anchor', () => {
 
   it('a real mob swing into Lightning Shield does NOT walk the leash anchor', () => {
     // Drives the actual mobSwing reflect path (mob/mob_swing.ts), the route that
-    // fires when a mob melees a shielded Shaman — the reported repro.
+    // fires when a mob melees a shielded Shaman - the reported repro.
     const sim = makeSim();
     const mob = aggroedMob(sim);
     mob.maxHp = 1_000_000;

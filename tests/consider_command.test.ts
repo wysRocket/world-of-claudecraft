@@ -42,23 +42,23 @@ describe('/consider command', () => {
 
   it('calls an equal-level target an even fight', () => {
     const { sim, self } = setup(10, 10);
-    expect(verdict(sim, self)).toBe('Bet is level 10 — an even fight for you (level 10).');
+    expect(verdict(sim, self)).toBe('Bet is level 10 - an even fight for you (level 10).');
   });
 
   it('flags a target 3+ levels up as daunting (the miss-penalty cliff)', () => {
     const { sim, self } = setup(10, 13);
-    expect(verdict(sim, self)).toBe('Bet is level 13 — a daunting fight for you (level 10).');
+    expect(verdict(sim, self)).toBe('Bet is level 13 - a daunting fight for you (level 10).');
   });
 
   it('flags a far-higher target as overwhelming', () => {
     const { sim, self } = setup(10, 16);
-    expect(verdict(sim, self)).toBe('Bet is level 16 — an overwhelming fight for you (level 10).');
+    expect(verdict(sim, self)).toBe('Bet is level 16 - an overwhelming fight for you (level 10).');
   });
 
   it('calls a much lower target an easy fight via the /con alias', () => {
     const { sim, self } = setup(10, 6);
     sim.chat('/con', self);
-    expect(lastError(sim.tick())).toBe('Bet is level 6 — an easy fight for you (level 10).');
+    expect(lastError(sim.tick())).toBe('Bet is level 6 - an easy fight for you (level 10).');
   });
 
   it('is self-only and never logged or spoken', () => {

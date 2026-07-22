@@ -40,8 +40,8 @@ await page.evaluate(() => {
 await wait(400);
 
 // Retemplate the nearest mob into a Gravecaller Cultist, stage it in front of the
-// player at level+3 (a lower-level attacker mostly MISSES a higher-level player —
-// #443 miss scaling — so bump its level to make forced swings reliably connect),
+// player at level+3 (a lower-level attacker mostly MISSES a higher-level player -
+// #443 miss scaling - so bump its level to make forced swings reliably connect),
 // then force swings until the Curse of Frailty lands. Also measure the damage
 // amplification on a fixed test hit for the PR write-up.
 const result = await page.evaluate(async () => {

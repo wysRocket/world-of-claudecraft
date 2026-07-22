@@ -1,6 +1,6 @@
 // Visual capture for the absorb-shield bar overlay (Power Word: Shield etc.).
 // Boots the offline game, injects absorb auras onto the player/target entities
-// (purely to exercise the HUD render — fresh chars are too low level to cast),
+// (purely to exercise the HUD render - fresh chars are too low level to cast),
 // and screenshots the unit frames. Needs `npm run dev` on :5173.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
@@ -27,7 +27,7 @@ await page.click('#btn-start-offline');
 await sleep(2500);
 
 // Helper run in the page: stamp an absorb aura on an entity's plain `.auras`
-// array (the HUD reads it each frame). Args are data only — no eval.
+// array (the HUD reads it each frame). Args are data only - no eval.
 async function pushAbsorb(args) {
   await page.evaluate(({ which, hpFrac, valFrac, name, id }) => {
     const sim = window.__game.sim;

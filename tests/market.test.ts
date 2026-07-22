@@ -53,7 +53,7 @@ function marketSellerKey(pid: number): string {
   return String(pid);
 }
 
-describe('the World Market — the Merchant', () => {
+describe('the World Market - the Merchant', () => {
   it('spawns a single Merchant who keeps standing house stock', () => {
     const sim = makeWorld();
     const merchants = [...sim.entities.values()].filter((e) => e.templateId === 'the_merchant');

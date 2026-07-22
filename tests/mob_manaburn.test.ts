@@ -52,7 +52,7 @@ describe('mob mana burn (Mana Sear)', () => {
     }
   });
 
-  it('drain clamps at zero — it never pushes mana negative', () => {
+  it('drain clamps at zero - it never pushes mana negative', () => {
     const { sim, player, mob } = setup('mage');
     const burn = MOBS.wyrmcult_necromancer.manaBurn!;
     player.resource = 10; // less than burn.amount (80)

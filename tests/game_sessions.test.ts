@@ -936,7 +936,7 @@ describe('GameServer sessions', () => {
     // Regression: the anti-bot kick used to call leave() WITHOUT sending an error
     // frame or closing the socket (unlike disconnectAccount/takeOverCharacter).
     // The character was removed from the world but the client stayed wedged
-    // "connected" — no onclose/error fired, so the app never returned to
+    // "connected" - no onclose/error fired, so the app never returned to
     // character select and the player could not rejoin.
     vi.mocked(saveCharacterState).mockResolvedValue(true);
     const server = new GameServer();

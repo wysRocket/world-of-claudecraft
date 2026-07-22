@@ -194,7 +194,7 @@ describe('nine classes', () => {
     // Judgement's spell hit is an RNG roll (capped at 99%), so a single cast can
     // miss on some world seeds and deal no damage. Re-seal and retry until it
     // lands, so this checks the mechanic (judgement hits and consumes the seal)
-    // rather than a lucky roll — robust to RNG-stream shifts from new content.
+    // rather than a lucky roll - robust to RNG-stream shifts from new content.
     let landed = false;
     for (let attempt = 0; attempt < 25 && !landed; attempt++) {
       if (!p.auras.some((a) => a.kind === 'imbue')) {
@@ -441,7 +441,7 @@ describe('parties', () => {
 
   it('refuses to accept an invite while already in a party', () => {
     // A player can become a party leader (by inviting someone who accepts)
-    // while still holding an unconsumed incoming invite — inviting someone
+    // while still holding an unconsumed incoming invite - inviting someone
     // never consumes the inviter's own pending invite. Accepting that stale
     // invite must NOT leave the player a member of two parties at once.
     const sim = makeWorld();
@@ -455,7 +455,7 @@ describe('parties', () => {
     sim.partyAccept(d);
     expect(sim.partyOf(a)?.leader).toBe(a);
     const ownParty = sim.partyOf(a)?.id;
-    // A now accepts C's stale invite — this must be rejected.
+    // A now accepts C's stale invite - this must be rejected.
     sim.partyAccept(a);
     // A stays in its own party only; no second membership is created.
     expect(sim.partyOf(a)?.id).toBe(ownParty);
@@ -1094,7 +1094,7 @@ describe('trading', () => {
     sim.addItem('wolf_fang', 5, a);
     sim.tradeRequest(b, a);
     sim.tradeAccept(b);
-    // two slots of 2 totals 4, within the 5 held — merged into one slot of 4
+    // two slots of 2 totals 4, within the 5 held - merged into one slot of 4
     sim.tradeSetOffer(
       [
         { itemId: 'wolf_fang', count: 2 },

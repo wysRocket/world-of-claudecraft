@@ -2,7 +2,7 @@
 // the S3 drift guard (tests/localization_fixes.test.ts) cannot see: the relic + quest-
 // item pickup error toasts are emitted as `this.error(id, def?.pickup* ?? 'English')`,
 // and the guard's this.error regex only captures a literal that immediately follows the
-// comma — so a `?? 'literal'` fallback slips past it. The /gear readout slot labels also
+// comma - so a `?? 'literal'` fallback slips past it. The /gear readout slot labels also
 // regressed (the over-broad Equipped rule mangled the worn case). This file pins all of
 // them: every string must localize (non-null) in every locale and not stay English.
 import { afterEach, describe, expect, it } from 'vitest';

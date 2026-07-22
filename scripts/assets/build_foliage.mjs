@@ -1,4 +1,4 @@
-// Foliage asset pipeline: like build_assets.mjs but adds mesh simplification —
+// Foliage asset pipeline: like build_assets.mjs but adds mesh simplification -
 // the Quaternius nature trees ship at 4-10k tris each, far too heavy for the
 // ~1,200-instance decoration field. Also strips all-white COLOR_0 attributes
 // (tree leaves carry a useless constant white that bloats the buffers; bark
@@ -12,7 +12,7 @@
 // "simplify" is the target triangle ratio (omit to skip). The meshopt
 // simplifier locks attribute-seam borders, so the chunky alpha-cutout leaf
 // cards survive while the dense sculpted barks collapse.
-// "recolor" hue-rotates matching textures (degrees) — the kit's twisted-tree
+// "recolor" hue-rotates matching textures (degrees) - the kit's twisted-tree
 // leaf sheet is autumn-red, which we shift to green (bushes) / olive (swamp).
 import fs from 'node:fs';
 import path from 'node:path';
@@ -33,7 +33,7 @@ function resolveSrc(src) {
   return path.isAbsolute(src) ? src : path.join(ROOT, src);
 }
 
-/** Drop COLOR_0 attributes that are constant white — pure buffer bloat. */
+/** Drop COLOR_0 attributes that are constant white - pure buffer bloat. */
 function stripWhiteVertexColors(doc) {
   for (const mesh of doc.getRoot().listMeshes()) {
     for (const prim of mesh.listPrimitives()) {

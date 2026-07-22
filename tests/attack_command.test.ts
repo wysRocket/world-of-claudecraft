@@ -35,7 +35,7 @@ describe('/attack command', () => {
     sim.chat('/attack', a);
     const expected = (pa.weapon.speed).toFixed(1);
     expect(errorText(sim.tick(), a)).toBe(
-      `Auto-attack is on against Bet — next swing in 1.2s (${expected}s swing).`,
+      `Auto-attack is on against Bet - next swing in 1.2s (${expected}s swing).`,
     );
   });
 

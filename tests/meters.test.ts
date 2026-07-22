@@ -50,7 +50,7 @@ describe('combat meters', () => {
     m.onEvent(dmg(1, 50, 25), w, party, 1000);
     m.onEvent(dmg(1, 51, 40), w, party, 2000);
     m.onEvent(heal(2, 1, 30), w, party, 2500);
-    m.onEvent(dmg(99, 50, 500), w, party, 2600); // outsider — ignored
+    m.onEvent(dmg(99, 50, 500), w, party, 2600); // outsider - ignored
     expect(m.current).not.toBeNull();
     expect(m.current!.tallies.get(1)!.dmg).toBe(65);
     expect(m.current!.tallies.get(2)!.heal).toBe(30);

@@ -37,7 +37,7 @@ const info = await page.evaluate(() => {
 console.log('target:', JSON.stringify(info));
 
 // Place the targeted unit just in front of the player so the ground reticle
-// fills the frame (offline sim — direct mutation is fine for a visual harness).
+// fills the frame (offline sim - direct mutation is fine for a visual harness).
 await page.evaluate(() => {
   const g = window.__game;
   const p = g.sim.player;

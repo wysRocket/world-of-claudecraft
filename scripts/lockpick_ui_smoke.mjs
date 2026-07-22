@@ -1,6 +1,6 @@
 // UI smoke for the lockpicking minigame panel. Feeds synthetic lockpick events
 // into hud.handleEvents() (the real render path) and screenshots the ante
-// selector + board. Needs npm run dev (:5173). Render-only — no real session,
+// selector + board. Needs npm run dev (:5173). Render-only - no real session,
 // so we don't click action buttons (that would hit the sim with no session).
 
 import fs from 'node:fs';

@@ -4,7 +4,7 @@ import type { IWorld } from '../src/world_api';
 import { QUESTS, ZONES } from '../src/sim/data';
 
 // The overlay's rendering is DOM-bound, but the step progression is a pure
-// function over observed IWorld state — that's what we pin here.
+// function over observed IWorld state - that's what we pin here.
 const base: TutorialSnapshot = {
   moved: false,
   nearGiver: false,
@@ -51,7 +51,7 @@ describe('computeTutorialStep', () => {
 // isFreshCharacter is the engage gate, and the online pre-snapshot race it
 // guards against is the highest-value missing coverage (see review #729).
 describe('isFreshCharacter', () => {
-  // Minimal IWorld stub — only the fields the gate reads.
+  // Minimal IWorld stub - only the fields the gate reads.
   const world = (over: Partial<IWorld> & { playerLevel?: number; playerId?: number; playerEntId?: number }): IWorld => ({
     playerId: over.playerId ?? 7,
     player: { id: over.playerEntId ?? 7, level: over.playerLevel ?? 1 } as any,

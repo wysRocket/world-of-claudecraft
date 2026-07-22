@@ -2,7 +2,7 @@
 // Boots a rogue, repurposes a nearby mob as Mirejaw the Ravenous, forces its
 // on-hit Sapping Bite onto the player, and captures the drained energy bar on
 // the player unit frame plus the combat log line (the affix has no debuff icon
-// — the proof is the resource bar dropping).
+// - the proof is the resource bar dropping).
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 
@@ -61,7 +61,7 @@ console.log('sap vigor result:', JSON.stringify(result));
 await new Promise((r) => setTimeout(r, 600));
 await page.screenshot({ path: 'tmp/sap_vigor_scene.png' });
 
-// Crop the player unit frame — the energy bar shows the drain.
+// Crop the player unit frame - the energy bar shows the drain.
 const box = await page.evaluate(() => {
   const el = document.querySelector('#player-frame');
   if (!el) return null;

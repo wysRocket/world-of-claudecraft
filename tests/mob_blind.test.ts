@@ -1,6 +1,6 @@
 // Some thugs fight dirty: the Vale Bandit's "Blinding Powder" flings a handful of
 // road grit on a landed hit, fouling the victim's aim so their OWN weapon swings
-// whiff for a few seconds. Blind is the weapon-side twin of silence — where
+// whiff for a few seconds. Blind is the weapon-side twin of silence - where
 // silence locks out spells, blind spoils melee and ranged attacks. It leaves
 // spellcasting, movement and the victim's defenses untouched.
 import { describe, expect, it } from 'vitest';

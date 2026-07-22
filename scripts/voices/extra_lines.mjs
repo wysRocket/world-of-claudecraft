@@ -1,4 +1,4 @@
-// Extra voiced lines that don't live on an NpcDef/QuestDef — dynamic encounter
+// Extra voiced lines that don't live on an NpcDef/QuestDef - dynamic encounter
 // dialogue emitted as chat 'yell' events (currently the Nythraxis raid from
 // PR #665, src/sim/sim.ts `nythraxisSay`). gen_npc_lines.mjs synthesizes these
 // alongside the greeting/quest lines.
@@ -21,7 +21,7 @@ const N = (text) => ({ key: yellKey(text), voiceNpc: 'nythraxis', text });
 const A = (text) => ({ key: yellKey(text), voiceNpc: 'brother_aldric', text });
 
 export const EXTRA_LINES = [
-  // Nythraxis, Scourge of Thornpeak (the raid boss) — new voice.
+  // Nythraxis, Scourge of Thornpeak (the raid boss) - new voice.
   N('Malric...'),
   N('What have you done'),
   N('Another kingdom comes to challenge me'),
@@ -35,7 +35,7 @@ export const EXTRA_LINES = [
   N('Your spirit belongs to me'),
   N('Witness true eternity!'),
   N('You cannot stop what was promised..'),
-  // Brother Aldric (raid ally) — reuses his existing voice.
+  // Brother Aldric (raid ally) - reuses his existing voice.
   A('Your kingdom is gone, Nythraxis'),
   A('Yet you still cling to it'),
   A('Champions, listen carefully!'),

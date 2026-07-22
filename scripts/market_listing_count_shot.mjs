@@ -6,7 +6,7 @@
 // seller's listings are always wired (the "Reclaim" rows on page 1).
 //
 // Run with max graphics: GFX=ultra. Toggle which build you screenshot with
-// LABEL=before|after (purely cosmetic — affects only the output filenames).
+// LABEL=before|after (purely cosmetic - affects only the output filenames).
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 import { BROWSER_PATH as EDGE } from './browser_path.mjs';

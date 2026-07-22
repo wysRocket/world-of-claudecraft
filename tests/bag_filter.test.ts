@@ -56,7 +56,7 @@ function ids(slots: InvSlot[]): string[] {
   return slots.map((s) => s.itemId);
 }
 
-describe('applyBagFilter — category filtering', () => {
+describe('applyBagFilter - category filtering', () => {
   it('returns everything (insertion order) for "all" + "recent"', () => {
     const out = applyBagFilter(INV, lookup, { category: 'all', sort: 'recent', search: '' });
     expect(ids(out)).toEqual(ids(INV));
@@ -94,7 +94,7 @@ describe('applyBagFilter — category filtering', () => {
   });
 });
 
-describe('applyBagFilter — search', () => {
+describe('applyBagFilter - search', () => {
   it('matches a case-insensitive name substring', () => {
     const out = applyBagFilter(INV, lookup, { category: 'all', sort: 'recent', search: 'red' });
     expect(ids(out)).toEqual(['blade']);
@@ -115,7 +115,7 @@ describe('applyBagFilter — search', () => {
   });
 });
 
-describe('applyBagFilter — sorting', () => {
+describe('applyBagFilter - sorting', () => {
   it('sorts by quality descending (legendary first, poor last), ties keep insertion order', () => {
     const out = applyBagFilter(INV, lookup, { category: 'all', sort: 'quality', search: '' });
     expect(ids(out)).toEqual([

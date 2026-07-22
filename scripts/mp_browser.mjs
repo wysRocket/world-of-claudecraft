@@ -89,7 +89,7 @@ console.log('A sees players:', JSON.stringify(aSees), aSees.includes(NAME_B) ? '
 console.log('B sees players:', JSON.stringify(bSees), bSees.includes(NAME_A) ? 'OK' : 'FAIL');
 
 // A runs forward; B should observe A's position change
-// B drains snapshots on rAF, which only runs foregrounded — so foreground B
+// B drains snapshots on rAF, which only runs foregrounded - so foreground B
 // around each position read, and A while it moves.
 await pageB.bringToFront();
 await new Promise((r) => setTimeout(r, 400));

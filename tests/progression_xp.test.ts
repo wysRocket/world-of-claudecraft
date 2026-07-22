@@ -27,7 +27,7 @@ function teleport(sim: AnySim, e: any, x: number, z: number): void {
 
 const inn = PROPS.buildings.find((b) => b.kind === 'inn')!;
 
-describe('progression/xp — isResting (inn footprint)', () => {
+describe('progression/xp - isResting (inn footprint)', () => {
   it('is true inside an inn footprint while out of combat', () => {
     const sim = makeSim();
     teleport(sim, sim.player, inn.x, inn.z);
@@ -50,7 +50,7 @@ describe('progression/xp — isResting (inn footprint)', () => {
   });
 });
 
-describe('progression/xp — updateRested (accrual + cap)', () => {
+describe('progression/xp - updateRested (accrual + cap)', () => {
   it('accrues a positive pool, paced off DT, while resting', () => {
     const sim = makeSim();
     const meta = sim.meta(sim.playerId)!;
@@ -94,7 +94,7 @@ describe('progression/xp — updateRested (accrual + cap)', () => {
   });
 });
 
-describe('progression/xp — prestige (cap-gated, cosmetic)', () => {
+describe('progression/xp - prestige (cap-gated, cosmetic)', () => {
   it('accepts at the cap with a full post-cap bar: resets the bar, bumps rank, leaves lifetime/level', () => {
     const sim = makeSim();
     sim.setPlayerLevel(MAX_LEVEL);

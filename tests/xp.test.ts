@@ -5,7 +5,7 @@
 // virtual-level boundaries, level-diff anti-farm still gates trivial mobs,
 // prestige resets the bar but not lifetimeXp, persistence round-trips, the
 // XP-bar label states (pre-cap / at-cap / post-cap), and the online
-// (ClientWorld) snapshot path — not just offline.
+// (ClientWorld) snapshot path - not just offline.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the db layer so the online-path test needs no Postgres (mirrors
@@ -132,7 +132,7 @@ describe('solo grantXp at the cap', () => {
     const before = sim.lifetimeXp;
     sim.grantXp(5000);
     expect(sim.lifetimeXp).toBe(before + 5000);
-    // the level bar stays frozen — no power, no de-level, no level-up
+    // the level bar stays frozen - no power, no de-level, no level-up
     expect(sim.player.level).toBe(MAX_LEVEL);
     expect(sim.xp).toBe(0);
   });
@@ -172,7 +172,7 @@ describe('solo grantXp at the cap', () => {
 });
 
 // -------------------------------------------------------------------------
-// Mid-level carry (regression — must keep working)
+// Mid-level carry (regression - must keep working)
 // -------------------------------------------------------------------------
 
 describe('pre-cap leveling regression', () => {
@@ -323,7 +323,7 @@ describe('prestige anti-abuse gate (server-locked rank)', () => {
     expect(sim.prestigeRank).toBe(0);
   });
 
-  it('caps rank at earned post-cap XP — spamming the command cannot inflate it', () => {
+  it('caps rank at earned post-cap XP - spamming the command cannot inflate it', () => {
     const sim = makeSim('warrior');
     sim.setPlayerLevel(MAX_LEVEL);
     // earn exactly 3 prestige bars of post-cap XP
@@ -515,7 +515,7 @@ describe('online ClientWorld path', () => {
     (client as any).applySnapshot(snap);
     expect(client.lifetimeXp).toBe(serverLifetime);
     expect(client.prestigeRank).toBe(1);
-    // the client derives the cosmetic virtual level for display — identical to
+    // the client derives the cosmetic virtual level for display - identical to
     // what the authoritative sim computes, and past the cap
     expect(virtualLevel(client.lifetimeXp)).toBe(virtualLevel(serverLifetime));
     expect(virtualLevel(client.lifetimeXp)).toBeGreaterThan(MAX_LEVEL);

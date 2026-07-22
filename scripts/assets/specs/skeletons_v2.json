@@ -1,5 +1,5 @@
 {
-  "note": "KayKit Skeletons 1.1 — bake clips + the held weapon into each enemy GLB so they are self-contained (no runtime attach needed). Necromancer/Rogue/Warrior use the shared Rig_Medium config in `defaults`; Skeleton_Golem overrides with the Rig_Large set. Outputs OVERWRITE the enemies/ GLBs. Run: node scripts/assets/build_assets.mjs scripts/assets/specs/skeletons_v2.json  —  IMPORTANT: after replacing these GLBs, REMOVE the `attach: [...]` weapon entries from their VISUALS in manifest.ts (the weapon is baked in now), or they will render a second weapon.",
+  "note": "KayKit Skeletons 1.1 - bake clips + the held weapon into each enemy GLB so they are self-contained (no runtime attach needed). Necromancer/Rogue/Warrior use the shared Rig_Medium config in `defaults`; Skeleton_Golem overrides with the Rig_Large set. Outputs OVERWRITE the enemies/ GLBs. Run: node scripts/assets/build_assets.mjs scripts/assets/specs/skeletons_v2.json  -  IMPORTANT: after replacing these GLBs, REMOVE the `attach: [...]` weapon entries from their VISUALS in manifest.ts (the weapon is baked in now), or they will render a second weapon.",
   "defaults": {
     "type": "character",
     "maxTex": 512,

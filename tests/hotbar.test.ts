@@ -373,7 +373,7 @@ describe('hotbar actions equality', () => {
 });
 
 describe('classes with per-form action bars', () => {
-  it('only the druid has form bars — every other class is single-bar', () => {
+  it('only the druid has form bars - every other class is single-bar', () => {
     const classIds = Object.keys(CLASSES);
     // sanity: the full roster is present so this stays exhaustive as classes are added
     expect(classIds.length).toBeGreaterThanOrEqual(9);

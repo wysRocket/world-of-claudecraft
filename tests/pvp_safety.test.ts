@@ -1,4 +1,4 @@
-// #96 — players must not damage or hostile-CC each other outside an accepted
+// #96 - players must not damage or hostile-CC each other outside an accepted
 // duel/PvP. These lock the invariant so the "killed in the starter village /
 // polymorphed into a baby llama" griefing path can never regress.
 import { describe, expect, it } from 'vitest';

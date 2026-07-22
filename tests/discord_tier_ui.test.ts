@@ -7,7 +7,7 @@ import {
 } from '../src/ui/discord_tier';
 
 // Exercising the presentation layer also exercises t(), which THROWS on an
-// untracked key in dev/test — so this is the guard that every hudChrome.discord
+// untracked key in dev/test - so this is the guard that every hudChrome.discord
 // tier key actually exists in the catalog.
 describe('discord tier presentation', () => {
   it('resolves a localized name for every rung (i18n keys exist)', () => {

@@ -61,7 +61,7 @@ describe('isFriendlyPet', () => {
 
 describe('mobNameColor', () => {
   it('a friendly pet gets friendly green regardless of level difference', () => {
-    // diff of +5 would otherwise be the scary red (#ff4444) — the original bug.
+    // diff of +5 would otherwise be the scary red (#ff4444) - the original bug.
     expect(mobNameColor(5, false, true)).toBe('#9fdc7f');
   });
   it('preserves the classic con colors for wild mobs (unchanged shipped nameplate bands)', () => {

@@ -71,7 +71,7 @@ describe('mob cinder (on-hit fire DoT)', () => {
     // Park the mob out of melee so only the DoT (not swings) chips the player.
     mob.pos = { x: player.pos.x + 500, y: player.pos.y, z: player.pos.z };
     const before = player.hp;
-    for (let i = 0; i < 20 * 4; i++) sim.tick(); // 4s — past one tick interval, beats regen
+    for (let i = 0; i < 20 * 4; i++) sim.tick(); // 4s - past one tick interval, beats regen
     expect(player.hp).toBeLessThan(before);
   });
 

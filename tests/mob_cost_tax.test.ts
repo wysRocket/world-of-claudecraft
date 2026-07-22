@@ -1,7 +1,7 @@
 // The Gravecaller Mender's "Draining Litany" is a cost-tax curse: a landed hit
 // can leave the victim's abilities more expensive (mana/rage/energy alike) for a
 // few seconds. Unlike a silence (full lockout) or a stat drain, it inflates the
-// resolved resource cost — resolved at the single resolvedAbility() choke point,
+// resolved resource cost - resolved at the single resolvedAbility() choke point,
 // so the affordability check and the actual spend always agree.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';

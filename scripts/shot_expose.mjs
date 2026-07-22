@@ -62,13 +62,13 @@ const setup = await page.evaluate(() => {
 });
 
 if (!setup.found) {
-  console.log('could not summon a varkas_boneguard from Marrowlord Varkas — FAIL');
+  console.log('could not summon a varkas_boneguard from Marrowlord Varkas - FAIL');
   await browser.close();
   process.exit(1);
 }
 
 // Drive swings until Cracked Guard lands. The affix is a real 25% proc shipped
-// on the Boneguard, so ~120 swings makes it virtually certain — no need to mutate
+// on the Boneguard, so ~120 swings makes it virtually certain - no need to mutate
 // the live template (which the sim closes over privately).
 const applied = await page.evaluate(async (mobId) => {
   const g = window.__game;

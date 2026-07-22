@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { buildBirds } from '../src/render/birds';
 
 // DUNGEON_X_THRESHOLD = 600 (src/sim/data.ts): x beyond this is inside an
-// instance, where the sky — and the flock — must not render.
+// instance, where the sky - and the flock - must not render.
 const INDOORS_X = 700;
 
 describe('ambient bird flock', () => {

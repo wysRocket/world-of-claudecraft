@@ -1,7 +1,7 @@
 // "Shuddering Stomp" boss mechanic: a mob with a `stomp` template field periodically
 // slams the ground while in melee combat, stunning (and optionally damaging)
-// every player inside its radius. It is telegraphed — the first slam only lands
-// one full interval after the fight begins — and resets on evade/respawn.
+// every player inside its radius. It is telegraphed - the first slam only lands
+// one full interval after the fight begins - and resets on evade/respawn.
 import { describe, expect, it } from 'vitest';
 import { MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';

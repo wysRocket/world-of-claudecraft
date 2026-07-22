@@ -35,7 +35,7 @@ await page.evaluate(() => {
 await wait(600);
 await page.screenshot({ path: 'tmp/browser_effects_start_full.png' });
 
-// 2) Same start screen at the MINIMAL tier — frozen background animations, blur
+// 2) Same start screen at the MINIMAL tier - frozen background animations, blur
 //    layers dropped, ember field hidden. The toned-down ambience a weak engine
 //    (e.g. Safari mobile / old Firefox) would auto-receive.
 await page.evaluate(() => {

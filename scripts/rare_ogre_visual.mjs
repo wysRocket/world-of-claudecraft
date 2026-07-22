@@ -54,7 +54,7 @@ console.log('brutok:', JSON.stringify(found));
 await new Promise((r) => setTimeout(r, 1400));
 await page.screenshot({ path: 'tmp/brutok_01_nameplate.png' });
 
-// Engage for a combat shot — pinned god-mode means he can't win, and his
+// Engage for a combat shot - pinned god-mode means he can't win, and his
 // Skull Smash pulse / enrage fire while we trade blows.
 await page.evaluate(() => { window.__game.sim.startAutoAttack(); });
 await new Promise((r) => setTimeout(r, 2800));

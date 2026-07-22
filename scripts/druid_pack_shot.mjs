@@ -88,7 +88,7 @@ await page.evaluate(() => {
 await sleep(800);
 await page.screenshot({ path: 'tmp/druid-buffs.png' });
 
-// --- 4: target debuffs — Faerie Fire (armor) + Insect Swarm (dot) on a nearby mob ---
+// --- 4: target debuffs - Faerie Fire (armor) + Insect Swarm (dot) on a nearby mob ---
 const dbg = await page.evaluate(() => {
   const g = window.__game;
   const p = g.sim.player;
@@ -122,4 +122,4 @@ await sleep(900);
 await page.screenshot({ path: 'tmp/druid-debuffs.png' });
 
 await browser.close();
-console.log('done — tmp/druid-spellbook.png, druid-tooltip.png, druid-buffs.png, druid-debuffs.png');
+console.log('done - tmp/druid-spellbook.png, druid-tooltip.png, druid-buffs.png, druid-debuffs.png');

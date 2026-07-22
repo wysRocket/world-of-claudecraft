@@ -38,7 +38,7 @@ const shot = async (name) => {
   console.log('shot', name);
 };
 
-// Step 1 — move: fresh spawn, player still at the start point.
+// Step 1 - move: fresh spawn, player still at the start point.
 await page.evaluate(() => {
   const { sim } = window.__game;
   sim.player.pos.x = 2; sim.player.pos.z = -2;
@@ -54,21 +54,21 @@ const giverPos = await page.evaluate(() => {
   return null;
 });
 
-// Step 2 — seek: walk a few yards from spawn (still far from the marshal).
+// Step 2 - seek: walk a few yards from spawn (still far from the marshal).
 await page.evaluate(() => {
   const { sim } = window.__game;
   sim.player.pos.x = 16; sim.player.pos.z = -12;
 });
 await shot('2_seek');
 
-// Step 3 — talk: stand right next to Marshal Redbrook.
+// Step 3 - talk: stand right next to Marshal Redbrook.
 await page.evaluate((g) => {
   const { sim } = window.__game;
   sim.player.pos.x = g.x + 2; sim.player.pos.z = g.z + 1;
 }, giverPos);
 await shot('3_talk');
 
-// Step 4 — slay: quest accepted, mid-hunt (3 of 8 wolves down).
+// Step 4 - slay: quest accepted, mid-hunt (3 of 8 wolves down).
 await page.evaluate(() => {
   const { sim } = window.__game;
   sim.acceptQuest('q_wolves');
@@ -78,7 +78,7 @@ await page.evaluate(() => {
 });
 await shot('4_slay');
 
-// Step 5 — return: objectives complete, head back to the marshal.
+// Step 5 - return: objectives complete, head back to the marshal.
 await page.evaluate((g) => {
   const { sim } = window.__game;
   const qp = sim.questLog.get('q_wolves');
@@ -87,7 +87,7 @@ await page.evaluate((g) => {
 }, giverPos);
 await shot('5_return');
 
-// Closing card — quest turned in.
+// Closing card - quest turned in.
 await page.evaluate(() => {
   const { sim } = window.__game;
   sim.questLog.delete('q_wolves');

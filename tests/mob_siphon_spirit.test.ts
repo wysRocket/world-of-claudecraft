@@ -13,7 +13,7 @@ const makeSim = (cls: PlayerClass = 'mage') => {
   return sim;
 };
 
-// Spawn Nhalia at the player's level so the hit table is even — an L12 elite
+// Spawn Nhalia at the player's level so the hit table is even - an L12 elite
 // swinging at an L20 mage misses almost every time, and the on-hit affix only
 // fires on a connecting hit. The victim is set gm in the swing loops so her
 // elite swing can't kill it mid-test (death clears auras).

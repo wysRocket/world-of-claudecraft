@@ -70,7 +70,7 @@ for (let i = 0; i < 60; i++) {
   });
   maxCombo = Math.max(maxCombo, s.combo);
   if (s.combo >= 2 && !evisFired) {
-    // give the HUD time to catch up before sampling the pips — headless
+    // give the HUD time to catch up before sampling the pips - headless
     // swiftshader frames can take several hundred ms each, so poll
     let pips = { ui: -1, combo: -2 };
     for (let j = 0; j < 10 && pips.ui !== pips.combo; j++) {

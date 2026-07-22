@@ -1,6 +1,6 @@
 // Retribution Aura is a paladin self-buff that reuses the Thorns aura: while it
 // is up, any enemy that lands a melee swing on the paladin takes flat Holy damage
-// back — the player-side analogue of innate mob "spiked hide" (see mob_thorns).
+// back - the player-side analogue of innate mob "spiked hide" (see mob_thorns).
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
 import { createMob } from '../src/sim/entity';

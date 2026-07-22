@@ -238,7 +238,7 @@ describe('H2: game.* values keep required diacritics', () => {
     // Italian: each listed form REQUIRES a final/internal accent in correct Italian
     // and has NO unaccented homograph, so a match means the diacritic was stripped.
     // (Deliberately excludes ambiguous forms like "abilita"/"necessita", which are
-    // also valid unaccented 3rd-person verbs — "abilita il PvP" = "enables PvP".)
+    // also valid unaccented 3rd-person verbs - "abilita il PvP" = "enables PvP".)
     it_IT:
       /\b(perche|piu|gia|citta|qualita|velocita|liberta|cosi|puo|universita|attivita|possibilita)\b/,
   };
@@ -306,7 +306,7 @@ describe('H3: DICT key parity, non-empty values, placeholder integrity', () => {
     }
   });
 
-  // H3b: copied-English guard — checkDict above never compares a value to English,
+  // H3b: copied-English guard - checkDict above never compares a value to English,
   // so untranslated/copied English would pass. This catches NEW copied-English while
   // allowing a fixed set of legitimate cognates / brand / borrowed terms / format strings.
   // COPIED_ALLOW is a VIEW over the status registry (declared at module scope
@@ -324,7 +324,7 @@ describe('H3: DICT key parity, non-empty values, placeholder integrity', () => {
         const id = `${label}::${lang}::${k}`;
         expect(
           COPIED_ALLOW.has(id),
-          `${id} copies English ("${v}") and is not allowlisted — translate it or allowlist if a genuine cognate`,
+          `${id} copies English ("${v}") and is not allowlisted - translate it or allowlist if a genuine cognate`,
         ).toBe(true);
       }
     }
@@ -757,7 +757,7 @@ function scanEmitCandidates(simSrc: string, serverSrc: string): Cand[] {
   for (const m of simSrc.matchAll(e1)) cands.push({ type: m[1] as Cand['type'], tmpl: unq(m[2]) });
   const e2 = new RegExp(`emit\\(\\{[^}]*?text:\\s*${lit}[^}]*?type:\\s*'(log|loot)'`, 'gs');
   for (const m of simSrc.matchAll(e2)) cands.push({ type: m[2] as Cand['type'], tmpl: unq(m[1]) });
-  // Ternary `text:` emits (both branches) — previously a blind spot.
+  // Ternary `text:` emits (both branches) - previously a blind spot.
   const e3 = new RegExp(
     `emit\\(\\{[^}]*?type:\\s*'(log|loot)'[^}]*?text:\\s*${cond}\\?\\s*${lit}\\s*:\\s*${lit}`,
     'gs',
@@ -774,7 +774,7 @@ function scanEmitCandidates(simSrc: string, serverSrc: string): Cand[] {
   const er = new RegExp(`(?:this|ctx)\\.error\\([^,]+,\\s*${lit}\\s*\\)`, 'g');
   for (const m of simSrc.matchAll(er)) cands.push({ type: 'error', tmpl: unq(m[1]) });
   // Variable-routed sim emits: this/ctx.notice(pid, '<lit>') (emits 'log') and
-  // this/ctx.stopFollow(p, '<lit>') (arg2 routes through error) — blind spots.
+  // this/ctx.stopFollow(p, '<lit>') (arg2 routes through error) - blind spots.
   // The first-arg class excludes ),(,newline so a single-arg call (e.g.
   // `this.stopFollow(p);`) cannot span into the NEXT call's literal.
   const nr = new RegExp(`(?:this|ctx)\\.(?:notice|stopFollow)\\([^,()\\n]+,\\s*${lit}`, 'g');
@@ -819,7 +819,7 @@ function scanEmitCandidates(simSrc: string, serverSrc: string): Cand[] {
   });
 }
 
-// --- S3: DRIFT GUARD — enumerate EVERY player-facing emit in src/sim/sim.ts and prove
+// --- S3: DRIFT GUARD - enumerate EVERY player-facing emit in src/sim/sim.ts and prove
 // each is recognized by the real client matcher for its event type. Unlike S1 (a curated
 // sample), this parses sim.ts at test time, so a NEW unhandled `text:`/this.error string
 // fails CI automatically. Routes through the real hud arm matchers (extracted from
@@ -997,7 +997,7 @@ describe('S3: every sim.ts emit is recognized (drift guard)', () => {
   const concrete = (tmpl: string): string => tmpl.replace(/\$\{([^}]*)\}/g, (_m, e) => sub(e));
 
   // `${verb}` holds a whole clause (leaves/has left/has been removed from the party),
-  // each concrete form covered by a sim_i18n RULE — not representable by one substitution.
+  // each concrete form covered by a sim_i18n RULE - not representable by one substitution.
   // The /who header + "...and N more" server templates count off `${total}` (a var the
   // probe substituter leaves as "Aki" because forcing it to a digit would desync the
   // fishing/overpower V07 backstop forms that share `total`/`remaining`); they are
@@ -1013,7 +1013,7 @@ describe('S3: every sim.ts emit is recognized (drift guard)', () => {
   // combat-log lines. This whole surface postdates PR #380's base, so its sim_i18n matcher
   // has no rules for it; these ship English as a documented backstop pending a dedicated
   // v0.7 slash-command localization pass (follow-up). The S3 guard stays fully active for
-  // every combat/quest/loot/party/system string that PR #380 actually localized — so a
+  // every combat/quest/loot/party/system string that PR #380 actually localized - so a
   // regression in the localized surface still fails here. Strings below are the guard's
   // concrete (placeholder-substituted) forms.
   // ALLOW_V07_SLASH is a VIEW over the status registry (declared at module scope

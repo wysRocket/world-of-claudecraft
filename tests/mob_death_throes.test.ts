@@ -1,7 +1,7 @@
 // Death Throes: a volatile mob (the Bog Bloat) does not explode the instant it
 // dies. Its corpse swells for a telegraphed delay, then bursts for area damage
 // to every living player within radius. Killing one next to you should arm the
-// fuse, then hurt you when it pops — but spare anyone who ran clear in time.
+// fuse, then hurt you when it pops - but spare anyone who ran clear in time.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
 import { MOBS } from '../src/sim/data';
@@ -36,7 +36,7 @@ describe('death throes on a volatile mob', () => {
     });
   });
 
-  it('does not detonate the instant it dies — it arms a fuse', () => {
+  it('does not detonate the instant it dies - it arms a fuse', () => {
     const sim = makeSim();
     const b = bloat(sim);
     place(sim, b, -200, 0);

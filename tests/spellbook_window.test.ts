@@ -117,7 +117,7 @@ describe('spellbook_window: no magic values (DOM painter)', () => {
   });
 
   it('carries no literal em dash in source', () => {
-    expect(src.includes('—'), 'em dash found').toBe(false);
+    expect(src.includes('-'), 'em dash found').toBe(false);
   });
 });
 

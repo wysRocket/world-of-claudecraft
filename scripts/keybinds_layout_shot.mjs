@@ -58,7 +58,7 @@ console.log('desktop panel width:', wide?.width);
 
 // --- Mobile: single-column touch fallback ---
 await page.evaluate(() => { window.__game.hud.closeOptions(); });
-// Landscape phone — avoids the portrait "rotate to landscape" overlay.
+// Landscape phone - avoids the portrait "rotate to landscape" overlay.
 await page.setViewport({ width: 844, height: 412 });
 await page.evaluate(() => document.body.classList.add('mobile-touch'));
 await wait(200);

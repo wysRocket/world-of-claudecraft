@@ -40,7 +40,7 @@ describe('percentileRarityStyle', () => {
     expect(percentileRarityStyle('epic').rays).toBe(false);
     expect(percentileRarityStyle('rare').halo).toBeGreaterThan(0);
     expect(percentileRarityStyle('rare').rays).toBe(false);
-    // Uncommon/common are plain medals — no halo, no rays.
+    // Uncommon/common are plain medals - no halo, no rays.
     expect(percentileRarityStyle('uncommon').halo).toBe(0);
     expect(percentileRarityStyle('common').halo).toBe(0);
   });
@@ -60,7 +60,7 @@ describe('percentileTierForPercent', () => {
     expect(percentileTierForPercent(3.2)?.percent).toBe(4);
     expect(percentileTierForPercent(2)?.percent).toBe(2);
     expect(percentileTierForPercent(5.99)?.percent).toBe(6);
-    expect(percentileTierForPercent(9.01)?.percent).toBe(10); // now within range — Top 10%
+    expect(percentileTierForPercent(9.01)?.percent).toBe(10); // now within range - Top 10%
   });
 
   it('maps a sub-1% rank to the apex Top 1% rung', () => {
@@ -77,7 +77,7 @@ describe('percentileTierForPercent', () => {
     }
   });
 
-  it('pins the inclusive Top 10% edge — 10 earns top10, 10.01 falls off', () => {
+  it('pins the inclusive Top 10% edge - 10 earns top10, 10.01 falls off', () => {
     expect(percentileTierForPercent(10)?.percent).toBe(10);
     expect(percentileTierForPercent(10)?.key).toBe('top10');
     expect(percentileTierForPercent(10.01)).toBeNull();
@@ -126,11 +126,11 @@ describe('percentileTierBadgeDataUrl', () => {
     expect(epic).not.toContain('<rect'); // but has no sunburst
 
     const common = svgFor(10);
-    expect(common).not.toContain('id="htop10"'); // common is a plain static medal — no halo
+    expect(common).not.toContain('id="htop10"'); // common is a plain static medal - no halo
     expect(common).not.toContain('<rect');
   });
 
-  it('emits no SMIL animation — the medal is only ever drawn onto the static card canvas', () => {
+  it('emits no SMIL animation - the medal is only ever drawn onto the static card canvas', () => {
     for (const tier of PERCENTILE_TIERS) {
       const svg = decodeURIComponent(percentileTierBadgeDataUrl(tier));
       expect(svg).not.toContain('<animate');

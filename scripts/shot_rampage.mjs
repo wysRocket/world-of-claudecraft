@@ -1,4 +1,4 @@
-// Screenshot the Battle Fury (Rampage) affix carrier — Warlord Drogmar — in the
+// Screenshot the Battle Fury (Rampage) affix carrier - Warlord Drogmar - in the
 // offline client. Boots the game, repurposes a nearby mob as the warlord, stands
 // it in front of a god-moded player, drives a string of landed swings so the
 // self-stacking buff_ap aura builds, and captures the boss in-world (nameplate +

@@ -72,7 +72,7 @@ describe('cosmetic skin-select event', () => {
 
   it('locks in an in-rank skin: applies it, consumes the token, clears the pending rank', () => {
     const { sim, rank } = rollRank(1);
-    const skin = EVENT_SKIN_TIERS[0].skin; // lowest tier — allowed by every rank
+    const skin = EVENT_SKIN_TIERS[0].skin; // lowest tier - allowed by every rank
     expect(rankAllowsSkin(rank, skin)).toBe(true);
 
     sim.claimEventSkin(skin);

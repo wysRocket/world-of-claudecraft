@@ -46,7 +46,7 @@ const closeAll = () => page.evaluate(() => {
     try { /* no-op: opened explicitly below */ } catch {}
 });
 
-// 1) #641 BATTLEGROUNDS: open the Ashen Coliseum arena panel — the ceiling of PvP
+// 1) #641 BATTLEGROUNDS: open the Ashen Coliseum arena panel - the ceiling of PvP
 // today is 1v1/2v2 ranked Elo + free duels. There is no objective team battleground.
 try {
   await page.evaluate(() => window.__game.hud.toggleArena());
@@ -56,7 +56,7 @@ await page.screenshot({ path: 'tmp/fr641_battlegrounds_arena.png' });
 try { await page.evaluate(() => window.__game.hud.toggleArena()); } catch {}
 await wait(300);
 
-// 2) #642 DUNGEON FINDER: open the Social panel — the only grouping aids today are the
+// 2) #642 DUNGEON FINDER: open the Social panel - the only grouping aids today are the
 // manual /invite party flow and the opt-in `lfg` chat channel. No automated queue.
 try {
   await page.evaluate(() => window.__game.hud.toggleSocial());
@@ -66,7 +66,7 @@ await page.screenshot({ path: 'tmp/fr642_dungeonfinder_social.png' });
 try { await page.evaluate(() => window.__game.hud.toggleSocial()); } catch {}
 await wait(300);
 
-// 3) #643 MACROS: open the spellbook — every ability/command is a single manual action;
+// 3) #643 MACROS: open the spellbook - every ability/command is a single manual action;
 // there is no way to compose a named sequence and bind it to a hotbar slot.
 try {
   await page.evaluate(() => window.__game.hud.toggleSpellbook());
@@ -77,7 +77,7 @@ try { await page.evaluate(() => window.__game.hud.toggleSpellbook()); } catch {}
 await wait(300);
 
 // 4) #644 HUNTER PET STABLE: summon a single tamed beast. The pet bar shows one active
-// pet — taming another would replace it; there is nowhere to store inactive pets.
+// pet - taming another would replace it; there is nowhere to store inactive pets.
 try {
   await page.evaluate(() => {
     const sim = window.__game.sim;

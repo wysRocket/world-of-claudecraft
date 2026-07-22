@@ -29,7 +29,7 @@ describe('/manaregen command', () => {
     const e = sim.entities.get(a)!;
     e.fiveSecondRule = 2.4; // 5 - 2.4 = 2.6 -> ceil 3
     sim.chat('/5sr', a);
-    expect(errorText(sim.tick())).toBe('Mana regen is paused — resumes in 3s (you spent mana recently).');
+    expect(errorText(sim.tick())).toBe('Mana regen is paused - resumes in 3s (you spent mana recently).');
   });
 
   it('tells non-mana classes the mechanic does not apply', () => {

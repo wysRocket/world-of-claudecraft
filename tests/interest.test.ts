@@ -60,7 +60,7 @@ function placeAt(server: GameServer, id: number, x: number, z: number): void {
 }
 
 // Nudge an entity so its dynamic wire state changes, then advance the
-// snapshot counter and broadcast — without running mob AI or wander.
+// snapshot counter and broadcast - without running mob AI or wander.
 function step(server: GameServer, moveIds: number[] = []): void {
   for (const id of moveIds) {
     const e = server.sim.entities.get(id)!;
@@ -599,7 +599,7 @@ describe('client crowd protocol', () => {
       expect(client.entities.get(subject.pid)!.netInterval).toBe(100);
 
       // records pause while an entity is unchanged; an 800ms standstill is
-      // idleness, not cadence — folding it in would smear the entity's
+      // idleness, not cadence - folding it in would smear the entity's
       // next steps in slow motion
       vi.advanceTimersByTime(800);
       viewerFc.sent.length = 0;

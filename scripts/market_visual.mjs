@@ -108,7 +108,7 @@ await page.evaluate(() => {
 await sleep(900);
 await page.screenshot({ path: 'tmp/market_01_merchant.png' });
 
-// 2) open the market — the Browse tab, full of listings
+// 2) open the market - the Browse tab, full of listings
 await page.evaluate(() => window.__game.hud.openMarket());
 await sleep(500);
 const browseRows = await page.evaluate(

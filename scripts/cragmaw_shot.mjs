@@ -1,4 +1,4 @@
-// Screenshot Old Cragmaw — the rare elite ridge beast (Thornpeak Heights) — in
+// Screenshot Old Cragmaw - the rare elite ridge beast (Thornpeak Heights) - in
 // the offline client. Boots the game, repurposes a nearby mob as Old Cragmaw at
 // its real template/level, targets it, and captures the elite target frame.
 import puppeteer from 'puppeteer-core';

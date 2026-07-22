@@ -44,12 +44,12 @@ await page.evaluate(() => {
   p.hp = 99999;
 });
 
-// 1) Open the "More" tray — shows the new Ranks (Leaderboard) button.
+// 1) Open the "More" tray - shows the new Ranks (Leaderboard) button.
 await tap('#mobile-more');
 await wait(400);
 await page.screenshot({ path: 'tmp/mobile_more_tray.png' });
 
-// 2) Tap Ranks — opens the leaderboard window.
+// 2) Tap Ranks - opens the leaderboard window.
 await tap('#mobile-leaderboard');
 await wait(500);
 await page.screenshot({ path: 'tmp/mobile_leaderboard.png' });

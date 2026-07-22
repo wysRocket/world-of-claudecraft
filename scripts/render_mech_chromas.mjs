@@ -3,7 +3,7 @@
 // scripts/mech_render_entry.js. The mech GLB is parsed once; each chroma PNG is
 // passed as base64, swapped onto the shared material, and rendered.
 //
-// Prereq: bundle the entry first —
+// Prereq: bundle the entry first -
 //   npx esbuild scripts/mech_render_entry.js --bundle --format=iife --outfile=tmp/mech_render_bundle.js
 // Run:
 //   node scripts/render_mech_chromas.mjs
@@ -21,7 +21,7 @@ const SKIP_BASE = process.argv[5] === 'nobase';
 mkdirSync(OUT, { recursive: true });
 
 const BUNDLE = 'tmp/mech_render_bundle.js';
-if (!existsSync(BUNDLE)) { console.error(`missing ${BUNDLE} — bundle the entry first (see header)`); process.exit(1); }
+if (!existsSync(BUNDLE)) { console.error(`missing ${BUNDLE} - bundle the entry first (see header)`); process.exit(1); }
 const bundle = readFileSync(BUNDLE, 'utf8');
 const html = `<!doctype html><html><head><meta charset="utf8"><style>html,body{margin:0;background:#000}</style></head><body><script>${bundle}</script></body></html>`;
 

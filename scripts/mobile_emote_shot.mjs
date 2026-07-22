@@ -44,12 +44,12 @@ await page.evaluate(() => {
   p.hp = 99999;
 });
 
-// 1) Open the "More" tray — shows the new Emotes button.
+// 1) Open the "More" tray - shows the new Emotes button.
 await tap('#mobile-more');
 await wait(400);
 await page.screenshot({ path: 'tmp/mobile_more_tray.png' });
 
-// 2) Tap Emotes — opens the radial emote wheel (pinned so a tap selects a slice).
+// 2) Tap Emotes - opens the radial emote wheel (pinned so a tap selects a slice).
 await tap('#mobile-emote');
 await wait(500);
 await page.screenshot({ path: 'tmp/mobile_emote_wheel.png' });

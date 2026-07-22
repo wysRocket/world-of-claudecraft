@@ -1,4 +1,4 @@
-// #100 — the social presence dot is colored purely by a CSS class derived from
+// #100 - the social presence dot is colored purely by a CSS class derived from
 // the player's status ('online' | 'combat' | 'dungeon' | 'dead'). A regression
 // once shipped where the green rule was named `.soc-dot.on` while the client
 // emitted `soc-dot online`, so every online player showed a grey dot. This

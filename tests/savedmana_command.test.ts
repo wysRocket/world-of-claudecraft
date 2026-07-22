@@ -53,7 +53,7 @@ describe('/savedmana command', () => {
     const d = sim.addPlayer('druid', 'Ash');
     sim.tick();
     expect(errorText(sim, '/savedmana', d)).toBe(
-      'Your mana is not parked — you are not shapeshifted.',
+      'Your mana is not parked - you are not shapeshifted.',
     );
   });
 

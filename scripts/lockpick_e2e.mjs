@@ -1,4 +1,4 @@
-// REAL end-to-end for the lockpicking minigame — drives the actual sim session
+// REAL end-to-end for the lockpicking minigame - drives the actual sim session
 // (not synthetic events like lockpick_ui_smoke.mjs). Offline only; needs
 // `npm run dev` (:5173). Flow: enter delve -> spawn the finale reward chest ->
 // engage the lock at ante 1 (premium / flawless) -> solve it with the real
@@ -22,8 +22,8 @@ let pass = 0,
   fail = 0;
 const check = (name, cond, extra = '') => {
   cond
-    ? (pass++, console.log(`  PASS ${name}${extra ? ` — ${extra}` : ''}`))
-    : (fail++, console.log(`  FAIL ${name}${extra ? ` — ${extra}` : ''}`));
+    ? (pass++, console.log(`  PASS ${name}${extra ? ` - ${extra}` : ''}`))
+    : (fail++, console.log(`  FAIL ${name}${extra ? ` - ${extra}` : ''}`));
 };
 
 const browser = await puppeteer.launch({
@@ -48,7 +48,7 @@ const browser = await puppeteer.launch({
 const page = await browser.newPage();
 const errors = [];
 // Offline `npm run dev` has no server, so the homepage's /api project-stats fetch
-// 502s — unrelated to the lockpick feature. Ignore that one known-benign noise.
+// 502s - unrelated to the lockpick feature. Ignore that one known-benign noise.
 const benign = (t) => /502|Bad Gateway|project stats/i.test(t);
 page.on('pageerror', (e) => errors.push(`PAGEERROR: ${e.message}`));
 page.on('console', (m) => {
@@ -231,7 +231,7 @@ const failPath = await page.evaluate(() => {
   const g = window.__game;
   const sim = g.sim;
   // leaveDelve only ejects the player; the run keeps its instance claim until it
-  // times out empty. Free it so re-enter claims a fresh, unlooted instance — the
+  // times out empty. Free it so re-enter claims a fresh, unlooted instance - the
   // real "clear the delve again for another attempt" path, fast-forwarded.
   const prev = sim.delveRunForPlayer(sim.player.id);
   sim.leaveDelve();
@@ -269,7 +269,7 @@ const failPath = await page.evaluate(() => {
   }
   const spec = run.lockpick.pages[run.lockpick.pageIndex];
   // Pick a deliberately illegal first move: an action whose delta lands off every
-  // open row of column 1 (guaranteed slip/bind) — fall back to the action that is
+  // open row of column 1 (guaranteed slip/bind) - fall back to the action that is
   // NOT the correct one if all single steps happen to be open.
   const DELTA = { hardSet: -2, set: -1, steady: 0, ease: 1, drop: 2 };
   const allowed = spec.tier.allowedActions;
@@ -300,7 +300,7 @@ console.log('fail path:', JSON.stringify(failPath));
 if (failPath.setupErr) {
   check('fail path: session engaged', false, `${failPath.setupErr} ${JSON.stringify(failPath)}`);
 } else if (failPath.noWrongMove) {
-  check('fail path: found a wrong move', false, 'all single steps open — widen test');
+  check('fail path: found a wrong move', false, 'all single steps open - widen test');
 } else {
   check('fail: ante-1 slip ends session', failPath.sessionGone === true);
   check('fail: chest jammed (no attempt left)', failPath.attemptAvailable === false);

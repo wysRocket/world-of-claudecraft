@@ -61,7 +61,7 @@ describe('mob cleave', () => {
       const splash = dmg.find((e) => e.targetId === nearE.id && e.amount > 0);
       if (splash) {
         expect(splash.ability).toBe('Reaping Arc');
-        return; // a hit landed and cleaved — done
+        return; // a hit landed and cleaved - done
       }
     }
     throw new Error('expected a cleave splash within 50 swings');

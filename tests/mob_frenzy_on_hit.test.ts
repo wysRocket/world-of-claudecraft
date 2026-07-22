@@ -1,7 +1,7 @@
 // Reactive beast "Frenzy": when a mob carrying the frenzyOnHit trait is wounded
 // by a player (or their pet), it has a chance to fly into a blood frenzy and
 // swing faster for a few seconds. Old Greyjaw (a rare wolf) carries the trait.
-// This is the mob-side reactive twin of packFrenzy — a refreshable buff_haste
+// This is the mob-side reactive twin of packFrenzy - a refreshable buff_haste
 // self-aura on the struck mob, not a player debuff.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';

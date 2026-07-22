@@ -1,4 +1,4 @@
-// RENAME STATE PROOF — the reverse-map re-digest proof (operator ruling addendum,
+// RENAME STATE PROOF - the reverse-map re-digest proof (operator ruling addendum,
 // 2026-07-02, recorded in ip-refactor/02-WORKING-MEMORY.md).
 //
 // Display names (and, for the sanctioned C1/C2 coined-id sweep, code ids) flow
@@ -22,7 +22,7 @@
 // read from a pinned local git ref.
 //
 // Run:  RENAME_PROOF=1 npx vitest run tests/parity/rename_state_proof.test.ts
-//       (default baseline ref HEAD — i.e. worktree goldens vs last commit;
+//       (default baseline ref HEAD - i.e. worktree goldens vs last commit;
 //        after the rename slice is committed, re-run with
 //        RENAME_PROOF_BASE=HEAD~1 to verify the committed slice.)
 // Skipped entirely (env-gated) unless RENAME_PROOF=1.
@@ -37,7 +37,7 @@ import { SCENARIOS } from './scenarios';
 import { canonical, fnv1a } from './trace';
 
 // Hoisted capture buffers (vi.mock factories execute during import, before test
-// body top-levels run — vi.hoisted makes these exist first).
+// body top-levels run - vi.hoisted makes these exist first).
 const captures = vi.hoisted(() => ({
   state: [] as string[], // canonical JSON of {players, entities}, one per frame
   events: [] as string[], // canonical JSON of the event window, one per frame
@@ -71,7 +71,7 @@ const BASE_REF = process.env.RENAME_PROOF_BASE || 'HEAD';
 // ---- the reverse map (new -> old), sourced from the LOCKED NAME-MAP ----------
 
 // Sanctioned coined-id sweeps (C1 family ids + C2 warlock pet ids), exact-match
-// only — mirrors ip-refactor/golden_token_inspector.mjs, reversed.
+// only - mirrors ip-refactor/golden_token_inspector.mjs, reversed.
 const REVERSE_ID_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['mudfin', 'murloc'],
   ['burrower', 'kobold'],

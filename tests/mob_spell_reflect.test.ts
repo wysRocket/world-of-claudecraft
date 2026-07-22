@@ -1,5 +1,5 @@
 // Innate "warded" mobs (Wyrmcult Necromancers) reflect flat damage onto any
-// caster whose SPELL connects — the magic-school twin of melee thorns. The
+// caster whose SPELL connects - the magic-school twin of melee thorns. The
 // reflect lives in dealDamage, the single funnel every damage instance passes
 // through, so driving dealDamage directly exercises the exact production path.
 import { describe, expect, it } from 'vitest';
@@ -43,7 +43,7 @@ describe('mob spell reflect (Spectral Ward)', () => {
     expect(before - player.hp).toBe(ward.value);
   });
 
-  it('does not reflect a physical (melee) hit — that is the thorns domain', () => {
+  it('does not reflect a physical (melee) hit - that is the thorns domain', () => {
     const sim = makeSim();
     const player = sim.player;
     player.maxHp = 100000;

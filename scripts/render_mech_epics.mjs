@@ -14,7 +14,7 @@ const OUT_PX = Number(process.argv[2] || 1920);
 mkdirSync(OUT, { recursive: true });
 
 const BUNDLE = 'tmp/mech_render_epic_bundle.js';
-if (!existsSync(BUNDLE)) { console.error(`missing ${BUNDLE} — bundle the entry first (see header)`); process.exit(1); }
+if (!existsSync(BUNDLE)) { console.error(`missing ${BUNDLE} - bundle the entry first (see header)`); process.exit(1); }
 const html = `<!doctype html><html><head><meta charset="utf8"><style>html,body{margin:0;background:#000}</style></head><body><script>${readFileSync(BUNDLE, 'utf8')}</script></body></html>`;
 
 const browser = await puppeteer.launch({

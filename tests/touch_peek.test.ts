@@ -5,7 +5,7 @@ describe('TouchPeekGuard', () => {
   it('a quick tap (no peek) activates the control', () => {
     const g = new TouchPeekGuard();
     g.press();
-    // no peek() — the long-press timer never fired
+    // no peek() - the long-press timer never fired
     expect(g.consume()).toBe(false);
   });
 

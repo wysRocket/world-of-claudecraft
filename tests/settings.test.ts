@@ -108,7 +108,7 @@ describe('Settings', () => {
     expect(s.set('interfaceMode', 1)).toBe(1);
   });
 
-  it('clamps touch opacity to its 0.3–1.0 bounds and defaults to fully opaque', () => {
+  it('clamps touch opacity to its 0.3-1.0 bounds and defaults to fully opaque', () => {
     const s = new Settings();
     expect(s.get('touchOpacity')).toBe(SETTING_RANGES.touchOpacity.def);
     expect(s.set('touchOpacity', 5)).toBe(SETTING_RANGES.touchOpacity.max);
@@ -116,7 +116,7 @@ describe('Settings', () => {
     expect(s.set('touchOpacity', 0.6)).toBe(0.6);
   });
 
-  it('defaults the joystick size to stock and clamps to its 0.7–1.3 range', () => {
+  it('defaults the joystick size to stock and clamps to its 0.7-1.3 range', () => {
     const s = new Settings();
     expect(s.get('joystickScale')).toBe(1);
     expect(s.set('joystickScale', 5)).toBe(SETTING_RANGES.joystickScale.max);

@@ -37,7 +37,7 @@ try {
   // Headless Chromium reports pointer:fine even on a mobile viewport, so the
   // PHONE_TOUCH_QUERY (pointer:coarse) never matches and the touch-only setting
   // won't render. Override matchMedia for coarse-pointer queries before any
-  // app code runs — this activates the whole mobile path natively.
+  // app code runs - this activates the whole mobile path natively.
   await page.evaluateOnNewDocument(() => {
     const real = window.matchMedia.bind(window);
     window.matchMedia = (q) =>

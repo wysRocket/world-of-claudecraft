@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 // The server self-wire test pulls in server/game.ts, which imports the db
-// layer — mock it so no Postgres is required (vi.mock is hoisted).
+// layer - mock it so no Postgres is required (vi.mock is hoisted).
 vi.mock('../server/db', () => ({
   pool: { query: vi.fn(async () => ({ rows: [] })) },
   saveCharacterState: vi.fn(async () => {}),

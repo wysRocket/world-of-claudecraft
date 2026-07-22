@@ -68,7 +68,7 @@ describe('fiesta: scoring & respawn', () => {
     expect(match.fiesta!.respawn.has(victimPid)).toBe(true);
     expect(victim.dead).toBe(true);
 
-    // The victim should NOT be permanently eliminated — they revive on their timer.
+    // The victim should NOT be permanently eliminated - they revive on their timer.
     const downedFor = match.fiesta!.respawn.get(victimPid)!;
     for (let i = 0; i < Math.ceil(downedFor * 20) + 5; i++) sim.tick();
     expect(match.fiesta!.respawn.has(victimPid)).toBe(false);
@@ -115,7 +115,7 @@ describe('fiesta: augments', () => {
     const { sim, match, pids } = startFiesta();
     for (let i = 0; i < 20 * 12 && match.fiesta!.wave < 1; i++) sim.tick();
     expect(match.fiesta!.wave).toBe(1);
-    // Deferred: nothing pops mid-fight — it's queued as pending instead.
+    // Deferred: nothing pops mid-fight - it's queued as pending instead.
     expect(match.fiesta!.offers.has(pids[0])).toBe(false);
     const pending = match.fiesta!.pending.get(pids[0]);
     expect(pending?.[0]?.choices.length).toBe(3);

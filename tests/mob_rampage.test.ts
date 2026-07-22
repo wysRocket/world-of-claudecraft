@@ -54,7 +54,7 @@ describe('mob Mounting Rage (Rampage)', () => {
     const baseAp = (sim as any).effectiveAttackPower(mob);
     swingTimes(sim, mob, player, maxStacks + 10);
     expect(rampageStacks(mob)).toBe(maxStacks);
-    // the single shared aura is valued at ap * maxStacks — never beyond the cap
+    // the single shared aura is valued at ap * maxStacks - never beyond the cap
     expect((sim as any).effectiveAttackPower(mob)).toBe(baseAp + ap * maxStacks);
     expect(mob.auras.filter((a: any) => a.id === `rampage_${mob.templateId}`).length).toBe(1);
   });
@@ -71,7 +71,7 @@ describe('mob Mounting Rage (Rampage)', () => {
     swingTimes(sim, mob, player, 3);
     expect(rampageStacks(mob)).toBeGreaterThan(0);
     const baseAp = mob.attackPower;
-    // drop the player so the warlord stops swinging — otherwise it keeps landing
+    // drop the player so the warlord stops swinging - otherwise it keeps landing
     // hits during tick() and refreshes the fury forever. Now let it time out.
     player.dead = true;
     player.hp = 0;

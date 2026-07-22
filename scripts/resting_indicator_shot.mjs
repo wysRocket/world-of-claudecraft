@@ -43,7 +43,7 @@ async function clipPlayerFrame(name) {
   console.log('shot:', name);
 }
 
-// 1) Standing — no indicator.
+// 1) Standing - no indicator.
 await clipPlayerFrame('standing');
 
 // 2) Resting (bare sit).

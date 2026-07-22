@@ -1,5 +1,5 @@
 // Read-only scoped-token guarantees. The behavioral 403 promise is enforced at a
-// single choke point — bearerActiveAccount rejects scope!=='full' — so this suite
+// single choke point - bearerActiveAccount rejects scope!=='full' - so this suite
 // proves (a) the scope policy itself, (b) every mutating route funnels through
 // that choke point (a source scan that "loops the list"), and (c) the migration
 // is additive with old tokens reading 'full'. main.ts cannot be imported (it

@@ -411,7 +411,7 @@ describe('admin api auth', () => {
   });
 
   it('rejects admin login for a non-admin account even with the right password', async () => {
-    // scrypt hash of "hunter22" is irrelevant — verifyPassword fails on a junk
+    // scrypt hash of "hunter22" is irrelevant - verifyPassword fails on a junk
     // hash, so this asserts the credential failure path returns 401.
     vi.mocked(findAccount).mockResolvedValue({ id: 3, username: 'bob', password_hash: 'junk' });
     const res = fakeRes();

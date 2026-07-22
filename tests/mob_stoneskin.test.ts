@@ -1,7 +1,7 @@
 // "Stoneskin" boss mechanic: a mob with a `stoneskin` template field
 // periodically wraps itself in a damage-absorbing barrier while in melee
-// combat. It is telegraphed — the first barrier only snaps up one full
-// interval after the fight begins — resets on evade/respawn, and reuses the
+// combat. It is telegraphed - the first barrier only snaps up one full
+// interval after the fight begins - resets on evade/respawn, and reuses the
 // existing `absorb` aura, which dealDamage already soaks before any HP is lost.
 import { describe, expect, it } from 'vitest';
 import { MOBS } from '../src/sim/data';

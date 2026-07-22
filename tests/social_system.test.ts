@@ -16,7 +16,7 @@ import type { ChatSenderFlair } from '../src/sim/account_flair';
 import type { SimEvent } from '../src/sim/types';
 
 // ---------------------------------------------------------------------------
-// In-memory fakes — let us exercise the full SocialService logic (friends,
+// In-memory fakes - let us exercise the full SocialService logic (friends,
 // ignore, guilds, presence, chat routing) without Postgres or sockets.
 // ---------------------------------------------------------------------------
 

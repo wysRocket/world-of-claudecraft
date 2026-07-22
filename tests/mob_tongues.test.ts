@@ -82,7 +82,7 @@ describe('mob curse of tongues ("Dirge of Tongues")', () => {
     expect(baseCast).toBeGreaterThan(0);
     (sim as any).cancelCast(p);
 
-    // Apply the curse and recast — the cast time should be 30% longer.
+    // Apply the curse and recast - the cast time should be 30% longer.
     p.auras.push({
       id: 'tongues_nhalia_mourner', name: 'Dirge of Tongues', kind: 'tongues',
       remaining: 10, duration: 10, value: 1.3, sourceId: 999, school: 'shadow',

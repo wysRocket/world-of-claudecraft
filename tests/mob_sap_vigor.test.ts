@@ -8,7 +8,7 @@ const SEED = 42;
 const makeSim = (cls: PlayerClass) => new Sim({ seed: SEED, playerClass: cls, autoEquip: true });
 
 // Spawn Mirejaw the Ravenous next to the player (at the player's level for an
-// even hit table) and swing until a hit connects — a swing can miss/dodge.
+// even hit table) and swing until a hit connects - a swing can miss/dodge.
 const setup = (cls: PlayerClass) => {
   const sim = makeSim(cls);
   const player = sim.player;
@@ -52,7 +52,7 @@ describe('mob sap vigor (Sapping Bite)', () => {
     }
   });
 
-  it('drain clamps at zero — it never pushes the resource negative', () => {
+  it('drain clamps at zero - it never pushes the resource negative', () => {
     const { sim, player, mob } = setup('rogue');
     const sap = MOBS.mirejaw_the_ravenous.sapVigor!;
     player.resource = 10; // less than sap.amount (25)

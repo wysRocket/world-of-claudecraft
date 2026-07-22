@@ -86,7 +86,7 @@ await page.evaluate(
 );
 await wait(300);
 
-// 1) Bags — all 12 new pieces with procedural icons + quality borders.
+// 1) Bags - all 12 new pieces with procedural icons + quality borders.
 await page.evaluate(() => {
   const el = document.querySelector('#bags');
   window.__game.hud.renderBags?.();
@@ -114,7 +114,7 @@ const result = await page.evaluate(
 );
 await wait(300);
 
-// 2) Character paperdoll — new helmet/shoulder/waist/gloves + Gorrak's Cleaver.
+// 2) Character paperdoll - new helmet/shoulder/waist/gloves + Gorrak's Cleaver.
 await page.evaluate(() => window.__game.hud.toggleChar());
 await wait(500);
 box = await clip('#char-window');
@@ -123,7 +123,7 @@ if (box && box.width > 0)
 await page.evaluate(() => window.__game.hud.toggleChar());
 await wait(200);
 
-// 3) World Market — the eight standing consignment listings. Stand the player
+// 3) World Market - the eight standing consignment listings. Stand the player
 // on the Merchant so the proximity gate passes, then open + browse.
 await page.evaluate(() => {
   const sim = window.__game.sim;

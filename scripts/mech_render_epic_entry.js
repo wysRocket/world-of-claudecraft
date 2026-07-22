@@ -3,7 +3,7 @@
 // a procedural studio environment map (PMREM) for reflections. The chrome lives
 // in the MATERIAL, tinted by the clean albedo (which also carries panel detail +
 // baked ★ sparkles). An emissive map keeps the visor eyes glowing.
-// IMPORTANT: NO bloom / postprocessing — all shine stays ON the model surface,
+// IMPORTANT: NO bloom / postprocessing - all shine stays ON the model surface,
 // within the silhouette (the earlier bloom spilled outside; that was rejected).
 // Exposes window.renderEpic(glbB64, albedoB64, emisB64) -> png data URL.
 import * as THREE from 'three';
@@ -102,7 +102,7 @@ window.renderEpic = async (glbB64, albedoB64, emisB64) => {
   if (material.map) material.map.dispose();
   if (material.emissiveMap) material.emissiveMap.dispose();
   material.map = tex(aImg, true);
-  material.metalness = 1.0;       // full chrome — the look the user locked on
+  material.metalness = 1.0;       // full chrome - the look the user locked on
   material.roughness = 0.2;       // sharp mirror-ish reflections
   material.envMapIntensity = 1.15;
   material.emissiveMap = tex(eImg, true);

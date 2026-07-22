@@ -65,7 +65,7 @@ describe('maskText (soft, cosmetic)', () => {
   });
 });
 
-describe('findHardWord (hard, punitive — the admin hard list is the SOLE trigger)', () => {
+describe('findHardWord (hard, punitive - the admin hard list is the SOLE trigger)', () => {
   it('matches a LISTED word through leet, case, plurals, diacritics, and Unicode', () => {
     expect(findHardWord(`you are a ${F.slur}`, [F.slur])).toBe(F.slur);
     expect(findHardWord(F.leet, [F.slur])).toBe(F.slur); // n1gg3r → nigger

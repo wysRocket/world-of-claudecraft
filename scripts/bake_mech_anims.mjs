@@ -6,7 +6,7 @@
 // animation clips, so it renders as a frozen T-pose. Every other player GLB
 // carries its own clip set baked in; this script makes the mech match by copying
 // the donor's animations (retargeted onto the mech's identically-named bones) so
-// the mech becomes self-contained — no special-case loader path required.
+// the mech becomes self-contained - no special-case loader path required.
 //
 // The donor (knight.glb) is meshopt-compressed; the mech is plain/uncompressed.
 // We decode the donor, copy only the animation samplers/channels (as plain
@@ -51,7 +51,7 @@ async function main() {
   for (const node of target.getRoot().listNodes()) {
     const name = node.getName();
     if (targetNodesByName.has(name)) {
-      console.warn(`  ! duplicate target node name "${name}" — retarget may be ambiguous`);
+      console.warn(`  ! duplicate target node name "${name}" - retarget may be ambiguous`);
     }
     targetNodesByName.set(name, node);
   }

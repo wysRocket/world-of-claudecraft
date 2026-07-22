@@ -138,7 +138,7 @@ if (setup.vendorId !== null) {
   });
   await page.screenshot({ path: `${OUT}/03_vendor.png`, clip: vclip });
 
-  // 4) TOOLTIP — synthesize a hover on the first vendor weapon row (attachTooltip
+  // 4) TOOLTIP - synthesize a hover on the first vendor weapon row (attachTooltip
   // listens for mouseenter/mousemove and positions #tooltip at the cursor).
   await page.evaluate(() => {
     const row = document.querySelector('#vendor-window .vendor-item');

@@ -2,7 +2,7 @@
 // into a harmless critter on a melee hit. The hex reuses the exact `polymorph`
 // aura the mage's Polymorph applies: it locks out every action (isStunned) and
 // breaks the instant the victim takes damage. Unlike the player-cast version it
-// does NOT heal the victim to full on apply — a monster shouldn't restore its prey.
+// does NOT heal the victim to full on apply - a monster shouldn't restore its prey.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
 import { MOBS } from '../src/sim/data';

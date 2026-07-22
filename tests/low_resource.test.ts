@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { lowResourceView, LOW_RESOURCE_THRESHOLD } from '../src/ui/low_resource';
 
 describe('lowResourceView', () => {
-  it('is inactive for rage (rage builds in combat — low is normal)', () => {
+  it('is inactive for rage (rage builds in combat - low is normal)', () => {
     expect(lowResourceView({ resource: 0, maxResource: 100, resourceType: 'rage' }).active).toBe(false);
   });
 

@@ -63,8 +63,8 @@ await pageB.evaluate(() => {
   r.triggerAttack = (id) => { window.__seen.attacks.push(id); origAtk(id); };
 });
 
-// A: teleport-ish — walk is slow; use the wolf nearest spawn. Find wolf, walk to it via sim facing + forward input is complex online.
-// Instead: target nearest wolf and use Charge (warrior, learnLevel 4 — not known at 1).
+// A: teleport-ish - walk is slow; use the wolf nearest spawn. Find wolf, walk to it via sim facing + forward input is complex online.
+// Instead: target nearest wolf and use Charge (warrior, learnLevel 4 - not known at 1).
 // Plan B: spawn-adjacent wolves are ~50yd north. Just walk A forward toward a wolf for a few seconds.
 const apid = await pageA.evaluate(() => window.__game.online.playerId);
 await pageA.bringToFront();
@@ -94,7 +94,7 @@ for (let i = 0; i < 60; i++) {
   if (done) break;
   await new Promise((r) => setTimeout(r, 250));
 }
-// B follows A so it stays in event radius (teleport B's interest doesn't matter — B just needs to be within 90yd of the fight; spawn is ~55yd from wolves, fine)
+// B follows A so it stays in event radius (teleport B's interest doesn't matter - B just needs to be within 90yd of the fight; spawn is ~55yd from wolves, fine)
 
 await pageA.evaluate((id) => {
   const g = window.__game;
@@ -102,7 +102,7 @@ await pageA.evaluate((id) => {
   g.world.startAutoAttack();
 }, wolf.id);
 console.log('A attacking');
-// rAF only runs in the foregrounded tab — B must be visible to drain events
+// rAF only runs in the foregrounded tab - B must be visible to drain events
 await pageB.bringToFront();
 // keep A square to the (circling) mob so his swings connect, and walk B
 // into spell range for a fireball

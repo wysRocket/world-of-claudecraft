@@ -114,7 +114,7 @@ describe('leaderboard_window: no magic values (DOM painter)', () => {
   });
 
   it('carries no literal em dash in source (the sticky-rank placeholder is an entity)', () => {
-    expect(src.includes('—'), 'em dash found').toBe(false);
+    expect(src.includes('-'), 'em dash found').toBe(false);
   });
 
   it('names the page size instead of an inline literal', () => {

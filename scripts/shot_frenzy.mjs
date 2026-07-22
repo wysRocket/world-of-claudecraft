@@ -3,7 +3,7 @@
 // through the real damage funnel with the proc forced, and captures the
 // "flies into a frenzy" combat-log line + the nova VFX on the wolf. The buff is
 // a self-haste on the mob (not a player debuff), so there is no debuff icon to
-// grab — the combat log is the reliable visual, as for other reactive traits.
+// grab - the combat log is the reliable visual, as for other reactive traits.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';
 
@@ -77,7 +77,7 @@ console.log('frenzy result:', JSON.stringify(result));
 await new Promise((r) => setTimeout(r, 250));
 await page.screenshot({ path: 'tmp/frenzy_scene.png' });
 
-// Crop the combat log (fixed bottom-left region — the panel reports 0 width).
+// Crop the combat log (fixed bottom-left region - the panel reports 0 width).
 await new Promise((r) => setTimeout(r, 400));
 await page.screenshot({
   path: 'tmp/frenzy_log.png',

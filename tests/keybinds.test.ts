@@ -324,7 +324,7 @@ describe('persistence', () => {
   });
 
   it('drops duplicate codes when loading corrupt storage', () => {
-    // two actions claim KeyR — the later one must lose it on load
+    // two actions claim KeyR - the later one must lose it on load
     localStorage.setItem(
       'woc_keybinds',
       JSON.stringify({
@@ -612,7 +612,7 @@ describe('modifier binding (edge actions)', () => {
     expect(kb.bind('slot1', 0, 'Shift+Digit1')).toBe(true);
     expect(kb.edgeActionForCombo('Shift+Digit1')).toBe('slot1');
     expect(kb.codeAt('slot1', 0)).toBe('Shift+Digit1');
-    // bare Digit1 (Attack/slot0) is untouched — the modified chord did not evict it
+    // bare Digit1 (Attack/slot0) is untouched - the modified chord did not evict it
     expect(kb.edgeActionForCombo('Digit1')).toBe('slot0');
     expect(kb.primaryLabel('slot1')).toBe('Shift+1');
   });

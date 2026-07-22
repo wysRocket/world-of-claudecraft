@@ -369,7 +369,7 @@ describe('account portal rate limiting (429)', () => {
 // verify must call clearAuthFailures so the user's own subsequent login is not
 // throttled by their earlier portal typos. We assert success returns 200 (the
 // branch that now clears) and that a wrong password is rejected (the branch that
-// records) — both from a fresh IP so the 429 cap above doesn't interfere.
+// records) - both from a fresh IP so the 429 cap above doesn't interfere.
 describe('account portal auth-failure accounting', () => {
   it('change-password success path is reachable (clears failures)', async () => {
     const res = makeRes();

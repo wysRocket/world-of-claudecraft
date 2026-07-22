@@ -6,7 +6,7 @@ import type { Entity } from '../src/sim/types';
 
 const SEED = 41099;
 
-// Mogger is the seeded carrier of the wardAllies support mechanic — a rare ogre
+// Mogger is the seeded carrier of the wardAllies support mechanic - a rare ogre
 // boss that shields his crew (mogger_lackeys) with a Bracing Order absorb.
 const inner = (sim: Sim) =>
   sim as unknown as {
@@ -79,7 +79,7 @@ describe('mob support shield (wardAllies)', () => {
   it('shields every ally in range plus the caster (AoE, healthy too)', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', noPlayer: true });
     const mogger = spawn(sim, 9021, MOBS.mogger);
-    const a = spawn(sim, 9022, MOBS.mogger_lackey); // full HP — a ward pre-empts damage
+    const a = spawn(sim, 9022, MOBS.mogger_lackey); // full HP - a ward pre-empts damage
     const b = spawn(sim, 9023, MOBS.mogger_lackey);
     for (let i = 0; i < 20 * 12 + 1; i++) inner(sim).updateBossMechanics(mogger);
     expect(ward(a)?.value).toBe(70);

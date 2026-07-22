@@ -1,5 +1,5 @@
-// Direct unit tests for the harness primitives — the samplers, canonicalization,
-// and the rng draw-order log — independent of the golden gate.
+// Direct unit tests for the harness primitives - the samplers, canonicalization,
+// and the rng draw-order log - independent of the golden gate.
 
 import { describe, expect, it } from 'vitest';
 import { Rng } from '../../src/sim/rng';

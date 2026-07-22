@@ -72,7 +72,7 @@ function giveForm(sim: Sim, pid: number, kind: AuraKind, name: string) {
   });
 }
 
-describe('druid spell pack — definitions', () => {
+describe('druid spell pack - definitions', () => {
   it('registers all 10 abilities as druid spells with effects', () => {
     for (const id of NEW_DRUID) {
       const def = ABILITIES[id];
@@ -96,7 +96,7 @@ describe('druid spell pack — definitions', () => {
   });
 });
 
-describe('druid spell pack — level gating', () => {
+describe('druid spell pack - level gating', () => {
   it('gates each pack spell at its learn level and teaches everything by 20', () => {
     // The choice-row unlock guard moved travel_form (11), bash (8), and rip (14)
     // earlier so the rows that modify them are live at unlock; the rest of the
@@ -119,7 +119,7 @@ describe('druid spell pack — level gating', () => {
   });
 });
 
-describe('druid spell pack — casting applies effects', () => {
+describe('druid spell pack - casting applies effects', () => {
   it("Tiger's Fury grants attack power in cat form", () => {
     const sim = makeWorld();
     const a = sim.addPlayer('druid', 'Cat');

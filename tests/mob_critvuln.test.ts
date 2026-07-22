@@ -30,21 +30,21 @@ describe('Find Weakness crit-vulnerability debuff', () => {
     p.maxHp = 100000; p.hp = 100000;
     const mob = createMob(910000, MOBS.mire_widow, 10, { x: 0, y: 0, z: 0 });
 
-    // normal hit — no amplification even with the debuff up
+    // normal hit - no amplification even with the debuff up
     p.auras.length = 0;
     p.auras.push(critVulnAura(0.5));
     p.hp = 100000;
     (sim as any).dealDamage(mob, p, 100, false, 'physical', null, 'hit');
     expect(100000 - p.hp).toBe(100);
 
-    // critical hit — amplified by +50%
+    // critical hit - amplified by +50%
     p.auras.length = 0;
     p.auras.push(critVulnAura(0.5));
     p.hp = 100000;
     (sim as any).dealDamage(mob, p, 100, true, 'physical', null, 'hit');
     expect(100000 - p.hp).toBe(150);
 
-    // critical hit without the debuff — unmodified
+    // critical hit without the debuff - unmodified
     p.auras.length = 0;
     p.hp = 100000;
     (sim as any).dealDamage(mob, p, 100, true, 'physical', null, 'hit');

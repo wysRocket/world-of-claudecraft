@@ -34,7 +34,7 @@ describe('/combat command', () => {
     e.combatTimer = 2; // 5s linger window - 2s elapsed -> 3s remaining
 
     sim.chat('/cb', a);
-    expect(lastError(sim.tick())).toBe('You are in combat — leaving in 3s if no further action.');
+    expect(lastError(sim.tick())).toBe('You are in combat - leaving in 3s if no further action.');
   });
 
   it('reports active engagement when in combat past the linger window', () => {

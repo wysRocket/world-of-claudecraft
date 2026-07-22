@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 
 // The server self-wire tests pull in server/game.ts, which imports the db
-// layer — mock it so no Postgres is required (vi.mock is hoisted).
+// layer - mock it so no Postgres is required (vi.mock is hoisted).
 vi.mock('../server/db', () => ({
   pool: { query: vi.fn(async () => ({ rows: [] })) },
   saveCharacterState: vi.fn(async () => {}),
@@ -43,7 +43,7 @@ function makeParty(sim: Sim, ...pids: number[]): void {
   }
 }
 
-describe('target markers — sim layer', () => {
+describe('target markers - sim layer', () => {
   it('a marker set by one party member is visible to the whole party, not outsiders', () => {
     const sim = makeWorld();
     const a = sim.addPlayer('warrior', 'Aleph');
@@ -76,7 +76,7 @@ describe('target markers — sim layer', () => {
     expect(sim.markersFor(c)[mob.id]).toBe(STAR);
   });
 
-  it('a symbol is unique within a party — re-assigning it moves it off the old mob', () => {
+  it('a symbol is unique within a party - re-assigning it moves it off the old mob', () => {
     const sim = makeWorld();
     const a = sim.addPlayer('warrior', 'Aleph');
     const b = sim.addPlayer('mage', 'Bet');
@@ -273,7 +273,7 @@ describe('target markers — sim layer', () => {
   });
 });
 
-describe('target markers — server self-wire', () => {
+describe('target markers - server self-wire', () => {
   function fakeWs() {
     const sent: any[] = [];
     return { sent, ws: { readyState: 1, send: (p: string) => sent.push(JSON.parse(p)) } };

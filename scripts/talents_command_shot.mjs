@@ -37,7 +37,7 @@ await new Promise((r) => setTimeout(r, 400));
 
 // Type the command through the actual chat input (Enter opens it). The readout
 // is delivered as a self-only `error` event, which the HUD shows as a centered
-// banner (#error-msg) that fades after ~1.6s — capture inside that window.
+// banner (#error-msg) that fades after ~1.6s - capture inside that window.
 await page.keyboard.press('Enter');
 await new Promise((r) => setTimeout(r, 150));
 await page.type('#chat-input', '/talents', { delay: 12 });

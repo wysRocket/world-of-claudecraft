@@ -26,7 +26,7 @@ await page.emulate({
   userAgent:
     'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148',
 });
-// isPhoneTouchDevice() reads matchMedia(pointer: coarse) — headless Chromium reports
+// isPhoneTouchDevice() reads matchMedia(pointer: coarse) - headless Chromium reports
 // fine, so force coarse pointer to mirror a real phone.
 const client = await page.target().createCDPSession();
 await client.send('Emulation.setEmulatedMedia', {

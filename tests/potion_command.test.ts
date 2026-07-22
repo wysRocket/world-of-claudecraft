@@ -31,7 +31,7 @@ describe('/potion command', () => {
     e.potionCooldownUntil = sim.time + 22.4;
 
     sim.chat('/pot', a);
-    expect(errorText(sim.tick())).toBe('Combat potion on cooldown — ready in 23s.');
+    expect(errorText(sim.tick())).toBe('Combat potion on cooldown - ready in 23s.');
   });
 
   it('responds to the /potioncd alias', () => {

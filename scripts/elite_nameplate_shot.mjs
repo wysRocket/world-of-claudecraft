@@ -1,6 +1,6 @@
 // Visual capture for the elite/boss nameplate "dragon frame" feature.
-// Boots the offline game, stages three live mobs in front of the camera —
-// a normal mob, an elite (gold bar frame), and a boss (red bar frame) — and
+// Boots the offline game, stages three live mobs in front of the camera -
+// a normal mob, an elite (gold bar frame), and a boss (red bar frame) - and
 // screenshots the nameplates so the classic-style framing is visible.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';

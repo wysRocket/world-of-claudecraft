@@ -55,7 +55,7 @@ await page.waitForFunction(() => window.__game?.world?.entities?.size > 0, {
 await sleep(600);
 
 // Seed a few log lines so the peek has something to show (append straight to
-// the #chatlog list — the same node hud.chatLogFrom writes into).
+// the #chatlog list - the same node hud.chatLogFrom writes into).
 await page.evaluate(() => {
   const log = document.querySelector('#chatlog');
   if (!log) return;
@@ -78,7 +78,7 @@ await sleep(400);
 
 const shot = (name) => page.screenshot({ path: `tmp/${name}.png` });
 
-// 1) Default play view — log stays hidden so the world is unobstructed.
+// 1) Default play view - log stays hidden so the world is unobstructed.
 await shot('mobile_chatlog_before');
 const hiddenDefault = await page.evaluate(
   () => !document.body.classList.contains('mobile-chatlog-peek'),

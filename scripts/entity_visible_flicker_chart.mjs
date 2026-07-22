@@ -1,7 +1,7 @@
 // Before/after proof for the ACTUAL on-screen flicker: the renderer's per-frame
 // `visible` toggle at the 80yd draw edge (renderer.ts). The rig OBJECT is created
 // at 80yd and destroyed at 96yd (hysteresis), but the per-frame visibility flag
-// used to flip with a HARD cutoff at exactly 80yd — so a character hovering right
+// used to flip with a HARD cutoff at exactly 80yd - so a character hovering right
 // at the draw edge popped visible/invisible every frame. This is the band that is
 // both drawn and on the boundary (the entity-map churn the other chart models
 // happens at 90-130yd, beyond the 80yd draw range, so it's never on screen).
@@ -25,11 +25,11 @@ const DESTROY = 96; // ENTITY_VIEW_DESTROY_RANGE (hide/destroy beyond)
 // where a hard cutoff toggles every frame.
 const dist = (i) => DRAW + 6 * Math.sin(i * 0.25);
 
-// BEFORE: hard cutoff — visible iff within 80yd, recomputed each frame.
+// BEFORE: hard cutoff - visible iff within 80yd, recomputed each frame.
 const before = [];
 for (let i = 0; i < N; i++) before.push(dist(i) <= DRAW);
 
-// AFTER: 80/96 hysteresis — once shown, stay until past 96; while hidden, show within 80.
+// AFTER: 80/96 hysteresis - once shown, stay until past 96; while hidden, show within 80.
 const after = [];
 let shown = dist(0) <= DRAW;
 for (let i = 0; i < N; i++) {
@@ -73,8 +73,8 @@ await page.evaluate((data) => {
     }
     ctx.strokeStyle = '#000'; ctx.strokeRect(x0, y, w, h);
   };
-  row(110, 'BEFORE', before, `${beforeFlips} flips — hard 80yd cutoff toggles every frame`);
-  row(220, 'AFTER',  after,  `${afterFlips} flip — 80/96 hysteresis, steady`);
+  row(110, 'BEFORE', before, `${beforeFlips} flips - hard 80yd cutoff toggles every frame`);
+  row(220, 'AFTER',  after,  `${afterFlips} flip - 80/96 hysteresis, steady`);
 
   ctx.fillStyle = '#7c828b'; ctx.font = '12px sans-serif';
   ctx.fillText('render frame →', x0, 300);

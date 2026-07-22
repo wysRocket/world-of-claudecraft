@@ -40,7 +40,7 @@ describe("admin fmtDate", () => {
     setAdminLanguage("de_DE");
     expect(() => fmtDate(iso)).not.toThrow();
     const de = fmtDate(iso);
-    expect(de).not.toBe("—");
+    expect(de).not.toBe("-");
     expect(de.length).toBeGreaterThan(0);
     setAdminLanguage("en");
   });

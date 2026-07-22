@@ -67,7 +67,7 @@ const before = await page.evaluate(() => {
 });
 console.log('haptics button (default):', JSON.stringify(before));
 
-// Toggle haptics off — tray stays open, button dims + relabels.
+// Toggle haptics off - tray stays open, button dims + relabels.
 await page.click('#mobile-haptics');
 await new Promise((r) => setTimeout(r, 300));
 const after = await page.evaluate(() => {

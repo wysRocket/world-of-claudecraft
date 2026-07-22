@@ -1,7 +1,7 @@
 // Screenshot the Heal-Absorb affix (Grave Blight) in the offline client.
 // Boots the game, repurposes a nearby mob as a Gravecaller Summoner, forces
 // its on-hit blight onto the player, and captures the resulting heal-absorb
-// debuff on the player buff bar — plus a console proof that a follow-up heal
+// debuff on the player buff bar - plus a console proof that a follow-up heal
 // is devoured by the shield.
 import puppeteer from 'puppeteer-core';
 import fs from 'node:fs';

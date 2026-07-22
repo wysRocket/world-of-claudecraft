@@ -1,5 +1,5 @@
 // Screenshot tour for ambient critters: boots the offline game, stands in open
-// meadow, and captures the wandering wildlife — a wide ambient shot plus a tight
+// meadow, and captures the wandering wildlife - a wide ambient shot plus a tight
 // projected crop of the nearest critter. Writes PNGs to tmp/. Needs `npm run dev`
 // (:5173). Override URL with GAME_URL=.
 import puppeteer from 'puppeteer-core';

@@ -103,7 +103,7 @@ describe('camera follow', () => {
 
   it('does not auto-follow while the camera drives the facing (mouse-camera move)', () => {
     // facing is slaved to camYaw this frame, so the follower must leave camYaw
-    // untouched — chasing its own output is what produced the wobble.
+    // untouched - chasing its own output is what produced the wobble.
     const next = updateFollowCameraYaw({
       camYaw: 1.0,
       interpFacing: 0.2,
@@ -152,7 +152,7 @@ describe('camera follow', () => {
     expect(cameraIsManual(true, false)).toBe(true); // classic right-mouse mouselook
     expect(cameraIsManual(false, true)).toBe(true); // Mouse Camera mode (always on)
     expect(cameraIsManual(true, true)).toBe(true);
-    expect(cameraIsManual(false, false)).toBe(false); // classic, hands off — follow runs
+    expect(cameraIsManual(false, false)).toBe(false); // classic, hands off - follow runs
   });
 
   it('keeps the camera locked to the drag in mouse-camera mode (no follow drift)', () => {

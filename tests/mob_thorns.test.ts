@@ -1,5 +1,5 @@
 // Innate "spiked hide" mobs (bristleback boars) reflect flat damage onto
-// anyone who melees them — the mob-side analogue of the druid Thorns aura.
+// anyone who melees them - the mob-side analogue of the druid Thorns aura.
 import { describe, expect, it } from 'vitest';
 import { MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';

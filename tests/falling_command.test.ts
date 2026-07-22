@@ -38,7 +38,7 @@ describe('/falling command', () => {
     e.fallStartY = e.pos.y;
 
     sim.chat('/jump', a);
-    expect(errorTextFor(sim, a)).toBe('You are airborne and rising — 4yd above the ground.');
+    expect(errorTextFor(sim, a)).toBe('You are airborne and rising - 4yd above the ground.');
   });
 
   it('warns of a dangerous fall when the peak drop exceeds the safe distance', () => {
@@ -54,7 +54,7 @@ describe('/falling command', () => {
 
     sim.chat('/airborne', a);
     expect(errorTextFor(sim, a)).toBe(
-      'You are falling — 9yd above the ground. Brace for impact — this fall is going to hurt.',
+      'You are falling - 9yd above the ground. Brace for impact - this fall is going to hurt.',
     );
   });
 
@@ -71,7 +71,7 @@ describe('/falling command', () => {
 
     sim.chat('/falling', a);
     expect(errorTextFor(sim, a)).toBe(
-      'You are falling — 2yd above the ground. It should be a safe landing.',
+      'You are falling - 2yd above the ground. It should be a safe landing.',
     );
   });
 });

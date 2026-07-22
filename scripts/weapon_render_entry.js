@@ -17,7 +17,7 @@ document.body.appendChild(renderer.domElement);
 
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
 
-// Soft 3-point rig — flat KayKit albedo reads well with a warm key + cool fill.
+// Soft 3-point rig - flat KayKit albedo reads well with a warm key + cool fill.
 function makeLights() {
   const g = new THREE.Group();
   const key = new THREE.DirectionalLight(0xfff0dc, 2.4);

@@ -61,7 +61,7 @@ const result = await page.evaluate(() => {
   }
 
   // Force a few Mana Sear procs for a clearly visible dip (keep the mage alive by
-  // topping its real HP each swing — no fake HP override, so the frame reads true).
+  // topping its real HP each swing - no fake HP override, so the frame reads true).
   let procs = 0;
   for (let i = 0; i < 200 && procs < 4; i++) {
     p.hp = p.maxHp;

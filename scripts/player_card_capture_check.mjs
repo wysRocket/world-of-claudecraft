@@ -2,8 +2,8 @@
 //
 // CharacterPreview.captureCloseup() (src/render/characters/preview.ts) is the
 // load-bearing step behind the shareable card's character art: it must frame the
-// WHOLE figure — feet to the top of a raised weapon/arms in the hero & victory
-// poses — without clipping at the frame edges. That depends on the capture
+// WHOLE figure - feet to the top of a raised weapon/arms in the hero & victory
+// poses - without clipping at the frame edges. That depends on the capture
 // camera (z / lookAt), which has no unit coverage because it needs a real WebGL
 // context. This drives the real preview in a headless browser, captures every
 // CARD_POSE across several classes, and measures the alpha bounding box of each
@@ -13,7 +13,7 @@
 //   npm run dev                       # Vite client on :5173 (serves the ESM modules)
 //   node scripts/player_card_capture_check.mjs
 //
-// Exits non-zero on any clipped, empty, OR under-framed (too-small) capture —
+// Exits non-zero on any clipped, empty, OR under-framed (too-small) capture -
 // the latter being the real downside of pulling the capture camera back too far,
 // since drawCharacter() fits the whole capture, not the figure's bounding box.
 import puppeteer from '../node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';

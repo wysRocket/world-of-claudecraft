@@ -71,7 +71,7 @@ describe('mob stacking poison (ramping on-hit DoT)', () => {
     sp.chance = 1;
     try {
       expect(swingToStacks(sim, mob, player, sp.maxStacks)).toBe(true);
-      // Keep biting past the cap — the stack count must not exceed maxStacks.
+      // Keep biting past the cap - the stack count must not exceed maxStacks.
       for (let i = 0; i < 40; i++) (sim as any).mobSwing(mob, player);
     } finally {
       sp.chance = orig;
@@ -101,7 +101,7 @@ describe('mob stacking poison (ramping on-hit DoT)', () => {
     // Park the mob far away so only the DoT (not swings) chips the player.
     mob.pos = { x: player.pos.x + 500, y: player.pos.y, z: player.pos.z };
     const before = player.hp;
-    for (let i = 0; i < 20 * 3; i++) sim.tick(); // 3s — at least one tick interval
+    for (let i = 0; i < 20 * 3; i++) sim.tick(); // 3s - at least one tick interval
     expect(player.hp).toBeLessThan(before);
   });
 

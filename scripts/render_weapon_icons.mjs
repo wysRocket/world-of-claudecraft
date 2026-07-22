@@ -4,7 +4,7 @@
 // scripts/weapon_render_entry.js. Each GLB is passed as base64 and parsed in
 // the page (no network), rendered, and the canvas saved as a downscaled JPG.
 //
-// Prereq: bundle the entry first —
+// Prereq: bundle the entry first -
 //   npx esbuild scripts/weapon_render_entry.js --bundle --format=iife --outfile=tmp/weapon_render_bundle.js
 // Run:
 //   node scripts/render_weapon_icons.mjs [srcDir=tmp/weapon_src] [outDir] [px=128]
@@ -20,7 +20,7 @@ mkdirSync(OUT, { recursive: true });
 
 const BUNDLE = 'tmp/weapon_render_bundle.js';
 if (!existsSync(BUNDLE)) {
-  console.error(`missing ${BUNDLE} — bundle the entry first (see header)`);
+  console.error(`missing ${BUNDLE} - bundle the entry first (see header)`);
   process.exit(1);
 }
 const bundle = readFileSync(BUNDLE, 'utf8');

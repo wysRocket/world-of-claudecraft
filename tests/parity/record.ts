@@ -48,7 +48,7 @@ export interface Scenario {
 
 // Quantize a mulberry32 output in [0,1) back to its exact 32-bit integer. next()
 // returns int/2^32, so this reconstructs `int` losslessly (ints < 2^32 are exact
-// floats) — a perfect, collision-resistant value to fold into the draw digest.
+// floats) - a perfect, collision-resistant value to fold into the draw digest.
 function drawToU32(value: number): number {
   return Math.round(value * 4294967296) >>> 0;
 }
@@ -56,7 +56,7 @@ function drawToU32(value: number): number {
 export class Recorder {
   readonly sim: Sim;
   readonly sampleEvery: number;
-  // Every event emitted across the whole recording (never reset) — for coverage
+  // Every event emitted across the whole recording (never reset) - for coverage
   // assertions in tests. The per-frame digest uses a separate windowed buffer.
   readonly allEvents: SimEvent[] = [];
   // Scratch anchors a scenario can stash for its coverage test (e.g. a transient

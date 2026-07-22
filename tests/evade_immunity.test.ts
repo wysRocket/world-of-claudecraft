@@ -1,6 +1,6 @@
 // A wild mob retreating home after a leash break (aiState 'evade') has dropped
 // its hate table and will not fight back. It must be immune to damage while it
-// resets, otherwise a player can chip it down — or kill it outright — for a
+// resets, otherwise a player can chip it down - or kill it outright - for a
 // risk-free kill, which also breaks the classic reset contract.
 import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
@@ -93,17 +93,17 @@ describe('evading mobs are immune while resetting', () => {
 });
 
 // An evading mob walks a STRAIGHT line home with no pathfinding, and resolvePosition
-// only pushes a body radially OUT of a collider — never around it. So an evading mob
+// only pushes a body radially OUT of a collider - never around it. So an evading mob
 // whose line home crosses a prop (the Gravecaller Encampment tent/campfire/crate) or
 // deep water freezes at the obstacle's edge. Because evading mobs are immune, a
-// permanent stall is a permanently unkillable mob — the Gravecaller Summoners that
+// permanent stall is a permanently unkillable mob - the Gravecaller Summoners that
 // pinned on their own camp props and blocked progression. Once stalled, the mob
 // phases through the blocker just far enough to clear it, then walks home and resets.
 describe('an evading mob that cannot path home recovers instead of getting stuck', () => {
   const WORLD_SEED = 20061; // the live world seed
   const CAMP_TENT = { x: -3, z: 505, y: 0 }; // the prop the summoners pin against
 
-  // the summoner that spawns closest to the camp tent — the one players see stuck
+  // the summoner that spawns closest to the camp tent - the one players see stuck
   function tentSummoner(sim: Sim): Entity {
     const mobs = [...sim.entities.values()].filter(
       (e) => e.kind === 'mob' && e.templateId === 'gravecaller_summoner',
@@ -119,7 +119,7 @@ describe('an evading mob that cannot path home recovers instead of getting stuck
 
     const home = { ...mob.spawnPos };
     // place it on the far side of the tent from its spawn, so the straight line home
-    // runs through the tent collider — exactly how a kited summoner ends up stuck.
+    // runs through the tent collider - exactly how a kited summoner ends up stuck.
     const dx = CAMP_TENT.x - home.x,
       dz = CAMP_TENT.z - home.z;
     const len = Math.hypot(dx, dz) || 1;
@@ -156,7 +156,7 @@ describe('an evading mob that cannot path home recovers instead of getting stuck
     expect(mob.hp).toBe(mob.maxHp); // healed, ready to be fought again
   });
 
-  it('phases through the tent only — leaves it clear of the prop, not teleported home', () => {
+  it('phases through the tent only - leaves it clear of the prop, not teleported home', () => {
     const sim = new Sim({ seed: WORLD_SEED, playerClass: 'warrior', autoEquip: true });
     const mob = tentSummoner(sim);
     sim.player.pos = { x: 9999, z: 9999, y: 0 };
@@ -184,7 +184,7 @@ describe('an evading mob that cannot path home recovers instead of getting stuck
       if (sim.entities.get(mob.id)!.aiState === 'idle') break;
     }
     // it traversed in small local steps (walking + at most a collision ejection
-    // out of the prop) — never a cross-map snap home like the old teleport reset
+    // out of the prop) - never a cross-map snap home like the old teleport reset
     expect(maxStepSeen).toBeLessThan(3);
   });
 

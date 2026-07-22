@@ -1,6 +1,6 @@
 // Screenshot harness for the "Death Throes" content: a volatile Bog Bloat whose
 // corpse swells for a telegraphed delay, then bursts for area damage. Drives the
-// offline client via window.__game.sim — no server needed. Saves PNGs to shots/.
+// offline client via window.__game.sim - no server needed. Saves PNGs to shots/.
 //
 // Usage: with `npm run dev` running, `node scripts/shot_death_throes.mjs`.
 import puppeteer from 'puppeteer-core';
@@ -60,7 +60,7 @@ for (let i = 0; i < 14; i++) { await page.mouse.wheel({ deltaY: -120 }); await n
 await new Promise((r) => setTimeout(r, 500));
 await page.screenshot({ path: 'shots/01_bog_bloat.png' });
 
-// Slay it: this arms the fuse and emits the "begins to swell — get clear!" log.
+// Slay it: this arms the fuse and emits the "begins to swell - get clear!" log.
 await page.evaluate((id) => {
   const sim = window.__game.sim;
   const mob = sim.entities.get(id);

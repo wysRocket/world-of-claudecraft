@@ -44,19 +44,19 @@ await page.evaluate(() => {
   p.hp = 99999;
 });
 
-// 1) Open the "More" tray — shows the new Character + Bags buttons.
+// 1) Open the "More" tray - shows the new Character + Bags buttons.
 await tap('#mobile-more');
 await wait(400);
 await page.screenshot({ path: 'tmp/mobile_more_tray.png' });
 
-// 2) Tap Character — opens the character sheet.
+// 2) Tap Character - opens the character sheet.
 await tap('#mobile-char');
 await wait(500);
 await page.screenshot({ path: 'tmp/mobile_character.png' });
 await page.evaluate(() => window.__game.hud.closeAll?.());
 await wait(200);
 
-// 3) Reopen tray, tap Bags — opens the inventory.
+// 3) Reopen tray, tap Bags - opens the inventory.
 await tap('#mobile-more');
 await wait(300);
 await tap('#mobile-bags');

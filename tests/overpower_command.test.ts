@@ -24,7 +24,7 @@ describe('/overpower command', () => {
 
     sim.chat('/overpower', pid);
     expect(errorTexts(sim.tick(), pid)).toContain(
-      'Overpower is ready — strike within 4s (an enemy dodged your attack).',
+      'Overpower is ready - strike within 4s (an enemy dodged your attack).',
     );
   });
 
