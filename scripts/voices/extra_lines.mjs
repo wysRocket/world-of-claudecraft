@@ -10,11 +10,14 @@
 // derivation in src/ui/hud.ts (yellVoiceKey) so playback can look the clip up
 // from the live event text.
 export function yellKey(text) {
-  return 'yell__' + text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '_')
-    .replace(/^_+|_+$/g, '')
-    .slice(0, 60);
+  return (
+    'yell__' +
+    text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '')
+      .slice(0, 60)
+  );
 }
 
 const N = (text) => ({ key: yellKey(text), voiceNpc: 'nythraxis', text });

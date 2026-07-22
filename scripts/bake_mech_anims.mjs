@@ -16,17 +16,19 @@
 //   node scripts/bake_mech_anims.mjs [donor.glb] [target.glb]
 //
 // Defaults bake knight.glb -> CombatMech.glb in place.
+
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 
 const DONOR = process.argv[2] ?? resolve(ROOT, 'public/models/chars/players/knight.glb');
-const TARGET = process.argv[3] ?? resolve(ROOT, 'public/models/chars/players/Mech/characters/CombatMech.glb');
+const TARGET =
+  process.argv[3] ?? resolve(ROOT, 'public/models/chars/players/Mech/characters/CombatMech.glb');
 
 async function main() {
   await MeshoptDecoder.ready;
@@ -60,11 +62,13 @@ async function main() {
   const buffer = target.getRoot().listBuffers()[0] ?? target.createBuffer();
 
   // Clone an accessor's decoded data into the target document.
-  const cloneAccessor = (src) => target.createAccessor(src.getName())
-    .setType(src.getType())
-    .setArray(src.getArray().slice())
-    .setNormalized(src.getNormalized())
-    .setBuffer(buffer);
+  const cloneAccessor = (src) =>
+    target
+      .createAccessor(src.getName())
+      .setType(src.getType())
+      .setArray(src.getArray().slice())
+      .setNormalized(src.getNormalized())
+      .setBuffer(buffer);
 
   let copiedAnims = 0;
   let copiedChannels = 0;
@@ -76,7 +80,8 @@ async function main() {
     // Copy samplers first; keep a src->dst map to wire channels.
     const samplerMap = new Map();
     for (const srcSampler of srcAnim.listSamplers()) {
-      const sampler = target.createAnimationSampler()
+      const sampler = target
+        .createAnimationSampler()
         .setInterpolation(srcSampler.getInterpolation())
         .setInput(cloneAccessor(srcSampler.getInput()))
         .setOutput(cloneAccessor(srcSampler.getOutput()));
@@ -88,8 +93,12 @@ async function main() {
       const srcNode = srcChannel.getTargetNode();
       const name = srcNode ? srcNode.getName() : '(none)';
       const dstNode = name ? targetNodesByName.get(name) : null;
-      if (!dstNode) { skipped.add(name); continue; } // bone absent on the mech
-      const channel = target.createAnimationChannel()
+      if (!dstNode) {
+        skipped.add(name);
+        continue;
+      } // bone absent on the mech
+      const channel = target
+        .createAnimationChannel()
         .setTargetNode(dstNode)
         .setTargetPath(srcChannel.getTargetPath())
         .setSampler(samplerMap.get(srcChannel.getSampler()));
@@ -105,8 +114,13 @@ async function main() {
   console.log(`  donor:  ${DONOR}`);
   console.log(`  target: ${TARGET}`);
   if (skipped.size) {
-    console.log(`  skipped channels targeting bones absent on the mech: ${[...skipped].join(', ')}`);
+    console.log(
+      `  skipped channels targeting bones absent on the mech: ${[...skipped].join(', ')}`,
+    );
   }
 }
 
-main().catch((err) => { console.error(err); process.exit(1); });
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

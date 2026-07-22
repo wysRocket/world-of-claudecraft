@@ -28,11 +28,31 @@
       "Skeletons_Taunt": "Taunt"
     },
     "keepClips": [
-      "Idle", "Idle_Combat", "Walking_A", "Running_A", "Walking_Backwards", "Running_Strafe_Left", "Running_Strafe_Right",
-      "1H_Melee_Attack_Chop", "1H_Melee_Attack_Slice_Diagonal", "2H_Melee_Attack_Chop", "Dualwield_Melee_Attack_Chop",
-      "2H_Ranged_Shoot", "Spellcasting", "Spellcast_Shoot", "Spellcast_Raise",
-      "Block", "Hit_A", "Death_A", "Jump_Idle", "Lie_Idle", "Sit_Floor_Down", "Sit_Floor_Idle", "Cheer",
-      "Skeletons_Awaken_Standing", "Taunt"
+      "Idle",
+      "Idle_Combat",
+      "Walking_A",
+      "Running_A",
+      "Walking_Backwards",
+      "Running_Strafe_Left",
+      "Running_Strafe_Right",
+      "1H_Melee_Attack_Chop",
+      "1H_Melee_Attack_Slice_Diagonal",
+      "2H_Melee_Attack_Chop",
+      "Dualwield_Melee_Attack_Chop",
+      "2H_Ranged_Shoot",
+      "Spellcasting",
+      "Spellcast_Shoot",
+      "Spellcast_Raise",
+      "Block",
+      "Hit_A",
+      "Death_A",
+      "Jump_Idle",
+      "Lie_Idle",
+      "Sit_Floor_Down",
+      "Sit_Floor_Idle",
+      "Cheer",
+      "Skeletons_Awaken_Standing",
+      "Taunt"
     ]
   },
   "items": [
@@ -40,29 +60,44 @@
       "src": "public/models/chars/_Check_These/KayKit Skeletons 1.1/characters/gltf/Necromancer.glb",
       "out": "models/chars/enemies/necromancer.glb",
       "attachMeshes": [
-        { "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Staff.gltf", "bone": "handslot.r" }
+        {
+          "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Staff.gltf",
+          "bone": "handslot.r"
+        }
       ]
     },
     {
       "src": "public/models/chars/_Check_These/KayKit Skeletons 1.1/characters/gltf/Skeleton_Rogue.glb",
       "out": "models/chars/enemies/skeleton_rogue.glb",
       "attachMeshes": [
-        { "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Axe.gltf", "bone": "handslot.r" }
+        {
+          "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Axe.gltf",
+          "bone": "handslot.r"
+        }
       ]
     },
     {
       "src": "public/models/chars/_Check_These/KayKit Skeletons 1.1/characters/gltf/Skeleton_Warrior.glb",
       "out": "models/chars/enemies/skeleton_warrior.glb",
       "attachMeshes": [
-        { "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Blade.gltf", "bone": "handslot.r" },
-        { "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Shield_Large_A.gltf", "bone": "handslot.l" }
+        {
+          "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Blade.gltf",
+          "bone": "handslot.r"
+        },
+        {
+          "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Shield_Large_A.gltf",
+          "bone": "handslot.l"
+        }
       ]
     },
     {
       "src": "public/models/chars/_Check_These/KayKit Skeletons 1.1/characters/gltf/Skeleton_Golem.glb",
       "out": "models/chars/enemies/skeleton_golem.glb",
       "attachMeshes": [
-        { "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Golem_Axe.gltf", "bone": "handslot.r" }
+        {
+          "from": "public/models/chars/_Check_These/KayKit Skeletons 1.1/assets/gltf/Skeleton_Golem_Axe.gltf",
+          "bone": "handslot.r"
+        }
       ],
       "addClipsFrom": [
         "public/models/chars/_Check_These/KayKit Character Animations 1.1/Animations/gltf/Rig_Large/Rig_Large_General.glb",
@@ -79,9 +114,14 @@
         "Melee_Dualwield_Slash": "Dualwield_Melee_Attack_Chop"
       },
       "keepClips": [
-        "Idle", "Walking_A", "Running_A",
-        "1H_Melee_Attack_Chop", "2H_Melee_Attack_Chop", "Dualwield_Melee_Attack_Chop",
-        "Hit_A", "Death_A"
+        "Idle",
+        "Walking_A",
+        "Running_A",
+        "1H_Melee_Attack_Chop",
+        "2H_Melee_Attack_Chop",
+        "Dualwield_Melee_Attack_Chop",
+        "Hit_A",
+        "Death_A"
       ]
     }
   ]
