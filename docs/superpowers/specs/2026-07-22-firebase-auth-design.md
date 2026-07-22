@@ -63,6 +63,18 @@ work, with no accompanying integration code.
   sign-in method (see Section 2) and needs no decision here: there is nothing to
   migrate or retire, since it was never part of the identity system this spec
   touches.
+- **Two corrections found during implementation planning, both narrowing scope
+  without changing the goal:** (1) Apple Sign-In in this codebase is native-iOS-only
+  today (a different mechanism, native SDK plus device attestation, from the web
+  OAuth-popup flow Discord/Google use), so the web-client work in this phase covers
+  Google and Discord; native-app Apple/Discord wiring is real follow-on work. (2) the
+  email/password login form asks for a **username**, but Firebase's email/password
+  auth needs an **email**, two different, not-interchangeable fields, and some
+  accounts have no email on file at all. Rather than change the login UX (a real
+  product decision, deliberately deferred), password accounts keep the untouched
+  legacy username/password path as their real verification authority forever;
+  Firebase only gets a mirrored identity for them, provisioned silently in the
+  background. See the corrected Section 6.
 - **Server-side verification uses the full `firebase-admin` SDK**, not a hand-rolled
   JWT check against Google's JWKS. This accepts the dependency-weight cost (this repo's
   "keep the dependency set tiny" rule) in exchange for the SDK's user-management API,
@@ -70,13 +82,13 @@ work, with no accompanying integration code.
 
 ## 4. Architecture
 
-Firebase Auth becomes the identity front door; the rest of the stack is unchanged.
+Two independent paths, covered in the same phase but touching different code:
 
-1. Client signs in via the Firebase JS client SDK (email/password, Google, Discord via
-   a custom OIDC provider config, or Apple) and receives a Firebase ID token (a
-   short-lived RS256 JWT).
-2. Client sends that token to a new server endpoint, replacing the old
-   username/password request body for this path.
+**Google and Discord (token-based, new client work):**
+
+1. Client signs in via the Firebase JS client SDK (Google, or Discord via a custom
+   OIDC provider config) and receives a Firebase ID token (a short-lived RS256 JWT).
+2. Client sends that token to a new server endpoint.
 3. Server verifies the token with `firebase-admin`'s `getAuth().verifyIdToken()`
    (locally cached JWKS verification; no per-request network call to Firebase).
 4. Server resolves the verified token to an `accounts` row (see Section 5) and issues
@@ -84,6 +96,11 @@ Firebase Auth becomes the identity front door; the rest of the stack is unchange
    old login path issues today.
 5. Everything downstream of "you have a valid session token" (`ws_auth.ts`, character
    load, every other authenticated route) sees zero change.
+
+**Email/password (no client change at all):** the existing `/api/login` endpoint and
+its username/password request body are untouched. On a successful legacy login, the
+server silently provisions (or updates) a shadow Firebase user in the background,
+using the account's email if it has one; see Section 6.
 
 ## 5. Data model
 
@@ -97,24 +114,26 @@ flow, as the matching keys described next.
 No bulk password import: Firebase's scrypt import format needs exact-parameter
 matching with Google's own modified scrypt variant, and this repo's Node `scrypt` call
 does not match it. Getting that wrong fails silently at import time or, worse, at
-first login. Instead, each account migrates individually, transparently, the first
-time it signs in after cutover:
+first login. Instead, each account migrates individually, transparently:
 
-- **Discord / Apple:** user signs in through Firebase's Discord/Apple provider as
-  normal. The server reads the provider's external subject id out of the verified
-  token (Discord user id / Apple subject) and looks it up in `discord_links` /
-  `apple_auth_links`. A match resolves to the existing `account_id`; the server sets
-  `firebase_uid` on that row. No new account is created, no re-authorization beyond the
-  normal provider consent screen, no data touched.
-- **Email/password:** the one case with no token to match against, since the user is
-  proving a secret we don't have in Firebase yet. Client attempts Firebase sign-in
-  first; if Firebase reports the email as unrecognized, the server falls back to the
-  *existing* `verifyPassword()` check in `server/auth.ts` against the stored
-  `password_hash`. On success, the server calls `firebase-admin`'s `createUser()` (or
+- **Discord (and Apple, once a client path for it exists):** user signs in through
+  Firebase's Discord provider as normal. The server reads the provider's external
+  subject id out of the verified token (Discord user id / Apple subject) and looks it
+  up in `discord_links` / `apple_auth_links`. A match resolves to the existing
+  `account_id`; the server sets `firebase_uid` on that row. No new account is
+  created, no re-authorization beyond the normal provider consent screen, no data
+  touched.
+- **Email/password:** the one case with no token to match against at all, since
+  Firebase's own client SDK requires an email, a field the existing login form does
+  not collect (it asks for username). Rather than change that form, migration here
+  is a background side effect of the *existing, unmodified* `/api/login` request: on
+  a successful legacy `verifyPassword()` check, if the account has an email on file
+  and no `firebase_uid` yet, the server calls `firebase-admin`'s `createUser()` (or
   `updateUser()` if the email already exists in Firebase from an abandoned prior
-  attempt) with that same verified password, then sets `firebase_uid`. The user
-  experiences this as an ordinary login (same email, same password) with no reset,
-  no email, no visible step.
+  attempt) with that same verified password, then sets `firebase_uid`. This is
+  best-effort: a Firebase outage or error never blocks or fails the login itself. An
+  account with no email on file simply does not migrate yet, consistent with this
+  app's existing `emailMissing` nudge that already prompts such accounts to add one.
 
 `server/github.ts`/`github_oauth.ts`/`github_db.ts` (the developer-badge linking
 feature) are not part of this migration at all: not read, not modified, not
@@ -125,10 +144,11 @@ has nothing to do with account sign-in.
 
 | Removed | Kept (and why) |
 |---|---|
-| The Discord/Apple OAuth **handshake** code in `server/discord_oauth.ts` / `server/apple_auth.ts` (Firebase's own providers now run the handshake) | `server/auth.ts`'s `hashPassword`/`verifyPassword`: needed by the email/password migration fallback until every account has migrated |
-| | `discord_links` / `apple_auth_links` **tables**: read-only migration-matching keys, droppable only once every account has migrated |
+| The Discord OAuth **handshake** code in `server/discord_oauth.ts` (Firebase's own provider now runs the handshake) | `server/auth.ts`'s `hashPassword`/`verifyPassword`: this stays load-bearing indefinitely, since password accounts keep the legacy path as their real verification authority (Section 6) |
+| | `server/apple_auth.ts`: entirely untouched (native-iOS-only today, not part of this phase's client work) |
+| | `discord_links` / `apple_auth_links` **tables**: read-only migration-matching keys |
 | | `auth_tokens` table and `server/ws_auth.ts`: completely unchanged |
-| | The old `/api/register` and `/api/login` routes: kept live in parallel during the transition (see Section 9) |
+| | The old `/api/register` and `/api/login` routes: kept live, unmodified except for the background-provisioning addition to `/api/login` (see Section 9) |
 | | `server/github.ts`/`github_oauth.ts`/`github_db.ts`: entirely unrelated (developer badge, not sign-in), untouched |
 
 ## 8. New server module
@@ -148,44 +168,60 @@ Firebase service-account credential, loaded from the environment
 
 ## 9. Client-side
 
-The Firebase JS SDK is added to the game client's login/character-select flow. The
-sign-in UI gains Google as a new option and routes Discord/Apple/email through
-Firebase's flows instead of the current ones. Firebase's client-side config (API key,
-project id, etc.) is not a secret: Firebase's own security model puts enforcement on
-the server-side token verification, not on hiding these values, so it ships as a
-plain client-side constant, same trust level as any other public config today.
+The Firebase JS SDK is added to the game client's login flow, gaining a new Google
+button and repointing the existing Discord button through Firebase instead of its
+current OAuth redirect. The email/password form is untouched: it keeps calling the
+existing `/api/login` exactly as it does today (Section 6). Firebase's client-side
+config (API key, project id, etc.) is not a secret: Firebase's own security model
+puts enforcement on the server-side token verification, not on hiding these values,
+so it ships as a plain client-side constant, same trust level as any other public
+config today.
 
 ## 10. Rollout and rollback
 
-The old `/api/register` and `/api/login` endpoints stay live, unmodified, in parallel
-with the new Firebase path for the full transition window: nothing about this change
-removes a working login path on day one. Once telemetry shows the email/password
-migration fallback (Section 6) is going effectively unused, meaning the accounts that
-were going to migrate, have, retiring the old endpoints and the fallback-verify code
-is a **follow-up change**, explicitly not part of this phase's completion definition.
+The old `/api/register` and `/api/login` endpoints stay live in parallel with the new
+Firebase token-resolution path for the full transition window: nothing about this
+change removes a working login path on day one, and `/api/login` itself keeps working
+identically from the caller's perspective even with the background-provisioning
+addition. Once telemetry shows the background provisioning step is going effectively
+unused, meaning the accounts that were going to migrate, have, retiring it and the
+old Discord OAuth handshake code is a **follow-up change**, explicitly not part of
+this phase's completion definition.
 
 ## 11. Testing
 
 Route-level tests using the existing `tests/server/helpers/` fakes, covering:
 
-- Fresh signup through each of the four providers (email/password, Google, Discord,
-  Apple).
-- First-login migration for an existing password account (fallback verify succeeds,
-  Firebase user provisioned, `firebase_uid` set).
-- First-login migration for an existing Discord-linked account and an existing
-  Apple-linked account (token subject matches `discord_links`/`apple_auth_links`,
-  `firebase_uid` set, no duplicate account created).
+- Fresh signup through the new token-resolution route (provider-agnostic at the
+  server layer: Google and Discord arrive as the same verified shape once Firebase's
+  client SDK has done its job, so one test covers both).
+- First-login migration for an existing Discord-linked account (token subject
+  matches `discord_links`, `firebase_uid` set, no duplicate account created); the
+  same logic path is exercised for Apple even though no client work produces an
+  Apple-provider token yet.
 - Session-issuance parity: a migrated login produces an `auth_tokens` row
   indistinguishable in shape from one issued by the legacy path.
 - A second login on an already-migrated account goes straight through Firebase
-  verification with no fallback path exercised.
+  verification with no re-matching path exercised.
+- The background provisioning step on `/api/login`: fires when an account has an
+  email and no `firebase_uid`, is skipped when either condition fails, and never
+  blocks or fails the login itself even when it throws.
 
 ## 12. Explicitly out of scope (this phase)
 
 - Firestore, or any migration of game data (characters, guilds, market, mail, bank,
   and so on) off Postgres. A separate, later spec.
-- Removing the old `/api/register`/`/api/login` endpoints or the migration-fallback
-  code: a follow-up change once migration telemetry supports it (Section 10).
+- Removing the old `/api/register`/`/api/login` endpoints, the Discord OAuth
+  handshake code, or the background-provisioning step: a follow-up change once
+  migration telemetry supports it (Section 10).
+- Native-app (Capacitor iOS/Android) Apple and Discord sign-in through Firebase: a
+  materially different mechanism (native SDKs, device attestation, the desktop/native
+  login-code handoff flows) from the web client's OAuth-popup flow. Real follow-on
+  work, not part of this phase.
+- Changing the email/password login form's identifier from username to email (which
+  would let Firebase become the real verification authority for password accounts
+  instead of a mirrored identity): a genuine product/UX decision, deliberately
+  deferred (Section 3).
 - Any change to the existing TOTP two-factor system on `accounts`; it is independent
   of the sign-in provider and is not touched here.
 - Any change to `server/oauth.ts` (this repo's own OAuth *server*, for third-party
