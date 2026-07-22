@@ -24,7 +24,14 @@ itself.
   1:1 identity mirror.
 - `server/apple_auth.ts` + `server/apple_auth_db.ts`: Apple Sign In flow.
   `apple_auth_links` table: `account_id` (PK) to `apple_subject` (UNIQUE), same shape.
-- `server/github_oauth.ts`: GitHub OAuth login/link flow.
+- `server/github.ts` + `server/github_oauth.ts` + `server/github_db.ts`: **not a
+  sign-in method.** Per `github.ts`'s own header comment, this is "the GitHub OAuth
+  link shell for the developer badge... linking is the only mode (the player is
+  already authenticated when they link)... no first-time-login chooser, no account
+  provisioning." It links an already-logged-in account to a GitHub identity purely to
+  compute developer-badge tier from merged-PR history. There is no way to create or
+  log into an account via GitHub today, so it is not part of this migration's
+  provider set at all, and is untouched by this spec.
 - `accounts` table (`server/db.ts`): `id`, `username`, `password_hash`, `email`,
   `email_verified_at`, `password_set`, plus moderation/admin/TOTP columns. No
   `firebase_uid` yet.
@@ -51,10 +58,11 @@ work, with no accompanying integration code.
   Firestore in this phase.
 - **Real accounts exist and must keep working.** No account may be locked out by this
   change; every existing sign-in path needs a migration story, not just new signups.
-- **Provider set going forward:** email/password, Google (new), Discord, Apple.
-  **GitHub is dropped.** Confirmed no account today is GitHub-only (every GitHub-linked
-  account also has another usable sign-in method), so this drops cleanly with no
-  lockout risk.
+- **Provider set going forward:** email/password, Google (new), Discord, Apple. These
+  are the full set of today's real sign-in methods plus Google. GitHub was never a
+  sign-in method (see Section 2) and needs no decision here: there is nothing to
+  migrate or retire, since it was never part of the identity system this spec
+  touches.
 - **Server-side verification uses the full `firebase-admin` SDK**, not a hand-rolled
   JWT check against Google's JWKS. This accepts the dependency-weight cost (this repo's
   "keep the dependency set tiny" rule) in exchange for the SDK's user-management API,
@@ -107,17 +115,21 @@ time it signs in after cutover:
   attempt) with that same verified password, then sets `firebase_uid`. The user
   experiences this as an ordinary login (same email, same password) with no reset,
   no email, no visible step.
-- **GitHub:** retires outright. `server/github_oauth.ts` and its route registration are
-  removed in this same change.
+
+`server/github.ts`/`github_oauth.ts`/`github_db.ts` (the developer-badge linking
+feature) are not part of this migration at all: not read, not modified, not
+retired. They solve an unrelated problem (crediting merged-PR contributors) that
+has nothing to do with account sign-in.
 
 ## 7. What retires vs. what stays
 
 | Removed | Kept (and why) |
 |---|---|
-| `server/github_oauth.ts` + its `RouteDef` registration | `server/auth.ts`'s `hashPassword`/`verifyPassword`: needed by the email/password migration fallback until every account has migrated |
-| The Discord/Apple OAuth **handshake** code in `server/discord_oauth.ts` / `server/apple_auth.ts` (Firebase's own providers now run the handshake) | `discord_links` / `apple_auth_links` **tables**: read-only migration-matching keys, droppable only once every account has migrated |
+| The Discord/Apple OAuth **handshake** code in `server/discord_oauth.ts` / `server/apple_auth.ts` (Firebase's own providers now run the handshake) | `server/auth.ts`'s `hashPassword`/`verifyPassword`: needed by the email/password migration fallback until every account has migrated |
+| | `discord_links` / `apple_auth_links` **tables**: read-only migration-matching keys, droppable only once every account has migrated |
 | | `auth_tokens` table and `server/ws_auth.ts`: completely unchanged |
 | | The old `/api/register` and `/api/login` routes: kept live in parallel during the transition (see Section 9) |
+| | `server/github.ts`/`github_oauth.ts`/`github_db.ts`: entirely unrelated (developer badge, not sign-in), untouched |
 
 ## 8. New server module
 
@@ -178,3 +190,6 @@ Route-level tests using the existing `tests/server/helpers/` fakes, covering:
   of the sign-in provider and is not touched here.
 - Any change to `server/oauth.ts` (this repo's own OAuth *server*, for third-party
   companion apps), an unrelated system.
+- Any change to `server/github.ts`/`github_oauth.ts`/`github_db.ts` (the
+  developer-badge GitHub linking feature); it is not a sign-in method and this spec
+  does not touch it.
