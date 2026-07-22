@@ -86,7 +86,7 @@ for (const f of albedos) {
     path.join(OUT, f.replace(/^combatmech_/, '')),
     Buffer.from(small.split(',')[1], 'base64'),
   );
-  console.log(`✓ ${f.replace(/^combatmech_epic_/, '')}`);
+  console.log(`OK: ${f.replace(/^combatmech_epic_/, '')}`);
   n++;
 }
 await browser.close();
