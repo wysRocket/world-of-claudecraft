@@ -194,7 +194,10 @@ describe('character visual manifest', () => {
     const allWeaponUrls = manifestUrls().filter((url) => url.startsWith('models/weapons/'));
     expect(allWeaponUrls.length).toBeGreaterThan(0);
     expect(manifestUrlsForGraphics(false)).toEqual(expect.arrayContaining(allWeaponUrls));
-    expect(visibleAttachmentsForGraphics(VISUALS.player_warrior).map((a) => a.url)).toContain(
+    // npc_knight carries the attached one-handed sword (player_warrior is the
+    // Meshy kawaii proof now, whose weapon is modeled into the body mesh rather
+    // than attached via a handslot bone).
+    expect(visibleAttachmentsForGraphics(VISUALS.npc_knight).map((a) => a.url)).toContain(
       'models/weapons/sword_1handed.glb',
     );
     expect(visibleAttachmentsForGraphics(VISUALS.player_rogue).map((a) => a.url)).toEqual([

@@ -191,6 +191,19 @@ const openmmoClips = (): ClipMap => ({
   jump: 'jump',
 });
 
+// Meshy-generated kawaii rig (Kawaii Adventurers proof): a Meshy auto-rigged
+// humanoid (standard Mixamo-style bones: Hips/Spine*/Left*/Right*) whose single
+// per-file clips were renamed to 'idle'/'walk'/'attack' and grafted via animUrls
+// (walk/attack root-motion stripped so they cycle in place). No dedicated run or
+// death clip yet: run reuses the walk cycle, death falls back to idle.
+const kawaii = (): ClipMap => ({
+  idle: 'idle',
+  walk: 'walk',
+  run: 'walk',
+  attack: ['attack'],
+  death: 'idle',
+});
+
 // Quaternius 2021 animal rig (wolf/bull/alpaca/fox/stag)
 const animal = (attack: string[]): ClipMap => ({
   idle: 'Idle',
@@ -521,42 +534,18 @@ const VELOCIRAPTOR: ClipMap = {
 
 export const VISUALS: Record<string, VisualDef> = {
   // -- player classes ------------------------------------------------------
+  // Kawaii Adventurers proof (single-class): the warrior is a Meshy-generated
+  // kawaii humanoid with its sword+shield modeled in. Its Mixamo-style rig has
+  // none of the KayKit handslot bones, so the gear-driven weapon swap
+  // (attach/weaponSlots) and the per-ability attack clips are intentionally
+  // dropped here; the held weapon is fixed and every attack plays the one 'attack'
+  // clip. Base mesh is warrior.glb (normalized to HUMANOID_H); walk/attack clips
+  // are grafted by name from the companion GLBs via animUrls.
   player_warrior: {
-    url: `${PLAYERS}/knight.glb`,
+    url: 'models/kawaii/warrior.glb',
+    animUrls: ['models/kawaii/warrior_walk.glb', 'models/kawaii/warrior_attack.glb'],
     height: HUMANOID_H,
-    clips: {
-      ...kaykit(['1H_Melee_Attack_Chop', '1H_Melee_Attack_Slice_Diagonal']),
-      attackByHand: {
-        twohand: '2H_Melee_Attack_Chop',
-        dualwield: 'Dualwield_Melee_Attack_Chop',
-      },
-      attackByAbility: {
-        mortal_strike: '2H_Melee_Attack_Chop',
-        execute: '2H_Melee_Attack_Chop',
-        slam: '2H_Melee_Attack_Chop',
-        red_harvest: '2H_Melee_Attack_Chop',
-        breachmaker: '2H_Melee_Attack_Chop',
-        shield_slam: '2H_Melee_Attack_Chop',
-        raging_gale: 'Dualwield_Melee_Attack_Chop',
-        bloodthirst: 'Dualwield_Melee_Attack_Chop',
-        cleave: '1H_Melee_Attack_Chop',
-        thunder_clap: '1H_Melee_Attack_Chop',
-        faultline: '1H_Melee_Attack_Chop',
-        revenge: '1H_Melee_Attack_Chop',
-        heroic_strike: '1H_Melee_Attack_Slice_Diagonal',
-        overpower: '1H_Melee_Attack_Slice_Diagonal',
-        hamstring: '1H_Melee_Attack_Slice_Diagonal',
-        sanguine_aura: 'Spellcast_Raise',
-        raised_guard: 'Block',
-      },
-    },
-    show: ['Knight_Helmet', 'Knight_Cape'], // v2 knight dropped the built-in Badge_Shield mesh
-    attach: [
-      { url: `${WEAPONS}/sword_1handed.glb`, bone: 'handslot.r' },
-      { url: `${WEAPONS}/shield_round.glb`, bone: 'handslot.l' },
-    ],
-    weaponSlots: [0],
-    offhandSlot: 1,
+    clips: kawaii(),
   },
   player_paladin: {
     url: `${PLAYERS}/paladin.glb`,
