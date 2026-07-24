@@ -59,9 +59,11 @@ describe('Emberwood render policy', () => {
       expect(classic.rock.vale).toBe(0x8d8d85);
     });
 
-    it('returns emberwood Vale foliage with muted greens', () => {
+    it('returns emberwood Vale foliage: autumn oak with muted green pine and grey rock', () => {
       const emberwood = foliagePaletteForTheme('emberwood');
-      expect(emberwood.oak.vale).toBe(0x7f936f);
+      // Oak is a deliberate ember/autumn accent (warm brown) in the emberwood
+      // theme; pine and rock stay muted green/grey (palette.ts oak/pine/rock vale).
+      expect(emberwood.oak.vale).toBe(0xb8783c);
       expect(emberwood.pine.vale).toBe(0x7f9a78);
       expect(emberwood.rock.vale).toBe(0x8a8a88);
       expect(emberwood.trunk.vale).toBe(0xd4c0a8);
