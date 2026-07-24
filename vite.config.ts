@@ -9,7 +9,6 @@ import { defineConfig } from 'vite';
 import { loadBrowserslistFloors } from './scripts/browserslist_targets.mjs';
 // Untyped zero-dep build helper (same convention as the other scripts/*.mjs tools).
 // vite.config.ts is outside tsconfig `include`, so this import is never type-checked.
-import { templateModulepreload } from './scripts/i18n_modulepreload.mjs';
 import { visualThemeHtmlPlugin } from './scripts/lib/visual_theme_html';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -134,38 +133,13 @@ function staticPageAliasPlugin() {
   return { name: 'woc-static-page-alias', configureServer: attach, configurePreviewServer: attach };
 }
 
-// Phase 4 (i18n Lazy Locales): after the production build, resolve each lazy locale
-// chunk's content-hashed URL from Vite's manifest and template a { locale: hashedChunkUrl }
-// lookup into dist/index.html. The inline boot <script> reads it to modulepreload a stored
-// non-en visitor's locale chunk before main parses. Build-only: in dev the inline script's
-// sentinel stays undefined (no-op). The manifest is metadata, so enabling it does not move
-// the resolved-table SHA. See scripts/i18n_modulepreload.mjs.
-function i18nModulepreloadPlugin() {
-  let outDir = path.resolve(root, 'dist');
-  let base = '/';
-  return {
-    name: 'woc-i18n-modulepreload',
-    apply: 'build' as const,
-    configResolved(cfg: { root: string; base: string; build: { outDir: string } }) {
-      base = cfg.base || '/';
-      outDir = path.isAbsolute(cfg.build.outDir)
-        ? cfg.build.outDir
-        : path.resolve(cfg.root, cfg.build.outDir);
-    },
-    closeBundle: {
-      // 'post' runs this after every default-ordered closeBundle, including Vite's own
-      // manifest writer, so the manifest is on disk before the read below.
-      order: 'post',
-      async handler() {
-        const { map } = await templateModulepreload({ root, outDir, base });
-        // eslint-disable-next-line no-console
-        console.log(
-          `[i18n] modulepreload: templated ${Object.keys(map).length} locale chunk URLs into index.html`,
-        );
-      },
-    },
-  };
-}
+// Phase 4 (i18n Lazy Locales): the lazy-locale modulepreload templating (resolve each
+// locale chunk's content-hashed URL from Vite's manifest into dist/index.html) runs as a
+// standalone post-build step, `node scripts/i18n_modulepreload_apply.mjs`, wired into the
+// `build` npm script AFTER `vite build`. It used to live in a `closeBundle` 'post' hook
+// here, but under rolldown-vite that hook raced the manifest writer and failed on Vercel's
+// build container (ENOENT on dist/.vite/manifest.json); running it after the build process
+// exits removes the ordering dependency. See scripts/i18n_modulepreload{,_apply}.mjs.
 
 // Dev-only save endpoint for the music editor (music_editor.html): receives the
 // edited theme map as JSON and writes src/game/music_overrides.generated.ts so
@@ -309,7 +283,6 @@ export default defineConfig({
     ...(process.env.VITEST ? [svelteTesting()] : []),
     staticPageAliasPlugin(),
     visualThemeHtmlPlugin(),
-    i18nModulepreloadPlugin(),
     musicEditorSavePlugin(),
   ],
   resolve: { alias: { '#bot-detector': botDetectorImpl } },
