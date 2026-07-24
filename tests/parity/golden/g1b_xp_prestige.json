@@ -16,8 +16,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "233cbbf9",
+      "nextId": 418,
+      "state": "6716ec49",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -55,7 +55,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -72,6 +72,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -90,7 +91,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -103,7 +104,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -147,9 +148,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 412,
-      "state": "a49cb7e8",
-      "events": "71077177",
+      "nextId": 418,
+      "state": "d91d64db",
+      "events": "28c9ea0b",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -158,8 +159,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 412,
-      "state": "49affb15",
+      "nextId": 418,
+      "state": "ea3e0356",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -169,8 +170,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "d397dc46",
+      "nextId": 418,
+      "state": "3fe6bb83",
       "events": "741638a5",
       "rng": {
         "draws": 77,
@@ -180,8 +181,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "d397dc46",
+      "nextId": 418,
+      "state": "3fe6bb83",
       "events": "741638a5",
       "rng": {
         "draws": 77,
@@ -217,7 +218,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -228,7 +230,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -245,6 +247,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 0.125,
           "talents": {
@@ -265,7 +268,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -278,7 +281,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -322,9 +325,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "fdae8aab",
-      "events": "fccd59ee",
+      "nextId": 418,
+      "state": "4ae7693e",
+      "events": "a37f7380",
       "rng": {
         "draws": 77,
         "digest": "f081ea72"
@@ -361,7 +364,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -372,7 +376,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -390,6 +394,7 @@
           "lifetimeXp": 160,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -411,7 +416,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -424,7 +429,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -468,9 +473,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "887508da",
-      "events": "20b133f5",
+      "nextId": 418,
+      "state": "54c21027",
+      "events": "df81f5f9",
       "rng": {
         "draws": 77,
         "digest": "f081ea72"
@@ -508,7 +513,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -519,7 +525,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -537,6 +543,7 @@
           "lifetimeXp": 610,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -558,7 +565,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -571,7 +578,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 138,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 2,
           "lootFfaTimer": "Infinity",
@@ -615,9 +622,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "32ef2f94",
-      "events": "4997bc2f",
+      "nextId": 418,
+      "state": "d7352067",
+      "events": "8903b667",
       "rng": {
         "draws": 77,
         "digest": "f081ea72"
@@ -655,7 +662,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -666,7 +674,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -684,6 +692,7 @@
           "lifetimeXp": 190400,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -705,7 +714,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -718,7 +727,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -762,9 +771,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "00316f9f",
-      "events": "5455e5c5",
+      "nextId": 418,
+      "state": "34d39e18",
+      "events": "f4ffa8fb",
       "rng": {
         "draws": 77,
         "digest": "f081ea72"
@@ -802,7 +811,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -813,7 +823,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -832,6 +842,7 @@
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "prestigeRank": 1,
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -852,7 +863,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -865,7 +876,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -909,8 +920,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "00316f9f",
+      "nextId": 418,
+      "state": "34d39e18",
       "events": "741638a5",
       "rng": {
         "draws": 77,
@@ -949,7 +960,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -960,7 +972,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -979,6 +991,7 @@
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "prestigeRank": 1,
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -999,7 +1012,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1012,7 +1025,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -1056,8 +1069,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 412,
-      "state": "00316f9f",
+      "nextId": 418,
+      "state": "34d39e18",
       "events": "741638a5",
       "rng": {
         "draws": 77,
@@ -1096,7 +1109,8 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1107,7 +1121,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1126,6 +1140,7 @@
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
           "prestigeRank": 1,
+          "recipesGrandfathered": true,
           "renown": 5,
           "restedXp": 920,
           "talents": {
@@ -1146,7 +1161,7 @@
               "name": "Battle Stance",
               "remaining": 3597,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1159,7 +1174,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",

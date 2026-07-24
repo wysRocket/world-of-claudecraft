@@ -16,7 +16,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -30,9 +30,9 @@
     {
       "tick": 25,
       "time": 1.25,
-      "nextId": 415,
-      "state": "3a9d5a87",
-      "events": "b29e9de5",
+      "nextId": 421,
+      "state": "38e1bbc5",
+      "events": "1ef6cbf5",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -41,9 +41,9 @@
     {
       "tick": 50,
       "time": 2.5,
-      "nextId": 415,
-      "state": "8c68e2ce",
-      "events": "ca451585",
+      "nextId": 421,
+      "state": "a3b3c98c",
+      "events": "d72fbd30",
       "rng": {
         "draws": 28,
         "digest": "6884e3da"
@@ -52,9 +52,9 @@
     {
       "tick": 75,
       "time": 3.75,
-      "nextId": 415,
-      "state": "e545a4c0",
-      "events": "d4f3263d",
+      "nextId": 421,
+      "state": "9776615e",
+      "events": "6fc821d8",
       "rng": {
         "draws": 140,
         "digest": "ae05f4b9"
@@ -63,9 +63,9 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 415,
-      "state": "7b42eda3",
-      "events": "58bcd995",
+      "nextId": 421,
+      "state": "fa253059",
+      "events": "e1f53a64",
       "rng": {
         "draws": 293,
         "digest": "cc3049a9"
@@ -74,9 +74,9 @@
     {
       "tick": 101,
       "time": 5.05,
-      "nextId": 415,
-      "state": "b8f514e6",
-      "events": "faee9940",
+      "nextId": 421,
+      "state": "14caf274",
+      "events": "04cf9af1",
       "rng": {
         "draws": 297,
         "digest": "725f871c"
@@ -116,7 +116,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -139,6 +139,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "war_row_double_charge",
@@ -181,7 +182,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -207,6 +208,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "mag_r5_ice_floes",
@@ -250,7 +252,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -273,6 +275,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "rog_r5_relentless_strikes",
@@ -315,7 +318,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -341,6 +344,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "hun_r5_improved_serpent_sting",
@@ -367,7 +371,7 @@
               "name": "Battle Stance",
               "remaining": 3595,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -378,7 +382,7 @@
           "dodgeChance": 0.0695,
           "fiveSecondRule": 104.05,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -428,7 +432,7 @@
           "dodgeChance": 0.056,
           "fiveSecondRule": 104.05,
           "hp": 418,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -473,14 +477,14 @@
           "castTotal": 2.5,
           "castingAbility": "fireball",
           "comboUntil": -1,
-          "critChance": 0.091,
+          "critChance": 0.121,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.091,
           "dualWielding": true,
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
           "hp": 4950,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -529,7 +533,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 115,
+          "attackPower": 139,
           "combatTimer": 99,
           "comboUntil": -1,
           "critChance": 0.091,
@@ -538,7 +542,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
           "hp": 783,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -553,7 +557,7 @@
             "z": -1232
           },
           "potionCooldownUntil": -1,
-          "rangedPower": 164,
+          "rangedPower": 188,
           "resource": 622,
           "resourceType": "mana",
           "spawnPos": {
@@ -564,7 +568,7 @@
           "spellPower": 16,
           "stats": {
             "agi": 82,
-            "armor": 375,
+            "armor": 405,
             "int": 32,
             "spi": 33,
             "sta": 57,
@@ -582,9 +586,9 @@
     {
       "tick": 101,
       "time": 5.05,
-      "nextId": 415,
-      "state": "1b79ffa8",
-      "events": "eebe27c3",
+      "nextId": 421,
+      "state": "87a617ec",
+      "events": "15b2b051",
       "rng": {
         "draws": 297,
         "digest": "725f871c"
@@ -624,7 +628,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -647,6 +651,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "war_row_double_charge",
@@ -689,7 +694,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -715,6 +720,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "mag_r5_ice_floes",
@@ -758,7 +764,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -781,6 +787,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "rog_r5_relentless_strikes",
@@ -823,7 +830,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -849,6 +856,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "hun_r5_improved_serpent_sting",
@@ -875,7 +883,7 @@
               "name": "Battle Stance",
               "remaining": 3595,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -886,7 +894,7 @@
           "dodgeChance": 0.0695,
           "fiveSecondRule": 104.05,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -936,7 +944,7 @@
           "dodgeChance": 0.056,
           "fiveSecondRule": 104.05,
           "hp": 418,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -979,14 +987,14 @@
           "attackPower": 118,
           "castTotal": 2.5,
           "comboUntil": -1,
-          "critChance": 0.091,
+          "critChance": 0.121,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.091,
           "dualWielding": true,
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
           "hp": 4900,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -1035,7 +1043,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 115,
+          "attackPower": 139,
           "combatTimer": 99,
           "comboUntil": -1,
           "critChance": 0.091,
@@ -1044,7 +1052,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
           "hp": 783,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -1059,7 +1067,7 @@
             "z": -1232
           },
           "potionCooldownUntil": -1,
-          "rangedPower": 164,
+          "rangedPower": 188,
           "resource": 622,
           "resourceType": "mana",
           "spawnPos": {
@@ -1070,7 +1078,7 @@
           "spellPower": 16,
           "stats": {
             "agi": 82,
-            "armor": 375,
+            "armor": 405,
             "int": 32,
             "spi": 33,
             "sta": 57,
@@ -1088,9 +1096,9 @@
     {
       "tick": 101,
       "time": 5.05,
-      "nextId": 415,
-      "state": "59e80b77",
-      "events": "33231b06",
+      "nextId": 421,
+      "state": "94c4459f",
+      "events": "17be7811",
       "rng": {
         "draws": 297,
         "digest": "725f871c"
@@ -1131,7 +1139,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1156,6 +1164,7 @@
           "lifetimeHonor": 20,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "war_row_double_charge",
@@ -1198,7 +1207,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1224,6 +1233,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "mag_r5_ice_floes",
@@ -1268,7 +1278,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -1291,6 +1301,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "rog_r5_relentless_strikes",
@@ -1333,7 +1344,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1359,6 +1370,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "hun_r5_improved_serpent_sting",
@@ -1385,7 +1397,7 @@
               "name": "Battle Stance",
               "remaining": 3595,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1396,7 +1408,7 @@
           "dodgeChance": 0.0695,
           "fiveSecondRule": 104.05,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -1446,7 +1458,7 @@
           "dodgeChance": 0.056,
           "fiveSecondRule": 104.05,
           "hp": 418,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -1489,14 +1501,14 @@
           "attackPower": 118,
           "castTotal": 2,
           "comboUntil": -1,
-          "critChance": 0.091,
+          "critChance": 0.121,
           "dead": true,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.091,
           "dualWielding": true,
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -1545,7 +1557,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 115,
+          "attackPower": 139,
           "combatTimer": 99,
           "comboUntil": -1,
           "critChance": 0.091,
@@ -1554,7 +1566,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 104.05,
           "hp": 783,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -1569,7 +1581,7 @@
             "z": -1232
           },
           "potionCooldownUntil": -1,
-          "rangedPower": 164,
+          "rangedPower": 188,
           "resource": 622,
           "resourceType": "mana",
           "spawnPos": {
@@ -1580,7 +1592,7 @@
           "spellPower": 16,
           "stats": {
             "agi": 82,
-            "armor": 375,
+            "armor": 405,
             "int": 32,
             "spi": 33,
             "sta": 57,
@@ -1598,8 +1610,8 @@
     {
       "tick": 125,
       "time": 6.25,
-      "nextId": 415,
-      "state": "c7e5aad7",
+      "nextId": 421,
+      "state": "bd04816f",
       "events": "741638a5",
       "rng": {
         "draws": 428,
@@ -1609,8 +1621,8 @@
     {
       "tick": 142,
       "time": 7.1,
-      "nextId": 415,
-      "state": "06f64ff4",
+      "nextId": 421,
+      "state": "4e1b680c",
       "events": "741638a5",
       "rng": {
         "draws": 522,
@@ -1652,7 +1664,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1677,6 +1689,7 @@
           "lifetimeHonor": 20,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "war_row_double_charge",
@@ -1719,7 +1732,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1745,6 +1758,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "mag_r5_ice_floes",
@@ -1789,7 +1803,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -1812,6 +1826,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "rog_r5_relentless_strikes",
@@ -1854,7 +1869,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1880,6 +1895,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "hun_r5_improved_serpent_sting",
@@ -1906,7 +1922,7 @@
               "name": "Battle Stance",
               "remaining": 3592.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1918,7 +1934,7 @@
           "dodgeChance": 0.0695,
           "fiveSecondRule": 106.1,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -1968,7 +1984,7 @@
           "dodgeChance": 0.056,
           "fiveSecondRule": 106.1,
           "hp": 418,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -2012,14 +2028,14 @@
           "castTotal": 2,
           "combatTimer": 2.05,
           "comboUntil": -1,
-          "critChance": 0.091,
+          "critChance": 0.121,
           "dead": true,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.091,
           "dualWielding": true,
           "facing": 3.141593,
           "fiveSecondRule": 106.1,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 20,
@@ -2068,7 +2084,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 115,
+          "attackPower": 139,
           "combatTimer": 101.05,
           "comboUntil": -1,
           "critChance": 0.091,
@@ -2077,7 +2093,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 106.1,
           "hp": 783,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -2092,7 +2108,7 @@
             "z": -1232
           },
           "potionCooldownUntil": -1,
-          "rangedPower": 164,
+          "rangedPower": 188,
           "resource": 622,
           "resourceType": "mana",
           "spawnPos": {
@@ -2103,7 +2119,7 @@
           "spellPower": 16,
           "stats": {
             "agi": 82,
-            "armor": 375,
+            "armor": 405,
             "int": 32,
             "spi": 33,
             "sta": 57,

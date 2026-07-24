@@ -13,7 +13,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -27,9 +27,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 416,
-      "state": "d2139abd",
-      "events": "755d3f39",
+      "nextId": 422,
+      "state": "0110e1a5",
+      "events": "3245c09e",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -67,7 +67,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -93,6 +93,7 @@
               999999999
             ]
           ],
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -129,7 +130,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -149,6 +150,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -185,7 +187,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -205,6 +207,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -241,7 +244,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -261,6 +264,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -297,7 +301,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 421,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -317,6 +321,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -335,7 +340,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -348,7 +353,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -398,7 +403,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -448,7 +453,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 413,
+          "id": 419,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -498,7 +503,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -548,7 +553,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 415,
+          "id": 421,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -592,9 +597,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 416,
-      "state": "d2139abd",
-      "events": "ea6b481c",
+      "nextId": 422,
+      "state": "0110e1a5",
+      "events": "070af176",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -632,7 +637,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -658,6 +663,7 @@
               999999999
             ]
           ],
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -694,7 +700,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -714,6 +720,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -750,7 +757,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -770,6 +777,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -806,7 +814,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -826,6 +834,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -862,7 +871,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 421,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -882,6 +891,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -900,7 +910,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -913,7 +923,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -963,7 +973,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1013,7 +1023,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 413,
+          "id": 419,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1063,7 +1073,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1113,7 +1123,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 51,
-          "id": 415,
+          "id": 421,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1157,9 +1167,9 @@
     {
       "tick": 1,
       "time": 0.05,
-      "nextId": 416,
-      "state": "e26de309",
-      "events": "b74102bd",
+      "nextId": 422,
+      "state": "ed991719",
+      "events": "cf8bd25d",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -1203,7 +1213,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1229,6 +1239,7 @@
               999999999
             ]
           ],
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1272,7 +1283,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1292,6 +1303,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1335,7 +1347,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1355,6 +1367,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1398,7 +1411,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1418,6 +1431,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1461,7 +1475,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 421,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1481,6 +1495,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1500,7 +1515,7 @@
               "name": "Battle Stance",
               "remaining": 3599.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1513,7 +1528,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1563,7 +1578,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99.05,
           "hp": 51,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1613,7 +1628,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99.05,
           "hp": 51,
-          "id": 413,
+          "id": 419,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1663,7 +1678,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99.05,
           "hp": 51,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1713,7 +1728,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99.05,
           "hp": 51,
-          "id": 415,
+          "id": 421,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",

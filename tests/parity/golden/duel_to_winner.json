@@ -14,7 +14,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -28,9 +28,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 413,
-      "state": "54355cf9",
-      "events": "d3403476",
+      "nextId": 419,
+      "state": "a3a612f5",
+      "events": "442ccee8",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -39,9 +39,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 413,
-      "state": "fa782bae",
-      "events": "34a1b65c",
+      "nextId": 419,
+      "state": "3832bd52",
+      "events": "73087460",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -50,9 +50,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 413,
-      "state": "348d5c8b",
-      "events": "162609b6",
+      "nextId": 419,
+      "state": "1eb92373",
+      "events": "4e7c035e",
       "rng": {
         "draws": 72,
         "digest": "d88ea488"
@@ -61,9 +61,9 @@
     {
       "tick": 61,
       "time": 3.05,
-      "nextId": 413,
-      "state": "47474688",
-      "events": "197fe979",
+      "nextId": 419,
+      "state": "14452884",
+      "events": "1b4cdf91",
       "rng": {
         "draws": 79,
         "digest": "b2659da4"
@@ -96,14 +96,11 @@
               "eastbrook_buckler",
               "recruit_tunic",
               "worn_sword"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -120,6 +117,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -151,14 +149,11 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -178,6 +173,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -196,7 +192,7 @@
               "name": "Battle Stance",
               "remaining": 3596.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -209,7 +205,7 @@
           "fallStartY": 2.242568,
           "fiveSecondRule": 102.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -258,7 +254,7 @@
           "fallStartY": 2.139867,
           "fiveSecondRule": 102.05,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -302,9 +298,9 @@
     {
       "tick": 61,
       "time": 3.05,
-      "nextId": 413,
-      "state": "ec1f0281",
-      "events": "0ce7a3bd",
+      "nextId": 419,
+      "state": "0a837c27",
+      "events": "b2ed388d",
       "rng": {
         "draws": 79,
         "digest": "b2659da4"
@@ -340,14 +336,11 @@
               "eastbrook_buckler",
               "recruit_tunic",
               "worn_sword"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -364,6 +357,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -397,14 +391,11 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -424,6 +415,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -442,7 +434,7 @@
               "name": "Battle Stance",
               "remaining": 3596.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -455,7 +447,7 @@
           "fallStartY": 2.242568,
           "fiveSecondRule": 102.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -504,7 +496,7 @@
           "fallStartY": 2.139867,
           "fiveSecondRule": 102.05,
           "hp": 1,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -548,9 +540,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 413,
-      "state": "d6177ab6",
-      "events": "df549409",
+      "nextId": 419,
+      "state": "c35d25e2",
+      "events": "42dd4059",
       "rng": {
         "draws": 152,
         "digest": "01bcc82a"
@@ -559,8 +551,8 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 413,
-      "state": "e1ac8f2d",
+      "nextId": 419,
+      "state": "89532859",
       "events": "741638a5",
       "rng": {
         "draws": 267,
@@ -570,8 +562,8 @@
     {
       "tick": 101,
       "time": 5.05,
-      "nextId": 413,
-      "state": "86afc534",
+      "nextId": 419,
+      "state": "ded0cdf8",
       "events": "741638a5",
       "rng": {
         "draws": 267,
@@ -608,9 +600,6 @@
               "eastbrook_buckler",
               "recruit_tunic",
               "worn_sword"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -621,7 +610,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -638,6 +627,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -672,9 +662,6 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
-            ],
-            "visited": [
-              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -685,7 +672,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -705,6 +692,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -724,7 +712,7 @@
               "name": "Battle Stance",
               "remaining": 3594.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -737,7 +725,7 @@
           "fallStartY": 2.242568,
           "fiveSecondRule": 104.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -786,7 +774,7 @@
           "fallStartY": 2.139867,
           "fiveSecondRule": 104.05,
           "hp": 7,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",

@@ -210,15 +210,26 @@ function frostProcOrb(): Scenario {
       p.gcdRemaining = 0;
       p.resource = p.maxResource;
       sim.castAbility('frostbolt');
-      for (let tick = 0; tick < 100; tick++) {
-        const events = rec.tick(1);
+      // Spam frostbolt across the window: the frost proc-multiplier rework (#2115)
+      // shifted the draw order, so a single bolt no longer lands both procs at this
+      // seed. Each frostbolt impact draws one Fingers of Frost (15%) and one Brain
+      // Freeze (20%) chance (rollFrostboltProcs); recasting whenever ready draws
+      // enough rolls that, deterministically at seed 43, both procs land (Brain
+      // Freeze ~tick 253, Fingers of Frost ~tick 403). Exit once both are seen; the
+      // Frozen Orb pulses/Rimelance damage fire earlier in allEvents.
+      for (let tick = 0; tick < 600; tick++) {
+        if (p.gcdRemaining <= 0 && !p.castingAbility) {
+          p.resource = p.maxResource;
+          sim.castAbility('frostbolt');
+        }
+        rec.tick(1);
         if (p.auras.some((aura) => aura.kind === 'fingers_of_frost')) {
           rec.notes.sawFingersOfFrost = true;
         }
         if (p.auras.some((aura) => aura.kind === 'brain_freeze')) {
           rec.notes.sawBrainFreeze = true;
         }
-        if (events.some((event) => event.type === 'damage' && event.ability === 'Rimelance')) {
+        if (rec.notes.sawFingersOfFrost && rec.notes.sawBrainFreeze) {
           break;
         }
       }

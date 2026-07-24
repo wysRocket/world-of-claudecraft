@@ -14,8 +14,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "627ae546",
+      "nextId": 418,
+      "state": "6e5fa070",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -52,7 +52,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -69,6 +69,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -88,7 +89,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 62,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -140,9 +141,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 413,
-      "state": "7b7afc62",
-      "events": "8ea652ba",
+      "nextId": 419,
+      "state": "45c59c2f",
+      "events": "8ed17988",
       "rng": {
         "draws": 8,
         "digest": "eab58be7"
@@ -151,9 +152,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 413,
-      "state": "c634dfdd",
-      "events": "e9a8e7f8",
+      "nextId": 419,
+      "state": "bb00cb74",
+      "events": "24d8b356",
       "rng": {
         "draws": 17,
         "digest": "3b427f10"
@@ -162,9 +163,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 413,
-      "state": "5c15a653",
-      "events": "e71e287d",
+      "nextId": 419,
+      "state": "0aefc902",
+      "events": "c557f06b",
       "rng": {
         "draws": 94,
         "digest": "3dcda533"
@@ -173,8 +174,8 @@
     {
       "tick": 72,
       "time": 3.6,
-      "nextId": 413,
-      "state": "48e02743",
+      "nextId": 419,
+      "state": "43767a5e",
       "events": "741638a5",
       "rng": {
         "draws": 146,
@@ -214,7 +215,8 @@
               "rusty_dagger"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -233,7 +235,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -251,6 +253,7 @@
           "lifetimeXp": 27600,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -274,7 +277,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 102.6,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 10,
@@ -316,7 +319,7 @@
             "str": 26
           },
           "swingTimer": 0.05,
-          "targetId": 412,
+          "targetId": 418,
           "templateId": "rogue",
           "weapon": {
             "dagger": true,
@@ -326,7 +329,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "attack",
           "combatTimer": 1.2,
           "comboUntil": -1,
@@ -338,7 +341,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 8893,
-          "id": 412,
+          "id": 418,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -368,12 +371,12 @@
             "armor": 40
           },
           "swingTimer": 0.45,
-          "tappedById": 411,
-          "targetId": 411,
+          "tappedById": 417,
+          "targetId": 417,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               108
             ]
           ],

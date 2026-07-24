@@ -15,7 +15,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -29,9 +29,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 415,
-      "state": "1f8bc39e",
-      "events": "7baabc33",
+      "nextId": 421,
+      "state": "b00fb3c7",
+      "events": "a0420161",
       "rng": {
         "draws": 1,
         "digest": "4d9ff5c1"
@@ -73,7 +73,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -94,6 +94,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -134,7 +135,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -154,6 +155,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -193,7 +195,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -210,6 +212,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -228,7 +231,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -241,7 +244,7 @@
           "fallStartY": 1.49341,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -291,7 +294,7 @@
           "fallStartY": 1.335617,
           "fiveSecondRule": 99,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -342,7 +345,7 @@
           "fallStartY": 1.133292,
           "fiveSecondRule": 99,
           "hp": 62,
-          "id": 413,
+          "id": 419,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -402,7 +405,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 414,
+          "id": 420,
           "kind": "mob",
           "level": 2,
           "loot": {
@@ -411,16 +414,16 @@
                 "count": 1,
                 "itemId": "gnarled_staff",
                 "personalFor": [
-                  412
+                  418
                 ]
               }
             ]
           },
           "lootFfaTimer": "Infinity",
           "lootRecipientIds": [
-            411,
-            412,
-            413
+            417,
+            418,
+            419
           ],
           "lootable": true,
           "maxHp": 54,
@@ -442,7 +445,7 @@
           "stats": {
             "armor": 10
           },
-          "tappedById": 411,
+          "tappedById": 417,
           "templateId": "forest_wolf",
           "weapon": {
             "max": 6,
@@ -455,9 +458,9 @@
     {
       "tick": 1,
       "time": 0.05,
-      "nextId": 415,
-      "state": "26745371",
-      "events": "d475fef1",
+      "nextId": 421,
+      "state": "6d9081ce",
+      "events": "ab4e08f4",
       "rng": {
         "draws": 3,
         "digest": "2fc30a78"
@@ -506,7 +509,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -531,6 +534,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -578,7 +582,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -598,6 +602,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -644,7 +649,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -661,6 +666,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -680,7 +686,7 @@
               "name": "Battle Stance",
               "remaining": 3599.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -693,7 +699,7 @@
           "fallStartY": 1.49341,
           "fiveSecondRule": 99.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -743,7 +749,7 @@
           "fallStartY": 1.335617,
           "fiveSecondRule": 99.05,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -794,7 +800,7 @@
           "fallStartY": 1.133292,
           "fiveSecondRule": 99.05,
           "hp": 62,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -855,7 +861,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 414,
+          "id": 420,
           "kind": "mob",
           "level": 2,
           "loot": {
@@ -864,7 +870,7 @@
                 "count": 1,
                 "itemId": "gnarled_staff",
                 "personalFor": [
-                  412
+                  418
                 ]
               },
               {
@@ -876,9 +882,9 @@
           },
           "lootFfaTimer": "Infinity",
           "lootRecipientIds": [
-            411,
-            412,
-            413
+            417,
+            418,
+            419
           ],
           "lootable": true,
           "maxHp": 54,
@@ -901,7 +907,7 @@
           "stats": {
             "armor": 10
           },
-          "tappedById": 411,
+          "tappedById": 417,
           "templateId": "forest_wolf",
           "weapon": {
             "max": 6,
@@ -914,9 +920,9 @@
     {
       "tick": 1,
       "time": 0.05,
-      "nextId": 415,
-      "state": "c180d990",
-      "events": "99d44f9a",
+      "nextId": 421,
+      "state": "14518683",
+      "events": "a2b814b6",
       "rng": {
         "draws": 3,
         "digest": "2fc30a78"
@@ -965,7 +971,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -990,6 +996,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1038,7 +1045,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1066,6 +1073,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1112,7 +1120,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -1129,6 +1137,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1148,7 +1157,7 @@
               "name": "Battle Stance",
               "remaining": 3599.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1161,7 +1170,7 @@
           "fallStartY": 1.49341,
           "fiveSecondRule": 99.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1211,7 +1220,7 @@
           "fallStartY": 1.335617,
           "fiveSecondRule": 99.05,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1262,7 +1271,7 @@
           "fallStartY": 1.133292,
           "fiveSecondRule": 99.05,
           "hp": 62,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -1323,14 +1332,14 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 414,
+          "id": 420,
           "kind": "mob",
           "level": 2,
           "lootFfaTimer": "Infinity",
           "lootRecipientIds": [
-            411,
-            412,
-            413
+            417,
+            418,
+            419
           ],
           "maxHp": 54,
           "moveSpeed": 8,
@@ -1352,7 +1361,7 @@
           "stats": {
             "armor": 10
           },
-          "tappedById": 411,
+          "tappedById": 417,
           "templateId": "forest_wolf",
           "weapon": {
             "max": 6,
@@ -1365,8 +1374,8 @@
     {
       "tick": 3,
       "time": 0.15,
-      "nextId": 415,
-      "state": "4696e295",
+      "nextId": 421,
+      "state": "138ab5c2",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -1416,7 +1425,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1441,6 +1450,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1489,7 +1499,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1517,6 +1527,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1563,7 +1574,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -1580,6 +1591,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -1599,7 +1611,7 @@
               "name": "Battle Stance",
               "remaining": 3599.85,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1612,7 +1624,7 @@
           "fallStartY": 1.49341,
           "fiveSecondRule": 99.15,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -1663,7 +1675,7 @@
           "fallStartY": 1.335617,
           "fiveSecondRule": 99.15,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -1714,7 +1726,7 @@
           "fallStartY": 1.133292,
           "fiveSecondRule": 99.15,
           "hp": 62,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -1763,7 +1775,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "combatTimer": 99.05,
           "comboUntil": -1,
@@ -1775,7 +1787,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -1808,7 +1820,7 @@
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               1
             ]
           ],

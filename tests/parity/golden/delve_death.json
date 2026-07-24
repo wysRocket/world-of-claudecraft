@@ -14,8 +14,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "627ae546",
+      "nextId": 418,
+      "state": "6e5fa070",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -52,7 +52,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -69,6 +69,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -88,7 +89,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 62,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -140,9 +141,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 426,
-      "state": "bae552a1",
-      "events": "edfb0fcf",
+      "nextId": 432,
+      "state": "edce2881",
+      "events": "8b064b81",
       "rng": {
         "draws": 1,
         "digest": "a407dac2"
@@ -178,7 +179,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -196,6 +197,7 @@
           "lifetimeXp": 11200,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -212,10 +214,10 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.0715,
           "dualWielding": true,
-          "fallStartY": 2.077747,
+          "fallStartY": 1.519145,
           "fiveSecondRule": 99,
           "hp": 93,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 7,
           "lootFfaTimer": "Infinity",
@@ -266,9 +268,9 @@
     {
       "tick": 2,
       "time": 0.1,
-      "nextId": 426,
-      "state": "550c5560",
-      "events": "a423f15a",
+      "nextId": 432,
+      "state": "2948892d",
+      "events": "f19269ae",
       "rng": {
         "draws": 1,
         "digest": "a407dac2"
@@ -314,7 +316,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -332,6 +334,7 @@
           "lifetimeXp": 11200,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 10,
           "talents": {
             "rows": {}
@@ -349,10 +352,10 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.0715,
           "dualWielding": true,
-          "fallStartY": 2.353205,
+          "fallStartY": 1.506291,
           "fiveSecondRule": 99.1,
           "hp": 185,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 7,
           "lootFfaTimer": "Infinity",
@@ -370,9 +373,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": -5,
-            "y": 2.353205,
-            "z": -56
+            "x": 18,
+            "y": 1.506291,
+            "z": 2
           },
           "potionCooldownUntil": -1,
           "resource": 100,
@@ -404,8 +407,8 @@
     {
       "tick": 2,
       "time": 0.1,
-      "nextId": 426,
-      "state": "550c5560",
+      "nextId": 432,
+      "state": "2948892d",
       "events": "741638a5",
       "rng": {
         "draws": 1,
@@ -452,7 +455,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -470,6 +473,7 @@
           "lifetimeXp": 11200,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 10,
           "talents": {
             "rows": {}
@@ -487,10 +491,10 @@
           "detonateTimer": "Infinity",
           "dodgeChance": 0.0715,
           "dualWielding": true,
-          "fallStartY": 2.353205,
+          "fallStartY": 1.506291,
           "fiveSecondRule": 99.1,
           "hp": 185,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 7,
           "lootFfaTimer": "Infinity",
@@ -508,9 +512,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": -5,
-            "y": 2.353205,
-            "z": -56
+            "x": 18,
+            "y": 1.506291,
+            "z": 2
           },
           "potionCooldownUntil": -1,
           "resource": 100,

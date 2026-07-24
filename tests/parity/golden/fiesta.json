@@ -15,7 +15,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -29,9 +29,9 @@
     {
       "tick": 25,
       "time": 1.25,
-      "nextId": 415,
-      "state": "3a9d5a87",
-      "events": "cc78a601",
+      "nextId": 421,
+      "state": "38e1bbc5",
+      "events": "037f8201",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -40,9 +40,9 @@
     {
       "tick": 50,
       "time": 2.5,
-      "nextId": 415,
-      "state": "8c68e2ce",
-      "events": "ca451585",
+      "nextId": 421,
+      "state": "a3b3c98c",
+      "events": "d72fbd30",
       "rng": {
         "draws": 36,
         "digest": "07037d6f"
@@ -51,9 +51,9 @@
     {
       "tick": 75,
       "time": 3.75,
-      "nextId": 415,
-      "state": "e545a4c0",
-      "events": "d4f3263d",
+      "nextId": 421,
+      "state": "9776615e",
+      "events": "6fc821d8",
       "rng": {
         "draws": 119,
         "digest": "8957f30f"
@@ -62,9 +62,9 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 415,
-      "state": "7b42eda3",
-      "events": "58bcd995",
+      "nextId": 421,
+      "state": "fa253059",
+      "events": "e1f53a64",
       "rng": {
         "draws": 234,
         "digest": "8a7460ea"
@@ -73,9 +73,9 @@
     {
       "tick": 125,
       "time": 6.25,
-      "nextId": 415,
-      "state": "2bb90b60",
-      "events": "dc128c9b",
+      "nextId": 421,
+      "state": "0600ad6c",
+      "events": "c62197c9",
       "rng": {
         "draws": 387,
         "digest": "73a1d3d8"
@@ -84,8 +84,8 @@
     {
       "tick": 150,
       "time": 7.5,
-      "nextId": 415,
-      "state": "20e7b483",
+      "nextId": 421,
+      "state": "c25ffacf",
       "events": "741638a5",
       "rng": {
         "draws": 540,
@@ -95,9 +95,9 @@
     {
       "tick": 163,
       "time": 8.15,
-      "nextId": 415,
-      "state": "292d7224",
-      "events": "6c1e84bc",
+      "nextId": 421,
+      "state": "3516db18",
+      "events": "d75d82e8",
       "rng": {
         "draws": 612,
         "digest": "d6dca293"
@@ -137,7 +137,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -162,6 +162,7 @@
           "lifetimeHonor": 20,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "war_row_double_charge",
@@ -204,7 +205,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -230,6 +231,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "mag_r5_ice_floes",
@@ -273,7 +275,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 413,
+          "entityId": 419,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -299,6 +301,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "rog_r5_relentless_strikes",
@@ -341,7 +344,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 414,
+          "entityId": 420,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -367,6 +370,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {
               "5": "hun_r5_improved_serpent_sting",
@@ -393,7 +397,7 @@
               "name": "Battle Stance",
               "remaining": 3591.9,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -405,7 +409,7 @@
           "dodgeChance": 0.0695,
           "fiveSecondRule": 107.15,
           "hp": 822,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -453,7 +457,7 @@
           "dodgeChance": 0.056,
           "fiveSecondRule": 107.15,
           "hp": 418,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -496,14 +500,14 @@
           "attackPower": 118,
           "combatTimer": 99.05,
           "comboUntil": -1,
-          "critChance": 0.091,
+          "critChance": 0.121,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.091,
           "dualWielding": true,
           "facing": 3.141593,
           "fiveSecondRule": 107.15,
           "hp": 510,
-          "id": 413,
+          "id": 419,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -551,7 +555,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 115,
+          "attackPower": 139,
           "combatTimer": 102.1,
           "comboUntil": -1,
           "critChance": 0.091,
@@ -560,7 +564,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 107.15,
           "hp": 783,
-          "id": 414,
+          "id": 420,
           "kind": "player",
           "level": 20,
           "lootFfaTimer": "Infinity",
@@ -575,7 +579,7 @@
             "z": -1232
           },
           "potionCooldownUntil": -1,
-          "rangedPower": 164,
+          "rangedPower": 188,
           "resource": 622,
           "resourceType": "mana",
           "spawnPos": {
@@ -586,7 +590,7 @@
           "spellPower": 16,
           "stats": {
             "agi": 82,
-            "armor": 375,
+            "armor": 405,
             "int": 32,
             "spi": 33,
             "sta": 57,

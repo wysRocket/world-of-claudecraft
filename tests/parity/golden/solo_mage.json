@@ -14,8 +14,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "7ca11171",
+      "nextId": 418,
+      "state": "eb9ef45f",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -53,7 +53,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -73,6 +73,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -91,7 +92,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 54,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -135,9 +136,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 413,
-      "state": "09e22b0c",
-      "events": "c8801bc6",
+      "nextId": 419,
+      "state": "665be5d5",
+      "events": "3e2eaccc",
       "rng": {
         "draws": 2,
         "digest": "f36c6bd5"
@@ -146,9 +147,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 413,
-      "state": "68c204c4",
-      "events": "c77e4079",
+      "nextId": 419,
+      "state": "176bf33f",
+      "events": "ac21f8c1",
       "rng": {
         "draws": 2,
         "digest": "f36c6bd5"
@@ -157,9 +158,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 413,
-      "state": "cbf714a0",
-      "events": "41c0acdf",
+      "nextId": 419,
+      "state": "77857a57",
+      "events": "50ab1609",
       "rng": {
         "draws": 73,
         "digest": "9f771e62"
@@ -168,9 +169,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 413,
-      "state": "f060846f",
-      "events": "41c0acdf",
+      "nextId": 419,
+      "state": "0c9690d4",
+      "events": "50ab1609",
       "rng": {
         "draws": 158,
         "digest": "f94d95d1"
@@ -179,9 +180,9 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 413,
-      "state": "63d1836f",
-      "events": "17d378fd",
+      "nextId": 419,
+      "state": "3e8fbef4",
+      "events": "87ecd84d",
       "rng": {
         "draws": 263,
         "digest": "ea90f37c"
@@ -190,9 +191,9 @@
     {
       "tick": 120,
       "time": 6,
-      "nextId": 413,
-      "state": "9a90c5d3",
-      "events": "41c0acdf",
+      "nextId": 419,
+      "state": "98425238",
+      "events": "50ab1609",
       "rng": {
         "draws": 374,
         "digest": "d59f376e"
@@ -201,8 +202,8 @@
     {
       "tick": 128,
       "time": 6.4,
-      "nextId": 413,
-      "state": "8fac63b5",
+      "nextId": 419,
+      "state": "b049669a",
       "events": "741638a5",
       "rng": {
         "draws": 421,
@@ -238,7 +239,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -257,7 +259,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -278,6 +280,7 @@
           "lifetimeXp": 27600,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -299,7 +302,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 105.4,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 10,
           "lootFfaTimer": "Infinity",
@@ -331,7 +334,7 @@
             "sta": 23,
             "str": 10
           },
-          "targetId": 412,
+          "targetId": 418,
           "templateId": "mage",
           "weapon": {
             "max": 6,
@@ -351,7 +354,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 9000,
-          "id": 412,
+          "id": 418,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",

@@ -13,7 +13,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -27,9 +27,9 @@
     {
       "tick": 3,
       "time": 0.15,
-      "nextId": 414,
-      "state": "282f218f",
-      "events": "582d6d2a",
+      "nextId": 420,
+      "state": "80b245a5",
+      "events": "d48f776c",
       "rng": {
         "draws": 2,
         "digest": "4bdf7dc7"
@@ -73,7 +73,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -90,6 +90,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -134,7 +135,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -158,6 +159,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 5,
           "talents": {
             "rows": {}
@@ -177,7 +179,7 @@
               "name": "Battle Stance",
               "remaining": 3599.85,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -190,7 +192,7 @@
           "fallStartY": 0.860353,
           "fiveSecondRule": 99.15,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -240,7 +242,7 @@
           "fallStartY": 0.639595,
           "fiveSecondRule": 99.15,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -293,7 +295,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 54,
-          "id": 413,
+          "id": 419,
           "kind": "mob",
           "level": 2,
           "lootFfaTimer": "Infinity",
@@ -318,7 +320,7 @@
           "stats": {
             "armor": 10
           },
-          "tappedById": 411,
+          "tappedById": 417,
           "templateId": "forest_wolf",
           "weapon": {
             "max": 6,

@@ -14,7 +14,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 411,
+      "nextId": 417,
       "state": "5bc471b0",
       "events": "741638a5",
       "rng": {
@@ -28,9 +28,9 @@
     {
       "tick": 5,
       "time": 0.25,
-      "nextId": 413,
-      "state": "048bbf59",
-      "events": "6091dd51",
+      "nextId": 419,
+      "state": "7bdd15cb",
+      "events": "d4c10d53",
       "rng": {
         "draws": 38,
         "digest": "383ca4de"
@@ -39,8 +39,8 @@
     {
       "tick": 10,
       "time": 0.5,
-      "nextId": 413,
-      "state": "c6d96362",
+      "nextId": 419,
+      "state": "3b1b9ea0",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -50,8 +50,8 @@
     {
       "tick": 15,
       "time": 0.75,
-      "nextId": 413,
-      "state": "0913f318",
+      "nextId": 419,
+      "state": "e0620d3e",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -61,9 +61,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 413,
-      "state": "66291f51",
-      "events": "19c0ccfe",
+      "nextId": 419,
+      "state": "86a17e7d",
+      "events": "7ee777aa",
       "rng": {
         "draws": 38,
         "digest": "383ca4de"
@@ -72,8 +72,8 @@
     {
       "tick": 25,
       "time": 1.25,
-      "nextId": 413,
-      "state": "953740c6",
+      "nextId": 419,
+      "state": "dabcee22",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -83,8 +83,8 @@
     {
       "tick": 30,
       "time": 1.5,
-      "nextId": 413,
-      "state": "79e7c24f",
+      "nextId": 419,
+      "state": "aeba1dc7",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -94,8 +94,8 @@
     {
       "tick": 35,
       "time": 1.75,
-      "nextId": 413,
-      "state": "7c65d81f",
+      "nextId": 419,
+      "state": "52ae35c3",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -105,8 +105,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 413,
-      "state": "e64669da",
+      "nextId": 419,
+      "state": "9a85221e",
       "events": "741638a5",
       "rng": {
         "draws": 38,
@@ -116,8 +116,8 @@
     {
       "tick": 41,
       "time": 2.05,
-      "nextId": 413,
-      "state": "0a4fc44f",
+      "nextId": 419,
+      "state": "67596d33",
       "events": "741638a5",
       "rng": {
         "draws": 42,
@@ -152,12 +152,13 @@
               "worn_sword"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -174,6 +175,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -206,12 +208,13 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 412,
+          "entityId": 418,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -231,6 +234,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -249,7 +253,7 @@
               "name": "Battle Stance",
               "remaining": 3597.95,
               "school": "physical",
-              "sourceId": 411
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -262,7 +266,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101.05,
           "hp": 100,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -312,7 +316,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101.05,
           "hp": 54,
-          "id": 412,
+          "id": 418,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",

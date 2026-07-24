@@ -13,13 +13,13 @@
     "gatherResult qty/rareEvent payload fields"
   ],
   "draws": 212,
-  "drawDigest": "1a92925a",
+  "drawDigest": "6504f616",
   "frames": [
     {
       "tick": 0,
       "time": 0,
-      "nextId": 416,
-      "state": "28f12f87",
+      "nextId": 418,
+      "state": "6716ec49",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -57,7 +57,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -93,7 +93,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -106,7 +106,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 415,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -150,12 +150,12 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 416,
-      "state": "9a898bcc",
-      "events": "ac045378",
+      "nextId": 418,
+      "state": "a4b2babe",
+      "events": "62aad11c",
       "rng": {
         "draws": 2,
-        "digest": "bfe7b728"
+        "digest": "d293fc23"
       },
       "label": "harvest-ore-common-and-denial",
       "players": [
@@ -195,7 +195,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -245,7 +245,7 @@
               "name": "Battle Stance",
               "remaining": 3600,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -258,7 +258,7 @@
           "fallStartY": 4.705663,
           "fiveSecondRule": 99,
           "hp": 100,
-          "id": 415,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -302,12 +302,12 @@
     {
       "tick": 2,
       "time": 0.1,
-      "nextId": 416,
-      "state": "41de7a20",
-      "events": "f1898110",
+      "nextId": 418,
+      "state": "6b5cdfa2",
+      "events": "84f93244",
       "rng": {
         "draws": 7,
-        "digest": "cbece765"
+        "digest": "a267aaa0"
       },
       "label": "harvest-wood-max-proficiency",
       "players": [
@@ -360,7 +360,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -382,17 +382,7 @@
               "itemId": "copper_ore"
             },
             {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
-            },
-            {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
+              "count": 2,
               "itemId": "ironbark_log"
             }
           ],
@@ -429,7 +419,7 @@
               "name": "Battle Stance",
               "remaining": 3599.9,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -441,7 +431,7 @@
           "fallStartY": 3.675258,
           "fiveSecondRule": 99.1,
           "hp": 88,
-          "id": 415,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 1,
@@ -487,12 +477,12 @@
     {
       "tick": 4,
       "time": 0.2,
-      "nextId": 416,
-      "state": "d02509b3",
-      "events": "00a6b070",
+      "nextId": 418,
+      "state": "ae1dc653",
+      "events": "939374b5",
       "rng": {
         "draws": 212,
-        "digest": "1a92925a"
+        "digest": "6504f616"
       },
       "label": "rare-event-window",
       "players": [
@@ -512,7 +502,7 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 19,
+            "damageTaken": 20,
             "levelUps": 2,
             "xpGained": 2022
           },
@@ -557,7 +547,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -579,17 +569,7 @@
               "itemId": "copper_ore"
             },
             {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
-            },
-            {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
+              "count": 2,
               "itemId": "ironbark_log"
             },
             {
@@ -1078,7 +1058,7 @@
               "name": "Battle Stance",
               "remaining": 3599.8,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1090,7 +1070,7 @@
           "fallStartY": -8.5,
           "fiveSecondRule": 99.2,
           "hp": 176,
-          "id": 415,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 3,
@@ -1108,7 +1088,7 @@
             "z": 90
           },
           "potionCooldownUntil": -1,
-          "resource": 4.125,
+          "resource": 4.4,
           "resourceType": "rage",
           "spawnPos": {
             "x": 2,
@@ -1136,12 +1116,12 @@
     {
       "tick": 6,
       "time": 0.3,
-      "nextId": 416,
-      "state": "4eea1d7a",
-      "events": "f7c264db",
+      "nextId": 418,
+      "state": "a98276aa",
+      "events": "a934cbcb",
       "rng": {
         "draws": 212,
-        "digest": "1a92925a"
+        "digest": "6504f616"
       },
       "label": "final",
       "players": [
@@ -1161,7 +1141,7 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "damageTaken": 19,
+            "damageTaken": 20,
             "levelUps": 2,
             "xpGained": 2022
           },
@@ -1222,7 +1202,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 415,
+          "entityId": 417,
           "equipment": {
             "chest": "recruit_tunic",
             "mainhand": "worn_sword",
@@ -1245,17 +1225,7 @@
               "itemId": "copper_ore"
             },
             {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
-            },
-            {
-              "count": 1,
-              "instance": {
-                "signer": "Adventurer"
-              },
+              "count": 2,
               "itemId": "ironbark_log"
             },
             {
@@ -1342,7 +1312,7 @@
               "name": "Battle Stance",
               "remaining": 3599.7,
               "school": "physical",
-              "sourceId": 415
+              "sourceId": 417
             }
           ],
           "blockChance": 0.05,
@@ -1355,7 +1325,7 @@
           "fallStartY": -5.25,
           "fiveSecondRule": 99.3,
           "hp": 176,
-          "id": 415,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 3,
@@ -1373,7 +1343,7 @@
             "z": 90
           },
           "potionCooldownUntil": -1,
-          "resource": 4.125,
+          "resource": 4.4,
           "resourceType": "rage",
           "spawnPos": {
             "x": 2,

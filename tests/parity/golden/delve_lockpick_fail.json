@@ -15,8 +15,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "627ae546",
+      "nextId": 418,
+      "state": "6e5fa070",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -53,7 +53,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -70,6 +70,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -89,7 +90,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 62,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -141,9 +142,9 @@
     {
       "tick": 10,
       "time": 0.5,
-      "nextId": 426,
-      "state": "6dfc08c9",
-      "events": "0983c314",
+      "nextId": 432,
+      "state": "6644271c",
+      "events": "e22294a4",
       "rng": {
         "draws": 3,
         "digest": "28b52f6d"
@@ -152,9 +153,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 426,
-      "state": "90fa56a3",
-      "events": "78dba13b",
+      "nextId": 432,
+      "state": "9c900ade",
+      "events": "ea02f49d",
       "rng": {
         "draws": 3,
         "digest": "28b52f6d"
@@ -163,8 +164,8 @@
     {
       "tick": 30,
       "time": 1.5,
-      "nextId": 426,
-      "state": "183039b1",
+      "nextId": 432,
+      "state": "24e5cc54",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -174,8 +175,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 426,
-      "state": "5233dc7f",
+      "nextId": 432,
+      "state": "16ff4292",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -185,8 +186,8 @@
     {
       "tick": 50,
       "time": 2.5,
-      "nextId": 426,
-      "state": "843e1e29",
+      "nextId": 432,
+      "state": "162fddbc",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -196,8 +197,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 426,
-      "state": "dbbb40d3",
+      "nextId": 432,
+      "state": "cc29ea8e",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -207,9 +208,9 @@
     {
       "tick": 69,
       "time": 3.45,
-      "nextId": 427,
-      "state": "c87c3277",
-      "events": "4cb6e354",
+      "nextId": 433,
+      "state": "52a7653a",
+      "events": "94548fe8",
       "rng": {
         "draws": 3,
         "digest": "28b52f6d"
@@ -270,7 +271,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -288,6 +289,7 @@
           "lifetimeXp": 11398,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 25,
           "talents": {
             "rows": {}
@@ -308,7 +310,7 @@
           "dualWielding": true,
           "fiveSecondRule": 102.45,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 7,
@@ -365,7 +367,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 99,
           "hp": 1,
-          "id": 425,
+          "id": 431,
           "kind": "object",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -398,8 +400,8 @@
     {
       "tick": 70,
       "time": 3.5,
-      "nextId": 427,
-      "state": "e11803dd",
+      "nextId": 433,
+      "state": "91e56c48",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -409,8 +411,8 @@
     {
       "tick": 71,
       "time": 3.55,
-      "nextId": 427,
-      "state": "e373240f",
+      "nextId": 433,
+      "state": "79986da2",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -472,7 +474,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_dagger",
@@ -490,6 +492,7 @@
           "lifetimeXp": 11398,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 25,
           "talents": {
             "rows": {}
@@ -510,7 +513,7 @@
           "dualWielding": true,
           "fiveSecondRule": 102.55,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 7,
@@ -567,7 +570,7 @@
           "facing": 3.141593,
           "fiveSecondRule": 99,
           "hp": 1,
-          "id": 425,
+          "id": 431,
           "kind": "object",
           "level": 1,
           "lootFfaTimer": "Infinity",

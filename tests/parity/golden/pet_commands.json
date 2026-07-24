@@ -22,8 +22,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 412,
-      "state": "f77fb2ec",
+      "nextId": 418,
+      "state": "c2784b5a",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -61,7 +61,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -81,6 +81,7 @@
           ],
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -99,7 +100,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 69,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 1,
           "lootFfaTimer": "Infinity",
@@ -144,9 +145,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 414,
-      "state": "0a970441",
-      "events": "a0a29960",
+      "nextId": 420,
+      "state": "1069efdb",
+      "events": "e499b5c8",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -183,7 +184,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -204,6 +205,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -222,7 +224,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -272,7 +274,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 194,
-          "id": 413,
+          "id": 419,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -280,7 +282,7 @@
           "moveSpeed": 8,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 411,
+          "ownerId": 417,
           "petMode": "passive",
           "pos": {
             "x": 4,
@@ -308,9 +310,9 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 414,
-      "state": "f71a3ffd",
-      "events": "908bd35e",
+      "nextId": 420,
+      "state": "2e63c8e5",
+      "events": "8c849546",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -347,7 +349,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -368,6 +370,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -386,7 +389,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -436,7 +439,7 @@
               "name": "Fed",
               "remaining": 5,
               "school": "nature",
-              "sourceId": 411,
+              "sourceId": 417,
               "tickInterval": 1,
               "tickTimer": 1,
               "value": 13
@@ -450,7 +453,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 97,
-          "id": 413,
+          "id": 419,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -458,7 +461,7 @@
           "moveSpeed": 8,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 411,
+          "ownerId": 417,
           "petMode": "defensive",
           "pos": {
             "x": 4,
@@ -486,9 +489,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 414,
-      "state": "9f999cce",
-      "events": "877d6633",
+      "nextId": 420,
+      "state": "23c87445",
+      "events": "7f90933f",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -497,9 +500,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 414,
-      "state": "4925ecdc",
-      "events": "506f1117",
+      "nextId": 420,
+      "state": "c3984cbb",
+      "events": "91479b47",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -508,8 +511,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 415,
-      "state": "b6612d72",
+      "nextId": 421,
+      "state": "4b890f2b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -545,7 +548,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -564,7 +568,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -585,6 +589,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -604,7 +609,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -645,7 +650,7 @@
           }
         },
         {
-          "aggroTargetId": 414,
+          "aggroTargetId": 420,
           "aiState": "idle",
           "auras": [
             {
@@ -655,7 +660,7 @@
               "name": "Fed",
               "remaining": 3,
               "school": "nature",
-              "sourceId": 411,
+              "sourceId": 417,
               "tickInterval": 1,
               "tickTimer": 1,
               "value": 13
@@ -668,7 +673,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 127,
-          "id": 413,
+          "id": 419,
           "inCombat": true,
           "kind": "mob",
           "level": 12,
@@ -677,7 +682,7 @@
           "moveSpeed": 8,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 411,
+          "ownerId": 417,
           "petMode": "defensive",
           "petTauntTimer": 10,
           "pos": {
@@ -702,7 +707,7 @@
           }
         },
         {
-          "aggroTargetId": 413,
+          "aggroTargetId": 419,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -710,11 +715,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -743,15 +748,15 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ],
             [
-              413,
+              419,
               52
             ]
           ],
@@ -766,9 +771,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 415,
-      "state": "8c8ffaf7",
-      "events": "ddfeb412",
+      "nextId": 421,
+      "state": "2747100b",
+      "events": "70a797e8",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -803,7 +808,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -822,7 +828,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -843,6 +849,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -862,7 +869,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -903,7 +910,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -911,11 +918,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -944,11 +951,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -963,9 +970,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 417,
-      "state": "04884c20",
-      "events": "7fff8dfa",
+      "nextId": 423,
+      "state": "04266d67",
+      "events": "f779da83",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -1000,7 +1007,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1019,7 +1027,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1040,6 +1048,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -1059,7 +1068,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1100,7 +1109,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -1108,11 +1117,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -1141,11 +1150,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -1165,7 +1174,7 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "id": 416,
+          "id": 422,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1173,7 +1182,7 @@
           "moveSpeed": 8,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 411,
+          "ownerId": 417,
           "petMode": "defensive",
           "pos": {
             "x": 4,
@@ -1201,9 +1210,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 417,
-      "state": "b629d384",
-      "events": "ace16b6a",
+      "nextId": 423,
+      "state": "8b6d38bf",
+      "events": "b7248d08",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -1238,7 +1247,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1257,7 +1267,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1278,6 +1288,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -1297,7 +1308,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1338,7 +1349,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -1346,11 +1357,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -1379,11 +1390,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -1403,7 +1414,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
           "hp": 68,
-          "id": 416,
+          "id": 422,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1411,7 +1422,7 @@
           "moveSpeed": 8,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 411,
+          "ownerId": 417,
           "petMode": "defensive",
           "pos": {
             "x": 4,
@@ -1439,8 +1450,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 417,
-      "state": "8c8ffaf7",
+      "nextId": 423,
+      "state": "2747100b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1476,7 +1487,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1495,7 +1507,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1516,6 +1528,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -1535,7 +1548,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1576,7 +1589,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -1584,11 +1597,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -1617,11 +1630,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -1636,8 +1649,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 418,
-      "state": "8c8ffaf7",
+      "nextId": 424,
+      "state": "2747100b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1673,7 +1686,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1692,7 +1706,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1713,6 +1727,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -1732,7 +1747,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -1773,7 +1788,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -1781,11 +1796,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -1814,11 +1829,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -1833,9 +1848,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 420,
-      "state": "5d9abd76",
-      "events": "fc752ed1",
+      "nextId": 426,
+      "state": "55978762",
+      "events": "452b36ff",
       "rng": {
         "draws": 0,
         "digest": "811c9dc5"
@@ -1870,7 +1885,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -1889,7 +1905,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -1910,6 +1926,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -1945,7 +1962,7 @@
           },
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 418,
+          "entityId": 424,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -1966,6 +1983,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "talents": {
             "rows": {}
           },
@@ -1984,7 +2002,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 101,
           "hp": 50000,
-          "id": 411,
+          "id": 417,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2025,7 +2043,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "chase",
           "comboUntil": -1,
           "critChance": 0.05,
@@ -2033,11 +2051,11 @@
           "dodgeChance": 0.05,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 3,
           "hostile": true,
           "hp": 50000,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -2066,11 +2084,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 413,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ]
           ],
@@ -2097,7 +2115,7 @@
           "fallStartY": 0.098164,
           "gcdRemaining": 1.5,
           "hp": 50000,
-          "id": 418,
+          "id": 424,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2146,7 +2164,7 @@
           "fallStartY": -0.525705,
           "fiveSecondRule": 99,
           "hp": 64,
-          "id": 419,
+          "id": 425,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2154,7 +2172,7 @@
           "moveSpeed": 5.2,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 418,
+          "ownerId": 424,
           "petMode": "defensive",
           "pos": {
             "x": 34,
@@ -2182,9 +2200,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 420,
-      "state": "21324589",
-      "events": "d336db97",
+      "nextId": 426,
+      "state": "3547ca9d",
+      "events": "80bfbb86",
       "rng": {
         "draws": 83,
         "digest": "51571952"
@@ -2193,9 +2211,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 420,
-      "state": "eb99561f",
-      "events": "96455b90",
+      "nextId": 426,
+      "state": "bde16f07",
+      "events": "688675da",
       "rng": {
         "draws": 159,
         "digest": "95e39278"
@@ -2204,8 +2222,8 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 420,
-      "state": "eb99561f",
+      "nextId": 426,
+      "state": "bde16f07",
       "events": "741638a5",
       "rng": {
         "draws": 159,
@@ -2243,7 +2261,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -2262,7 +2281,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -2283,6 +2302,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -2314,6 +2334,9 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
+            ],
+            "visited": [
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -2332,7 +2355,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 418,
+          "entityId": 424,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -2353,6 +2376,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -2372,7 +2396,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 103,
           "hp": 49987,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 12,
@@ -2414,7 +2438,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "attack",
           "combatTimer": 1.95,
           "comboUntil": -1,
@@ -2424,11 +2448,11 @@
           "facing": -1.892547,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 1,
           "hostile": true,
           "hp": 49977,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -2458,16 +2482,16 @@
             "armor": 70
           },
           "swingTimer": 0.05,
-          "tappedById": 411,
-          "targetId": 413,
+          "tappedById": 417,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ],
             [
-              417,
+              423,
               23
             ]
           ],
@@ -2494,7 +2518,7 @@
           "fallStartY": 0.098164,
           "fiveSecondRule": 2,
           "hp": 50000,
-          "id": 418,
+          "id": 424,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2543,7 +2567,7 @@
           "fallStartY": -0.525705,
           "fiveSecondRule": 99,
           "hp": 93,
-          "id": 419,
+          "id": 425,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2551,7 +2575,7 @@
           "moveSpeed": 5.2,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 418,
+          "ownerId": 424,
           "petMode": "defensive",
           "pos": {
             "x": 34,
@@ -2579,9 +2603,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 422,
-      "state": "5a120be0",
-      "events": "a58f8566",
+      "nextId": 428,
+      "state": "66c3d541",
+      "events": "c3a0e1ee",
       "rng": {
         "draws": 159,
         "digest": "95e39278"
@@ -2618,7 +2642,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -2637,7 +2662,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -2658,6 +2683,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -2689,6 +2715,9 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
+            ],
+            "visited": [
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -2707,7 +2736,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 418,
+          "entityId": 424,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -2728,6 +2757,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -2747,7 +2777,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 103,
           "hp": 49987,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 12,
@@ -2789,7 +2819,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "attack",
           "combatTimer": 1.95,
           "comboUntil": -1,
@@ -2799,11 +2829,11 @@
           "facing": -1.892547,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 1,
           "hostile": true,
           "hp": 49977,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -2833,16 +2863,16 @@
             "armor": 70
           },
           "swingTimer": 0.05,
-          "tappedById": 411,
-          "targetId": 413,
+          "tappedById": 417,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ],
             [
-              417,
+              423,
               23
             ]
           ],
@@ -2869,7 +2899,7 @@
           "fallStartY": 0.098164,
           "fiveSecondRule": 2,
           "hp": 50000,
-          "id": 418,
+          "id": 424,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2918,7 +2948,7 @@
           "fallStartY": -0.525705,
           "fiveSecondRule": 99,
           "hp": 378,
-          "id": 421,
+          "id": 427,
           "kind": "mob",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -2926,7 +2956,7 @@
           "moveSpeed": 5,
           "onGround": true,
           "overpowerUntil": -1,
-          "ownerId": 418,
+          "ownerId": 424,
           "petMode": "defensive",
           "pos": {
             "x": 34,
@@ -2954,9 +2984,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 424,
-      "state": "58abba12",
-      "events": "11efdf6c",
+      "nextId": 430,
+      "state": "508570b8",
+      "events": "eb64617d",
       "rng": {
         "draws": 159,
         "digest": "95e39278"
@@ -2993,7 +3023,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -3012,7 +3043,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -3033,6 +3064,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -3064,6 +3096,9 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
+            ],
+            "visited": [
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -3082,7 +3117,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 418,
+          "entityId": 424,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -3103,6 +3138,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -3122,7 +3158,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 103,
           "hp": 49987,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 12,
@@ -3164,7 +3200,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "attack",
           "combatTimer": 1.95,
           "comboUntil": -1,
@@ -3174,11 +3210,11 @@
           "facing": -1.892547,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 1,
           "hostile": true,
           "hp": 49977,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -3208,16 +3244,16 @@
             "armor": 70
           },
           "swingTimer": 0.05,
-          "tappedById": 411,
-          "targetId": 413,
+          "tappedById": 417,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ],
             [
-              417,
+              423,
               23
             ]
           ],
@@ -3244,7 +3280,7 @@
           "fallStartY": 0.098164,
           "fiveSecondRule": 2,
           "hp": 50000,
-          "id": 418,
+          "id": 424,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -3284,7 +3320,7 @@
           }
         },
         {
-          "aggroTargetId": 418,
+          "aggroTargetId": 424,
           "aiState": "chase",
           "combatTimer": 99,
           "comboUntil": -1,
@@ -3295,7 +3331,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 50000,
-          "id": 423,
+          "id": 429,
           "inCombat": true,
           "kind": "mob",
           "level": 8,
@@ -3319,11 +3355,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 422,
+          "targetId": 428,
           "templateId": "forest_wolf",
           "threat": [
             [
-              418,
+              424,
               20
             ]
           ],
@@ -3338,8 +3374,8 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 424,
-      "state": "58abba12",
+      "nextId": 430,
+      "state": "508570b8",
       "events": "741638a5",
       "rng": {
         "draws": 159,
@@ -3377,7 +3413,8 @@
               "spring_water"
             ],
             "visited": [
-              "poi:eastbrook_vale:eastbrook"
+              "poi:eastbrook_vale:eastbrook",
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -3396,7 +3433,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 411,
+          "entityId": 417,
           "equipment": {
             "chest": "footpad_jerkin",
             "mainhand": "rusty_hatchet"
@@ -3417,6 +3454,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -3448,6 +3486,9 @@
               "baked_bread",
               "gnarled_staff",
               "spring_water"
+            ],
+            "visited": [
+              "poi:eastbrook_vale:reliquary_hill"
             ]
           },
           "deedsEarned": [
@@ -3466,7 +3507,7 @@
           ],
           "delveClears": {},
           "delveDaily": {},
-          "entityId": 418,
+          "entityId": 424,
           "equipment": {
             "chest": "apprentice_robe",
             "mainhand": "gnarled_staff"
@@ -3487,6 +3528,7 @@
           "lifetimeXp": 44000,
           "mailWelcomed": true,
           "nodeHarvestReadyAt": {},
+          "recipesGrandfathered": true,
           "renown": 20,
           "talents": {
             "rows": {}
@@ -3506,7 +3548,7 @@
           "fallStartY": 1.5,
           "fiveSecondRule": 103,
           "hp": 49987,
-          "id": 411,
+          "id": 417,
           "inCombat": true,
           "kind": "player",
           "level": 12,
@@ -3548,7 +3590,7 @@
           }
         },
         {
-          "aggroTargetId": 411,
+          "aggroTargetId": 417,
           "aiState": "attack",
           "combatTimer": 1.95,
           "comboUntil": -1,
@@ -3558,11 +3600,11 @@
           "facing": -1.892547,
           "fallStartY": 1.5,
           "fiveSecondRule": 99,
-          "forcedTargetId": 413,
+          "forcedTargetId": 419,
           "forcedTargetTimer": 1,
           "hostile": true,
           "hp": 49977,
-          "id": 414,
+          "id": 420,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -3592,16 +3634,16 @@
             "armor": 70
           },
           "swingTimer": 0.05,
-          "tappedById": 411,
-          "targetId": 413,
+          "tappedById": 417,
+          "targetId": 419,
           "templateId": "forest_wolf",
           "threat": [
             [
-              411,
+              417,
               30
             ],
             [
-              417,
+              423,
               23
             ]
           ],
@@ -3628,7 +3670,7 @@
           "fallStartY": 0.098164,
           "fiveSecondRule": 2,
           "hp": 50000,
-          "id": 418,
+          "id": 424,
           "kind": "player",
           "level": 12,
           "lootFfaTimer": "Infinity",
@@ -3668,7 +3710,7 @@
           }
         },
         {
-          "aggroTargetId": 418,
+          "aggroTargetId": 424,
           "aiState": "chase",
           "combatTimer": 99,
           "comboUntil": -1,
@@ -3679,7 +3721,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 50000,
-          "id": 423,
+          "id": 429,
           "inCombat": true,
           "kind": "mob",
           "level": 8,
@@ -3703,11 +3745,11 @@
           "stats": {
             "armor": 70
           },
-          "targetId": 422,
+          "targetId": 428,
           "templateId": "forest_wolf",
           "threat": [
             [
-              418,
+              424,
               20
             ]
           ],
