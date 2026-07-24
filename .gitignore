@@ -119,3 +119,7 @@ dist-bot/
 /scripts/gravewyrm_trio.mjs
 /TESTING-TALENTS-2-0.md
 .vercel
+
+# Leaked SFX-studio security-test scratch symlink (must never be committed/deployed;
+# it points at an absolute path that breaks vite copyDir on the build container).
+public/models/sfx-studio-security-*.glb
