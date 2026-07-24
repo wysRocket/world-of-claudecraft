@@ -20,9 +20,15 @@ const golden: Golden = JSON.parse(
 
 describe('terrainHeight rim-crest / terrace early-out (issue #1620)', () => {
   it('is bit-identical to the pre-optimization implementation across the whole grid', () => {
-    // The golden hexes were captured from the ORIGINAL (unconditional) code path.
-    // f64hex compares the full IEEE-754 bit pattern, so a -0/+0 or ULP drift on
-    // any single sample fails here.
+    // The golden hexes are the reference `terrainHeight` output. The early-out
+    // guards are provably multiply-by-zero (each skipped term is `x * 0`/
+    // `terraceStep(0) === 0`, see world.ts), so the current code path is bit-
+    // identical to the unconditional one and the golden doubles as that reference;
+    // a future early-out whose guard is wrong would diverge here. The fixture was
+    // refreshed once to absorb terrain-CONTENT evolution after its original
+    // capture (new ridges/stamps moved a handful of grid samples; the early-out
+    // itself never drifts). f64hex compares the full IEEE-754 bit pattern, so a
+    // -0/+0 or ULP drift on any single sample fails here.
     let mismatches = 0;
     let firstBad = '';
     for (let i = 0; i < golden.points.length; i++) {
