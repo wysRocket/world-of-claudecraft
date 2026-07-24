@@ -951,7 +951,9 @@ describe('delve reward chest + surface exit flow', () => {
 
   it('the Bountiful roll is deterministic for a given seed', () => {
     // Read the raw roll via enterReliquary (enterFinale pins it false). Same seed
-    // ⇒ same outcome; seed 42 is known to roll Bountiful (drives the fixtures above).
+    // ⇒ same outcome; seed 14 is a hunted seed known to roll Bountiful (the
+    // Bountiful-Coffer fixtures above opt in explicitly via run.bountiful = true,
+    // so they do not depend on this seed).
     const rollFor = (seed: number) => {
       const s = makeSim('warrior', seed);
       s.setPlayerLevel(DELVES.collapsed_reliquary.minLevel);
@@ -959,7 +961,7 @@ describe('delve reward chest + surface exit flow', () => {
       return s.delveRunForPlayer(s.playerId)?.bountiful;
     };
     expect(rollFor(1234)).toBe(rollFor(1234));
-    expect(rollFor(42)).toBe(true);
+    expect(rollFor(14)).toBe(true);
   });
 
   it('a Bountiful Coffer refuses the lower antes and only opens at Hard-tier + Premium ante', () => {
@@ -2672,6 +2674,12 @@ describe('The Drowned Litany (Phase 7 heroic affixes)', () => {
       const run = enterModule(sim, 'litany_baptistry');
       run.affixes = affixes;
       run.blackwaterTimer = 0;
+      // Clear the module's trash so an incidental mob hit can't pollute the
+      // measured HP loss (the same isolation the bad_air affix test above uses):
+      // the assertion is the pulse's own 35% delta, not any combat that happens
+      // to land in the interval. The Blackwater pulse itself is mob-independent.
+      for (const id of [...run.mobIds]) (sim as any).dropEntity(id);
+      run.mobIds = [];
       const h = DELVE_MODULES.litany_baptistry.hazards![0];
       const zBase = delveModuleZOffset(run.modules, 0);
       const p = sim.player;

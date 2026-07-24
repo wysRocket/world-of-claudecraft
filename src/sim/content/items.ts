@@ -964,7 +964,9 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     slot: 'mainhand',
     hand: 'twohand',
     quality: 'common',
-    weapon: { min: 9, max: 15, speed: 3.4 },
+    // Re-budgeted onto the two-hander premium DPS curve (v0.27.1); the original
+    // 9-15 was missed in that pass and sat far below the curve for its level.
+    weapon: { min: 30, max: 44, speed: 3.4 },
     sellValue: 160,
     buyValue: 1600,
   },

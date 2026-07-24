@@ -269,7 +269,11 @@ describe('warlock wave 2 choice rows', () => {
   it('Deepened Hex and defensive pact hooks change live combat outcomes', () => {
     const hit = (withDot: boolean) => {
       const { sim } = rig('warlock', 20, { 14: 'wlk_r14_amplify_curse' });
-      const mob = addTargetMob(sim);
+      // 8yd (not the 10yd default): the warlock spawn has a static collider ~9yd
+      // north that now blocks line of sight to the 10yd slot, and 8yd keeps the
+      // Gloom Bolt projectile's cast + travel comfortably inside the settle window
+      // below. The talent-damage comparison is distance-agnostic.
+      const mob = addTargetMob(sim, 100000, 8);
       if (withDot) {
         mob.auras.push({
           id: 'corruption',
@@ -287,7 +291,7 @@ describe('warlock wave 2 choice rows', () => {
       const before = mob.hp;
       sim.player.resource = sim.player.maxResource;
       sim.castAbility('shadow_bolt');
-      for (let i = 0; i < 20 * 4; i++) sim.tick();
+      for (let i = 0; i < 20 * 6; i++) sim.tick();
       expect(mob.dead).toBe(false);
       return before - mob.hp;
     };

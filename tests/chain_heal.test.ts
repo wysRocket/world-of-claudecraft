@@ -96,10 +96,14 @@ describe('chain heal', () => {
 
     // Exact falloff: both the near (hop 0) and mid (hop 1) hops land raw (hurt enough
     // to avoid the missing-hp clamp), and every hop scales one shared baseAmount by
-    // `falloff ** i`, so the crit is common to both and hop 1 is exactly HALF of hop 0
-    // (0.5 falloff), never the tooltip's mistaken 40% (a 0.6 ratio) or any other value.
-    // Rounding-tolerant to +/-1 since each hop rounds independently.
-    expect(Math.abs(heals[1].amount - heals[0].amount / 2)).toBeLessThanOrEqual(1);
+    // `falloff ** i`. A per-hop crit can land on either hop independently (at seed 42
+    // hop 0 crits but hop 1 does not), which masks the raw ratio in the emitted amounts;
+    // de-crit each hop back to its pre-crit base (heal crits multiply by 1.5, with a 0
+    // critDmgHealBonus for a level-18 resto shaman) to recover the falloff. base 1 is then
+    // exactly HALF of base 0 (0.5 falloff), never the tooltip's mistaken 40% (a 0.6 ratio)
+    // or any other value. Rounding-tolerant to +/-1 since each hop rounds independently.
+    const deCrit = (h: HealEv) => (h.crit ? h.amount / 1.5 : h.amount);
+    expect(Math.abs(deCrit(heals[1]) - deCrit(heals[0]) / 2)).toBeLessThanOrEqual(1);
 
     // (The far mage's exact hp is not asserted: out-of-combat regen ticks during
     // the collection window; its exclusion is proven by the beam/heal target lists.)

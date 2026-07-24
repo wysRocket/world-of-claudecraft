@@ -58,10 +58,14 @@ describe('Cauterize', () => {
 
   it('the burn ticks 5% max HP per second while it rides', () => {
     const { sim, p } = mage('fire');
-    hit(sim, enemy(sim), p, 999_999);
-    const afterSave = p.hp; // 2500
+    // A sourceless lethal blow triggers Cauterize (the passive keys off the target
+    // taking a lethal hit, not on who dealt it) and isolates the DoT: with no live
+    // attacker in range, no follow-up melee swing lands inside the one-second
+    // measurement window, so the delta is the pure burn tick.
+    hit(sim, null, p, 999_999);
+    const afterSave = p.hp;
     for (let i = 0; i < 20; i++) sim.tick(); // 1 second -> one 5% tick
-    expect(afterSave - p.hp).toBe(Math.round(p.maxHp * 0.05)); // 500 burned
+    expect(afterSave - p.hp).toBe(Math.round(p.maxHp * 0.05)); // one 5% max HP burn tick
   });
 
   it('grants +12% Fire damage to enemies while burning, but never to the self-burn', () => {

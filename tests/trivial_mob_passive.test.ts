@@ -3,6 +3,7 @@
 // back if attacked (that path is the damage/threat handler, not the idle gate),
 // and elites/rares/bosses are never trivial, so they always remain dangerous.
 import { describe, expect, it } from 'vitest';
+import { MOBS } from '../src/sim/data';
 import { Sim } from '../src/sim/sim';
 import type { Entity } from '../src/sim/types';
 import { dist2d } from '../src/sim/types';
@@ -33,6 +34,11 @@ function nearestMob(sim: Sim): Entity {
   let bestD = Infinity;
   for (const e of sim.entities.values()) {
     if (e.kind !== 'mob' || e.dead || e.ownerId !== null) continue;
+    // Skip elite/rare/boss templates: they are never trivial (isTrivialTo), so the
+    // trivial-con test needs a plain wild mob. The nearest spawn on this seed is now
+    // the elite amber_heart_golem, which would always aggro and mask the passive gate.
+    const t = MOBS[e.templateId];
+    if (t?.elite || t?.rare || t?.boss) continue;
     const d = dist2d(sim.player.pos, e.pos);
     if (d < bestD) {
       bestD = d;

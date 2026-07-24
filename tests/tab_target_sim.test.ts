@@ -39,6 +39,11 @@ describe('Sim.tabTarget on-screen / in-combat cycling', () => {
     const p = sim.entities.get(sim.playerId)!;
     p.facing = 0; // facing +Z
     (sim as any).rebucket(p);
+    // Isolate from world-spawned mobs (an off-axis one in front now lands inside the
+    // ~40 yd query and would win as the visible pick) so the only candidate is ours.
+    for (const id of [...sim.entities.keys()]) {
+      if (id !== sim.playerId) (sim as any).dropEntity(id);
+    }
     const behindClose = spawnMob(sim, 900003, 0, -6); // behind, near, idle (off screen)
 
     // No on-screen / engaged enemy exists, so Tab still targets the only mob.

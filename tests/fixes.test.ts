@@ -1047,6 +1047,11 @@ describe('boss loot and encounter resets', () => {
     sim.partyAccept(b);
     teleportTo(sim, 20, 20, a);
     teleportTo(sim, 21, 20, b);
+    // The mob-pathing rework lets wandering mobs walk up and kill a stationary
+    // player over the 61s FFA-timeout wait below; make the looter invulnerable so
+    // it is still alive to loot the timed-out item (this test is about the loot
+    // returning to the corpse, not about surviving a swarm).
+    sim.entities.get(a)!.gm = true;
     const mob = createMob(990108, MOBS.forest_wolf, 2, { x: 20, y: 0, z: 22 });
     mob.dead = true;
     mob.lootable = true;

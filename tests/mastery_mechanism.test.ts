@@ -121,9 +121,13 @@ describe('Gloamveil Form amplifies Shadow damage by 15%', () => {
 
   it('amplifies periodic Shadow damage too (a Shadow Word: Pain DoT tick is +15%)', () => {
     // Every shadow damage path funnels through dealDamage, so the DoT ticks benefit like
-    // direct hits. Same seed, only the form differs.
+    // direct hits. Same seed, only the form differs. Dirge of Decay lands as a shadow
+    // projectile subject to a resist roll; seed 3 now rolls a FULL resist on that draw
+    // (the shared rng draw order shifted after the sim reworks), so it lands zero damage
+    // and the DoT never applies. Use a seed where the cast connects; the form is a pure
+    // 15% amplifier on each tick, so inForm == round(plain * 1.15) holds on any landing seed.
     const dotDamage = (inForm: boolean): number => {
-      const sim = new Sim({ seed: 3, playerClass: 'priest', autoEquip: true });
+      const sim = new Sim({ seed: 5, playerClass: 'priest', autoEquip: true });
       sim.setPlayerLevel(20);
       const p = sim.entities.get(sim.playerId) as Entity;
       p.facing = 0;

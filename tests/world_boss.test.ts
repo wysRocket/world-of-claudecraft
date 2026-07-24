@@ -840,10 +840,22 @@ describe('world boss pathing (phases through obstacles)', () => {
     // Reuse the boss entity but masquerade as an unflagged template: the gate
     // reads MOBS[templateId], so a plain wolf template must NOT phase.
     boss.templateId = 'forest_wolf';
-    boss.pos = { x: 10, z: 8, y: 0 };
-    (sim as any).moveToward(boss, { x: 10, z: 22, y: 0 }, 7);
-    const deflected = Math.abs(boss.pos.x - 10) > 1e-6 || Math.abs(boss.pos.z - 8) < 0.3;
-    expect(deflected).toBe(true);
+    // March the same due-north line as the phasing-boss case above (z 2 -> 22
+    // through the zone1 house OBB at (10, 12)). A single step from just south of
+    // the collider does not engage it (the sliding solver only deflects once the
+    // swept body overlaps the OBB), so walk the full line: unlike the boss, whose
+    // x stays pinned to 10, the plain wolf is shoved off the straight line and its
+    // x deviates as it slides around the building.
+    boss.pos = { x: 10, z: 2, y: 0 };
+    const dest = { x: 10, z: 22, y: 0 };
+    const budget = (Math.ceil(20 / (7 * (1 / 20))) + 2) * 2;
+    let maxXDeviation = 0;
+    let arrived = false;
+    for (let t = 0; t < budget && !arrived; t++) {
+      arrived = (sim as any).moveToward(boss, dest, 7);
+      maxXDeviation = Math.max(maxXDeviation, Math.abs(boss.pos.x - 10));
+    }
+    expect(maxXDeviation).toBeGreaterThan(0.3);
   });
 
   it('the template opts in via phasesThroughObstacles', () => {

@@ -25,6 +25,18 @@ function spawn(sim: Sim, id: number, tmplId: string, hp?: number): Entity {
   return mob;
 }
 
+// Malric's channeled heal can roll the baseline spell crit (spellCrit carries a
+// hardcoded 0.05 floor), which multiplies a measured tick by 1.5x and masks the raw
+// ramp (e.g. a crit on the 560 tick reads 840). These ramp/interrupt tests measure
+// the exact base+ramp values, so suppress the crit deterministically (rng.chance
+// still draws, so the stream is unchanged). The heroic-multiplier test below spawns
+// Malric with plain spawn() and keeps crit live on purpose.
+function spawnMalric(sim: Sim, id: number): Entity {
+  const malric = spawn(sim, id, 'nythraxis_heroic_priest_add');
+  malric.sharedCritBonus = -1;
+  return malric;
+}
+
 const stun = (sourceId: number): Aura => ({
   id: 'test_stun',
   name: 'Test Stun',
@@ -66,7 +78,7 @@ describe('heroic Nythraxis priest: escalating channeled heal', () => {
   it('heals the boss for more each uninterrupted tick (the ramp)', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', noPlayer: true });
     const boss = spawn(sim, 8001, 'nythraxis_scourge_of_thornpeak', 1000); // wounded, huge pool
-    const malric = spawn(sim, 8002, 'nythraxis_heroic_priest_add');
+    const malric = spawnMalric(sim, 8002);
     boss.pos = { x: 4, y: 0, z: 0 };
 
     // Standalone spawn has no mechanicHealMult (the heroic 1.6x only applies in a
@@ -84,7 +96,7 @@ describe('heroic Nythraxis priest: escalating channeled heal', () => {
   it('a stun breaks the channel and resets the ramp to base', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', noPlayer: true });
     const boss = spawn(sim, 8011, 'nythraxis_scourge_of_thornpeak', 1000);
-    const malric = spawn(sim, 8012, 'nythraxis_heroic_priest_add');
+    const malric = spawnMalric(sim, 8012);
     boss.pos = { x: 4, y: 0, z: 0 };
 
     tickOneChannel(sim, malric, boss); // 320
@@ -150,7 +162,7 @@ describe('heroic Nythraxis priest: escalating channeled heal', () => {
   it('a shadow-school lockout breaks the channel and resets the ramp', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', noPlayer: true });
     const boss = spawn(sim, 8401, 'nythraxis_scourge_of_thornpeak', 1000);
-    const malric = spawn(sim, 8402, 'nythraxis_heroic_priest_add');
+    const malric = spawnMalric(sim, 8402);
     boss.pos = { x: 4, y: 0, z: 0 };
     tickOneChannel(sim, malric, boss); // 320
     expect(tickOneChannel(sim, malric, boss)).toBe(560); // ramp built
@@ -174,7 +186,7 @@ describe('heroic Nythraxis priest: escalating channeled heal', () => {
   it('a silence breaks the channel and resets the ramp', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'warrior', noPlayer: true });
     const boss = spawn(sim, 8401, 'nythraxis_scourge_of_thornpeak', 1000);
-    const malric = spawn(sim, 8402, 'nythraxis_heroic_priest_add');
+    const malric = spawnMalric(sim, 8402);
     boss.pos = { x: 4, y: 0, z: 0 };
     tickOneChannel(sim, malric, boss); // 320
     expect(tickOneChannel(sim, malric, boss)).toBe(560); // ramp built

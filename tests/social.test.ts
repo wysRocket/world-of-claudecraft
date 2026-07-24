@@ -242,8 +242,12 @@ describe('nine classes', () => {
     const sim = new Sim({ seed: 42, playerClass: 'hunter' });
     const p = sim.player;
     const wolf = nearestMob(sim, 'forest_wolf');
-    p.maxHp = 500;
-    p.hp = 500;
+    // The mob-pathing rework lets nearby camp mobs walk up and swarm a stationary
+    // player; park the hunter on a large health pool so the incidental melee never
+    // ends the pull before the ranged kill lands (the isolation idiom used by the
+    // lightning-shield tests above). This test measures the ranged auto shot on the
+    // distant wolf, not the hunter's survivability against a wandering pack.
+    p.hp = p.maxHp = 1_000_000;
     wolf.hp = 60;
     teleport(sim, p.id, wolf.pos.x + 35, wolf.pos.z);
     sim.targetEntity(wolf.id);

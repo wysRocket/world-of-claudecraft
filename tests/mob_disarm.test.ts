@@ -108,6 +108,18 @@ describe('mob disarm ("Disarming Smash")', () => {
     sim.setPlayerLevel(60); // enough HP to survive incidental mob swings during the tick loop
     const p = sim.player;
     const mob = spawnCrusher(sim, p);
+    // A level-60 player otherwise AVOIDS the Crusher's swings (mobSwing early-returns on
+    // miss/dodge/parry BEFORE the disarm affix rolls), so the manual proc never landed.
+    // Make the landed hit deterministic without making it lethal: raise the mob above
+    // the player (miss floors at 0.5%), drop its weapon damage to ~nothing so the player
+    // survives the tick loop, zero the player's dodge/block, and place the mob behind the
+    // player so the warrior front-arc parry never applies.
+    mob.level = 80;
+    mob.weapon = { ...mob.weapon, min: 0, max: 0 };
+    p.dodgeChance = 0;
+    p.blockChance = 0;
+    p.facing = 0; // facing +Z
+    mob.pos = { x: p.pos.x, y: p.pos.y, z: p.pos.z - 2 };
     try {
       MOBS['ogre_crusher'].disarm!.chance = 1; // deterministic: every landed hit procs
       swing(sim, mob, p); // first proc: applies the debuff, 6s remaining
