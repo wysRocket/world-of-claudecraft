@@ -784,21 +784,39 @@ describe('asset library registry parsers', () => {
     const library = await libraryImport;
     const src = readFileSync(join(ROOT, 'src/render/characters/manifest.ts'), 'utf8');
     const map = library.parseVisualUrls(src);
-    expect(map.get('models/chars/players/knight.glb')).toContain('player_warrior');
+    // The knight NPC rides the KayKit knight body (a literal url the source parser
+    // resolves). The kawaii player classes are generated via kawaiiClass(...), so
+    // their function-built urls are deliberately outside this regex parser's reach.
+    expect(map.get('models/chars/players/knight.glb')).toContain('npc_knight');
     expect(map.get('models/creatures/wolf_basic.glb')).toEqual(
       expect.arrayContaining(['form_cat', 'mob_wolf']),
     );
-    // Attach urls are attributed too (the knight's default sword).
-    expect(map.get('models/weapons/sword_1handed.glb')).toContain('player_warrior');
+    // Attach urls are attributed too (the knight NPC's default sword).
+    expect(map.get('models/weapons/sword_1handed.glb')).toContain('npc_knight');
   });
 
   it('parses SKINS into atlasPath -> [{key, index}] with correct indexes', async () => {
     const library = await libraryImport;
-    const src = readFileSync(join(ROOT, 'src/render/characters/manifest.ts'), 'utf8');
+    // Parser contract check against a representative SKINS block: index 0 is the
+    // null default; later `${SKINS_DIR}/...` entries register as atlas skins at
+    // their array index, and one atlas shared by several classes lists every key.
+    // (The live kawaii bodies carry no per-index atlas, so this exercises the
+    // parser with a controlled fixture instead of volatile manifest data.)
+    const src = [
+      'export const SKINS: Record<string, (string | null)[]> = {',
+      '  player_warrior: [null, `${SKINS_DIR}/knight/alt_a.png`, `${SKINS_DIR}/knight/alt_b.png`],',
+      '  player_priest: [null, `${SKINS_DIR}/mage/alt_a.png`],',
+      '  player_mage: [null, `${SKINS_DIR}/mage/alt_a.png`],',
+      '  player_warlock: [null, `${SKINS_DIR}/mage/alt_a.png`],',
+      '};',
+    ].join('\n');
     const map = library.parseSkinsMap(src);
     const knightA = map.get('textures/skins/knight/alt_a.png') ?? [];
     expect(knightA).toEqual(expect.arrayContaining([{ key: 'player_warrior', index: 1 }]));
-    // mage.glb atlases serve priest, mage, and warlock.
+    expect(map.get('textures/skins/knight/alt_b.png')).toEqual([
+      { key: 'player_warrior', index: 2 },
+    ]);
+    // A shared atlas lists priest, mage, and warlock.
     const mageA = map.get('textures/skins/mage/alt_a.png') ?? [];
     expect(mageA.map((s: { key: string }) => s.key).sort()).toEqual([
       'player_mage',
@@ -830,7 +848,7 @@ describe('asset library registry parsers', () => {
     const knight = assets.find(
       (a: { path: string }) => a.path === 'models/chars/players/knight.glb',
     );
-    expect(knight.registration.visualKeys).toContain('player_warrior');
+    expect(knight.registration.visualKeys).toContain('npc_knight');
     expect(knight.registration.referenced).toBe(true);
   });
 });

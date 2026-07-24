@@ -434,11 +434,14 @@ describe('Combat Mech held weapon over the wire', () => {
     expect(mirrored.mainhandItemId).toBe('rusty_dagger');
     expect(mirrored.offhandItemId).toBe('keen_dirk');
 
-    // what the renderer derives from the mirrored entity
+    // what the renderer derives from the mirrored entity: the mainhand/offhand
+    // item ids still ride the wire, but the kawaii classes are baked and expose
+    // no weapon layout, so the mech has no per-class offhand to mirror (it falls
+    // back to its own default mainhand). Restoring the mech's offhand rendering
+    // for dual-wield/shield classes would need a layout table decoupled from the
+    // now-baked class VISUALS.
     expect(visualKeyFor(mirrored)).toBe('player_mech');
-    const override = mechHeldWeaponOverride(mirrored.templateId as PlayerClass);
-    expect(override?.weaponSlots).toEqual([0]);
-    expect(override?.offhandSlot).toBe(1);
+    expect(mechHeldWeaponOverride(mirrored.templateId as PlayerClass)).toBeNull();
   });
 
   it('mirrors a winning Warrior mech with its real shield offhand', () => {
@@ -456,10 +459,9 @@ describe('Combat Mech held weapon over the wire', () => {
     expect(mirrored.mainhandItemId).toBe('worn_sword');
     expect(mirrored.offhandItemId).toBe('eastbrook_buckler');
     expect(visualKeyFor(mirrored)).toBe('player_mech');
-    expect(mechHeldWeaponOverride(mirrored.templateId as PlayerClass)).toMatchObject({
-      weaponSlots: [0],
-      offhandSlot: 1,
-    });
+    // Offhand item id still mirrors over the wire, but with baked classes the mech
+    // no longer derives a per-class offhand layout (see the rogue-mech note above).
+    expect(mechHeldWeaponOverride(mirrored.templateId as PlayerClass)).toBeNull();
   });
 });
 

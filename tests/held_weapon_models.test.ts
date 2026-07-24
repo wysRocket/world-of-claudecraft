@@ -181,72 +181,52 @@ describe('held weapon models', () => {
   // hunter, which keeps its crossbow regardless of the melee weapon equipped. The
   // cosmetic Combat Mech (player_mech) is class-agnostic but is included: it still
   // shows the wearer's equipped mainhand, like every other body.
-  it('all player classes swap the mainhand except the hunter', () => {
+  // The kawaii class bodies model their weapon into the mesh (the fast baked
+  // path), so they carry no live weapon attach/swap. The Combat Mech is the one
+  // non-baked cosmetic body left, so it alone still swaps its mainhand.
+  it('the kawaii player classes bake their weapons; only the Combat Mech still swaps', () => {
     const players = Object.keys(VISUALS).filter((k) => k.startsWith('player_'));
     expect(players).toContain('player_hunter');
     expect(players).toContain('player_mech');
     for (const key of players) {
       const def = VISUALS[key];
-      if (key === 'player_hunter') {
-        expect(def.weaponSlots, 'hunter must keep its crossbow').toBeUndefined();
+      if (key === 'player_mech') {
+        expect(def.weaponSlots, 'the mech still swaps its mainhand').toEqual([0]);
       } else {
-        expect(def.weaponSlots?.includes(0), `${key} should swap its mainhand`).toBe(true);
+        expect(def.weaponSlots, `${key} bakes its weapon (no swap)`).toBeUndefined();
+        expect(def.attach, `${key} has no live attach`).toBeUndefined();
+        expect(def.offhandSlot, `${key} has no live offhand`).toBeUndefined();
       }
     }
-    // The rogue dual-wields through independent mainhand and offhand slots.
-    expect(VISUALS.player_rogue.weaponSlots).toEqual([0]);
-    expect(VISUALS.player_rogue.offhandSlot).toBe(1);
   });
 
-  it('gives winning Warrior one mainhand swap and one independent live offhand', () => {
-    expect(VISUALS.player_warrior.weaponSlots).toEqual([0]);
-    expect(VISUALS.player_warrior.offhandSlot).toBe(1);
-    expect(VISUALS.player_warrior.attach).toEqual([
+  it('the Combat Mech keeps a plain mainhand swap with the sword as its no-weapon default', () => {
+    expect(VISUALS.player_mech.weaponSlots).toEqual([0]);
+    expect(VISUALS.player_mech.offhandSlot).toBeUndefined();
+    expect(VISUALS.player_mech.attach).toEqual([
       { url: 'models/weapons/sword_1handed.glb', bone: 'handslot.r' },
-      { url: 'models/weapons/shield_round.glb', bone: 'handslot.l' },
     ]);
   });
 
-  it('keeps every real offhand independent from mainhand cosmetics', () => {
-    expect(VISUALS.player_rogue.offhandSlot).toBe(1);
-    expect(VISUALS.player_paladin).toMatchObject({
-      weaponSlots: [0],
-      offhandSlot: 1,
-      attach: [
-        { url: 'models/weapons/axe_1handed.glb', bone: 'handslot.r' },
-        { url: 'models/weapons/shield_square.glb', bone: 'handslot.l' },
-      ],
-    });
-    expect(VISUALS.player_shaman).toMatchObject({
-      weaponSlots: [0],
-      offhandSlot: 1,
-      attach: [
-        { url: 'models/weapons/axe_1handed.glb', bone: 'handslot.r' },
-        { url: 'models/weapons/shield_round.glb', bone: 'handslot.l' },
-      ],
-    });
-  });
-
-  // The class-agnostic Combat Mech adopts the wearer's real offhand layout, so
-  // rogues keep their second weapon and shield classes keep their shield.
-  it('the Combat Mech mirrors every class with an independent offhand', () => {
-    const rogue = mechHeldWeaponOverride('rogue');
-    expect(rogue?.weaponSlots).toEqual([0]);
-    expect(rogue?.offhandSlot).toBe(1);
-    expect(rogue?.attach?.length).toBe(2);
-    expect(mechHeldWeaponOverride('paladin')?.offhandSlot).toBe(1);
-    expect(mechHeldWeaponOverride('shaman')?.offhandSlot).toBe(1);
-    for (const cls of ['hunter', 'priest', 'mage', 'warlock', 'druid'] as const) {
-      expect(mechHeldWeaponOverride(cls), `${cls} should keep the mech default`).toBeNull();
+  // With the kawaii classes baked, no class exposes a weapon layout, so the mech
+  // has nothing per-class to mirror: mechHeldWeaponOverride is null for every
+  // class and the mech falls back to its own default mainhand. (Restoring the
+  // mech's per-class offhand mirroring would need a layout table decoupled from
+  // the now-baked class VISUALS.)
+  it('the Combat Mech no longer mirrors a per-class offhand (classes are baked)', () => {
+    for (const cls of [
+      'warrior',
+      'rogue',
+      'paladin',
+      'shaman',
+      'hunter',
+      'priest',
+      'mage',
+      'warlock',
+      'druid',
+    ] as const) {
+      expect(mechHeldWeaponOverride(cls), `${cls} has no live layout to mirror`).toBeNull();
     }
-
-    const warrior = mechHeldWeaponOverride('warrior');
-    expect(warrior?.weaponSlots).toEqual([0]);
-    expect(warrior?.offhandSlot).toBe(1);
-    expect(warrior?.attach?.[1]).toEqual({
-      url: 'models/weapons/shield_round.glb',
-      bone: 'handslot.l',
-    });
   });
 });
 

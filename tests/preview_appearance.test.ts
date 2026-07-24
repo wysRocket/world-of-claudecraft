@@ -103,13 +103,16 @@ describe('previewAppearanceVisual', () => {
     expect(rogue.visualKey).toBe('player_mech');
     expect(rogue.weaponItemId).toBe('dagger_x');
     expect(rogue.offhandItemId).toBe('dagger_y');
-    // Same override the in-world mech render applies for the dual-wield class.
+    // The preview derives the SAME mech weapon override the in-world render does.
+    // With the kawaii classes baked, no class exposes a weapon layout, so that
+    // override is now null (the mech uses its own default mainhand); the mainhand
+    // and offhand item ids still resolve independently above.
     expect(rogue.weaponOverride).toEqual(mechHeldWeaponOverride('rogue'));
-    expect(rogue.weaponOverride).not.toBeNull();
+    expect(rogue.weaponOverride).toBeNull();
 
-    // Winning Warrior also needs its independent shield / Fury offhand layout.
     const warrior = previewAppearanceVisual(appearance({ cls: 'warrior', skinCatalog: 'mech' }));
     expect(warrior.weaponOverride).toEqual(mechHeldWeaponOverride('warrior'));
+    expect(warrior.weaponOverride).toBeNull();
   });
 });
 

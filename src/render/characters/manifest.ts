@@ -451,17 +451,20 @@ function mechEmissiveUrl(c: MechChroma): string | null {
 // to the body material's .map (same UVs). Classes sharing a model share its skin
 // set. Players only - mobs/npcs keep their default look. See public/textures/skins/.
 export const SKINS: Record<string, (string | null)[]> = {
-  // The kawaii class bodies each ship a single baked texture (no alt-skin atlas),
-  // so only the embedded default is offered.
-  player_warrior: [null],
-  player_paladin: [null],
-  player_hunter: [null],
-  player_rogue: [null],
-  player_priest: [null],
-  player_mage: [null],
-  player_warlock: [null],
-  player_shaman: [null],
-  player_druid: [null],
+  // The kawaii class bodies ship a single baked texture (no alt-skin atlas), so
+  // every owned appearance index renders that same embedded default (null). The
+  // slot COUNT per class stays in lockstep with the sim-side SKIN_COUNTS so the
+  // cosmetic skin system (rolls, owned indices, Armory) keeps working unchanged;
+  // the kawaii bodies simply have no visual variety between indices yet.
+  player_warrior: [null, null, null, null],
+  player_paladin: [null, null],
+  player_hunter: [null, null, null, null],
+  player_rogue: [null, null, null, null],
+  player_priest: [null, null, null, null],
+  player_mage: [null, null, null, null],
+  player_warlock: [null, null, null, null],
+  player_shaman: [null, null, null, null],
+  player_druid: [null, null, null, null],
   // Combat Mech chromas - every index is a real full-model texture (no null
   // default; the embedded base texture is not one of the rewards).
   player_mech: MECH_CHROMAS.map(mechChromaUrl),
