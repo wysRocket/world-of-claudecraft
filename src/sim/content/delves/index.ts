@@ -12,10 +12,12 @@ export const BROTHER_HALVEN: NpcDef = {
   id: 'brother_halven',
   name: 'Brother Halven',
   title: 'Reliquary Keeper',
-  pos: { x: -5, z: -52 },
-  // Faces +z (north), toward the town/hub up the road, so he greets arrivals
-  // with the glowing delve mouth framed behind him (was Math.PI, facing away).
-  facing: 0,
+  // World-design pass: relocated from the far southern hill (-5,-52) to the NE
+  // corner of the town square so the delve entrance sits right on the plaza.
+  pos: { x: 18, z: 6 },
+  // Faces roughly SW toward the square center (0,2) so he greets players crossing
+  // the plaza, with the delve mouth framed behind him.
+  facing: -1.79,
   // Near-black charcoal: the hooded keeper reads dark/dirty under the 'entity'
   // tint of npc_reliquary_keeper (was 0xd4c5a0 light tan, too friendly).
   color: 0x2b2620,
