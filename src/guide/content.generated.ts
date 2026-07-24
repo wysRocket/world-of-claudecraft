@@ -809,8 +809,7 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
       }
     ],
     "model": "player_priest",
-    "tint": "#f0e9d6",
-    "still": "/guide-stills/player_priest__f0e9d6.webp"
+    "still": "/guide-stills/player_priest.webp"
   },
   {
     "id": "shaman",
@@ -913,8 +912,7 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
       }
     ],
     "model": "player_shaman",
-    "tint": "#6f8fc9",
-    "still": "/guide-stills/player_shaman__6f8fc9.webp"
+    "still": "/guide-stills/player_shaman.webp"
   },
   {
     "id": "mage",
@@ -1291,8 +1289,7 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
       }
     ],
     "model": "player_warlock",
-    "tint": "#8d5fd3",
-    "still": "/guide-stills/player_warlock__8d5fd3.webp"
+    "still": "/guide-stills/player_warlock.webp"
   },
   {
     "id": "druid",
@@ -3590,142 +3587,49 @@ export const GUIDE_DEEDS: GuideDeed[] = [
 
 export const GUIDE_MODELS: Record<string, GuideModelSpec> = {
   "player_warrior": {
-    "url": "models/chars/players/knight.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [
-      "Knight_Helmet",
-      "Knight_Cape"
-    ],
-    "attach": [
-      {
-        "url": "models/weapons/sword_1handed.glb",
-        "bone": "handslot.r"
-      },
-      {
-        "url": "models/weapons/shield_round.glb",
-        "bone": "handslot.l"
-      }
-    ]
+    "url": "models/kawaii/warrior.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_paladin": {
-    "url": "models/chars/players/paladin.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "attach": [
-      {
-        "url": "models/weapons/axe_1handed.glb",
-        "bone": "handslot.r"
-      },
-      {
-        "url": "models/weapons/shield_square.glb",
-        "bone": "handslot.l"
-      }
-    ]
+    "url": "models/kawaii/paladin.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_hunter": {
-    "url": "models/chars/players/ranger.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "attach": [
-      {
-        "url": "models/weapons/crossbow_1handed.glb",
-        "bone": "handslot.r"
-      }
-    ]
+    "url": "models/kawaii/hunter.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_rogue": {
-    "url": "models/chars/players/rogue.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [
-      "Rogue_Cape"
-    ],
-    "attach": [
-      {
-        "url": "models/weapons/dagger.glb",
-        "bone": "handslot.r"
-      },
-      {
-        "url": "models/weapons/dagger.glb",
-        "bone": "handslot.l"
-      }
-    ]
+    "url": "models/kawaii/rogue.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_priest": {
-    "url": "models/chars/players/mage.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [],
-    "attach": [
-      {
-        "url": "models/weapons/staff.glb",
-        "bone": "handslot.r"
-      }
-    ],
-    "tintStrength": 0.5
+    "url": "models/kawaii/priest.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_shaman": {
-    "url": "models/chars/players/barbarian.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [
-      "Barbarian_BearHat"
-    ],
-    "attach": [
-      {
-        "url": "models/weapons/axe_1handed.glb",
-        "bone": "handslot.r"
-      },
-      {
-        "url": "models/weapons/shield_round.glb",
-        "bone": "handslot.l"
-      }
-    ],
-    "tintStrength": 0.4
+    "url": "models/kawaii/shaman.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_mage": {
-    "url": "models/chars/players/mage.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [
-      "Mage_Cape"
-    ],
-    "attach": [
-      {
-        "url": "models/weapons/staff.glb",
-        "bone": "handslot.r"
-      }
-    ]
+    "url": "models/kawaii/mage.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_warlock": {
-    "url": "models/chars/players/mage.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "show": [],
-    "attach": [
-      {
-        "url": "models/weapons/wand.glb",
-        "bone": "handslot.r"
-      },
-      {
-        "url": "models/weapons/spellbook_open.glb",
-        "bone": "handslot.l",
-        "gripRef": "Spellbook_open"
-      }
-    ],
-    "tintStrength": 0.45
+    "url": "models/kawaii/warlock.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "player_druid": {
-    "url": "models/chars/players/druid.glb",
-    "idle": "Idle",
-    "height": 2.6,
-    "attach": [
-      {
-        "url": "models/weapons/staff.glb",
-        "bone": "handslot.r"
-      }
-    ]
+    "url": "models/kawaii/druid.glb",
+    "idle": "idle",
+    "height": 2.6
   },
   "form_bear": {
     "url": "models/creatures/yetialt.glb",

@@ -11,6 +11,9 @@ import type { GLTF } from 'three/addons/loaders/GLTFLoader.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { clone as cloneSkinned } from 'three/addons/utils/SkeletonUtils.js';
 import { WEAPON_SKINS } from '../../sim/content/weapon_skins';
+import { ACTIVE_VISUAL_THEME } from '../../visual_theme';
+import { VISUAL_THEME_CATALOG } from '../../visual_theme_catalog.generated';
+import { themedAssetPath } from '../../visual_theme_core';
 import { loadGltf, loadTexture } from '../assets/loader';
 import { registerPreload } from '../assets/preload';
 import { addRimGlow, GFX } from '../gfx';
@@ -30,9 +33,6 @@ import {
   visualAssetUrlForGraphics,
   weaponSkinModelUrl,
 } from './manifest';
-import { ACTIVE_VISUAL_THEME } from '../../visual_theme';
-import { VISUAL_THEME_CATALOG } from '../../visual_theme_catalog.generated';
-import { themedAssetPath } from '../../visual_theme_core';
 import { mergeSkinnedParts } from './rig_merge';
 import { weaponSkinAttachBone, weaponSkinHandling } from './skin_attack';
 import { variantGripTransform, WEAPON_GRIP_OVERRIDES } from './weapon_grip';

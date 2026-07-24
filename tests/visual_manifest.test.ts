@@ -194,13 +194,14 @@ describe('character visual manifest', () => {
     const allWeaponUrls = manifestUrls().filter((url) => url.startsWith('models/weapons/'));
     expect(allWeaponUrls.length).toBeGreaterThan(0);
     expect(manifestUrlsForGraphics(false)).toEqual(expect.arrayContaining(allWeaponUrls));
-    expect(visibleAttachmentsForGraphics(VISUALS.player_warrior).map((a) => a.url)).toContain(
+    // npc_knight carries the attached one-handed sword (KayKit handslot rig).
+    expect(visibleAttachmentsForGraphics(VISUALS.npc_knight).map((a) => a.url)).toContain(
       'models/weapons/sword_1handed.glb',
     );
-    expect(visibleAttachmentsForGraphics(VISUALS.player_rogue).map((a) => a.url)).toEqual([
-      'models/weapons/dagger.glb',
-      'models/weapons/dagger.glb',
-    ]);
+    // The kawaii class bodies model their gear in, so player classes attach no
+    // separate weapon props (no gear-driven swap).
+    expect(VISUALS.player_warrior.attach).toBeUndefined();
+    expect(VISUALS.player_rogue.attach).toBeUndefined();
   });
 
   it('keeps deepfen_spearjaw on its raptor model despite its reptile family retag', () => {
