@@ -42,7 +42,14 @@ const bundled = await esbuild.build({
   bundle: true,
   format: 'iife',
   platform: 'browser',
-  define: { 'import.meta.env.DEV': 'true', 'import.meta.env.PROD': 'false' },
+  // VITE_VISUAL_THEME is read by src/visual_theme.ts to resolve theme-swapped
+  // asset paths (e.g. the emberwood-only amber_heart_golem model); the IIFE bundle
+  // has no import.meta.env, so define it or the theme lookup throws at load.
+  define: {
+    'import.meta.env.DEV': 'true',
+    'import.meta.env.PROD': 'false',
+    'import.meta.env.VITE_VISUAL_THEME': '"emberwood"',
+  },
   write: false,
   logLevel: 'silent',
 });
