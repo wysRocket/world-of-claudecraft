@@ -3088,6 +3088,10 @@ export const pt_BR: EnTranslations = {
         "name": "Escavadores",
         "desc": "Escavadores encardidos que infestam minas e tocas, guardando seu minério com ferocidade."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoides",
         "desc": "Bandidos, cultistas e outros que escolheram o ofício errado. Eles lutam com táticas, não apenas com dentes."
@@ -9193,6 +9197,9 @@ export const pt_BR: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Lobo da floresta"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Velho Greyjaw"

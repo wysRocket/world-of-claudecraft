@@ -3088,6 +3088,10 @@ export const pl_PL: EnTranslations = {
         "name": "Drążyciele",
         "desc": "Oblepieni błotem kopacze, którzy zarażają kopalnie i nory, zaciekle strzegąc swojej rudy."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoidy",
         "desc": "Bandyci, kultyści i inni, którzy obrali zły fach. Walczą taktyką, nie tylko kłami."
@@ -9193,6 +9197,9 @@ export const pl_PL: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Leśny Wilk"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Stary Szaropaszczy"

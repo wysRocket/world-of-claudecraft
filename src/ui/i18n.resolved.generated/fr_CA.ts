@@ -3088,6 +3088,10 @@ export const fr_CA: EnTranslations = {
         "name": "Fouisseurs",
         "desc": "Fouisseurs couverts de terre qui infestent mines et terriers, gardant farouchement leur minerai."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoïdes",
         "desc": "Bandits, cultistes et autres ayant embrassé le mauvais métier. Ils combattent avec tactique, pas seulement avec les crocs."
@@ -9193,6 +9197,9 @@ export const fr_CA: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Loup des bois"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Vieux Greyjaw"

@@ -9,25 +9,85 @@
 // Reproducibility is checked by tests/i18n_resolved_equivalence.test.ts.
 
 export const pending: Record<string, readonly string[]> = {
-  "es": [],
-  "es_ES": [],
-  "fr_FR": [],
-  "fr_CA": [],
+  "es": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "es_ES": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "fr_FR": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "fr_CA": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
   "en_CA": [],
-  "it_IT": [],
-  "de_DE": [],
+  "it_IT": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "de_DE": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
   "zh_CN": [],
   "zh_TW": [],
   "ko_KR": [],
   "ja_JP": [],
-  "pt_BR": [],
+  "pt_BR": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
   "ru_RU": [],
-  "cs_CZ": [],
-  "nl_NL": [],
-  "pl_PL": [],
-  "id_ID": [],
-  "tr_TR": [],
-  "sv_SE": [],
-  "vi_VN": [],
-  "da_DK": []
+  "cs_CZ": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "nl_NL": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "pl_PL": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "id_ID": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "tr_TR": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "sv_SE": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "vi_VN": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ],
+  "da_DK": [
+    "entities.mobs.amber_heart_golem.name",
+    "guide.family.golem.desc",
+    "guide.family.golem.name"
+  ]
 };

@@ -3088,6 +3088,10 @@ export const id_ID: EnTranslations = {
         "name": "Penggali Liang",
         "desc": "Penggali berlumur tanah yang menjangkiti tambang dan liang, menjaga bijih mereka dengan garang."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoid",
         "desc": "Bandit, pemuja, dan lainnya yang menempuh jalan yang salah. Mereka bertarung dengan siasat, bukan sekadar taring."
@@ -9193,6 +9197,9 @@ export const id_ID: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Serigala Hutan"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Greyjaw Tua"

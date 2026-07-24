@@ -3088,6 +3088,10 @@ export const zh_TW: EnTranslations = {
         "name": "掘地怪",
         "desc": "滿身泥垢的挖掘者，盤踞於礦坑與洞穴中，凶猛地守衛著礦石。"
       },
+      "golem": {
+        "name": "魔像",
+        "desc": "由石頭與琥珀構成的活體造物，行動遲緩卻力大無窮，守護著它們被束縛之地。"
+      },
       "humanoid": {
         "name": "類人生物",
         "desc": "盜匪、邪教徒，以及其他誤入歧途之人。他們靠戰術作戰，而非只憑蠻力。"
@@ -9193,6 +9197,9 @@ export const zh_TW: EnTranslations = {
       },
       "forest_wolf": {
         "name": "森林狼"
+      },
+      "amber_heart_golem": {
+        "name": "琥珀之心魔像"
       },
       "old_greyjaw": {
         "name": "老灰顎"

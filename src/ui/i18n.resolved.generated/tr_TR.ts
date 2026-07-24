@@ -3088,6 +3088,10 @@ export const tr_TR: EnTranslations = {
         "name": "Oyucular",
         "desc": "Madenleri ve oyukları istila eden, cevherlerini hırsla koruyan toprağa bulanmış kazıcılar."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "İnsansılar",
         "desc": "Haydutlar, tarikatçılar ve yanlış işe bulaşmış diğerleri. Sadece dişle değil, taktikle savaşırlar."
@@ -9193,6 +9197,9 @@ export const tr_TR: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Orman Kurdu"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "İhtiyar Greyjaw"

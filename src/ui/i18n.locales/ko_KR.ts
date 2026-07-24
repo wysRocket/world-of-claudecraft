@@ -3204,6 +3204,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.items.tidewatchers_wraps.name': '조수지기의 손싸개',
   'entities.items.ysols_pearl_greaves.name': '이솔레이의 진주 정강이받이',
   'entities.mobs.forest_wolf.name': '숲늑대',
+  'entities.mobs.amber_heart_golem.name': '호박심장 골렘',
   'entities.mobs.old_greyjaw.name': '늙은 그레이죠',
   'entities.mobs.wild_boar.name': '야생 멧돼지',
   'entities.mobs.webwood_spider.name': '흑거미줄 잠복자',
@@ -5049,6 +5050,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'guide.family.mudfin.desc':
     '시끄럽고 영역 의식이 강한 무리를 이루어 얕은 물가에 떼지어 모이는 양서류 늪지 거주자들.',
   'guide.family.burrower.name': '굴착꾼',
+  'guide.family.golem.name': '골렘',
+  'guide.family.golem.desc': '돌과 호박으로 빚어진 살아 움직이는 구조물로, 느리지만 짓누를 듯 강하며 자신이 얽매인 장소를 지킨다.',
   'guide.family.burrower.desc':
     '광산과 굴을 들끓게 하며 자기네 광석을 사납게 지키는, 흙범벅이 된 굴착꾼들.',
   'guide.family.humanoid.name': '인간형',

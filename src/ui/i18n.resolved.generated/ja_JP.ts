@@ -3088,6 +3088,10 @@ export const ja_JP: EnTranslations = {
         "name": "穴掘り",
         "desc": "泥にまみれた採掘者たち。鉱山や巣穴にはびこり、自らの鉱石を必死に守ります。"
       },
+      "golem": {
+        "name": "ゴーレム",
+        "desc": "石と琥珀で造られた動く構造体。動きは遅いが力は絶大で、縛り付けられた場所を守り続ける。"
+      },
       "humanoid": {
         "name": "ヒューマノイド",
         "desc": "盗賊やカルト信者など、道を踏み外した者たち。牙だけでなく、戦術を使って襲いかかってきます。"
@@ -9193,6 +9197,9 @@ export const ja_JP: EnTranslations = {
       },
       "forest_wolf": {
         "name": "森の狼"
+      },
+      "amber_heart_golem": {
+        "name": "琥珀の心のゴーレム"
       },
       "old_greyjaw": {
         "name": "老グレイジョー"

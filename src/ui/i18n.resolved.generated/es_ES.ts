@@ -3088,6 +3088,10 @@ export const es_ES: EnTranslations = {
         "name": "Madrigueros",
         "desc": "Excavadores cubiertos de tierra que infestan minas y madrigueras, defendiendo con ferocidad su mineral."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoides",
         "desc": "Bandidos, sectarios y otros que tomaron el oficio equivocado. Luchan con tácticas, no solo con los dientes."
@@ -9193,6 +9197,9 @@ export const es_ES: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Lobo del bosque"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Viejo Greyjaw"

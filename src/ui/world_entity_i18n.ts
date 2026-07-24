@@ -26,6 +26,7 @@ import { DELVES, DUNGEONS, MOBS, NPCS, QUESTS, ZONES } from '../sim/data';
 const MOB_IDS = [
   'yumi_cat',
   'forest_wolf',
+  'amber_heart_golem',
   'old_greyjaw',
   'wild_boar',
   'webwood_spider',

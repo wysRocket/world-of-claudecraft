@@ -3088,6 +3088,10 @@ export const da_DK: EnTranslations = {
         "name": "Gravere",
         "desc": "Jordklistrede gravere, der hærger miner og huler og voldsomt vogter deres malm."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoider",
         "desc": "Banditter, kultister og andre, der valgte det forkerte erhverv. De kæmper med taktik, ikke kun tænder."
@@ -9193,6 +9197,9 @@ export const da_DK: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Skovulv"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Gamle Gråkæft"

@@ -3088,6 +3088,10 @@ export const de_DE: EnTranslations = {
         "name": "Wühler",
         "desc": "Schlammverkrustete Schaufler, die Minen und Höhlen verseuchen und ihr Erz erbittert verteidigen."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoide",
         "desc": "Banditen, Kultisten und andere, die das falsche Gewerbe ergriffen haben. Sie kämpfen mit Taktik, nicht nur mit Zähnen."
@@ -9193,6 +9197,9 @@ export const de_DE: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Waldwolf"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Alter Greyjaw"

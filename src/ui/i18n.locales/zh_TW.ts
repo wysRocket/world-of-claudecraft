@@ -3098,6 +3098,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.items.tidewatchers_wraps.name': '守潮者護腕',
   'entities.items.ysols_pearl_greaves.name': '伊索蕾的珍珠脛甲',
   'entities.mobs.forest_wolf.name': '森林狼',
+  'entities.mobs.amber_heart_golem.name': '琥珀之心魔像',
   'entities.mobs.old_greyjaw.name': '老灰顎',
   'entities.mobs.wild_boar.name': '野豬',
   'entities.mobs.webwood_spider.name': '玄網潛伏者',
@@ -4843,6 +4844,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.family.mudfin.name': '泥鰭',
   'guide.family.mudfin.desc': '兩棲的沼澤居民，成群聚集於淺灘，喧鬧且強烈護衛地盤。',
   'guide.family.burrower.name': '掘地怪',
+  'guide.family.golem.name': '魔像',
+  'guide.family.golem.desc': '由石頭與琥珀構成的活體造物，行動遲緩卻力大無窮，守護著它們被束縛之地。',
   'guide.family.burrower.desc': '滿身泥垢的挖掘者，盤踞於礦坑與洞穴中，凶猛地守衛著礦石。',
   'guide.family.humanoid.name': '類人生物',
   'guide.family.humanoid.desc':

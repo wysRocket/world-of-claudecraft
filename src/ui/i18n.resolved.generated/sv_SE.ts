@@ -3088,6 +3088,10 @@ export const sv_SE: EnTranslations = {
         "name": "Grävare",
         "desc": "Lerinkrustade grävare som plågar gruvor och hålor och hetsigt vaktar sin malm."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoider",
         "desc": "Banditer, kultister och andra som tagit upp fel yrke. De slåss med taktik, inte bara tänder."
@@ -9193,6 +9197,9 @@ export const sv_SE: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Skogsvarg"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Gamle Gråkäft"

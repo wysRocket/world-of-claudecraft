@@ -3088,6 +3088,10 @@ export const vi_VN: EnTranslations = {
         "name": "Lũ Đào Hang",
         "desc": "Những kẻ đào hang bám đầy bùn đất tràn ngập các hầm mỏ và hang ổ, hung hãn bảo vệ quặng của chúng."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Nhân Hình",
         "desc": "Cướp, tín đồ tà giáo, và những kẻ khác đã chọn sai nghề. Chúng chiến đấu bằng chiến thuật, không chỉ bằng nanh vuốt."
@@ -9193,6 +9197,9 @@ export const vi_VN: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Sói Rừng"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Lão Greyjaw"

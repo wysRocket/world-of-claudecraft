@@ -9,9 +9,9 @@
 // has a proper icon. Results are cached as data URLs.
 
 import { ABILITIES, ITEMS } from '../sim/data';
+import { visualAssetPath } from '../visual_theme';
 import { DEED_IMAGE_IDS } from './deed_image_ids';
 import { ITEM_WEAPON_VARIANTS } from './weapon_variants';
-import { visualAssetPath } from '../visual_theme';
 
 export type IconKind = 'ability' | 'item' | 'aura' | 'crest';
 
@@ -3238,6 +3238,7 @@ const CREST_RECIPES: Record<string, IconRecipe> = {
   family_undead: r('shadow', 'bone', ['skull']),
   family_troll: r('junk', 'bone', ['bone']),
   family_ogre: r('fury', 'earthBrown', ['fist']),
+  family_golem: r('earth', 'gold', ['fist']),
   family_elemental: r('storm', 'sky', ['lightning'], ['glow']),
   family_dragonkin: r('fire', 'ember', ['claw_slash'], ['glow']),
   family_reptile: r('earth', 'leafGreen', ['fang']),

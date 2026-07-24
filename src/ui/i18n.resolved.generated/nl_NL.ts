@@ -3088,6 +3088,10 @@ export const nl_NL: EnTranslations = {
         "name": "Gravers",
         "desc": "Met modder besmeurde gravers die mijnen en holen besmetten en hun erts fel bewaken."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Mensachtigen",
         "desc": "Bandieten, sekteleden en anderen die het verkeerde vak kozen. Ze vechten met tactiek, niet alleen met tanden."
@@ -9193,6 +9197,9 @@ export const nl_NL: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Boswolf"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Oude Grijskaak"

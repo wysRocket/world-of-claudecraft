@@ -3088,6 +3088,10 @@ export const zh_CN: EnTranslations = {
         "name": "穴居者",
         "desc": "沾满泥污的掘地者，在矿洞与地穴中繁衍，凶狠地守护着自己的矿石。"
       },
+      "golem": {
+        "name": "魔像",
+        "desc": "由石头和琥珀构成的活体造物，行动迟缓却力大无穷，守护着它们被束缚之地。"
+      },
       "humanoid": {
         "name": "人型生物",
         "desc": "盗匪、邪教徒以及其他误入歧途之辈。他们以战术作战，而非只靠拳脚。"
@@ -9193,6 +9197,9 @@ export const zh_CN: EnTranslations = {
       },
       "forest_wolf": {
         "name": "森林狼"
+      },
+      "amber_heart_golem": {
+        "name": "琥珀之心魔像"
       },
       "old_greyjaw": {
         "name": "老灰颚"

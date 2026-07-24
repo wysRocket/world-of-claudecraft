@@ -3088,6 +3088,10 @@ export const en_CA: EnTranslations = {
         "name": "Burrowers",
         "desc": "Dirt-caked diggers that infest mines and burrows, fiercely guarding their ore."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoids",
         "desc": "Bandits, cultists, and others who took up the wrong trade. They fight with tactics, not just teeth."
@@ -9193,6 +9197,9 @@ export const en_CA: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Forest Wolf"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Old Greyjaw"

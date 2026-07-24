@@ -3088,6 +3088,10 @@ export const it_IT: EnTranslations = {
         "name": "Scavatori",
         "desc": "Scavatori incrostati di fango che infestano miniere e cunicoli, difendendo ferocemente il loro minerale."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Umanoidi",
         "desc": "Banditi, cultisti e altri che hanno scelto il mestiere sbagliato. Combattono con tattica, non solo con i denti."
@@ -9193,6 +9197,9 @@ export const it_IT: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Lupo della foresta"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Vecchio Greyjaw"

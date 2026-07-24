@@ -3088,6 +3088,10 @@ export const ko_KR: EnTranslations = {
         "name": "굴착꾼",
         "desc": "광산과 굴을 들끓게 하며 자기네 광석을 사납게 지키는, 흙범벅이 된 굴착꾼들."
       },
+      "golem": {
+        "name": "골렘",
+        "desc": "돌과 호박으로 빚어진 살아 움직이는 구조물로, 느리지만 짓누를 듯 강하며 자신이 얽매인 장소를 지킨다."
+      },
       "humanoid": {
         "name": "인간형",
         "desc": "산적과 광신도, 그리고 잘못된 길로 들어선 자들. 이들은 이빨이 아니라 전술로 싸웁니다."
@@ -9193,6 +9197,9 @@ export const ko_KR: EnTranslations = {
       },
       "forest_wolf": {
         "name": "숲늑대"
+      },
+      "amber_heart_golem": {
+        "name": "호박심장 골렘"
       },
       "old_greyjaw": {
         "name": "늙은 그레이죠"

@@ -3088,6 +3088,10 @@ export const cs_CZ: EnTranslations = {
         "name": "Norníci",
         "desc": "Hlínou obalení kopáči zamořující doly a nory, zuřivě střežící svou rudu."
       },
+      "golem": {
+        "name": "Golems",
+        "desc": "Animated constructs of stone and amber, slow but crushingly strong, that guard the places they were bound to."
+      },
       "humanoid": {
         "name": "Humanoidi",
         "desc": "Bandité, kultisté a další, kteří se dali na špatné řemeslo. Bojují taktikou, nejen zuby."
@@ -9193,6 +9197,9 @@ export const cs_CZ: EnTranslations = {
       },
       "forest_wolf": {
         "name": "Lesní vlk"
+      },
+      "amber_heart_golem": {
+        "name": "Amber-Heart Golem"
       },
       "old_greyjaw": {
         "name": "Starý Šedočelista"

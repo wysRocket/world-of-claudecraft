@@ -3248,6 +3248,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.items.tidewatchers_wraps.name': 'Обмотки Стража приливов',
   'entities.items.ysols_pearl_greaves.name': 'Жемчужные поножи Изолеи',
   'entities.mobs.forest_wolf.name': 'Лесной волк',
+  'entities.mobs.amber_heart_golem.name': 'Голем янтарного сердца',
   'entities.mobs.old_greyjaw.name': 'Старый Серочелюст',
   'entities.mobs.wild_boar.name': 'Дикий кабан',
   'entities.mobs.webwood_spider.name': 'Паук-скрытень Сейблвеба',
@@ -5114,6 +5115,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'guide.family.mudfin.desc':
     'Земноводные обитатели топей, что кишат на мелководье шумными, оберегающими свою территорию стаями.',
   'guide.family.burrower.name': 'Землекопы',
+  'guide.family.golem.name': 'Големы',
+  'guide.family.golem.desc': 'Оживлённые изваяния из камня и янтаря, медлительные, но сокрушительно сильные, что охраняют места, к которым привязаны.',
   'guide.family.burrower.desc':
     'Землекопы, покрытые коркой грязи, что наводняют шахты и норы, яростно охраняя свою руду.',
   'guide.family.humanoid.name': 'Гуманоиды',

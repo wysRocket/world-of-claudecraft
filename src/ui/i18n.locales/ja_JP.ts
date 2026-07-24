@@ -3223,6 +3223,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.items.tidewatchers_wraps.name': '潮見の手布',
   'entities.items.ysols_pearl_greaves.name': 'イソレイの真珠脚甲',
   'entities.mobs.forest_wolf.name': '森の狼',
+  'entities.mobs.amber_heart_golem.name': '琥珀の心のゴーレム',
   'entities.mobs.old_greyjaw.name': '老グレイジョー',
   'entities.mobs.wild_boar.name': '野生の猪',
   'entities.mobs.webwood_spider.name': 'セイブルウェブの潜伏者',
@@ -5055,6 +5056,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.family.mudfin.desc':
     '浅瀬に群がる水陸両生の沼地の住人。騒がしく、縄張り意識の強い群れをなします。',
   'guide.family.burrower.name': '穴掘り',
+  'guide.family.golem.name': 'ゴーレム',
+  'guide.family.golem.desc': '石と琥珀で造られた動く構造体。動きは遅いが力は絶大で、縛り付けられた場所を守り続ける。',
   'guide.family.burrower.desc':
     '泥にまみれた採掘者たち。鉱山や巣穴にはびこり、自らの鉱石を必死に守ります。',
   'guide.family.humanoid.name': 'ヒューマノイド',
