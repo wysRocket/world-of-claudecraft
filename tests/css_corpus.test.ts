@@ -103,7 +103,6 @@ const INDEX_SECTIONS = [
   'lockpicking minigame ("Tumbler\'s Path")',
   'combat meters',
   'minimap',
-  'community HUD',
   'windows',
   'window shell',
   'character window',
@@ -167,10 +166,11 @@ const INDEX_SECTIONS = [
 const MANIFEST = INDEX_SECTIONS;
 
 describe('css_corpus section manifest', () => {
-  it('pins a non-vacuous 69-section manifest with no duplicate names', () => {
-    expect(INDEX_SECTIONS.length).toBe(69);
-    expect(MANIFEST.length).toBe(69);
-    expect(new Set(INDEX_SECTIONS).size).toBe(69);
+  it('pins a non-vacuous 68-section manifest with no duplicate names', () => {
+    // 68 after the community HUD section was retired with the community-links rail.
+    expect(INDEX_SECTIONS.length).toBe(68);
+    expect(MANIFEST.length).toBe(68);
+    expect(new Set(INDEX_SECTIONS).size).toBe(68);
   });
 
   it('captures the live corpus markers (the marker regex is non-vacuous, not a zero match)', () => {

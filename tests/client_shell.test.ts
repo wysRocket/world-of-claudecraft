@@ -921,7 +921,10 @@ describe('client HTML shell', () => {
       "onDonate: () => window.open(DONATE_URL, '_blank', 'noopener,noreferrer'),",
     );
     for (const [name, entry] of [['index.html', html]] as const) {
-      expect(entry.match(/href="https:\/\/ko-fi\.com\/worldofclaudecraft"/g), name).toHaveLength(3);
+      // Two Ko-fi donate links remain (the #mobile-donate tray entry and the
+      // homepage donate-cta); the community-tray's donate link was removed with
+      // the community-links rail (emberwood landing-page pass).
+      expect(entry.match(/href="https:\/\/ko-fi\.com\/worldofclaudecraft"/g), name).toHaveLength(2);
       expect(entry, name).not.toContain('https://github.com/sponsors/levy-street');
     }
   });
@@ -1045,13 +1048,11 @@ describe('client HTML shell', () => {
     expect(mainTs).toContain("classList.toggle('show-actionbar3', visibility.third)");
   });
 
-  it('carries the same community-tray links in BOTH entries, with no duplicate Discord entry', () => {
-    for (const entry of [html]) {
-      expect(entry).toContain('<a class="community-link github"');
-      expect(entry).toContain('<a class="community-link donate"');
-      expect(entry).not.toContain('<a class="community-link discord"');
-    }
-  });
+  // The community-links tray/rail (community-menu, community-tray, community-link
+  // github/donate) was removed in the emberwood landing-page pass; its dedicated
+  // markup/JS/CSS tests are retired with it. GitHub stays reachable via #btn-github
+  // and Discord/Donate via the mobile tray (#mobile-discord/#mobile-donate) + the
+  // desktop micro-menu (#mm-discord), each still covered above.
 
   it('keeps the game menu free of duplicate and dev-only entries', () => {
     const interfaceEntries = optionsViewTs.match(/labelKey: 'hud\.options\.interface'/g) ?? [];
@@ -1133,30 +1134,13 @@ describe('client HTML shell', () => {
     );
   });
 
-  it('hides the community-links rail on mobile touch (its icon read as a Friends button)', () => {
-    // The rail markup stays for desktop (narrow-desktop rules and the
-    // homepage still use it); only the in-game touch HUD hides it, because
-    // its two-person toggle icon under the minimap masqueraded as a Friends
-    // button next to the real Social button in the top-left trio.
+  it('still ships the homepage donate CTA after the community rail was removed', () => {
+    // The community-links rail was removed (emberwood landing-page pass); the
+    // standalone homepage donate CTA is the surviving support link.
     expect(html).toContain('<a class="donate-cta"');
-    expect(html).toContain('<details id="community-menu">');
-    expect(html).toContain('<summary class="community-toggle"');
-    expect(html).toContain('<div class="community-tray">');
-    expect(html).toContain('<a class="community-link github"');
-    expect(html).toContain('<a class="community-link donate"');
-    // No separate Discord invite link here: it duplicated the Discord (U)
-    // icon-rail button (#mm-discord), the game HUD's single Discord entry
-    // point (see the fix/inspect-camera-talent-overlap-discord-dup PR).
-    expect(html).not.toContain('<a class="community-link discord"');
-    expect(hudMobileCss).toContain('body.mobile-touch.game-active #ui {\n    z-index: 80;\n  }');
-    expect(hudMobileCss).toContain('body.mobile-touch #community-hud {\n    display: none;\n  }');
-    // No stray mobile-touch styling survives for the hidden rail (the old
-    // positioning/tray rules are gone, not just overridden).
-    expect(hudMobileCss).not.toContain('body.mobile-touch .community-toggle');
-    expect(hudMobileCss).not.toContain('body.mobile-touch .community-tray');
-    expect(hudMobileCss).not.toContain('body.mobile-touch .community-link');
-    expect(hudMobileCss).not.toContain('body.mobile-touch #community-menu');
-    expect(hudMobileCss).not.toContain('body.mobile-touch .donate-cta {\n    display: none;');
+    expect(html).not.toContain('<details id="community-menu">');
+    expect(html).not.toContain('<div class="community-tray">');
+    expect(html).not.toContain('<a class="community-link');
   });
 
   it('omits the repository link from the homepage footer without removing GitHub integrations', () => {
@@ -1167,20 +1151,15 @@ describe('client HTML shell', () => {
 
     const footer = html.slice(footerStart, footerEnd);
     expect(footer).not.toContain('https://github.com/levy-street/world-of-claudecraft');
-    expect(html.slice(0, footerStart)).toContain('<a class="community-link github"');
+    // GitHub stays reachable through the in-game integration button (the community
+    // tray's github link was removed with the community-links rail).
     expect(html).toContain('id="btn-github"');
   });
 
-  it('closes mobile community and More trays when tapping outside', () => {
-    expect(hudTs).toContain(
-      "const communityMenu = document.getElementById('community-menu') as HTMLDetailsElement | null;",
-    );
-    expect(hudTs).toMatch(
-      /if \(\s*document\.body\.classList\.contains\('mobile-touch'\) &&\s*communityMenu\?\.open &&\s*!communityMenu\.contains\(target\)\s*\) \{\s*communityMenu\.open = false;\s*\}/,
-    );
-    expect(hudTs).not.toContain(
-      'if (communityMenu?.open && !communityMenu.contains(target)) {\n        communityMenu.open = false;\n      }',
-    );
+  it('closes the mobile More tray when tapping outside', () => {
+    // The community menu was removed with the community-links rail; the mobile
+    // More tray keeps its tap-outside-to-close behavior.
+    expect(hudTs).not.toContain("document.getElementById('community-menu')");
     expect(hudTs).toContain("if (document.body.classList.contains('mobile-more-open')) {");
     expect(hudTs).toContain("document.body.classList.remove('mobile-more-open');");
     expect(hudTs).toContain(
@@ -1210,13 +1189,6 @@ describe('client HTML shell', () => {
     );
     expect(hudTs).not.toMatch(
       /(?:releaseSpiritBtnEl|resurrectCorpseBtnEl|resurrectHealerBtnEl)\.addEventListener\('click'/,
-    );
-  });
-
-  it('keeps desktop community links open after HUD clicks', () => {
-    expect(mainTs).toContain('communityMenu.open = !(NATIVE_APP || useTouchInterface());');
-    expect(hudTs).toMatch(
-      /document\.body\.classList\.contains\('mobile-touch'\) &&\s*communityMenu\?\.open/,
     );
   });
 
