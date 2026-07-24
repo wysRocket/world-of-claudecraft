@@ -11,7 +11,11 @@ export type DesktopPlatform = 'mac' | 'win' | 'linux' | 'other';
 // (see docs/desktop-release.md). The static hrefs in index.html carry the same
 // version as a no-JS fallback.
 export const DESKTOP_VERSION = '0.28.0';
-const DESKTOP_HOST = 'https://updates.endlessglory.vercel.app/desktop';
+// Kept on the legacy worldofclaudecraft.com update host on purpose: existing
+// desktop installs auto-update against this endpoint, so the rebrand to
+// endlessglory.vercel.app must NOT leak into it (tests/desktop_download +
+// rebrand_surfaces pin this legacy-compatibility endpoint).
+const DESKTOP_HOST = 'https://updates.worldofclaudecraft.com/desktop';
 
 // electron-builder website-channel artifact names (docs/desktop-release.md):
 // mac ships one universal dmg; the x64 Linux AppImage is named x86_64 (that is
