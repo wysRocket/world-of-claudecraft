@@ -204,6 +204,19 @@ const kawaii = (): ClipMap => ({
   death: 'idle',
 });
 
+// Every Meshy kawaii class is auto-rigged to one shared 24-bone skeleton (the
+// Blender rig pass), so they all reuse the warrior walk + attack clips grafted
+// by bone name. The base GLB carries the shared bind-pose breathing idle; run
+// reuses walk and death falls back to idle via kawaii(). Weapons are modeled
+// into each body (no gear-driven swap).
+const KAWAII_ANIM_URLS = ['models/kawaii/warrior_walk.glb', 'models/kawaii/warrior_attack.glb'];
+const kawaiiClass = (key: string): VisualDef => ({
+  url: `models/kawaii/${key}.glb`,
+  animUrls: KAWAII_ANIM_URLS,
+  height: HUMANOID_H,
+  clips: kawaii(),
+});
+
 // Quaternius 2021 animal rig (wolf/bull/alpaca/fox/stag)
 const animal = (attack: string[]): ClipMap => ({
   idle: 'Idle',
@@ -438,55 +451,17 @@ function mechEmissiveUrl(c: MechChroma): string | null {
 // to the body material's .map (same UVs). Classes sharing a model share its skin
 // set. Players only - mobs/npcs keep their default look. See public/textures/skins/.
 export const SKINS: Record<string, (string | null)[]> = {
-  player_warrior: [
-    null,
-    `${SKINS_DIR}/knight/alt_a.png`,
-    `${SKINS_DIR}/knight/alt_b.png`,
-    `${SKINS_DIR}/knight/alt_c.png`,
-  ],
-  player_paladin: [null, `${SKINS_DIR}/paladin/alt_a.png`],
-  player_hunter: [
-    null,
-    `${SKINS_DIR}/ranger/alt_a.png`,
-    `${SKINS_DIR}/ranger/alt_b.png`,
-    `${SKINS_DIR}/ranger/alt_c.png`,
-  ],
-  player_rogue: [
-    null,
-    `${SKINS_DIR}/rogue/alt_a.png`,
-    `${SKINS_DIR}/rogue/alt_b.png`,
-    `${SKINS_DIR}/rogue/alt_c.png`,
-  ],
-  player_priest: [
-    null,
-    `${SKINS_DIR}/mage/alt_a.png`,
-    `${SKINS_DIR}/mage/alt_b.png`,
-    `${SKINS_DIR}/mage/alt_c.png`,
-  ],
-  player_mage: [
-    null,
-    `${SKINS_DIR}/mage/alt_a.png`,
-    `${SKINS_DIR}/mage/alt_b.png`,
-    `${SKINS_DIR}/mage/alt_c.png`,
-  ],
-  player_warlock: [
-    null,
-    `${SKINS_DIR}/mage/alt_a.png`,
-    `${SKINS_DIR}/mage/alt_b.png`,
-    `${SKINS_DIR}/mage/alt_c.png`,
-  ],
-  player_shaman: [
-    null,
-    `${SKINS_DIR}/barbarian/alt_a.png`,
-    `${SKINS_DIR}/barbarian/alt_b.png`,
-    `${SKINS_DIR}/barbarian/alt_c.png`,
-  ],
-  player_druid: [
-    null,
-    `${SKINS_DIR}/druid/alt_a.png`,
-    `${SKINS_DIR}/druid/alt_b.png`,
-    `${SKINS_DIR}/druid/alt_c.png`,
-  ],
+  // The kawaii class bodies each ship a single baked texture (no alt-skin atlas),
+  // so only the embedded default is offered.
+  player_warrior: [null],
+  player_paladin: [null],
+  player_hunter: [null],
+  player_rogue: [null],
+  player_priest: [null],
+  player_mage: [null],
+  player_warlock: [null],
+  player_shaman: [null],
+  player_druid: [null],
   // Combat Mech chromas - every index is a real full-model texture (no null
   // default; the embedded base texture is not one of the rewards).
   player_mech: MECH_CHROMAS.map(mechChromaUrl),
@@ -534,120 +509,20 @@ const VELOCIRAPTOR: ClipMap = {
 
 export const VISUALS: Record<string, VisualDef> = {
   // -- player classes ------------------------------------------------------
-  // Kawaii Adventurers proof (single-class): the warrior is a Meshy-generated
-  // kawaii humanoid with its sword+shield modeled in. Its Mixamo-style rig has
-  // none of the KayKit handslot bones, so the gear-driven weapon swap
-  // (attach/weaponSlots) and the per-ability attack clips are intentionally
-  // dropped here; the held weapon is fixed and every attack plays the one 'attack'
-  // clip. Base mesh is warrior.glb (normalized to HUMANOID_H); walk/attack clips
-  // are grafted by name from the companion GLBs via animUrls.
-  player_warrior: {
-    url: 'models/kawaii/warrior.glb',
-    animUrls: ['models/kawaii/warrior_walk.glb', 'models/kawaii/warrior_attack.glb'],
-    height: HUMANOID_H,
-    clips: kawaii(),
-  },
-  player_paladin: {
-    url: `${PLAYERS}/paladin.glb`,
-    height: HUMANOID_H,
-    clips: {
-      ...kaykit(['1H_Melee_Attack_Chop', '1H_Melee_Attack_Slice_Diagonal']),
-      attackByHand: { twohand: '2H_Melee_Attack_Chop' },
-    },
-    // dedicated paladin model (helmeted variant) - ships its own Cape + Helmet
-    // meshes and texture, so no show-list/tint. Shield + paladin hammer arrive
-    // in the weapons pass; the gripped axe holds the slot until then.
-    attach: [
-      { url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' },
-      { url: `${WEAPONS}/shield_square.glb`, bone: 'handslot.l' },
-    ],
-    weaponSlots: [0],
-    offhandSlot: 1,
-  },
-  player_hunter: {
-    url: `${PLAYERS}/ranger.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['2H_Ranged_Shoot']),
-    // Bow-draw clips for the Season 1 bow skins (scripts/build_bow_anims.mjs):
-    // with a bow displayed the shot plays a draw instead of the crossbow
-    // shoulder-aim (visual.ts weaponSkinAttackClips).
-    animUrls: [`${PLAYERS}/bow_anims.glb`],
-    // dedicated ranger model - the quiver is a built-in mesh, so it's no longer
-    // a separate chest attachment
-    attach: [{ url: `${WEAPONS}/crossbow_1handed.glb`, bone: 'handslot.r' }],
-  },
-  player_rogue: {
-    url: `${PLAYERS}/rogue.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['Dualwield_Melee_Attack_Chop']),
-    show: ['Rogue_Cape'],
-    attach: [
-      { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.r' },
-      { url: `${WEAPONS}/dagger.glb`, bone: 'handslot.l' },
-    ],
-    weaponSlots: [0],
-    offhandSlot: 1,
-  },
-  player_priest: {
-    url: `${PLAYERS}/mage.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['2H_Melee_Attack_Chop']),
-    // The priest's Light: a warm golden halo ring above the crown.
-    halo: 0xffd766,
-    show: [],
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
-    weaponSlots: [0],
-    tint: 0xf0e9d6,
-    tintStrength: 0.5,
-  },
-  player_shaman: {
-    url: `${PLAYERS}/barbarian.glb`,
-    height: HUMANOID_H,
-    clips: {
-      ...kaykit(['1H_Melee_Attack_Chop', '1H_Melee_Attack_Slice_Diagonal']),
-      attackByHand: { twohand: '2H_Melee_Attack_Chop' },
-    },
-    show: ['Barbarian_BearHat'], // v2 barbarian renamed Hat→BearHat and dropped the round shield mesh
-    attach: [
-      { url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' },
-      { url: `${WEAPONS}/shield_round.glb`, bone: 'handslot.l' },
-    ],
-    weaponSlots: [0],
-    offhandSlot: 1,
-    tint: 0x6f8fc9,
-    tintStrength: 0.4,
-  },
-  player_mage: {
-    url: `${PLAYERS}/mage.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['2H_Melee_Attack_Chop']),
-    // no Mage_Hat on players: the brim hides the whole body from the default
-    // chase-camera pitch (NPC mages keep theirs - they're seen from the side)
-    show: ['Mage_Cape'],
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
-    weaponSlots: [0],
-  },
-  player_warlock: {
-    url: `${PLAYERS}/mage.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['Spellcast_Shoot']), // wand zap reads better than a staff bonk
-    show: [],
-    attach: [
-      { url: `${WEAPONS}/wand.glb`, bone: 'handslot.r' },
-      { url: `${WEAPONS}/spellbook_open.glb`, bone: 'handslot.l', gripRef: 'Spellbook_open' },
-    ],
-    weaponSlots: [0], // mainhand (wand) swaps; spellbook offhand stays
-    tint: 0x8d5fd3,
-    tintStrength: 0.45,
-  },
-  player_druid: {
-    url: `${PLAYERS}/druid.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['2H_Melee_Attack_Chop']),
-    // dedicated druid model (own texture, ships a Backpack mesh)
-    attach: [{ url: `${WEAPONS}/staff.glb`, bone: 'handslot.r' }],
-    weaponSlots: [0],
-  },
+  // Kawaii Adventurers roster: every class is a Meshy-generated chibi body with
+  // its gear modeled in, auto-rigged to one shared 24-bone skeleton (the Blender
+  // rig pass) so they all reuse the shared walk/attack clip donors via
+  // KAWAII_ANIM_URLS and the bind-pose breathing idle each base GLB carries.
+  // Weapons are fixed (no gear-driven swap); the priest keeps its Light halo.
+  player_warrior: kawaiiClass('warrior'),
+  player_paladin: kawaiiClass('paladin'),
+  player_hunter: kawaiiClass('hunter'),
+  player_rogue: kawaiiClass('rogue'),
+  player_priest: { ...kawaiiClass('priest'), halo: 0xffd766 },
+  player_shaman: kawaiiClass('shaman'),
+  player_mage: kawaiiClass('mage'),
+  player_warlock: kawaiiClass('warlock'),
+  player_druid: kawaiiClass('druid'),
 
   // -- cosmetic body skin (class-agnostic; both the skin preview and a live
   //    player whose skinCatalog === 'mech', see visualKeyFor) ----------------
@@ -1103,13 +978,7 @@ export const VISUALS: Record<string, VisualDef> = {
     tint: 0xc9b98a,
     tintStrength: 0.3,
   },
-  npc_smith: {
-    url: `${PLAYERS}/barbarian.glb`,
-    height: HUMANOID_H,
-    clips: kaykit(['1H_Melee_Attack_Chop']),
-    show: [],
-    attach: [{ url: `${WEAPONS}/axe_1handed.glb`, bone: 'handslot.r' }],
-  },
+  npc_smith: kawaiiClass('npc_smith'),
   npc_scout: {
     url: `${PLAYERS}/scout.glb`,
     height: HUMANOID_H,
@@ -1159,21 +1028,9 @@ export const VISUALS: Record<string, VisualDef> = {
     height: HUMANOID_H,
     clips: openmmoClips(),
   },
-  npc_dealer: {
-    url: 'models/emberwood/npcs/emberwood_dealer.glb',
-    height: HUMANOID_H,
-    clips: openmmoClips(),
-  },
-  npc_armorer: {
-    url: 'models/emberwood/npcs/emberwood_armorer.glb',
-    height: HUMANOID_H,
-    clips: openmmoClips(),
-  },
-  npc_foreman: {
-    url: 'models/emberwood/npcs/emberwood_foreman.glb',
-    height: HUMANOID_H,
-    clips: openmmoClips(),
-  },
+  npc_dealer: kawaiiClass('npc_dealer'),
+  npc_armorer: kawaiiClass('npc_armorer'),
+  npc_foreman: kawaiiClass('npc_foreman'),
   // Bursar Fernando: the villager body with the likeness atlas (SKINS above)
   // carrying black shoulder-length hair and light brown skin. No entity tint:
   // the gold NpcDef color would wash the repaint back toward the villager look.
@@ -1197,11 +1054,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // the plain npc_knight and from npc_reliquary_keeper's guard look. Referenced
   // directly (no themed-asset indirection): there is no non-Emberwood counterpart,
   // same pattern as amber_heart_golem below.
-  npc_paladin: {
-    url: 'models/emberwood/npcs/emberwood_paladin.glb',
-    height: HUMANOID_H,
-    clips: kaykit(['1H_Melee_Attack_Chop']),
-  },
+  npc_paladin: kawaiiClass('npc_paladin'),
   // Edda Reedhand (The Drowned Litany companion NPC, healer): the druid player
   // rig, staff in hand, backpack authored on the model (a traveling marsh
   // herbalist). The earlier Meshy mesh clashed with the KayKit proportions; a

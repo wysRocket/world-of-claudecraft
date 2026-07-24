@@ -17,30 +17,20 @@ describe('winning Warrior attack animation routing', () => {
     expect(weaponAttackStyle('missing_item', 'rusty_dagger')).toBeNull();
   });
 
-  it('pins winning Warrior hand and ability clips', () => {
-    expect(VISUALS.player_warrior.clips.attackByHand).toEqual({
-      twohand: '2H_Melee_Attack_Chop',
-      dualwield: 'Dualwield_Melee_Attack_Chop',
-    });
-    expect(VISUALS.player_warrior.clips.attackByAbility).toMatchObject({
-      mortal_strike: '2H_Melee_Attack_Chop',
-      execute: '2H_Melee_Attack_Chop',
-      slam: '2H_Melee_Attack_Chop',
-      red_harvest: '2H_Melee_Attack_Chop',
-      breachmaker: '2H_Melee_Attack_Chop',
-      shield_slam: '2H_Melee_Attack_Chop',
-      raging_gale: 'Dualwield_Melee_Attack_Chop',
-      bloodthirst: 'Dualwield_Melee_Attack_Chop',
-      cleave: '1H_Melee_Attack_Chop',
-      thunder_clap: '1H_Melee_Attack_Chop',
-      faultline: '1H_Melee_Attack_Chop',
-      revenge: '1H_Melee_Attack_Chop',
-      heroic_strike: '1H_Melee_Attack_Slice_Diagonal',
-      overpower: '1H_Melee_Attack_Slice_Diagonal',
-      hamstring: '1H_Melee_Attack_Slice_Diagonal',
-      sanguine_aura: 'Spellcast_Raise',
-      raised_guard: 'Block',
-    });
+  it('drives the kawaii Warrior from the shared kawaii-roster animation donors', () => {
+    const def = VISUALS.player_warrior;
+    // Fast-path kawaii body: gear is modeled in, so no attach / gear-driven swap.
+    expect(def.url).toBe('models/kawaii/warrior.glb');
+    expect(def.attach).toBeUndefined();
+    expect(def.weaponSlots).toBeUndefined();
+    // Reuses the shared walk/attack clip donors grafted by bone name; the single
+    // generic 'attack' swing plays for every ability (no per-ability map).
+    expect(def.animUrls).toEqual([
+      'models/kawaii/warrior_walk.glb',
+      'models/kawaii/warrior_attack.glb',
+    ]);
+    expect(def.clips.attack).toEqual(['attack']);
+    expect(def.clips.attackByAbility).toBeUndefined();
   });
 
   it('normalizes damage-event display names and preserves the whirlwind spin cue', () => {

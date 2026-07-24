@@ -241,30 +241,26 @@ describe('bow skin attack animation (hunter draw instead of crossbow aim)', () =
     expect(weaponSkinOrientPin(null)).toBeNull();
   });
 
-  it('the hunter ships the bow clip via animUrls and the GLB carries it', async () => {
+  it('the kawaii hunter models its weapon in, retiring the bow-draw graft', async () => {
     // Source scan, not an import: pulling the manifest into Node would kick
     // the module-import GLB preloads (assets.ts loading contract).
+    // The Kawaii Adventurers hunter is a fixed-weapon chibi body reusing the
+    // shared roster donors, so it no longer grafts bow_anims (Season 1 bow-skin
+    // draw animations are dormant while the roster keeps baked weapons).
     const manifestSrc = readFileSync(join(ROOT, 'src/render/characters/manifest.ts'), 'utf8');
-    const hunterBlock = manifestSrc.slice(
-      manifestSrc.indexOf('player_hunter: {'),
-      manifestSrc.indexOf('player_rogue: {'),
+    expect(manifestSrc).toContain("player_hunter: kawaiiClass('hunter')");
+    const classBlock = manifestSrc.slice(
+      manifestSrc.indexOf('player_warrior: kawaiiClass'),
+      manifestSrc.indexOf('player_mech:'),
     );
-    expect(hunterBlock).toContain('bow_anims.glb');
-    // Parse the shipped GLB's JSON chunk and assert the clips are inside
-    // (scripts/build_bow_anims.mjs output; regenerate from the CC0 pack).
+    expect(classBlock).not.toContain('bow_anims.glb');
+    // The bow-draw clip donor still ships well-formed for whenever a ranged
+    // class re-adopts the gear rig (scripts/build_bow_anims.mjs output).
     const glb = readFileSync(join(ROOT, 'public/models/chars/players/bow_anims.glb'));
     const jsonLen = glb.readUInt32LE(12);
     const doc = JSON.parse(glb.subarray(20, 20 + jsonLen).toString('utf8'));
-    const clips = (doc.animations ?? []).map((a: { name?: string }) => a.name);
-    expect(clips).toContain('Bow_Draw_Shot');
-    // Mesh-free clip donor: nothing to render, just bones + tracks.
-    expect(doc.meshes ?? []).toEqual([]);
-    // The authored animation can carry a release pose without changing the
-    // server-authoritative Auto Shot timeline.
-    const script = readFileSync(join(ROOT, 'scripts/build_bow_anims.mjs'), 'utf8');
-    const m = script.match(/BOW_RELEASE_AT = ([0-9.]+)/);
-    expect(m, 'build_bow_anims.mjs must declare BOW_RELEASE_AT').toBeTruthy();
-    expect(Number(m?.[1])).toBeGreaterThan(0);
+    expect((doc.animations ?? []).map((a: { name?: string }) => a.name)).toContain('Bow_Draw_Shot');
+    expect(doc.meshes ?? []).toEqual([]); // mesh-free clip donor
   });
 
   it('uses typed launch correlation instead of a gameplay-system label dependency', () => {
