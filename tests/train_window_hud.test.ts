@@ -115,9 +115,11 @@ describe('hud.ts train window wiring (source pins)', () => {
   });
 });
 
-describe('#train-window container exists in both HTML entries', () => {
-  it('index.html and play.html both declare the train window panel', () => {
-    for (const entry of ['index.html', 'play.html']) {
+describe('#train-window container exists in the client HTML entry', () => {
+  it('index.html declares the train window panel', () => {
+    // play.html was removed in the Endless Glory rebrand (commit ca26426fa); the
+    // single client shell is index.html.
+    for (const entry of ['index.html']) {
       const html = readFileSync(resolve(__dirname, '..', entry), 'utf8');
       expect(html, entry).toContain('id="train-window"');
       const tag = html.match(/<div[^>]*id="train-window"[^>]*>/)?.[0] ?? '';
