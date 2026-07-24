@@ -402,6 +402,13 @@ function flagGeometry(w: number, h: number): THREE.PlaneGeometry {
 
 // ---------------------------------------------------------------------------
 
+// World-design pass: render the Sowfield in a subtler form. The two tiered
+// grandstands are the dominant mass on the skyline behind the Reliquary portal,
+// so they are omitted; the chalked pitch, goals, gate, banners, bunting and
+// corner braziers remain, leaving a modest village ground rather than a stadium.
+// Flip to false to restore the full grandstands.
+const SOWFIELD_SUBTLE = true;
+
 export function buildValeCupStadium(seed: number): ValeCupStadiumView {
   const group = new THREE.Group();
   group.name = 'sowfield-stadium';
@@ -719,139 +726,148 @@ export function buildValeCupStadium(seed: number): ValeCupStadiumView {
     else inst.set(kind, [m]);
   };
 
-  const benchAsset = kitAsset('bench');
-  const tierHeights = [VC_STAND_TIER_HEIGHTS[0], VC_STAND_TIER_HEIGHTS[1]];
-  const tierDepth = VC_STAND_TIER_DEPTH;
-  for (const stand of [STAND_NORTH, STAND_SOUTH]) {
-    const north = stand === STAND_NORTH;
-    const front = north ? stand.zMin : stand.zMax;
-    const dirAway = north ? 1 : -1; // +z away from the pitch for the north stand
-    const width = stand.xMax - stand.xMin;
-    const xMid = (stand.xMin + stand.xMax) / 2;
-    for (let tier = 0; tier < 2; tier++) {
-      const zC = front + dirAway * (tierDepth / 2 + tier * tierDepth);
-      const frontZ = front + dirAway * tier * tierDepth;
-      const hTop = tierHeights[tier];
-      const prevTop = tier === 0 ? 0 : tierHeights[tier - 1];
-      // Timber deck in 4 spans, each seated on its own terrain sample. The decks
-      // are built on the FLAT terrain baseline (terrainHeight, not the walkable
-      // groundHeight): at the real Sowfield the walkable ground ramps up to the
-      // deck top (sowfieldStandLift, in groundHeight) so a player climbs the
-      // tiers and the risers/posts sit buried under the ramp; at a private
-      // practice-pitch copy (flat ground) the same posts/fascia visibly support
-      // the decks. One geometry, correct both places.
-      const spans = 4;
-      const spanW = width / spans;
-      for (let sIdx = 0; sIdx < spans; sIdx++) {
-        const xC = stand.xMin + (sIdx + 0.5) * spanW;
-        const deckY = th(xC, zC) + hTop - 0.1;
-        addBox(
-          structure,
-          spanW + 0.04,
-          0.2,
-          tierDepth,
-          xC,
-          deckY,
-          zC,
-          0,
-          (sIdx + tier) % 2 === 0 ? WOOD_A : WOOD_PALE,
-        );
-        // pitch-facing fascia: closes the step riser so the tier reads solid
-        const fh = hTop - prevTop + 0.12;
-        addBox(
-          structure,
-          spanW + 0.04,
-          fh,
-          0.16,
-          xC,
-          th(xC, frontZ) + prevTop + fh / 2 - 0.08,
-          frontZ,
-          0,
-          WOOD_B,
-        );
-      }
-      // support posts along the riser front
-      for (let px2 = stand.xMin + 1; px2 <= stand.xMax - 0.5; px2 += 4.1) {
-        addBox(
-          structure,
-          0.26,
-          hTop + 0.1,
-          0.26,
-          px2,
-          th(px2, frontZ) + (hTop + 0.1) / 2 - 0.08,
-          frontZ + dirAway * 0.3,
-          0,
-          WOOD_DARK,
-        );
-      }
-      // side skirts at both stand ends
-      for (const ex of [stand.xMin, stand.xMax]) {
-        addBox(structure, 0.16, hTop, tierDepth, ex, th(ex, zC) + hTop / 2 - 0.06, zC, 0, WOOD_B);
-      }
-      // bench rows on each tier, facing the pitch; leave the gate aisle open
-      const benchStep = rich ? 2.7 : 4.1;
-      const benchScale = 2.3 / Math.max(0.001, benchAsset.size.x);
-      const benchZ = zC + dirAway * 0.5;
-      const benchYaw = north ? Math.PI : 0;
-      for (let bx = stand.xMin + 1.6; bx <= stand.xMax - 1.6; bx += benchStep) {
-        if (north && Math.abs(bx - GATE.x) < 2.4) continue; // gate aisle
-        const salt = Math.round(bx * 7 + zC);
-        // plain benches only: bench_decorated carries a skull + lantern (crypt
-        // dressing), the wrong vibe for a harvest festival
-        addInst(
-          'bench',
-          bx,
-          th(bx, benchZ) + hTop,
-          benchZ,
-          benchYaw + (hash2(salt, 22, seed) - 0.5) * 0.08,
-          benchScale,
-        );
-      }
-      // back rail along the top tier rear
-      if (tier === 1) {
-        const backZ = zC + dirAway * (tierDepth / 2);
-        addCyl(
-          structure,
-          0.07,
-          0.07,
-          width,
-          6,
-          xMid,
-          th(xMid, backZ) + hTop + 0.85,
-          backZ,
-          WOOD_DARK,
-          0,
-          Math.PI / 2,
-        );
-        for (let px2 = stand.xMin + 0.4; px2 <= stand.xMax; px2 += 5) {
-          addBox(structure, 0.14, 1, 0.14, px2, th(px2, backZ) + hTop + 0.4, backZ, 0, WOOD_DARK);
+  if (!SOWFIELD_SUBTLE) {
+    const benchAsset = kitAsset('bench');
+    const tierHeights = [VC_STAND_TIER_HEIGHTS[0], VC_STAND_TIER_HEIGHTS[1]];
+    const tierDepth = VC_STAND_TIER_DEPTH;
+    for (const stand of [STAND_NORTH, STAND_SOUTH]) {
+      const north = stand === STAND_NORTH;
+      const front = north ? stand.zMin : stand.zMax;
+      const dirAway = north ? 1 : -1; // +z away from the pitch for the north stand
+      const width = stand.xMax - stand.xMin;
+      const xMid = (stand.xMin + stand.xMax) / 2;
+      for (let tier = 0; tier < 2; tier++) {
+        const zC = front + dirAway * (tierDepth / 2 + tier * tierDepth);
+        const frontZ = front + dirAway * tier * tierDepth;
+        const hTop = tierHeights[tier];
+        const prevTop = tier === 0 ? 0 : tierHeights[tier - 1];
+        // Timber deck in 4 spans, each seated on its own terrain sample. The decks
+        // are built on the FLAT terrain baseline (terrainHeight, not the walkable
+        // groundHeight): at the real Sowfield the walkable ground ramps up to the
+        // deck top (sowfieldStandLift, in groundHeight) so a player climbs the
+        // tiers and the risers/posts sit buried under the ramp; at a private
+        // practice-pitch copy (flat ground) the same posts/fascia visibly support
+        // the decks. One geometry, correct both places.
+        const spans = 4;
+        const spanW = width / spans;
+        for (let sIdx = 0; sIdx < spans; sIdx++) {
+          const xC = stand.xMin + (sIdx + 0.5) * spanW;
+          const deckY = th(xC, zC) + hTop - 0.1;
+          addBox(
+            structure,
+            spanW + 0.04,
+            0.2,
+            tierDepth,
+            xC,
+            deckY,
+            zC,
+            0,
+            (sIdx + tier) % 2 === 0 ? WOOD_A : WOOD_PALE,
+          );
+          // pitch-facing fascia: closes the step riser so the tier reads solid
+          const fh = hTop - prevTop + 0.12;
+          addBox(
+            structure,
+            spanW + 0.04,
+            fh,
+            0.16,
+            xC,
+            th(xC, frontZ) + prevTop + fh / 2 - 0.08,
+            frontZ,
+            0,
+            WOOD_B,
+          );
+        }
+        // support posts along the riser front
+        for (let px2 = stand.xMin + 1; px2 <= stand.xMax - 0.5; px2 += 4.1) {
+          addBox(
+            structure,
+            0.26,
+            hTop + 0.1,
+            0.26,
+            px2,
+            th(px2, frontZ) + (hTop + 0.1) / 2 - 0.08,
+            frontZ + dirAway * 0.3,
+            0,
+            WOOD_DARK,
+          );
+        }
+        // side skirts at both stand ends
+        for (const ex of [stand.xMin, stand.xMax]) {
+          addBox(structure, 0.16, hTop, tierDepth, ex, th(ex, zC) + hTop / 2 - 0.06, zC, 0, WOOD_B);
+        }
+        // bench rows on each tier, facing the pitch; leave the gate aisle open
+        const benchStep = rich ? 2.7 : 4.1;
+        const benchScale = 2.3 / Math.max(0.001, benchAsset.size.x);
+        const benchZ = zC + dirAway * 0.5;
+        const benchYaw = north ? Math.PI : 0;
+        for (let bx = stand.xMin + 1.6; bx <= stand.xMax - 1.6; bx += benchStep) {
+          if (north && Math.abs(bx - GATE.x) < 2.4) continue; // gate aisle
+          const salt = Math.round(bx * 7 + zC);
+          // plain benches only: bench_decorated carries a skull + lantern (crypt
+          // dressing), the wrong vibe for a harvest festival
+          addInst(
+            'bench',
+            bx,
+            th(bx, benchZ) + hTop,
+            benchZ,
+            benchYaw + (hash2(salt, 22, seed) - 0.5) * 0.08,
+            benchScale,
+          );
+        }
+        // back rail along the top tier rear
+        if (tier === 1) {
+          const backZ = zC + dirAway * (tierDepth / 2);
+          addCyl(
+            structure,
+            0.07,
+            0.07,
+            width,
+            6,
+            xMid,
+            th(xMid, backZ) + hTop + 0.85,
+            backZ,
+            WOOD_DARK,
+            0,
+            Math.PI / 2,
+          );
+          for (let px2 = stand.xMin + 0.4; px2 <= stand.xMax; px2 += 5) {
+            addBox(structure, 0.14, 1, 0.14, px2, th(px2, backZ) + hTop + 0.4, backZ, 0, WOOD_DARK);
+          }
         }
       }
-    }
-    // crate/barrel clutter at the stand ends (plain pieces: no skull dressing)
-    const endZ = front + dirAway * 2.2;
-    const crateScale = 1.5 / Math.max(0.001, kitAsset('crate_large').size.x);
-    const brl = 1.0 / Math.max(0.001, kitAsset('barrel_large').size.x);
-    addInst(
-      'crate_large',
-      stand.xMin - 1.6,
-      th(stand.xMin - 1.6, endZ) - 0.02,
-      endZ,
-      0.6,
-      crateScale,
-    );
-    addInst(
-      'crate_large',
-      stand.xMax + 1.5,
-      th(stand.xMax + 1.5, endZ) - 0.02,
-      endZ,
-      -0.4,
-      crateScale,
-    );
-    if (rich) {
-      const bz1 = endZ + dirAway * 1.8;
-      addInst('barrel_large', stand.xMin - 1.4, th(stand.xMin - 1.4, bz1) - 0.02, bz1, 1.7, brl);
-      addInst('barrel_large', stand.xMax + 2.6, th(stand.xMax + 2.6, endZ) - 0.02, endZ, 0.3, brl);
+      // crate/barrel clutter at the stand ends (plain pieces: no skull dressing)
+      const endZ = front + dirAway * 2.2;
+      const crateScale = 1.5 / Math.max(0.001, kitAsset('crate_large').size.x);
+      const brl = 1.0 / Math.max(0.001, kitAsset('barrel_large').size.x);
+      addInst(
+        'crate_large',
+        stand.xMin - 1.6,
+        th(stand.xMin - 1.6, endZ) - 0.02,
+        endZ,
+        0.6,
+        crateScale,
+      );
+      addInst(
+        'crate_large',
+        stand.xMax + 1.5,
+        th(stand.xMax + 1.5, endZ) - 0.02,
+        endZ,
+        -0.4,
+        crateScale,
+      );
+      if (rich) {
+        const bz1 = endZ + dirAway * 1.8;
+        addInst('barrel_large', stand.xMin - 1.4, th(stand.xMin - 1.4, bz1) - 0.02, bz1, 1.7, brl);
+        addInst(
+          'barrel_large',
+          stand.xMax + 2.6,
+          th(stand.xMax + 2.6, endZ) - 0.02,
+          endZ,
+          0.3,
+          brl,
+        );
+      }
     }
   }
 

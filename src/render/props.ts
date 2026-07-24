@@ -889,8 +889,20 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
   // ---- wells ---------------------------------------------------------------
   for (const w of getActiveWorldContent().props.wells) {
     const g = new THREE.Group();
-    const a = propAsset('well');
-    addParts(g, 'well', { scale: [2.6 / a.size.x, 3.6 / a.size.y, 2.9 / a.size.z] });
+    // World-design pass: the town-square well (0,2) is replaced by a carved
+    // statue on a plinth as the plaza centerpiece; the other zones' square wells
+    // keep the well. Render-only, so the landmark collider and map dot are
+    // unchanged (the statue reuses the well footprint).
+    const townSquare = Math.abs(w.x) < 0.5 && Math.abs(w.z - 2) < 0.5;
+    if (townSquare) {
+      const plinth = propAsset('statueBlock');
+      addParts(g, 'statueBlock', { scale: 1.5 / plinth.size.y });
+      const figure = propAsset('statueHead');
+      addParts(g, 'statueHead', { y: 1.45, scale: 2.2 / figure.size.y });
+    } else {
+      const a = propAsset('well');
+      addParts(g, 'well', { scale: [2.6 / a.size.x, 3.6 / a.size.y, 2.9 / a.size.z] });
+    }
     g.position.set(w.x, ground(w.x, w.z) - 0.1, w.z);
     g.rotation.y = propRand(w.x, w.z, 1) * Math.PI;
     group.add(shadowed(g));
